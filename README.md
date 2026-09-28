@@ -199,6 +199,27 @@ claude-skills catalog             # Rebuild catalog JSON
 claude-skills stats               # Library statistics
 ```
 
+### GitHub Action
+
+Validate, score, and catalog skills in your own repo with the
+[Claude Skills Action](action.yml):
+
+```yaml
+name: Validate skills
+on:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ssrjkk/claude-skills@v3.4.0
+        with:
+          command: validate
+          target: .claude/skills
+```
+
 ## Quality Pipeline
 
 Every skill is scored on 5 dimensions:

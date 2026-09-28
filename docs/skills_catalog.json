@@ -1,0 +1,1693 @@
+{
+  "metadata": {
+    "schema_version": "3.0",
+    "generated_at": "2026-09-28T17:09:04Z",
+    "total_skills": 59,
+    "total_ru": 59,
+    "domains": [
+      "ai",
+      "backend",
+      "blockchain",
+      "data",
+      "database",
+      "desktop",
+      "devops",
+      "embedded",
+      "engineering",
+      "frontend",
+      "mobile",
+      "qa",
+      "security"
+    ],
+    "bilingual": true
+  },
+  "skills": [
+    {
+      "name": "agent-development",
+      "description": "Build reliable LLM agents and agentic workflows: tool use, memory, loops, guardrails, and evaluation. Use for autonomous AI systems.",
+      "category": "ai",
+      "tags": [
+        "agents",
+        "agentic",
+        "tool-use",
+        "orchestration",
+        "llm",
+        "workflows",
+        "autonomy"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/agent-development/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "few-shot-learning",
+      "description": "Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering. Use for task specification without fine-tuning.",
+      "category": "ai",
+      "tags": [
+        "prompt",
+        "few-shot",
+        "examples",
+        "in-context-learning",
+        "llm"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/few-shot-learning/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "function-calling",
+      "description": "Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use.",
+      "category": "ai",
+      "tags": [
+        "function-calling",
+        "tool-use",
+        "llm",
+        "structured-output",
+        "agents",
+        "json-schema"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/function-calling/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "llm-evals",
+      "description": "Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration. Use for trustworthy model behavior.",
+      "category": "ai",
+      "tags": [
+        "llm-evals",
+        "evaluation",
+        "metrics",
+        "judge",
+        "testing",
+        "llm",
+        "regression"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/llm-evals/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "llm-finetuning",
+      "description": "Fine-tunes open-source LLMs (Llama, Mistral, Qwen) using LoRA/QLoRA with HuggingFace and Unsloth. Use for domain-specific model adaptation.",
+      "category": "ai",
+      "tags": [
+        "finetuning",
+        "lora",
+        "llama",
+        "mistral",
+        "unsloth",
+        "llm"
+      ],
+      "models": [
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/llm-finetuning/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "mcp-servers",
+      "description": "Build Model Context Protocol servers and clients: tools, resources, prompts, transport, and secure agent integration. Use for connecting agents to external systems.",
+      "category": "ai",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "agents",
+        "tools",
+        "server",
+        "llm",
+        "integration"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/mcp-servers/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "mlops",
+      "description": "Operate machine learning in production: experiment tracking, pipelines, model registry, serving, monitoring, and CI/CD for ML. Use for ML lifecycle.",
+      "category": "ai",
+      "tags": [
+        "mlops",
+        "machine-learning",
+        "pipelines",
+        "model-registry",
+        "serving",
+        "monitoring",
+        "ml"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/mlops/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "prompt-caching",
+      "description": "Optimize LLM cost and latency with prompt caching: cacheable prefixes, cache-control headers, context layout, and cache-aware prompting. Use for high-volume apps.",
+      "category": "ai",
+      "tags": [
+        "prompt-caching",
+        "caching",
+        "llm",
+        "cost",
+        "latency",
+        "context",
+        "optimization"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/prompt-caching/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "prompt-engineering",
+      "description": "Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation. Use to get reliable model behavior.",
+      "category": "ai",
+      "tags": [
+        "prompt-engineering",
+        "llm",
+        "prompting",
+        "chain-of-thought",
+        "structured-output"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/prompt-engineering/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "rag-pipeline",
+      "description": "Build retrieval-augmented generation pipelines: chunking, embeddings, vector search, hybrid retrieval, and citation. Use for grounded LLM answers over your data.",
+      "category": "ai",
+      "tags": [
+        "rag",
+        "retrieval",
+        "embeddings",
+        "vector-db",
+        "chunking",
+        "llm",
+        "search"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/ai/rag-pipeline/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "deno-runtime",
+      "description": "Deno runtime and standard library",
+      "category": "backend",
+      "tags": [
+        "deno",
+        "runtime",
+        "typescript",
+        "javascript",
+        "secure"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/deno-runtime/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "django",
+      "description": "Build secure web applications with Django: models, views, ORM, admin, auth, REST APIs, and deployment. Use for Python web backends.",
+      "category": "backend",
+      "tags": [
+        "django",
+        "python",
+        "web",
+        "orm",
+        "models",
+        "admin",
+        "rest",
+        "backend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/django/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "express",
+      "description": "Build Node.js web APIs with Express: routing, middleware, error handling, validation, and production hardening. Use for Node backends.",
+      "category": "backend",
+      "tags": [
+        "express",
+        "nodejs",
+        "javascript",
+        "typescript",
+        "middleware",
+        "api",
+        "backend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/express/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "fastapi",
+      "description": "Build high-performance Python APIs with FastAPI: routing, Pydantic validation, async, dependency injection, OpenAPI, and testing. Use for any Python backend.",
+      "category": "backend",
+      "tags": [
+        "fastapi",
+        "python",
+        "api",
+        "async",
+        "pydantic",
+        "openapi",
+        "backend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/fastapi/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "go-rest-api",
+      "description": "Build production REST APIs in Go with the standard library or Gin, including routing, middleware, JSON handling, and testing. Use for performant backends.",
+      "category": "backend",
+      "tags": [
+        "go",
+        "golang",
+        "rest",
+        "api",
+        "http",
+        "backend",
+        "server"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/go-rest-api/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "grpc",
+      "description": "Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling. Use for inter-service communication.",
+      "category": "backend",
+      "tags": [
+        "grpc",
+        "protobuf",
+        "rpc",
+        "microservices",
+        "streaming",
+        "schema",
+        "backend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/grpc/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "nestjs",
+      "description": "Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs.",
+      "category": "backend",
+      "tags": [
+        "nestjs",
+        "nodejs",
+        "typescript",
+        "api",
+        "decorators"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/nestjs/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "rest-api-design",
+      "description": "Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task.",
+      "category": "backend",
+      "tags": [
+        "rest",
+        "api-design",
+        "http",
+        "resources",
+        "pagination",
+        "versioning",
+        "openapi"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/rest-api-design/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "rust-tokio",
+      "description": "Async Rust with Tokio runtime",
+      "category": "backend",
+      "tags": [
+        "rust",
+        "tokio",
+        "async",
+        "concurrency",
+        "runtime"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/backend/rust-tokio/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "zk-proofs",
+      "description": "Zero-knowledge proof development",
+      "category": "blockchain",
+      "tags": [
+        "zk-proofs",
+        "circom",
+        "snarkjs",
+        "cryptography",
+        "blockchain"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/blockchain/zk-proofs/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "elasticsearch",
+      "description": "Design and operate Elasticsearch: mappings, indexing, queries, aggregations, and cluster tuning. Use for search and log analytics.",
+      "category": "data",
+      "tags": [
+        "elasticsearch",
+        "search",
+        "full-text",
+        "indexing",
+        "aggregations",
+        "kibana",
+        "logs"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/data/elasticsearch/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "pandas",
+      "description": "Analyze and transform tabular data with pandas: dataframes, cleaning, aggregation, joins, and time series. Use for any data analysis or ETL task.",
+      "category": "data",
+      "tags": [
+        "pandas",
+        "python",
+        "data-analysis",
+        "dataframe",
+        "etl",
+        "csv",
+        "time-series"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/data/pandas/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "sql-querying",
+      "description": "Write correct and efficient SQL: joins, aggregations, window functions, CTEs, and query optimization. Use for any relational data access.",
+      "category": "data",
+      "tags": [
+        "sql",
+        "database",
+        "queries",
+        "joins",
+        "aggregations",
+        "window-functions",
+        "cte"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/data/sql-querying/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "mongodb",
+      "description": "Design and operate MongoDB: document modeling, queries, indexes, aggregation, replication, and sharding. Use for flexible NoSQL data.",
+      "category": "database",
+      "tags": [
+        "mongodb",
+        "nosql",
+        "document-db",
+        "queries",
+        "indexes",
+        "aggregation",
+        "atlas"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/database/mongodb/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "postgresql",
+      "description": "Design and operate PostgreSQL databases: schema design, indexing, query optimization, transactions, and migrations. Use for any relational data layer.",
+      "category": "database",
+      "tags": [
+        "postgresql",
+        "sql",
+        "database",
+        "indexing",
+        "transactions",
+        "migrations",
+        "relational"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/database/postgresql/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "prisma-orm",
+      "description": "Models databases and writes type-safe queries with Prisma ORM. Use for modern Node.js/TypeScript database access.",
+      "category": "database",
+      "tags": [
+        "prisma",
+        "orm",
+        "database",
+        "typescript",
+        "postgresql"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/database/prisma-orm/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "redis",
+      "description": "Use Redis for caching, sessions, queues, rate limiting, and pub/sub: data structures, persistence, eviction, and clustering. Use for any high-performance data layer.",
+      "category": "database",
+      "tags": [
+        "redis",
+        "cache",
+        "sessions",
+        "queues",
+        "pubsub",
+        "rate-limiting",
+        "in-memory"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/database/redis/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "vector-databases",
+      "description": "Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval.",
+      "category": "database",
+      "tags": [
+        "vector-db",
+        "embeddings",
+        "hnsw",
+        "similarity-search",
+        "rag",
+        "retrieval",
+        "pgvector"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/database/vector-databases/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "electron",
+      "description": "Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.",
+      "category": "desktop",
+      "tags": [
+        "electron",
+        "desktop",
+        "react",
+        "native",
+        "cross-platform"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/desktop/electron/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "aws-lambda",
+      "description": "Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures.",
+      "category": "devops",
+      "tags": [
+        "aws",
+        "lambda",
+        "serverless",
+        "api-gateway",
+        "sam"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/aws-lambda/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "cloud-native-ai",
+      "description": "Cloud-native AI deployment patterns",
+      "category": "devops",
+      "tags": [
+        "cloud-native",
+        "ai",
+        "kubernetes",
+        "inference",
+        "deployment"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/cloud-native-ai/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "docker",
+      "description": "Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening. Use for any deployable service.",
+      "category": "devops",
+      "tags": [
+        "docker",
+        "containers",
+        "images",
+        "dockerfile",
+        "compose",
+        "deployment",
+        "devops"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/docker/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "github-actions",
+      "description": "Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines.",
+      "category": "devops",
+      "tags": [
+        "github-actions",
+        "ci",
+        "cd",
+        "workflows",
+        "automation",
+        "pipelines",
+        "github"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/github-actions/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "gitlab-ci",
+      "description": "Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment.",
+      "category": "devops",
+      "tags": [
+        "gitlab",
+        "ci-cd",
+        "pipelines",
+        "runner",
+        "devops"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/gitlab-ci/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "kafka",
+      "description": "Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems.",
+      "category": "devops",
+      "tags": [
+        "kafka",
+        "event-streaming",
+        "message-queue",
+        "topics",
+        "consumers",
+        "partitioning",
+        "streaming"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/kafka/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "kubernetes",
+      "description": "Deploy and operate applications on Kubernetes: workloads, services, config, scaling, and GitOps. Use for container orchestration at scale.",
+      "category": "devops",
+      "tags": [
+        "kubernetes",
+        "k8s",
+        "containers",
+        "orchestration",
+        "deployment",
+        "gitops",
+        "helm"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/kubernetes/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "observability-llm",
+      "description": "LLM observability with Langfuse/LangSmith",
+      "category": "devops",
+      "tags": [
+        "observability",
+        "llm",
+        "langfuse",
+        "langsmith",
+        "tracing",
+        "monitoring"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/observability-llm/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "platform-engineering",
+      "description": "Platform engineering with Backstage/Port",
+      "category": "devops",
+      "tags": [
+        "platform-engineering",
+        "backstage",
+        "port",
+        "developer-portal",
+        "internal-developer-platform"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/platform-engineering/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "prometheus-grafana",
+      "description": "Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking. Use for observability.",
+      "category": "devops",
+      "tags": [
+        "prometheus",
+        "grafana",
+        "monitoring",
+        "metrics",
+        "alerting",
+        "dashboards",
+        "observability"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/prometheus-grafana/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "serverless-ai",
+      "description": "Serverless AI inference (Cloudflare Workers, Lambda)",
+      "category": "devops",
+      "tags": [
+        "serverless",
+        "ai",
+        "inference",
+        "cloudflare-workers",
+        "lambda",
+        "edge"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/serverless-ai/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "sre-slos",
+      "description": "SRE SLI/SLO/SLA implementation",
+      "category": "devops",
+      "tags": [
+        "sre",
+        "sli",
+        "slo",
+        "sla",
+        "reliability",
+        "monitoring"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/sre-slos/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "terraform",
+      "description": "Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends. Use for cloud resource management.",
+      "category": "devops",
+      "tags": [
+        "terraform",
+        "iac",
+        "infrastructure",
+        "cloud",
+        "modules",
+        "state",
+        "aws"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/devops/terraform/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "rust-embedded",
+      "description": "Rust for embedded systems",
+      "category": "embedded",
+      "tags": [
+        "rust",
+        "embedded",
+        "microcontroller",
+        "no-std",
+        "arm",
+        "risc-v"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/embedded/rust-embedded/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "ai-testing",
+      "description": "AI-powered test generation and validation",
+      "category": "engineering",
+      "tags": [
+        "testing",
+        "ai",
+        "test-generation",
+        "quality",
+        "automation"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/engineering/ai-testing/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "claude-code-commands",
+      "description": "Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code.",
+      "category": "engineering",
+      "tags": [
+        "claude-code",
+        "claude",
+        "commands",
+        "agent",
+        "cli",
+        "workflow",
+        "skills"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/engineering/claude-code-commands/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "code-review",
+      "description": "Conduct effective code reviews: correctness, security, performance, style, and actionable feedback. Use for reviewing any pull request or diff.",
+      "category": "engineering",
+      "tags": [
+        "code-review",
+        "quality",
+        "pull-request",
+        "best-practices",
+        "review",
+        "engineering"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/engineering/code-review/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "git-workflow",
+      "description": "Use Git effectively: branching, commits, rebase vs merge, history hygiene, conflict resolution, and collaboration workflows. Use for any git-based project.",
+      "category": "engineering",
+      "tags": [
+        "git",
+        "github",
+        "branching",
+        "rebase",
+        "merge",
+        "commits",
+        "collaboration",
+        "vcs"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/engineering/git-workflow/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "bun-runtime",
+      "description": "Bun runtime for JavaScript/TypeScript",
+      "category": "frontend",
+      "tags": [
+        "bun",
+        "javascript",
+        "typescript",
+        "runtime",
+        "bundler"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/frontend/bun-runtime/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "nextjs",
+      "description": "Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps.",
+      "category": "frontend",
+      "tags": [
+        "nextjs",
+        "react",
+        "fullstack",
+        "app-router",
+        "ssr",
+        "web"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/frontend/nextjs/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "react-19",
+      "description": "Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work.",
+      "category": "frontend",
+      "tags": [
+        "react",
+        "ui",
+        "javascript",
+        "typescript",
+        "frontend",
+        "components"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/frontend/react-19/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "tailwind-v4",
+      "description": "Tailwind CSS v4 features",
+      "category": "frontend",
+      "tags": [
+        "tailwind",
+        "css",
+        "v4",
+        "design",
+        "styling"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/frontend/tailwind-v4/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "typescript",
+      "description": "Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase.",
+      "category": "frontend",
+      "tags": [
+        "typescript",
+        "javascript",
+        "typing",
+        "generics",
+        "static-analysis",
+        "tooling"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/frontend/typescript/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "vue",
+      "description": "Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work.",
+      "category": "frontend",
+      "tags": [
+        "vue",
+        "vue3",
+        "javascript",
+        "typescript",
+        "frontend",
+        "reactivity",
+        "components"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/frontend/vue/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "expo-rn",
+      "description": "Expo SDK for React Native development",
+      "category": "mobile",
+      "tags": [
+        "expo",
+        "react-native",
+        "mobile",
+        "ios",
+        "android",
+        "cross-platform"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/mobile/expo-rn/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "flutter",
+      "description": "Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds. Use for iOS/Android/desktop.",
+      "category": "mobile",
+      "tags": [
+        "flutter",
+        "dart",
+        "mobile",
+        "cross-platform",
+        "widgets",
+        "state",
+        "ios",
+        "android"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/mobile/flutter/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "browser-automation",
+      "description": "Automate browsers with Playwright: selectors, waits, assertions, screenshots, network interception, and CI. Use for E2E tests and scraping.",
+      "category": "qa",
+      "tags": [
+        "playwright",
+        "browser",
+        "e2e",
+        "testing",
+        "automation",
+        "scraping",
+        "selectors"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/qa/browser-automation/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-25",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "pytest",
+      "description": "Write reliable Python tests with pytest: fixtures, parametrize, mocking, async tests, and CI integration. Use for any Python testing.",
+      "category": "qa",
+      "tags": [
+        "pytest",
+        "python",
+        "testing",
+        "fixtures",
+        "mocking",
+        "parametrize",
+        "coverage"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/qa/pytest/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-26",
+      "updated": "2026-09-28"
+    },
+    {
+      "name": "oauth2-jwt",
+      "description": "Implements OAuth 2.0 authentication and JWT-based authorization with refresh tokens. Use for secure API access.",
+      "category": "security",
+      "tags": [
+        "oauth2",
+        "jwt",
+        "auth",
+        "security",
+        "authentication"
+      ],
+      "models": [
+        "sonnet",
+        "opus"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/security/oauth2-jwt/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-05-14",
+      "updated": "2026-09-06"
+    },
+    {
+      "name": "owasp-web-security",
+      "description": "Harden web applications against the OWASP Top 10: injection, XSS, auth flaws, CSRF, SSRF, and insecure dependencies. Use for any web app security review.",
+      "category": "security",
+      "tags": [
+        "owasp",
+        "security",
+        "web",
+        "injection",
+        "xss",
+        "csrf",
+        "ssrf",
+        "pentest"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/security/owasp-web-security/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-20",
+      "updated": "2026-09-28"
+    }
+  ]
+}

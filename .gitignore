@@ -58,6 +58,7 @@ web/out/
 
 # Generated catalog (built by CI)
 skills_catalog.json
+!/docs/skills_catalog.json
 quality-report.json
 
 # One-time scripts (should not be tracked)

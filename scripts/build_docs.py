@@ -100,6 +100,15 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     lines.extend([
         "      </div>",
         "    </section>",
+        '    <section id="install">',
+        "      <h2>Install</h2>",
+        '      <div class="install-box">',
+        '        <code>curl -fsSL https://raw.githubusercontent.com/ssrjkk/claude-skills/main/install.sh | bash</code>',
+        "      </div>",
+        "      <p style='color:#666;font-size:.9rem'>"
+        "Portable to Claude Code, OpenCode, Cursor, Windsurf. "
+        '<a href="skills_catalog.json" download>Download catalog (JSON)</a></p>',
+        "    </section>",
         "    <footer>",
         (
             f"      <p>Generated on {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} · "
@@ -178,7 +187,9 @@ h2{margin:2rem 0 1rem;font-size:1.5rem;color:#1a1a2e}
 .skill-list small{color:#999;display:block}
 footer{margin-top:3rem;text-align:center;color:#999;font-size:.9rem}
 footer a{color:#667eea;text-decoration:none}
-footer a:hover{text-decoration:underline}"""
+footer a:hover{text-decoration:underline}
+.install-box{background:#1a1a2e;border-radius:10px;padding:1rem 1.25rem;overflow-x:auto;margin:.5rem 0 1rem}
+.install-box code{color:#7ee787;font-size:.9rem}"""
     (output_dir / "style.css").write_text(css, encoding="utf-8")
     print(f"Stylesheet written to {output_dir / 'style.css'}")
 
@@ -198,6 +209,12 @@ def main() -> int:
 
     build_index_html(Path(args.catalog), output_dir)
     build_style_css(output_dir)
+
+    import shutil
+    catalog_src = Path(args.catalog)
+    if catalog_src.exists():
+        shutil.copy2(catalog_src, output_dir / "skills_catalog.json")
+        print(f"Catalog copied to {output_dir / 'skills_catalog.json'}")
 
     print(f"Documentation built in {output_dir}")
     return 0
