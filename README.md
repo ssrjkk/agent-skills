@@ -16,7 +16,8 @@
 <p align="center">
   <a href="https://ssrjkk.github.io/claude-skills/">Live Catalog Site</a> ·
   <a href="https://github.com/ssrjkk/claude-skills/releases">Releases</a> ·
-  <a href="https://github.com/ssrjkk/claude-skills/issues">Issues</a>
+  <a href="https://github.com/ssrjkk/claude-skills/issues">Issues</a> ·
+  <a href="https://github.com/ssrjkk/claude-skills/discussions">Discussions</a>
 </p>
 
 <p align="center">
@@ -239,11 +240,14 @@ Every skill is scored on 5 dimensions:
 
 ## Author
 
-**ssrjkk**
+**ssrjkk** — creator & maintainer
 
-- Telegram: [@ssrjkk](https://t.me/ssrjkk)
-- Email: [ray013lefe@gmail.com](mailto:ray013lefe@gmail.com)
-- Twitter/X: [ssrjkk](https://twitter.com/ssrjkk)
+<p align="center">
+  <a href="https://github.com/ssrjkk"><img src="https://img.shields.io/badge/GitHub-ssrjkk-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+  <a href="https://t.me/ssrjkk"><img src="https://img.shields.io/badge/Telegram-@ssrjkk-26A5E4?style=for-the-badge&logo=telegram" alt="Telegram"></a>
+  <a href="https://twitter.com/ssrjkk"><img src="https://img.shields.io/badge/Twitter/X-@ssrjkk-000000?style=for-the-badge&logo=x" alt="Twitter/X"></a>
+  <a href="mailto:ray013lefe@gmail.com"><img src="https://img.shields.io/badge/Email-ray013lefe%40gmail.com-D14836?style=for-the-badge&logo=gmail" alt="Email"></a>
+</p>
 
 ## For Contributors
 
@@ -257,6 +261,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 
 ## Links
 
+- [Live Catalog Site](https://ssrjkk.github.io/claude-skills/)
 - [Architecture Guide](docs/ARCHITECTURE.md)
 - [Release Notes](docs/RELEASE_NOTES_v3.4.md)
 - [Roadmap](ROADMAP.md)
@@ -271,11 +276,28 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
   lock-in: install once, use anywhere.
 - **Bilingual (EN + RU)** — every skill ships a real Russian translation, not
   a machine one.
+- **Works across every LLM/GLM ecosystem** — skills are written to work with
+  Claude (Sonnet/Opus), OpenAI (GPT), Google (Gemini), and Zhipu GLM models.
 - **Quality enforced in CI** — validation, quality scoring, anti-pattern
   detection, cross-agent interop checks, 100% test coverage. What you see in
   `main` is what passes the bar.
 - **SDK + CLI + GitHub Action** — validate, score, catalog and search any
   skills library programmatically.
+
+## Supported agents & models
+
+The `SKILL.md` format is universal — every skill works with any agent that
+implements the Agent Skills spec, across model providers:
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude%20Code-Claude%20Sonnet%2FOpus-8B5CF6?style=flat-square&logo=anthropic" alt="Claude">
+  <img src="https://img.shields.io/badge/OpenAI-GPT%20Series-10A37F?style=flat-square&logo=openai" alt="OpenAI">
+  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=flat-square&logo=google" alt="Gemini">
+  <img src="https://img.shields.io/badge/Zhipu-GLM%20Series-3859FF?style=flat-square" alt="GLM">
+  <img src="https://img.shields.io/badge/OpenCode-%E2%9C%93-00C9A7?style=flat-square" alt="OpenCode">
+  <img src="https://img.shields.io/badge/Cursor-%E2%9C%93-6C5CE7?style=flat-square" alt="Cursor">
+  <img src="https://img.shields.io/badge/Windsurf-%E2%9C%93-00B3FF?style=flat-square" alt="Windsurf">
+</p>
 
 ## Legacy Version
 
