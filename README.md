@@ -8,6 +8,8 @@
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
   <img src="https://img.shields.io/github/stars/ssrjkk/claude-skills?style=for-the-badge&color=gold" alt="Stars">
   <img src="https://img.shields.io/github/actions/workflow/status/ssrjkk/claude-skills/validate.yml?branch=main&style=for-the-badge&label=CI&color=green" alt="CI">
+  <img src="https://img.shields.io/github/release/ssrjkk/claude-skills?style=for-the-badge&color=blue" alt="Release">
+  <img src="https://img.shields.io/github/last-commit/ssrjkk/claude-skills?style=for-the-badge&color=lightgrey" alt="Last commit">
 </p>
 
 <h1 align="center">Skills Library</h1>

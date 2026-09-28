@@ -33,6 +33,8 @@ dependencies = [
 Source = "https://github.com/ssrjkk/claude-skills"
 Documentation = "https://ssrjkk.github.io/claude-skills/"
 "Bug Tracker" = "https://github.com/ssrjkk/claude-skills/issues"
+Discussions = "https://github.com/ssrjkk/claude-skills/discussions"
+Roadmap = "https://github.com/ssrjkk/claude-skills/blob/main/ROADMAP.md"
 PyPI = "https://pypi.org/project/claude-skills-library/"
 
 [project.optional-dependencies]

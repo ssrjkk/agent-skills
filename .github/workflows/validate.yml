@@ -65,6 +65,9 @@ jobs:
           python -m build
           twine check dist/*
 
+      - name: Verify GitHub Action Docker image builds
+        run: docker build -t claude-skills-action:test .
+
       - name: Build documentation site
         run: python scripts/build_docs.py --catalog skills_catalog.json --output-dir docs
 
