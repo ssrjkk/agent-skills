@@ -10,21 +10,22 @@
 
 ## Skill Coverage by Model
 
-All **21 skills** across **11 domains** are tested with **Sonnet** and **Opus**.
+All **37 skills** across **12 domains** are tested with **Sonnet** and **Opus**.
 
 |Domain|Skills|Sonnet|Opus|
 |--------|:-----:|:------:|:----:|
-|DevOps|7||||
-|Backend|3||||
-|AI|2||||
-|Frontend|2||||
+|DevOps|11||||
+|Backend|5||||
+|AI|5||||
+|Frontend|5||||
+|Security|2||||
+|Database|3||||
+|Data|1||||
 |Blockchain|1||||
-|Database|1||||
 |Desktop|1||||
 |Embedded|1||||
-|Engineering|1||||
+|Engineering|2||||
 |Mobile|1||||
-|Security|1||||
 
 > Full support · No recommendation
 
@@ -42,11 +43,12 @@ All **21 skills** across **11 domains** are tested with **Sonnet** and **Opus**.
 
 ## Model Notes
 
-- 20 of 21 skills declare `models: [sonnet, opus]`.
+- Most skills declare `models: [sonnet, opus]`; newer skills also declare
+  `gpt-5`, `gemini-2.5`, and `glm-4.6` for cross-provider portability.
 - `ai/llm-finetuning` is **Opus-only** (full fine-tuning runs benefit from the
   strongest reasoning model).
 - No skill in the curated library declares Haiku support.
 
 ---
 
-*Last updated: 2026-09-06*
+*Last updated: 2026-09-28*
