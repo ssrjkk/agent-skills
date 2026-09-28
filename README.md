@@ -5,13 +5,40 @@
   <img src="https://img.shields.io/badge/quality-A%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
+  <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
+  <img src="https://img.shields.io/github/stars/ssrjkk/claude-skills?style=for-the-badge&color=gold" alt="Stars">
+  <img src="https://img.shields.io/github/actions/workflow/status/ssrjkk/claude-skills/validate.yml?branch=main&style=for-the-badge&label=CI&color=green" alt="CI">
 </p>
 
 <h1 align="center">Skills Library</h1>
 <p align="center"><strong>Curated bilingual (EN + RU) skills in the universal Agent Skills format</strong></p>
 <p align="center">Works with Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills-compatible tool</p>
+<p align="center">
+  <a href="https://ssrjkk.github.io/claude-skills/">Live Catalog Site</a> ·
+  <a href="https://github.com/ssrjkk/claude-skills/releases">Releases</a> ·
+  <a href="https://github.com/ssrjkk/claude-skills/issues">Issues</a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ssrjkk/claude-skills/main/.github/social-preview.svg" alt="Skills Library banner" width="640">
+</p>
 
 ---
+
+## Install in one line
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ssrjkk/claude-skills/main/install.sh | bash
+```
+
+Or clone directly into your agent's skills directory:
+
+| Agent      | Command |
+|------------|---------|
+| Claude Code | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.claude/skills` |
+| OpenCode   | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.opencode/skills` |
+| Cursor     | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.cursor/skills` |
+| Windsurf   | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.windsurf/skills` |
 
 ## What is this?
 
@@ -175,14 +202,25 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 - [Release Notes](docs/RELEASE_NOTES_v3.1.md)
 - [Issue Tracker](https://github.com/ssrjkk/claude-skills/issues)
 
+## Why this library
+
+- **Curated, not generated** — 21 hand-reviewed skills that pass a 5-dimension
+  quality pipeline (completeness, depth, code quality, freshness, bilingual).
+- **Universal Agent Skills format** — the same `SKILL.md` convention native to
+  Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No
+  lock-in: install once, use anywhere.
+- **Bilingual (EN + RU)** — every skill ships a real Russian translation, not
+  a machine one.
+- **Quality enforced in CI** — validation, quality scoring, anti-pattern
+  detection, cross-agent interop checks, 100% test coverage. What you see in
+  `main` is what passes the bar.
+- **SDK + CLI + GitHub Action** — validate, score, catalog and search any
+  skills library programmatically.
+
 ## Legacy Version
 
-Version 2.0 is a complete rewrite focused on quality — 21 carefully curated,
-bilingual, Grade A skills with a validated SDK instead of thousands of
-auto-generated ones.
-
 The original v1.0 library (10,000+ auto-generated skills) is archived under
-the `v1.0-legacy` tag:
+the `v1.0-legacy` tag — v3.1 is a complete rewrite focused on quality:
 
 ```bash
 git checkout v1.0-legacy
