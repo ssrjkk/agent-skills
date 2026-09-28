@@ -10,16 +10,16 @@
   <div class="container">
     <header>
       <h1>Claude Skills Library</h1>
-      <p class="subtitle">37 skills across 12 domains · 37 Russian translations</p>
+      <p class="subtitle">47 skills across 13 domains · 47 Russian translations</p>
     </header>
     <div class="search-bar">
       <input type="text" id="search" placeholder="Search skills by name, domain, or tag..." oninput="filterSkills(this.value)">
     </div>
     <section id="stats">
       <div class=stats-grid>
-        <div class=stat><strong>37</strong><span>Total Skills</span></div>
-        <div class=stat><strong>37</strong><span>Russian</span></div>
-        <div class=stat><strong>12</strong><span>Domains</span></div>
+        <div class=stat><strong>47</strong><span>Total Skills</span></div>
+        <div class=stat><strong>47</strong><span>Russian</span></div>
+        <div class=stat><strong>13</strong><span>Domains</span></div>
         <div class=stat><strong>3.0</strong><span>Schema</span></div>
       </div>
     </section>
@@ -27,22 +27,27 @@
       <h2>Domains</h2>
       <div class="domain-list" id="domain-list">
         <div class="domain" data-domain="ai">
-          <button class="domain-header" onclick="toggleDomain(this)">            <strong>ai</strong>            <span class="domain-meta">5 skills, 5 RU</span>          </button>
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>ai</strong>            <span class="domain-meta">9 skills, 9 RU</span>          </button>
           <ul class="skill-list" style="display:none">
             <li class="skill-item" data-name="agent-development" data-domain="ai" data-tags='["agents", "agentic", "tool-use", "orchestration", "llm", "workflows", "autonomy"]'><code onclick="copySkill('agent-development')" title="Click to copy path">agent-development</code> <br><small>agents, agentic, tool-use</small></li>
             <li class="skill-item" data-name="few-shot-learning" data-domain="ai" data-tags='["prompt", "few-shot", "examples", "in-context-learning", "llm"]'><code onclick="copySkill('few-shot-learning')" title="Click to copy path">few-shot-learning</code> <br><small>prompt, few-shot, examples</small></li>
+            <li class="skill-item" data-name="function-calling" data-domain="ai" data-tags='["function-calling", "tool-use", "llm", "structured-output", "agents", "json-schema"]'><code onclick="copySkill('function-calling')" title="Click to copy path">function-calling</code> <br><small>function-calling, tool-use, llm</small></li>
+            <li class="skill-item" data-name="llm-evals" data-domain="ai" data-tags='["llm-evals", "evaluation", "metrics", "judge", "testing", "llm", "regression"]'><code onclick="copySkill('llm-evals')" title="Click to copy path">llm-evals</code> <br><small>llm-evals, evaluation, metrics</small></li>
             <li class="skill-item" data-name="llm-finetuning" data-domain="ai" data-tags='["finetuning", "lora", "llama", "mistral", "unsloth", "llm"]'><code onclick="copySkill('llm-finetuning')" title="Click to copy path">llm-finetuning</code> <br><small>finetuning, lora, llama</small></li>
+            <li class="skill-item" data-name="mcp-servers" data-domain="ai" data-tags='["mcp", "model-context-protocol", "agents", "tools", "server", "llm", "integration"]'><code onclick="copySkill('mcp-servers')" title="Click to copy path">mcp-servers</code> <br><small>mcp, model-context-protocol, agents</small></li>
+            <li class="skill-item" data-name="prompt-caching" data-domain="ai" data-tags='["prompt-caching", "caching", "llm", "cost", "latency", "context", "optimization"]'><code onclick="copySkill('prompt-caching')" title="Click to copy path">prompt-caching</code> <br><small>prompt-caching, caching, llm</small></li>
             <li class="skill-item" data-name="prompt-engineering" data-domain="ai" data-tags='["prompt-engineering", "llm", "prompting", "chain-of-thought", "structured-output"]'><code onclick="copySkill('prompt-engineering')" title="Click to copy path">prompt-engineering</code> <br><small>prompt-engineering, llm, prompting</small></li>
             <li class="skill-item" data-name="rag-pipeline" data-domain="ai" data-tags='["rag", "retrieval", "embeddings", "vector-db", "chunking", "llm", "search"]'><code onclick="copySkill('rag-pipeline')" title="Click to copy path">rag-pipeline</code> <br><small>rag, retrieval, embeddings</small></li>
           </ul>
         </div>
         <div class="domain" data-domain="backend">
-          <button class="domain-header" onclick="toggleDomain(this)">            <strong>backend</strong>            <span class="domain-meta">5 skills, 5 RU</span>          </button>
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>backend</strong>            <span class="domain-meta">6 skills, 6 RU</span>          </button>
           <ul class="skill-list" style="display:none">
             <li class="skill-item" data-name="deno-runtime" data-domain="backend" data-tags='["deno", "runtime", "typescript", "javascript", "secure"]'><code onclick="copySkill('deno-runtime')" title="Click to copy path">deno-runtime</code> <br><small>deno, runtime, typescript</small></li>
             <li class="skill-item" data-name="fastapi" data-domain="backend" data-tags='["fastapi", "python", "api", "async", "pydantic", "openapi", "backend"]'><code onclick="copySkill('fastapi')" title="Click to copy path">fastapi</code> <br><small>fastapi, python, api</small></li>
             <li class="skill-item" data-name="go-rest-api" data-domain="backend" data-tags='["go", "golang", "rest", "api", "http", "backend", "server"]'><code onclick="copySkill('go-rest-api')" title="Click to copy path">go-rest-api</code> <br><small>go, golang, rest</small></li>
             <li class="skill-item" data-name="nestjs" data-domain="backend" data-tags='["nestjs", "nodejs", "typescript", "api", "decorators"]'><code onclick="copySkill('nestjs')" title="Click to copy path">nestjs</code> <br><small>nestjs, nodejs, typescript</small></li>
+            <li class="skill-item" data-name="rest-api-design" data-domain="backend" data-tags='["rest", "api-design", "http", "resources", "pagination", "versioning", "openapi"]'><code onclick="copySkill('rest-api-design')" title="Click to copy path">rest-api-design</code> <br><small>rest, api-design, http</small></li>
             <li class="skill-item" data-name="rust-tokio" data-domain="backend" data-tags='["rust", "tokio", "async", "concurrency", "runtime"]'><code onclick="copySkill('rust-tokio')" title="Click to copy path">rust-tokio</code> <br><small>rust, tokio, async</small></li>
           </ul>
         </div>
@@ -53,17 +58,19 @@
           </ul>
         </div>
         <div class="domain" data-domain="data">
-          <button class="domain-header" onclick="toggleDomain(this)">            <strong>data</strong>            <span class="domain-meta">1 skills, 1 RU</span>          </button>
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>data</strong>            <span class="domain-meta">2 skills, 2 RU</span>          </button>
           <ul class="skill-list" style="display:none">
             <li class="skill-item" data-name="pandas" data-domain="data" data-tags='["pandas", "python", "data-analysis", "dataframe", "etl", "csv", "time-series"]'><code onclick="copySkill('pandas')" title="Click to copy path">pandas</code> <br><small>pandas, python, data-analysis</small></li>
+            <li class="skill-item" data-name="sql-querying" data-domain="data" data-tags='["sql", "database", "queries", "joins", "aggregations", "window-functions", "cte"]'><code onclick="copySkill('sql-querying')" title="Click to copy path">sql-querying</code> <br><small>sql, database, queries</small></li>
           </ul>
         </div>
         <div class="domain" data-domain="database">
-          <button class="domain-header" onclick="toggleDomain(this)">            <strong>database</strong>            <span class="domain-meta">3 skills, 3 RU</span>          </button>
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>database</strong>            <span class="domain-meta">4 skills, 4 RU</span>          </button>
           <ul class="skill-list" style="display:none">
             <li class="skill-item" data-name="postgresql" data-domain="database" data-tags='["postgresql", "sql", "database", "indexing", "transactions", "migrations", "relational"]'><code onclick="copySkill('postgresql')" title="Click to copy path">postgresql</code> <br><small>postgresql, sql, database</small></li>
             <li class="skill-item" data-name="prisma-orm" data-domain="database" data-tags='["prisma", "orm", "database", "typescript", "postgresql"]'><code onclick="copySkill('prisma-orm')" title="Click to copy path">prisma-orm</code> <br><small>prisma, orm, database</small></li>
             <li class="skill-item" data-name="redis" data-domain="database" data-tags='["redis", "cache", "sessions", "queues", "pubsub", "rate-limiting", "in-memory"]'><code onclick="copySkill('redis')" title="Click to copy path">redis</code> <br><small>redis, cache, sessions</small></li>
+            <li class="skill-item" data-name="vector-databases" data-domain="database" data-tags='["vector-db", "embeddings", "hnsw", "similarity-search", "rag", "retrieval", "pgvector"]'><code onclick="copySkill('vector-databases')" title="Click to copy path">vector-databases</code> <br><small>vector-db, embeddings, hnsw</small></li>
           </ul>
         </div>
         <div class="domain" data-domain="desktop">
@@ -94,10 +101,12 @@
           </ul>
         </div>
         <div class="domain" data-domain="engineering">
-          <button class="domain-header" onclick="toggleDomain(this)">            <strong>engineering</strong>            <span class="domain-meta">2 skills, 2 RU</span>          </button>
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>engineering</strong>            <span class="domain-meta">4 skills, 4 RU</span>          </button>
           <ul class="skill-list" style="display:none">
             <li class="skill-item" data-name="ai-testing" data-domain="engineering" data-tags='["testing", "ai", "test-generation", "quality", "automation"]'><code onclick="copySkill('ai-testing')" title="Click to copy path">ai-testing</code> <br><small>testing, ai, test-generation</small></li>
+            <li class="skill-item" data-name="claude-code-commands" data-domain="engineering" data-tags='["claude-code", "claude", "commands", "agent", "cli", "workflow", "skills"]'><code onclick="copySkill('claude-code-commands')" title="Click to copy path">claude-code-commands</code> <br><small>claude-code, claude, commands</small></li>
             <li class="skill-item" data-name="code-review" data-domain="engineering" data-tags='["code-review", "quality", "pull-request", "best-practices", "review", "engineering"]'><code onclick="copySkill('code-review')" title="Click to copy path">code-review</code> <br><small>code-review, quality, pull-request</small></li>
+            <li class="skill-item" data-name="git-workflow" data-domain="engineering" data-tags='["git", "github", "branching", "rebase", "merge", "commits", "collaboration", "vcs"]'><code onclick="copySkill('git-workflow')" title="Click to copy path">git-workflow</code> <br><small>git, github, branching</small></li>
           </ul>
         </div>
         <div class="domain" data-domain="frontend">
@@ -116,6 +125,12 @@
             <li class="skill-item" data-name="expo-rn" data-domain="mobile" data-tags='["expo", "react-native", "mobile", "ios", "android", "cross-platform"]'><code onclick="copySkill('expo-rn')" title="Click to copy path">expo-rn</code> <br><small>expo, react-native, mobile</small></li>
           </ul>
         </div>
+        <div class="domain" data-domain="qa">
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>qa</strong>            <span class="domain-meta">1 skills, 1 RU</span>          </button>
+          <ul class="skill-list" style="display:none">
+            <li class="skill-item" data-name="browser-automation" data-domain="qa" data-tags='["playwright", "browser", "e2e", "testing", "automation", "scraping", "selectors"]'><code onclick="copySkill('browser-automation')" title="Click to copy path">browser-automation</code> <br><small>playwright, browser, e2e</small></li>
+          </ul>
+        </div>
         <div class="domain" data-domain="security">
           <button class="domain-header" onclick="toggleDomain(this)">            <strong>security</strong>            <span class="domain-meta">2 skills, 2 RU</span>          </button>
           <ul class="skill-list" style="display:none">
@@ -126,7 +141,7 @@
       </div>
     </section>
     <footer>
-      <p>Generated on 2026-09-28 16:36 UTC · 37 total skills</p>
+      <p>Generated on 2026-09-28 16:57 UTC · 47 total skills</p>
       <p><a href="https://github.com/ssrjkk/claude-skills">GitHub</a> · <a href="https://github.com/ssrjkk/claude-skills/issues">Report Issue</a></p>
     </footer>
   </div>

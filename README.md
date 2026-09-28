@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-37-blue?style=for-the-badge" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-47-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
-  <img src="https://img.shields.io/badge/domains-12-orange?style=for-the-badge" alt="Domains">
+  <img src="https://img.shields.io/badge/domains-13-orange?style=for-the-badge" alt="Domains">
   <img src="https://img.shields.io/badge/quality-A%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
@@ -42,7 +42,7 @@ Or clone directly into your agent's skills directory:
 
 ## What is this?
 
-37 production-grade, bilingual (English + Russian) skills following the
+47 production-grade, bilingual (English + Russian) skills following the
 **universal Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
@@ -96,9 +96,9 @@ Frontmatter is strictly validated for cross-agent portability in CI
 
 | Metric | Value |
 |--------|-------|
-| Total skills | **37** |
-| Russian translations | **37 (100%)** |
-| Domains | **12** |
+| Total skills | **47** |
+| Russian translations | **47 (100%)** |
+| Domains | **13** |
 | Quality score | **100% (Grade A)** |
 | Test coverage | **100%** |
 | License | MIT |
@@ -115,16 +115,23 @@ in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `ai` | `prompt-engineering` | Reliable prompt design for LLMs |
 | `ai` | `rag-pipeline` | Retrieval-augmented generation |
 | `ai` | `agent-development` | Reliable LLM agents with tools |
+| `ai` | `mcp-servers` | Model Context Protocol servers |
+| `ai` | `llm-evals` | Evaluation suites for LLMs |
+| `ai` | `function-calling` | Robust LLM tool calling |
+| `ai` | `prompt-caching` | LLM cost & latency optimization |
 | `backend` | `deno-runtime` | Deno realtime apps & Workers |
 | `backend` | `nestjs` | NestJS modular backends |
 | `backend` | `rust-tokio` | Async Rust with Tokio |
 | `backend` | `fastapi` | High-performance Python APIs |
 | `backend` | `go-rest-api` | REST APIs in Go |
+| `backend` | `rest-api-design` | Consistent REST API design |
 | `blockchain` | `zk-proofs` | Zero-knowledge proofs |
 | `data` | `pandas` | Tabular data analysis & ETL |
+| `data` | `sql-querying` | Correct & efficient SQL |
 | `database` | `postgresql` | PostgreSQL schema & queries |
 | `database` | `prisma-orm` | Prisma ORM data layer |
 | `database` | `redis` | Caching, queues, rate limiting |
+| `database` | `vector-databases` | Semantic search & RAG retrieval |
 | `desktop` | `electron` | Electron cross-platform apps |
 | `devops` | `aws-lambda` | Serverless on AWS Lambda |
 | `devops` | `cloud-native-ai` | Cloud-native AI platforms |
@@ -139,12 +146,15 @@ in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `embedded` | `rust-embedded` | Embedded Rust |
 | `engineering` | `ai-testing` | AI/LLM testing |
 | `engineering` | `code-review` | Effective code reviews |
+| `engineering` | `git-workflow` | Git branching & history hygiene |
+| `engineering` | `claude-code-commands` | Claude Code commands & hooks |
 | `frontend` | `bun-runtime` | Bun runtime & tooling |
 | `frontend` | `nextjs` | Next.js full-stack React |
 | `frontend` | `react-19` | Modern React UIs |
 | `frontend` | `tailwind-v4` | Tailwind CSS v4 |
 | `frontend` | `typescript` | Type-safe JavaScript |
 | `mobile` | `expo-rn` | Expo & React Native |
+| `qa` | `browser-automation` | Playwright E2E & scraping |
 | `security` | `oauth2-jwt` | OAuth 2.0 & JWT |
 | `security` | `owasp-web-security` | OWASP Top 10 hardening |
 
@@ -189,10 +199,10 @@ Every skill is scored on 5 dimensions:
 | Freshness | 15% | Recency of last update |
 | Bilingual | 15% | Russian translation quality |
 
-## Domains (12)
+## Domains (13)
 
 `ai` · `backend` · `blockchain` · `data` · `database` · `desktop` · `devops` ·
-`embedded` · `engineering` · `frontend` · `mobile` · `security`
+`embedded` · `engineering` · `frontend` · `mobile` · `qa` · `security`
 
 ## Author
 
@@ -215,12 +225,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 ## Links
 
 - [Architecture Guide](docs/ARCHITECTURE.md)
-- [Release Notes](docs/RELEASE_NOTES_v3.2.md)
+- [Release Notes](docs/RELEASE_NOTES_v3.3.md)
 - [Issue Tracker](https://github.com/ssrjkk/claude-skills/issues)
 
 ## Why this library
 
-- **Curated, not generated** — 37 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — 47 hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No

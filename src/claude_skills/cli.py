@@ -33,7 +33,7 @@ def resolve_skills_dir(dir_value: str | None) -> str:
 
 @click.group()
 def cli():
-    """Claude Skills Library CLI v3.2.0 - Production Ready."""
+    """Claude Skills Library CLI v3.3.0 - Production Ready."""
 
 
 @cli.command()
