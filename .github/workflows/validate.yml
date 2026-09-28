@@ -59,6 +59,12 @@ jobs:
       - name: Run tests with coverage
         run: python -m pytest tests/ -v --tb=short --cov=src/claude_skills --cov-report=term-missing
 
+      - name: Verify package builds
+        run: |
+          pip install build
+          python -m build
+          twine check dist/*
+
       - name: Build documentation site
         run: python scripts/build_docs.py --catalog skills_catalog.json --output-dir docs
 

@@ -10,23 +10,23 @@
 
 ## Skill Coverage by Model
 
-All **47 skills** across **13 domains** are tested with **Sonnet** and **Opus**.
+All **59 skills** across **13 domains** are tested with **Sonnet** and **Opus**.
 
 |Domain|Skills|Sonnet|Opus|
 |--------|:-----:|:------:|:----:|
-|AI|9||||
-|DevOps|11||||
-|Backend|6||||
-|Frontend|5||||
+|AI|10||||
+|DevOps|14||||
+|Backend|9||||
+|Frontend|6||||
 |Engineering|4||||
-|Database|4||||
+|Database|5||||
 |Security|2||||
-|Data|2||||
-|QA|1||||
+|Data|3||||
+|QA|2||||
 |Blockchain|1||||
 |Desktop|1||||
 |Embedded|1||||
-|Mobile|1||||
+|Mobile|2||||
 
 > Full support · No recommendation
 

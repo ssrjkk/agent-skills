@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-47-blue?style=for-the-badge" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-59-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-13-orange?style=for-the-badge" alt="Domains">
   <img src="https://img.shields.io/badge/quality-A%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
@@ -42,7 +42,7 @@ Or clone directly into your agent's skills directory:
 
 ## What is this?
 
-47 production-grade, bilingual (English + Russian) skills following the
+59 production-grade, bilingual (English + Russian) skills following the
 **universal Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
@@ -96,8 +96,8 @@ Frontmatter is strictly validated for cross-agent portability in CI
 
 | Metric | Value |
 |--------|-------|
-| Total skills | **47** |
-| Russian translations | **47 (100%)** |
+| Total skills | **59** |
+| Russian translations | **59 (100%)** |
 | Domains | **13** |
 | Quality score | **100% (Grade A)** |
 | Test coverage | **100%** |
@@ -119,19 +119,25 @@ in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `ai` | `llm-evals` | Evaluation suites for LLMs |
 | `ai` | `function-calling` | Robust LLM tool calling |
 | `ai` | `prompt-caching` | LLM cost & latency optimization |
+| `ai` | `mlops` | ML in production lifecycle |
 | `backend` | `deno-runtime` | Deno realtime apps & Workers |
 | `backend` | `nestjs` | NestJS modular backends |
 | `backend` | `rust-tokio` | Async Rust with Tokio |
 | `backend` | `fastapi` | High-performance Python APIs |
 | `backend` | `go-rest-api` | REST APIs in Go |
 | `backend` | `rest-api-design` | Consistent REST API design |
+| `backend` | `django` | Secure Django web apps |
+| `backend` | `grpc` | High-performance gRPC services |
+| `backend` | `express` | Node.js APIs with Express |
 | `blockchain` | `zk-proofs` | Zero-knowledge proofs |
 | `data` | `pandas` | Tabular data analysis & ETL |
 | `data` | `sql-querying` | Correct & efficient SQL |
+| `data` | `elasticsearch` | Search & log analytics |
 | `database` | `postgresql` | PostgreSQL schema & queries |
 | `database` | `prisma-orm` | Prisma ORM data layer |
 | `database` | `redis` | Caching, queues, rate limiting |
 | `database` | `vector-databases` | Semantic search & RAG retrieval |
+| `database` | `mongodb` | Flexible NoSQL documents |
 | `desktop` | `electron` | Electron cross-platform apps |
 | `devops` | `aws-lambda` | Serverless on AWS Lambda |
 | `devops` | `cloud-native-ai` | Cloud-native AI platforms |
@@ -143,6 +149,9 @@ in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `devops` | `platform-engineering` | Internal developer platforms |
 | `devops` | `serverless-ai` | Serverless AI workloads |
 | `devops` | `sre-slos` | SLOs & reliability |
+| `devops` | `terraform` | Infrastructure as code |
+| `devops` | `kafka` | Event streaming platform |
+| `devops` | `prometheus-grafana` | Metrics & dashboards |
 | `embedded` | `rust-embedded` | Embedded Rust |
 | `engineering` | `ai-testing` | AI/LLM testing |
 | `engineering` | `code-review` | Effective code reviews |
@@ -153,8 +162,11 @@ in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `frontend` | `react-19` | Modern React UIs |
 | `frontend` | `tailwind-v4` | Tailwind CSS v4 |
 | `frontend` | `typescript` | Type-safe JavaScript |
+| `frontend` | `vue` | Vue 3 reactive UIs |
 | `mobile` | `expo-rn` | Expo & React Native |
+| `mobile` | `flutter` | Cross-platform Flutter apps |
 | `qa` | `browser-automation` | Playwright E2E & scraping |
+| `qa` | `pytest` | Reliable Python testing |
 | `security` | `oauth2-jwt` | OAuth 2.0 & JWT |
 | `security` | `owasp-web-security` | OWASP Top 10 hardening |
 
@@ -225,12 +237,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 ## Links
 
 - [Architecture Guide](docs/ARCHITECTURE.md)
-- [Release Notes](docs/RELEASE_NOTES_v3.3.md)
+- [Release Notes](docs/RELEASE_NOTES_v3.4.md)
+- [Roadmap](ROADMAP.md)
 - [Issue Tracker](https://github.com/ssrjkk/claude-skills/issues)
 
 ## Why this library
 
-- **Curated, not generated** — 47 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — 59 hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No

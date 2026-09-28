@@ -16,6 +16,12 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     meta = data["metadata"]
     skills = data["skills"]
 
+    model_names = set()
+    for s in skills:
+        for m in s.get("models", []):
+            model_names.add(str(m))
+    models_str = " · ".join(sorted(model_names))
+
     by_category: dict[str, list] = {}
     for s in skills:
         by_category.setdefault(s["category"], []).append(s)
@@ -38,6 +44,10 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
             f'{meta["total_ru"]} Russian translations</p>'
         ),
         "    </header>",
+        (
+            f'      <p class="subtitle" style="color:#666;font-size:.95rem;margin-top:.5rem">Models: '
+            f"{models_str}</p>"
+        ),
         '    <div class="search-bar">',
         (
             '      <input type="text" id="search" placeholder="Search skills by name, domain, or tag..." '
@@ -114,7 +124,8 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         "    items.forEach(function(item) {",
         "      var name = item.getAttribute('data-name').toLowerCase();",
         "      var domain = item.getAttribute('data-domain').toLowerCase();",
-        "      var match = name.includes(q) || domain.includes(q);",
+        "      var tags = (item.getAttribute('data-tags') || '').toLowerCase();",
+        "      var match = name.includes(q) || domain.includes(q) || tags.includes(q);",
         "      item.style.display = match ? '' : 'none';",
         "      if (match) anyVisible = true;",
         "    });",
