@@ -123,10 +123,12 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         '      <div class="install-box">',
         '        <code>curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash</code>',
         "      </div>",
-        "      <p style='color:#666;font-size:.9rem'>"
-        "Portable to Claude Code, OpenCode, Cursor, Windsurf. "
-        '<a href="skills_catalog.json" download>Download catalog (JSON)</a> · '
-        '<a href="skills_catalog.schema.json" download>JSON Schema</a></p>',
+        (
+            "      <p style='color:#666;font-size:.9rem'>"
+            "Portable to Claude Code, OpenCode, Cursor, Windsurf. "
+            '<a href="skills_catalog.json" download>Download catalog (JSON)</a> · '
+            '<a href="skills_catalog.schema.json" download>JSON Schema</a></p>'
+        ),
         "    </section>",
         "    <footer>",
         (
