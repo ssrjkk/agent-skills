@@ -37,6 +37,16 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         '  <meta property="og:title" content="Claude Skills Library">',
         '  <meta property="og:description" content="Curated bilingual skills for every AI agent — Claude Code, OpenCode, Cursor, Windsurf, GPT, Gemini, GLM.">',
         '  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/">',
+        (
+            '  <script type="application/ld+json">'
+            '{"@context":"https://schema.org","@type":"WebSite",'
+            '"name":"Agent Skills Library",'
+            '"url":"https://ssrjkk.github.io/agent-skills/",'
+            '"description":"'
+            + str(meta["total_skills"])
+            + ' curated bilingual (EN + RU) skills in the universal Agent Skills format for every LLM/GLM agent"}}'
+            "</script>"
+        ),
         '  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23667eea%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">',
         '  <link rel="stylesheet" href="style.css">',
         "</head>",
@@ -226,6 +236,28 @@ footer a:hover{text-decoration:underline}
     print(f"Stylesheet written to {output_dir / 'style.css'}")
 
 
+def build_seo_files(output_dir: Path) -> None:
+    base = "https://ssrjkk.github.io/agent-skills/"
+    robots = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Sitemap: {base}sitemap.xml\n"
+    )
+    (output_dir / "robots.txt").write_text(robots, encoding="utf-8")
+    print(f"robots.txt written to {output_dir / 'robots.txt'}")
+
+    sitemap = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"  <url><loc>{base}</loc><priority>1.0</priority></url>\n"
+        f"  <url><loc>{base}skills_catalog.json</loc></url>\n"
+        f"  <url><loc>{base}skills_catalog.schema.json</loc></url>\n"
+        "</urlset>\n"
+    )
+    (output_dir / "sitemap.xml").write_text(sitemap, encoding="utf-8")
+    print(f"sitemap.xml written to {output_dir / 'sitemap.xml'}")
+
+
 def main() -> int:
     import argparse
     parser = argparse.ArgumentParser(description="Build documentation site")
@@ -241,6 +273,7 @@ def main() -> int:
 
     build_index_html(Path(args.catalog), output_dir)
     build_style_css(output_dir)
+    build_seo_files(output_dir)
 
     import shutil
     catalog_src = Path(args.catalog)

@@ -6,7 +6,7 @@ tags: [oauth2, jwt, auth, security, authentication]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # OAuth2 & JWT
 

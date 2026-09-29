@@ -6,7 +6,7 @@ tags: [tailwind, css, v4, design, styling]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Tailwind CSS v4
 

@@ -6,7 +6,7 @@ tags: [gitlab, ci-cd, pipelines, runner, devops]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # GitLab CI/CD
 
