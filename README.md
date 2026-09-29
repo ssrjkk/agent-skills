@@ -10,6 +10,8 @@
   <img src="https://img.shields.io/github/actions/workflow/status/ssrjkk/agent-skills/validate.yml?branch=main&style=for-the-badge&label=CI&color=green" alt="CI">
   <img src="https://img.shields.io/github/release/ssrjkk/agent-skills?style=for-the-badge&color=blue" alt="Release">
   <img src="https://img.shields.io/github/last-commit/ssrjkk/agent-skills?style=for-the-badge&color=lightgrey" alt="Last commit">
+  <img src="https://img.shields.io/pypi/v/agent-skills-library?style=for-the-badge&color=3775A9&logo=pypi&logoColor=white" alt="PyPI">
+  <img src="https://img.shields.io/pypi/pyversions/agent-skills-library?style=for-the-badge&color=3775A9" alt="Python versions">
 </p>
 
 <h1 align="center">Skills Library</h1>
@@ -58,8 +60,8 @@ cataloging and search, all enforced in CI.
 ## Quick Start
 
 ```bash
-# Install (editable)
-pip install -e .
+# Install the SDK + CLI from PyPI
+pip install agent-skills-library
 
 # Explore the library
 claude-skills stats          # Library statistics
