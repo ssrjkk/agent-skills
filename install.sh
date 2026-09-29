@@ -34,20 +34,22 @@ else
     git clone --depth 1 --branch "$BRANCH" "https://github.com/$REPO.git" "$INSTALL_DIR"
 fi
 
-# Install Python SDK
+# Install Python SDK (prefer PyPI; fall back to local install)
 if command -v pip3 &>/dev/null; then
-    echo " Installing Python SDK..."
-    pip3 install "$INSTALL_DIR" 2>/dev/null || true
+    echo " Installing Python SDK from PyPI..."
+    pip3 install agent-skills-library 2>/dev/null || pip3 install "$INSTALL_DIR" 2>/dev/null || true
 elif command -v pip &>/dev/null; then
-    echo " Installing Python SDK..."
-    pip install "$INSTALL_DIR" 2>/dev/null || true
+    echo " Installing Python SDK from PyPI..."
+    pip install agent-skills-library 2>/dev/null || pip install "$INSTALL_DIR" 2>/dev/null || true
 fi
 
 echo ""
 echo " Claude Skills Library installed!"
 echo ""
 echo " Stats:"
-if command -v claude-skills &>/dev/null; then
+if command -v agent-skills &>/dev/null; then
+    agent-skills stats
+elif command -v claude-skills &>/dev/null; then
     claude-skills stats
 elif [ -f "$INSTALL_DIR/scripts/list-skills.py" ]; then
     cd "$INSTALL_DIR" && python scripts/list-skills.py
