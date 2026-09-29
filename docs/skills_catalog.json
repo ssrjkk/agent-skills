@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-09-29T16:48:08Z",
+    "generated_at": "2026-09-29T22:40:35Z",
     "total_skills": 65,
     "total_ru": 65,
     "domains": [
@@ -78,7 +78,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "function-calling",
@@ -162,7 +162,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "mcp-servers",
@@ -335,7 +335,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "django",
@@ -511,7 +511,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "rest-api-design",
@@ -566,7 +566,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "zk-proofs",
@@ -591,7 +591,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "elasticsearch",
@@ -766,7 +766,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "redis",
@@ -851,7 +851,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "aws-lambda",
@@ -876,7 +876,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "cloud-native-ai",
@@ -901,7 +901,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "docker",
@@ -986,7 +986,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "kafka",
@@ -1072,7 +1072,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "platform-engineering",
@@ -1097,7 +1097,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "prometheus-grafana",
@@ -1153,7 +1153,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "sre-slos",
@@ -1179,7 +1179,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "terraform",
@@ -1235,7 +1235,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "ai-testing",
@@ -1260,7 +1260,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "claude-code-commands",
@@ -1437,7 +1437,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "nextjs",
@@ -1520,7 +1520,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "typescript",
@@ -1729,7 +1729,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "flutter",
@@ -1845,7 +1845,7 @@
       ],
       "has_ru": true,
       "created": "2026-05-14",
-      "updated": "2026-09-06"
+      "updated": "2026-09-29"
     },
     {
       "name": "owasp-web-security",
