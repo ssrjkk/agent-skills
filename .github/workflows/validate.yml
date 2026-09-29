@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: ["3.9", "3.11", "3.12"]
@@ -70,6 +70,9 @@ jobs:
 
       - name: Agent-interop compatibility (universal format)
         run: python scripts/check_agent_interop.py
+
+      - name: Python code fences in skills are valid
+        run: python scripts/check_python_fences.py
 
       - name: Run tests with coverage
         run: python -m pytest tests/ -v --tb=short --cov=src/claude_skills --cov-report=term-missing

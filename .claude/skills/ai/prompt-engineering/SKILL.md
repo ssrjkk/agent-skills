@@ -77,7 +77,7 @@ resp = client.chat.completions.create(
     model="gpt-5",
     messages=[
         {"role": "system", "content": "You extract entities to JSON."},
-        {"role": "user", "content": '{"text": "Alice works at Acme"}'],
+        {"role": "user", "content": '{"text": "Alice works at Acme"}'},
     ],
     response_format={"type": "json_object"},
 )

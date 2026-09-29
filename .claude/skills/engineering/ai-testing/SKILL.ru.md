@@ -46,9 +46,9 @@ Requirements:
 - Достичь coverage > 90%
 
 Source code:
-```python
+<source>
 {source}
-```
+</source>
 
 Generate tests only:'''
 
@@ -72,9 +72,9 @@ def validate_test_quality(test_code: str) -> dict:
 4. Completeness: чего не хватает?
 
 Test code:
-```python
+<test_code>
 {test_code}
-```
+</test_code>
 
 Score each category 1-10 и перечислите пробелы.'''}],
         max_tokens=1000

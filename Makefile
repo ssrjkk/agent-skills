@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint typecheck test coverage interop validate quality catalog stats docs clean all
+.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats docs clean all
 
 help:
 	@echo "Claude Skills Library - Makefile"
@@ -9,6 +9,7 @@ help:
 	@echo "  test          Run pytest suite"
 	@echo "  coverage      Run pytest with coverage report"
 	@echo "  interop       Cross-agent portability check"
+	@echo "  fences        Validate python code fences in skills"
 	@echo "  validate      Validate all skills"
 	@echo "  quality       Quality analysis report"
 	@echo "  catalog       Regenerate skills_catalog.json"
@@ -37,6 +38,9 @@ coverage:
 interop:
 	python scripts/check_agent_interop.py
 
+fences:
+	python scripts/check_python_fences.py
+
 validate:
 	python -m claude_skills.cli validate --dir .claude/skills
 
@@ -56,5 +60,5 @@ clean:
 	python -c "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]"
 	python -c "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]"
 
-all: lint typecheck test interop validate quality catalog
+all: lint typecheck test interop fences validate quality catalog
 	@echo "All checks passed!"
