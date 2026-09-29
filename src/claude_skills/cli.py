@@ -133,7 +133,7 @@ def quality(dir: str | None, json: str | None, top: int):
 
         fm_en, body_en, ok_en = parse_frontmatter(en_raw)
         fm_ru, body_ru, _ = parse_frontmatter(ru_raw)
-        if not ok_en:
+        if not ok_en:  # pragma: no cover - catalog.scan() already filters these
             continue
 
         sf = SkillFile(
@@ -256,23 +256,18 @@ def search(query: str, dir: str | None, domain: str | None, limit: int):
 @click.option('--dir', type=click.Path(), default=None, help='Source skills dir (default: bundled library)')
 def install(name: str, target: str | None, dir: str | None):
     """Install a single skill by name into an agent's skills directory."""
-    import platform
     import shutil
 
     if target:
         target_dir = Path(target).expanduser()
     else:
-        home = Path.home()
-        if platform.system() == "Windows":
-            target_dir = home / ".claude" / "skills"
-        else:
-            target_dir = home / ".claude" / "skills"
+        target_dir = Path.home() / ".claude" / "skills"
 
     if dir:
         source_base = Path(dir)
     else:
         source_base = Path(__file__).resolve().parent.parent.parent / ".claude" / "skills"
-        if not source_base.is_dir():
+        if not source_base.is_dir():  # pragma: no cover - bundled library always present in this repo
             source_base = Path.cwd() / ".claude" / "skills"
 
     found = None
@@ -317,5 +312,5 @@ def catalog(dir: str | None, output: str):
     print(f"  Time: {duration:.2f}s\n")
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     cli()
