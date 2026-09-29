@@ -59,6 +59,19 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
             'oninput="filterSkills(this.value)">'
         ),
         "    </div>",
+        '    <div class="filter-bar" id="filter-bar">',
+        '      <button class="filter-btn active" data-filter="all" onclick="filterByDomain(\'all\', this)">All</button>',
+    ]
+
+    for domain in sorted(by_category):
+        count = len(by_category[domain])
+        lines.append(
+            f'      <button class="filter-btn" data-filter="{domain}" '
+            f'onclick="filterByDomain(\'{domain}\', this)">{domain} ({count})</button>'
+        )
+
+    lines.extend([
+        "    </div>",
         '    <section id="stats">',
         "      <div class=stats-grid>",
         f'        <div class=stat><strong>{meta["total_skills"]}</strong><span>Total Skills</span></div>',
@@ -70,7 +83,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         '    <section id="domains">',
         "      <h2>Domains</h2>",
         '      <div class="domain-list" id="domain-list">',
-    ]
+    ])
 
     for domain in sorted(by_category):
         domain_skills = by_category[domain]
@@ -112,7 +125,8 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         "      </div>",
         "      <p style='color:#666;font-size:.9rem'>"
         "Portable to Claude Code, OpenCode, Cursor, Windsurf. "
-        '<a href="skills_catalog.json" download>Download catalog (JSON)</a></p>',
+        '<a href="skills_catalog.json" download>Download catalog (JSON)</a> · '
+        '<a href="skills_catalog.schema.json" download>JSON Schema</a></p>',
         "    </section>",
         "    <footer>",
         (
@@ -126,6 +140,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         "    </footer>",
         "  </div>",
         "  <script>",
+        "  var activeDomain = 'all';",
         "  function toggleDomain(btn) {",
         "    var list = btn.nextElementSibling;",
         "    list.style.display = list.style.display === 'none' ? 'block' : 'none';",
@@ -134,26 +149,32 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         "    q = q.toLowerCase();",
         "    var items = document.querySelectorAll('.skill-item');",
         "    var domains = document.querySelectorAll('.domain');",
-        "    var anyVisible = false;",
         "    items.forEach(function(item) {",
         "      var name = item.getAttribute('data-name').toLowerCase();",
         "      var domain = item.getAttribute('data-domain').toLowerCase();",
         "      var tags = (item.getAttribute('data-tags') || '').toLowerCase();",
-        "      var match = name.includes(q) || domain.includes(q) || tags.includes(q);",
-        "      item.style.display = match ? '' : 'none';",
-        "      if (match) anyVisible = true;",
+        "      var domainMatch = activeDomain === 'all' || domain === activeDomain;",
+        "      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q);",
+        "      item.style.display = (domainMatch && textMatch) ? '' : 'none';",
         "    });",
-        "    if (q) {",
-        "      domains.forEach(function(d) {",
-        "        var list = d.querySelector('.skill-list');",
-        "        list.style.display = 'block';",
-        "      });",
-        "    }",
+        "    domains.forEach(function(d) {",
+        "      var list = d.querySelector('.skill-list');",
+        "      var visible = d.querySelectorAll('.skill-item:not([style*=\"display: none\"])');",
+        "      list.style.display = (q || activeDomain !== 'all') ? 'block' : 'none';",
+        "      d.style.display = visible.length > 0 ? '' : 'none';",
+        "    });",
+        "  }",
+        "  function filterByDomain(domain, btn) {",
+        "    activeDomain = domain;",
+        "    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });",
+        "    btn.classList.add('active');",
+        "    var q = document.getElementById('search').value;",
+        "    filterSkills(q);",
         "  }",
         "  function copySkill(name) {",
         "    var path = '.claude/skills/' + name;",
         "    navigator.clipboard.writeText(path);",
-        "    alert(' Copied: ' + path);",
+        "    alert('Copied: ' + path);",
         "  }",
         "  </script>",
         "</body>",
@@ -194,7 +215,11 @@ footer{margin-top:3rem;text-align:center;color:#999;font-size:.9rem}
 footer a{color:#667eea;text-decoration:none}
 footer a:hover{text-decoration:underline}
 .install-box{background:#1a1a2e;border-radius:10px;padding:1rem 1.25rem;overflow-x:auto;margin:.5rem 0 1rem}
-.install-box code{color:#7ee787;font-size:.9rem}"""
+.install-box code{color:#7ee787;font-size:.9rem}
+.filter-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.filter-btn{padding:.4rem 1rem;border:1px solid #e0e0e0;border-radius:20px;background:white;cursor:pointer;font-size:.85rem;color:#666;transition:all .2s}
+.filter-btn:hover{border-color:#667eea;color:#667eea}
+.filter-btn.active{background:#667eea;color:white;border-color:#667eea}"""
     (output_dir / "style.css").write_text(css, encoding="utf-8")
     print(f"Stylesheet written to {output_dir / 'style.css'}")
 
@@ -220,6 +245,11 @@ def main() -> int:
     if catalog_src.exists():
         shutil.copy2(catalog_src, output_dir / "skills_catalog.json")
         print(f"Catalog copied to {output_dir / 'skills_catalog.json'}")
+
+    schema_src = Path(args.catalog).parent / "skills_catalog.schema.json"
+    if schema_src.exists():
+        shutil.copy2(schema_src, output_dir / "skills_catalog.schema.json")
+        print(f"Schema copied to {output_dir / 'skills_catalog.schema.json'}")
 
     print(f"Documentation built in {output_dir}")
     return 0

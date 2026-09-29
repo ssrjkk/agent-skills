@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Skills Library — 59 curated bilingual skills</title>
+  <title>Claude Skills Library — 65 curated bilingual skills</title>
   <meta name="description" content="Curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.">
   <meta property="og:title" content="Claude Skills Library">
   <meta property="og:description" content="Curated bilingual skills for every AI agent — Claude Code, OpenCode, Cursor, Windsurf, GPT, Gemini, GLM.">
@@ -15,17 +15,36 @@
   <div class="container">
     <header>
       <h1>Claude Skills Library</h1>
-      <p class="subtitle">59 skills across 13 domains · 59 Russian translations</p>
+      <p class="subtitle">65 skills across 16 domains · 65 Russian translations</p>
     </header>
       <p class="subtitle" style="color:#666;font-size:.95rem;margin-top:.5rem">Models: gemini-2.5 · glm-4.6 · gpt-5 · opus · sonnet</p>
     <div class="search-bar">
       <input type="text" id="search" placeholder="Search skills by name, domain, or tag..." oninput="filterSkills(this.value)">
     </div>
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" data-filter="all" onclick="filterByDomain('all', this)">All</button>
+      <button class="filter-btn" data-filter="ai" onclick="filterByDomain('ai', this)">ai (10)</button>
+      <button class="filter-btn" data-filter="backend" onclick="filterByDomain('backend', this)">backend (9)</button>
+      <button class="filter-btn" data-filter="blockchain" onclick="filterByDomain('blockchain', this)">blockchain (1)</button>
+      <button class="filter-btn" data-filter="data" onclick="filterByDomain('data', this)">data (3)</button>
+      <button class="filter-btn" data-filter="database" onclick="filterByDomain('database', this)">database (5)</button>
+      <button class="filter-btn" data-filter="desktop" onclick="filterByDomain('desktop', this)">desktop (1)</button>
+      <button class="filter-btn" data-filter="devops" onclick="filterByDomain('devops', this)">devops (13)</button>
+      <button class="filter-btn" data-filter="embedded" onclick="filterByDomain('embedded', this)">embedded (1)</button>
+      <button class="filter-btn" data-filter="engineering" onclick="filterByDomain('engineering', this)">engineering (4)</button>
+      <button class="filter-btn" data-filter="finance" onclick="filterByDomain('finance', this)">finance (2)</button>
+      <button class="filter-btn" data-filter="frontend" onclick="filterByDomain('frontend', this)">frontend (6)</button>
+      <button class="filter-btn" data-filter="gamedev" onclick="filterByDomain('gamedev', this)">gamedev (2)</button>
+      <button class="filter-btn" data-filter="healthcare" onclick="filterByDomain('healthcare', this)">healthcare (2)</button>
+      <button class="filter-btn" data-filter="mobile" onclick="filterByDomain('mobile', this)">mobile (2)</button>
+      <button class="filter-btn" data-filter="qa" onclick="filterByDomain('qa', this)">qa (2)</button>
+      <button class="filter-btn" data-filter="security" onclick="filterByDomain('security', this)">security (2)</button>
+    </div>
     <section id="stats">
       <div class=stats-grid>
-        <div class=stat><strong>59</strong><span>Total Skills</span></div>
-        <div class=stat><strong>59</strong><span>Russian</span></div>
-        <div class=stat><strong>13</strong><span>Domains</span></div>
+        <div class=stat><strong>65</strong><span>Total Skills</span></div>
+        <div class=stat><strong>65</strong><span>Russian</span></div>
+        <div class=stat><strong>16</strong><span>Domains</span></div>
         <div class=stat><strong>3.0</strong><span>Schema</span></div>
       </div>
     </section>
@@ -124,6 +143,13 @@
             <li class="skill-item" data-name="git-workflow" data-domain="engineering" data-tags='["git", "github", "branching", "rebase", "merge", "commits", "collaboration", "vcs"]'><code onclick="copySkill('git-workflow')" title="Click to copy path">git-workflow</code> <br><small>git, github, branching</small></li>
           </ul>
         </div>
+        <div class="domain" data-domain="finance">
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>finance</strong>            <span class="domain-meta">2 skills, 2 RU</span>          </button>
+          <ul class="skill-list" style="display:none">
+            <li class="skill-item" data-name="algorithmic-trading" data-domain="finance" data-tags='["algorithmic-trading", "backtesting", "strategy", "quantitative", "finance", "market-data", "execution", "risk"]'><code onclick="copySkill('algorithmic-trading')" title="Click to copy path">algorithmic-trading</code> <br><small>algorithmic-trading, backtesting, strategy</small></li>
+            <li class="skill-item" data-name="risk-modeling" data-domain="finance" data-tags='["risk-modeling", "var", "cvar", "monte-carlo", "stress-testing", "portfolio", "quantitative", "finance"]'><code onclick="copySkill('risk-modeling')" title="Click to copy path">risk-modeling</code> <br><small>risk-modeling, var, cvar</small></li>
+          </ul>
+        </div>
         <div class="domain" data-domain="frontend">
           <button class="domain-header" onclick="toggleDomain(this)">            <strong>frontend</strong>            <span class="domain-meta">6 skills, 6 RU</span>          </button>
           <ul class="skill-list" style="display:none">
@@ -133,6 +159,20 @@
             <li class="skill-item" data-name="tailwind-v4" data-domain="frontend" data-tags='["tailwind", "css", "v4", "design", "styling"]'><code onclick="copySkill('tailwind-v4')" title="Click to copy path">tailwind-v4</code> <br><small>tailwind, css, v4</small></li>
             <li class="skill-item" data-name="typescript" data-domain="frontend" data-tags='["typescript", "javascript", "typing", "generics", "static-analysis", "tooling"]'><code onclick="copySkill('typescript')" title="Click to copy path">typescript</code> <br><small>typescript, javascript, typing</small></li>
             <li class="skill-item" data-name="vue" data-domain="frontend" data-tags='["vue", "vue3", "javascript", "typescript", "frontend", "reactivity", "components"]'><code onclick="copySkill('vue')" title="Click to copy path">vue</code> <br><small>vue, vue3, javascript</small></li>
+          </ul>
+        </div>
+        <div class="domain" data-domain="gamedev">
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>gamedev</strong>            <span class="domain-meta">2 skills, 2 RU</span>          </button>
+          <ul class="skill-list" style="display:none">
+            <li class="skill-item" data-name="game-physics" data-domain="gamedev" data-tags='["physics", "game-dev", "rigid-body", "collision", "raycast", "simulation", "2d", "3d"]'><code onclick="copySkill('game-physics')" title="Click to copy path">game-physics</code> <br><small>physics, game-dev, rigid-body</small></li>
+            <li class="skill-item" data-name="unity-ecs" data-domain="gamedev" data-tags='["unity", "ecs", "dots", "jobs", "burst", "game-dev", "performance", "csharp"]'><code onclick="copySkill('unity-ecs')" title="Click to copy path">unity-ecs</code> <br><small>unity, ecs, dots</small></li>
+          </ul>
+        </div>
+        <div class="domain" data-domain="healthcare">
+          <button class="domain-header" onclick="toggleDomain(this)">            <strong>healthcare</strong>            <span class="domain-meta">2 skills, 2 RU</span>          </button>
+          <ul class="skill-list" style="display:none">
+            <li class="skill-item" data-name="hipaa-compliance" data-domain="healthcare" data-tags='["hipaa", "compliance", "healthcare", "security", "phi", "encryption", "audit", "access-control"]'><code onclick="copySkill('hipaa-compliance')" title="Click to copy path">hipaa-compliance</code> <br><small>hipaa, compliance, healthcare</small></li>
+            <li class="skill-item" data-name="hl7-fhir" data-domain="healthcare" data-tags='["hl7", "fhir", "healthcare", "interoperability", "smart-on-fhir", "clinical", "api", "resources"]'><code onclick="copySkill('hl7-fhir')" title="Click to copy path">hl7-fhir</code> <br><small>hl7, fhir, healthcare</small></li>
           </ul>
         </div>
         <div class="domain" data-domain="mobile">
@@ -163,14 +203,15 @@
       <div class="install-box">
         <code>curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash</code>
       </div>
-      <p style='color:#666;font-size:.9rem'>Portable to Claude Code, OpenCode, Cursor, Windsurf. <a href="skills_catalog.json" download>Download catalog (JSON)</a></p>
+      <p style='color:#666;font-size:.9rem'>Portable to Claude Code, OpenCode, Cursor, Windsurf. <a href="skills_catalog.json" download>Download catalog (JSON)</a> · <a href="skills_catalog.schema.json" download>JSON Schema</a></p>
     </section>
     <footer>
-      <p>Generated on 2026-09-29 11:27 UTC · 59 total skills</p>
+      <p>Generated on 2026-09-29 15:13 UTC · 65 total skills</p>
       <p><a href="https://github.com/ssrjkk/agent-skills">GitHub</a> · <a href="https://github.com/ssrjkk/agent-skills/issues">Report Issue</a></p>
     </footer>
   </div>
   <script>
+  var activeDomain = 'all';
   function toggleDomain(btn) {
     var list = btn.nextElementSibling;
     list.style.display = list.style.display === 'none' ? 'block' : 'none';
@@ -179,26 +220,32 @@
     q = q.toLowerCase();
     var items = document.querySelectorAll('.skill-item');
     var domains = document.querySelectorAll('.domain');
-    var anyVisible = false;
     items.forEach(function(item) {
       var name = item.getAttribute('data-name').toLowerCase();
       var domain = item.getAttribute('data-domain').toLowerCase();
       var tags = (item.getAttribute('data-tags') || '').toLowerCase();
-      var match = name.includes(q) || domain.includes(q) || tags.includes(q);
-      item.style.display = match ? '' : 'none';
-      if (match) anyVisible = true;
+      var domainMatch = activeDomain === 'all' || domain === activeDomain;
+      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q);
+      item.style.display = (domainMatch && textMatch) ? '' : 'none';
     });
-    if (q) {
-      domains.forEach(function(d) {
-        var list = d.querySelector('.skill-list');
-        list.style.display = 'block';
-      });
-    }
+    domains.forEach(function(d) {
+      var list = d.querySelector('.skill-list');
+      var visible = d.querySelectorAll('.skill-item:not([style*="display: none"])');
+      list.style.display = (q || activeDomain !== 'all') ? 'block' : 'none';
+      d.style.display = visible.length > 0 ? '' : 'none';
+    });
+  }
+  function filterByDomain(domain, btn) {
+    activeDomain = domain;
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var q = document.getElementById('search').value;
+    filterSkills(q);
   }
   function copySkill(name) {
     var path = '.claude/skills/' + name;
     navigator.clipboard.writeText(path);
-    alert(' Copied: ' + path);
+    alert('Copied: ' + path);
   }
   </script>
 </body>

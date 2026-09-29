@@ -26,3 +26,7 @@ footer a{color:#667eea;text-decoration:none}
 footer a:hover{text-decoration:underline}
 .install-box{background:#1a1a2e;border-radius:10px;padding:1rem 1.25rem;overflow-x:auto;margin:.5rem 0 1rem}
 .install-box code{color:#7ee787;font-size:.9rem}
+.filter-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.filter-btn{padding:.4rem 1rem;border:1px solid #e0e0e0;border-radius:20px;background:white;cursor:pointer;font-size:.85rem;color:#666;transition:all .2s}
+.filter-btn:hover{border-color:#667eea;color:#667eea}
+.filter-btn.active{background:#667eea;color:white;border-color:#667eea}

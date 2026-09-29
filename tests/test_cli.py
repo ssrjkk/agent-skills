@@ -40,7 +40,7 @@ def _make_skill(root: Path, name: str, category: str, description: str = "A test
 class TestCliImport:
     def test_cli_group(self):
         names = sorted(cli.commands.keys())
-        assert set(names) == {"stats", "validate", "quality", "search", "catalog"}
+        assert set(names) == {"stats", "validate", "quality", "search", "catalog", "install"}
 
     def test_cli_help(self):
         import subprocess
@@ -50,7 +50,7 @@ class TestCliImport:
             capture_output=True, text=True, check=False
         )
         assert result.returncode == 0
-        for name in ("stats", "validate", "quality", "search", "catalog"):
+        for name in ("stats", "validate", "quality", "search", "catalog", "install"):
             assert name in result.stdout
 
 

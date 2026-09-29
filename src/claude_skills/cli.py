@@ -251,6 +251,55 @@ def search(query: str, dir: str | None, domain: str | None, limit: int):
 
 
 @cli.command()
+@click.argument('name')
+@click.option('--target', default=None, help='Target agent skills dir (e.g. ~/.claude/skills)')
+@click.option('--dir', type=click.Path(), default=None, help='Source skills dir (default: bundled library)')
+def install(name: str, target: str | None, dir: str | None):
+    """Install a single skill by name into an agent's skills directory."""
+    import platform
+    import shutil
+
+    if target:
+        target_dir = Path(target).expanduser()
+    else:
+        home = Path.home()
+        if platform.system() == "Windows":
+            target_dir = home / ".claude" / "skills"
+        else:
+            target_dir = home / ".claude" / "skills"
+
+    if dir:
+        source_base = Path(dir)
+    else:
+        source_base = Path(__file__).resolve().parent.parent.parent / ".claude" / "skills"
+        if not source_base.is_dir():
+            source_base = Path.cwd() / ".claude" / "skills"
+
+    found = None
+    for sk in source_base.rglob("SKILL.md"):
+        if sk.parent.name == name:
+            found = sk.parent
+            break
+
+    if not found:
+        raise click.ClickException(f"Skill '{name}' not found in {source_base}")
+
+    category = found.parent.name
+    dest = target_dir / category / name
+
+    if dest.exists():
+        print(f"{Fore.YELLOW}Skill '{name}' already exists at {dest}, overwriting...{Style.RESET_ALL}")
+        shutil.rmtree(dest)
+
+    shutil.copytree(found, dest)
+
+    ru_count = sum(1 for _ in dest.glob("SKILL*.md"))
+    print(f"\n{Fore.GREEN}Installed '{name}' -> {dest}{Style.RESET_ALL}")
+    print(f"  Files: {ru_count}")
+    print(f"  Agent: {target_dir}\n")
+
+
+@cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--output', type=click.Path(), default='skills_catalog.json', help='Output catalog path')
 def catalog(dir: str | None, output: str):

@@ -1,0 +1,41 @@
+{
+  "name": "agent-skills-library",
+  "version": "3.4.0",
+  "description": "Curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.",
+  "main": "index.js",
+  "bin": {
+    "agent-skills": "./bin/agent-skills.js"
+  },
+  "scripts": {
+    "test": "node test/test.js",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "claude",
+    "ai",
+    "skills",
+    "agent",
+    "llm",
+    "cursor",
+    "windsurf",
+    "opencode",
+    "prompt-engineering"
+  ],
+  "author": "ssrjkk",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssrjkk/agent-skills.git"
+  },
+  "homepage": "https://ssrjkk.github.io/agent-skills/",
+  "files": [
+    "skills/",
+    "bin/",
+    "scripts/",
+    "index.js",
+    "skills_catalog.json"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

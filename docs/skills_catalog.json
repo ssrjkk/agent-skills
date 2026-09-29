@@ -1,9 +1,9 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-09-29T11:27:33Z",
-    "total_skills": 59,
-    "total_ru": 59,
+    "generated_at": "2026-09-29T15:11:14Z",
+    "total_skills": 65,
+    "total_ru": 65,
     "domains": [
       "ai",
       "backend",
@@ -14,7 +14,10 @@
       "devops",
       "embedded",
       "engineering",
+      "finance",
       "frontend",
+      "gamedev",
+      "healthcare",
       "mobile",
       "qa",
       "security"
@@ -1350,6 +1353,68 @@
       "updated": "2026-09-28"
     },
     {
+      "name": "algorithmic-trading",
+      "description": "Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance.",
+      "category": "finance",
+      "tags": [
+        "algorithmic-trading",
+        "backtesting",
+        "strategy",
+        "quantitative",
+        "finance",
+        "market-data",
+        "execution",
+        "risk"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/finance/algorithmic-trading/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-29",
+      "updated": "2026-09-29"
+    },
+    {
+      "name": "risk-modeling",
+      "description": "Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management.",
+      "category": "finance",
+      "tags": [
+        "risk-modeling",
+        "var",
+        "cvar",
+        "monte-carlo",
+        "stress-testing",
+        "portfolio",
+        "quantitative",
+        "finance"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/finance/risk-modeling/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-29",
+      "updated": "2026-09-29"
+    },
+    {
       "name": "bun-runtime",
       "description": "Bun runtime for JavaScript/TypeScript",
       "category": "frontend",
@@ -1515,6 +1580,130 @@
       "has_ru": true,
       "created": "2026-09-26",
       "updated": "2026-09-28"
+    },
+    {
+      "name": "game-physics",
+      "description": "Implement 2D/3D game physics: rigid bodies, collisions, constraints, raycasting, and performance optimization. Use for realistic game mechanics.",
+      "category": "gamedev",
+      "tags": [
+        "physics",
+        "game-dev",
+        "rigid-body",
+        "collision",
+        "raycast",
+        "simulation",
+        "2d",
+        "3d"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/gamedev/game-physics/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-29",
+      "updated": "2026-09-29"
+    },
+    {
+      "name": "unity-ecs",
+      "description": "Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity.",
+      "category": "gamedev",
+      "tags": [
+        "unity",
+        "ecs",
+        "dots",
+        "jobs",
+        "burst",
+        "game-dev",
+        "performance",
+        "csharp"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/gamedev/unity-ecs/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-29",
+      "updated": "2026-09-29"
+    },
+    {
+      "name": "hipaa-compliance",
+      "description": "Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification. Use for health IT security.",
+      "category": "healthcare",
+      "tags": [
+        "hipaa",
+        "compliance",
+        "healthcare",
+        "security",
+        "phi",
+        "encryption",
+        "audit",
+        "access-control"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/healthcare/hipaa-compliance/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-29",
+      "updated": "2026-09-29"
+    },
+    {
+      "name": "hl7-fhir",
+      "description": "Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange. Use for health IT interoperability.",
+      "category": "healthcare",
+      "tags": [
+        "hl7",
+        "fhir",
+        "healthcare",
+        "interoperability",
+        "smart-on-fhir",
+        "clinical",
+        "api",
+        "resources"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-5",
+        "gemini-2.5",
+        "glm-4.6"
+      ],
+      "version": "1.0.0",
+      "path": "D:/harvest/.claude/skills/healthcare/hl7-fhir/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-09-29",
+      "updated": "2026-09-29"
     },
     {
       "name": "expo-rn",

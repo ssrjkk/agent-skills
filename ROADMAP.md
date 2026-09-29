@@ -2,28 +2,29 @@
 
 ## Current state
 
-- **59 curated skills** across 13 domains, 100% bilingual (EN + RU), Grade A.
+- **65 curated skills** across 16 domains, 100% bilingual (EN + RU), Grade A.
 - Universal Agent Skills format, portable to Claude Code, OpenCode, Cursor,
   Windsurf, and every Agent Skills-compatible agent.
 - Python SDK + CLI, GitHub Action, live catalog site, PyPI-ready packaging.
+- JSON Schema validation, npm package, domain filters, quality gates.
 
 ## Planned
 
 ### v4.0 — Ecosystem
 - [x] Publish `agent-skills-library` to PyPI (auto-publish on tags)
-- [ ] Add `skills_catalog.json` downloads and JSON Schema for the catalog
-- [ ] npm package for Node-based agents
+- [x] Add `skills_catalog.json` downloads and JSON Schema for the catalog
+- [x] npm package for Node-based agents
 - [ ] Homebrew tap for macOS installs
 
 ### v4.1 — More coverage
-- [ ] Add skills for more domains: gamedev, finance, healthcare, ecommerce
+- [x] Add skills for more domains: gamedev, finance, healthcare, ecommerce
 - [ ] Community-requested skills via GitHub Discussions
 - [ ] Per-skill verified recipes (tested commands + expected output)
 
 ### v4.2 — Quality & UX
-- [ ] CI that validates new skills in PRs (already) + blocks below-Grade-A
-- [ ] `claude-skills install <skill>` targeted single-skill install
-- [ ] Better docs site with search, filters, and install snippets
+- [x] CI that validates new skills in PRs (already) + blocks below-Grade-A
+- [x] `claude-skills install <skill>` targeted single-skill install
+- [x] Better docs site with search, filters, and install snippets
 - [ ] Benchmark suite for validation speed
 
 ### v4.3 — Community

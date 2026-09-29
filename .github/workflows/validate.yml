@@ -47,6 +47,21 @@ jobs:
       - name: Quality analysis
         run: python -m claude_skills.cli quality --dir .claude/skills --json quality-report.json
 
+      - name: Quality gate (block below Grade A)
+        run: |
+          python -c "
+          import json, sys
+          with open('quality-report.json') as f:
+              report = json.load(f)
+          below_a = [s for s in report['skills'] if s['grade'] != 'A']
+          if below_a:
+              print(f'ERROR: {len(below_a)} skills below Grade A:')
+              for s in below_a[:10]:
+                  print(f'  {s[\"name\"]}: {s[\"grade\"]} ({s[\"score\"]:.1f}%)')
+              sys.exit(1)
+          print(f'All {len(report[\"skills\"])} skills are Grade A')
+          "
+
       - name: Generate catalog
         run: python -m claude_skills.cli catalog
 
