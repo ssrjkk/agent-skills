@@ -225,10 +225,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ssrjkk/agent-skills@v3.4.0
+      - uses: ssrjkk/agent-skills@v3.5.0
         with:
-          command: validate
-          target: .claude/skills
+          command: validate      # validate | quality | catalog | stats
+          target: .claude/skills # path to skills directory
+          output: skills_catalog.json
 ```
 
 ## Quality Pipeline

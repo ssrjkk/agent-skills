@@ -26,3 +26,5 @@ runs:
     - ${{ inputs.command }}
     - --dir
     - ${{ inputs.target }}
+    - --output
+    - ${{ inputs.output }}

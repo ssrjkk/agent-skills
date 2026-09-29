@@ -38,7 +38,7 @@ def cli():
 
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
-@click.option('--json', type=click.Path(), help='Output JSON report')
+@click.option('--json', '--output', 'json', type=click.Path(), help='Output JSON report')
 def stats(dir: str | None, json: str | None):
     """Show library statistics."""
     start = time.perf_counter()
@@ -71,7 +71,7 @@ def stats(dir: str | None, json: str | None):
 
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
-@click.option('--json', type=click.Path(), help='Output JSON report')
+@click.option('--json', '--output', 'json', type=click.Path(), help='Output JSON report')
 def validate(dir: str | None, json: str | None):
     """Validate all skills (EN + RU)."""
     start = time.perf_counter()
@@ -113,7 +113,7 @@ def validate(dir: str | None, json: str | None):
 
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
-@click.option('--json', type=click.Path(), help='Output JSON report')
+@click.option('--json', '--output', 'json', type=click.Path(), help='Output JSON report')
 @click.option('--top', type=int, default=10, help='Show top N skills')
 def quality(dir: str | None, json: str | None, top: int):
     """Analyze quality of all skills."""
