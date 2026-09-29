@@ -54,7 +54,7 @@ Source code:
 Generate tests only:"""
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=4096
     )
@@ -65,7 +65,7 @@ Generate tests only:"""
 def validate_test_quality(test_code: str) -> dict:
     """Evaluate test quality with AI."""
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         messages=[{"role": "user", "content": f"""Evaluate this test suite for:
 
 1. Coverage: Are edge cases covered?
