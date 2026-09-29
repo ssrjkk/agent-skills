@@ -8,7 +8,7 @@ every Agent Skills-compatible agent.
 
 ```
 claude-skills/
-├── .claude/skills/          # 59 curated skills (universal SKILL.md format)
+├── .claude/skills/          # 65 curated skills (universal SKILL.md format)
 │   └── {domain}/
 │       └── {skill-name}/
 │           ├── SKILL.md     # English (primary)
@@ -79,4 +79,4 @@ The quality score is a weighted composite of 5 dimensions:
 | Freshness | 15% | Recency of last update |
 | Bilingual | 15% | Russian translation quality |
 
-All 59 skills currently score 100.0% (Grade A).
+All 65 skills currently score 100.0% (Grade A).

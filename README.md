@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-59-blue?style=for-the-badge" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-65-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
-  <img src="https://img.shields.io/badge/domains-13-orange?style=for-the-badge" alt="Domains">
+  <img src="https://img.shields.io/badge/domains-16-orange?style=for-the-badge" alt="Domains">
   <img src="https://img.shields.io/badge/quality-A%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
@@ -47,7 +47,7 @@ Or clone directly into your agent's skills directory:
 
 ## What is this?
 
-59 production-grade, bilingual (English + Russian) skills following the
+65 production-grade, bilingual (English + Russian) skills following the
 **universal Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
@@ -63,12 +63,12 @@ cataloging and search, all enforced in CI.
 # Install the SDK + CLI from PyPI
 pip install agent-skills-library
 
-# Explore the library
-claude-skills stats          # Library statistics
-claude-skills search <query> # Search skills
-claude-skills validate       # Validate all skills (EN + RU)
-claude-skills quality        # Quality analysis
-claude-skills catalog        # Rebuild skills_catalog.json
+# Explore the library (both `agent-skills` and `claude-skills` work)
+agent-skills stats          # Library statistics
+agent-skills search <query> # Search skills
+agent-skills validate       # Validate all skills (EN + RU)
+agent-skills quality        # Quality analysis
+agent-skills catalog        # Rebuild skills_catalog.json
 ```
 
 ## Using the skills with your agent
@@ -101,9 +101,9 @@ Frontmatter is strictly validated for cross-agent portability in CI
 
 | Metric | Value |
 |--------|-------|
-| Total skills | **59** |
-| Russian translations | **59 (100%)** |
-| Domains | **13** |
+| Total skills | **65** |
+| Russian translations | **65 (100%)** |
+| Domains | **16** |
 | Quality score | **100% (Grade A)** |
 | Test coverage | **100%** |
 | License | MIT |
@@ -168,6 +168,12 @@ in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `frontend` | `tailwind-v4` | Tailwind CSS v4 |
 | `frontend` | `typescript` | Type-safe JavaScript |
 | `frontend` | `vue` | Vue 3 reactive UIs |
+| `finance` | `algorithmic-trading` | Backtesting & strategy design |
+| `finance` | `risk-modeling` | VaR, CVaR & stress testing |
+| `gamedev` | `game-physics` | 2D/3D physics & collisions |
+| `gamedev` | `unity-ecs` | Unity ECS & DOTS |
+| `healthcare` | `hipaa-compliance` | HIPAA security & privacy |
+| `healthcare` | `hl7-fhir` | FHIR integrations |
 | `mobile` | `expo-rn` | Expo & React Native |
 | `mobile` | `flutter` | Cross-platform Flutter apps |
 | `qa` | `browser-automation` | Playwright E2E & scraping |
@@ -197,11 +203,11 @@ print(f"Errors: {report['errors']}, Warnings: {report['warnings']}")
 Commands: `stats`, `search`, `validate`, `quality`, `catalog`.
 
 ```bash
-claude-skills search <query>      # Search by name, description, tags
-claude-skills validate --json out.json
-claude-skills quality --json out.json
-claude-skills catalog             # Rebuild catalog JSON
-claude-skills stats               # Library statistics
+agent-skills search <query>      # Search by name, description, tags
+agent-skills validate --json out.json
+agent-skills quality --json out.json
+agent-skills catalog             # Rebuild catalog JSON
+agent-skills stats               # Library statistics
 ```
 
 ### GitHub Action
@@ -237,10 +243,11 @@ Every skill is scored on 5 dimensions:
 | Freshness | 15% | Recency of last update |
 | Bilingual | 15% | Russian translation quality |
 
-## Domains (13)
+## Domains (16)
 
 `ai` · `backend` · `blockchain` · `data` · `database` · `desktop` · `devops` ·
-`embedded` · `engineering` · `frontend` · `mobile` · `qa` · `security`
+`embedded` · `engineering` · `finance` · `frontend` · `gamedev` · `healthcare` ·
+`mobile` · `qa` · `security`
 
 ## Author
 
@@ -267,13 +274,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 
 - [Live Catalog Site](https://ssrjkk.github.io/agent-skills/)
 - [Architecture Guide](docs/ARCHITECTURE.md)
-- [Release Notes](docs/RELEASE_NOTES_v3.4.md)
+- [Release Notes](docs/RELEASE_NOTES_v3.5.md)
 - [Roadmap](ROADMAP.md)
 - [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)
 
 ## Why this library
 
-- **Curated, not generated** — 59 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — 65 hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No
