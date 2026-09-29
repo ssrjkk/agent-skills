@@ -30,14 +30,14 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 ### Report a Bug
 
-If you find a skill that doesn't work correctly, open a [Bug Report](https://github.com/ssrjkk/claude-skills/issues/new?template=bug_report.md) with:
+If you find a skill that doesn't work correctly, open a [Bug Report](https://github.com/ssrjkk/agent-skills/issues/new?template=bug_report.md) with:
 - The skill name and domain
 - What you expected vs what happened
 - The prompt you used
 
 ### Request a Skill
 
-Missing a skill? Open a [Skill Request](https://github.com/ssrjkk/claude-skills/issues/new?template=skill_request.md) with:
+Missing a skill? Open a [Skill Request](https://github.com/ssrjkk/agent-skills/issues/new?template=skill_request.md) with:
 - Skill name and domain
 - Description of what it should do
 - Example use case
@@ -160,7 +160,7 @@ python scripts/list-skills.py
 
 - Telegram: [@ssrjkk](https://t.me/ssrjkk)
 - Email: [ray013lefe@gmail.com](mailto:ray013lefe@gmail.com)
-- GitHub Issues: [Create an issue](https://github.com/ssrjkk/claude-skills/issues/new)
+- GitHub Issues: [Create an issue](https://github.com/ssrjkk/agent-skills/issues/new)
 
 ---
 

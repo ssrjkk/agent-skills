@@ -17,5 +17,5 @@
   <rect x="80" y="310" width="580" height="8" rx="4" fill="url(#accent)"/>
   <text x="80" y="400" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="bold" fill="#ffffff">21 skills · 11 domains · 100% quality</text>
   <text x="80" y="450" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#c4b5fd">100% bilingual (EN + RU) · 100% test coverage</text>
-  <text x="80" y="520" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#94a3b8">github.com/ssrjkk/claude-skills</text>
+  <text x="80" y="520" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#94a3b8">github.com/ssrjkk/agent-skills</text>
 </svg>

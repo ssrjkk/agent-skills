@@ -18,7 +18,7 @@
   `gemini-2.5`, and `glm-4.6` for portability across Claude, OpenAI, Google, and
   Zhipu GLM ecosystems.
 - **GitHub Pages live site** — the catalog site is deployed via CI
-  (`ssrjkk.github.io/claude-skills/`).
+  (`ssrjkk.github.io/agent-skills/`).
 - **PyPI publish workflow** — ready to publish `claude-skills-library` on tag
   (set the `PUBLISH_TO_PYPI` repo variable and `PYPI_API_TOKEN` secret).
 - **Social preview banner** — new OpenGraph image for link sharing.

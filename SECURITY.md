@@ -6,7 +6,7 @@ If you discover a security vulnerability in this project, please report it
 privately before disclosure.
 
 **Contact:** open a private vulnerability report on GitHub:
-https://github.com/ssrjkk/claude-skills/security/advisories
+https://github.com/ssrjkk/agent-skills/security/advisories
 
 Please include:
 - The affected file/feature

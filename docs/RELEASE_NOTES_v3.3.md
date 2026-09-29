@@ -17,7 +17,7 @@
 - **Cross-provider model tags** — all new skills declare `sonnet`, `opus`,
   `gpt-5`, `gemini-2.5`, and `glm-4.6`.
 - Live catalog site continues to deploy from CI:
-  `ssrjkk.github.io/claude-skills/`.
+  `ssrjkk.github.io/agent-skills/`.
 
 ## Quality Report
 

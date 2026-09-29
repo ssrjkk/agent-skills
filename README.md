@@ -6,24 +6,24 @@
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
-  <img src="https://img.shields.io/github/stars/ssrjkk/claude-skills?style=for-the-badge&color=gold" alt="Stars">
-  <img src="https://img.shields.io/github/actions/workflow/status/ssrjkk/claude-skills/validate.yml?branch=main&style=for-the-badge&label=CI&color=green" alt="CI">
-  <img src="https://img.shields.io/github/release/ssrjkk/claude-skills?style=for-the-badge&color=blue" alt="Release">
-  <img src="https://img.shields.io/github/last-commit/ssrjkk/claude-skills?style=for-the-badge&color=lightgrey" alt="Last commit">
+  <img src="https://img.shields.io/github/stars/ssrjkk/agent-skills?style=for-the-badge&color=gold" alt="Stars">
+  <img src="https://img.shields.io/github/actions/workflow/status/ssrjkk/agent-skills/validate.yml?branch=main&style=for-the-badge&label=CI&color=green" alt="CI">
+  <img src="https://img.shields.io/github/release/ssrjkk/agent-skills?style=for-the-badge&color=blue" alt="Release">
+  <img src="https://img.shields.io/github/last-commit/ssrjkk/agent-skills?style=for-the-badge&color=lightgrey" alt="Last commit">
 </p>
 
 <h1 align="center">Skills Library</h1>
 <p align="center"><strong>Curated bilingual (EN + RU) skills in the universal Agent Skills format</strong></p>
 <p align="center">Works with Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills-compatible tool</p>
 <p align="center">
-  <a href="https://ssrjkk.github.io/claude-skills/">Live Catalog Site</a> ·
-  <a href="https://github.com/ssrjkk/claude-skills/releases">Releases</a> ·
-  <a href="https://github.com/ssrjkk/claude-skills/issues">Issues</a> ·
-  <a href="https://github.com/ssrjkk/claude-skills/discussions">Discussions</a>
+  <a href="https://ssrjkk.github.io/agent-skills/">Live Catalog Site</a> ·
+  <a href="https://github.com/ssrjkk/agent-skills/releases">Releases</a> ·
+  <a href="https://github.com/ssrjkk/agent-skills/issues">Issues</a> ·
+  <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ssrjkk/claude-skills/main/.github/social-preview.svg" alt="Skills Library banner" width="640">
+  <img src="https://raw.githubusercontent.com/ssrjkk/agent-skills/main/.github/social-preview.svg" alt="Skills Library banner" width="640">
 </p>
 
 ---
@@ -31,17 +31,17 @@
 ## Install in one line
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ssrjkk/claude-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash
 ```
 
 Or clone directly into your agent's skills directory:
 
 | Agent      | Command |
 |------------|---------|
-| Claude Code | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.claude/skills` |
-| OpenCode   | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.opencode/skills` |
-| Cursor     | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.cursor/skills` |
-| Windsurf   | `git clone --depth 1 https://github.com/ssrjkk/claude-skills.git ~/.windsurf/skills` |
+| Claude Code | `git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.claude/skills` |
+| OpenCode   | `git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.opencode/skills` |
+| Cursor     | `git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills` |
+| Windsurf   | `git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills` |
 
 ## What is this?
 
@@ -217,7 +217,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ssrjkk/claude-skills@v3.4.0
+      - uses: ssrjkk/agent-skills@v3.4.0
         with:
           command: validate
           target: .claude/skills
@@ -263,11 +263,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 
 ## Links
 
-- [Live Catalog Site](https://ssrjkk.github.io/claude-skills/)
+- [Live Catalog Site](https://ssrjkk.github.io/agent-skills/)
 - [Architecture Guide](docs/ARCHITECTURE.md)
 - [Release Notes](docs/RELEASE_NOTES_v3.4.md)
 - [Roadmap](ROADMAP.md)
-- [Issue Tracker](https://github.com/ssrjkk/claude-skills/issues)
+- [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)
 
 ## Why this library
 

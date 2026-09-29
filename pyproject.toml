@@ -30,11 +30,11 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/ssrjkk/claude-skills"
-Documentation = "https://ssrjkk.github.io/claude-skills/"
-"Bug Tracker" = "https://github.com/ssrjkk/claude-skills/issues"
-Discussions = "https://github.com/ssrjkk/claude-skills/discussions"
-Roadmap = "https://github.com/ssrjkk/claude-skills/blob/main/ROADMAP.md"
+Source = "https://github.com/ssrjkk/agent-skills"
+Documentation = "https://ssrjkk.github.io/agent-skills/"
+"Bug Tracker" = "https://github.com/ssrjkk/agent-skills/issues"
+Discussions = "https://github.com/ssrjkk/agent-skills/discussions"
+Roadmap = "https://github.com/ssrjkk/agent-skills/blob/main/ROADMAP.md"
 PyPI = "https://pypi.org/project/claude-skills-library/"
 
 [project.optional-dependencies]
