@@ -10,7 +10,7 @@
 ## Planned
 
 ### v4.0 — Ecosystem
-- [ ] Publish `claude-skills-library` to PyPI (auto-publish on tags)
+- [ ] Publish `agent-skills-library` to PyPI (auto-publish on tags)
 - [ ] Add `skills_catalog.json` downloads and JSON Schema for the catalog
 - [ ] npm package for Node-based agents
 - [ ] Homebrew tap for macOS installs

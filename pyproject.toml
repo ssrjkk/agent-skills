@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "claude-skills-library"
+name = "agent-skills-library"
 version = "3.4.0"
 description = "59 curated bilingual (EN+RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent. Python SDK + CLI with CI-enforced validation and quality scoring."
 readme = "README.md"
@@ -35,7 +35,7 @@ Documentation = "https://ssrjkk.github.io/agent-skills/"
 "Bug Tracker" = "https://github.com/ssrjkk/agent-skills/issues"
 Discussions = "https://github.com/ssrjkk/agent-skills/discussions"
 Roadmap = "https://github.com/ssrjkk/agent-skills/blob/main/ROADMAP.md"
-PyPI = "https://pypi.org/project/claude-skills-library/"
+PyPI = "https://pypi.org/project/agent-skills-library/"
 
 [project.optional-dependencies]
 dev = [
