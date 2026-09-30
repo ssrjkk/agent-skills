@@ -2,7 +2,7 @@
   <img src="https://img.shields.io/badge/skills-100-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-16-orange?style=for-the-badge" alt="Domains">
-  <img src="https://img.shields.io/badge/quality-SSS%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
+  <img src="https://img.shields.io/badge/quality-A%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
@@ -104,7 +104,7 @@ Frontmatter is strictly validated for cross-agent portability in CI
 | Total skills | **100** |
 | Russian translations | **100 (100%)** |
 | Domains | **16** |
-| Quality score | **100% (SSS rank)** |
+| Quality score | **100% (Grade A)** |
 | Test coverage | **100%** |
 | License | MIT |
 
@@ -278,10 +278,6 @@ Every skill is scored on 5 dimensions:
 | Code Quality | 20% | Working code examples |
 | Freshness | 15% | Recency of last update |
 | Bilingual | 15% | Russian translation quality |
-
-**SSS rank** is the top tier: a skill must score 100% on all five dimensions
-**and** be structurally advanced — at least 4 code blocks and 90+ lines of body
-content. All 100 skills in this library hold the SSS rank.
 
 ## Domains (16)
 

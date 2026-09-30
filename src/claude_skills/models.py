@@ -39,8 +39,6 @@ class QualityScore:
     code_quality: float = 0.0
     freshness: float = 0.0
     bilingual: float = 0.0
-    code_blocks: int = 0
-    body_lines: int = 0
 
     @property
     def overall(self) -> float:
@@ -50,9 +48,6 @@ class QualityScore:
     @property
     def grade(self) -> str:
         score = self.overall
-        # SSS: perfect score AND advanced structure (>=4 code blocks, >=90 body lines)
-        if score >= 99.5 and self.code_blocks >= 4 and self.body_lines >= 90:
-            return "SSS"
         if score >= 90:
             return "A"
         if score >= 80:

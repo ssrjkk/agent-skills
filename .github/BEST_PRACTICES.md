@@ -71,6 +71,6 @@ Use skills:
 
 ## Validation
 
-- Run `make validate` and `make quality` — expect 0 errors, SSS rank.
+- Run `make validate` and `make quality` — expect 0 errors, Grade A.
 - Run `python scripts/check_agent_interop.py` for cross-agent portability.
 - Run `make test` before pushing changes.

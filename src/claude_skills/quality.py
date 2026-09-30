@@ -16,17 +16,12 @@ class QualityAnalyzer:
     }
 
     def analyze(self, skill_file: SkillFile) -> QualityScore:
-        body = skill_file.en_body or ""
-        code_blocks = body.count("```") // 2
-        body_lines = len(body.strip().split("\n")) if body.strip() else 0
         return QualityScore(
             completeness=self._score_completeness(skill_file),
             depth=self._score_depth(skill_file),
             code_quality=self._score_code_quality(skill_file),
             freshness=self._score_freshness(skill_file),
             bilingual=self._score_bilingual(skill_file),
-            code_blocks=code_blocks,
-            body_lines=body_lines,
         )
 
     def _score_completeness(self, skill: SkillFile) -> float:
@@ -124,7 +119,7 @@ class QualityReport:
 
     @property
     def grade_distribution(self) -> dict[str, int]:
-        dist: dict[str, int] = {"SSS": 0, "A": 0, "B": 0, "C": 0, "D": 0, "F": 0}
+        dist: dict[str, int] = {"A": 0, "B": 0, "C": 0, "D": 0, "F": 0}
         for s in self.scores.values():
             dist[s.grade] = dist.get(s.grade, 0) + 1
         return dist

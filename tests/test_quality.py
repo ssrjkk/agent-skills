@@ -41,8 +41,7 @@ class TestQualityAnalyzer:
         assert score.depth == 0.0
         assert score.overall > 0  # bilingual might be > 0 from freshness
 
-    def test_sss_grade_for_advanced_structure(self, analyzer: QualityAnalyzer):
-        # Build a long body with the required sections, many detail lines, and 4+ code blocks
+    def test_grade_a_for_complete_advanced_skill(self, analyzer: QualityAnalyzer):
         sections = ["Quick Start", "When to Use", "Best Practices", "Step-by-Step",
                     "Examples", "Validation", "Troubleshooting", "Dependencies"]
         parts = []
@@ -53,16 +52,8 @@ class TestQualityAnalyzer:
         sf = self._make_skill_file(body=body, created="2026-09-28",
                                    ru_body="\n".join("## " + s for s in ["Быстрый старт", "Когда использовать", "Практики", "Шаги", "Примеры", "Валидация", "Устранение", "Зависимости"]))
         score = analyzer.analyze(sf)
-        assert score.code_blocks >= 4
-        assert score.body_lines >= 90
         assert score.overall >= 99.5
-        assert score.grade == "SSS"
-
-    def test_a_grade_without_advanced_structure(self, analyzer: QualityAnalyzer):
-        body = "## Quick Start\nContent\n## When to Use\nContent\n## Step-by-Step\nContent\n## Examples\nContent\n## Validation\nContent"
-        sf = self._make_skill_file(body=body, created="2026-09-28", ru_body="## Быстрый старт\n## Когда использовать\n## Шаги\n## Примеры\n## Валидация")
-        score = analyzer.analyze(sf)
-        assert score.grade == "A" or score.code_blocks < 4 or score.body_lines < 90
+        assert score.grade == "A"
 
     def test_depth_calculation(self, analyzer: QualityAnalyzer):
         short = self._make_skill_file(body="Line1\nLine2\n")
