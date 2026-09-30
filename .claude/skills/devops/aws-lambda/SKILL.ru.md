@@ -52,11 +52,20 @@ Resources:
 - Фоновая обработка (ресайз изображений, отправка email)
 - Не для длительных процессов (> 15 минут)
 
+## Лучшие практики
+- Обработчики мелкие и идемпотентные для retries.
+- Память/таймаут под ворклоад и стоимость.
+- Конфиг через переменные окружения, не секреты в коде.
+- Lambda Powertools для логов, трейсинга и метрик.
+- Низкий cold start: минимум зависимостей и лёгкий рантайм.
+- Ошибки и dead-letter queues для async-инвокаций.
+
 ## Пошаговые инструкции
 1. Установите AWS SAM CLI
 2. Создайте SAM-шаблон с Lambda-функциями
 3. Напишите Handler-код
 4. Деплой: `sam deploy --guided`
+5. Добавьте наблюдаемость и алерты
 
 ## Зависимости
 ```bash
@@ -66,6 +75,38 @@ npm install aws-lambda @types/aws-lambda
 ```
 
 ## Примеры
+
+```typescript
+// Идемпотентный handler с обработкой ошибок
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+
+export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  try {
+    const id = event.pathParameters?.id;
+    const data = await getItem(id);
+    return { statusCode: 200, body: JSON.stringify(data) };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, body: JSON.stringify({ error: "internal" }) };
+  }
+}
+```
+```yaml
+# SAM-шаблон с env-конфигом
+Resources:
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable
+```
 Вход: GET /hello → Выход: `{ "message": "Hello from Lambda!" }`
 
 ## Ресурсы

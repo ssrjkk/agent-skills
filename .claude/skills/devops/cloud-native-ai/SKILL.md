@@ -138,6 +138,20 @@ kubectl get hpa vllm-hpa
 curl https://models.example.com/v1/chat/completions -d '{"model":"mistralai/Mistral-7B-v0.1","messages":[{"role":"user","content":"hi"}],"max_tokens":50}'
 ```
 
+## Best Practices
+- Run AI workloads in containers with pinned base images.
+- Use GPU resource requests/limits on Kubernetes for inference.
+- Cache models and embeddings to cut cold-start latency.
+- Scale inference horizontally behind a load balancer.
+- Monitor GPU utilization, latency, and error rates.
+- Use a service mesh or gateway for traffic control.
+
+## Troubleshooting
+- GPU not allocated: check nodeSelector, resources, and driver.
+- Cold start slow: preload models into shared memory or cache.
+- OOM on inference: batch requests or right-size the container.
+- Latency spikes: scale replicas and warm the model cache.
+
 ## Validation
 1. Model deployment completes with health check passing
 2. HPA scales based on GPU utilization

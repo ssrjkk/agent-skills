@@ -41,11 +41,21 @@ build:
 - Multi-project pipelines
 - Container registry integration
 
+## Best Practices
+- Name jobs clearly and keep each stage single-purpose.
+- Cache dependencies and use `needs` for fast pipelines.
+- Store secrets in CI/CD variables, masked and scoped.
+- Use rules (not only/except) for branch-based triggers.
+- Upload artifacts and reports for visibility.
+- Reuse logic with `include` and templates.
+
 ## Step-by-Step
 1. Add `.gitlab-ci.yml` to repo root
 2. Configure stages and jobs
 3. Set up GitLab Runner
 4. Push to trigger pipeline
+5. Add caching and rules
+6. Secure variables and deploy
 
 ## Dependencies
 ```bash
@@ -55,12 +65,34 @@ gitlab-runner register
 
 ## Examples
 ```yaml
+# Job with caching and rules
+test:
+  stage: test
+  image: node:20
+  cache:
+    key: npm
+    paths: [node_modules/]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script:
+    - npm ci
+    - npm test
+```
+```yaml
+# Reusable template via include
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - local: /ci/deploy.gitlab-ci.yml
+
 deploy:
   stage: deploy
+  image: docker:24
+  services: [docker:24-dind]
   only:
     - main
   script:
-    - kubectl apply -f k8s/
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
   environment: production
 ```
 

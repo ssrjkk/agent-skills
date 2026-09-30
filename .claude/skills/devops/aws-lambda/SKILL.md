@@ -52,11 +52,20 @@ Resources:
 - Background processing (resize images, send emails)
 - Not for long-running processes (>15 min)
 
+## Best Practices
+- Keep handlers small and idempotent for retries.
+- Set memory/timeout to match the workload and cost.
+- Use environment variables for config, not secrets in code.
+- Use Lambda Powertools for logging, tracing, and metrics.
+- Keep cold starts low: minimal deps and a lean runtime.
+- Handle errors and dead-letter queues for async invocations.
+
 ## Step-by-Step Instructions
 1. Install AWS SAM CLI
 2. Create SAM template with Lambda functions
 3. Write handler code
 4. Deploy: `sam deploy --guided`
+5. Add observability and alerts
 
 ## Dependencies
 ```bash
@@ -67,6 +76,38 @@ npm install aws-lambda @types/aws-lambda
 
 ## Examples
 Input: GET /hello → Output: `{ "message": "Hello from Lambda!" }`
+
+```typescript
+// Idempotent handler with error handling
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+
+export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  try {
+    const id = event.pathParameters?.id;
+    const data = await getItem(id);
+    return { statusCode: 200, body: JSON.stringify(data) };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, body: JSON.stringify({ error: "internal" }) };
+  }
+}
+```
+```yaml
+# SAM template with env config
+Resources:
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable
+```
 
 ## Resources
 - [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/)

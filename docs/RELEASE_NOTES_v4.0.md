@@ -2,8 +2,10 @@
 
 ## Highlights
 
-- **100/100 skills at 100.0% quality (Grade A)** across 16 domains — milestone
-  release.
+- **100/100 skills at the SSS rank** across 16 domains — milestone release.
+- **SSS rank** introduced: a skill must score 100% on all five quality
+  dimensions **and** be structurally advanced (4+ code blocks, 90+ lines).
+  All 100 skills qualify.
 - **35 new skills** covering the most in-demand topics:
 
   - `ai`: `structured-output`, `embeddings`, `context-engineering`,
@@ -25,8 +27,8 @@
 ## Quality Report
 
 ```
-100/100 skills at 100.0% (A)
-Grade A:  100/100
+100/100 skills at SSS rank
+SSS:  100/100
 Bilingual coverage: 100/100 (100%)
 Average score: 100.0
 ```

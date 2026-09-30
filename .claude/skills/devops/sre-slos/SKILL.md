@@ -129,6 +129,20 @@ sli_valid = p.custom_query('sum(rate(http_requests_total[28d]))')
 print("availability:", float(sli_good[0]["value"][1]) / float(sli_valid[0]["value"][1]))
 ```
 
+## Best Practices
+- Define SLIs that measure real user experience, not internals.
+- Set SLOs with error budgets and burn-rate alerts.
+- Use the four golden signals: latency, traffic, errors, saturation.
+- Track availability and latency over rolling windows.
+- Review SLO attainment in a monthly review.
+- Tie releases to error-budget health.
+
+## Troubleshooting
+- Budget exhausted: freeze risky changes and focus on reliability.
+- Noisy alerts: tune burn-rate windows and thresholds.
+- SLI drift: keep the measurement definition stable and reviewed.
+- Unreachable SLO: renegotiate with stakeholders and improve.
+
 ## Validation
 1. SLIs are accurately measured and reported
 2. SLO compliance dashboard shows current and historical status

@@ -178,7 +178,7 @@ def quality(dir: str | None, json: str | None, top: int):
     print(f"  Average bilingual:    {Fore.YELLOW}{avg.bilingual:.1f}%{Style.RESET_ALL}")
     print(f"\n  Overall score: {Fore.GREEN}{avg.overall:.1f}% ({avg.grade}){Style.RESET_ALL}\n")
 
-    for grade in ["A", "B", "C", "D", "F"]:
+    for grade in ["SSS", "A", "B", "C", "D", "F"]:
         print(f"    {grade}: {dist.get(grade, 0)}")
 
     print(f"\n   Top {top} skills:")

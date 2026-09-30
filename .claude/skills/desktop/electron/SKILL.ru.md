@@ -51,11 +51,20 @@ contextBridge.exposeInMainWorld('electronAPI', {
 - Приложения на веб-фреймворках (React, Vue, Svelte)
 - Не для лёгких приложений (лучше Tauri)
 
+## Лучшие практики
+- Держите main-процесс тонким; UI — в renderer.
+- `contextIsolation: true` и минимальный preload для IPC.
+- Общение через `ipcMain`/`ipcRenderer` с валидацией пейлоадов.
+- Упаковка через `asar`; исключайте dev-зависимости.
+- Обрабатывайте жизненный цикл окон на разных платформах.
+- Подписывайте и нотаризуйте для продакшн-дистрибуции.
+
 ## Пошаговые инструкции
 1. Инициализация: `npm init; npm install electron --save-dev`
 2. Создайте `main.js` с созданием окна
 3. Создайте `preload.js` для безопасного IPC
 4. Сборка и упаковка: `npx electron-builder`
+5. Подпись/нотаризация для релиза
 
 ## Зависимости
 ```bash
@@ -65,6 +74,34 @@ npm install electron-builder --save-dev
 
 ## Примеры
 Вход: `npm run start` → Выход: нативное десктоп-окно с веб-приложением
+
+```javascript
+// Безопасный main-процесс с contextIsolation
+const { app, BrowserWindow, ipcMain } = require("electron");
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+  win.loadURL("http://localhost:3000");
+}
+
+app.whenReady().then(createWindow);
+```
+```javascript
+// preload.js — безопасный IPC-мост
+const { contextBridge, ipcRenderer } = require("electron");
+
+contextBridge.exposeInMainWorld("api", {
+  getData: () => ipcRenderer.invoke("data:get"),
+});
+```
 
 ## Ресурсы
 - [Electron Docs](https://www.electronjs.org/docs)

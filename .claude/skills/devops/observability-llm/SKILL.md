@@ -108,6 +108,20 @@ python -m langfuse export-json --project your-project --output ./traces.json
 langfuse-compose up    # self-hosted Langfuse stack
 ```
 
+## Best Practices
+- Trace every LLM call with prompt, model, tokens, and latency.
+- Track cost per call and per user to catch abuse.
+- Add input/output logging for debugging and evals.
+- Alert on error rates, token overruns, and latency.
+- Use OpenTelemetry or a vendor like Langfuse/LangSmith.
+- Correlate LLM traces with app metrics and logs.
+
+## Troubleshooting
+- Missing traces: ensure the SDK auto-instruments the provider.
+- High cost: review prompts, caching, and model tier.
+- Latency spikes: check model load and retries.
+- Privacy: redact PII in logged prompts and responses.
+
 ## Validation
 1. Traces appear in Langfuse/LangSmith dashboard
 2. Token usage and costs are accurately tracked

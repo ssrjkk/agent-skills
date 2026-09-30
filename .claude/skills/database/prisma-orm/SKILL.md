@@ -50,11 +50,20 @@ const user = await prisma.user.create({
 - Rapid schema evolution with migrations
 - Not for complex raw SQL queries
 
+## Best Practices
+- Define the schema as the single source of truth; generate the client.
+- Use migrations for every schema change, committed with the code.
+- Select only needed fields (`select`) to avoid over-fetching.
+- Use `include`/`relationLoadStrategy` deliberately to prevent N+1.
+- Batch writes with `createMany`/`updateMany`.
+- Use transactions for multi-step consistency.
+
 ## Step-by-Step Instructions
 1. Install: `npm install prisma @prisma/client`
 2. Init: `npx prisma init`
 3. Define models in `schema.prisma`
 4. Migrate: `npx prisma migrate dev`
+5. Generate client and query with types
 
 ## Dependencies
 ```bash
@@ -64,6 +73,24 @@ npx prisma init
 
 ## Examples
 Input: `prisma.user.findMany({ where: { email: { contains: "@" } } })` → Output: All users with @ in email
+
+```typescript
+// Paginated, type-safe query with relations
+const page = await prisma.user.findMany({
+  where: { role: "member" },
+  select: { id: true, email: true, posts: { select: { title: true } } },
+  orderBy: { id: "desc" },
+  take: 20,
+  skip: 40,
+});
+```
+```typescript
+// Transaction for consistency
+await prisma.$transaction([
+  prisma.order.create({ data: { userId, amount } }),
+  prisma.user.update({ where: { id: userId }, data: { balance: { decrement: amount } } }),
+]);
+```
 
 ## Resources
 - [Prisma Docs](https://www.prisma.io/docs)

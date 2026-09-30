@@ -79,4 +79,5 @@ The quality score is a weighted composite of 5 dimensions:
 | Freshness | 15% | Recency of last update |
 | Bilingual | 15% | Russian translation quality |
 
-All 100 skills currently score 100.0% (Grade A).
+All 100 skills currently hold the SSS rank (100% score with 4+ code blocks
+and 90+ lines each).

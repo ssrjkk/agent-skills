@@ -125,6 +125,20 @@ kubectl get hpa vllm-hpa
 curl https://models.example.com/v1/chat/completions -d '{"model":"mistralai/Mistral-7B-v0.1","messages":[{"role":"user","content":"hi"}],"max_tokens":50}'
 ```
 
+## Лучшие практики
+- AI-нагрузки в контейнерах с закреплёнными базовыми образами.
+- GPU requests/limits на Kubernetes для инференса.
+- Кэшируйте модели и эмбеддинги против cold-start.
+- Масштабируйте инференс горизонтально за балансировщиком.
+- Мониторьте GPU, задержку и error rates.
+- Service mesh или gateway для контроля трафика.
+
+## Устранение неполадок
+- GPU не выделен: проверьте nodeSelector, resources и драйвер.
+- Медленный cold start: предзагрузите модели в shared memory или кэш.
+- OOM на инференсе: батчите запросы или увеличьте контейнер.
+- Спайки задержки: масштабируйте реплики и грейте кэш моделей.
+
 ## Валидация
 1. Деплой модели завершается, health check проходит
 2. HPA масштабируется по загрузке GPU

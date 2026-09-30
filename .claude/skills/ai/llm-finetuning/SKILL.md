@@ -50,11 +50,21 @@ trainer.train()
 - Task-specific fine-tuning (chat, code, classification)
 - Not for simple prompt engineering tasks
 
+## Best Practices
+- Start with a small LoRA adapter (r=16) on a capable base model.
+- Use QLoRA (4-bit) to fit larger models on consumer GPUs.
+- Prepare a clean, formatted dataset with validation split.
+- Track loss and a held-out metric per epoch; stop early.
+- Keep the base model frozen; adapt, not retrain.
+- Version datasets, base model, and adapter together.
+
 ## Step-by-Step Instructions
 1. Choose base model (Llama 3, Mistral, Qwen)
 2. Prepare training dataset in chat format
 3. Configure LoRA/QLoRA parameters
 4. Train and save adapter
+5. Evaluate on a held-out set
+6. Merge or serve the adapter
 
 ## Dependencies
 ```bash
@@ -63,6 +73,36 @@ pip install unsloth transformers datasets trl accelerate
 
 ## Examples
 Input: Training dataset of 1000 examples → Output: Fine-tuned LoRA adapter (50MB)
+
+```python
+# Inference with a fine-tuned adapter
+from unsloth import FastLanguageModel
+
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Meta-Llama-3.1-8B",
+    load_in_4bit=True,
+)
+model.load_adapter("lora-adapters/my-domain")
+
+FastLanguageModel.for_inference(model)
+output = model.generate(
+    tokenizer(["Explain the domain rule:"], return_tensors="pt")["input_ids"],
+    max_new_tokens=128,
+)
+print(tokenizer.batch_decode(output))
+```
+
+```python
+# Dataset formatting for chat fine-tuning
+def format_example(example):
+    return {
+        "text": "### User: {}\n### Assistant: {}".format(
+            example["prompt"], example["completion"]
+        )
+    }
+
+dataset = dataset.map(format_example)
+```
 
 ## Resources
 - [Unsloth](https://github.com/unslothai/unsloth)

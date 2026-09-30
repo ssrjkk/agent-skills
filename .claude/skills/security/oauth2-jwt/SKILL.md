@@ -52,11 +52,21 @@ function authMiddleware(req, res, next) {
 - Single sign-on (SSO) with OAuth providers
 - Not for server-to-server with API keys
 
+## Best Practices
+- Store passwords hashed (bcrypt/argon2), never plaintext.
+- Use short-lived access tokens (15m) and rotating refresh tokens.
+- Store refresh tokens server-side or in httpOnly cookies.
+- Verify signature, expiry, issuer, and audience on every token.
+- Use the Authorization Code + PKCE flow for browser clients.
+- Rotate signing keys and support JWKS with caching.
+
 ## Step-by-Step Instructions
 1. Install packages: `npm install jsonwebtoken bcrypt`
 2. Set up user model with hashed passwords
 3. Create login endpoint returning access + refresh tokens
 4. Add auth middleware to protected routes
+5. Implement token refresh with rotation
+6. Add scopes and audience checks
 
 ## Dependencies
 ```bash
@@ -66,6 +76,34 @@ npm install jsonwebtoken bcrypt
 
 ## Examples
 Input: Login with email/password → Output: `{ accessToken, refreshToken, expiresIn }`
+
+```typescript
+// Refresh with rotation
+router.post("/refresh", async (req, res) => {
+  const old = req.body.refreshToken;
+  const decoded = jwt.verify(old, process.env.JWT_REFRESH_SECRET!);
+  if (!isStored(old)) return res.status(401).json({ error: "revoked" });
+  revoke(old);
+  const accessToken = jwt.sign(
+    { userId: decoded.userId },
+    process.env.JWT_SECRET!,
+    { expiresIn: "15m" }
+  );
+  const refreshToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_REFRESH_SECRET!, { expiresIn: "7d" });
+  res.json({ accessToken, refreshToken });
+});
+```
+```typescript
+// Authorization check with scopes
+function requireScope(scope: string) {
+  return (req, res, next) => {
+    if (!req.user?.scopes?.includes(scope)) {
+      return res.status(403).json({ error: "insufficient_scope" });
+    }
+    next();
+  };
+}
+```
 
 ## Resources
 - [JWT.io](https://jwt.io/)
