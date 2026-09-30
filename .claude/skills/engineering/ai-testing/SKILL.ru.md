@@ -53,7 +53,7 @@ Source code:
 Generate tests only:'''
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=4096
     )
@@ -63,7 +63,7 @@ Generate tests only:'''
 # AI-валидация качества тестов
 def validate_test_quality(test_code: str) -> dict:
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         messages=[{"role": "user", "content": f'''Оцените набор тестов по:
 
 1. Coverage: покрыты ли edge cases?
@@ -124,6 +124,20 @@ pytest tests/ --cov=src --cov-fail-under=80 --cov-report=term-missing
 # Mutation testing spot-check
 pip install mutmut && mutmut run --paths-to-mutate src/
 ```
+
+## Лучшие практики
+- Тестируйте вывод модели на golden-наборе с детерминированными промптами.
+- LLM-as-judge с рубрикой для субъективного качества.
+- Регрессионные гейты в CI для изменений промпта/модели.
+- Трекайте токены, стоимость и задержку вместе с корректностью.
+- Edge cases: пустой ввод, adversarial, длинный контекст.
+- Детерминизм: temperature 0, фиксированный seed.
+
+## Устранение неполадок
+- Флаки скоре: чините недетерминизм сэмплинга.
+- Предвзятость судьи: калибруйте рубрику человеческими метками.
+- Медленный сьют: кэшируйте вызовы модели и сэмплируйте.
+- Дрейф: переоценка по расписанию и алерты на регрессии.
 
 ## Валидация
 1. AI-тесты проходят при прогоне по исходникам

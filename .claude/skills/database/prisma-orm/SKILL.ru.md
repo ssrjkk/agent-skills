@@ -50,11 +50,20 @@ const user = await prisma.user.create({
 - Быстрая эволюция схемы с миграциями
 - Не для сложных сырых SQL-запросов
 
+## Лучшие практики
+- Схема — единый источник правды; генерируйте клиент.
+- Миграции на каждое изменение схемы, коммитьте с кодом.
+- Берите только нужные поля (`select`) против over-fetching.
+- `include`/`relationLoadStrategy` осознанно против N+1.
+- Батч-записи через `createMany`/`updateMany`.
+- Транзакции для многошаговой консистентности.
+
 ## Пошаговые инструкции
 1. Установка: `npm install prisma @prisma/client`
 2. Инициализация: `npx prisma init`
 3. Опишите модели в `schema.prisma`
 4. Миграция: `npx prisma migrate dev`
+5. Генерация клиента и запросы с типами
 
 ## Зависимости
 ```bash
@@ -64,6 +73,24 @@ npx prisma init
 
 ## Примеры
 Вход: `prisma.user.findMany({ where: { email: { contains: "@" } } })` → Выход: все пользователи с @ в email
+
+```typescript
+// Пагинированный type-safe запрос со связями
+const page = await prisma.user.findMany({
+  where: { role: "member" },
+  select: { id: true, email: true, posts: { select: { title: true } } },
+  orderBy: { id: "desc" },
+  take: 20,
+  skip: 40,
+});
+```
+```typescript
+// Транзакция для консистентности
+await prisma.$transaction([
+  prisma.order.create({ data: { userId, amount } }),
+  prisma.user.update({ where: { id: userId }, data: { balance: { decrement: amount } } }),
+]);
+```
 
 ## Ресурсы
 - [Prisma Docs](https://www.prisma.io/docs)

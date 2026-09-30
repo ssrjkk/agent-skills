@@ -6,7 +6,7 @@ tags: [deno, runtime, typescript, javascript, secure]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Deno Runtime
 
@@ -92,6 +92,22 @@ Deno is secure by default — no file/network/env access without explicit flags.
 4. Run with explicit permissions: `deno run --allow-net --allow-read --allow-write --allow-env server.ts`.
 5. Iterate with watcher: `deno run --watch server.ts`, then format/lint with `deno fmt` / `deno lint`.
 6. Ship: `deno compile -A -o app-server server.ts` produces a standalone binary.
+
+## Best Practices
+- Run with the minimal permission flags the app actually needs (`--allow-net` only if no file access).
+- Prefer web-standard APIs (`fetch`, `Request`, `Response`) over Node-specific globals for portability.
+- Use JSR packages with explicit versions pinned in `deno.json` for reproducibility.
+- Keep handlers thin: parse, validate, and delegate to a service layer.
+- Use `Deno.serve` for zero-dependency servers; add Hono only when you need routing/middleware.
+- Validate request bodies before writing to the database to avoid bad rows.
+- Format and lint in CI (`deno fmt --check`, `deno lint`).
+- Use `deno task` to define and document common commands.
+
+## Troubleshooting
+- Permission errors: add the exact `--allow-*` flags your code needs.
+- Port in use: change the port or stop the conflicting process.
+- Missing module: pin versions in `deno.json` imports and re-run `deno install`.
+- SQLite locked: use a single connection or wrap writes in a transaction.
 
 ## Examples
 ```typescript

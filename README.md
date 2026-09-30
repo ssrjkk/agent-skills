@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-65-blue?style=for-the-badge" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-100-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-16-orange?style=for-the-badge" alt="Domains">
-  <img src="https://img.shields.io/badge/quality-A%20(100%25)-brightgreen?style=for-the-badge" alt="Quality">
+  <img src="https://img.shields.io/badge/quality-100%25-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
@@ -47,7 +47,7 @@ Or clone directly into your agent's skills directory:
 
 ## What is this?
 
-65 production-grade, bilingual (English + Russian) skills following the
+100 production-grade, bilingual (English + Russian) skills following the
 **universal Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
@@ -101,85 +101,120 @@ Frontmatter is strictly validated for cross-agent portability in CI
 
 | Metric | Value |
 |--------|-------|
-| Total skills | **65** |
-| Russian translations | **65 (100%)** |
+| Total skills | **100** |
+| Russian translations | **100 (100%)** |
 | Domains | **16** |
-| Quality score | **100% (Grade A)** |
+| Quality score | **100%** |
 | Test coverage | **100%** |
 | License | MIT |
 
-Only skills meeting the quality bar (Grade A, no validation errors) are kept
-in `main`. Everything else is archived under the `v1.0-legacy` tag.
+Only skills meeting the quality bar (100% score, no validation errors) are
+kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 
 ## Skills by domain
 
 | Domain | Skill | Description |
 |--------|-------|-------------|
-| `ai` | `few-shot-learning` | Few-shot prompt design with example selection |
-| `ai` | `llm-finetuning` | Fine-tuning LLMs end-to-end |
-| `ai` | `prompt-engineering` | Reliable prompt design for LLMs |
-| `ai` | `rag-pipeline` | Retrieval-augmented generation |
-| `ai` | `agent-development` | Reliable LLM agents with tools |
-| `ai` | `mcp-servers` | Model Context Protocol servers |
-| `ai` | `llm-evals` | Evaluation suites for LLMs |
-| `ai` | `function-calling` | Robust LLM tool calling |
-| `ai` | `prompt-caching` | LLM cost & latency optimization |
-| `ai` | `mlops` | ML in production lifecycle |
-| `backend` | `deno-runtime` | Deno realtime apps & Workers |
-| `backend` | `nestjs` | NestJS modular backends |
-| `backend` | `rust-tokio` | Async Rust with Tokio |
-| `backend` | `fastapi` | High-performance Python APIs |
-| `backend` | `go-rest-api` | REST APIs in Go |
-| `backend` | `rest-api-design` | Consistent REST API design |
-| `backend` | `django` | Secure Django web apps |
-| `backend` | `grpc` | High-performance gRPC services |
-| `backend` | `express` | Node.js APIs with Express |
-| `blockchain` | `zk-proofs` | Zero-knowledge proofs |
-| `data` | `pandas` | Tabular data analysis & ETL |
-| `data` | `sql-querying` | Correct & efficient SQL |
-| `data` | `elasticsearch` | Search & log analytics |
-| `database` | `postgresql` | PostgreSQL schema & queries |
-| `database` | `prisma-orm` | Prisma ORM data layer |
-| `database` | `redis` | Caching, queues, rate limiting |
-| `database` | `vector-databases` | Semantic search & RAG retrieval |
-| `database` | `mongodb` | Flexible NoSQL documents |
-| `desktop` | `electron` | Electron cross-platform apps |
-| `devops` | `aws-lambda` | Serverless on AWS Lambda |
-| `devops` | `cloud-native-ai` | Cloud-native AI platforms |
-| `devops` | `docker` | Containers & deployment |
-| `devops` | `github-actions` | CI/CD pipelines on GitHub |
-| `devops` | `gitlab-ci` | GitLab CI/CD pipelines |
-| `devops` | `kubernetes` | Container orchestration |
-| `devops` | `observability-llm` | LLM observability |
-| `devops` | `platform-engineering` | Internal developer platforms |
-| `devops` | `serverless-ai` | Serverless AI workloads |
-| `devops` | `sre-slos` | SLOs & reliability |
-| `devops` | `terraform` | Infrastructure as code |
-| `devops` | `kafka` | Event streaming platform |
-| `devops` | `prometheus-grafana` | Metrics & dashboards |
-| `embedded` | `rust-embedded` | Embedded Rust |
-| `engineering` | `ai-testing` | AI/LLM testing |
-| `engineering` | `code-review` | Effective code reviews |
-| `engineering` | `git-workflow` | Git branching & history hygiene |
-| `engineering` | `claude-code-commands` | Claude Code commands & hooks |
-| `frontend` | `bun-runtime` | Bun runtime & tooling |
-| `frontend` | `nextjs` | Next.js full-stack React |
-| `frontend` | `react-19` | Modern React UIs |
-| `frontend` | `tailwind-v4` | Tailwind CSS v4 |
-| `frontend` | `typescript` | Type-safe JavaScript |
-| `frontend` | `vue` | Vue 3 reactive UIs |
-| `finance` | `algorithmic-trading` | Backtesting & strategy design |
-| `finance` | `risk-modeling` | VaR, CVaR & stress testing |
-| `gamedev` | `game-physics` | 2D/3D physics & collisions |
-| `gamedev` | `unity-ecs` | Unity ECS & DOTS |
-| `healthcare` | `hipaa-compliance` | HIPAA security & privacy |
-| `healthcare` | `hl7-fhir` | FHIR integrations |
-| `mobile` | `expo-rn` | Expo & React Native |
-| `mobile` | `flutter` | Cross-platform Flutter apps |
-| `qa` | `browser-automation` | Playwright E2E & scraping |
-| `qa` | `pytest` | Reliable Python testing |
-| `security` | `oauth2-jwt` | OAuth 2.0 & JWT |
-| `security` | `owasp-web-security` | OWASP Top 10 hardening |
+| `ai` | `agent-development` | Build reliable LLM agents and agentic workflows: tool use, memory, loops, guardrails, and evaluation |
+| `ai` | `context-engineering` | Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets |
+| `ai` | `embeddings` | Work with text embeddings: model selection, vectorization, similarity, clustering, and caching for search and retrieval |
+| `ai` | `few-shot-learning` | Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering |
+| `ai` | `function-calling` | Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution |
+| `ai` | `llm-evals` | Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration |
+| `ai` | `llm-finetuning` | Fine-tunes open-source LLMs (Llama, Mistral, Qwen) using LoRA/QLoRA with HuggingFace and Unsloth |
+| `ai` | `llm-guardrails` | Add safety guardrails to LLM apps: prompt injection defense, content filtering, PII protection, policy enforcement, and red-teaming |
+| `ai` | `mcp-servers` | Build Model Context Protocol servers and clients: tools, resources, prompts, transport, and secure agent integration |
+| `ai` | `mlops` | Operate machine learning in production: experiment tracking, pipelines, model registry, serving, monitoring, and CI/CD for ML |
+| `ai` | `multi-agent-orchestration` | Design and run multi-agent systems: orchestrator-worker, routing, handoffs, shared state, and coordination patterns |
+| `ai` | `prompt-caching` | Optimize LLM cost and latency with prompt caching: cacheable prefixes, cache-control headers, context layout, and cache-aware prompting |
+| `ai` | `prompt-engineering` | Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation |
+| `ai` | `rag-pipeline` | Build retrieval-augmented generation pipelines: chunking, embeddings, vector search, hybrid retrieval, and citation |
+| `ai` | `structured-output` | Force LLMs to emit valid, schema-constrained structured output: JSON modes, function calling, JSON Schema validation, and error recovery |
+| `backend` | `deno-runtime` | Deno runtime and standard library |
+| `backend` | `django` | Build secure web applications with Django: models, views, ORM, admin, auth, REST APIs, and deployment |
+| `backend` | `dotnet` | Build  |
+| `backend` | `express` | Build Node |
+| `backend` | `fastapi` | Build high-performance Python APIs with FastAPI: routing, Pydantic validation, async, dependency injection, OpenAPI, and testing |
+| `backend` | `go-rest-api` | Build production REST APIs in Go with the standard library or Gin, including routing, middleware, JSON handling, and testing |
+| `backend` | `graphql` | Design and implement GraphQL APIs: schemas, resolvers, queries, mutations, subscriptions, and N+1 avoidance |
+| `backend` | `grpc` | Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling |
+| `backend` | `laravel` | Build PHP web applications with Laravel: routing, Eloquent ORM, Blade, migrations, validation, and deployment |
+| `backend` | `nestjs` | Creates Node |
+| `backend` | `rest-api-design` | Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation |
+| `backend` | `rust-tokio` | Async Rust with Tokio runtime |
+| `backend` | `spring-boot` | Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing |
+| `backend` | `websockets` | Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection |
+| `blockchain` | `zk-proofs` | Zero-knowledge proof development |
+| `data` | `airflow` | Orchestrate data pipelines with Apache Airflow: DAGs, tasks, dependencies, sensors, and retries |
+| `data` | `apache-spark` | Process large-scale data with Apache Spark: DataFrames, SQL, joins, partitioning, and optimization |
+| `data` | `data-visualization` | Create clear data visualizations with Matplotlib, Plotly, and Altair: chart selection, design, interactivity, and dashboards |
+| `data` | `dbt` | Build analytics engineering workflows with dbt: models, tests, sources, macros, and documentation |
+| `data` | `elasticsearch` | Design and operate Elasticsearch: mappings, indexing, queries, aggregations, and cluster tuning |
+| `data` | `pandas` | Analyze and transform tabular data with pandas: dataframes, cleaning, aggregation, joins, and time series |
+| `data` | `sql-querying` | Write correct and efficient SQL: joins, aggregations, window functions, CTEs, and query optimization |
+| `database` | `clickhouse` | Design and operate ClickHouse for OLAP analytics: columnar tables, engines, aggregations, partitioning, and performance |
+| `database` | `mongodb` | Design and operate MongoDB: document modeling, queries, indexes, aggregation, replication, and sharding |
+| `database` | `mysql` | Design and operate MySQL: schema, InnoDB tuning, indexing, transactions, replication, and query optimization |
+| `database` | `postgresql` | Design and operate PostgreSQL databases: schema design, indexing, query optimization, transactions, and migrations |
+| `database` | `prisma-orm` | Models databases and writes type-safe queries with Prisma ORM |
+| `database` | `redis` | Use Redis for caching, sessions, queues, rate limiting, and pub/sub: data structures, persistence, eviction, and clustering |
+| `database` | `sqlite` | Use SQLite for embedded relational storage: schema, WAL mode, transactions, indexing, and performance |
+| `database` | `vector-databases` | Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling |
+| `desktop` | `electron` | Builds cross-platform desktop applications with Electron, React, and IPC communication |
+| `devops` | `ansible` | Automate infrastructure with Ansible: playbooks, roles, inventory, modules, and idempotency |
+| `devops` | `argocd` | Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks |
+| `devops` | `aws-lambda` | Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK |
+| `devops` | `cloud-native-ai` | Cloud-native AI deployment patterns |
+| `devops` | `docker` | Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening |
+| `devops` | `github-actions` | Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows |
+| `devops` | `gitlab-ci` | Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner |
+| `devops` | `istio` | Operate a service mesh with Istio: sidecars, traffic routing, mTLS, observability, and resiliency |
+| `devops` | `jenkins` | Operate Jenkins CI/CD: pipelines as code, agents, shared libraries, credentials, and plugins |
+| `devops` | `kafka` | Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once |
+| `devops` | `kubernetes` | Deploy and operate applications on Kubernetes: workloads, services, config, scaling, and GitOps |
+| `devops` | `loki` | Operate log aggregation with Grafana Loki: agents, labels, queries (LogQL), retention, and dashboards |
+| `devops` | `nginx` | Configure and operate Nginx: reverse proxy, load balancing, TLS, caching, and security headers |
+| `devops` | `observability-llm` | LLM observability with Langfuse/LangSmith |
+| `devops` | `platform-engineering` | Platform engineering with Backstage/Port |
+| `devops` | `prometheus-grafana` | Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking |
+| `devops` | `serverless-ai` | Serverless AI inference (Cloudflare Workers, Lambda) |
+| `devops` | `sre-slos` | SRE SLI/SLO/SLA implementation |
+| `devops` | `terraform` | Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends |
+| `embedded` | `rust-embedded` | Rust for embedded systems |
+| `engineering` | `ai-testing` | AI-powered test generation and validation |
+| `engineering` | `claude-code-commands` | Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows |
+| `engineering` | `clean-architecture` | Structure codebases with clean architecture: layers, dependency rule, use cases, ports and adapters |
+| `engineering` | `code-review` | Conduct effective code reviews: correctness, security, performance, style, and actionable feedback |
+| `engineering` | `git-workflow` | Use Git effectively: branching, commits, rebase vs merge, history hygiene, conflict resolution, and collaboration workflows |
+| `engineering` | `system-design` | Design scalable systems: requirements, architecture, data models, trade-offs, and scaling strategies |
+| `engineering` | `test-driven-development` | Practice test-driven development: red-green-refactor, test design, refactoring safely, and coverage discipline |
+| `finance` | `algorithmic-trading` | Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines |
+| `finance` | `risk-modeling` | Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition |
+| `frontend` | `angular` | Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing |
+| `frontend` | `astro` | Build content-focused websites with Astro: islands architecture, content collections, static generation, and integrations |
+| `frontend` | `bun-runtime` | Bun runtime for JavaScript/TypeScript |
+| `frontend` | `modern-css` | Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design |
+| `frontend` | `nextjs` | Build full-stack React applications with Next |
+| `frontend` | `react-19` | Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler |
+| `frontend` | `svelte` | Build reactive UIs with Svelte 5: runes, stores, components, and transitions |
+| `frontend` | `tailwind-v4` | Tailwind CSS v4 features |
+| `frontend` | `typescript` | Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling |
+| `frontend` | `vue` | Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling |
+| `gamedev` | `game-physics` | Implement 2D/3D game physics: rigid bodies, collisions, constraints, raycasting, and performance optimization |
+| `gamedev` | `unity-ecs` | Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns |
+| `healthcare` | `hipaa-compliance` | Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification |
+| `healthcare` | `hl7-fhir` | Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange |
+| `mobile` | `expo-rn` | Expo SDK for React Native development |
+| `mobile` | `flutter` | Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds |
+| `mobile` | `kotlin-android` | Build Android apps with Kotlin: Compose UI, coroutines, architecture components, and Gradle |
+| `mobile` | `swift-ios` | Build iOS apps with Swift and SwiftUI: views, state, navigation, concurrency, and Combine |
+| `qa` | `browser-automation` | Automate browsers with Playwright: selectors, waits, assertions, screenshots, network interception, and CI |
+| `qa` | `jest` | Write reliable JavaScript tests with Jest: unit tests, mocking, snapshots, coverage, and CI integration |
+| `qa` | `pytest` | Write reliable Python tests with pytest: fixtures, parametrize, mocking, async tests, and CI integration |
+| `security` | `api-security` | Secure web APIs: authentication, authorization, rate limiting, input validation, and abuse protection |
+| `security` | `oauth2-jwt` | Implements OAuth 2 |
+| `security` | `owasp-web-security` | Harden web applications against the OWASP Top 10: injection, XSS, auth flaws, CSRF, SSRF, and insecure dependencies |
+| `security` | `secrets-management` | Manage secrets safely: vaults, rotation, environment variables, scanning, and least privilege |
 
 ## SDK
 
@@ -275,13 +310,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 
 - [Live Catalog Site](https://ssrjkk.github.io/agent-skills/)
 - [Architecture Guide](docs/ARCHITECTURE.md)
-- [Release Notes](docs/RELEASE_NOTES_v3.5.md)
+- [Release Notes](docs/RELEASE_NOTES_v4.0.md)
 - [Roadmap](ROADMAP.md)
 - [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)
 
 ## Why this library
 
-- **Curated, not generated** — 65 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — 100 hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No

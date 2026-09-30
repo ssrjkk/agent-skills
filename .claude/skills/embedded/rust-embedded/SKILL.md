@@ -6,7 +6,7 @@ tags: [rust, embedded, microcontroller, no-std, arm, risc-v]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Rust Embedded
 
@@ -137,6 +137,20 @@ cargo build --release
 cargo size --release
 cargo embed --release   # flashes via probe-rs using the target config
 ```
+
+## Best Practices
+- Use `no_std` crates for bare-metal targets.
+- Keep memory and stack usage bounded and profiled.
+- Use interrupts and DMA for I/O; avoid busy polling.
+- Pin toolchain and target for reproducible builds.
+- Test on hardware with a CI runner or QEMU.
+- Use a RTOS (RTIC/embassy) for concurrency.
+
+## Troubleshooting
+- Link errors: check target triple and memory layout.
+- Stack overflow: increase stack or profile usage.
+- Flaky interrupts: check priorities and critical sections.
+- No output: verify the UART config and baud rate.
 
 ## Validation
 1. `cargo build --target thumbv7em-none-eabihf` compiles without std

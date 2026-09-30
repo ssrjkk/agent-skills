@@ -6,7 +6,7 @@ tags: [nestjs, nodejs, typescript, api, decorators]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # NestJS
 
@@ -87,6 +87,20 @@ nest g resource users --no-spec
 curl http://localhost:3000/users
 curl -X POST http://localhost:3000/users -H "content-type: application/json" -d '{"email":"a@b.c","name":"Alice"}'
 ```
+
+## Best Practices
+- Organize by feature modules with clear providers and controllers.
+- Use DTOs and ValidationPipe for typed request/response contracts.
+- Inject services via constructor DI; keep controllers thin.
+- Use interceptors for logging, guards for auth, and filters for errors.
+- Prefer async handlers and non-blocking database access.
+- Write e2e tests with supertest against the full Nest app.
+
+## Troubleshooting
+- DI errors: verify providers are registered in the right module.
+- Validation not firing: ensure ValidationPipe is applied globally.
+- Circular imports: use forwardRef() and split the module.
+- Slow handlers: move heavy work to a queue or cache results.
 
 ## Validation
 1. Server starts on port 3000

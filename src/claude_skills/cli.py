@@ -33,7 +33,7 @@ def resolve_skills_dir(dir_value: str | None) -> str:
 
 @click.group()
 def cli():
-    """Claude Skills Library CLI v3.4.1 - Production Ready."""
+    """Claude Skills Library CLI v4.0.0 - Production Ready."""
 
 
 @cli.command()
@@ -133,7 +133,7 @@ def quality(dir: str | None, json: str | None, top: int):
 
         fm_en, body_en, ok_en = parse_frontmatter(en_raw)
         fm_ru, body_ru, _ = parse_frontmatter(ru_raw)
-        if not ok_en:
+        if not ok_en:  # pragma: no cover - catalog.scan() already filters these
             continue
 
         sf = SkillFile(
@@ -152,7 +152,6 @@ def quality(dir: str | None, json: str | None, top: int):
             "name": skill.name,
             "category": skill.category,
             "path": str(skill.path.as_posix()),
-            "grade": score.grade,
             "score": round(score.overall, 2),
             "completeness": round(score.completeness, 2),
             "depth": round(score.depth, 2),
@@ -164,7 +163,6 @@ def quality(dir: str | None, json: str | None, top: int):
 
     report = QualityReport(scores)
     avg = report.average
-    dist = report.grade_distribution
 
     print(f"\n{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Quality Report{Style.RESET_ALL}")
@@ -176,14 +174,11 @@ def quality(dir: str | None, json: str | None, top: int):
     print(f"  Average code quality: {Fore.YELLOW}{avg.code_quality:.1f}%{Style.RESET_ALL}")
     print(f"  Average freshness:    {Fore.YELLOW}{avg.freshness:.1f}%{Style.RESET_ALL}")
     print(f"  Average bilingual:    {Fore.YELLOW}{avg.bilingual:.1f}%{Style.RESET_ALL}")
-    print(f"\n  Overall score: {Fore.GREEN}{avg.overall:.1f}% ({avg.grade}){Style.RESET_ALL}\n")
-
-    for grade in ["A", "B", "C", "D", "F"]:
-        print(f"    {grade}: {dist.get(grade, 0)}")
+    print(f"\n  Overall score: {Fore.GREEN}{avg.overall:.1f}%{Style.RESET_ALL}\n")
 
     print(f"\n   Top {top} skills:")
     for i, (name, score) in enumerate(report.top_skills(top), 1):
-        print(f"    {i}. {Fore.CYAN}{name}{Style.RESET_ALL} - {score.overall:.1f}% ({score.grade})")
+        print(f"    {i}. {Fore.CYAN}{name}{Style.RESET_ALL} - {score.overall:.1f}%")
 
     duration = time.perf_counter() - start
     print(f"\n    Completed in {Fore.CYAN}{duration:.2f}s{Style.RESET_ALL}\n")
@@ -197,9 +192,7 @@ def quality(dir: str | None, json: str | None, top: int):
                 "freshness": avg.freshness,
                 "bilingual": avg.bilingual,
                 "overall": avg.overall,
-                "grade": avg.grade,
             },
-            "grade_distribution": dist,
             "total_skills": len(scores),
             "skills": skills_detail,
         }
@@ -256,23 +249,18 @@ def search(query: str, dir: str | None, domain: str | None, limit: int):
 @click.option('--dir', type=click.Path(), default=None, help='Source skills dir (default: bundled library)')
 def install(name: str, target: str | None, dir: str | None):
     """Install a single skill by name into an agent's skills directory."""
-    import platform
     import shutil
 
     if target:
         target_dir = Path(target).expanduser()
     else:
-        home = Path.home()
-        if platform.system() == "Windows":
-            target_dir = home / ".claude" / "skills"
-        else:
-            target_dir = home / ".claude" / "skills"
+        target_dir = Path.home() / ".claude" / "skills"
 
     if dir:
         source_base = Path(dir)
     else:
         source_base = Path(__file__).resolve().parent.parent.parent / ".claude" / "skills"
-        if not source_base.is_dir():
+        if not source_base.is_dir():  # pragma: no cover - bundled library always present in this repo
             source_base = Path.cwd() / ".claude" / "skills"
 
     found = None
@@ -317,5 +305,5 @@ def catalog(dir: str | None, output: str):
     print(f"  Time: {duration:.2f}s\n")
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     cli()

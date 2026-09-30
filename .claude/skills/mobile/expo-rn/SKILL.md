@@ -6,7 +6,7 @@ tags: [expo, react-native, mobile, ios, android, cross-platform]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Expo SDK
 
@@ -118,6 +118,20 @@ npx expo prebuild
 eas build --platform android --profile preview
 npx expo update
 ```
+
+## Best Practices
+- Use Expo SDK with Expo Go for fast development iteration.
+- Manage dependencies with `expo install` for compatible versions.
+- Structure with typed components and hooks for shared logic.
+- Handle deep links and navigation with expo-router.
+- Optimize images and use expo-av for media carefully.
+- Test on both platforms; use EAS for builds.
+
+## Troubleshooting
+- Version mismatch: run `npx expo install --fix`.
+- Build failures: check EAS credentials and app config.
+- Native module missing: prebuild and add the config plugin.
+- Slow reload: split the bundle and avoid heavy imports.
 
 ## Validation
 1. `npx expo start` launches Metro bundler successfully

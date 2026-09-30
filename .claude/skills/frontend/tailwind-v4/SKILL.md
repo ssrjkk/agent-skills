@@ -6,7 +6,7 @@ tags: [tailwind, css, v4, design, styling]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Tailwind CSS v4
 
@@ -122,6 +122,20 @@ Tailwind v4 is CSS-first (no tailwind.config.js). New features: `@theme` directi
   </div>
 </div>
 ```
+
+## Best Practices
+- Configure the theme via CSS `@theme` tokens, not config files.
+- Use utility-first classes; extract components only when repeated.
+- Leverage responsive and state variants (`hover:`, `md:`).
+- Use `@apply` sparingly; prefer utilities in markup.
+- Add custom utilities with `@utility` for repeated patterns.
+- Enable content scanning for your template paths.
+
+## Troubleshooting
+- Classes not generated: check the content globs.
+- Build too slow: narrow the content paths.
+- Override issues: use variant ordering or `!` for important.
+- v4 vs v3 config: migrate `tailwind.config` to CSS `@theme`.
 
 ## Validation
 1. `@theme` custom properties are available in all utility classes

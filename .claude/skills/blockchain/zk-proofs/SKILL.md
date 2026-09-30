@@ -6,7 +6,7 @@ tags: [zk-proofs, circom, snarkjs, cryptography, blockchain]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Zero-Knowledge Proofs
 
@@ -108,6 +108,20 @@ snarkjs zkey export solidityverifier circuit_final.zkey Verifier.sol
 snarkjs generatecall
 # paste the returned inputs into `verifier.verifyProof(...)`
 ```
+
+## Best Practices
+- Keep the circuit logic minimal and auditable; reuse audited templates.
+- Use Circom for arithmetic circuits; test with witness generation.
+- Generate and verify proofs with snarkjs; pin the trusted setup.
+- Validate public inputs on-chain before verifying the proof.
+- Keep trusted setup ceremony artifacts versioned and signed.
+- Profile constraint count; simplify to stay within limits.
+
+## Troubleshooting
+- Constraint overflow: refactor or split the circuit.
+- Proof mismatch: ensure the same circuit hash and inputs are used.
+- Trusted setup errors: re-download and verify the ceremony artifacts.
+- Verification fails on-chain: check gas and public input encoding.
 
 ## Validation
 1. Circuit compiles with `circom` without errors

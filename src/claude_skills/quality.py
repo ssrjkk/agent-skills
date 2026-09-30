@@ -132,7 +132,6 @@ class QualityReport:
 
     def summary(self) -> str:
         avg = self.average
-        dist = self.grade_distribution
         lines = [
             "=" * 60,
             "QUALITY REPORT",
@@ -143,9 +142,6 @@ class QualityReport:
             f"Average code quality: {avg.code_quality:.1f}%",
             f"Average freshness:    {avg.freshness:.1f}%",
             f"Average bilingual:    {avg.bilingual:.1f}%",
-            f"Overall score:        {avg.overall:.1f}% ({avg.grade})",
-            "",
-            "Grade distribution:",
-            *[f"  {g}: {n}" for g, n in sorted(dist.items())],
+            f"Overall score:        {avg.overall:.1f}%",
         ]
         return "\n".join(lines)

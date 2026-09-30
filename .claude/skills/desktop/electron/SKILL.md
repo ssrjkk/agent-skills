@@ -6,7 +6,7 @@ tags: [electron, desktop, react, native, cross-platform]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Electron
 
@@ -51,11 +51,20 @@ contextBridge.exposeInMainWorld('electronAPI', {
 - Apps built with web frameworks (React, Vue, Svelte)
 - Not for lightweight apps (better Tauri)
 
+## Best Practices
+- Keep the main process thin; renderer owns the UI.
+- Use `contextIsolation: true` and a minimal preload for IPC.
+- Communicate via `ipcMain`/`ipcRenderer` with validated payloads.
+- Use `asar` packaging and exclude dev dependencies.
+- Handle window lifecycle across platforms.
+- Sign and notarize for production distribution.
+
 ## Step-by-Step Instructions
 1. Init: `npm init; npm install electron --save-dev`
 2. Create `main.js` with window creation
 3. Create `preload.js` for secure IPC
 4. Build and package: `npx electron-builder`
+5. Sign/notarize for release
 
 ## Dependencies
 ```bash
@@ -65,6 +74,34 @@ npm install electron-builder --save-dev
 
 ## Examples
 Input: `npm run start` → Output: Native desktop window with web app
+
+```javascript
+// Secure main process with contextIsolation
+const { app, BrowserWindow, ipcMain } = require("electron");
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+  win.loadURL("http://localhost:3000");
+}
+
+app.whenReady().then(createWindow);
+```
+```javascript
+// preload.js — safe IPC bridge
+const { contextBridge, ipcRenderer } = require("electron");
+
+contextBridge.exposeInMainWorld("api", {
+  getData: () => ipcRenderer.invoke("data:get"),
+});
+```
 
 ## Resources
 - [Electron Docs](https://www.electronjs.org/docs)

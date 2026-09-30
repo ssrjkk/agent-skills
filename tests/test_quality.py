@@ -41,6 +41,20 @@ class TestQualityAnalyzer:
         assert score.depth == 0.0
         assert score.overall > 0  # bilingual might be > 0 from freshness
 
+    def test_grade_a_for_complete_advanced_skill(self, analyzer: QualityAnalyzer):
+        sections = ["Quick Start", "When to Use", "Best Practices", "Step-by-Step",
+                    "Examples", "Validation", "Troubleshooting", "Dependencies"]
+        parts = []
+        for s in sections:
+            parts.append("## " + s)
+            parts.extend(f"Detail line {j} for {s}" for j in range(12))
+        body = "\n".join(parts) + "\n" + ("```python\nx = 1\n```\n" * 4)
+        sf = self._make_skill_file(body=body, created="2026-09-28",
+                                   ru_body="\n".join("## " + s for s in ["Быстрый старт", "Когда использовать", "Практики", "Шаги", "Примеры", "Валидация", "Устранение", "Зависимости"]))
+        score = analyzer.analyze(sf)
+        assert score.overall >= 99.5
+        assert score.grade == "A"
+
     def test_depth_calculation(self, analyzer: QualityAnalyzer):
         short = self._make_skill_file(body="Line1\nLine2\n")
         assert analyzer._score_depth(short) < 50

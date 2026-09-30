@@ -50,11 +50,21 @@ trainer.train()
 - Задача-специфичное дообучение (чат, код, классификация)
 - Не для простых задач prompt engineering
 
+## Лучшие практики
+- Начните с небольшого LoRA-адаптера (r=16) на способной базовой модели.
+- QLoRA (4-bit) для более крупных моделей на потребительских GPU.
+- Чистый, отформатированный датасет с валидационным сплитом.
+- Отслеживайте loss и метрику на отложенной выборке по эпохам; early stop.
+- Базовая модель заморожена; адаптируем, а не переобучаем.
+- Версионируйте датасет, базовую модель и адаптер вместе.
+
 ## Пошаговые инструкции
 1. Выберите базовую модель (Llama 3, Mistral, Qwen)
 2. Подготовьте обучающий датасет в chat-формате
 3. Настройте параметры LoRA/QLoRA
 4. Обучите и сохраните адаптер
+5. Оцените на отложенной выборке
+6. Мёрджите или сервите адаптер
 
 ## Зависимости
 ```bash
@@ -63,6 +73,36 @@ pip install unsloth transformers datasets trl accelerate
 
 ## Примеры
 Вход: обучающий датасет из 1000 примеров → Выход: дообученный LoRA-адаптер (50MB)
+
+```python
+# Инференс с дообученным адаптером
+from unsloth import FastLanguageModel
+
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Meta-Llama-3.1-8B",
+    load_in_4bit=True,
+)
+model.load_adapter("lora-adapters/my-domain")
+
+FastLanguageModel.for_inference(model)
+output = model.generate(
+    tokenizer(["Explain the domain rule:"], return_tensors="pt")["input_ids"],
+    max_new_tokens=128,
+)
+print(tokenizer.batch_decode(output))
+```
+
+```python
+# Форматирование датасета для chat-дообучения
+def format_example(example):
+    return {
+        "text": "### User: {}\n### Assistant: {}".format(
+            example["prompt"], example["completion"]
+        )
+    }
+
+dataset = dataset.map(format_example)
+```
 
 ## Ресурсы
 - [Unsloth](https://github.com/unslothai/unsloth)

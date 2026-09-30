@@ -6,7 +6,7 @@ tags: [testing, ai, test-generation, quality, automation]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # AI Testing
 
@@ -54,7 +54,7 @@ Source code:
 Generate tests only:"""
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=4096
     )
@@ -65,7 +65,7 @@ Generate tests only:"""
 def validate_test_quality(test_code: str) -> dict:
     """Evaluate test quality with AI."""
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         messages=[{"role": "user", "content": f"""Evaluate this test suite for:
 
 1. Coverage: Are edge cases covered?
@@ -126,6 +126,20 @@ pytest tests/ --cov=src --cov-fail-under=80 --cov-report=term-missing
 # Mutation testing spot-check
 pip install mutmut && mutmut run --paths-to-mutate src/
 ```
+
+## Best Practices
+- Test model outputs with a golden set and deterministic prompts.
+- Use LLM-as-judge with a rubric for subjective quality.
+- Add regression gates in CI for prompt and model changes.
+- Track token cost and latency alongside correctness.
+- Test edge cases: empty input, adversarial, and long context.
+- Keep tests deterministic (temperature 0, fixed seed).
+
+## Troubleshooting
+- Flaky scores: fix nondeterminism in sampling.
+- Judge bias: calibrate the rubric with human labels.
+- Slow suite: cache model calls and sample the set.
+- Drift: re-run evals on schedule and alert on regressions.
 
 ## Validation
 1. AI-generated tests pass when run against the source

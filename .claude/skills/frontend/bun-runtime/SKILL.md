@@ -6,7 +6,7 @@ tags: [bun, javascript, typescript, runtime, bundler]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Bun Runtime
 
@@ -122,6 +122,20 @@ bun run --watch src/index.ts
 bun test
 bun build src/index.ts --outdir=dist --minify --target=bun && bun dist/index.js
 ```
+
+## Best Practices
+- Use Bun for fast JS/TS runtimes, bundling, and tests.
+- Prefer `bun install` for lockfile speed and compatibility.
+- Use `bun test` for built-in test runner with coverage.
+- Leverage `Bun.serve` for high-throughput HTTP.
+- Keep dependencies minimal; Bun has many built-ins.
+- Pin the Bun version in CI for reproducibility.
+
+## Troubleshooting
+- Install conflicts: clear node_modules and regenerate lockfile.
+- Native bindings: match Bun version with the package.
+- Runtime differences: check the Bun version in CI vs local.
+- Slow cold start: use `--smol` or tweak the runtime flags.
 
 ## Validation
 1. `bun --version` shows installed version

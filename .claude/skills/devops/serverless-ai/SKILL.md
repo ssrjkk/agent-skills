@@ -6,7 +6,7 @@ tags: [serverless, ai, inference, cloudflare-workers, lambda, edge]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Serverless AI
 
@@ -125,6 +125,20 @@ curl -w "@dns_time=%{time_starttransfer}\n" https://edge.example.com/summarize
 # lambda load test
 hey -n 1000 -c 50 -m POST https://api-aws.example.com/generate
 ```
+
+## Best Practices
+- Keep cold-start low: smaller models, warmers, and minimal deps.
+- Use GPU/CPU-appropriate runtimes; batch when possible.
+- Cache model weights in layer or shared storage.
+- Set timeouts and memory to match the workload.
+- Monitor invocations, duration, and cold-start rate.
+- Fall back to a dedicated endpoint for long requests.
+
+## Troubleshooting
+- Cold starts high: use provisioned concurrency or a warmer.
+- Timeout: split work or raise the function timeout.
+- Memory errors: right-size the allocation for the model.
+- Cost spikes: review invocation patterns and caching.
 
 ## Validation
 1. Function deploys and responds to requests

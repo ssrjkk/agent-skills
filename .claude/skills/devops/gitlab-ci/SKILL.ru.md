@@ -41,11 +41,21 @@ build:
 - Мультипроектные пайплайны
 - Интеграция с Container Registry
 
+## Лучшие практики
+- Ясные имена jobs; одна задача на стадию.
+- Кэшируйте зависимости и используйте `needs` для скорости.
+- Секреты в CI/CD variables, masked и scoped.
+- `rules` вместо only/except для триггеров по веткам.
+- Загружайте артефакты и отчёты для видимости.
+- Переиспользуйте логику через `include` и шаблоны.
+
 ## Пошаговое руководство
 1. Добавьте `.gitlab-ci.yml` в корень репозитория
 2. Настройте стадии и jobs
 3. Настройте GitLab Runner
 4. Запушьте, чтобы запустить пайплайн
+5. Добавьте кэш и rules
+6. Обезопасьте переменные и деплой
 
 ## Зависимости
 ```bash
@@ -55,12 +65,34 @@ gitlab-runner register
 
 ## Примеры
 ```yaml
+# Job с кэшем и rules
+test:
+  stage: test
+  image: node:20
+  cache:
+    key: npm
+    paths: [node_modules/]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script:
+    - npm ci
+    - npm test
+```
+```yaml
+# Переиспользуемый шаблон через include
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - local: /ci/deploy.gitlab-ci.yml
+
 deploy:
   stage: deploy
+  image: docker:24
+  services: [docker:24-dind]
   only:
     - main
   script:
-    - kubectl apply -f k8s/
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
   environment: production
 ```
 

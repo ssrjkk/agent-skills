@@ -6,7 +6,7 @@ tags: [platform-engineering, backstage, port, developer-portal, internal-develop
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Platform Engineering
 
@@ -122,6 +122,20 @@ spec:
 kubectl port-forward svc/backstage-backend 7007:7007
 curl http://localhost:7007/api/catalog/entities?filter=kind=component
 ```
+
+## Best Practices
+- Define golden paths with self-service templates and guardrails.
+- Use Backstage or Port for a developer portal and catalog.
+- Standardize CI/CD, environments, and secrets across teams.
+- Measure adoption and feedback; iterate on the platform.
+- Automate provisioning with IaC and approval workflows.
+- Keep platform teams accountable via SLOs for golden paths.
+
+## Troubleshooting
+- Low adoption: reduce friction and document the golden path.
+- Drift: enforce policies and templates in CI.
+- Access issues: audit RBAC and portal roles.
+- Slow onboarding: automate scaffolding end to end.
 
 ## Validation
 1. Backstage/Port starts and renders the service catalog

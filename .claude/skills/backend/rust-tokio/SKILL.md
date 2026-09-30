@@ -6,7 +6,7 @@ tags: [rust, tokio, async, concurrency, runtime]
 models: [sonnet, opus]
 version: 1.0.0
 created: 2026-05-14
-updated: 2026-09-06
+updated: 2026-09-29
 ---
 # Rust Tokio
 
@@ -206,6 +206,20 @@ async fn main() {
     tokio::time::sleep(Duration::from_millis(50)).await;
 }
 ```
+
+## Best Practices
+- Use Tokio's async runtime for I/O-bound work; threads for CPU-heavy.
+- Prefer `tokio::spawn` with owned tasks; avoid blocking the executor.
+- Use channels for communication and `Arc<Mutex>` sparingly.
+- Add timeouts with `tokio::time` to avoid hangs.
+- Use `tokio::select!` for concurrent awaitable sources.
+- Benchmark with `tokio` instrumented tracing when latency matters.
+
+## Troubleshooting
+- Runtime not found: add `tokio` with the `full` or `rt-multi-thread` feature.
+- Blocking executor: move sync work to `spawn_blocking`.
+- Deadlocks: keep lock scopes tiny and avoid awaits while holding locks.
+- Task panic: use JoinHandle or a supervisor to restart.
 
 ## Validation
 1. `cargo run` starts server without panics
