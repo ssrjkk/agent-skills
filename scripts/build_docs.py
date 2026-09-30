@@ -114,7 +114,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       <div class="stat"><span class="stat-num">{meta["total_skills"]}</span><span class="stat-label">Skills</span></div>
       <div class="stat"><span class="stat-num">{meta["total_ru"]}</span><span class="stat-label">Russian</span></div>
       <div class="stat"><span class="stat-num">{len(meta["domains"])}</span><span class="stat-label">Domains</span></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Grade A</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Quality</span></div>
     </section>
 
     <section class="install">

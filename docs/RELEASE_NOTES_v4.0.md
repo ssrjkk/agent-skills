@@ -2,7 +2,7 @@
 
 ## Highlights
 
-- **100/100 skills at 100.0% quality (Grade A)** across 16 domains — milestone
+- **100/100 skills at 100.0% quality** across 16 domains — milestone
   release.
 - **35 new skills** covering the most in-demand topics:
 
@@ -25,8 +25,7 @@
 ## Quality Report
 
 ```
-100/100 skills at 100.0% (A)
-Grade A:  100/100
+100/100 skills at 100.0%
 Bilingual coverage: 100/100 (100%)
 Average score: 100.0
 ```

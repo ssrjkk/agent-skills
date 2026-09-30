@@ -196,7 +196,6 @@ class TestCommandQuality:
         assert data["total_skills"] == 1
         assert len(data["skills"]) == 1
         assert data["skills"][0]["name"] == "quality-skill"
-        assert "grade" in data["skills"][0]
         assert "score" in data["skills"][0]
 
     def test_quality_output_alias(self, tmp_path: Path):

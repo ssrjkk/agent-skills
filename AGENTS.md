@@ -49,7 +49,7 @@ python -m claude_skills.cli quality --dir .claude/skills
 ## Testing a new skill
 
 1. Add the skill files under `.claude/skills/{domain}/{name}/`.
-2. Run `make validate` and `make quality` — expect 0 errors, Grade A.
+2. Run `make validate` and `make quality` — expect 0 errors, 100% score.
 3. Run `python scripts/check_agent_interop.py`.
 4. Run `make test`.
 5. Rebuild catalog and docs: `make catalog && make docs`.
