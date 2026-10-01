@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>github-actions — Agent Skills Library</title>
+  <meta name="description" content="Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/github-actions.html">
+  <meta property="og:title" content="github-actions — Agent Skills Library">
+  <meta property="og:description" content="Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/github-actions.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">github-actions</span><span class="tag">ci</span><span class="tag">cd</span><span class="tag">workflows</span><span class="tag">automation</span><span class="tag">pipelines</span><span class="tag">github</span>
+        </div>
+        <h1 class="skill-page-title">github-actions</h1>
+        <p class="skill-page-desc">Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>156</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('github-actions')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/github-actions">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="docker.html">← docker</a><a class="page-nav-link" href="gitlab-ci.html">gitlab-ci →</a></div>
+      <div class="skill-page-body">
+        <h1>GitHub Actions</h1>
+<blockquote>Automating build, test, and deploy pipelines with GitHub Actions.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Add .github/workflows/ci.yml and push
+# Workflow runs on push/PR automatically</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Running tests and linting on every PR</li>
+<li>Building and publishing artifacts</li>
+<li>Deploying to cloud, registries, and Pages</li>
+<li>Scheduled jobs and dependency updates</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Workflow Design</h3>
+<ul>
+<li>Split CI/CD into separate workflows or jobs</li>
+<li>Use job `needs` for ordering; `matrix` for version combos</li>
+<li>Cache dependencies (`actions/cache`) for speed</li>
+<li>Keep secrets in repo/org secrets; never in YAML</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li>Pin action versions (`@v4`) or commit SHAs</li>
+<li>Use `permissions:` minimal scope per job</li>
+<li>Sanitize untrusted inputs (PRs from forks)</li>
+<li>Avoid `pull_request_target` unless you handle secrets carefully</li>
+</ul>
+<h3>Efficiency</h3>
+<ul>
+<li>Trigger only on relevant paths (`on: push: paths:`)</li>
+<li>Use concurrency to cancel stale runs</li>
+<li>Reuse workflows via `workflow_call`</li>
+<li>Upload artifacts only when needed</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># None required — GitHub-hosted runners have common tools.
+# Pin versions:
+#   actions/checkout@v4, actions/setup-python@v5, actions/cache@v4</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [&quot;3.11&quot;, &quot;3.12&quot;]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -e &quot;.[dev]&quot;
+      - run: ruff check .
+      - run: pytest tests/ -q</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Deploy on tag with permissions
+name: Deploy
+
+on:
+  push:
+    tags: [&quot;v*&quot;]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo &quot;deploying ${{ github.ref_name }}&quot;
+        env:
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Reusable workflow
+name: Quality
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci &amp;&amp; npm run lint</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Scheduled + caching
+name: Nightly
+
+on:
+  schedule:
+    - cron: &quot;0 2 * * *&quot;
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles(&#x27;requirements.txt&#x27;) }}
+      - run: pip install -r requirements.txt</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define the trigger (`on`) and job breakdown.</p>
+<p class='ordered'>2. Checkout code and set up the language runtime.</p>
+<p class='ordered'>3. Cache dependencies for speed.</p>
+<p class='ordered'>4. Run lint, typecheck, and tests in parallel jobs where possible.</p>
+<p class='ordered'>5. Add a build/publish step gated on success.</p>
+<p class='ordered'>6. Add deployment job with `needs` and environment protection.</p>
+<p class='ordered'>7. Set `permissions` minimal; store secrets in repo settings.</p>
+<p class='ordered'>8. Review Actions logs; add status badges to the README.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Workflow runs green on push and PR</p>
+<p class='ordered'>2. Matrix covers the supported versions</p>
+<p class='ordered'>3. Artifacts/secrets used correctly (no leaks in logs)</p>
+<p class='ordered'>4. Caching measurably speeds up runs</p>
+<p class='ordered'>5. Cancelled stale runs via concurrency</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>&quot;Permission denied&quot; on push/deploy: check `permissions` and token scope.</li>
+<li>Secrets missing: define them in repo/org settings.</li>
+<li>Flaky runs: pin action versions and runner images.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="docker.html">← docker</a><a class="page-nav-link" href="gitlab-ci.html">gitlab-ci →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

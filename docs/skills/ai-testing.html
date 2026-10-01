@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ai-testing — Agent Skills Library</title>
+  <meta name="description" content="AI-powered test generation and validation">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/ai-testing.html">
+  <meta property="og:title" content="ai-testing — Agent Skills Library">
+  <meta property="og:description" content="AI-powered test generation and validation">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/ai-testing.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#a855f71a;color:#a855f7;border-color:#a855f744">engineering</span>
+          <span class="tag">testing</span><span class="tag">ai</span><span class="tag">test-generation</span><span class="tag">quality</span><span class="tag">automation</span>
+        </div>
+        <h1 class="skill-page-title">ai-testing</h1>
+        <p class="skill-page-desc">AI-powered test generation and validation</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>149</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('ai-testing')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/engineering/ai-testing">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="claude-code-commands.html">claude-code-commands →</a></div>
+      <div class="skill-page-body">
+        <h1>AI Testing</h1>
+<blockquote>Generate, validate, and maintain test suites using AI-powered test generation.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># AI test generation with Claude
+from anthropic import Anthropic
+import ast
+import os
+
+client = Anthropic()
+
+def generate_tests(source_file: str) -&gt; str:
+    &quot;&quot;&quot;Generate unit tests for a Python module using AI.&quot;&quot;&quot;
+    with open(source_file) as f:
+        source = f.read()
+
+    # Parse to understand structure
+    tree = ast.parse(source)
+    functions = [node.name for node in ast.walk(tree) 
+                 if isinstance(node, ast.FunctionDef) and not node.name.startswith(&#x27;_&#x27;)]
+    classes = [node.name for node in ast.walk(tree) 
+               if isinstance(node, ast.ClassDef)]
+
+    prompt = f&quot;&quot;&quot;Generate comprehensive pytest tests for this module.
+
+Module: {os.path.basename(source_file)}
+Functions: {&#x27;, &#x27;.join(functions)}
+Classes: {&#x27;, &#x27;.join(classes)}
+
+Requirements:
+- Cover: happy path, edge cases, error handling
+- Use pytest fixtures for setup
+- Include property-based tests where appropriate
+- Mock external dependencies (I/O, network, DB)
+- Achieve &gt; 90% code coverage
+
+Source code:
+&lt;source&gt;
+{source}
+&lt;/source&gt;
+
+Generate tests only:&quot;&quot;&quot;
+
+    response = client.messages.create(
+        model=&quot;claude-sonnet-4-5&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+        max_tokens=4096
+    )
+
+    return response.content[0].text
+
+# AI-powered test validation
+def validate_test_quality(test_code: str) -&gt; dict:
+    &quot;&quot;&quot;Evaluate test quality with AI.&quot;&quot;&quot;
+    response = client.messages.create(
+        model=&quot;claude-sonnet-4-5&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;&quot;&quot;Evaluate this test suite for:
+
+1. Coverage: Are edge cases covered?
+2. Isolation: Are tests properly isolated?
+3. Maintainability: Are tests readable?
+4. Completeness: What&#x27;s missing?
+
+Test code:
+&lt;test_code&gt;
+{test_code}
+&lt;/test_code&gt;
+
+Score each category 1-10 and list gaps.&quot;&quot;&quot;}],
+        max_tokens=1000
+    )
+    return response.content[0].text</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Run AI-generated tests
+pytest tests/ --cov=src --cov-report=term-missing
+
+# Continuous test regeneration on source changes
+# Add to CI: if coverage drops &gt; 5%, regenerate tests</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>AI generates tests faster but needs validation. Combine AI generation with traditional tools (coverage, mutation testing). Review AI-generated tests for correctness — they may hallucinate APIs or miss context.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Legacy codebases lacking test coverage</li>
+<li>Rapid prototyping where manual test writing is slow</li>
+<li>Generating test data and fixtures</li>
+<li>CI pipeline to suggest tests for new code</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Parse the target module: walk the AST to list public functions, classes, and their signatures.</p>
+<p class='ordered'>2. Build a prompt: instruct the model to generate pytest with fixtures, edge cases, and mocked external deps.</p>
+<p class='ordered'>3. Generate and save: write the AI-produced tests into `tests/` (name like `test_&lt;module&gt;.py`).</p>
+<p class='ordered'>4. Run coverage: `pytest tests/ --cov=src --cov-report=term-missing` to see gaps.</p>
+<p class='ordered'>5. Validate quality: ask the model to score coverage/isolation/maintainability and list missing cases; fix hallucinations by re-running tests.</p>
+<p class='ordered'>6. Automate in CI: regenerate tests when coverage drops &gt; 5%; add adversarial cases (property-based) for numeric/logic functions.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Regenerate tests automatically after a source change
+import subprocess, pathlib
+
+def regenerate_for(source: str) -&gt; None:
+    tests = generate_tests(source)          # from Quick Start
+    out = pathlib.Path(&quot;tests&quot;) / f&quot;test_{pathlib.Path(source).stem}.py&quot;
+    out.write_text(tests)
+    subprocess.run([&quot;pytest&quot;, str(out), &quot;--cov=src&quot;, &quot;--cov-report=term-missing&quot;], check=False)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Enforce quality gate in CI
+pytest tests/ --cov=src --cov-fail-under=80 --cov-report=term-missing
+# Mutation testing spot-check
+pip install mutmut &amp;&amp; mutmut run --paths-to-mutate src/</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Test model outputs with a golden set and deterministic prompts.</li>
+<li>Use LLM-as-judge with a rubric for subjective quality.</li>
+<li>Add regression gates in CI for prompt and model changes.</li>
+<li>Track token cost and latency alongside correctness.</li>
+<li>Test edge cases: empty input, adversarial, and long context.</li>
+<li>Keep tests deterministic (temperature 0, fixed seed).</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Flaky scores: fix nondeterminism in sampling.</li>
+<li>Judge bias: calibrate the rubric with human labels.</li>
+<li>Slow suite: cache model calls and sample the set.</li>
+<li>Drift: re-run evals on schedule and alert on regressions.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. AI-generated tests pass when run against the source</p>
+<p class='ordered'>2. Coverage meets the target threshold (&gt; 80%)</p>
+<p class='ordered'>3. No hallucinated function calls in generated tests</p>
+<p class='ordered'>4. Tests are deterministic (same results on each run)</p>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="claude-code-commands.html">claude-code-commands →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

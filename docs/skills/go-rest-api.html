@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>go-rest-api — Agent Skills Library</title>
+  <meta name="description" content="Build production REST APIs in Go with the standard library or Gin, including routing, middleware, JSON handling, and testing. Use for performant backends.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/go-rest-api.html">
+  <meta property="og:title" content="go-rest-api — Agent Skills Library">
+  <meta property="og:description" content="Build production REST APIs in Go with the standard library or Gin, including routing, middleware, JSON handling, and testing. Use for performant backends.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/go-rest-api.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">go</span><span class="tag">golang</span><span class="tag">rest</span><span class="tag">api</span><span class="tag">http</span><span class="tag">backend</span><span class="tag">server</span>
+        </div>
+        <h1 class="skill-page-title">go-rest-api</h1>
+        <p class="skill-page-desc">Build production REST APIs in Go with the standard library or Gin, including routing, middleware, JSON handling, and testing. Use for performant backends.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>136</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('go-rest-api')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/go-rest-api">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="fastapi.html">← fastapi</a><a class="page-nav-link" href="graphql.html">graphql →</a></div>
+      <div class="skill-page-body">
+        <h1>Go REST API</h1>
+<blockquote>Building fast, concurrent REST APIs in Go.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>go mod init example.com/myapi
+go run .  # http://localhost:8080</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>High-concurrency services and backends</li>
+<li>Microservices needing small, static binaries</li>
+<li>Teams wanting simple concurrency primitives</li>
+<li>CLIs and tools that double as libraries</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Structure</h3>
+<ul>
+<li>Organize by feature: `cmd/`, `internal/`, `pkg/`</li>
+<li>Keep handlers thin; move logic to services</li>
+<li>Use `net/http` with Go 1.22+ route patterns or a router</li>
+<li>Define request/response types explicitly</li>
+</ul>
+<h3>Concurrency</h3>
+<ul>
+<li>Use goroutines for independent work; channel for coordination</li>
+<li>Use `context.Context` for cancellation and deadlines</li>
+<li>Bound concurrency with semaphores or worker pools</li>
+<li>Protect shared state with `sync.Mutex` or atomics</li>
+</ul>
+<h3>Errors &amp; Logging</h3>
+<ul>
+<li>Wrap errors with `fmt.Errorf(&quot;%w&quot;, err)` and `errors.Is`</li>
+<li>Log structured with `slog`; include request ID</li>
+<li>Return proper HTTP status codes and JSON errors</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>go mod init example.com/myapi
+go get github.com/gin-gonic/gin   # optional router</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc(&quot;GET /health&quot;, healthHandler)
+	mux.HandleFunc(&quot;POST /items&quot;, createItem)
+	http.ListenAndServe(&quot;:8080&quot;, logMiddleware(mux))
+}
+
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+	fmt.Fprint(w, `{&quot;status&quot;:&quot;ok&quot;}`)
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Gin-style handler with JSON binding
+package main
+
+import &quot;github.com/gin-gonic/gin&quot;
+
+type Item struct {
+	Name  string `json:&quot;name&quot; binding:&quot;required&quot;`
+	Price float64 `json:&quot;price&quot; binding:&quot;required&quot;`
+}
+
+func createItem(c *gin.Context) {
+	var item Item
+	if err := c.ShouldBindJSON(&amp;item); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{&quot;error&quot;: err.Error()})
+		return
+	}
+	c.JSON(http.StatusCreated, gin.H{&quot;ok&quot;: true, &quot;item&quot;: item})
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Context-aware handler with timeout
+func slowHandler(ctx context.Context) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case &lt;-time.After(2 * time.Second):
+			fmt.Fprint(w, &quot;done&quot;)
+		case &lt;-ctx.Done():
+			w.WriteHeader(http.StatusGatewayTimeout)
+		}
+	}
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Middleware pattern
+func logMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		slog.Info(&quot;request&quot;, &quot;method&quot;, r.Method, &quot;path&quot;, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Initialize the module and pick a routing approach (stdlib patterns or Gin).</p>
+<p class='ordered'>2. Sketch the API contract: routes, methods, request/response JSON.</p>
+<p class='ordered'>3. Define explicit request/response structs with `json` tags.</p>
+<p class='ordered'>4. Implement handlers; keep them thin and delegate to services.</p>
+<p class='ordered'>5. Add middleware for logging, recovery, CORS, and auth.</p>
+<p class='ordered'>6. Use `context.Context` everywhere; set server timeouts.</p>
+<p class='ordered'>7. Write table-driven tests with `httptest`.</p>
+<p class='ordered'>8. Add linters (golangci-lint), staticcheck, and `go vet` to CI.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `go build ./...` succeeds</p>
+<p class='ordered'>2. `go test ./...` passes</p>
+<p class='ordered'>3. `go vet ./...` clean</p>
+<p class='ordered'>4. Endpoints return correct status codes and JSON shape</p>
+<p class='ordered'>5. `go test -race ./...` shows no data races</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Data races: guard shared state with mutexes or use channels.</li>
+<li>Context canceled: honor `ctx.Done()` in long operations.</li>
+<li>High latency: add timeouts on the server and on outbound clients.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="fastapi.html">← fastapi</a><a class="page-nav-link" href="graphql.html">graphql →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

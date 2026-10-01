@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mongodb — Agent Skills Library</title>
+  <meta name="description" content="Design and operate MongoDB: document modeling, queries, indexes, aggregation, replication, and sharding. Use for flexible NoSQL data.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/mongodb.html">
+  <meta property="og:title" content="mongodb — Agent Skills Library">
+  <meta property="og:description" content="Design and operate MongoDB: document modeling, queries, indexes, aggregation, replication, and sharding. Use for flexible NoSQL data.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/mongodb.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#14b8a61a;color:#14b8a6;border-color:#14b8a644">database</span>
+          <span class="tag">mongodb</span><span class="tag">nosql</span><span class="tag">document-db</span><span class="tag">queries</span><span class="tag">indexes</span><span class="tag">aggregation</span><span class="tag">atlas</span>
+        </div>
+        <h1 class="skill-page-title">mongodb</h1>
+        <p class="skill-page-desc">Design and operate MongoDB: document modeling, queries, indexes, aggregation, replication, and sharding. Use for flexible NoSQL data.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>116</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('mongodb')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/database/mongodb">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="clickhouse.html">← clickhouse</a><a class="page-nav-link" href="mysql.html">mysql →</a></div>
+      <div class="skill-page-body">
+        <h1>MongoDB</h1>
+<blockquote>Designing and operating flexible document databases with MongoDB.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name mongo -p 27017:27017 -d mongo:8
+mongosh
+use app
+db.users.insertOne({ name: &quot;Alice&quot;, role: &quot;admin&quot; })</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Flexible or evolving document schemas</li>
+<li>High write throughput and horizontal scale</li>
+<li>Denormalized data with rich queries</li>
+<li>Prototyping where schema changes fast</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Document Modeling</h3>
+<ul>
+<li>Embed data read together; reference rarely-changed data</li>
+<li>Avoid unbounded arrays (prefer separate collections)</li>
+<li>Design for access patterns, not normalization</li>
+<li>Use `_id` or a unique index as the primary key</li>
+</ul>
+<h3>Queries &amp; Indexes</h3>
+<ul>
+<li>Create indexes matching filter/sort patterns</li>
+<li>Use compound indexes with correct field order</li>
+<li>Prefer equality filters before range filters</li>
+<li>Monitor with `explain(&quot;executionStats&quot;)`</li>
+</ul>
+<h3>Aggregation</h3>
+<ul>
+<li>Use the aggregation pipeline for complex transforms</li>
+<li>Match/filter early, then group/project</li>
+<li>`$lookup` sparingly; prefer embedded data</li>
+<li>Cap stages and memory per pipeline</li>
+</ul>
+<h3>Operations</h3>
+<ul>
+<li>Use replica sets for HA; shard for scale</li>
+<li>Set `writeConcern` and `readPreference` deliberately</li>
+<li>Enable auth and TLS; never expose without auth</li>
+<li>Back up with mongodump or Atlas cloud backup</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name mongo -p 27017:27017 -d mongo:8
+# Python driver
+pip install pymongo</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>from pymongo import MongoClient
+
+client = MongoClient(&quot;mongodb://localhost:27017&quot;)
+db = client.app
+users = db.users
+
+# Create with unique index
+users.create_index(&quot;email&quot;, unique=True)
+users.insert_one({&quot;name&quot;: &quot;Alice&quot;, &quot;email&quot;: &quot;alice@example.com&quot;, &quot;role&quot;: &quot;admin&quot;})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Query with filter and sort
+result = users.find({&quot;role&quot;: &quot;admin&quot;}).sort(&quot;created_at&quot;, -1).limit(10)
+for user in result:
+    print(user[&quot;name&quot;])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Aggregation pipeline
+pipeline = [
+    {&quot;$match&quot;: {&quot;status&quot;: &quot;paid&quot;}},
+    {&quot;$group&quot;: {&quot;_id&quot;: &quot;$region&quot;, &quot;total&quot;: {&quot;$sum&quot;: &quot;$amount&quot;}}},
+    {&quot;$sort&quot;: {&quot;total&quot;: -1}},
+]
+for row in db.orders.aggregate(pipeline):
+    print(row)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// mongosh: explain to verify index use
+db.users.find({ email: &quot;alice@example.com&quot; }).explain(&quot;executionStats&quot;);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Model documents around your read access patterns.</p>
+<p class='ordered'>2. Decide embed vs reference for each relation.</p>
+<p class='ordered'>3. Create indexes for the hot queries.</p>
+<p class='ordered'>4. Write queries and aggregation pipelines.</p>
+<p class='ordered'>5. Verify with `explain()` that indexes are used.</p>
+<p class='ordered'>6. Set up a replica set for production.</p>
+<p class='ordered'>7. Enable auth and TLS; restrict network exposure.</p>
+<p class='ordered'>8. Configure backups and monitor metrics.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Hot queries use indexes (explain shows IXSCAN)</p>
+<p class='ordered'>2. Document model matches the access patterns</p>
+<p class='ordered'>3. Aggregation results are correct</p>
+<p class='ordered'>4. Replica set has a healthy primary</p>
+<p class='ordered'>5. Backup/restore tested in staging</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Slow queries: add/compound indexes; check sort order.</li>
+<li>Unbounded growth: split embedded arrays into collections.</li>
+<li>Connection drops: use connection pooling and retry writes.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="clickhouse.html">← clickhouse</a><a class="page-nav-link" href="mysql.html">mysql →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

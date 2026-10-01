@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>postgresql — Agent Skills Library</title>
+  <meta name="description" content="Design and operate PostgreSQL databases: schema design, indexing, query optimization, transactions, and migrations. Use for any relational data layer.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/postgresql.html">
+  <meta property="og:title" content="postgresql — Agent Skills Library">
+  <meta property="og:description" content="Design and operate PostgreSQL databases: schema design, indexing, query optimization, transactions, and migrations. Use for any relational data layer.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/postgresql.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#14b8a61a;color:#14b8a6;border-color:#14b8a644">database</span>
+          <span class="tag">postgresql</span><span class="tag">sql</span><span class="tag">database</span><span class="tag">indexing</span><span class="tag">transactions</span><span class="tag">migrations</span><span class="tag">relational</span>
+        </div>
+        <h1 class="skill-page-title">postgresql</h1>
+        <p class="skill-page-desc">Design and operate PostgreSQL databases: schema design, indexing, query optimization, transactions, and migrations. Use for any relational data layer.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>109</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('postgresql')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/database/postgresql">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="mysql.html">← mysql</a><a class="page-nav-link" href="prisma-orm.html">prisma-orm →</a></div>
+      <div class="skill-page-body">
+        <h1>PostgreSQL</h1>
+<blockquote>Designing and operating reliable PostgreSQL databases.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name pg -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:17
+psql -h localhost -U postgres
+# CREATE DATABASE app;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Relational data with strong consistency needs</li>
+<li>Transactions and complex joins</li>
+<li>Full-text search, JSONB, and geospatial (PostGIS)</li>
+<li>Analytics via materialized views and window functions</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Schema Design</h3>
+<ul>
+<li>Use proper types (uuid, timestamptz, jsonb) — avoid text-only columns</li>
+<li>Add foreign keys and constraints to enforce integrity</li>
+<li>Prefer normalized core; denormalize only for known hot reads</li>
+<li>Name tables in plural or singular consistently; use snake_case</li>
+</ul>
+<h3>Indexing</h3>
+<ul>
+<li>Index columns used in WHERE, JOIN, ORDER BY</li>
+<li>Prefer B-tree for equality/range; GIN for JSONB/arrays; BRIN for huge tables</li>
+<li>Create composite indexes matching query column order</li>
+<li>Remove unused indexes; analyze with `pg_stat_user_indexes`</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Use `EXPLAIN (ANALYZE, BUFFERS)` to read plans</li>
+<li>Avoid `SELECT *`; fetch only needed columns</li>
+<li>Batch inserts with `COPY` or multi-row VALUES</li>
+<li>Use connection pooling (PgBouncer) in production</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name pg -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:17
+# psql client:  psql -h localhost -U postgres</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>-- Schema with types, constraints, and indexes
+CREATE TABLE users (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text NOT NULL UNIQUE,
+  role text NOT NULL DEFAULT &#x27;member&#x27;,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_users_created ON users (created_at DESC);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Query optimization with EXPLAIN
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT id, email FROM users
+WHERE created_at &gt; now() - interval &#x27;7 days&#x27;
+ORDER BY created_at DESC
+LIMIT 50;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Window function for analytics
+SELECT
+  category,
+  revenue,
+  RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rnk
+FROM monthly_sales;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- JSONB querying with GIN index
+CREATE INDEX idx_meta ON orders USING gin (meta);
+SELECT id FROM orders WHERE meta @&gt; &#x27;{&quot;status&quot;: &quot;paid&quot;}&#x27;;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Model entities and relationships; decide types for each column.</p>
+<p class='ordered'>2. Write the DDL with constraints (PK, FK, UNIQUE, NOT NULL).</p>
+<p class='ordered'>3. Add indexes for the query patterns you actually use.</p>
+<p class='ordered'>4. Write migrations (Alembic/Prisma/Flyway) and version them.</p>
+<p class='ordered'>5. Load representative data and run `EXPLAIN (ANALYZE)` on hot queries.</p>
+<p class='ordered'>6. Tune indexes and queries; add pooling for production.</p>
+<p class='ordered'>7. Set up backups (pg_dump/WAL archiving) and a restore drill.</p>
+<p class='ordered'>8. Monitor slow queries via `pg_stat_statements` and set alerts.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Schema applies cleanly via migrations</p>
+<p class='ordered'>2. Constraints reject invalid data</p>
+<p class='ordered'>3. Hot queries run within target latency</p>
+<p class='ordered'>4. `EXPLAIN` shows index usage on large tables</p>
+<p class='ordered'>5. Backup and restore verified in staging</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Slow query despite index: check composite index column order and `= NULL`.</li>
+<li>Lock waits: long transactions hold locks — keep them short.</li>
+<li>High memory: raise `shared_buffers` and `effective_cache_size` carefully.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="mysql.html">← mysql</a><a class="page-nav-link" href="prisma-orm.html">prisma-orm →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

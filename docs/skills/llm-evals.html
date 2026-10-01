@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>llm-evals — Agent Skills Library</title>
+  <meta name="description" content="Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration. Use for trustworthy model behavior.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/llm-evals.html">
+  <meta property="og:title" content="llm-evals — Agent Skills Library">
+  <meta property="og:description" content="Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration. Use for trustworthy model behavior.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/llm-evals.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">llm-evals</span><span class="tag">evaluation</span><span class="tag">metrics</span><span class="tag">judge</span><span class="tag">testing</span><span class="tag">llm</span><span class="tag">regression</span>
+        </div>
+        <h1 class="skill-page-title">llm-evals</h1>
+        <p class="skill-page-desc">Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration. Use for trustworthy model behavior.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>145</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('llm-evals')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/llm-evals">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="function-calling.html">← function-calling</a><a class="page-nav-link" href="llm-finetuning.html">llm-finetuning →</a></div>
+      <div class="skill-page-body">
+        <h1>LLM Evals</h1>
+<blockquote>Measuring and guarding LLM application quality with evaluation suites.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest openai
+# collect a golden set, score answers, gate releases in CI</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Tracking prompt and model quality over time</li>
+<li>Comparing prompt variants and model versions</li>
+<li>Catching regressions before release</li>
+<li>Building confidence in production agents and RAG</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Golden Datasets</h3>
+<ul>
+<li>Cover happy paths, edge cases, and adversarial inputs</li>
+<li>Use real user queries plus synthetic variations</li>
+<li>Include expected answers or rubrics per case</li>
+<li>Keep the set small (20-100) and maintainable</li>
+</ul>
+<h3>Metrics</h3>
+<ul>
+<li>Use exact-match for structured outputs (JSON, codes)</li>
+<li>Use similarity for free text (semantic or lexical)</li>
+<li>Prefer LLM-as-judge with a rubric for subjective quality</li>
+<li>Track per-metric scores and aggregate over the set</li>
+</ul>
+<h3>LLM-as-Judge</h3>
+<ul>
+<li>Give the judge an explicit scoring rubric</li>
+<li>Provide reference answers where possible</li>
+<li>Use a different model than the one evaluated</li>
+<li>Calibrate: spot-check judge vs human labels</li>
+</ul>
+<h3>CI Gating</h3>
+<ul>
+<li>Run evals on every PR for changed prompts/models</li>
+<li>Set pass thresholds; fail on regressions</li>
+<li>Keep flaky checks out of the blocking path</li>
+<li>Report diffs against the baseline</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest openai numpy
+# optional: ragas, promptfoo, deepeval</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import json
+import openai
+
+client = openai.OpenAI()
+
+def run_case(prompt: str, user_input: str) -&gt; str:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: prompt},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input},
+        ],
+    )
+    return resp.choices[0].message.content</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Golden set with expected structured output
+GOLDEN = [
+    {
+        &quot;input&quot;: &quot;Alice works at Acme.&quot;,
+        &quot;expected&quot;: {&quot;name&quot;: &quot;Alice&quot;, &quot;org&quot;: &quot;Acme&quot;},
+    },
+    {
+        &quot;input&quot;: &quot;No company mentioned here.&quot;,
+        &quot;expected&quot;: {&quot;name&quot;: None, &quot;org&quot;: None},
+    },
+]
+
+def exact_match(out: str, expected: dict) -&gt; bool:
+    try:
+        return json.loads(out) == expected
+    except json.JSONDecodeError:
+        return False</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># LLM-as-judge with rubric
+JUDGE_PROMPT = &quot;&quot;&quot;Rate the answer 1-5 using this rubric:
+5 = correct, complete, well-grounded. 1 = wrong or off-topic.
+Return only the number.&quot;&quot;&quot;
+
+def judge(answer: str) -&gt; int:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: JUDGE_PROMPT},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: answer},
+        ],
+    )
+    return int(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Regression gate
+def run_suite() -&gt; float:
+    scores = []
+    for case in GOLDEN:
+        out = run_case(PROMPT, case[&quot;input&quot;])
+        scores.append(1.0 if exact_match(out, case[&quot;expected&quot;]) else 0.0)
+    return sum(scores) / len(scores)
+
+def test_no_regression():
+    assert run_suite() &gt;= 0.9, &quot;Eval score dropped below threshold&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define what &quot;good&quot; means: correct format, factuality, helpfulness.</p>
+<p class='ordered'>2. Build a golden dataset with rubrics or expected answers.</p>
+<p class='ordered'>3. Choose metrics: exact-match, similarity, or LLM-as-judge.</p>
+<p class='ordered'>4. Implement the scoring harness and aggregate results.</p>
+<p class='ordered'>5. Establish a baseline score on the current prompt/model.</p>
+<p class='ordered'>6. Add a regression gate in CI with a threshold.</p>
+<p class='ordered'>7. Review judge quality against human labels.</p>
+<p class='ordered'>8. Extend the set as you find failure modes in production.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Evals run deterministically on the same inputs</p>
+<p class='ordered'>2. Threshold gate blocks clear regressions</p>
+<p class='ordered'>3. Judge scores correlate with human judgment</p>
+<p class='ordered'>4. Golden set covers the main failure modes</p>
+<p class='ordered'>5. Run time is practical for every PR</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Judge drift: recalibrate rubric and spot-check labels.</li>
+<li>Flaky scores: fix nondeterminism (temperature, model, seed).</li>
+<li>Too many cases: prioritize high-signal inputs and trim duplicates.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="function-calling.html">← function-calling</a><a class="page-nav-link" href="llm-finetuning.html">llm-finetuning →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

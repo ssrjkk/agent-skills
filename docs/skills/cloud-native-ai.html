@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cloud-native-ai — Agent Skills Library</title>
+  <meta name="description" content="Cloud-native AI deployment patterns">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/cloud-native-ai.html">
+  <meta property="og:title" content="cloud-native-ai — Agent Skills Library">
+  <meta property="og:description" content="Cloud-native AI deployment patterns">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/cloud-native-ai.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">cloud-native</span><span class="tag">ai</span><span class="tag">kubernetes</span><span class="tag">inference</span><span class="tag">deployment</span>
+        </div>
+        <h1 class="skill-page-title">cloud-native-ai</h1>
+        <p class="skill-page-desc">Cloud-native AI deployment patterns</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>160</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('cloud-native-ai')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/cloud-native-ai">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="aws-lambda.html">← aws-lambda</a><a class="page-nav-link" href="docker.html">docker →</a></div>
+      <div class="skill-page-body">
+        <h1>Cloud-Native AI</h1>
+<blockquote>Deploy and scale AI workloads using cloud-native patterns with Kubernetes and containerization.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># model-serving.yaml — vLLM inference server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm
+  template:
+    metadata:
+      labels:
+        app: vllm
+    spec:
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:latest
+        args: [&quot;--model&quot;, &quot;mistralai/Mistral-7B-v0.1&quot;]
+        env:
+        - name: HUGGING_FACE_HUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-token
+              key: token
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            memory: &quot;32Gi&quot;
+            cpu: &quot;8&quot;
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: vllm-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: vllm-server
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Pods
+    pods:
+      metric:
+        name: vllm:gpu_cache_usage_perc
+      target:
+        type: AverageValue
+        averageValue: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Model inference with batching
+curl -X POST http://localhost:8000/v1/chat/completions \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{
+    &quot;model&quot;: &quot;mistralai/Mistral-7B-v0.1&quot;,
+    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello&quot;}],
+    &quot;max_tokens&quot;: 100
+  }&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Cloud-native AI uses containers, orchestration, service mesh, and GitOps for ML deployment. Key patterns: model serving with vLLM/TGI, batch inference with Kueue/Volcano, model registries, and A/B testing with traffic splitting.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Production AI services requiring high availability</li>
+<li>Multi-model serving infrastructure</li>
+<li>CI/CD for ML models with canary deployments</li>
+<li>GPU cluster management and scheduling</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Containerize the model server: build an image with the inference engine (vLLM/TGI) and pinned model weights.</p>
+<p class='ordered'>2. Deploy with Kubernetes: define a `Deployment` with GPU resource limits, env secrets, and `/health` readiness probe.</p>
+<p class='ordered'>3. Expose the API: create a `Service` (ClusterIP) plus an `Ingress`/Gateway with TLS and routing to `/v1`.</p>
+<p class='ordered'>4. Scale horizontally: attach an HPA on the GPU-cache metric (`vllm:gpu_cache_usage_perc`) with a stabilization window.</p>
+<p class='ordered'>5. Roll out safely: use a rolling update with readiness checks for new model versions; route canary traffic by weight.</p>
+<p class='ordered'>6. Run batch jobs: use Kueue/Volcano `Queue` + `Job` for offline inference, with PVC-based output artifacts.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Gateway + Service exposing the model API
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-server
+spec:
+  selector: { app: vllm }
+  ports:
+    - port: 8000
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: model-ingress
+spec:
+  rules:
+    - host: models.example.com
+      http:
+        paths:
+          - path: /v1
+            pathType: Prefix
+            backend:
+              service: { name: vllm-server, port: { number: 8000 } }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>kubectl apply -f model-serving.yaml -f hpa.yaml -f svc-ingress.yaml
+kubectl rollout status deployment/vllm-server
+kubectl get hpa vllm-hpa
+curl https://models.example.com/v1/chat/completions -d &#x27;{&quot;model&quot;:&quot;mistralai/Mistral-7B-v0.1&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;hi&quot;}],&quot;max_tokens&quot;:50}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Run AI workloads in containers with pinned base images.</li>
+<li>Use GPU resource requests/limits on Kubernetes for inference.</li>
+<li>Cache models and embeddings to cut cold-start latency.</li>
+<li>Scale inference horizontally behind a load balancer.</li>
+<li>Monitor GPU utilization, latency, and error rates.</li>
+<li>Use a service mesh or gateway for traffic control.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>GPU not allocated: check nodeSelector, resources, and driver.</li>
+<li>Cold start slow: preload models into shared memory or cache.</li>
+<li>OOM on inference: batch requests or right-size the container.</li>
+<li>Latency spikes: scale replicas and warm the model cache.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. Model deployment completes with health check passing</p>
+<p class='ordered'>2. HPA scales based on GPU utilization</p>
+<p class='ordered'>3. Rolling update deploys new model version without downtime</p>
+<p class='ordered'>4. Batch inference jobs complete with correct results</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="aws-lambda.html">← aws-lambda</a><a class="page-nav-link" href="docker.html">docker →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

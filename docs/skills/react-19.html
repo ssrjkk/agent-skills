@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>react-19 — Agent Skills Library</title>
+  <meta name="description" content="Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/react-19.html">
+  <meta property="og:title" content="react-19 — Agent Skills Library">
+  <meta property="og:description" content="Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/react-19.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">react</span><span class="tag">ui</span><span class="tag">javascript</span><span class="tag">typescript</span><span class="tag">frontend</span><span class="tag">components</span>
+        </div>
+        <h1 class="skill-page-title">react-19</h1>
+        <p class="skill-page-desc">Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>140</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('react-19')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/react-19">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="nextjs.html">← nextjs</a><a class="page-nav-link" href="svelte.html">svelte →</a></div>
+      <div class="skill-page-body">
+        <h1>React 19</h1>
+<blockquote>Building fast, interactive user interfaces with React 19.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npx create-react-app@latest my-app
+# or with a build tool you control:
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm run dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Any interactive web UI, from small widgets to full applications</li>
+<li>Teams already invested in the React ecosystem</li>
+<li>Projects needing rich client-side state and rendering</li>
+<li>Server Components when you want to reduce client JS</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Component Design</h3>
+<ul>
+<li>Split UI into small, focused components with clear props</li>
+<li>Keep components pure: derive state instead of mutating during render</li>
+<li>Use composition over prop drilling</li>
+<li>Prefer `useMemo`/`useCallback` only when profiling shows a need</li>
+</ul>
+<h3>Server Components (App Router)</h3>
+<ul>
+<li>Default to Server Components; add `&quot;use client&quot;` only where needed</li>
+<li>Keep data fetching in Server Components</li>
+<li>Pass serializable props across the boundary</li>
+<li>Move event handlers and interactive state into Client Components</li>
+</ul>
+<h3>State Management</h3>
+<ul>
+<li>Prefer local state and derived values first</li>
+<li>Add a store (Zustand/Redux) only when state is genuinely shared</li>
+<li>Colocate state with the components that use it</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm create vite@latest app -- --template react-ts
+cd app
+npm i react@19 react-dom@19
+npm i -D typescript @types/react @types/react-dom</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// A Server Component that fetches and renders
+export default async function PostsPage() {
+  const posts = await getPosts();
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Posts&lt;/h1&gt;
+      {posts.map((p) =&gt; &lt;PostCard key={p.id} post={p} /&gt;)}
+    &lt;/main&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// A Client Component with Actions and optimistic updates
+&quot;use client&quot;;
+import { useActionState, useOptimistic } from &quot;react&quot;;
+
+async function addTodo(prev: string[], formData: FormData) {
+  const title = String(formData.get(&quot;title&quot;));
+  return [...prev, title];
+}
+
+export function TodoList() {
+  const [items, setItems] = useActionState(addTodo, []);
+  return (
+    &lt;form action={addTodo}&gt;
+      &lt;input name=&quot;title&quot; /&gt;
+      &lt;button&gt;Add&lt;/button&gt;
+      &lt;ul&gt;{items.map((t) =&gt; &lt;li key={t}&gt;{t}&lt;/li&gt;)}&lt;/ul&gt;
+    &lt;/form&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Custom hook pattern with cleanup
+import { useEffect, useState } from &quot;react&quot;;
+
+export function useWindowSize() {
+  const [size, setSize] = useState({ w: window.innerWidth, h: window.innerHeight });
+  useEffect(() =&gt; {
+    const onResize = () =&gt; setSize({ w: window.innerWidth, h: window.innerHeight });
+    window.addEventListener(&quot;resize&quot;, onResize);
+    return () =&gt; window.removeEventListener(&quot;resize&quot;, onResize);
+  }, []);
+  return size;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Suspense with lazy loading
+import { lazy, Suspense } from &quot;react&quot;;
+const Chart = lazy(() =&gt; import(&quot;./Chart&quot;));
+
+export default function Dashboard() {
+  return (
+    &lt;Suspense fallback={&lt;div&gt;Loading chart...&lt;/div&gt;}&gt;
+      &lt;Chart /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold with Vite (`react-ts` template) — it is faster and more configurable than CRA.</p>
+<p class='ordered'>2. Set up TypeScript strict mode and ESLint + Prettier before writing features.</p>
+<p class='ordered'>3. Model the UI as a tree of small components; sketch props at each level.</p>
+<p class='ordered'>4. Default to Server Components; add `&quot;use client&quot;` for interactive parts.</p>
+<p class='ordered'>5. Use Actions for mutations (form actions, optimistic updates) instead of manual fetch chains.</p>
+<p class='ordered'>6. Add Suspense boundaries around async sections; avoid blocking the whole page.</p>
+<p class='ordered'>7. Profile with React DevTools; memoize only what the profiler shows as hot.</p>
+<p class='ordered'>8. Write tests with Vitest + React Testing Library, preferring user-centric queries.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. App builds with `npm run build` and passes `tsc --noEmit`</p>
+<p class='ordered'>2. All interactive elements reachable by keyboard</p>
+<p class='ordered'>3. No layout shift after async data loads</p>
+<p class='ordered'>4. React DevTools shows no unnecessary re-renders</p>
+<p class='ordered'>5. Lighthouse performance score &gt;= 90 for key routes</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>&quot;Too many re-renders&quot;: setState called during render — move it into an event or effect.</li>
+<li>Hydration mismatch: ensure Server and Client render identical markup; avoid `Date.now()` in render.</li>
+<li>State reset unexpectedly: key props determine identity — keep keys stable.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="nextjs.html">← nextjs</a><a class="page-nav-link" href="svelte.html">svelte →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

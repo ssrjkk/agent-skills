@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>graphql — Agent Skills Library</title>
+  <meta name="description" content="Design and implement GraphQL APIs: schemas, resolvers, queries, mutations, subscriptions, and N+1 avoidance. Use for flexible client-driven APIs.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/graphql.html">
+  <meta property="og:title" content="graphql — Agent Skills Library">
+  <meta property="og:description" content="Design and implement GraphQL APIs: schemas, resolvers, queries, mutations, subscriptions, and N+1 avoidance. Use for flexible client-driven APIs.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/graphql.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">graphql</span><span class="tag">api</span><span class="tag">schema</span><span class="tag">resolvers</span><span class="tag">mutations</span><span class="tag">subscriptions</span><span class="tag">dataloader</span>
+        </div>
+        <h1 class="skill-page-title">graphql</h1>
+        <p class="skill-page-desc">Design and implement GraphQL APIs: schemas, resolvers, queries, mutations, subscriptions, and N+1 avoidance. Use for flexible client-driven APIs.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>129</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('graphql')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/graphql">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="go-rest-api.html">← go-rest-api</a><a class="page-nav-link" href="grpc.html">grpc →</a></div>
+      <div class="skill-page-body">
+        <h1>GraphQL</h1>
+<blockquote>Designing and implementing flexible GraphQL APIs.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm init -y &amp;&amp; npm i graphql @apollo/server
+node server.js  # http://localhost:4000/graphql</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Client-driven data fetching over multiple sources</li>
+<li>Mobile apps needing minimal payloads</li>
+<li>Aggregating several services behind one API</li>
+<li>Complex object graphs with deep relations</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Schema Design</h3>
+<ul>
+<li>Model the domain as a typed graph</li>
+<li>Use clear types, enums, and interfaces</li>
+<li>Design queries around client needs</li>
+<li>Keep mutations small and explicit</li>
+</ul>
+<h3>Resolvers</h3>
+<ul>
+<li>Resolve fields on demand, not eagerly</li>
+<li>Avoid N+1 with DataLoader batching</li>
+<li>Return errors per field via the errors array</li>
+<li>Keep resolvers thin; delegate to services</li>
+</ul>
+<h3>Mutations &amp; Subscriptions</h3>
+<ul>
+<li>Name mutations as actions (`createUser`)</li>
+<li>Return the affected object plus a client mutation ID</li>
+<li>Use subscriptions for real-time events</li>
+<li>Validate inputs before mutating</li>
+</ul>
+<h3>Performance &amp; Security</h3>
+<ul>
+<li>Set query depth and complexity limits</li>
+<li>Add field-level authorization</li>
+<li>Cache resolvers and use persisted queries</li>
+<li>Monitor resolver timing</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm i graphql @apollo/server graphql-tools dataloader
+# Python: pip install strawberry-graphql</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># schema.graphql
+type User {
+  id: ID!
+  name: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  author: User!
+}
+
+type Query {
+  user(id: ID!): User
+  recentPosts(limit: Int = 10): [Post!]!
+}
+
+type Mutation {
+  createPost(title: String!, authorId: ID!): Post!
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Resolver with DataLoader batching
+import DataLoader from &quot;dataloader&quot;;
+
+const userLoader = new DataLoader(ids =&gt; fetchUsersByIds(ids));
+const resolvers = {
+  Post: {
+    author: post =&gt; userLoader.load(post.authorId),
+  },
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Apollo Server setup
+import { ApolloServer } from &quot;@apollo/server&quot;;
+import { startStandaloneServer } from &quot;@apollo/server/standalone&quot;;
+
+const server = new ApolloServer({ typeDefs, resolvers });
+startStandaloneServer(server, { listen: { port: 4000 } });</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Complexity limits
+const { createComplexityLimitRule } = require(&quot;graphql-validation-complexity&quot;);
+// depthLimit(7), complexityLimit(100) as validationRules</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Model the domain types and relationships.</p>
+<p class='ordered'>2. Define queries, mutations, and subscriptions in the schema.</p>
+<p class='ordered'>3. Write resolvers with DataLoader to avoid N+1.</p>
+<p class='ordered'>4. Add input validation and field authorization.</p>
+<p class='ordered'>5. Add depth/complexity limits.</p>
+<p class='ordered'>6. Implement subscriptions for real-time data.</p>
+<p class='ordered'>7. Monitor resolver latency and errors.</p>
+<p class='ordered'>8. Use persisted queries for production.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Schema compiles and is introspection-valid</p>
+<p class='ordered'>2. Queries return exactly the requested fields</p>
+<p class='ordered'>3. N+1 avoided (loader batches requests)</p>
+<p class='ordered'>4. Mutations validate and return affected objects</p>
+<p class='ordered'>5. Depth/complexity limits reject abusive queries</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>N+1: batch with DataLoader, not per-field queries.</li>
+<li>Introspection leaks: disable in production or restrict.</li>
+<li>Circular types: use lazy references in the schema.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="go-rest-api.html">← go-rest-api</a><a class="page-nav-link" href="grpc.html">grpc →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

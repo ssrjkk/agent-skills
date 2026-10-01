@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gitlab-ci — Agent Skills Library</title>
+  <meta name="description" content="Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/gitlab-ci.html">
+  <meta property="og:title" content="gitlab-ci — Agent Skills Library">
+  <meta property="og:description" content="Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/gitlab-ci.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">gitlab</span><span class="tag">ci-cd</span><span class="tag">pipelines</span><span class="tag">runner</span><span class="tag">devops</span>
+        </div>
+        <h1 class="skill-page-title">gitlab-ci</h1>
+        <p class="skill-page-desc">Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>9</strong></span>
+          <span>Lines <strong>116</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('gitlab-ci')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/gitlab-ci">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="github-actions.html">← github-actions</a><a class="page-nav-link" href="istio.html">istio →</a></div>
+      <div class="skill-page-body">
+        <h1>GitLab CI/CD</h1>
+<blockquote>Git-integrated CI/CD with powerful pipeline orchestration.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  image: node:20
+  script:
+    - npm ci
+    - npm test
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>GitLab-hosted repositories</li>
+<li>Auto DevOps deployments</li>
+<li>Multi-project pipelines</li>
+<li>Container registry integration</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Name jobs clearly and keep each stage single-purpose.</li>
+<li>Cache dependencies and use `needs` for fast pipelines.</li>
+<li>Store secrets in CI/CD variables, masked and scoped.</li>
+<li>Use rules (not only/except) for branch-based triggers.</li>
+<li>Upload artifacts and reports for visibility.</li>
+<li>Reuse logic with `include` and templates.</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Add `.gitlab-ci.yml` to repo root</p>
+<p class='ordered'>2. Configure stages and jobs</p>
+<p class='ordered'>3. Set up GitLab Runner</p>
+<p class='ordered'>4. Push to trigger pipeline</p>
+<p class='ordered'>5. Add caching and rules</p>
+<p class='ordered'>6. Secure variables and deploy</p>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Local runner
+gitlab-runner register</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Job with caching and rules
+test:
+  stage: test
+  image: node:20
+  cache:
+    key: npm
+    paths: [node_modules/]
+  rules:
+    - if: &#x27;$CI_PIPELINE_SOURCE == &quot;merge_request_event&quot;&#x27;
+  script:
+    - npm ci
+    - npm test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Reusable template via include
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - local: /ci/deploy.gitlab-ci.yml
+
+deploy:
+  stage: deploy
+  image: docker:24
+  services: [docker:24-dind]
+  only:
+    - main
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+  environment: production</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Resources</h2>
+<ul>
+<li>[GitLab CI Docs](https://docs.gitlab.com/ee/ci)</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>**Job stuck in pending** — runner has no tag match. Add `tags: [docker]`</li>
+</ul>
+<p>to the job or register the runner with matching tags.</p>
+<ul>
+<li>**Pipeline fails on `npm ci`** — cache is stale. Clear the cache from</li>
+</ul>
+<p>*CI/CD → Pipelines → Run pipeline* or bump the cache `key`.</p>
+<ul>
+<li>**Deploy stage skipped** — `only: [main]` blocks feature branches;</li>
+</ul>
+<p>use `rules: [if: &#x27;$CI_COMMIT_BRANCH == &quot;main&quot;&#x27;]` for finer control.</p>
+<ul>
+<li>**Runner runs as `sh`, not `bash`** — set `image` per job or use</li>
+</ul>
+<p>POSIX-compatible script lines (`|| true`, no `set -o pipefail`).</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Pipeline starts on commit</p>
+<p class='ordered'>2. All stages execute in order</p>
+<p class='ordered'>3. Deployments succeed</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="github-actions.html">← github-actions</a><a class="page-nav-link" href="istio.html">istio →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

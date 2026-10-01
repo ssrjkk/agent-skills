@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pytest — Agent Skills Library</title>
+  <meta name="description" content="Write reliable Python tests with pytest: fixtures, parametrize, mocking, async tests, and CI integration. Use for any Python testing.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/pytest.html">
+  <meta property="og:title" content="pytest — Agent Skills Library">
+  <meta property="og:description" content="Write reliable Python tests with pytest: fixtures, parametrize, mocking, async tests, and CI integration. Use for any Python testing.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/pytest.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#22c55e1a;color:#22c55e;border-color:#22c55e44">qa</span>
+          <span class="tag">pytest</span><span class="tag">python</span><span class="tag">testing</span><span class="tag">fixtures</span><span class="tag">mocking</span><span class="tag">parametrize</span><span class="tag">coverage</span>
+        </div>
+        <h1 class="skill-page-title">pytest</h1>
+        <p class="skill-page-desc">Write reliable Python tests with pytest: fixtures, parametrize, mocking, async tests, and CI integration. Use for any Python testing.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>126</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('pytest')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/qa/pytest">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="jest.html">← jest</a></div>
+      <div class="skill-page-body">
+        <h1>pytest</h1>
+<blockquote>Writing reliable Python tests with pytest.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest pytest-cov
+pytest tests/ -v --cov=src --cov-report=term-missing</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Unit tests for functions and classes</li>
+<li>Integration tests with real services</li>
+<li>Regression suites in CI</li>
+<li>Testing async code and data pipelines</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Test Structure</h3>
+<ul>
+<li>Name tests clearly: `test_&lt;behavior&gt;`</li>
+<li>Arrange, act, assert per test</li>
+<li>One behavior per test</li>
+<li>Put tests in `tests/` mirroring the package</li>
+</ul>
+<h3>Fixtures</h3>
+<ul>
+<li>Use fixtures for setup/teardown and shared resources</li>
+<li>Scope fixtures (`function`, `session`, `module`)</li>
+<li>Make fixtures narrow and composable</li>
+<li>Yield fixtures for cleanup</li>
+</ul>
+<h3>Parametrization</h3>
+<ul>
+<li>Use `@pytest.mark.parametrize` for input variants</li>
+<li>Cover boundaries and error cases</li>
+<li>Use `pytest.raises` for expected exceptions</li>
+<li>Use `monkeypatch` for env and side effects</li>
+</ul>
+<h3>Isolation</h3>
+<ul>
+<li>Mock external calls (`mock.patch`)</li>
+<li>Avoid network and filesystem in unit tests</li>
+<li>Use `tmp_path` for file-based tests</li>
+<li>Keep tests deterministic and fast</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest pytest-cov pytest-asyncio
+# mocking: pytest-mock</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Basic test with parametrize
+import pytest
+
+def add(a, b):
+    return a + b
+
+@pytest.mark.parametrize(&quot;a,b,expected&quot;, [
+    (1, 2, 3),
+    (0, 0, 0),
+    (-1, 1, 0),
+])
+def test_add(a, b, expected):
+    assert add(a, b) == expected</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Fixtures with cleanup
+import pytest
+
+@pytest.fixture
+def temp_db(tmp_path):
+    db = create_db(tmp_path / &quot;test.db&quot;)
+    yield db
+    db.close()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Async test
+import pytest
+import pytest_asyncio
+
+@pytest.mark.asyncio
+async def test_fetch():
+    data = await fetch_data()
+    assert &quot;items&quot; in data</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Mocking external call
+from unittest.mock import patch
+
+def test_api(mock_session):
+    with patch(&quot;app.client.get&quot;, return_value={&quot;ok&quot;: True}):
+        result = app.client.get(&quot;/health&quot;)
+    assert result == {&quot;ok&quot;: True}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install pytest and set up a `tests/` directory.</p>
+<p class='ordered'>2. Write focused tests for the core behavior.</p>
+<p class='ordered'>3. Extract setup into fixtures.</p>
+<p class='ordered'>4. Parametrize input variants and edge cases.</p>
+<p class='ordered'>5. Mock external services for isolation.</p>
+<p class='ordered'>6. Add coverage measurement and a threshold.</p>
+<p class='ordered'>7. Wire pytest into CI on every PR.</p>
+<p class='ordered'>8. Run with `-x`, `--ff`, and `-p no:cacheprovider` for speed.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. All tests pass locally and in CI</p>
+<p class='ordered'>2. Coverage meets the project threshold</p>
+<p class='ordered'>3. No tests depend on network or fixed absolute paths</p>
+<p class='ordered'>4. Tests are deterministic across runs</p>
+<p class='ordered'>5. Failures point to the specific behavior</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Flaky tests: find shared state or timing dependence.</li>
+<li>Slow suite: mark integration tests and run unit separately.</li>
+<li>Coverage gaps: check which branches lack assertions.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="jest.html">← jest</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

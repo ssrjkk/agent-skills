@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>unity-ecs — Agent Skills Library</title>
+  <meta name="description" content="Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/unity-ecs.html">
+  <meta property="og:title" content="unity-ecs — Agent Skills Library">
+  <meta property="og:description" content="Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/unity-ecs.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#ef44441a;color:#ef4444;border-color:#ef444444">gamedev</span>
+          <span class="tag">unity</span><span class="tag">ecs</span><span class="tag">dots</span><span class="tag">jobs</span><span class="tag">burst</span><span class="tag">game-dev</span><span class="tag">performance</span><span class="tag">csharp</span>
+        </div>
+        <h1 class="skill-page-title">unity-ecs</h1>
+        <p class="skill-page-desc">Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>9</strong></span>
+          <span>Sections <strong>7</strong></span>
+          <span>Lines <strong>250</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('unity-ecs')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/gamedev/unity-ecs">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="game-physics.html">← game-physics</a></div>
+      <div class="skill-page-body">
+        <h1>Unity ECS</h1>
+<blockquote>Building high-performance Unity games with Entity Component System and DOTS.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>using Unity.Entities;
+using Unity.Transforms;
+using Unity.Mathematics;
+
+// Define a component
+public struct Health : IComponentData
+{
+    public float Current;
+    public float Max;
+}
+
+// Define a system
+public partial class DamageSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        float dt = SystemAPI.Time.DeltaTime;
+
+        foreach (var (health, transform) in
+            SystemAPI.Query&lt;RefRW&lt;Health&gt;, RefRO&lt;LocalTransform&gt;&gt;())
+        {
+            if (health.ValueRO.Current &lt;= 0)
+                continue;
+
+            // Example: regenerate health over time
+            health.ValueRW.Current = math.min(
+                health.ValueRO.Current + dt * 5f,
+                health.ValueRO.Max
+            );
+        }
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Building games with thousands of similar entities (bullets, particles, NPCs)</li>
+<li>When MonoBehaviour performance is not enough</li>
+<li>Need for data-oriented design and cache-friendly code</li>
+<li>Large-scale simulations or strategy games</li>
+</ul>
+<h2>Step-by-Step</h2>
+<h3>1. Design Components (Data)</h3>
+<p>Keep components small and focused:</p>
+<div class="codeblock"><pre class="code"><code>public struct MovementSpeed : IComponentData { public float Value; }
+public struct TargetPosition : IComponentData { public float3 Value; }
+public struct DamageOnContact : IComponentData { public float Amount; }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Create Systems (Logic)</h3>
+<p>Systems operate on entities with specific component combinations:</p>
+<div class="codeblock"><pre class="code"><code>public partial class MovementSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        float dt = SystemAPI.Time.DeltaTime;
+
+        foreach (var (transform, speed) in
+            SystemAPI.Query&lt;RefRW&lt;LocalTransform&gt;, RefRO&lt;MovementSpeed&gt;&gt;())
+        {
+            var pos = transform.ValueRO.Position;
+            pos.z += speed.ValueRO.Value * dt;
+            transform.ValueRW.Position = pos;
+        }
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Use Jobs for Parallelism</h3>
+<div class="codeblock"><pre class="code"><code>[BurstCompile]
+public partial struct CalculateDamageJob : IJobEntity
+{
+    public float DeltaTime;
+
+    void Execute(ref Health health, in DamageOverTime dot)
+    {
+        health.Current -= dot.DamagePerSecond * DeltaTime;
+        health.Current = math.max(0, health.Current);
+    }
+}
+
+public partial class DamageOverTimeSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        var job = new CalculateDamageJob
+        {
+            DeltaTime = SystemAPI.Time.DeltaTime
+        };
+        job.ScheduleParallel();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Entity Queries</h3>
+<div class="codeblock"><pre class="code"><code>partial class TargetingSystem : SystemBase
+{
+    private EntityQuery _enemyQuery;
+
+    protected override void OnCreate()
+    {
+        _enemyQuery = new EntityQueryBuilder(Allocator.Temp)
+            .WithAll&lt;Health, EnemyTag&gt;()
+            .WithNone&lt;DeadTag&gt;()
+            .Build(this);
+    }
+
+    protected override void OnUpdate()
+    {
+        var enemies = _enemyQuery.ToEntityArray(Allocator.Temp);
+        // Process enemies...
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Shared Components (Rendering)</h3>
+<div class="codeblock"><pre class="code"><code>public struct SpriteRenderer : ISharedComponentData
+{
+    public Texture2D Texture;
+    public Material Material;
+}
+
+// Entities with same shared component are grouped together</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>**Keep components small** — single responsibility</li>
+<li>**Avoid managed references** in components (use Entity references)</li>
+<li>**Use Burst** for math-heavy jobs</li>
+<li>**Batch entities** by shared components for rendering</li>
+<li>**Profile with Unity Profiler** — measure before optimizing</li>
+</ul>
+<h2>Common Pitfalls</h2>
+<ul>
+<li>Forgetting to mark jobs with `[BurstCompile]`</li>
+<li>Using `foreach` instead of `IJobEntity` for large datasets</li>
+<li>Creating too many systems — group related logic</li>
+<li>Not disposing NativeArrays and other native containers</li>
+</ul>
+<h2>Examples</h2>
+<h3>Spawning Entities</h3>
+<div class="codeblock"><pre class="code"><code>public partial class SpawnerSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        var ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+        foreach (var (spawner, transform) in
+            SystemAPI.Query&lt;RefRO&lt;Spawner&gt;, RefRO&lt;LocalTransform&gt;&gt;())
+        {
+            if (spawner.ValueRO.CanSpawn)
+            {
+                var entity = ecb.Instantiate(spawner.ValueRO.Prefab);
+                ecb.SetComponent(entity, new LocalTransform
+                {
+                    Position = transform.ValueRO.Position
+                });
+            }
+        }
+
+        ecb.Playback(SystemAPI.GetSingleton&lt;EntityManager&gt;());
+        ecb.Dispose();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Health and Death</h3>
+<div class="codeblock"><pre class="code"><code>public partial class DeathSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        var ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+        foreach (var (health, entity) in
+            SystemAPI.Query&lt;RefRO&lt;Health&gt;&gt;().WithEntityAccess())
+        {
+            if (health.ValueRO.Current &lt;= 0)
+            {
+                ecb.AddComponent&lt;DeadTag&gt;(entity);
+                ecb.RemoveComponent&lt;Health&gt;(entity);
+            }
+        }
+
+        ecb.Playback(SystemAPI.GetSingleton&lt;EntityManager&gt;());
+        ecb.Dispose();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Validation</h2>
+<div class="codeblock"><pre class="code"><code>[Test]
+public void MovementSystem_UpdatesPosition()
+{
+    using var world = new World(&quot;Test&quot;);
+    var system = world.GetOrCreateSystemManaged&lt;MovementSystem&gt;();
+
+    var entity = world.EntityManager.CreateEntity();
+    world.EntityManager.AddComponentData(entity, new LocalTransform
+    {
+        Position = new float3(0, 0, 0)
+    });
+    world.EntityManager.AddComponentData(entity, new MovementSpeed { Value = 10f });
+
+    system.Update();
+
+    var transform = world.EntityManager.GetComponentData&lt;LocalTransform&gt;(entity);
+    Assert.Greater(transform.Position.z, 0);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="game-physics.html">← game-physics</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

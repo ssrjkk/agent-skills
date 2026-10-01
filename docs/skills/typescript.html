@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>typescript — Agent Skills Library</title>
+  <meta name="description" content="Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/typescript.html">
+  <meta property="og:title" content="typescript — Agent Skills Library">
+  <meta property="og:description" content="Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/typescript.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">typescript</span><span class="tag">javascript</span><span class="tag">typing</span><span class="tag">generics</span><span class="tag">static-analysis</span><span class="tag">tooling</span>
+        </div>
+        <h1 class="skill-page-title">typescript</h1>
+        <p class="skill-page-desc">Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>114</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('typescript')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/typescript">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="tailwind-v4.html">← tailwind-v4</a><a class="page-nav-link" href="vue.html">vue →</a></div>
+      <div class="skill-page-body">
+        <h1>TypeScript</h1>
+<blockquote>Type-safe JavaScript with strong typing, generics, and strict tooling.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm create vite@latest my-app -- --template vanilla-ts
+cd my-app
+npm i
+npm run build
+# tsconfig.json enables strict mode</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Any JavaScript project that grows beyond a few files</li>
+<li>Libraries and shared packages where API contracts matter</li>
+<li>Teams that want compile-time safety before runtime</li>
+<li>Refactoring large legacy JS codebases</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Type Design</h3>
+<ul>
+<li>Model the domain with unions, discriminated unions, and literals</li>
+<li>Derive types from data, not the other way around</li>
+<li>Prefer `type` aliases over `interface` for unions and mapped types</li>
+<li>Export shared types from a central `types.ts`</li>
+</ul>
+<h3>Strictness</h3>
+<ul>
+<li>Enable `strict: true` from the start</li>
+<li>Avoid `any`; use `unknown` and narrow with type guards</li>
+<li>Use `satisfies` to validate objects against a type without widening</li>
+<li>Enable `noUncheckedIndexedAccess` for array safety</li>
+</ul>
+<h3>Generics</h3>
+<ul>
+<li>Write generic functions with sensible constraints</li>
+<li>Use utility types: `Pick`, `Omit`, `Partial`, `Record`, `ReturnType`</li>
+<li>Prefer `infer` in conditional types for advanced extraction</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm i -D typescript @types/node tsx
+npx tsc --init
+# set: strict true, noUncheckedIndexedAccess true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Discriminated union models a state machine safely
+type Result&lt;T&gt; =
+  | { status: &quot;success&quot;; data: T }
+  | { status: &quot;error&quot;; message: string };
+
+function handle(r: Result&lt;number&gt;): number {
+  if (r.status === &quot;success&quot;) return r.data;
+  console.error(r.message);
+  return 0;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Generic function with constraint
+function pluck&lt;T, K extends keyof T&gt;(items: T[], key: K): T[K][] {
+  return items.map((item) =&gt; item[key]);
+}
+
+const names = pluck([{ name: &quot;a&quot;, id: 1 }], &quot;name&quot;); // string[]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// satisfies keeps narrow types while checking shape
+const config = {
+  port: 3000,
+  host: &quot;0.0.0.0&quot;,
+} satisfies Record&lt;string, string | number&gt;;
+
+config.port; // number, not string | number</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Type guard narrows unknown
+function isError(x: unknown): x is { message: string } {
+  return typeof x === &quot;object&quot; &amp;&amp; x !== null &amp;&amp; &quot;message&quot; in x;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Enable `strict: true` and `noUncheckedIndexedAccess` in `tsconfig.json`.</p>
+<p class='ordered'>2. Model domain types first (unions, entities) before writing functions.</p>
+<p class='ordered'>3. Write functions with explicit return types; avoid implicit `any`.</p>
+<p class='ordered'>4. Use `unknown` for external input; narrow with guards and validation.</p>
+<p class='ordered'>5. Prefer `satisfies` for config objects; use `as const` for literals.</p>
+<p class='ordered'>6. Extract complex logic into generics only when reused twice or more.</p>
+<p class='ordered'>7. Add `tsc --noEmit` to CI; enforce on every PR.</p>
+<p class='ordered'>8. Run `tsc` in watch mode during development for fast feedback.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `tsc --noEmit` passes with zero errors</p>
+<p class='ordered'>2. No `any` in new code (lint rule `@typescript-eslint/no-explicit-any`)</p>
+<p class='ordered'>3. Public APIs of shared modules have explicit types</p>
+<p class='ordered'>4. Runtime behavior matches types (no unsafe casts to work around errors)</p>
+<p class='ordered'>5. Build (`tsup`/`vite build`) completes cleanly</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>&quot;Property does not exist&quot;: the type is narrower than you think — narrow with guards.</li>
+<li>&quot;Not assignable&quot;: mismatch between declared and actual shape — fix the data contract, not the cast.</li>
+<li>Weird `any` leaks: check `ts-ignore` and third-party typings.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="tailwind-v4.html">← tailwind-v4</a><a class="page-nav-link" href="vue.html">vue →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>docker — Agent Skills Library</title>
+  <meta name="description" content="Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening. Use for any deployable service.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/docker.html">
+  <meta property="og:title" content="docker — Agent Skills Library">
+  <meta property="og:description" content="Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening. Use for any deployable service.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/docker.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">docker</span><span class="tag">containers</span><span class="tag">images</span><span class="tag">dockerfile</span><span class="tag">compose</span><span class="tag">deployment</span><span class="tag">devops</span>
+        </div>
+        <h1 class="skill-page-title">docker</h1>
+        <p class="skill-page-desc">Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening. Use for any deployable service.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>132</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('docker')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/docker">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="cloud-native-ai.html">← cloud-native-ai</a><a class="page-nav-link" href="github-actions.html">github-actions →</a></div>
+      <div class="skill-page-body">
+        <h1>Docker</h1>
+<blockquote>Containerizing applications with Docker for consistent deployment.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>docker build -t myapp .
+docker run -p 8080:8080 myapp
+docker compose up -d</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Consistent environments across dev, test, and prod</li>
+<li>Microservices and isolated dependencies</li>
+<li>CI/CD artifacts that are identical everywhere</li>
+<li>Local development with databases and services</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Dockerfiles</h3>
+<ul>
+<li>Use multi-stage builds to slim images</li>
+<li>Prefer official and pinned base images (`alpine:3.20`)</li>
+<li>Run as non-root; copy only what is needed</li>
+<li>Layer ordering: dependencies first, code last (better caching)</li>
+</ul>
+<h3>Images</h3>
+<ul>
+<li>Keep images small: distroless or alpine when possible</li>
+<li>Tag with commit SHA and semver; avoid `latest` for prod</li>
+<li>Scan images with `docker scout` or Trivy</li>
+<li>Use `--platform` for multi-arch builds</li>
+</ul>
+<h3>Runtime</h3>
+<ul>
+<li>Set resource limits (`--memory`, `--cpus`)</li>
+<li>Use volumes for persistent data; anonymous volumes are ephemeral</li>
+<li>Prefer `init: true` or `tini` to reap zombies</li>
+<li>Add healthchecks so orchestrators can manage lifecycle</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Docker Desktop or docker engine + compose plugin
+docker --version
+docker compose version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Multi-stage Node build
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+USER node
+EXPOSE 3000
+CMD [&quot;node&quot;, &quot;dist/server.js&quot;]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># docker-compose.yml
+services:
+  web:
+    build: .
+    ports:
+      - &quot;8080:8080&quot;
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;wget&quot;, &quot;-qO-&quot;, &quot;http://localhost:8080/health&quot;]
+      interval: 10s
+      retries: 3
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U postgres&quot;]
+volumes:
+  pgdata:</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Build and push with metadata
+docker build -t ghcr.io/org/myapp:${GITHUB_SHA} .
+docker push ghcr.io/org/myapp:${GITHUB_SHA}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Inspect and debug
+docker exec -it myapp sh
+docker logs --follow myapp
+docker image prune -f</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Write a multi-stage Dockerfile with pinned base images.</p>
+<p class='ordered'>2. Order layers for cache efficiency (deps before code).</p>
+<p class='ordered'>3. Run as non-root; add a healthcheck.</p>
+<p class='ordered'>4. Build and test locally with `docker build` and `docker run`.</p>
+<p class='ordered'>5. Compose services for local integration (app + db + cache).</p>
+<p class='ordered'>6. Tag images with the commit SHA; push to a registry.</p>
+<p class='ordered'>7. Scan for vulnerabilities before deploy.</p>
+<p class='ordered'>8. Pin resource limits and set up log rotation.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `docker build` succeeds with no warnings</p>
+<p class='ordered'>2. `docker run` starts and responds to healthcheck</p>
+<p class='ordered'>3. Image scan reports no critical vulnerabilities</p>
+<p class='ordered'>4. Compose stack starts cleanly with `docker compose up`</p>
+<p class='ordered'>5. Non-root container cannot write to protected paths</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>&quot;Cannot connect to the Docker daemon&quot;: start Docker Desktop/engine.</li>
+<li>Image too large: switch to multi-stage and slimmer base.</li>
+<li>&quot;Address already in use&quot;: change host port mapping or stop the conflicting container.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="cloud-native-ai.html">← cloud-native-ai</a><a class="page-nav-link" href="github-actions.html">github-actions →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

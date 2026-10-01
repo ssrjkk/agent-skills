@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bun-runtime — Agent Skills Library</title>
+  <meta name="description" content="Bun runtime for JavaScript/TypeScript">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/bun-runtime.html">
+  <meta property="og:title" content="bun-runtime — Agent Skills Library">
+  <meta property="og:description" content="Bun runtime for JavaScript/TypeScript">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/bun-runtime.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">bun</span><span class="tag">javascript</span><span class="tag">typescript</span><span class="tag">runtime</span><span class="tag">bundler</span>
+        </div>
+        <h1 class="skill-page-title">bun-runtime</h1>
+        <p class="skill-page-desc">Bun runtime for JavaScript/TypeScript</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>145</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('bun-runtime')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/bun-runtime">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="astro.html">← astro</a><a class="page-nav-link" href="modern-css.html">modern-css →</a></div>
+      <div class="skill-page-body">
+        <h1>Bun Runtime</h1>
+<blockquote>Build and run JavaScript/TypeScript applications with Bun — the all-in-one toolkit.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Install Bun
+powershell -c &quot;irm bun.sh/install.ps1 | iex&quot;
+
+# Create a new project
+bun init
+
+# Run TypeScript directly (no ts-node needed)
+bun run server.ts
+
+# Package scripts (3-5x faster than npm)
+bun install
+bun add express
+bun add -d typescript
+
+# Run package.json scripts
+bun run dev
+bun run build
+
+# Test runner (Jest-compatible)
+bun test
+
+# Bun&#x27;s built-in bundler
+bun build ./src/index.ts --outdir=./dist</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// bun自带 features
+
+// Fetch API (built-in, no polyfill needed)
+const response = await fetch(&quot;https://api.example.com/data&quot;);
+const data = await response.json();
+
+// SQLite (built-in)
+import { Database } from &quot;bun:sqlite&quot;;
+const db = new Database(&quot;:memory:&quot;);
+db.run(&quot;CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)&quot;);
+db.run(&quot;INSERT INTO users (name) VALUES ($name)&quot;, { name: &quot;Alice&quot; });
+const users = db.query(&quot;SELECT * FROM users&quot;).all();
+
+// File I/O (Bun native)
+const file = Bun.file(&quot;data.json&quot;);
+const contents = await file.json();
+
+// Environment variables (built-in)
+const apiKey = Bun.env.API_KEY;
+
+// WebSocket server
+Bun.serve({
+  port: 3000,
+  fetch(req, server) {
+    if (server.upgrade(req)) return; // upgrade to WebSocket
+    return new Response(&quot;Hello&quot;);
+  },
+  websocket: {
+    message(ws, message) {
+      ws.send(`Echo: ${message}`);
+    }
+  }
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Bun is a JavaScript runtime, bundler, test runner, and package manager in one. Uses JavaScriptCore (not V8), starts faster than Node.js, and is fully compatible with Node.js APIs.</p>
+<h2>When to Use</h2>
+<ul>
+<li>New TypeScript/JavaScript projects</li>
+<li>CI/CD pipelines needing faster installs and builds</li>
+<li>Development servers requiring hot reload</li>
+<li>Projects wanting built-in SQLite, fetch, and WebSocket support</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install: run the one-line installer (`irm bun.sh/install.ps1 | iex` on Windows) and verify `bun --version`.</p>
+<p class='ordered'>2. Scaffold: `bun init` creates `package.json`, `tsconfig.json`, and entry `index.ts`.</p>
+<p class='ordered'>3. Write code natively: use built-in `fetch`, `Bun.file`, `bun:sqlite`, and `Bun.serve` — no polyfills, no framework.</p>
+<p class='ordered'>4. Manage deps fast: `bun install`; install exact versions with `bun add &lt;pkg&gt;@&lt;version&gt;`.</p>
+<p class='ordered'>5. Run and test: `bun run dev` (watch mode), `bun test` (Jest-compatible API), debug with `bun --inspect`.</p>
+<p class='ordered'>6. Bundle and ship: `bun build ./src/index.ts --outdir=./dist --minify --target=bun` for a deployment artifact.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// REST API with built-in SQLite and typed routes
+import { Database } from &quot;bun:sqlite&quot;;
+
+const db = new Database(&quot;:memory:&quot;);
+db.run(&quot;CREATE TABLE todos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER DEFAULT 0)&quot;);
+
+Bun.serve({
+  port: 3000,
+  async fetch(req: Request) {
+    const url = new URL(req.url);
+    if (req.method === &quot;POST&quot; &amp;&amp; url.pathname === &quot;/todos&quot;) {
+      const { title } = await req.json();
+      const res = db.query(&quot;INSERT INTO todos (title) VALUES (?) RETURNING *&quot;).get(title);
+      return Response.json(res, { status: 201 });
+    }
+    if (url.pathname === &quot;/todos&quot;) {
+      return Response.json(db.query(&quot;SELECT * FROM todos&quot;).all());
+    }
+    return Response.json({ error: &quot;not found&quot; }, { status: 404 });
+  },
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Serve the built SPA/SSR artifact and run tests
+bun run --watch src/index.ts
+bun test
+bun build src/index.ts --outdir=dist --minify --target=bun &amp;&amp; bun dist/index.js</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Use Bun for fast JS/TS runtimes, bundling, and tests.</li>
+<li>Prefer `bun install` for lockfile speed and compatibility.</li>
+<li>Use `bun test` for built-in test runner with coverage.</li>
+<li>Leverage `Bun.serve` for high-throughput HTTP.</li>
+<li>Keep dependencies minimal; Bun has many built-ins.</li>
+<li>Pin the Bun version in CI for reproducibility.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Install conflicts: clear node_modules and regenerate lockfile.</li>
+<li>Native bindings: match Bun version with the package.</li>
+<li>Runtime differences: check the Bun version in CI vs local.</li>
+<li>Slow cold start: use `--smol` or tweak the runtime flags.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. `bun --version` shows installed version</p>
+<p class='ordered'>2. `bun run` executes TypeScript without compilation step</p>
+<p class='ordered'>3. `bun install` is faster than npm/pnpm on the same project</p>
+<p class='ordered'>4. `bun test` runs existing Jest/Vitest test suites</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="astro.html">← astro</a><a class="page-nav-link" href="modern-css.html">modern-css →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>express — Agent Skills Library</title>
+  <meta name="description" content="Build Node.js web APIs with Express: routing, middleware, error handling, validation, and production hardening. Use for Node backends.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/express.html">
+  <meta property="og:title" content="express — Agent Skills Library">
+  <meta property="og:description" content="Build Node.js web APIs with Express: routing, middleware, error handling, validation, and production hardening. Use for Node backends.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/express.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">express</span><span class="tag">nodejs</span><span class="tag">javascript</span><span class="tag">typescript</span><span class="tag">middleware</span><span class="tag">api</span><span class="tag">backend</span>
+        </div>
+        <h1 class="skill-page-title">express</h1>
+        <p class="skill-page-desc">Build Node.js web APIs with Express: routing, middleware, error handling, validation, and production hardening. Use for Node backends.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>135</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('express')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/express">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="dotnet.html">← dotnet</a><a class="page-nav-link" href="fastapi.html">fastapi →</a></div>
+      <div class="skill-page-body">
+        <h1>Express</h1>
+<blockquote>Building Node.js APIs with Express and middleware.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm init -y
+npm i express
+node server.js  # http://localhost:3000</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Simple and flexible HTTP APIs in Node</li>
+<li>Middleware-heavy applications</li>
+<li>Prototyping and small services</li>
+<li>Teams familiar with JavaScript</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Structure</h3>
+<ul>
+<li>Organize routes by resource: `routes/`, `controllers/`</li>
+<li>Use `express.Router()` per resource</li>
+<li>Keep controllers thin; logic in services</li>
+<li>Separate config from code</li>
+</ul>
+<h3>Middleware</h3>
+<ul>
+<li>Use middleware for auth, logging, CORS, parsing</li>
+<li>Order matters: parse → auth → routes → error</li>
+<li>Keep middleware small and single-purpose</li>
+<li>Add a centralized error handler</li>
+</ul>
+<h3>Validation &amp; Errors</h3>
+<ul>
+<li>Validate request bodies (zod/joi)</li>
+<li>Return structured errors with status codes</li>
+<li>Use async error handlers (`express-async-errors`)</li>
+<li>Handle 404 centrally</li>
+</ul>
+<h3>Production</h3>
+<ul>
+<li>Use `process.env` for config</li>
+<li>Enable `trust proxy` behind a reverse proxy</li>
+<li>Add rate limiting and security headers (helmet)</li>
+<li>Run with a process manager (PM2) or serverless</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm i express helmet cors zod
+npm i -D typescript @types/express ts-node nodemon</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>const express = require(&quot;express&quot;);
+const app = express();
+
+app.use(express.json());
+app.get(&quot;/health&quot;, (req, res) =&gt; res.json({ ok: true }));
+
+app.use((err, req, res, next) =&gt; {
+  res.status(err.status || 500).json({ error: err.message });
+});
+
+app.listen(3000);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Router for a resource
+const { Router } = require(&quot;express&quot;);
+const router = Router();
+
+router.get(&quot;/:id&quot;, async (req, res, next) =&gt; {
+  try {
+    const user = await findUser(req.params.id);
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Validation with zod
+const { z } = require(&quot;zod&quot;);
+
+const createSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+});
+
+router.post(&quot;/&quot;, (req, res, next) =&gt; {
+  const parsed = createSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(422).json({ error: parsed.error.flatten() });
+  }
+  res.status(201).json(createUser(parsed.data));
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Central error handler + 404
+app.use((req, res) =&gt; res.status(404).json({ error: &quot;Not found&quot; }));
+app.use((err, req, res, next) =&gt; {
+  console.error(err);
+  res.status(err.status || 500).json({ error: &quot;Internal error&quot; });
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Initialize the project and install Express.</p>
+<p class='ordered'>2. Set up middleware: json, helmet, cors.</p>
+<p class='ordered'>3. Create routers per resource.</p>
+<p class='ordered'>4. Add validation schemas for inputs.</p>
+<p class='ordered'>5. Implement services for business logic.</p>
+<p class='ordered'>6. Add a centralized error handler and 404.</p>
+<p class='ordered'>7. Secure with rate limiting and env config.</p>
+<p class='ordered'>8. Add tests and deploy behind a reverse proxy.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Endpoints return correct status codes and JSON</p>
+<p class='ordered'>2. Validation rejects bad input with 422</p>
+<p class='ordered'>3. Errors are handled centrally, not crashing the server</p>
+<p class='ordered'>4. Security headers and rate limiting are active</p>
+<p class='ordered'>5. Tests pass in CI</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>CORS errors: configure cors with the right origin.</li>
+<li>Unhandled rejection: add process-level handlers and async error middleware.</li>
+<li>Slow responses: profile middleware order and DB queries.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="dotnet.html">← dotnet</a><a class="page-nav-link" href="fastapi.html">fastapi →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

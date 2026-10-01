@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prompt-engineering — Agent Skills Library</title>
+  <meta name="description" content="Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation. Use to get reliable model behavior.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/prompt-engineering.html">
+  <meta property="og:title" content="prompt-engineering — Agent Skills Library">
+  <meta property="og:description" content="Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation. Use to get reliable model behavior.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/prompt-engineering.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">prompt-engineering</span><span class="tag">llm</span><span class="tag">prompting</span><span class="tag">chain-of-thought</span><span class="tag">structured-output</span>
+        </div>
+        <h1 class="skill-page-title">prompt-engineering</h1>
+        <p class="skill-page-desc">Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation. Use to get reliable model behavior.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>118</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('prompt-engineering')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/prompt-engineering">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="prompt-caching.html">← prompt-caching</a><a class="page-nav-link" href="rag-pipeline.html">rag-pipeline →</a></div>
+      <div class="skill-page-body">
+        <h1>Prompt Engineering</h1>
+<blockquote>Designing prompts that reliably steer LLM behavior.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>You are a senior Python code reviewer.
+Review the code below for bugs, security issues, and style.
+Output a markdown report with sections: Issues, Severity, Fix.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Getting consistent structured output from LLMs</li>
+<li>Reducing hallucinations in critical workflows</li>
+<li>Making prompts robust across models and versions</li>
+<li>Building prompts for agents and tools</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Framing</h3>
+<ul>
+<li>Give the model a clear role and task</li>
+<li>State constraints explicitly (format, length, tone)</li>
+<li>Provide context before asking the question</li>
+<li>Ask for one thing per prompt when possible</li>
+</ul>
+<h3>Structured Output</h3>
+<ul>
+<li>Ask for JSON/YAML with a schema</li>
+<li>Use few-shot examples of the desired format</li>
+<li>Request self-checking: &quot;validate your JSON before responding&quot;</li>
+<li>Prefer `response_format`/tools when the API supports them</li>
+</ul>
+<h3>Reasoning</h3>
+<ul>
+<li>Use chain-of-thought for multi-step problems</li>
+<li>Ask for step-by-step reasoning before the final answer</li>
+<li>Keep reasoning separate from the final deliverable</li>
+<li>Avoid leaking internal reasoning into user-facing output</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai   # or anthropic, google-generativeai</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Structured JSON extraction
+Extract entities from the text below as JSON.
+Schema: {&quot;name&quot;: string, &quot;org&quot;: string|null, &quot;confidence&quot;: float 0-1}
+Return only valid JSON, no commentary.
+
+Text: &quot;Alice works at Acme and handles billing.&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Chain-of-thought
+Solve the math problem step by step, then give the final answer.
+Show each calculation. End with: &quot;Answer: &lt;number&gt;&quot;.
+
+Problem: A train travels 240 km in 3 hours. What is the average speed?</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import openai
+
+client = openai.OpenAI()
+resp = client.chat.completions.create(
+    model=&quot;gpt-6&quot;,
+    messages=[
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You extract entities to JSON.&quot;},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &#x27;{&quot;text&quot;: &quot;Alice works at Acme&quot;}&#x27;},
+    ],
+    response_format={&quot;type&quot;: &quot;json_object&quot;},
+)
+print(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Evaluate prompt quality on a test set
+def score_prompt(prompt: str, cases: list[tuple[str, str]]) -&gt; float:
+    correct = 0
+    for inp, expected in cases:
+        out = run_model(prompt, inp)
+        if normalize(out) == normalize(expected):
+            correct += 1
+    return correct / len(cases)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define the task, expected output, and failure modes.</p>
+<p class='ordered'>2. Write a role + constraints prompt; include an output schema.</p>
+<p class='ordered'>3. Add 2-3 few-shot examples of the exact format.</p>
+<p class='ordered'>4. For reasoning tasks, request step-by-step with separated final answer.</p>
+<p class='ordered'>5. Test against a held-out set; measure accuracy and format compliance.</p>
+<p class='ordered'>6. Iterate: add failing cases, tighten constraints, trim noise.</p>
+<p class='ordered'>7. Version prompts; pin model and temperature.</p>
+<p class='ordered'>8. Monitor drift and re-evaluate on schedule.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Output parses as valid JSON/YAML when structured</p>
+<p class='ordered'>2. Accuracy on the eval set meets the target</p>
+<p class='ordered'>3. Prompt works across the target models</p>
+<p class='ordered'>4. No prompt injection from user content (sandbox untrusted input)</p>
+<p class='ordered'>5. Latency and cost within budget</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Output not JSON: tighten schema, add few-shot, use response_format.</li>
+<li>Hallucinations: add grounding context and ask for citations.</li>
+<li>Verbose answers: constrain length and format in the prompt.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="prompt-caching.html">← prompt-caching</a><a class="page-nav-link" href="rag-pipeline.html">rag-pipeline →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

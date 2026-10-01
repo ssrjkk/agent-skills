@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rust-tokio — Agent Skills Library</title>
+  <meta name="description" content="Async Rust with Tokio runtime">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/rust-tokio.html">
+  <meta property="og:title" content="rust-tokio — Agent Skills Library">
+  <meta property="og:description" content="Async Rust with Tokio runtime">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/rust-tokio.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">rust</span><span class="tag">tokio</span><span class="tag">async</span><span class="tag">concurrency</span><span class="tag">runtime</span>
+        </div>
+        <h1 class="skill-page-title">rust-tokio</h1>
+        <p class="skill-page-desc">Async Rust with Tokio runtime</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>229</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('rust-tokio')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/rust-tokio">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="rest-api-design.html">← rest-api-design</a><a class="page-nav-link" href="spring-boot.html">spring-boot →</a></div>
+      <div class="skill-page-body">
+        <h1>Rust Tokio</h1>
+<blockquote>Build high-performance async applications in Rust using the Tokio runtime.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>use tokio::net::TcpListener;
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
+use std::sync::Arc;
+use tokio::sync::Mutex;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let listener = TcpListener::bind(&quot;127.0.0.1:8080&quot;).await?;
+    let counter = Arc::new(Mutex::new(0u64));
+
+    println!(&quot;Server listening on :8080&quot;);
+
+    loop {
+        let (socket, addr) = listener.accept().await?;
+        let counter = counter.clone();
+        
+        tokio::spawn(async move {
+            println!(&quot;New connection: {}&quot;, addr);
+            
+            let (reader, mut writer) = socket.into_split();
+            let mut buf_reader = BufReader::new(reader);
+            let mut line = String::new();
+
+            loop {
+                line.clear();
+                match buf_reader.read_line(&amp;mut line).await {
+                    Ok(0) =&gt; break, // EOF
+                    Ok(_) =&gt; {
+                        let response = format!(&quot;Echo: {}&quot;, line.trim());
+                        
+                        // Update shared counter
+                        let mut count = counter.lock().await;
+                        *count += 1;
+                        drop(count);
+
+                        if let Err(e) = writer.write_all(response.as_bytes()).await {
+                            eprintln!(&quot;Write error: {}&quot;, e);
+                            break;
+                        }
+                        if let Err(e) = writer.write_all(b&quot;\n&quot;).await {
+                            eprintln!(&quot;Write error: {}&quot;, e);
+                            break;
+                        }
+                    }
+                    Err(e) =&gt; {
+                        eprintln!(&quot;Read error: {}&quot;, e);
+                        break;
+                    }
+                }
+            }
+            println!(&quot;Connection closed: {}&quot;, addr);
+        });
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Async HTTP client
+use reqwest;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    // Concurrent requests with join
+    let urls = vec![
+        &quot;https://api.example.com/users&quot;,
+        &quot;https://api.example.com/products&quot;,
+        &quot;https://api.example.com/orders&quot;,
+    ];
+
+    let mut handles = Vec::new();
+    for url in urls {
+        handles.push(tokio::spawn(async move {
+            reqwest::get(url).await.unwrap().text().await.unwrap()
+        }));
+    }
+
+    // Join all concurrent requests
+    for handle in handles {
+        let result = handle.await?;
+        println!(&quot;Got response: {} bytes&quot;, result.len());
+    }
+
+    Ok(())
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Tokio is an async runtime for Rust providing I/O, timers, synchronization primitives, and task scheduling. Use `#[tokio::main]` to enter async context. `tokio::spawn` creates concurrent tasks. Use `Mutex`/`RwLock` for shared state.</p>
+<h2>When to Use</h2>
+<ul>
+<li>High-throughput network services (HTTP servers, proxies)</li>
+<li>Real-time systems (chat, gaming, streaming)</li>
+<li>Concurrent data processing pipelines</li>
+<li>Microservices requiring maximum performance</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Add Tokio: `cargo add tokio --features full` and set an async `main` with `#[tokio::main]`.</p>
+<p class='ordered'>2. Pick the I/O primitive: `TcpListener`/`TcpStream` for sockets, `UnixListener` for local pipes, `tokio::fs` for async file access.</p>
+<p class='ordered'>3. Handle each connection by `tokio::spawn` — never block tokio worker threads with synchronous work.</p>
+<p class='ordered'>4. Share state via `tokio::sync::Mutex`/`RwLock` (or actor channels) cloned into tasks.</p>
+<p class='ordered'>5. Add concurrency: use `tokio::join!`/`try_join!` for parallel awaits and `tokio::time::timeout` for deadlines.</p>
+<p class='ordered'>6. Tune the runtime: set worker threads and run tests with `cargo test` under `--cfg tokio_unstable` if multi-thread stats are needed.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Fan-out to N concurrent tasks and aggregate results
+use tokio::time::{sleep, Duration};
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let handles: Vec&lt;_&gt; = (0..5)
+        .map(|i| tokio::spawn(async move {
+            sleep(Duration::from_millis(100 * i)).await;
+            i * i
+        }))
+        .collect();
+
+    let mut total = 0;
+    for h in handles {
+        total += h.await?;
+    }
+    println!(&quot;sum of squares = {total}&quot;);
+    Ok(())
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Graceful shutdown with CancellationToken
+use tokio_util::sync::CancellationToken;
+
+#[tokio::main]
+async fn main() {
+    let token = CancellationToken::new();
+    let child = token.clone();
+    tokio::spawn(async move {
+        tokio::select! {
+            _ = child.cancelled() =&gt; println!(&quot;task cancelled&quot;),
+            _ = tokio::time::sleep(Duration::from_secs(60)) =&gt; println!(&quot;task done&quot;),
+        }
+    });
+    tokio::time::sleep(Duration::from_millis(50)).await;
+    token.cancel();
+    tokio::time::sleep(Duration::from_millis(50)).await;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<p class='ordered'>1. Add Tokio: `cargo add tokio --features full` and set an async `main` with `#[tokio::main]`.</p>
+<p class='ordered'>2. Pick the I/O primitive: `TcpListener`/`TcpStream` for sockets, `UnixListener` for local pipes, `tokio::fs` for async file access.</p>
+<p class='ordered'>3. Handle each connection by `tokio::spawn` — never block tokio worker threads with synchronous work.</p>
+<p class='ordered'>4. Share state via `tokio::sync::Mutex`/`RwLock` (or actor channels) cloned into tasks.</p>
+<p class='ordered'>5. Add concurrency: use `tokio::join!`/`try_join!` for parallel awaits and `tokio::time::timeout` for deadlines.</p>
+<p class='ordered'>6. Tune the runtime: set worker threads and run tests with `cargo test` under `--cfg tokio_unstable` if multi-thread stats are needed.</p>
+<div class="codeblock"><pre class="code"><code>// Fan-out to N concurrent tasks and aggregate results
+use tokio::time::{sleep, Duration};
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let handles: Vec&lt;_&gt; = (0..5)
+        .map(|i| tokio::spawn(async move {
+            sleep(Duration::from_millis(100 * i)).await;
+            i * i
+        }))
+        .collect();
+
+    let mut total = 0;
+    for h in handles {
+        total += h.await?;
+    }
+    println!(&quot;sum of squares = {total}&quot;);
+    Ok(())
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Graceful shutdown with CancellationToken
+use tokio_util::sync::CancellationToken;
+
+#[tokio::main]
+async fn main() {
+    let token = CancellationToken::new();
+    let child = token.clone();
+    tokio::spawn(async move {
+        tokio::select! {
+            _ = child.cancelled() =&gt; println!(&quot;task cancelled&quot;),
+            _ = tokio::time::sleep(Duration::from_secs(60)) =&gt; println!(&quot;task done&quot;),
+        }
+    });
+    tokio::time::sleep(Duration::from_millis(50)).await;
+    token.cancel();
+    tokio::time::sleep(Duration::from_millis(50)).await;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Use Tokio&#x27;s async runtime for I/O-bound work; threads for CPU-heavy.</li>
+<li>Prefer `tokio::spawn` with owned tasks; avoid blocking the executor.</li>
+<li>Use channels for communication and `Arc&lt;Mutex&gt;` sparingly.</li>
+<li>Add timeouts with `tokio::time` to avoid hangs.</li>
+<li>Use `tokio::select!` for concurrent awaitable sources.</li>
+<li>Benchmark with `tokio` instrumented tracing when latency matters.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Runtime not found: add `tokio` with the `full` or `rt-multi-thread` feature.</li>
+<li>Blocking executor: move sync work to `spawn_blocking`.</li>
+<li>Deadlocks: keep lock scopes tiny and avoid awaits while holding locks.</li>
+<li>Task panic: use JoinHandle or a supervisor to restart.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. `cargo run` starts server without panics</p>
+<p class='ordered'>2. Multiple concurrent connections are handled</p>
+<p class='ordered'>3. Shared state synchronization is race-condition free</p>
+<p class='ordered'>4. Performance benchmarks show expected throughput</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="rest-api-design.html">← rest-api-design</a><a class="page-nav-link" href="spring-boot.html">spring-boot →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>claude-code-commands — Agent Skills Library</title>
+  <meta name="description" content="Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/claude-code-commands.html">
+  <meta property="og:title" content="claude-code-commands — Agent Skills Library">
+  <meta property="og:description" content="Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/claude-code-commands.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#a855f71a;color:#a855f7;border-color:#a855f744">engineering</span>
+          <span class="tag">claude-code</span><span class="tag">claude</span><span class="tag">commands</span><span class="tag">agent</span><span class="tag">cli</span><span class="tag">workflow</span><span class="tag">skills</span>
+        </div>
+        <h1 class="skill-page-title">claude-code-commands</h1>
+        <p class="skill-page-desc">Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>115</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('claude-code-commands')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/engineering/claude-code-commands">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="ai-testing.html">← ai-testing</a><a class="page-nav-link" href="clean-architecture.html">clean-architecture →</a></div>
+      <div class="skill-page-body">
+        <h1>Claude Code Commands</h1>
+<blockquote>Getting the most out of Claude Code with commands, hooks, and skills.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Install and start
+npm install -g @anthropic-ai/claude-code
+cd your-project
+claude
+# then in the REPL: /help, /clear, /add &lt;file&gt;, /model sonnet</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Everyday agentic coding in the terminal</li>
+<li>Multi-file refactors and feature work</li>
+<li>Reviewing code and running tests with the agent</li>
+<li>Extending the agent with skills and MCP</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Slash Commands</h3>
+<ul>
+<li>Use `/init` to create an AGENTS.md at project start</li>
+<li>Use `/add` and `/drop` to manage context files</li>
+<li>Use `/compact` to summarize long conversations</li>
+<li>Use `/status` to review pending edits and costs</li>
+</ul>
+<h3>Context Management</h3>
+<ul>
+<li>Keep an `AGENTS.md` with project conventions</li>
+<li>Load only relevant files; drop noise</li>
+<li>Use `@path/to/file` to reference specific files</li>
+<li>`/clear` between unrelated tasks</li>
+</ul>
+<h3>Hooks &amp; Permissions</h3>
+<ul>
+<li>Add hooks for formatting and linting before/after edits</li>
+<li>Use permission rules to avoid prompts for routine actions</li>
+<li>Review approvals for destructive commands</li>
+<li>Configure settings per project or user</li>
+</ul>
+<h3>Skills &amp; MCP</h3>
+<ul>
+<li>Install skills into `.claude/skills/`</li>
+<li>Connect MCP servers for external tools</li>
+<li>Keep skill files short and focused</li>
+<li>Test skills with a representative task</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm install -g @anthropic-ai/claude-code
+claude --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Project setup
+claude
+&gt; /init            # create AGENTS.md
+&gt; /model sonnet    # pick the model
+&gt; /permissions     # configure permission rules</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Working with files
+&gt; /add src/core.py tests/test_core.py
+&gt; /status
+&gt; /compact
+&gt; /clear</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># One-shot non-interactive
+claude -p &quot;Run the tests and fix failures&quot;
+claude -p &quot;Explain the architecture of this repo&quot; --output-format json</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Hooks example (pre-edit formatting)
+# .claude/settings.json
+{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [
+      { &quot;matcher&quot;: &quot;Edit|Write&quot;, &quot;hooks&quot;: [{ &quot;type&quot;: &quot;command&quot;, &quot;command&quot;: &quot;ruff format .&quot; }] }
+    ]
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install Claude Code and start a session in your project.</p>
+<p class='ordered'>2. Run `/init` to establish project context and conventions.</p>
+<p class='ordered'>3. Load relevant files with `/add`; drop noise.</p>
+<p class='ordered'>4. Work iteratively; review with `/status`.</p>
+<p class='ordered'>5. Compact long sessions; clear between tasks.</p>
+<p class='ordered'>6. Add hooks for linting and formatting.</p>
+<p class='ordered'>7. Install skills and MCP servers for your stack.</p>
+<p class='ordered'>8. Configure permissions to keep the flow fast and safe.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. AGENTS.md captures project conventions</p>
+<p class='ordered'>2. Context is focused (no stale files loaded)</p>
+<p class='ordered'>3. Hooks run and keep code formatted</p>
+<p class='ordered'>4. Destructive actions require approval</p>
+<p class='ordered'>5. Skills/MCP work on a representative task</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Wrong context: `/add` the right files, `/clear` stale state.</li>
+<li>Too many prompts: tighten permission rules.</li>
+<li>Slow agent: reduce context size and file count.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="ai-testing.html">← ai-testing</a><a class="page-nav-link" href="clean-architecture.html">clean-architecture →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

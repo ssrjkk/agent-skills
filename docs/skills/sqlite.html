@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sqlite — Agent Skills Library</title>
+  <meta name="description" content="Use SQLite for embedded relational storage: schema, WAL mode, transactions, indexing, and performance. Use for local and mobile data layers.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/sqlite.html">
+  <meta property="og:title" content="sqlite — Agent Skills Library">
+  <meta property="og:description" content="Use SQLite for embedded relational storage: schema, WAL mode, transactions, indexing, and performance. Use for local and mobile data layers.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/sqlite.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#14b8a61a;color:#14b8a6;border-color:#14b8a644">database</span>
+          <span class="tag">sqlite</span><span class="tag">database</span><span class="tag">embedded</span><span class="tag">local-storage</span><span class="tag">wal</span><span class="tag">transactions</span>
+        </div>
+        <h1 class="skill-page-title">sqlite</h1>
+        <p class="skill-page-desc">Use SQLite for embedded relational storage: schema, WAL mode, transactions, indexing, and performance. Use for local and mobile data layers.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>117</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('sqlite')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/database/sqlite">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="redis.html">← redis</a><a class="page-nav-link" href="vector-databases.html">vector-databases →</a></div>
+      <div class="skill-page-body">
+        <h1>SQLite</h1>
+<blockquote>Embedded relational storage with SQLite.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>sqlite3 app.db
+CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT UNIQUE);
+INSERT INTO users (email) VALUES (&#x27;a@b.com&#x27;);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Local/desktop/mobile storage</li>
+<li>Single-machine apps with small data</li>
+<li>Prototypes and embedded tools</li>
+<li>Read-heavy offline datasets</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Schema</h3>
+<ul>
+<li>Use INTEGER PRIMARY KEY or explicit rowid</li>
+<li>Prefer TEXT for dates (ISO) or REAL for timestamps</li>
+<li>Add UNIQUE and CHECK constraints</li>
+<li>Use `STRICT` tables (SQLite 3.37+) for typed data</li>
+</ul>
+<h3>Concurrency</h3>
+<ul>
+<li>Enable WAL mode for concurrent readers</li>
+<li>Use short write transactions</li>
+<li>Set `busy_timeout` to avoid SQLITE_BUSY</li>
+<li>Avoid long-running read transactions</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Index columns used in WHERE/JOIN</li>
+<li>Use `PRAGMA` to tune (cache_size, mmap)</li>
+<li>Batch writes in transactions</li>
+<li>`VACUUM` periodically to reclaim space</li>
+</ul>
+<h3>Durability</h3>
+<ul>
+<li>Choose journal mode by need (WAL vs DELETE)</li>
+<li>Set `synchronous=NORMAL` in WAL for speed</li>
+<li>Back up via `.backup` or VACUUM INTO</li>
+<li>Test on the target filesystem</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>sqlite3  # CLI
+# Python: sqlite3 stdlib</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>-- WAL and busy timeout
+PRAGMA journal_mode=WAL;
+PRAGMA busy_timeout=5000;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Schema with constraints
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  role TEXT NOT NULL DEFAULT &#x27;member&#x27;
+  CHECK (role IN (&#x27;member&#x27;,&#x27;admin&#x27;))
+);
+CREATE INDEX idx_users_role ON users(role);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Python usage with transactions
+import sqlite3
+
+conn = sqlite3.connect(&quot;app.db&quot;)
+conn.execute(&quot;PRAGMA journal_mode=WAL&quot;)
+with conn:
+    conn.execute(&quot;INSERT INTO users (email, role) VALUES (?, ?)&quot;, (&quot;a@b.com&quot;, &quot;admin&quot;))
+for row in conn.execute(&quot;SELECT * FROM users&quot;):
+    print(row)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Batch writes in one transaction
+with conn:
+    conn.executemany(
+        &quot;INSERT INTO logs (ts, msg) VALUES (?, ?)&quot;,
+        [(1, &quot;a&quot;), (2, &quot;b&quot;), (3, &quot;c&quot;)],
+    )</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Choose file location and open with pragmas (WAL).</p>
+<p class='ordered'>2. Create schema with constraints and indexes.</p>
+<p class='ordered'>3. Write with short transactions and `busy_timeout`.</p>
+<p class='ordered'>4. Query with parameters to avoid injection.</p>
+<p class='ordered'>5. Tune cache and synchronous for the workload.</p>
+<p class='ordered'>6. Back up with `.backup`/`VACUUM INTO`.</p>
+<p class='ordered'>7. Vacuum and re-analyze periodically.</p>
+<p class='ordered'>8. Test concurrency on the target platform.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Writes and reads are consistent</p>
+<p class='ordered'>2. Concurrent reads work in WAL mode</p>
+<p class='ordered'>3. No SQLITE_BUSY under expected load</p>
+<p class='ordered'>4. Queries use indexes (EXPLAIN QUERY PLAN)</p>
+<p class='ordered'>5. Backup restores correctly</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>SQLITE_BUSY: raise busy_timeout, shorten transactions.</li>
+<li>Database locked: check for open long transactions.</li>
+<li>Slow queries: add indexes; check `EXPLAIN QUERY PLAN`.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="redis.html">← redis</a><a class="page-nav-link" href="vector-databases.html">vector-databases →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

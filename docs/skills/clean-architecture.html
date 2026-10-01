@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>clean-architecture — Agent Skills Library</title>
+  <meta name="description" content="Structure codebases with clean architecture: layers, dependency rule, use cases, ports and adapters. Use for maintainable large codebases.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/clean-architecture.html">
+  <meta property="og:title" content="clean-architecture — Agent Skills Library">
+  <meta property="og:description" content="Structure codebases with clean architecture: layers, dependency rule, use cases, ports and adapters. Use for maintainable large codebases.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/clean-architecture.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#a855f71a;color:#a855f7;border-color:#a855f744">engineering</span>
+          <span class="tag">clean-architecture</span><span class="tag">architecture</span><span class="tag">hexagonal</span><span class="tag">dependency-rule</span><span class="tag">use-cases</span>
+        </div>
+        <h1 class="skill-page-title">clean-architecture</h1>
+        <p class="skill-page-desc">Structure codebases with clean architecture: layers, dependency rule, use cases, ports and adapters. Use for maintainable large codebases.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>121</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('clean-architecture')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/engineering/clean-architecture">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="claude-code-commands.html">← claude-code-commands</a><a class="page-nav-link" href="code-review.html">code-review →</a></div>
+      <div class="skill-page-body">
+        <h1>Clean Architecture</h1>
+<blockquote>Organizing codebases for maintainability and testability.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>Layers (outer -&gt; inner):
+  Frameworks/Drivers -&gt; Interface -&gt; Application -&gt; Domain
+Dependency rule: dependencies point inward only.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Large, long-lived codebases</li>
+<li>Complex business domains</li>
+<li>Teams needing testability</li>
+<li>Systems with changing infrastructure</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Dependency Rule</h3>
+<ul>
+<li>Dependencies point inward only</li>
+<li>Domain has no framework imports</li>
+<li>Outer layers depend on interfaces</li>
+<li>Invert dependencies with DI</li>
+</ul>
+<h3>Layers</h3>
+<ul>
+<li>Domain: entities and business rules</li>
+<li>Application: use cases and ports</li>
+<li>Interface: controllers/presenters</li>
+<li>Infrastructure: DB, HTTP, external</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li>Model each business action as a use case</li>
+<li>Keep use cases thin and focused</li>
+<li>Ports define interfaces to the outside</li>
+<li>Adapters implement ports</li>
+</ul>
+<h3>Boundaries</h3>
+<ul>
+<li>Cross boundaries with interfaces</li>
+<li>Map data at the boundary (DTOs)</li>
+<li>Keep frameworks at the edges</li>
+<li>Test each layer in isolation</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># language-agnostic; DI container helps</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Domain entity (no framework imports)
+class Order:
+    def __init__(self, items: list[float]):
+        if any(i &lt;= 0 for i in items):
+            raise ValueError(&quot;invalid item&quot;)
+        self.items = items
+
+    def total(self) -&gt; float:
+        return sum(self.items)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Port (interface to the outside)
+from abc import ABC, abstractmethod
+
+class OrderRepository(ABC):
+    @abstractmethod
+    def save(self, order: Order) -&gt; None: ...
+
+    @abstractmethod
+    def find(self, order_id: int) -&gt; Order | None: ...</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Use case in the application layer
+class CreateOrder:
+    def __init__(self, repo: OrderRepository):
+        self._repo = repo
+
+    def execute(self, items: list[float]) -&gt; Order:
+        order = Order(items)
+        self._repo.save(order)
+        return order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Adapter implementing the port
+class SqlOrderRepository(OrderRepository):
+    def save(self, order: Order) -&gt; None:
+        db.insert(&quot;orders&quot;, {&quot;items&quot;: order.items})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define the domain entities and business rules first.</p>
+<p class='ordered'>2. Identify use cases (actions) the app must support.</p>
+<p class='ordered'>3. Define ports (interfaces) the domain needs.</p>
+<p class='ordered'>4. Implement adapters (DB, HTTP) outside the domain.</p>
+<p class='ordered'>5. Wire everything with dependency injection.</p>
+<p class='ordered'>6. Keep frameworks at the edges.</p>
+<p class='ordered'>7. Test domain and use cases without infra.</p>
+<p class='ordered'>8. Keep the dependency rule enforced.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Domain has no framework imports</p>
+<p class='ordered'>2. Dependencies point inward</p>
+<p class='ordered'>3. Use cases are testable without infra</p>
+<p class='ordered'>4. Changing a DB/HTTP lib doesn&#x27;t ripple through the core</p>
+<p class='ordered'>5. Each layer is independently testable</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Framework creep: move framework code to adapters.</li>
+<li>Anemic domain: put business rules in entities.</li>
+<li>Leaky boundaries: map data at the boundaries with DTOs.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="claude-code-commands.html">← claude-code-commands</a><a class="page-nav-link" href="code-review.html">code-review →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

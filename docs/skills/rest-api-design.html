@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rest-api-design — Agent Skills Library</title>
+  <meta name="description" content="Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/rest-api-design.html">
+  <meta property="og:title" content="rest-api-design — Agent Skills Library">
+  <meta property="og:description" content="Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/rest-api-design.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">rest</span><span class="tag">api-design</span><span class="tag">http</span><span class="tag">resources</span><span class="tag">pagination</span><span class="tag">versioning</span><span class="tag">openapi</span>
+        </div>
+        <h1 class="skill-page-title">rest-api-design</h1>
+        <p class="skill-page-desc">Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>143</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('rest-api-design')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/rest-api-design">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="nestjs.html">← nestjs</a><a class="page-nav-link" href="rust-tokio.html">rust-tokio →</a></div>
+      <div class="skill-page-body">
+        <h1>REST API Design</h1>
+<blockquote>Designing consistent, evolvable REST APIs.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>Resources:   /users, /users/{id}, /users/{id}/orders
+Methods:     GET list/detail, POST create, PUT replace, PATCH partial, DELETE
+Status:      200, 201, 204, 400, 401, 403, 404, 409, 422, 429, 500</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Public or internal HTTP APIs</li>
+<li>Designing before implementation</li>
+<li>Versioning and evolving existing APIs</li>
+<li>SDKs and clients that consume the API</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Resources</h3>
+<ul>
+<li>Model nouns as resources, actions as sub-resources</li>
+<li>Use plural names: `/users`, not `/user`</li>
+<li>Nest only for genuine ownership: `/users/{id}/orders`</li>
+<li>Represent relations with IDs, not nested objects</li>
+</ul>
+<h3>Methods &amp; Status</h3>
+<ul>
+<li>Use HTTP methods for intent (GET/POST/PUT/PATCH/DELETE)</li>
+<li>Return 201 with Location on create, 204 on delete</li>
+<li>Use 422 for validation, 409 for conflicts</li>
+<li>Map errors consistently: code, message, details</li>
+</ul>
+<h3>Pagination &amp; Filtering</h3>
+<ul>
+<li>Paginate list endpoints: page/limit or cursor</li>
+<li>Use cursor-based pagination for stability</li>
+<li>Filter with query params, not paths</li>
+<li>Sort with explicit `sort` param</li>
+</ul>
+<h3>Versioning &amp; Evolution</h3>
+<ul>
+<li>Version the API: URL prefix or header</li>
+<li>Additive changes within a version</li>
+<li>Deprecate with headers and clear notices</li>
+<li>Document everything in OpenAPI</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Design/docs tooling
+npm i -D @redocly/cli
+# or Python
+pip install openapi-spec-validator</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># OpenAPI minimal user resource
+openapi: 3.1.0
+info:
+  title: Users API
+  version: v1
+paths:
+  /users:
+    get:
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, maximum: 100 }
+      responses:
+        &quot;200&quot;:
+          description: Paginated users
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: &quot;#/components/schemas/UserInput&quot;
+      responses:
+        &quot;201&quot;:
+          description: Created</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Consistent error contract
+{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
+    &quot;message&quot;: &quot;Invalid request body&quot;,
+    &quot;details&quot;: [{ &quot;field&quot;: &quot;email&quot;, &quot;reason&quot;: &quot;must be a valid email&quot; }],
+    &quot;request_id&quot;: &quot;req_abc123&quot;
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Pagination response shape
+GET /users?limit=25&amp;cursor=eyJpZCI6MTAwfQ
+
+{
+  &quot;data&quot;: [...],
+  &quot;pagination&quot;: {
+    &quot;next_cursor&quot;: &quot;eyJpZCI6MTI1fQ&quot;,
+    &quot;has_more&quot;: true
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Example routing
+# GET /v1/users -&gt; list
+# POST /v1/users -&gt; create
+# GET /v1/users/{id} -&gt; detail
+# PATCH /v1/users/{id} -&gt; partial update
+# DELETE /v1/users/{id} -&gt; 204</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Identify resources and their relations from the domain.</p>
+<p class='ordered'>2. Define endpoints with proper methods and paths.</p>
+<p class='ordered'>3. Specify request/response schemas and status codes.</p>
+<p class='ordered'>4. Add pagination, filtering, and sorting to lists.</p>
+<p class='ordered'>5. Create a consistent error contract.</p>
+<p class='ordered'>6. Decide versioning strategy up front.</p>
+<p class='ordered'>7. Write OpenAPI spec and validate it.</p>
+<p class='ordered'>8. Generate docs and SDKs from the spec.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. All paths follow the resource naming convention</p>
+<p class='ordered'>2. Status codes match HTTP semantics</p>
+<p class='ordered'>3. Error responses have a consistent shape</p>
+<p class='ordered'>4. Lists are paginated with a stable cursor</p>
+<p class='ordered'>5. OpenAPI spec validates and documents fully</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Over-nested paths: flatten unless true ownership.</li>
+<li>Inconsistent errors: centralize the error mapping.</li>
+<li>Breaking changes: bump version instead of changing semantics.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="nestjs.html">← nestjs</a><a class="page-nav-link" href="rust-tokio.html">rust-tokio →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

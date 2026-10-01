@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>websockets — Agent Skills Library</title>
+  <meta name="description" content="Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection. Use for live updates and chat.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/websockets.html">
+  <meta property="og:title" content="websockets — Agent Skills Library">
+  <meta property="og:description" content="Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection. Use for live updates and chat.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/websockets.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">websockets</span><span class="tag">realtime</span><span class="tag">socket.io</span><span class="tag">chat</span><span class="tag">live-updates</span><span class="tag">bidirectional</span>
+        </div>
+        <h1 class="skill-page-title">websockets</h1>
+        <p class="skill-page-desc">Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection. Use for live updates and chat.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>136</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('websockets')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/websockets">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="spring-boot.html">← spring-boot</a></div>
+      <div class="skill-page-body">
+        <h1>WebSockets</h1>
+<blockquote>Building real-time, bidirectional communication with WebSockets.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm i ws
+node server.js  # ws://localhost:8080</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Live updates (chat, notifications, dashboards)</li>
+<li>Collaborative editing and presence</li>
+<li>Streaming data and progress</li>
+<li>Bidirectional client-server interactions</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Protocol Design</h3>
+<ul>
+<li>Define message envelopes with a type + payload</li>
+<li>Version the message protocol</li>
+<li>Use JSON or a binary format consistently</li>
+<li>Include correlation/request IDs</li>
+</ul>
+<h3>Connection Lifecycle</h3>
+<ul>
+<li>Handle open, message, close, and error events</li>
+<li>Implement ping/pong keepalive</li>
+<li>Detect half-open connections</li>
+<li>Clean up resources on close</li>
+</ul>
+<h3>Backpressure &amp; Flow</h3>
+<ul>
+<li>Respect slow consumers; don&#x27;t buffer unbounded</li>
+<li>Use queues with limits and drop policies</li>
+<li>Batch high-frequency updates</li>
+<li>Pause/close on saturation</li>
+</ul>
+<h3>Scaling</h3>
+<ul>
+<li>Share state via pub/sub (Redis) across nodes</li>
+<li>Use sticky sessions or a gateway</li>
+<li>Reconnect with exponential backoff client-side</li>
+<li>Handle authentication at handshake</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm i ws
+# Python: pip install websockets
+# Node: socket.io for fallback/rooms</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Minimal WebSocket server (Node)
+import { WebSocketServer } from &quot;ws&quot;;
+
+const wss = new WebSocketServer({ port: 8080 });
+wss.on(&quot;connection&quot;, (ws) =&gt; {
+  ws.send(JSON.stringify({ type: &quot;hello&quot;, data: &quot;welcome&quot; }));
+  ws.on(&quot;message&quot;, (raw) =&gt; {
+    const msg = JSON.parse(raw.toString());
+    broadcast({ type: &quot;chat&quot;, data: msg });
+  });
+});
+
+function broadcast(obj) {
+  const text = JSON.stringify(obj);
+  wss.clients.forEach((c) =&gt; c.readyState === 1 &amp;&amp; c.send(text));
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Python server with websockets
+import asyncio, websockets
+
+async def handler(ws):
+    await ws.send(&quot;hello&quot;)
+    async for raw in ws:
+        await ws.send(&quot;echo: &quot; + raw)
+
+async def main():
+    async with websockets.serve(handler, &quot;localhost&quot;, 8080):
+        await asyncio.Future()
+
+asyncio.run(main())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Client with reconnect + backoff
+function connect(url) {
+  const ws = new WebSocket(url);
+  let delay = 500;
+  ws.onclose = () =&gt; setTimeout(() =&gt; connect(url), delay);
+  ws.onopen = () =&gt; { delay = 500; };
+  return ws;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Keepalive ping/pong
+const interval = setInterval(() =&gt; {
+  if (ws.readyState === 1) {
+    ws.ping();
+    if (!ws.isAlive) return ws.terminate();
+    ws.isAlive = false;
+  }
+}, 30000);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define the message envelope and event types.</p>
+<p class='ordered'>2. Set up the server with connection handling.</p>
+<p class='ordered'>3. Add keepalive (ping/pong) and reconnection.</p>
+<p class='ordered'>4. Implement broadcast and room/scope routing.</p>
+<p class='ordered'>5. Add backpressure handling for slow clients.</p>
+<p class='ordered'>6. Auth at the handshake (token/cookie).</p>
+<p class='ordered'>7. Scale with a pub/sub backbone for multi-node.</p>
+<p class='ordered'>8. Monitor connections, messages, and errors.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Messages round-trip bidirectionally</p>
+<p class='ordered'>2. Reconnection resumes without data loss</p>
+<p class='ordered'>3. Keepalive detects dead connections</p>
+<p class='ordered'>4. Slow consumers don&#x27;t stall the server</p>
+<p class='ordered'>5. Multi-node broadcast is consistent</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Connections drop: add keepalive and check proxy timeouts.</li>
+<li>Order issues: use sequence numbers or a single writer per topic.</li>
+<li>Scale limits: move state to pub/sub and add a gateway.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="spring-boot.html">← spring-boot</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

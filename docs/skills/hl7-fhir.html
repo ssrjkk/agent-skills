@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hl7-fhir — Agent Skills Library</title>
+  <meta name="description" content="Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange. Use for health IT interoperability.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/hl7-fhir.html">
+  <meta property="og:title" content="hl7-fhir — Agent Skills Library">
+  <meta property="og:description" content="Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange. Use for health IT interoperability.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/hl7-fhir.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#06b6d41a;color:#06b6d4;border-color:#06b6d444">healthcare</span>
+          <span class="tag">hl7</span><span class="tag">fhir</span><span class="tag">healthcare</span><span class="tag">interoperability</span><span class="tag">smart-on-fhir</span><span class="tag">clinical</span><span class="tag">api</span><span class="tag">resources</span>
+        </div>
+        <h1 class="skill-page-title">hl7-fhir</h1>
+        <p class="skill-page-desc">Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange. Use for health IT interoperability.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>8</strong></span>
+          <span>Sections <strong>7</strong></span>
+          <span>Lines <strong>274</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('hl7-fhir')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/healthcare/hl7-fhir">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="hipaa-compliance.html">← hipaa-compliance</a></div>
+      <div class="skill-page-body">
+        <h1>HL7 FHIR</h1>
+<blockquote>Building healthcare integrations with HL7 FHIR resources and SMART on FHIR apps.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>import requests
+
+class FHIRClient:
+    def __init__(self, base_url: str, access_token: str = None):
+        self.base_url = base_url.rstrip(&#x27;/&#x27;)
+        self.headers = {
+            &#x27;Content-Type&#x27;: &#x27;application/fhir+json&#x27;,
+            &#x27;Accept&#x27;: &#x27;application/fhir+json&#x27;,
+        }
+        if access_token:
+            self.headers[&#x27;Authorization&#x27;] = f&#x27;Bearer {access_token}&#x27;
+
+    def read(self, resource_type: str, id: str) -&gt; dict:
+        &quot;&quot;&quot;Read a FHIR resource by ID.&quot;&quot;&quot;
+        resp = requests.get(
+            f&#x27;{self.base_url}/{resource_type}/{id}&#x27;,
+            headers=self.headers
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    def search(self, resource_type: str, params: dict = None) -&gt; dict:
+        &quot;&quot;&quot;Search FHIR resources.&quot;&quot;&quot;
+        resp = requests.get(
+            f&#x27;{self.base_url}/{resource_type}&#x27;,
+            params=params or {},
+            headers=self.headers
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    def create(self, resource: dict) -&gt; dict:
+        &quot;&quot;&quot;Create a new FHIR resource.&quot;&quot;&quot;
+        resp = requests.post(
+            f&#x27;{self.base_url}/{resource[&quot;resourceType&quot;]}&#x27;,
+            json=resource,
+            headers=self.headers
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+# Example: fetch a Patient
+client = FHIRClient(&#x27;https://fhir.example.com/fhir&#x27;)
+patient = client.read(&#x27;Patient&#x27;, &#x27;12345&#x27;)
+print(f&quot;Patient: {patient[&#x27;name&#x27;][0][&#x27;family&#x27;]}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Building EHR integrations (Epic, Cerner, etc.)</li>
+<li>Creating SMART on FHIR apps for clinical workflows</li>
+<li>Exchanging clinical data between systems</li>
+<li>When you need healthcare data interoperability</li>
+</ul>
+<h2>Step-by-Step</h2>
+<h3>1. Understanding FHIR Resources</h3>
+<p>Common resources you&#x27;ll work with:</p>
+<div class="codeblock"><pre class="code"><code># Patient resource
+patient = {
+    &quot;resourceType&quot;: &quot;Patient&quot;,
+    &quot;id&quot;: &quot;12345&quot;,
+    &quot;name&quot;: [{
+        &quot;family&quot;: &quot;Smith&quot;,
+        &quot;given&quot;: [&quot;John&quot;]
+    }],
+    &quot;gender&quot;: &quot;male&quot;,
+    &quot;birthDate&quot;: &quot;1990-01-15&quot;
+}
+
+# Observation (lab result)
+observation = {
+    &quot;resourceType&quot;: &quot;Observation&quot;,
+    &quot;status&quot;: &quot;final&quot;,
+    &quot;code&quot;: {
+        &quot;coding&quot;: [{
+            &quot;system&quot;: &quot;http://loinc.org&quot;,
+            &quot;code&quot;: &quot;2339-0&quot;,
+            &quot;display&quot;: &quot;Glucose [Mass/volume] in Blood&quot;
+        }]
+    },
+    &quot;subject&quot;: {&quot;reference&quot;: &quot;Patient/12345&quot;},
+    &quot;valueQuantity&quot;: {
+        &quot;value&quot;: 95,
+        &quot;unit&quot;: &quot;mg/dL&quot;
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. SMART on FHIR Auth</h3>
+<div class="codeblock"><pre class="code"><code>import secrets
+from urllib.parse import urlencode
+
+class SMARTAuth:
+    def __init__(self, client_id: str, client_secret: str, fhir_url: str):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.fhir_url = fhir_url
+
+    def get_auth_url(self, redirect_uri: str, scopes: list[str]) -&gt; str:
+        &quot;&quot;&quot;Generate OAuth2 authorization URL.&quot;&quot;&quot;
+        params = {
+            &#x27;response_type&#x27;: &#x27;code&#x27;,
+            &#x27;client_id&#x27;: self.client_id,
+            &#x27;redirect_uri&#x27;: redirect_uri,
+            &#x27;scope&#x27;: &#x27; &#x27;.join(scopes),
+            &#x27;state&#x27;: secrets.token_urlsafe(32),
+            &#x27;aud&#x27;: self.fhir_url,
+        }
+        return f&#x27;{self.fhir_url}/auth/authorize?{urlencode(params)}&#x27;
+
+    def exchange_code(self, code: str, redirect_uri: str) -&gt; dict:
+        &quot;&quot;&quot;Exchange authorization code for access token.&quot;&quot;&quot;
+        resp = requests.post(f&#x27;{self.fhir_url}/auth/token&#x27;, data={
+            &#x27;grant_type&#x27;: &#x27;authorization_code&#x27;,
+            &#x27;code&#x27;: code,
+            &#x27;redirect_uri&#x27;: redirect_uri,
+            &#x27;client_id&#x27;: self.client_id,
+            &#x27;client_secret&#x27;: self.client_secret,
+        })
+        return resp.json()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Clinical Queries</h3>
+<div class="codeblock"><pre class="code"><code>def get_patient_labs(client: FHIRClient, patient_id: str) -&gt; list[dict]:
+    &quot;&quot;&quot;Fetch all lab results for a patient.&quot;&quot;&quot;
+    bundle = client.search(&#x27;Observation&#x27;, {
+        &#x27;subject&#x27;: f&#x27;Patient/{patient_id}&#x27;,
+        &#x27;category&#x27;: &#x27;laboratory&#x27;,
+        &#x27;_sort&#x27;: &#x27;-date&#x27;,
+    })
+    return bundle.get(&#x27;entry&#x27;, [])
+
+def get_patient_medications(client: FHIRClient, patient_id: str) -&gt; list[dict]:
+    &quot;&quot;&quot;Fetch active medications for a patient.&quot;&quot;&quot;
+    bundle = client.search(&#x27;MedicationRequest&#x27;, {
+        &#x27;subject&#x27;: f&#x27;Patient/{patient_id}&#x27;,
+        &#x27;status&#x27;: &#x27;active&#x27;,
+    })
+    return bundle.get(&#x27;entry&#x27;, [])
+
+def get_patient_conditions(client: FHIRClient, patient_id: str) -&gt; list[dict]:
+    &quot;&quot;&quot;Fetch active conditions (diagnoses) for a patient.&quot;&quot;&quot;
+    bundle = client.search(&#x27;Condition&#x27;, {
+        &#x27;subject&#x27;: f&#x27;Patient/{patient_id}&#x27;,
+        &#x27;clinical-status&#x27;: &#x27;active&#x27;,
+    })
+    return bundle.get(&#x27;entry&#x27;, [])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. FHIR Bulk Data</h3>
+<div class="codeblock"><pre class="code"><code>def kick_off_bulk_export(client: FHIRClient, output_format: str = &#x27;application/fhir+ndjson&#x27;):
+    &quot;&quot;&quot;Initiate FHIR Bulk Data export.&quot;&quot;&quot;
+    resp = requests.get(
+        f&#x27;{client.base_url}/$export&#x27;,
+        headers={
+            **client.headers,
+            &#x27;Accept&#x27;: output_format,
+            &#x27;Prefer&#x27;: &#x27;respond-async&#x27;,
+        }
+    )
+    return resp.headers.get(&#x27;Content-Location&#x27;)  # Poll this URL for status
+
+def check_bulk_status(status_url: str) -&gt; dict:
+    &quot;&quot;&quot;Check status of bulk data export.&quot;&quot;&quot;
+    resp = requests.get(status_url)
+    if resp.status_code == 200:
+        return resp.json()  # Contains download URLs
+    return {&#x27;status&#x27;: &#x27;in-progress&#x27;}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Subscriptions</h3>
+<div class="codeblock"><pre class="code"><code>def create_subscription(client: FHIRClient, criteria: str, endpoint: str) -&gt; dict:
+    &quot;&quot;&quot;Create a FHIR subscription for real-time notifications.&quot;&quot;&quot;
+    subscription = {
+        &quot;resourceType&quot;: &quot;Subscription&quot;,
+        &quot;status&quot;: &quot;requested&quot;,
+        &quot;criteria&quot;: criteria,
+        &quot;channel&quot;: {
+            &quot;type&quot;: &quot;rest-hook&quot;,
+            &quot;endpoint&quot;: endpoint,
+            &quot;payload&quot;: &quot;application/fhir+json&quot;,
+        }
+    }
+    return client.create(subscription)
+
+# Example: subscribe to new Observations for a patient
+create_subscription(
+    client,
+    &quot;Observation?subject=Patient/12345&quot;,
+    &quot;https://myapp.example.com/fhir-webhook&quot;
+)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>**Use official FHIR schemas** for validation</li>
+<li>**Handle pagination** in search results (Bundle links)</li>
+<li>**Cache resources** when appropriate to reduce server load</li>
+<li>**Use _summary and _elements** to reduce payload size</li>
+<li>**Implement retry logic** for transient failures</li>
+<li>**Validate tokens** on every request in production</li>
+</ul>
+<h2>Common Pitfalls</h2>
+<ul>
+<li>Not handling Bundle pagination (missing results)</li>
+<li>Ignoring FHIR version differences (R4 vs R5)</li>
+<li>Not validating resource references before use</li>
+<li>Forgetting to handle timezone in date/time fields</li>
+<li>Not implementing proper OAuth2 token refresh</li>
+</ul>
+<h2>Examples</h2>
+<h3>Patient Summary</h3>
+<div class="codeblock"><pre class="code"><code>def build_patient_summary(client: FHIRClient, patient_id: str) -&gt; dict:
+    &quot;&quot;&quot;Build a comprehensive patient summary.&quot;&quot;&quot;
+    patient = client.read(&#x27;Patient&#x27;, patient_id)
+    labs = get_patient_labs(client, patient_id)
+    meds = get_patient_medications(client, patient_id)
+    conditions = get_patient_conditions(client, patient_id)
+
+    return {
+        &#x27;patient&#x27;: patient[&#x27;name&#x27;][0],
+        &#x27;recent_labs&#x27;: [e[&#x27;resource&#x27;] for e in labs[:10]],
+        &#x27;active_medications&#x27;: [e[&#x27;resource&#x27;] for e in meds],
+        &#x27;active_conditions&#x27;: [e[&#x27;resource&#x27;] for e in conditions],
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Validation</h2>
+<div class="codeblock"><pre class="code"><code>def test_fhir_client():
+    client = FHIRClient(&#x27;https://hapi.fhir.org/baseR4&#x27;)
+    patient = client.read(&#x27;Patient&#x27;, &#x27;example&#x27;)
+    assert patient[&#x27;resourceType&#x27;] == &#x27;Patient&#x27;
+
+def test_resource_validation():
+    patient = {&quot;resourceType&quot;: &quot;Patient&quot;, &quot;name&quot;: [{&quot;family&quot;: &quot;Test&quot;}]}
+    assert patient[&#x27;resourceType&#x27;] == &#x27;Patient&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="hipaa-compliance.html">← hipaa-compliance</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

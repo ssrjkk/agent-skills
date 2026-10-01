@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flutter — Agent Skills Library</title>
+  <meta name="description" content="Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds. Use for iOS/Android/desktop.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/flutter.html">
+  <meta property="og:title" content="flutter — Agent Skills Library">
+  <meta property="og:description" content="Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds. Use for iOS/Android/desktop.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/flutter.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#ec48991a;color:#ec4899;border-color:#ec489944">mobile</span>
+          <span class="tag">flutter</span><span class="tag">dart</span><span class="tag">mobile</span><span class="tag">cross-platform</span><span class="tag">widgets</span><span class="tag">state</span><span class="tag">ios</span><span class="tag">android</span>
+        </div>
+        <h1 class="skill-page-title">flutter</h1>
+        <p class="skill-page-desc">Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds. Use for iOS/Android/desktop.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>144</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('flutter')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/mobile/flutter">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="expo-rn.html">← expo-rn</a><a class="page-nav-link" href="kotlin-android.html">kotlin-android →</a></div>
+      <div class="skill-page-body">
+        <h1>Flutter</h1>
+<blockquote>Building beautiful cross-platform apps with Flutter and Dart.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>flutter create my_app
+cd my_app
+flutter run
+# builds for your connected device or emulator</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Cross-platform mobile apps (iOS + Android)</li>
+<li>Desktop and web from one codebase</li>
+<li>Rich custom UI without platform views</li>
+<li>Fast iteration with hot reload</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Widgets</h3>
+<ul>
+<li>Compose small widgets over large ones</li>
+<li>Use `StatelessWidget` unless state is needed</li>
+<li>Extract reusable widgets into the widget tree</li>
+<li>Follow Material/Cupertino design tokens</li>
+</ul>
+<h3>State Management</h3>
+<ul>
+<li>Use `setState` for local state only</li>
+<li>Adopt Provider/Riverpod for shared state</li>
+<li>Keep state logic out of widgets (controllers)</li>
+<li>Use immutable state and explicit rebuilds</li>
+</ul>
+<h3>Navigation &amp; Lifecycle</h3>
+<ul>
+<li>Use named routes or go_router</li>
+<li>Dispose controllers and subscriptions</li>
+<li>Handle app lifecycle (background/foreground)</li>
+<li>Avoid context across async gaps (use mounted)</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Use `const` constructors where possible</li>
+<li>Avoid rebuilding large subtrees</li>
+<li>Use `ListView.builder` for long lists</li>
+<li>Profile with the Flutter DevTools</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>flutter create my_app --platforms=android,ios
+# state: flutter pub add provider
+# navigation: flutter pub add go_router</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import &#x27;package:flutter/material.dart&#x27;;
+
+void main() =&gt; runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: const CounterPage());
+  }
+}
+
+class CounterPage extends StatefulWidget {
+  const CounterPage({super.key});
+  @override
+  State&lt;CounterPage&gt; createState() =&gt; _CounterPageState();
+}
+
+class _CounterPageState extends State&lt;CounterPage&gt; {
+  int _count = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Text(&#x27;Count: $_count&#x27;, style: const TextStyle(fontSize: 32))),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =&gt; setState(() =&gt; _count++),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// State management with Provider
+class CounterController extends ChangeNotifier {
+  int _value = 0;
+  int get value =&gt; _value;
+  void increment() { _value++; notifyListeners(); }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// go_router navigation
+final router = GoRouter(
+  routes: [
+    GoRoute(path: &quot;/&quot;, builder: (_, __) =&gt; const HomeScreen()),
+    GoRoute(path: &quot;/detail/:id&quot;, builder: (_, s) =&gt; DetailScreen(id: s.pathParameters[&quot;id&quot;]!)),
+  ],
+);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Platform channel (calling native code)
+import &#x27;package:flutter/services.dart&#x27;;
+
+final channel = const MethodChannel(&quot;app/battery&quot;);
+Future&lt;int&gt; getBattery() async {
+  return await channel.invokeMethod(&quot;getBatteryLevel&quot;) as int;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Create the project with `flutter create`.</p>
+<p class='ordered'>2. Set up app structure (features, theme, routes).</p>
+<p class='ordered'>3. Build the UI with small composable widgets.</p>
+<p class='ordered'>4. Add state management for shared data.</p>
+<p class='ordered'>5. Wire navigation with go_router or named routes.</p>
+<p class='ordered'>6. Add platform channels for native features.</p>
+<p class='ordered'>7. Test with widget tests and integration tests.</p>
+<p class='ordered'>8. Build release artifacts for store submission.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `flutter analyze` is clean</p>
+<p class='ordered'>2. `flutter test` passes</p>
+<p class='ordered'>3. App runs on emulator and device</p>
+<p class='ordered'>4. No provider leaks or lifecycle errors</p>
+<p class='ordered'>5. Release build succeeds for target platforms</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>&quot;use_build_context_synchronously&quot;: check `mounted` before async context use.</li>
+<li>Slow first frame: reduce work in build; lazy-load heavy data.</li>
+<li>Platform channel errors: match method names and types across sides.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="expo-rn.html">← expo-rn</a><a class="page-nav-link" href="kotlin-android.html">kotlin-android →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

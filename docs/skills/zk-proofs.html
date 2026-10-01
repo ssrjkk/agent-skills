@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>zk-proofs — Agent Skills Library</title>
+  <meta name="description" content="Zero-knowledge proof development">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/zk-proofs.html">
+  <meta property="og:title" content="zk-proofs — Agent Skills Library">
+  <meta property="og:description" content="Zero-knowledge proof development">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/zk-proofs.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f59e0b1a;color:#f59e0b;border-color:#f59e0b44">blockchain</span>
+          <span class="tag">zk-proofs</span><span class="tag">circom</span><span class="tag">snarkjs</span><span class="tag">cryptography</span><span class="tag">blockchain</span>
+        </div>
+        <h1 class="skill-page-title">zk-proofs</h1>
+        <p class="skill-page-desc">Zero-knowledge proof development</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>131</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('zk-proofs')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/blockchain/zk-proofs">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      
+      <div class="skill-page-body">
+        <h1>Zero-Knowledge Proofs</h1>
+<blockquote>Build zero-knowledge proof circuits with Circom and integrate them into dApps.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>// age-check.circom — Prove age &gt;= 18 without revealing age
+pragma circom 2.1.0;
+
+include &quot;circomlib/comparators.circom&quot;;
+
+template AgeCheck(maxAgeBits) {
+    signal input age;
+    signal input threshold;
+    signal output isAdult;
+    
+    component gt = GreaterEqThan(maxAgeBits);
+    gt.in[0] &lt;== age;
+    gt.in[1] &lt;== threshold;
+    isAdult &lt;== gt.out;
+}
+
+component main { public [threshold] } = AgeCheck(8);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Generate proof with snarkjs
+import { buildPoseidon } from &quot;circomlibjs&quot;;
+
+async function generateProof() {
+    // Compile circuit
+    // circom age-check.circom --r1cs --wasm --sym
+    
+    // Generate proving/verification keys
+    // snarkjs groth16 setup age-check.r1cs pot12_final.ptau circuit.zkey
+    
+    // Generate witness
+    const { proof, publicSignals } = await snarkjs.groth16.fullProve(
+        { age: 25, threshold: 18 },
+        &quot;age-check.wasm&quot;,
+        &quot;circuit_final.zkey&quot;
+    );
+    
+    // Verify proof
+    const vKey = JSON.parse(fs.readFileSync(&quot;verification_key.json&quot;));
+    const verified = await snarkjs.groth16.verify(
+        vKey,
+        publicSignals,
+        proof
+    );
+    
+    console.log(&quot;Proven age &gt;= 18:&quot;, verified);
+    return { proof, publicSignals };
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>ZK proofs let you prove statements without revealing inputs. Circom defines arithmetic circuits. Groth16 produces small, fast-to-verify proofs. Common uses: private transactions, identity verification, and scalability (zk-rollups).</p>
+<h2>When to Use</h2>
+<ul>
+<li>Privacy-preserving applications (private voting, identity)</li>
+<li>Blockchain scaling (zk-rollups, validiums)</li>
+<li>Verifiable computation (outsource computation with proof)</li>
+<li>Compliance (prove age, KYC, credit score without exposing data)</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Author the circuit in Citcom: `circom age-check.circom --r1cs --wasm --sym` compiles to constraints, wasm, and symbols.</p>
+<p class='ordered'>2. Generate the powers-of-tau ceremony artifact: `snarkjs powersoftau new bn128 12 pot12_0000.ptau` then `snarkjs powersoftau prepare phase2`.</p>
+<p class='ordered'>3. Build proving + verification keys: `snarkjs groth16 setup circuit.r1cs pot12_final.ptau circuit.zkey`.</p>
+<p class='ordered'>4. Export the verification key and solidity verifier: `snarkjs zkey export verificationkey` and `snarkjs zkey export solidityverifier`.</p>
+<p class='ordered'>5. Compute a witness offline with `snarkjs wtns calculate` then generate the proof with `groth16 prove` (timed for tester&#x27;s threshold).</p>
+<p class='ordered'>6. Verify in the dApp: call the on-chain verifier (or `snarkjs groth16 verify`) with public inputs + proof.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Client-side proof generation for private age check
+import { buildPoseidon } from &quot;circomlibjs&quot;;
+import snarkjs from &quot;snarkjs&quot;;
+import fs from &quot;fs&quot;;
+
+const wc = await snarkjs.wtns.calculate(
+  { age: 25, threshold: 18 },
+  &quot;age-check.wasm&quot;,
+  &quot;witness.wtns&quot;
+);
+const { proof, publicSignals } = await snarkjs.groth16.prove(
+  &quot;circuit_final.zkey&quot;,
+  &quot;witness.wtns&quot;
+);
+
+const vkey = JSON.parse(fs.readFileSync(&quot;verification_key.json&quot;, &quot;utf8&quot;));
+const ok = await snarkjs.groth16.verify(vkey, publicSignals, proof);
+console.log(&quot;age &gt;= 18 proven:&quot;, ok, &quot;public threshold:&quot;, publicSignals[0]);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># On-chain: deploy Verifier.sol, then verify with the packed call data
+snarkjs zkey export solidityverifier circuit_final.zkey Verifier.sol
+snarkjs generatecall
+# paste the returned inputs into `verifier.verifyProof(...)`</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Keep the circuit logic minimal and auditable; reuse audited templates.</li>
+<li>Use Circom for arithmetic circuits; test with witness generation.</li>
+<li>Generate and verify proofs with snarkjs; pin the trusted setup.</li>
+<li>Validate public inputs on-chain before verifying the proof.</li>
+<li>Keep trusted setup ceremony artifacts versioned and signed.</li>
+<li>Profile constraint count; simplify to stay within limits.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Constraint overflow: refactor or split the circuit.</li>
+<li>Proof mismatch: ensure the same circuit hash and inputs are used.</li>
+<li>Trusted setup errors: re-download and verify the ceremony artifacts.</li>
+<li>Verification fails on-chain: check gas and public input encoding.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. Circuit compiles with `circom` without errors</p>
+<p class='ordered'>2. Proof generation completes within acceptable time</p>
+<p class='ordered'>3. Verification passes for valid proofs, fails for invalid</p>
+<p class='ordered'>4. Public inputs are correctly revealed, private inputs are hidden</p>
+      </div>
+      
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

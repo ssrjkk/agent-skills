@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>spring-boot — Agent Skills Library</title>
+  <meta name="description" content="Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/spring-boot.html">
+  <meta property="og:title" content="spring-boot — Agent Skills Library">
+  <meta property="og:description" content="Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/spring-boot.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">spring-boot</span><span class="tag">java</span><span class="tag">kotlin</span><span class="tag">rest</span><span class="tag">dependency-injection</span><span class="tag">jvm</span><span class="tag">backend</span>
+        </div>
+        <h1 class="skill-page-title">spring-boot</h1>
+        <p class="skill-page-desc">Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>125</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('spring-boot')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/spring-boot">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="rust-tokio.html">← rust-tokio</a><a class="page-nav-link" href="websockets.html">websockets →</a></div>
+      <div class="skill-page-body">
+        <h1>Spring Boot</h1>
+<blockquote>Building production JVM backends with Spring Boot.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># start.spring.io -&gt; Spring Web, Data JPA, Validation
+./mvnw spring-boot:run
+# http://localhost:8080</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Enterprise Java/Kotlin services</li>
+<li>Teams using dependency injection at scale</li>
+<li>CRUD + business logic backends</li>
+<li>Batch, messaging, and data-heavy apps</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Structure</h3>
+<ul>
+<li>Organize by feature: controller, service, repository</li>
+<li>Keep controllers thin; logic in services</li>
+<li>Use constructor injection over field injection</li>
+<li>Package by feature, not by layer</li>
+</ul>
+<h3>Data Access</h3>
+<ul>
+<li>Use Spring Data repositories for CRUD</li>
+<li>Define entities explicitly; use DTOs at the boundary</li>
+<li>Add indexes and query methods deliberately</li>
+<li>Transactions on services, not controllers</li>
+</ul>
+<h3>REST &amp; Validation</h3>
+<ul>
+<li>Use `@RestController` with `@Valid` on request bodies</li>
+<li>Return DTOs, never entities, to clients</li>
+<li>Handle errors with `@ControllerAdvice`</li>
+<li>Use proper HTTP status codes</li>
+</ul>
+<h3>Testing</h3>
+<ul>
+<li>Unit test services with mocks</li>
+<li>Integration test with `@SpringBootTest` and Testcontainers</li>
+<li>Use `MockMvc` for controller tests</li>
+<li>Keep tests isolated and fast</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Maven or Gradle from start.spring.io
+./mvnw spring-boot:run</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>@RestController
+@RequestMapping(&quot;/api/users&quot;)
+class UserController {
+    private final UserService service;
+
+    UserController(UserService service) { this.service = service; }
+
+    @GetMapping(&quot;/{id}&quot;)
+    UserDto get(@PathVariable Long id) {
+        return service.get(id);
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>@Service
+@Transactional
+class UserService {
+    private final UserRepository repo;
+
+    UserService(UserRepository repo) { this.repo = repo; }
+
+    public UserDto get(Long id) {
+        return repo.findById(id).map(UserDto::from)
+            .orElseThrow(() -&gt; new NotFoundException(&quot;user&quot;));
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+    List&lt;User&gt; findByEmail(String email);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>@ControllerAdvice
+class ApiExceptionHandler {
+    @ExceptionHandler(NotFoundException.class)
+    ResponseEntity&lt;ErrorBody&gt; notFound(NotFoundException e) {
+        return ResponseEntity.status(404).body(new ErrorBody(e.getMessage()));
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold with Spring Initializr (Web, Data JPA, Validation).</p>
+<p class='ordered'>2. Model the domain entities and repositories.</p>
+<p class='ordered'>3. Build services with transactional business logic.</p>
+<p class='ordered'>4. Add controllers returning DTOs with validation.</p>
+<p class='ordered'>5. Centralize error handling with @ControllerAdvice.</p>
+<p class='ordered'>6. Add security (Spring Security) for authN/authZ.</p>
+<p class='ordered'>7. Write unit + integration tests.</p>
+<p class='ordered'>8. Containerize and configure for deployment.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `./mvnw test` passes</p>
+<p class='ordered'>2. Endpoints return correct status and DTO shape</p>
+<p class='ordered'>3. Validation rejects bad input with 400/422</p>
+<p class='ordered'>4. Transactions roll back on failure</p>
+<p class='ordered'>5. App starts cleanly in production profile</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Circular dependencies: use constructor injection and refactor.</li>
+<li>LazyInitializationException: use DTOs and fetch eagerly in the service.</li>
+<li>Slow endpoints: add indexes and query methods instead of entity scans.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="rust-tokio.html">← rust-tokio</a><a class="page-nav-link" href="websockets.html">websockets →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aws-lambda — Agent Skills Library</title>
+  <meta name="description" content="Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/aws-lambda.html">
+  <meta property="og:title" content="aws-lambda — Agent Skills Library">
+  <meta property="og:description" content="Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/aws-lambda.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">aws</span><span class="tag">lambda</span><span class="tag">serverless</span><span class="tag">api-gateway</span><span class="tag">sam</span>
+        </div>
+        <h1 class="skill-page-title">aws-lambda</h1>
+        <p class="skill-page-desc">Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>5</strong></span>
+          <span>Sections <strong>9</strong></span>
+          <span>Lines <strong>130</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('aws-lambda')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/aws-lambda">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="argocd.html">← argocd</a><a class="page-nav-link" href="cloud-native-ai.html">cloud-native-ai →</a></div>
+      <div class="skill-page-body">
+        <h1>AWS Lambda</h1>
+<blockquote>Serverless functions with AWS Lambda, API Gateway, and event triggers.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>import { Handler, APIGatewayProxyEvent, APIGatewayProxyResult } from &#x27;aws-lambda&#x27;;
+
+export const handler: Handler = async (event: APIGatewayProxyEvent): Promise&lt;APIGatewayProxyResult&gt; =&gt; {
+  return {
+    statusCode: 200,
+    headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; },
+    body: JSON.stringify({
+      message: &#x27;Hello from Lambda!&#x27;,
+      path: event.path,
+      method: event.httpMethod,
+    }),
+  };
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># template.yaml (SAM)
+AWSTemplateFormatVersion: &#x27;2010-09-09&#x27;
+Resources:
+  HelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: GET</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Event-driven serverless APIs</li>
+<li>Background processing (resize images, send emails)</li>
+<li>Not for long-running processes (&gt;15 min)</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Keep handlers small and idempotent for retries.</li>
+<li>Set memory/timeout to match the workload and cost.</li>
+<li>Use environment variables for config, not secrets in code.</li>
+<li>Use Lambda Powertools for logging, tracing, and metrics.</li>
+<li>Keep cold starts low: minimal deps and a lean runtime.</li>
+<li>Handle errors and dead-letter queues for async invocations.</li>
+</ul>
+<h2>Step-by-Step Instructions</h2>
+<p class='ordered'>1. Install AWS SAM CLI</p>
+<p class='ordered'>2. Create SAM template with Lambda functions</p>
+<p class='ordered'>3. Write handler code</p>
+<p class='ordered'>4. Deploy: `sam deploy --guided`</p>
+<p class='ordered'>5. Add observability and alerts</p>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Install AWS SAM CLI
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html
+npm install aws-lambda @types/aws-lambda</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<p>Input: GET /hello → Output: `{ &quot;message&quot;: &quot;Hello from Lambda!&quot; }`</p>
+<div class="codeblock"><pre class="code"><code>// Idempotent handler with error handling
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from &quot;aws-lambda&quot;;
+
+export async function handler(event: APIGatewayProxyEvent): Promise&lt;APIGatewayProxyResult&gt; {
+  try {
+    const id = event.pathParameters?.id;
+    const data = await getItem(id);
+    return { statusCode: 200, body: JSON.stringify(data) };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, body: JSON.stringify({ error: &quot;internal&quot; }) };
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># SAM template with env config
+Resources:
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Resources</h2>
+<ul>
+<li>[AWS Lambda Docs](https://docs.aws.amazon.com/lambda/)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>**Cold start spikes** — keep dependencies lean, enable provisioned</li>
+</ul>
+<p>concurrency for hot paths, and prefer lighter runtimes (Node/Go).</p>
+<ul>
+<li>**Timeouts at 6s in VPC** — the default Lambda timeout is too low.</li>
+</ul>
+<p>Raise the timeout and check NAT gateway routes to private subnets.</p>
+<ul>
+<li>**Permission denied on SDK calls** — the execution role lacks policy.</li>
+</ul>
+<p>Attach the least-privilege IAM policy and re-test with `--no-sign-request`.</p>
+<ul>
+<li>**`/tmp` fills up** — the 512MB scratch space is shared between invokes.</li>
+</ul>
+<p>Clean it in a finally block or use `/tmp` only for small artifacts.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Function deploys successfully</p>
+<p class='ordered'>2. API Gateway endpoint responds</p>
+<p class='ordered'>3. CloudWatch logs show execution</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="argocd.html">← argocd</a><a class="page-nav-link" href="cloud-native-ai.html">cloud-native-ai →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

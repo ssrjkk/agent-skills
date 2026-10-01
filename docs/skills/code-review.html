@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>code-review — Agent Skills Library</title>
+  <meta name="description" content="Conduct effective code reviews: correctness, security, performance, style, and actionable feedback. Use for reviewing any pull request or diff.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/code-review.html">
+  <meta property="og:title" content="code-review — Agent Skills Library">
+  <meta property="og:description" content="Conduct effective code reviews: correctness, security, performance, style, and actionable feedback. Use for reviewing any pull request or diff.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/code-review.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#a855f71a;color:#a855f7;border-color:#a855f744">engineering</span>
+          <span class="tag">code-review</span><span class="tag">quality</span><span class="tag">pull-request</span><span class="tag">best-practices</span><span class="tag">review</span><span class="tag">engineering</span>
+        </div>
+        <h1 class="skill-page-title">code-review</h1>
+        <p class="skill-page-desc">Conduct effective code reviews: correctness, security, performance, style, and actionable feedback. Use for reviewing any pull request or diff.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>109</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('code-review')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/engineering/code-review">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="clean-architecture.html">← clean-architecture</a><a class="page-nav-link" href="git-workflow.html">git-workflow →</a></div>
+      <div class="skill-page-body">
+        <h1>Code Review</h1>
+<blockquote>Conducting thorough, actionable code reviews.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Review a diff systematically
+git diff main...HEAD
+# check correctness, security, performance, and readability</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Every pull request before merge</li>
+<li>Security-sensitive changes (auth, payments, data)</li>
+<li>Refactors and large diffs</li>
+<li>Onboarding and knowledge sharing</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Prioritize</h3>
+<ul>
+<li>Review correctness and security first, style last</li>
+<li>Separate blocking issues from nits</li>
+<li>Focus on the diff, not the whole codebase</li>
+<li>Read tests: do they cover the change?</li>
+</ul>
+<h3>Feedback Quality</h3>
+<ul>
+<li>Ask questions instead of demanding changes</li>
+<li>Explain the &quot;why&quot; behind each suggestion</li>
+<li>Suggest concrete fixes with examples</li>
+<li>Acknowledge what is done well</li>
+</ul>
+<h3>Security &amp; Performance</h3>
+<ul>
+<li>Look for injection, secrets, and unsafe deserialization</li>
+<li>Check authz on every endpoint</li>
+<li>Flag N+1 queries and O(n^2) patterns</li>
+<li>Watch for unbounded inputs and resource leaks</li>
+</ul>
+<h3>Scope</h3>
+<ul>
+<li>Review the intent: does it solve the stated problem?</li>
+<li>Check for dead code, leftovers, and debug output</li>
+<li>Verify tests, docs, and migrations are included</li>
+<li>Respect scope: propose follow-ups for large refactors</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Tools that help: ruff, mypy, eslint, golangci-lint
+# Static security scanning: bandit, semgrep, gitleaks</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Risk: user-supplied value in SQL query
+query = f&quot;SELECT * FROM users WHERE id = {request.user_id}&quot;  # SQL injection
+# Fix: parameterize
+cursor.execute(&quot;SELECT * FROM users WHERE id = %s&quot;, (request.user_id,))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Risk: N+1 queries in a loop
+for order in user.orders:           # 1 query per order
+    items += order.items.all()
+# Fix: eager load
+from django.db.models import Prefetch
+user.orders.prefetch_related(Prefetch(&quot;items&quot;))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Risk: missing authorization check
+@app.route(&quot;/admin/users/&lt;uid&gt;&quot;)
+def delete_user(uid):
+    User.objects.get(id=uid).delete()   # no authz check
+# Fix: verify the caller is an admin first</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Risk: secrets in code
+API_KEY = &quot;sk-live-abc123...&quot;   # leaked secret
+# Fix: use environment variables / secret manager</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Read the PR description and understand the intent.</p>
+<p class='ordered'>2. Scan the diff for obvious correctness and security issues.</p>
+<p class='ordered'>3. Read tests; check they assert real behavior.</p>
+<p class='ordered'>4. Review each file in order of risk (backend, auth, data).</p>
+<p class='ordered'>5. Run static analysis if not already in CI.</p>
+<p class='ordered'>6. Write feedback: blocking issues, questions, nits.</p>
+<p class='ordered'>7. Approve only when blockers are resolved.</p>
+<p class='ordered'>8. Follow up on deferred suggestions as issues.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. No injection, broken authz, or leaked secrets</p>
+<p class='ordered'>2. Tests cover the new behavior including edge cases</p>
+<p class='ordered'>3. No N+1 queries or obvious performance regressions</p>
+<p class='ordered'>4. Code matches project style and conventions</p>
+<p class='ordered'>5. Every blocking comment addressed or justified</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Large PR: request splitting or review by commits.</li>
+<li>Missing tests: ask for tests on the changed paths.</li>
+<li>Style bikeshedding: defer to the project linter/config.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="clean-architecture.html">← clean-architecture</a><a class="page-nav-link" href="git-workflow.html">git-workflow →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fastapi — Agent Skills Library</title>
+  <meta name="description" content="Build high-performance Python APIs with FastAPI: routing, Pydantic validation, async, dependency injection, OpenAPI, and testing. Use for any Python backend.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/fastapi.html">
+  <meta property="og:title" content="fastapi — Agent Skills Library">
+  <meta property="og:description" content="Build high-performance Python APIs with FastAPI: routing, Pydantic validation, async, dependency injection, OpenAPI, and testing. Use for any Python backend.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/fastapi.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">fastapi</span><span class="tag">python</span><span class="tag">api</span><span class="tag">async</span><span class="tag">pydantic</span><span class="tag">openapi</span><span class="tag">backend</span>
+        </div>
+        <h1 class="skill-page-title">fastapi</h1>
+        <p class="skill-page-desc">Build high-performance Python APIs with FastAPI: routing, Pydantic validation, async, dependency injection, OpenAPI, and testing. Use for any Python backend.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>137</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('fastapi')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/fastapi">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="express.html">← express</a><a class="page-nav-link" href="go-rest-api.html">go-rest-api →</a></div>
+      <div class="skill-page-body">
+        <h1>FastAPI</h1>
+<blockquote>High-performance Python API framework with automatic OpenAPI docs.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install fastapi uvicorn
+uvicorn main:app --reload
+# http://localhost:8000/docs  (Swagger UI)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>REST or async APIs in Python</li>
+<li>Microservices and serverless handlers</li>
+<li>Projects needing validation, typed contracts, and OpenAPI schema</li>
+<li>Async workloads (HTTP clients, WebSockets, background tasks)</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Structure</h3>
+<ul>
+<li>Organize by feature: `routers/`, `schemas/`, `services/`, `models/`</li>
+<li>Use APIRouter per resource; include them in the app</li>
+<li>Keep business logic in services, not in route handlers</li>
+<li>Put Pydantic schemas in a dedicated module</li>
+</ul>
+<h3>Validation &amp; Types</h3>
+<ul>
+<li>Define request/response models with Pydantic</li>
+<li>Use `Depends` for shared logic (auth, DB sessions)</li>
+<li>Set `response_model` on every endpoint</li>
+<li>Prefer `Annotated` dependencies for clarity</li>
+</ul>
+<h3>Async</h3>
+<ul>
+<li>Use `async def` for I/O-bound endpoints</li>
+<li>Prefer async SQLAlchemy/asyncpg for DB access</li>
+<li>Offload CPU-bound work to a threadpool (`run_in_executor`)</li>
+<li>Avoid blocking calls in the event loop</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install fastapi uvicorn[standard] pydantic
+pip install -D pytest httpx pytest-asyncio</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>from fastapi import FastAPI, Depends, HTTPException
+from pydantic import BaseModel
+from typing import Annotated
+
+app = FastAPI(title=&quot;Items API&quot;)
+
+class Item(BaseModel):
+    name: str
+    price: float
+
+class ItemOut(BaseModel):
+    id: int
+    name: str
+    price: float
+
+def get_session():
+    # injected dependency
+    yield {&quot;conn&quot;: &quot;pool&quot;}
+
+@app.post(&quot;/items&quot;, response_model=ItemOut, status_code=201)
+async def create_item(item: Item, session: Annotated[dict, Depends(get_session)]):
+    return ItemOut(id=1, **item.model_dump())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Router pattern
+from fastapi import APIRouter
+
+router = APIRouter(prefix=&quot;/users&quot;, tags=[&quot;users&quot;])
+
+@router.get(&quot;/{user_id}&quot;)
+async def get_user(user_id: int):
+    if user_id &lt; 0:
+        raise HTTPException(status_code=400, detail=&quot;Invalid id&quot;)
+    return {&quot;id&quot;: user_id}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Async DB with asyncpg
+import asyncpg
+from fastapi import Depends
+
+async def get_pool():
+    pool = await asyncpg.create_pool(dsn=&quot;postgres://localhost/app&quot;)
+    try:
+        yield pool
+    finally:
+        await pool.close()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Background task
+from fastapi import BackgroundTasks
+
+async def send_email(email: str):
+    pass  # send in background
+
+@app.post(&quot;/notify&quot;)
+async def notify(email: str, bg: BackgroundTasks):
+    bg.add_task(send_email, email)
+    return {&quot;ok&quot;: True}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold: create `main.py` with the FastAPI app and import routers.</p>
+<p class='ordered'>2. Define Pydantic schemas for every request and response model.</p>
+<p class='ordered'>3. Write route handlers with `response_model` and correct status codes.</p>
+<p class='ordered'>4. Add dependencies (`Depends`) for auth, DB sessions, and settings.</p>
+<p class='ordered'>5. Use async handlers and async DB drivers for concurrency.</p>
+<p class='ordered'>6. Add exception handlers for consistent error responses.</p>
+<p class='ordered'>7. Write tests with `httpx` + `pytest`; override dependencies for isolation.</p>
+<p class='ordered'>8. Validate the generated OpenAPI schema in CI; lock your dependencies.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `uvicorn main:app` starts cleanly</p>
+<p class='ordered'>2. `/docs` renders schemas with correct types</p>
+<p class='ordered'>3. `pytest` passes (unit + integration with TestClient)</p>
+<p class='ordered'>4. Invalid input returns 422 with Pydantic details</p>
+<p class='ordered'>5. Response models match declared schemas</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>422 on valid input: check Pydantic field types vs JSON types.</li>
+<li>Slow async endpoints: look for blocking sync calls in `async def`.</li>
+<li>Circular imports: move schemas to a shared module.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="express.html">← express</a><a class="page-nav-link" href="go-rest-api.html">go-rest-api →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
+  })();
+  </script>
+</body>
+</html>
