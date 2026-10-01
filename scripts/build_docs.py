@@ -115,6 +115,7 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
         <a class="nav-link" href="{nav_index}#catalog">Catalog</a>
         <a class="nav-link" href="{nav_index}#dashboard">Stats</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
       </div>
     </div>
@@ -294,7 +295,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
 
     <footer>
       <p>Generated on {generated} · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
-      <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a></p>
+      <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 """ + """
   <div class="toast" id="toast"></div>
