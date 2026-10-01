@@ -42,6 +42,13 @@
         <a class="btn-primary" href="#catalog">Browse skills</a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
+      <div class="term-box" aria-hidden="true">
+        <div class="term-bar">
+          <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+          <span class="term-title">agent-skills — zsh</span>
+        </div>
+        <div class="term-body" id="term-body"></div>
+      </div>
     </header>
 
     <section class="stats" aria-label="Library statistics">
@@ -368,7 +375,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     </section>
 
     <footer>
-      <p>Generated on 2026-10-01 15:22 UTC · 100 skills · 16 domains</p>
+      <p>Generated on 2026-10-01 15:33 UTC · 100 skills · 16 domains</p>
       <p><a href="https://github.com/ssrjkk/agent-skills">GitHub</a> · <a href="https://github.com/ssrjkk/agent-skills/issues">Report Issue</a> · <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 
@@ -447,6 +454,34 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     }
     requestAnimationFrame(step);
   });
+  // terminal typing animation
+  (function() {
+    var el = document.getElementById('term-body');
+    if (!el) return;
+    var lines = [
+      '<span class="ln">~$</span> <span class="cmd">pip install agent-skills-library</span>',
+      '<span class="ok">&#10003; 100 skills ready · 16 domains · EN+RU</span>',
+      '<span class="ln">~$</span> <span class="cmd">agent-skills search rag</span>',
+      '<span class="ok">&#10003; rag-pipeline · vector-databases · embeddings</span>',
+      '<span class="ln">~$</span> <span class="cmd">agent-skills validate</span><span class="cursor"></span>',
+    ];
+    var idx = 0;
+    el.innerHTML = '';
+    function typeLine() {
+      if (idx >= lines.length) { setTimeout(reset, 4000); return; }
+      var line = document.createElement('div');
+      line.innerHTML = lines[idx];
+      el.appendChild(line);
+      idx++;
+      setTimeout(typeLine, 700);
+    }
+    function reset() {
+      el.innerHTML = '';
+      idx = 0;
+      setTimeout(typeLine, 1500);
+    }
+    setTimeout(typeLine, 400);
+  })();
   </script>
   </div>
 </body>
