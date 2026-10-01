@@ -89,6 +89,9 @@ jobs:
       - name: Build documentation site
         run: python scripts/build_docs.py --catalog skills_catalog.json --output-dir docs
 
+      - name: Verify site consistency (links, CSS paths, search index)
+        run: python scripts/check_site_consistency.py
+
       - name: Verify catalog consistency
         run: |
           python -c "
