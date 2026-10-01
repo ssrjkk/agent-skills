@@ -3,7 +3,7 @@ name: fastapi
 description: "Build high-performance Python APIs with FastAPI: routing, Pydantic validation, async, dependency injection, OpenAPI, and testing. Use for any Python backend."
 category: backend
 tags: [fastapi, python, api, async, pydantic, openapi, backend]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 author: ssrjkk
 created: 2026-09-20

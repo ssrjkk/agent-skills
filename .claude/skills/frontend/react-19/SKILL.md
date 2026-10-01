@@ -3,7 +3,7 @@ name: react-19
 description: "Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work."
 category: frontend
 tags: [react, ui, javascript, typescript, frontend, components]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 author: ssrjkk
 created: 2026-09-20

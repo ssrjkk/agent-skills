@@ -3,7 +3,7 @@ name: unity-ecs
 description: "Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity."
 category: gamedev
 tags: [unity, ecs, dots, jobs, burst, game-dev, performance, csharp]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

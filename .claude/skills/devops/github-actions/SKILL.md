@@ -3,7 +3,7 @@ name: github-actions
 description: "Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines."
 category: devops
 tags: [github-actions, ci, cd, workflows, automation, pipelines, github]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

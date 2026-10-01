@@ -3,7 +3,7 @@ name: istio
 description: "Operate a service mesh with Istio: sidecars, traffic routing, mTLS, observability, and resiliency. Use for Kubernetes service management."
 category: devops
 tags: [istio, service-mesh, kubernetes, mTLS, traffic-routing, observability]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

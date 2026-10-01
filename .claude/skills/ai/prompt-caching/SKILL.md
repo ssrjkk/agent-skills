@@ -3,7 +3,7 @@ name: prompt-caching
 description: "Optimize LLM cost and latency with prompt caching: cacheable prefixes, cache-control headers, context layout, and cache-aware prompting. Use for high-volume apps."
 category: ai
 tags: [prompt-caching, caching, llm, cost, latency, context, optimization]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28
@@ -17,7 +17,7 @@ author: ssrjkk
 ```python
 # Put stable content first, mark it as cacheable
 resp = client.chat.completions.create(
-    model="gpt-5",
+    model="gpt-6",
     messages=[
         {"role": "system", "content": LONG_SYSTEM_PROMPT},
         {"role": "user", "content": dynamic_question},
@@ -77,7 +77,7 @@ STATIC = [
 
 def ask(question: str) -> str:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=STATIC + [{"role": "user", "content": question}],
         extra_headers={"Cache-Control": "ttl=3600, min_tokens=1024"},
     )
@@ -110,7 +110,7 @@ def chat_session():
     while True:
         q = input("> ")
         resp = client.chat.completions.create(
-            model="gpt-5", messages=messages + [{"role": "user", "content": q}],
+            model="gpt-6", messages=messages + [{"role": "user", "content": q}],
             extra_headers={"Cache-Control": "ttl=3600, min_tokens=1024"},
         )
         answer = resp.choices[0].message.content

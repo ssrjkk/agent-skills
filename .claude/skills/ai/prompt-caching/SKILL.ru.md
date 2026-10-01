@@ -17,7 +17,7 @@ author: ssrjkk
 ```python
 # Стабильный контент первым, пометьте его как cacheable
 resp = client.chat.completions.create(
-    model="gpt-5",
+    model="gpt-6",
     messages=[
         {"role": "system", "content": LONG_SYSTEM_PROMPT},
         {"role": "user", "content": dynamic_question},
@@ -77,7 +77,7 @@ STATIC = [
 
 def ask(question: str) -> str:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=STATIC + [{"role": "user", "content": question}],
         extra_headers={"Cache-Control": "ttl=3600, min_tokens=1024"},
     )
@@ -110,7 +110,7 @@ def chat_session():
     while True:
         q = input("> ")
         resp = client.chat.completions.create(
-            model="gpt-5", messages=messages + [{"role": "user", "content": q}],
+            model="gpt-6", messages=messages + [{"role": "user", "content": q}],
             extra_headers={"Cache-Control": "ttl=3600, min_tokens=1024"},
         )
         answer = resp.choices[0].message.content

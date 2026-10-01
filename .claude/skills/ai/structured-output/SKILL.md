@@ -3,7 +3,7 @@ name: structured-output
 description: "Force LLMs to emit valid, schema-constrained structured output: JSON modes, function calling, JSON Schema validation, and error recovery. Use for reliable data extraction."
 category: ai
 tags: [structured-output, json, json-schema, llm, extraction, validation]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29
@@ -71,7 +71,7 @@ SCHEMA = {
 
 def extract(text: str) -> dict:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[{"role": "user", "content": f"Extract from: {text}"}],
         response_format={"type": "json_schema", "json_schema": {"name": "person", "schema": SCHEMA}},
     )
@@ -99,7 +99,7 @@ class Person(BaseModel):
     emails: list[str] = []
 
 resp = client.beta.chat.completions.parse(
-    model="gpt-5",
+    model="gpt-6",
     messages=[{"role": "user", "content": "Alice is 30, email a@b.com"}],
     response_format=Person,
 )
@@ -109,7 +109,7 @@ print(resp.choices[0].message.parsed.model_dump())
 # JSON mode fallback for providers without json_schema
 def extract_json_mode(text: str) -> dict:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[
             {"role": "system", "content": "Respond only with valid JSON matching the schema."},
             {"role": "user", "content": text},

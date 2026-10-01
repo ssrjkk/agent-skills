@@ -3,7 +3,7 @@ name: kafka
 description: "Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems."
 category: devops
 tags: [kafka, event-streaming, message-queue, topics, consumers, partitioning, streaming]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-26
 updated: 2026-09-28

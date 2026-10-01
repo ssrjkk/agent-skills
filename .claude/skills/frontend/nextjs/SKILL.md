@@ -3,7 +3,7 @@ name: nextjs
 description: "Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps."
 category: frontend
 tags: [nextjs, react, fullstack, app-router, ssr, web]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 author: ssrjkk
 created: 2026-09-20

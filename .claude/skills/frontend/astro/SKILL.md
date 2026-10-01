@@ -3,7 +3,7 @@ name: astro
 description: "Build content-focused websites with Astro: islands architecture, content collections, static generation, and integrations. Use for fast content sites."
 category: frontend
 tags: [astro, static-site, islands, content-collections, ssg, frontend]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

@@ -3,7 +3,7 @@ name: rest-api-design
 description: "Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task."
 category: backend
 tags: [rest, api-design, http, resources, pagination, versioning, openapi]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28

@@ -3,7 +3,7 @@ name: swift-ios
 description: "Build iOS apps with Swift and SwiftUI: views, state, navigation, concurrency, and Combine. Use for native Apple platforms."
 category: mobile
 tags: [swift, ios, swiftui, combine, concurrency, xcode, mobile]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

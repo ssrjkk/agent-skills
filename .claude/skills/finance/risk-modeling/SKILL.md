@@ -3,7 +3,7 @@ name: risk-modeling
 description: "Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management."
 category: finance
 tags: [risk-modeling, var, cvar, monte-carlo, stress-testing, portfolio, quantitative, finance]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

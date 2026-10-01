@@ -3,7 +3,7 @@ name: sql-querying
 description: "Write correct and efficient SQL: joins, aggregations, window functions, CTEs, and query optimization. Use for any relational data access."
 category: data
 tags: [sql, database, queries, joins, aggregations, window-functions, cte]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28

@@ -3,7 +3,7 @@ name: git-workflow
 description: "Use Git effectively: branching, commits, rebase vs merge, history hygiene, conflict resolution, and collaboration workflows. Use for any git-based project."
 category: engineering
 tags: [git, github, branching, rebase, merge, commits, collaboration, vcs]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28

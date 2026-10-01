@@ -3,7 +3,7 @@ name: websockets
 description: "Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection. Use for live updates and chat."
 category: backend
 tags: [websockets, realtime, socket.io, chat, live-updates, bidirectional]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

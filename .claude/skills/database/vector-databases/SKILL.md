@@ -3,7 +3,7 @@ name: vector-databases
 description: "Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval."
 category: database
 tags: [vector-db, embeddings, hnsw, similarity-search, rag, retrieval, pgvector]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28

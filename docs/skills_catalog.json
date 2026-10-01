@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-09-29T23:56:09Z",
+    "generated_at": "2026-10-01T11:47:09Z",
     "total_skills": 100,
     "total_ru": 100,
     "domains": [
@@ -41,9 +41,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/agent-development/SKILL.md",
@@ -70,9 +70,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/context-engineering/SKILL.md",
@@ -99,9 +99,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/embeddings/SKILL.md",
@@ -153,9 +153,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/function-calling/SKILL.md",
@@ -183,9 +183,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/llm-evals/SKILL.md",
@@ -237,9 +237,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/llm-guardrails/SKILL.md",
@@ -267,9 +267,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/mcp-servers/SKILL.md",
@@ -297,9 +297,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/mlops/SKILL.md",
@@ -326,9 +326,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/multi-agent-orchestration/SKILL.md",
@@ -356,9 +356,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/prompt-caching/SKILL.md",
@@ -384,9 +384,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/prompt-engineering/SKILL.md",
@@ -414,9 +414,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/rag-pipeline/SKILL.md",
@@ -443,9 +443,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/ai/structured-output/SKILL.md",
@@ -499,9 +499,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/django/SKILL.md",
@@ -528,9 +528,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/dotnet/SKILL.md",
@@ -558,9 +558,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/express/SKILL.md",
@@ -588,9 +588,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/fastapi/SKILL.md",
@@ -618,9 +618,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/go-rest-api/SKILL.md",
@@ -648,9 +648,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/graphql/SKILL.md",
@@ -678,9 +678,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/grpc/SKILL.md",
@@ -708,9 +708,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/laravel/SKILL.md",
@@ -763,9 +763,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/rest-api-design/SKILL.md",
@@ -818,9 +818,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/spring-boot/SKILL.md",
@@ -847,9 +847,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/backend/websockets/SKILL.md",
@@ -902,9 +902,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/airflow/SKILL.md",
@@ -932,9 +932,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/apache-spark/SKILL.md",
@@ -962,9 +962,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/data-visualization/SKILL.md",
@@ -992,9 +992,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/dbt/SKILL.md",
@@ -1022,9 +1022,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/elasticsearch/SKILL.md",
@@ -1052,9 +1052,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/pandas/SKILL.md",
@@ -1082,9 +1082,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/data/sql-querying/SKILL.md",
@@ -1111,9 +1111,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/clickhouse/SKILL.md",
@@ -1141,9 +1141,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/mongodb/SKILL.md",
@@ -1171,9 +1171,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/mysql/SKILL.md",
@@ -1201,9 +1201,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/postgresql/SKILL.md",
@@ -1256,9 +1256,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/redis/SKILL.md",
@@ -1285,9 +1285,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/sqlite/SKILL.md",
@@ -1315,9 +1315,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/database/vector-databases/SKILL.md",
@@ -1369,9 +1369,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/ansible/SKILL.md",
@@ -1398,9 +1398,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/argocd/SKILL.md",
@@ -1478,9 +1478,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/docker/SKILL.md",
@@ -1508,9 +1508,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/github-actions/SKILL.md",
@@ -1562,9 +1562,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/istio/SKILL.md",
@@ -1592,9 +1592,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/jenkins/SKILL.md",
@@ -1622,9 +1622,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/kafka/SKILL.md",
@@ -1652,9 +1652,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/kubernetes/SKILL.md",
@@ -1681,9 +1681,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/loki/SKILL.md",
@@ -1710,9 +1710,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/nginx/SKILL.md",
@@ -1791,9 +1791,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/prometheus-grafana/SKILL.md",
@@ -1873,9 +1873,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/devops/terraform/SKILL.md",
@@ -1954,9 +1954,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/engineering/claude-code-commands/SKILL.md",
@@ -1982,9 +1982,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/engineering/clean-architecture/SKILL.md",
@@ -2011,9 +2011,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/engineering/code-review/SKILL.md",
@@ -2042,9 +2042,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/engineering/git-workflow/SKILL.md",
@@ -2070,9 +2070,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/engineering/system-design/SKILL.md",
@@ -2099,9 +2099,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/engineering/test-driven-development/SKILL.md",
@@ -2130,9 +2130,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/finance/algorithmic-trading/SKILL.md",
@@ -2161,9 +2161,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/finance/risk-modeling/SKILL.md",
@@ -2190,9 +2190,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/angular/SKILL.md",
@@ -2219,9 +2219,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/astro/SKILL.md",
@@ -2273,9 +2273,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/modern-css/SKILL.md",
@@ -2302,9 +2302,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/nextjs/SKILL.md",
@@ -2331,9 +2331,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/react-19/SKILL.md",
@@ -2360,9 +2360,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/svelte/SKILL.md",
@@ -2414,9 +2414,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/typescript/SKILL.md",
@@ -2444,9 +2444,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/frontend/vue/SKILL.md",
@@ -2475,9 +2475,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/gamedev/game-physics/SKILL.md",
@@ -2506,9 +2506,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/gamedev/unity-ecs/SKILL.md",
@@ -2537,9 +2537,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/healthcare/hipaa-compliance/SKILL.md",
@@ -2568,9 +2568,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/healthcare/hl7-fhir/SKILL.md",
@@ -2625,9 +2625,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/mobile/flutter/SKILL.md",
@@ -2654,9 +2654,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/mobile/kotlin-android/SKILL.md",
@@ -2684,9 +2684,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/mobile/swift-ios/SKILL.md",
@@ -2714,9 +2714,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/qa/browser-automation/SKILL.md",
@@ -2744,9 +2744,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/qa/jest/SKILL.md",
@@ -2774,9 +2774,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/qa/pytest/SKILL.md",
@@ -2802,9 +2802,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/security/api-security/SKILL.md",
@@ -2858,9 +2858,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/security/owasp-web-security/SKILL.md",
@@ -2887,9 +2887,9 @@
       "models": [
         "sonnet",
         "opus",
-        "gpt-5",
-        "gemini-2.5",
-        "glm-4.6"
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": "D:/harvest/.claude/skills/security/secrets-management/SKILL.md",

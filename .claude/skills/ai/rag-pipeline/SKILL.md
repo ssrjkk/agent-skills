@@ -3,7 +3,7 @@ name: rag-pipeline
 description: "Build retrieval-augmented generation pipelines: chunking, embeddings, vector search, hybrid retrieval, and citation. Use for grounded LLM answers over your data."
 category: ai
 tags: [rag, retrieval, embeddings, vector-db, chunking, llm, search]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

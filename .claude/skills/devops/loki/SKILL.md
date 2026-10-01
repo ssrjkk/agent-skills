@@ -3,7 +3,7 @@ name: loki
 description: "Operate log aggregation with Grafana Loki: agents, labels, queries (LogQL), retention, and dashboards. Use for log observability."
 category: devops
 tags: [loki, logging, logql, grafana, log-aggregation, retention]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

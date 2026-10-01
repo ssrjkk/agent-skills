@@ -3,7 +3,7 @@ name: prompt-engineering
 description: "Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation. Use to get reliable model behavior."
 category: ai
 tags: [prompt-engineering, llm, prompting, chain-of-thought, structured-output]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28
@@ -74,7 +74,7 @@ import openai
 
 client = openai.OpenAI()
 resp = client.chat.completions.create(
-    model="gpt-5",
+    model="gpt-6",
     messages=[
         {"role": "system", "content": "You extract entities to JSON."},
         {"role": "user", "content": '{"text": "Alice works at Acme"}'},

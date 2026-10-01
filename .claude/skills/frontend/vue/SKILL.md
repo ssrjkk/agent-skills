@@ -3,7 +3,7 @@ name: vue
 description: "Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work."
 category: frontend
 tags: [vue, vue3, javascript, typescript, frontend, reactivity, components]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-26
 updated: 2026-09-28

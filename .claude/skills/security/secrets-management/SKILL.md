@@ -3,7 +3,7 @@ name: secrets-management
 description: "Manage secrets safely: vaults, rotation, environment variables, scanning, and least privilege. Use for protecting credentials and keys."
 category: security
 tags: [secrets, vault, env-vars, rotation, scanning, credentials]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

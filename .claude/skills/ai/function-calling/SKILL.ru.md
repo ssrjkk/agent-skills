@@ -79,7 +79,7 @@ TOOLS = [
 ]
 
 resp = client.chat.completions.create(
-    model="gpt-5",
+    model="gpt-6",
     messages=[{"role": "user", "content": "Weather in Tokyo?"}],
     tools=TOOLS,
 )
@@ -101,7 +101,7 @@ messages = [
     resp.choices[0].message,
     {"role": "tool", "tool_call_id": call.id, "content": result},
 ]
-final = client.chat.completions.create(model="gpt-5", messages=messages, tools=TOOLS)
+final = client.chat.completions.create(model="gpt-6", messages=messages, tools=TOOLS)
 print(final.choices[0].message.content)
 ```
 ```python

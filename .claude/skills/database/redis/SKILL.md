@@ -3,7 +3,7 @@ name: redis
 description: "Use Redis for caching, sessions, queues, rate limiting, and pub/sub: data structures, persistence, eviction, and clustering. Use for any high-performance data layer."
 category: database
 tags: [redis, cache, sessions, queues, pubsub, rate-limiting, in-memory]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

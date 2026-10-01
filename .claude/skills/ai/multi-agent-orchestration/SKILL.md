@@ -3,7 +3,7 @@ name: multi-agent-orchestration
 description: "Design and run multi-agent systems: orchestrator-worker, routing, handoffs, shared state, and coordination patterns. Use for complex agent teams."
 category: ai
 tags: [multi-agent, orchestration, agents, coordination, workflows, teams]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

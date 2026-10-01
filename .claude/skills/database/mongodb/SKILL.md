@@ -3,7 +3,7 @@ name: mongodb
 description: "Design and operate MongoDB: document modeling, queries, indexes, aggregation, replication, and sharding. Use for flexible NoSQL data."
 category: database
 tags: [mongodb, nosql, document-db, queries, indexes, aggregation, atlas]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-26
 updated: 2026-09-28

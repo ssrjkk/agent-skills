@@ -3,7 +3,7 @@ name: go-rest-api
 description: "Build production REST APIs in Go with the standard library or Gin, including routing, middleware, JSON handling, and testing. Use for performant backends."
 category: backend
 tags: [go, golang, rest, api, http, backend, server]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

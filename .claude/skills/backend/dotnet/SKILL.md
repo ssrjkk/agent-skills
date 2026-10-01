@@ -3,7 +3,7 @@ name: dotnet
 description: "Build .NET backends with ASP.NET Core: minimal APIs, EF Core, dependency injection, middleware, and testing. Use for C# services."
 category: backend
 tags: [dotnet, csharp, aspnet-core, ef-core, minimal-api, backend]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

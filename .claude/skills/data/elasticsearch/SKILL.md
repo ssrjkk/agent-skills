@@ -3,7 +3,7 @@ name: elasticsearch
 description: "Design and operate Elasticsearch: mappings, indexing, queries, aggregations, and cluster tuning. Use for search and log analytics."
 category: data
 tags: [elasticsearch, search, full-text, indexing, aggregations, kibana, logs]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-26
 updated: 2026-09-28
