@@ -74,6 +74,34 @@ def skill_metrics(name: str, path_str: str) -> dict:
     return {"score": max(0, score), "lines": lines, "blocks": blocks, "sections": sections, "preview": preview}
 
 
+def skill_search_text(skill_path: Path) -> str:
+    """Extract a searchable plain-text blob from a SKILL.md: headings, bullet
+    lines, and prose (code fences excluded) so search matches skill content."""
+    try:
+        text = skill_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return ""
+    parts = text.split("---", 2)
+    body = parts[2] if len(parts) >= 3 else text
+    out = []
+    in_fence = False
+    for line in body.splitlines():
+        if line.strip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        s = line.strip()
+        if not s:
+            continue
+        s = re.sub(r"^#{1,6}\s+", "", s)
+        s = re.sub(r"^[-*]\s+", "", s)
+        s = re.sub(r"^>\s?", "", s)
+        if len(s) > 3:
+            out.append(s.lower())
+    return " ".join(out)
+
+
 def load_all(path: Path) -> tuple[dict, dict, dict]:
     data = read_catalog(path)
     meta = data["metadata"]
@@ -308,6 +336,14 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
   <div class="toast" id="toast"></div>
   <script>
   var activeDomain = 'all';
+  var searchIndex = null;
+  function loadSearchIndex() {
+    if (searchIndex) return;
+    fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
+      searchIndex = {};
+      data.forEach(function(e) { searchIndex[e.name] = (e.content || '').toLowerCase(); });
+    }).catch(function() { searchIndex = {}; });
+  }
   function copyText(text) {
     navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
   }
@@ -342,7 +378,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     btn.classList.add('active');
     applyFilter();
   }
-  function onSearch(q) { applyFilter(); }
+  function onSearch(q) { loadSearchIndex(); applyFilter(); }
   function applyFilter() {
     var q = (document.getElementById('search').value || '').toLowerCase();
     var sort = document.getElementById('sort').value;
@@ -353,7 +389,8 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       var domain = c.getAttribute('data-domain');
       var tags = c.getAttribute('data-tags') || '';
       var domainMatch = activeDomain === 'all' || domain === activeDomain;
-      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q);
+      var content = (searchIndex && searchIndex[name]) || '';
+      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q) || content.includes(q);
       var show = domainMatch && textMatch;
       c.style.display = show ? '' : 'none';
       if (show) visible++;
@@ -737,6 +774,7 @@ body{
 .card{
   position:relative;background:var(--card);border:1px solid var(--border);
   padding:1rem 1.1rem;transition:border-color .15s,transform .15s;text-decoration:none;color:inherit;display:block;border-radius:var(--radius);
+  content-visibility:auto;contain-intrinsic-size:auto 240px;
 }
 .card:hover{transform:translateY(-3px);border-color:var(--accent)}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
@@ -841,6 +879,20 @@ body[data-theme="light"] .bg-glow{
     print(f"Stylesheet written to {output_dir / 'style.css'}")
 
 
+def build_search_index(catalog_path: Path, output_dir: Path) -> None:
+    _meta, skills, _metrics = load_all(catalog_path)
+    index = []
+    for s in sorted(skills, key=lambda x: x["name"]):
+        index.append({
+            "name": s["name"],
+            "category": s["category"],
+            "content": skill_search_text(Path(s["path"]))[:2000],
+        })
+    out = output_dir / "search-index.json"
+    out.write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
+    print(f"Search index written to {out}")
+
+
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     robots = (
         "User-agent: *\n"
@@ -878,6 +930,7 @@ def main() -> int:
     build_skill_pages(Path(args.catalog), output_dir)
     build_domain_pages(Path(args.catalog), output_dir)
     build_style_css(output_dir)
+    build_search_index(Path(args.catalog), output_dir)
     build_seo_files(output_dir, Path(args.catalog))
 
     import shutil

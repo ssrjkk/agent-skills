@@ -129,6 +129,7 @@ body{
 .card{
   position:relative;background:var(--card);border:1px solid var(--border);
   padding:1rem 1.1rem;transition:border-color .15s,transform .15s;text-decoration:none;color:inherit;display:block;border-radius:var(--radius);
+  content-visibility:auto;contain-intrinsic-size:auto 240px;
 }
 .card:hover{transform:translateY(-3px);border-color:var(--accent)}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}

@@ -375,13 +375,21 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     </section>
 
     <footer>
-      <p>Generated on 2026-10-01 17:33 UTC · 100 skills · 16 domains</p>
+      <p>Generated on 2026-10-01 17:48 UTC · 100 skills · 16 domains</p>
       <p><a href="https://github.com/ssrjkk/agent-skills">GitHub</a> · <a href="https://github.com/ssrjkk/agent-skills/issues">Report Issue</a> · <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 
   <div class="toast" id="toast"></div>
   <script>
   var activeDomain = 'all';
+  var searchIndex = null;
+  function loadSearchIndex() {
+    if (searchIndex) return;
+    fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
+      searchIndex = {};
+      data.forEach(function(e) { searchIndex[e.name] = (e.content || '').toLowerCase(); });
+    }).catch(function() { searchIndex = {}; });
+  }
   function copyText(text) {
     navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
   }
@@ -416,7 +424,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     btn.classList.add('active');
     applyFilter();
   }
-  function onSearch(q) { applyFilter(); }
+  function onSearch(q) { loadSearchIndex(); applyFilter(); }
   function applyFilter() {
     var q = (document.getElementById('search').value || '').toLowerCase();
     var sort = document.getElementById('sort').value;
@@ -427,7 +435,8 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
       var domain = c.getAttribute('data-domain');
       var tags = c.getAttribute('data-tags') || '';
       var domainMatch = activeDomain === 'all' || domain === activeDomain;
-      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q);
+      var content = (searchIndex && searchIndex[name]) || '';
+      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q) || content.includes(q);
       var show = domainMatch && textMatch;
       c.style.display = show ? '' : 'none';
       if (show) visible++;
