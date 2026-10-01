@@ -26,8 +26,11 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ssrjkk/agent-skills/main/.github/social-preview.svg" alt="Skills Library banner" width="640">
+  <a href="https://ssrjkk.github.io/agent-skills/">
+    <img src="https://raw.githubusercontent.com/ssrjkk/agent-skills/main/.github/site-preview.png" alt="Agent Skills Library — live catalog site" width="800">
+  </a>
 </p>
+<p align="center"><em>Live catalog: <a href="https://ssrjkk.github.io/agent-skills/">ssrjkk.github.io/agent-skills</a></em></p>
 
 ---
 
