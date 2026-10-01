@@ -66,7 +66,7 @@ client = openai.OpenAI()
 
 def run_case(prompt: str, user_input: str) -> str:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": user_input},
@@ -101,7 +101,7 @@ Return only the number."""
 
 def judge(answer: str) -> int:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[
             {"role": "system", "content": JUDGE_PROMPT},
             {"role": "user", "content": answer},

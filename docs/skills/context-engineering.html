@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>context-engineering — Agent Skills Library</title>
+  <meta name="description" content="Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets. Use for effective agent context.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/context-engineering.html">
+  <meta property="og:title" content="context-engineering — Agent Skills Library">
+  <meta property="og:description" content="Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets. Use for effective agent context.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/context-engineering.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">context-engineering</span><span class="tag">context-window</span><span class="tag">tokens</span><span class="tag">agents</span><span class="tag">compaction</span><span class="tag">retrieval</span>
+        </div>
+        <h1 class="skill-page-title">context-engineering</h1>
+        <p class="skill-page-desc">Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets. Use for effective agent context.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>119</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('context-engineering')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/context-engineering">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="agent-development.html">← agent-development</a><a class="page-nav-link" href="embeddings.html">embeddings →</a></div>
+      <div class="skill-page-body">
+        <h1>Context Engineering</h1>
+<blockquote>Curating the context window for better answers and lower cost.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Keep a small stable system prompt, fetch only what the task needs
+SYSTEM = &quot;You are a concise senior engineer.&quot;
+TASK = &quot;Fix the bug in src/auth.py&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Long agent sessions that grow beyond the window</li>
+<li>RAG where too much context hurts quality</li>
+<li>Cost-sensitive high-volume LLM calls</li>
+<li>Multi-turn agents with memory needs</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Context Budgeting</h3>
+<ul>
+<li>Set a token budget per section (system, task, memory, retrieval)</li>
+<li>Keep system prompt small and high-signal</li>
+<li>Trim retrieved chunks to the top-k and relevant spans</li>
+<li>Reserve space for the answer</li>
+</ul>
+<h3>Compaction</h3>
+<ul>
+<li>Summarize old turns instead of keeping raw history</li>
+<li>Use structured summaries (decisions, actions, open items)</li>
+<li>Keep the last turns verbatim for immediate coherence</li>
+<li>Trigger compaction at a token threshold</li>
+</ul>
+<h3>Progressive Disclosure</h3>
+<ul>
+<li>Load details only when needed (lazy retrieval)</li>
+<li>Use summaries + pointers to deeper docs</li>
+<li>Ask clarifying questions before pulling big context</li>
+<li>Keep examples cached, not repeated</li>
+</ul>
+<h3>Retrieval Quality</h3>
+<ul>
+<li>Retrieve on demand, not everything up front</li>
+<li>Rerank and deduplicate before injecting</li>
+<li>Cite sources so the model can verify</li>
+<li>Keep injected context fresh and relevant</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install tiktoken openai
+# tokenizer for budgeting</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import tiktoken
+
+enc = tiktoken.get_encoding(&quot;cl100k_base&quot;)
+
+def count_tokens(text: str) -&gt; int:
+    return len(enc.encode(text))
+
+BUDGET = {&quot;system&quot;: 500, &quot;task&quot;: 1000, &quot;memory&quot;: 1500, &quot;retrieval&quot;: 2000}
+print(count_tokens(&quot;hello world&quot;))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Compaction with structured summary
+def compact(history: list[dict], summary: str, keep_last: int = 6) -&gt; list[dict]:
+    return [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: f&quot;Conversation summary so far:\n{summary}&quot;}
+    ] + history[-keep_last:]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Lazy retrieval: only fetch when needed
+def build_context(question: str, memory: dict) -&gt; str:
+    chunks = []
+    if &quot;codebase&quot; in question.lower():
+        chunks += retrieve(&quot;code&quot;, question, k=4)
+    if &quot;api&quot; in question.lower():
+        chunks += retrieve(&quot;api_docs&quot;, question, k=2)
+    return &quot;\n\n&quot;.join(chunks)[:BUDGET[&quot;retrieval&quot;]]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Token-aware trimming
+def trim_to_budget(text: str, budget: int) -&gt; str:
+    tokens = enc.encode(text)
+    if len(tokens) &lt;= budget:
+        return text
+    return enc.decode(tokens[:budget]) + &quot;\n...[trimmed]&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define a per-section token budget for your task.</p>
+<p class='ordered'>2. Write a tight system prompt with role and constraints.</p>
+<p class='ordered'>3. Retrieve only what the current turn needs (lazy).</p>
+<p class='ordered'>4. Inject top-k, deduplicated, cited chunks.</p>
+<p class='ordered'>5. Summarize older turns into structured memory.</p>
+<p class='ordered'>6. Trim long content to the budget.</p>
+<p class='ordered'>7. Measure token usage and cost per call.</p>
+<p class='ordered'>8. Iterate on budgets based on answer quality.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Answers stay correct as the session grows</p>
+<p class='ordered'>2. Token cost per call is within budget</p>
+<p class='ordered'>3. Retrieved context is relevant (recall@k)</p>
+<p class='ordered'>4. Compaction preserves decisions and facts</p>
+<p class='ordered'>5. No budget overflow errors in production</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Context overflow: compact earlier and trim harder.</li>
+<li>Lost facts after compaction: improve the summary format.</li>
+<li>Low quality with much context: reduce injected chunks, keep only relevant.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="agent-development.html">← agent-development</a><a class="page-nav-link" href="embeddings.html">embeddings →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

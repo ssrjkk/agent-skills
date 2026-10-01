@@ -74,7 +74,7 @@ import openai
 
 client = openai.OpenAI()
 resp = client.chat.completions.create(
-    model="gpt-5",
+    model="gpt-6",
     messages=[
         {"role": "system", "content": "You extract entities to JSON."},
         {"role": "user", "content": '{"text": "Alice works at Acme"}'},

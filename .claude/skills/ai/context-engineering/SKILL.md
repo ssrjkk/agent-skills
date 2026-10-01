@@ -3,7 +3,7 @@ name: context-engineering
 description: "Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets. Use for effective agent context."
 category: ai
 tags: [context-engineering, context-window, tokens, agents, compaction, retrieval]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

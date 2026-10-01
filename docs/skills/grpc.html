@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grpc — Agent Skills Library</title>
+  <meta name="description" content="Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling. Use for inter-service communication.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/grpc.html">
+  <meta property="og:title" content="grpc — Agent Skills Library">
+  <meta property="og:description" content="Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling. Use for inter-service communication.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/grpc.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">grpc</span><span class="tag">protobuf</span><span class="tag">rpc</span><span class="tag">microservices</span><span class="tag">streaming</span><span class="tag">schema</span><span class="tag">backend</span>
+        </div>
+        <h1 class="skill-page-title">grpc</h1>
+        <p class="skill-page-desc">Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling. Use for inter-service communication.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>141</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('grpc')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/grpc">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="graphql.html">← graphql</a><a class="page-nav-link" href="laravel.html">laravel →</a></div>
+      <div class="skill-page-body">
+        <h1>gRPC</h1>
+<blockquote>Building high-performance service communication with gRPC.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install grpcio grpcio-tools
+# or Go:
+go get google.golang.org/grpc</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Internal service-to-service calls</li>
+<li>Low-latency, typed, cross-language APIs</li>
+<li>Streaming use cases (live data, progress)</li>
+<li>Microservices that share a contract via proto</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Schemas</h3>
+<ul>
+<li>Define contracts in `.proto` first</li>
+<li>Use semantic proto3 field numbering (stable)</li>
+<li>Version via package and field compatibility rules</li>
+<li>Keep messages small and focused</li>
+</ul>
+<h3>RPC Styles</h3>
+<ul>
+<li>Use unary for request/response</li>
+<li>Server streaming for pagination or live updates</li>
+<li>Client streaming for uploads and batching</li>
+<li>Bidi streaming for interactive sessions</li>
+</ul>
+<h3>Implementation</h3>
+<ul>
+<li>Generate stubs into a shared module</li>
+<li>Set deadlines/timeouts on every call</li>
+<li>Use interceptors for logging, auth, metrics</li>
+<li>Handle status codes and rich errors</li>
+</ul>
+<h3>Operations</h3>
+<ul>
+<li>Use TLS/mTLS between services</li>
+<li>Add retries with backoff for transient errors</li>
+<li>Load balance with client-side LB or service mesh</li>
+<li>Monitor latency and error rates per method</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install grpcio grpcio-tools protobuf
+# Go:
+go get google.golang.org/grpc google.golang.org/protobuf</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// proto/hello.proto
+syntax = &quot;proto3&quot;;
+package hello;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc StreamGreetings (HelloRequest) returns (stream HelloReply);
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import grpc
+import hello_pb2, hello_pb2_grpc
+
+class Greeter(hello_pb2_grpc.GreeterServicer):
+    def SayHello(self, request, context):
+        return hello_pb2.HelloReply(message=f&quot;Hello, {request.name}&quot;)
+
+    def StreamGreetings(self, request, context):
+        for i in range(5):
+            yield hello_pb2.HelloReply(message=f&quot;Hello #{i}, {request.name}&quot;)
+
+server = grpc.server(grpc.ThreadPoolExecutor(max_workers=10))
+hello_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+server.add_insecure_port(&quot;[::]:50051&quot;)
+server.start()
+server.wait_for_termination()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Client with deadline and retry
+channel = grpc.insecure_channel(&quot;localhost:50051&quot;)
+stub = hello_pb2_grpc.GreeterStub(channel)
+
+try:
+    reply = stub.SayHello(hello_pb2.HelloRequest(name=&quot;World&quot;), timeout=5)
+    print(reply.message)
+except grpc.RpcError as e:
+    print(&quot;status:&quot;, e.code(), e.details())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Go client with deadline
+conn, _ := grpc.NewClient(&quot;localhost:50051&quot;, grpc.WithTransportCredentials(insecure.NewCredentials()))
+defer conn.Close()
+c := hellopb.NewGreeterClient(conn)
+
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+reply, err := c.SayHello(ctx, &amp;hellopb.HelloRequest{Name: &quot;World&quot;})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define the service contract in a `.proto` file.</p>
+<p class='ordered'>2. Generate stubs for each language.</p>
+<p class='ordered'>3. Implement the server with business logic.</p>
+<p class='ordered'>4. Add interceptors for auth, logging, and metrics.</p>
+<p class='ordered'>5. Implement clients with deadlines and retries.</p>
+<p class='ordered'>6. Use TLS/mTLS in non-dev environments.</p>
+<p class='ordered'>7. Add load balancing and circuit breakers.</p>
+<p class='ordered'>8. Monitor per-method latency and error rates.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Stubs generate cleanly for all languages</p>
+<p class='ordered'>2. Unary and streaming calls return correct data</p>
+<p class='ordered'>3. Deadlines trigger appropriate status codes</p>
+<p class='ordered'>4. Interceptors log and authenticate</p>
+<p class='ordered'>5. Error propagation uses proper gRPC status codes</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>DeadlineExceeded: raise timeouts or check downstream latency.</li>
+<li>Unimplemented: verify the method is registered on the server.</li>
+<li>Connection refused: check the server address and ports.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="graphql.html">← graphql</a><a class="page-nav-link" href="laravel.html">laravel →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

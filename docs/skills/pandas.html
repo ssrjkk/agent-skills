@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pandas — Agent Skills Library</title>
+  <meta name="description" content="Analyze and transform tabular data with pandas: dataframes, cleaning, aggregation, joins, and time series. Use for any data analysis or ETL task.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/pandas.html">
+  <meta property="og:title" content="pandas — Agent Skills Library">
+  <meta property="og:description" content="Analyze and transform tabular data with pandas: dataframes, cleaning, aggregation, joins, and time series. Use for any data analysis or ETL task.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/pandas.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#10b9811a;color:#10b981;border-color:#10b98144">data</span>
+          <span class="tag">pandas</span><span class="tag">python</span><span class="tag">data-analysis</span><span class="tag">dataframe</span><span class="tag">etl</span><span class="tag">csv</span><span class="tag">time-series</span>
+        </div>
+        <h1 class="skill-page-title">pandas</h1>
+        <p class="skill-page-desc">Analyze and transform tabular data with pandas: dataframes, cleaning, aggregation, joins, and time series. Use for any data analysis or ETL task.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>105</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('pandas')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/data/pandas">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="elasticsearch.html">← elasticsearch</a><a class="page-nav-link" href="sql-querying.html">sql-querying →</a></div>
+      <div class="skill-page-body">
+        <h1>Pandas</h1>
+<blockquote>Analyzing and transforming tabular data with pandas.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install pandas
+python -c &quot;import pandas as pd; print(pd.read_csv(&#x27;data.csv&#x27;).head())&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Cleaning and reshaping tabular datasets</li>
+<li>Aggregations, joins, and pivots</li>
+<li>Time series analysis and resampling</li>
+<li>ETL steps before machine learning</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Data Loading</h3>
+<ul>
+<li>Specify `dtype`, `parse_dates`, and `usecols` to avoid surprises</li>
+<li>Use `read_parquet`/`read_csv` with explicit schema</li>
+<li>Chunk large files with `chunksize` or use Dask/Polars for scale</li>
+<li>Validate shape and nulls right after loading</li>
+</ul>
+<h3>Cleaning</h3>
+<ul>
+<li>Use vectorized ops; avoid row-wise loops</li>
+<li>Handle missing data deliberately (`fillna` vs `dropna`)</li>
+<li>Normalize types: datetime, categorical, numeric</li>
+<li>Keep an audit trail of transformations</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Prefer vectorized operations over `.apply`/`.iterrows`</li>
+<li>Use `groupby` aggregations instead of loops</li>
+<li>Convert object columns to categorical for speed</li>
+<li>Set indexes for joins; avoid merge on object columns</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install pandas numpy
+# scale: polars, dask, pyarrow</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import pandas as pd
+
+df = pd.read_csv(&quot;sales.csv&quot;, parse_dates=[&quot;date&quot;], dtype={&quot;qty&quot;: &quot;int32&quot;})
+df.info()
+print(df.isna().sum())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Cleaning
+df[&quot;price&quot;] = df[&quot;price&quot;].str.replace(&quot;$&quot;, &quot;&quot;).astype(float)
+df = df.dropna(subset=[&quot;order_id&quot;])
+df[&quot;date&quot;] = pd.to_datetime(df[&quot;date&quot;], errors=&quot;coerce&quot;)
+df = df[df[&quot;qty&quot;] &gt; 0]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Aggregation
+by_region = (
+    df.groupby(&quot;region&quot;, as_index=False)
+      .agg(total=(&quot;amount&quot;, &quot;sum&quot;), orders=(&quot;order_id&quot;, &quot;nunique&quot;))
+      .sort_values(&quot;total&quot;, ascending=False)
+)
+print(by_region.head())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Time series resampling
+daily = df.set_index(&quot;date&quot;)[&quot;amount&quot;].resample(&quot;D&quot;).sum()
+monthly = daily.resample(&quot;ME&quot;).mean()
+print(monthly.head())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Load data with explicit dtypes and date parsing.</p>
+<p class='ordered'>2. Profile: shape, columns, nulls, and unique counts.</p>
+<p class='ordered'>3. Clean types and missing values deliberately.</p>
+<p class='ordered'>4. Filter and transform with vectorized operations.</p>
+<p class='ordered'>5. Aggregate with `groupby`; reshape with pivot/merge.</p>
+<p class='ordered'>6. For time series, resample and window correctly.</p>
+<p class='ordered'>7. Export with explicit schema (parquet preferred).</p>
+<p class='ordered'>8. Verify outputs against the source invariants.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. No unexpected nulls or type errors after cleaning</p>
+<p class='ordered'>2. Aggregations match manually computed totals</p>
+<p class='ordered'>3. Joins don&#x27;t multiply rows unexpectedly</p>
+<p class='ordered'>4. Date ranges and resampling are correct</p>
+<p class='ordered'>5. Results reproducible with a fixed seed (if sampling)</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>MemoryError: use dtypes, chunking, or Polars.</li>
+<li>Wrong joins: check key types and duplicates before merge.</li>
+<li>Slow loops: convert to vectorized or `groupby` operations.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="elasticsearch.html">← elasticsearch</a><a class="page-nav-link" href="sql-querying.html">sql-querying →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

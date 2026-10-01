@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sre-slos — Agent Skills Library</title>
+  <meta name="description" content="SRE SLI/SLO/SLA implementation">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/sre-slos.html">
+  <meta property="og:title" content="sre-slos — Agent Skills Library">
+  <meta property="og:description" content="SRE SLI/SLO/SLA implementation">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/sre-slos.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">sre</span><span class="tag">sli</span><span class="tag">slo</span><span class="tag">sla</span><span class="tag">reliability</span><span class="tag">monitoring</span>
+        </div>
+        <h1 class="skill-page-title">sre-slos</h1>
+        <p class="skill-page-desc">SRE SLI/SLO/SLA implementation</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>151</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('sre-slos')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/sre-slos">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="serverless-ai.html">← serverless-ai</a><a class="page-nav-link" href="terraform.html">terraform →</a></div>
+      <div class="skill-page-body">
+        <h1>SRE SLOs</h1>
+<blockquote>Implement Service Level Indicators, Objectives, and Agreements following SRE best practices.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># slo-config.yaml — Service level configuration
+apiVersion: sre.google.com/v1
+kind: SLO
+metadata:
+  name: api-availability
+  service: payment-api
+spec:
+  description: &quot;Payment API availability SLO&quot;
+  target: 99.9  # percentage
+  window: 28d   # rolling window
+  
+  indicator:
+    type: availability
+    definition: |
+      # SLI: Ratio of successful requests
+      good_events = count(status_code &lt; 500)
+      valid_events = count(status_code != 0)
+      sli = good_events / valid_events
+  
+  burnRateAlerts:
+    - severity: page
+      threshold: 0.01  # minutes of error budget consumed per minute
+      lookback: 1h
+    - severity: ticket
+      threshold: 0.001
+      lookback: 6h
+---
+# Error budget policy
+apiVersion: sre.google.com/v1
+kind: ErrorBudget
+metadata:
+  name: api-error-budget
+spec:
+  sloRef: api-availability
+  policy:
+    # Stop deployments when error budget is depleted
+    deployFreeze:
+      enabled: true
+      remainingBudgetPercent: 20</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># SLO Monitoring with Prometheus
+from prometheus_client import Histogram, Counter
+import time
+
+REQUEST_LATENCY = Histogram(
+    &#x27;http_request_duration_seconds&#x27;,
+    &#x27;HTTP request latency&#x27;,
+    [&#x27;method&#x27;, &#x27;endpoint&#x27;],
+    buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0]
+)
+
+REQUEST_COUNT = Counter(
+    &#x27;http_requests_total&#x27;,
+    &#x27;Total HTTP requests&#x27;,
+    [&#x27;method&#x27;, &#x27;endpoint&#x27;, &#x27;status&#x27;]
+)
+
+def track_request(method: str, endpoint: str):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            start = time.time()
+            try:
+                result = func(*args, **kwargs)
+                REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=&quot;200&quot;).inc()
+                return result
+            except Exception:
+                REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=&quot;500&quot;).inc()
+                raise
+            finally:
+                REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(time.time() - start)
+        return wrapper
+    return decorator</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>SLIs measure service reliability (latency, availability, durability). SLOs set targets (e.g., 99.9% availability over 28 days). Error budget = (1 - SLO) × total events. Use burn rate alerts for early detection.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Defining reliability expectations for services</li>
+<li>Making data-driven decisions about deployment velocity</li>
+<li>Balancing feature development with reliability investment</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Pick service boundaries: define the user-visible promise (e.g., &quot;API replies within 300ms p50, 99.9% available&quot;).</p>
+<p class='ordered'>2. Define SLIs as ratios: good events / valid events, per endpoint, aggregated over a rolling window.</p>
+<p class='ordered'>3. Set SLO targets with error budgets: availability = 99.9% over 28 days → budget = 43 min of downtime.</p>
+<p class='ordered'>4. Wire monitoring: export latency histograms and counters from Prometheus; compute SLIs with recording rules.</p>
+<p class='ordered'>5. Add burn-rate alerts: page on 2h lookback at 14.4x budget consumption, ticket on 6h/1d windows.</p>
+<p class='ordered'>6. Gate change velocity: pause deployments when remaining budget crosses the policy threshold (e.g., 20%).</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Multi-window burn-rate alert (two tiers)
+groups:
+  - name: slo-alerts
+    rules:
+      - alert: APIAvailabilityBurnRate
+        expr: |
+          sum(rate(http_requests_total{status=~&quot;5..&quot;}[2h]))
+          / sum(rate(http_requests_total[2h])) &gt; 0.02
+        # 2h window, ~14.4x budget consumption at 99.9% SLO
+        annotations:
+          summary: &quot;API availability error budget burning fast&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Compute SLO compliance from a Prometheus Query API response
+from prometheus_api_client import PrometheusConnect
+p = PrometheusConnect(url=&quot;http://prometheus:9090&quot;)
+sli_good = p.custom_query(&#x27;sum(rate(http_requests_total{status&lt;&quot;500&quot;}[28d]))&#x27;)
+sli_valid = p.custom_query(&#x27;sum(rate(http_requests_total[28d]))&#x27;)
+print(&quot;availability:&quot;, float(sli_good[0][&quot;value&quot;][1]) / float(sli_valid[0][&quot;value&quot;][1]))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Define SLIs that measure real user experience, not internals.</li>
+<li>Set SLOs with error budgets and burn-rate alerts.</li>
+<li>Use the four golden signals: latency, traffic, errors, saturation.</li>
+<li>Track availability and latency over rolling windows.</li>
+<li>Review SLO attainment in a monthly review.</li>
+<li>Tie releases to error-budget health.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Budget exhausted: freeze risky changes and focus on reliability.</li>
+<li>Noisy alerts: tune burn-rate windows and thresholds.</li>
+<li>SLI drift: keep the measurement definition stable and reviewed.</li>
+<li>Unreachable SLO: renegotiate with stakeholders and improve.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. SLIs are accurately measured and reported</p>
+<p class='ordered'>2. SLO compliance dashboard shows current and historical status</p>
+<p class='ordered'>3. Error budget alerts fire correctly during degradation</p>
+<p class='ordered'>4. Deployment gates respect error budget policy</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="serverless-ai.html">← serverless-ai</a><a class="page-nav-link" href="terraform.html">terraform →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

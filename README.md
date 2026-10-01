@@ -21,12 +21,16 @@
   <a href="https://ssrjkk.github.io/agent-skills/">Live Catalog Site</a> ·
   <a href="https://github.com/ssrjkk/agent-skills/releases">Releases</a> ·
   <a href="https://github.com/ssrjkk/agent-skills/issues">Issues</a> ·
-  <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a>
+  <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a> ·
+  <a href="https://t.me/ssrjkk_bot">Telegram</a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ssrjkk/agent-skills/main/.github/social-preview.svg" alt="Skills Library banner" width="640">
+  <a href="https://ssrjkk.github.io/agent-skills/">
+    <img src="https://raw.githubusercontent.com/ssrjkk/agent-skills/main/.github/site-preview.png" alt="Agent Skills Library — live catalog site" width="800">
+  </a>
 </p>
+<p align="center"><em>Live catalog: <a href="https://ssrjkk.github.io/agent-skills/">ssrjkk.github.io/agent-skills</a></em></p>
 
 ---
 
@@ -291,8 +295,8 @@ Every skill is scored on 5 dimensions:
 
 <p align="center">
   <a href="https://github.com/ssrjkk"><img src="https://img.shields.io/badge/GitHub-ssrjkk-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+  <a href="https://t.me/ssrjkk_bot"><img src="https://img.shields.io/badge/Telegram-@ssrjkk_bot-26A5E4?style=for-the-badge&logo=telegram" alt="Telegram bot"></a>
   <a href="https://t.me/ssrjkk"><img src="https://img.shields.io/badge/Telegram-@ssrjkk-26A5E4?style=for-the-badge&logo=telegram" alt="Telegram"></a>
-  <a href="https://twitter.com/ssrjkk"><img src="https://img.shields.io/badge/Twitter/X-@ssrjkk-000000?style=for-the-badge&logo=x" alt="Twitter/X"></a>
   <a href="mailto:ray013lefe@gmail.com"><img src="https://img.shields.io/badge/Email-ray013lefe%40gmail.com-D14836?style=for-the-badge&logo=gmail" alt="Email"></a>
 </p>
 
@@ -309,6 +313,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 ## Links
 
 - [Live Catalog Site](https://ssrjkk.github.io/agent-skills/)
+- [Telegram Bot](https://t.me/ssrjkk_bot)
 - [Architecture Guide](docs/ARCHITECTURE.md)
 - [Release Notes](docs/RELEASE_NOTES_v4.0.md)
 - [Roadmap](ROADMAP.md)

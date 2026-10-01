@@ -3,7 +3,7 @@ name: clickhouse
 description: "Design and operate ClickHouse for OLAP analytics: columnar tables, engines, aggregations, partitioning, and performance. Use for analytics workloads."
 category: database
 tags: [clickhouse, olap, columnar, analytics, aggregations, partitioning]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

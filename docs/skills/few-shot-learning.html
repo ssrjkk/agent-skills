@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>few-shot-learning — Agent Skills Library</title>
+  <meta name="description" content="Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering. Use for task specification without fine-tuning.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/few-shot-learning.html">
+  <meta property="og:title" content="few-shot-learning — Agent Skills Library">
+  <meta property="og:description" content="Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering. Use for task specification without fine-tuning.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/few-shot-learning.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">prompt</span><span class="tag">few-shot</span><span class="tag">examples</span><span class="tag">in-context-learning</span><span class="tag">llm</span>
+        </div>
+        <h1 class="skill-page-title">few-shot-learning</h1>
+        <p class="skill-page-desc">Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering. Use for task specification without fine-tuning.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>5</strong></span>
+          <span>Sections <strong>11</strong></span>
+          <span>Lines <strong>124</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('few-shot-learning')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/few-shot-learning">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="embeddings.html">← embeddings</a><a class="page-nav-link" href="function-calling.html">function-calling →</a></div>
+      <div class="skill-page-body">
+        <h1>Few-Shot Learning</h1>
+<blockquote>Guiding LLM behavior through carefully curated examples.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>Classify the sentiment of each review:
+
+Review: &quot;This product is amazing!&quot;
+Sentiment: Positive
+
+Review: &quot;Terrible experience, would not recommend.&quot;
+Sentiment: Negative
+
+Review: &quot;It&#x27;s okay, nothing special.&quot;
+Sentiment: Neutral
+
+Review: &quot;Best purchase I&#x27;ve made all year!&quot;
+Sentiment:</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Teaching new tasks without fine-tuning</li>
+<li>Specifying output format by example</li>
+<li>Handling edge cases</li>
+<li>Setting response tone and style</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Example Selection</h3>
+<ul>
+<li>Cover edge cases and boundary conditions</li>
+<li>Include 3-5 diverse examples</li>
+<li>Show both positive and negative cases</li>
+<li>Order from simple to complex</li>
+</ul>
+<h3>Formatting</h3>
+<ul>
+<li>Use consistent separator between examples</li>
+<li>Clearly mark input vs output boundaries</li>
+<li>Keep format identical to expected real use</li>
+</ul>
+<h3>Dynamic Selection</h3>
+<ul>
+<li>For large datasets: retrieve most similar examples</li>
+<li>Use embedding similarity for example selection</li>
+<li>Limit to context window constraints</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai
+# For dynamic selection: pip install sentence-transformers</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>Translate English to French:
+
+English: &quot;Hello&quot;
+French: &quot;Bonjour&quot;
+
+English: &quot;Good morning&quot;
+French: &quot;Bonjour&quot;
+
+English: &quot;Thank you&quot;
+French: &quot;Merci&quot;
+
+English: &quot;How are you?&quot;
+French:</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Resources</h2>
+<ul>
+<li>[OpenAI Few-Shot Guide](https://platform.openai.com/docs/guides/prompt-engineering)</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Decompose the task: identify input/output shape and the boundary cases that must be taught.</p>
+<p class='ordered'>2. Curate 3-5 examples: pick diverse pairs, ordering simple to complex, including edge cases and counterexamples.</p>
+<p class='ordered'>3. Format consistently: use an identical separator between examples and mark input vs output boundaries explicitly.</p>
+<p class='ordered'>4. Size to the context: keep examples compact; for larger corpora, retrieve the top-k similar examples via embeddings.</p>
+<p class='ordered'>5. Prompt the model with the examples inline (few-shot) or in a system message; keep the target format in the final turn.</p>
+<p class='ordered'>6. Evaluate: run on a held-out set, compare formats, then iterate — adding failing cases to the example pool.</p>
+<div class="codeblock"><pre class="code"><code># Dynamic few-shot selection using embedding similarity
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+
+def select_examples(query: str, pool: list[tuple[str, str]], k: int = 3) -&gt; list[tuple[str, str]]:
+    # pool: list of (prompt_example, answer_example) with prompts embedded offline
+    emb_q = model.encode(query)
+    emb_pool = model.encode([p for p, _ in pool])
+    idx = np.argsort([np.dot(emb_q, e) for e in emb_pool])[-k:][::-1]
+    return [pool[i] for i in idx]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Consistent formatting with clear markers
+## Example 1
+Input: &quot;The movie was brilliant and moving.&quot;
+Output: Positive
+
+## Example 2
+Input: &quot;Waste of money, don&#x27;t buy.&quot;
+Output: Negative
+
+## Example 3 (edge case)
+Input: &quot;Not bad at all.&quot;
+Output: Positive</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Validation</h2>
+<p class='ordered'>1. Model follows example patterns consistently</p>
+<p class='ordered'>2. Edge cases handled correctly</p>
+<p class='ordered'>3. Adding more examples improves accuracy</p>
+<p class='ordered'>4. Format matches examples exactly</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="embeddings.html">← embeddings</a><a class="page-nav-link" href="function-calling.html">function-calling →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

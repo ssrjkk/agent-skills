@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prompt-caching — Agent Skills Library</title>
+  <meta name="description" content="Optimize LLM cost and latency with prompt caching: cacheable prefixes, cache-control headers, context layout, and cache-aware prompting. Use for high-volume apps.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/prompt-caching.html">
+  <meta property="og:title" content="prompt-caching — Agent Skills Library">
+  <meta property="og:description" content="Optimize LLM cost and latency with prompt caching: cacheable prefixes, cache-control headers, context layout, and cache-aware prompting. Use for high-volume apps.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/prompt-caching.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">prompt-caching</span><span class="tag">caching</span><span class="tag">llm</span><span class="tag">cost</span><span class="tag">latency</span><span class="tag">context</span><span class="tag">optimization</span>
+        </div>
+        <h1 class="skill-page-title">prompt-caching</h1>
+        <p class="skill-page-desc">Optimize LLM cost and latency with prompt caching: cacheable prefixes, cache-control headers, context layout, and cache-aware prompting. Use for high-volume apps.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>150</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('prompt-caching')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/prompt-caching">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="multi-agent-orchestration.html">← multi-agent-orchestration</a><a class="page-nav-link" href="prompt-engineering.html">prompt-engineering →</a></div>
+      <div class="skill-page-body">
+        <h1>Prompt Caching</h1>
+<blockquote>Cutting LLM cost and latency by caching repeated prompt prefixes.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Put stable content first, mark it as cacheable
+resp = client.chat.completions.create(
+    model=&quot;gpt-6&quot;,
+    messages=[
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: LONG_SYSTEM_PROMPT},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: dynamic_question},
+    ],
+    extra_headers={&quot;Cache-Control&quot;: &quot;ttl=3600, min_tokens=1024&quot;},
+)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Chat with long system prompts or tool definitions</li>
+<li>Agents with large context that repeats across turns</li>
+<li>RAG apps where system instructions are stable</li>
+<li>High-volume endpoints where cost matters</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Layout</h3>
+<ul>
+<li>Put stable content first: system prompt, tools, static context</li>
+<li>Put dynamic content last: user turns, retrieved chunks</li>
+<li>Keep a stable prefix across all requests</li>
+<li>Minimum cacheable size varies by provider (e.g., 1024+ tokens)</li>
+</ul>
+<h3>Cache-Control</h3>
+<ul>
+<li>Mark cacheable segments with cache-control headers</li>
+<li>Set a TTL that matches your access pattern</li>
+<li>Don&#x27;t cache secrets or per-user data</li>
+<li>Verify cache hits via usage metadata (`cached_tokens`)</li>
+</ul>
+<h3>Design for Caching</h3>
+<ul>
+<li>Keep the system prompt identical across calls</li>
+<li>Separate static tool definitions from dynamic input</li>
+<li>Reuse the same prefix for the whole conversation</li>
+<li>Batch ephemeral data at the end of the context</li>
+</ul>
+<h3>Measurement</h3>
+<ul>
+<li>Track cached vs uncached tokens in usage</li>
+<li>Measure latency improvement per request</li>
+<li>Monitor cache hit rate over time</li>
+<li>Compare cost before and after optimization</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai anthropic</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import openai
+
+client = openai.OpenAI()
+
+# Stable prefix: system prompt + tools, marked cacheable
+STATIC = [
+    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a senior support agent.&quot;},
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Available tools: search, refund, escalate.&quot;},
+]
+
+def ask(question: str) -&gt; str:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=STATIC + [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}],
+        extra_headers={&quot;Cache-Control&quot;: &quot;ttl=3600, min_tokens=1024&quot;},
+    )
+    usage = resp.usage
+    print(&quot;cached:&quot;, getattr(usage, &quot;prompt_tokens_details&quot;, None))
+    return resp.choices[0].message.content</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Anthropic-style cache control
+import anthropic
+
+client = anthropic.Anthropic()
+
+def ask(question: str) -&gt; str:
+    resp = client.messages.create(
+        model=&quot;claude-sonnet-4-5&quot;,
+        max_tokens=1024,
+        system=[
+            {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: SYSTEM_PROMPT, &quot;cache_control&quot;: {&quot;type&quot;: &quot;ephemeral&quot;}},
+        ],
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}],
+    )
+    print(&quot;cache:&quot;, resp.usage.cache_creation_input_tokens, resp.usage.cache_read_input_tokens)
+    return resp.content[0].text</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Session-style caching: stable system across a conversation
+def chat_session():
+    messages = list(STATIC)
+    while True:
+        q = input(&quot;&gt; &quot;)
+        resp = client.chat.completions.create(
+            model=&quot;gpt-6&quot;, messages=messages + [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: q}],
+            extra_headers={&quot;Cache-Control&quot;: &quot;ttl=3600, min_tokens=1024&quot;},
+        )
+        answer = resp.choices[0].message.content
+        messages.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: q})
+        messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: answer})
+        print(answer)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Verify cache hits from usage metadata
+def report_cache(usage) -&gt; dict:
+    details = getattr(usage, &quot;prompt_tokens_details&quot;, None) or {}
+    cached = getattr(details, &quot;cached_tokens&quot;, 0)
+    total = usage.prompt_tokens
+    return {&quot;cached&quot;: cached, &quot;total&quot;: total, &quot;rate&quot;: cached / total if total else 0}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Identify the stable prefix in your prompts (system, tools, static).</p>
+<p class='ordered'>2. Move dynamic content to the end of the context.</p>
+<p class='ordered'>3. Mark the prefix cacheable with the provider&#x27;s mechanism.</p>
+<p class='ordered'>4. Verify cache hits in usage metadata.</p>
+<p class='ordered'>5. Measure latency and cost before/after.</p>
+<p class='ordered'>6. Tune TTL and minimum tokens to your traffic.</p>
+<p class='ordered'>7. Avoid caching per-user or secret data.</p>
+<p class='ordered'>8. Monitor hit rate and keep the prefix byte-identical.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Usage shows cached tokens on repeat requests</p>
+<p class='ordered'>2. Latency drops for the cached portion</p>
+<p class='ordered'>3. Cost per request decreases measurably</p>
+<p class='ordered'>4. Responses stay correct after cache hits</p>
+<p class='ordered'>5. Secrets are not in the cacheable prefix</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>No cache hits: prefix differs between calls — keep it byte-identical.</li>
+<li>Short prompts: raise the prefix above the provider minimum.</li>
+<li>Cache invalidation: changing the prefix invalidates; redesign for stability.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="multi-agent-orchestration.html">← multi-agent-orchestration</a><a class="page-nav-link" href="prompt-engineering.html">prompt-engineering →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

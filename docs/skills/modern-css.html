@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>modern-css — Agent Skills Library</title>
+  <meta name="description" content="Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/modern-css.html">
+  <meta property="og:title" content="modern-css — Agent Skills Library">
+  <meta property="og:description" content="Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/modern-css.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">css</span><span class="tag">grid</span><span class="tag">flexbox</span><span class="tag">custom-properties</span><span class="tag">container-queries</span><span class="tag">responsive</span>
+        </div>
+        <h1 class="skill-page-title">modern-css</h1>
+        <p class="skill-page-desc">Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>112</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('modern-css')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/modern-css">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="bun-runtime.html">← bun-runtime</a><a class="page-nav-link" href="nextjs.html">nextjs →</a></div>
+      <div class="skill-page-body">
+        <h1>Modern CSS</h1>
+<blockquote>Maintainable, performant styling with modern CSS.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>:root { --accent: #8b5cf6; }
+.card { padding: 1rem; border: 1px solid color-mix(in srgb, var(--accent), white 40%); }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Any styling without heavy frameworks</li>
+<li>Responsive and maintainable layouts</li>
+<li>Design systems with tokens</li>
+<li>Component libraries</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Layout</h3>
+<ul>
+<li>Use Grid for page/component layout</li>
+<li>Use Flexbox for one-dimensional alignment</li>
+<li>Prefer logical properties (inline/block)</li>
+<li>Use `auto-fit`/`minmax` for responsive grids</li>
+</ul>
+<h3>Custom Properties</h3>
+<ul>
+<li>Define design tokens as `--*` variables</li>
+<li>Use them consistently across components</li>
+<li>Scope overrides with `:root` or components</li>
+<li>Use `color-mix()` for derived colors</li>
+</ul>
+<h3>Container Queries</h3>
+<ul>
+<li>Use container queries for component-level responsiveness</li>
+<li>Define `container-type` on the container</li>
+<li>Combine with media queries for viewport</li>
+<li>Test components in isolation</li>
+</ul>
+<h3>Cascade &amp; Layers</h3>
+<ul>
+<li>Organize with `@layer` (reset, tokens, base, components)</li>
+<li>Keep specificity low</li>
+<li>Avoid `!important` unless forced</li>
+<li>Prefer modern units (rem, ch, dvh)</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># No build step required — modern CSS works natively</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>/* Responsive grid layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Design tokens */
+:root {
+  --color-bg: #0b0b1a;
+  --color-accent: #8b5cf6;
+  --space-1: 0.5rem;
+  --radius: 12px;
+}
+.card { background: var(--color-bg); border-radius: var(--radius); padding: var(--space-1); }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Container queries */
+.cards { container-type: inline-size; }
+@container (min-width: 500px) {
+  .card { display: grid; grid-template-columns: 1fr 2fr; }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Cascade layers */
+@layer reset, tokens, base, components;
+@layer tokens { :root { --accent: #8b5cf6; } }
+@layer components { .btn { background: var(--accent); } }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define design tokens as custom properties.</p>
+<p class='ordered'>2. Structure with @layer for maintainability.</p>
+<p class='ordered'>3. Build layouts with Grid and Flexbox.</p>
+<p class='ordered'>4. Use logical properties and modern units.</p>
+<p class='ordered'>5. Add container queries for components.</p>
+<p class='ordered'>6. Use color-mix and modern functions.</p>
+<p class='ordered'>7. Scope styles and keep specificity low.</p>
+<p class='ordered'>8. Test responsive behavior at breakpoints.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Layouts adapt without media-query sprawl</p>
+<p class='ordered'>2. Tokens are consistent across components</p>
+<p class='ordered'>3. Container queries work in isolation</p>
+<p class='ordered'>4. No specificity wars or !important</p>
+<p class='ordered'>5. Performance: no layout thrash or huge stylesheets</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Specificity issues: use @layer and low-specificity selectors.</li>
+<li>Responsive breakpoints piling up: use container queries.</li>
+<li>Old browser support: check target browsers for modern features.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="bun-runtime.html">← bun-runtime</a><a class="page-nav-link" href="nextjs.html">nextjs →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

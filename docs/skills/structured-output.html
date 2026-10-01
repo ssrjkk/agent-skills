@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>structured-output — Agent Skills Library</title>
+  <meta name="description" content="Force LLMs to emit valid, schema-constrained structured output: JSON modes, function calling, JSON Schema validation, and error recovery. Use for reliable data extraction.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/structured-output.html">
+  <meta property="og:title" content="structured-output — Agent Skills Library">
+  <meta property="og:description" content="Force LLMs to emit valid, schema-constrained structured output: JSON modes, function calling, JSON Schema validation, and error recovery. Use for reliable data extraction.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/structured-output.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">structured-output</span><span class="tag">json</span><span class="tag">json-schema</span><span class="tag">llm</span><span class="tag">extraction</span><span class="tag">validation</span>
+        </div>
+        <h1 class="skill-page-title">structured-output</h1>
+        <p class="skill-page-desc">Force LLMs to emit valid, schema-constrained structured output: JSON modes, function calling, JSON Schema validation, and error recovery. Use for reliable data extraction.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>142</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('structured-output')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/structured-output">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="rag-pipeline.html">← rag-pipeline</a></div>
+      <div class="skill-page-body">
+        <h1>Structured Output</h1>
+<blockquote>Getting LLMs to reliably emit valid, schema-constrained output.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic jsonschema
+# combine response_format with a JSON Schema for guaranteed shape</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Data extraction into typed records</li>
+<li>API responses that must match a contract</li>
+<li>Tool/function arguments generation</li>
+<li>Reducing malformed-output handling</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Schema Design</h3>
+<ul>
+<li>Define a strict JSON Schema per output shape</li>
+<li>Use `additionalProperties: false` to reject surprises</li>
+<li>Keep schemas flat and primitive where possible</li>
+<li>Version schemas alongside your code</li>
+</ul>
+<h3>Mode Selection</h3>
+<ul>
+<li>Prefer the provider&#x27;s `response_format` (json_object / json_schema)</li>
+<li>Use function/tool calling when the output feeds a tool</li>
+<li>Fall back to few-shot + validation for models without structured mode</li>
+<li>Never trust unvalidated text</li>
+</ul>
+<h3>Validation &amp; Recovery</h3>
+<ul>
+<li>Validate every response against the schema</li>
+<li>Re-prompt with the validation error on failure</li>
+<li>Cap retries; fall back to a default record</li>
+<li>Log malformed responses for prompt tuning</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic jsonschema</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import json
+import openai
+from jsonschema import validate, ValidationError
+
+client = openai.OpenAI()
+
+SCHEMA = {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+        &quot;name&quot;: {&quot;type&quot;: &quot;string&quot;},
+        &quot;age&quot;: {&quot;type&quot;: &quot;integer&quot;, &quot;minimum&quot;: 0},
+        &quot;emails&quot;: {&quot;type&quot;: &quot;array&quot;, &quot;items&quot;: {&quot;type&quot;: &quot;string&quot;}},
+    },
+    &quot;required&quot;: [&quot;name&quot;, &quot;age&quot;],
+    &quot;additionalProperties&quot;: False,
+}
+
+def extract(text: str) -&gt; dict:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Extract from: {text}&quot;}],
+        response_format={&quot;type&quot;: &quot;json_schema&quot;, &quot;json_schema&quot;: {&quot;name&quot;: &quot;person&quot;, &quot;schema&quot;: SCHEMA}},
+    )
+    return json.loads(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Validate and recover on failure
+def safe_extract(text: str, retries: int = 2) -&gt; dict:
+    for attempt in range(retries):
+        raw = extract(text)
+        try:
+            validate(instance=raw, schema=SCHEMA)
+            return raw
+        except ValidationError as e:
+            print(f&quot;retry {attempt}: {e.message}&quot;)
+    return {&quot;name&quot;: &quot;unknown&quot;, &quot;age&quot;: 0}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Pydantic-based extraction
+from pydantic import BaseModel, Field
+
+class Person(BaseModel):
+    name: str
+    age: int = Field(ge=0)
+    emails: list[str] = []
+
+resp = client.beta.chat.completions.parse(
+    model=&quot;gpt-6&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Alice is 30, email a@b.com&quot;}],
+    response_format=Person,
+)
+print(resp.choices[0].message.parsed.model_dump())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># JSON mode fallback for providers without json_schema
+def extract_json_mode(text: str) -&gt; dict:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;Respond only with valid JSON matching the schema.&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: text},
+        ],
+        response_format={&quot;type&quot;: &quot;json_object&quot;},
+    )
+    return json.loads(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define the exact output shape as a JSON Schema.</p>
+<p class='ordered'>2. Pick the strictest mode the provider supports (schema &gt; json_object &gt; few-shot).</p>
+<p class='ordered'>3. Implement extraction with the schema attached.</p>
+<p class='ordered'>4. Validate every response; re-prompt with errors on mismatch.</p>
+<p class='ordered'>5. Add retry limits and safe defaults.</p>
+<p class='ordered'>6. Log failures to improve the prompt or schema.</p>
+<p class='ordered'>7. Add tests with realistic inputs including edge cases.</p>
+<p class='ordered'>8. Version schemas and monitor drift.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. All outputs parse as valid JSON</p>
+<p class='ordered'>2. Every output satisfies the schema (validated programmatically)</p>
+<p class='ordered'>3. Invalid inputs still yield schema-conforming records</p>
+<p class='ordered'>4. Retry recovery works without infinite loops</p>
+<p class='ordered'>5. Contract changes are versioned</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Output fails schema: tighten the prompt, add examples, or narrow the schema.</li>
+<li>`additionalProperties` errors: expected extra fields — adjust the schema.</li>
+<li>Model ignores format: switch to function calling or guided generation.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="rag-pipeline.html">← rag-pipeline</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

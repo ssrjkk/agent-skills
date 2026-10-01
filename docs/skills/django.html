@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>django — Agent Skills Library</title>
+  <meta name="description" content="Build secure web applications with Django: models, views, ORM, admin, auth, REST APIs, and deployment. Use for Python web backends.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/django.html">
+  <meta property="og:title" content="django — Agent Skills Library">
+  <meta property="og:description" content="Build secure web applications with Django: models, views, ORM, admin, auth, REST APIs, and deployment. Use for Python web backends.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/django.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">django</span><span class="tag">python</span><span class="tag">web</span><span class="tag">orm</span><span class="tag">models</span><span class="tag">admin</span><span class="tag">rest</span><span class="tag">backend</span>
+        </div>
+        <h1 class="skill-page-title">django</h1>
+        <p class="skill-page-desc">Build secure web applications with Django: models, views, ORM, admin, auth, REST APIs, and deployment. Use for Python web backends.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>128</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('django')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/django">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="deno-runtime.html">← deno-runtime</a><a class="page-nav-link" href="dotnet.html">dotnet →</a></div>
+      <div class="skill-page-body">
+        <h1>Django</h1>
+<blockquote>Building secure, batteries-included web apps with Django.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install django djangorestframework
+django-admin startproject mysite .
+python manage.py migrate
+python manage.py runserver</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Content-heavy sites and admin panels</li>
+<li>Apps needing built-in auth and ORM</li>
+<li>Rapid CRUD development</li>
+<li>Secure defaults out of the box</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Models</h3>
+<ul>
+<li>Design models to mirror the domain</li>
+<li>Use explicit field types and constraints</li>
+<li>Add indexes for hot queries</li>
+<li>Manage schema with migrations, not raw SQL</li>
+</ul>
+<h3>Views &amp; URLs</h3>
+<ul>
+<li>Organize by app: `myapp/models.py`, `views.py`, `urls.py`</li>
+<li>Use class-based views for reusable behavior</li>
+<li>Use DRF for APIs with serializers and viewsets</li>
+<li>Keep views thin; business logic in services</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li>Never trust client input: validate with forms/serializers</li>
+<li>Use Django&#x27;s CSRF and XSS protections by default</li>
+<li>Store passwords with default PBKDF2/argon2</li>
+<li>Apply least privilege in admin; use permissions</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Select related to avoid N+1 queries</li>
+<li>Use `QuerySet` filtering instead of Python loops</li>
+<li>Cache heavy pages and queries</li>
+<li>Set `DEBUG=False` and secure settings in prod</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install django djangorestframework
+pip install -D pytest pytest-django factory-boy</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>from django.db import models
+
+class Order(models.Model):
+    user = models.ForeignKey(&quot;auth.User&quot;, on_delete=models.CASCADE, related_name=&quot;orders&quot;)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=[(&quot;new&quot;, &quot;New&quot;), (&quot;paid&quot;, &quot;Paid&quot;)], default=&quot;new&quot;)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [models.Index(fields=[&quot;user&quot;, &quot;created_at&quot;])]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from django.views.generic import ListView
+
+class OrderListView(ListView):
+    model = Order
+    template_name = &quot;orders/list.html&quot;
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).select_related(&quot;user&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from rest_framework import serializers, viewsets
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [&quot;id&quot;, &quot;amount&quot;, &quot;status&quot;, &quot;created_at&quot;]
+
+class OrderViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Service layer pattern
+def create_order(user, items) -&gt; Order:
+    total = sum(item.price for item in items)
+    order = Order.objects.create(user=user, amount=total)
+    order.items.set(items)
+    return order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Start the project and apps with `startproject`/`startapp`.</p>
+<p class='ordered'>2. Model the domain with Django models and migrations.</p>
+<p class='ordered'>3. Register models in the admin for internal tooling.</p>
+<p class='ordered'>4. Build views or DRF serializers/viewsets.</p>
+<p class='ordered'>5. Add templates for server-rendered pages (if any).</p>
+<p class='ordered'>6. Add validation, permissions, and tests.</p>
+<p class='ordered'>7. Optimize queries; add caching where hot.</p>
+<p class='ordered'>8. Deploy with `collectstatic`, Gunicorn, and a reverse proxy.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `python manage.py check` passes</p>
+<p class='ordered'>2. `migrate` applies cleanly</p>
+<p class='ordered'>3. Tests pass (model, view, API, permission)</p>
+<p class='ordered'>4. Admin and API work with proper auth</p>
+<p class='ordered'>5. No obvious N+1 queries in key views</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>N+1 queries: use `select_related`/`prefetch_related`.</li>
+<li>CSRF errors in API: use DRF or exempt session-free endpoints carefully.</li>
+<li>Migration conflicts: fix model state, then regenerate migrations.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="deno-runtime.html">← deno-runtime</a><a class="page-nav-link" href="dotnet.html">dotnet →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

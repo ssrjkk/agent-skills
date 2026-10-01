@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue — Agent Skills Library</title>
+  <meta name="description" content="Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/vue.html">
+  <meta property="og:title" content="vue — Agent Skills Library">
+  <meta property="og:description" content="Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/vue.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">vue</span><span class="tag">vue3</span><span class="tag">javascript</span><span class="tag">typescript</span><span class="tag">frontend</span><span class="tag">reactivity</span><span class="tag">components</span>
+        </div>
+        <h1 class="skill-page-title">vue</h1>
+        <p class="skill-page-desc">Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>138</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('vue')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/vue">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="typescript.html">← typescript</a></div>
+      <div class="skill-page-body">
+        <h1>Vue</h1>
+<blockquote>Building reactive UIs with Vue 3 and the Composition API.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm create vue@latest my-app
+cd my-app
+npm install
+npm run dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Progressive enhancement on existing pages</li>
+<li>Single-file-component SPAs</li>
+<li>Teams wanting a gentle learning curve</li>
+<li>Reusable component libraries</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Composition API</h3>
+<ul>
+<li>Use `&lt;script setup&gt;` for concise components</li>
+<li>Compose logic into reusable `composables`</li>
+<li>Keep reactive state minimal and explicit</li>
+<li>Use `ref` for primitives, `reactive` for objects</li>
+</ul>
+<h3>Components</h3>
+<ul>
+<li>Split UI into small focused components</li>
+<li>Define props with types and defaults</li>
+<li>Emit typed events instead of mutating props</li>
+<li>Use slots for flexible composition</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Use `computed` for derived state</li>
+<li>Virtualize long lists</li>
+<li>Lazy-load routes and heavy components</li>
+<li>Use `v-memo` and `shallowRef` where appropriate</li>
+</ul>
+<h3>State</h3>
+<ul>
+<li>Local state with `ref`/`reactive` first</li>
+<li>Add Pinia for shared app state</li>
+<li>Keep stores focused and typed</li>
+<li>Avoid over-engineering with global state</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm create vue@latest my-app -- --typescript --router --pinia
+npm i vue</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref, computed } from &quot;vue&quot;;
+
+const count = ref(0);
+const doubled = computed(() =&gt; count.value * 2);
+
+function increment() {
+  count.value += 1;
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;button @click=&quot;increment&quot;&gt;Count: {{ count }}&lt;/button&gt;
+  &lt;p&gt;Doubled: {{ doubled }}&lt;/p&gt;
+&lt;/template&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Reusable composable
+import { ref } from &quot;vue&quot;;
+
+export function useCounter(start = 0) {
+  const count = ref(start);
+  const increment = () =&gt; count.value++;
+  const decrement = () =&gt; count.value--;
+  return { count, increment, decrement };
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>&lt;script setup lang=&quot;ts&quot;&gt;
+// Props with types and events
+interface Props {
+  title: string;
+  done?: boolean;
+}
+const props = withDefaults(defineProps&lt;Props&gt;(), { done: false });
+const emit = defineEmits&lt;{ (e: &quot;toggle&quot;, id: number): void }&gt;();
+&lt;/script&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Pinia store
+import { defineStore } from &quot;pinia&quot;;
+import { ref } from &quot;vue&quot;;
+
+export const useCartStore = defineStore(&quot;cart&quot;, () =&gt; {
+  const items = ref&lt;string[]&gt;([]);
+  const total = ref(0);
+  const add = (item: string, price: number) =&gt; {
+    items.value.push(item);
+    total.value += price;
+  };
+  return { items, total, add };
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold with `create-vue` (TypeScript, Router, Pinia).</p>
+<p class='ordered'>2. Set up a global layout with navigation.</p>
+<p class='ordered'>3. Build pages as route components.</p>
+<p class='ordered'>4. Extract shared logic into composables.</p>
+<p class='ordered'>5. Add Pinia stores for shared state.</p>
+<p class='ordered'>6. Create reusable components with typed props.</p>
+<p class='ordered'>7. Optimize: lazy routes, computed, virtualization.</p>
+<p class='ordered'>8. Write tests with Vitest + Vue Test Utils.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `npm run build` passes with type checking</p>
+<p class='ordered'>2. `npm run lint` is clean</p>
+<p class='ordered'>3. Components render and update reactively</p>
+<p class='ordered'>4. No unnecessary re-renders (Vue DevTools)</p>
+<p class='ordered'>5. Tests pass for core logic and components</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Reactive loss: unwrap refs in templates; use `reactive` for objects.</li>
+<li>&quot;Cannot find module&quot;: check path aliases and `tsconfig`.</li>
+<li>Devtools missing state: check Pinia installation and plugin order.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="typescript.html">← typescript</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

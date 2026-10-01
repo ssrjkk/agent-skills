@@ -3,7 +3,7 @@ name: function-calling
 description: "Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use."
 category: ai
 tags: [function-calling, tool-use, llm, structured-output, agents, json-schema]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28
@@ -79,7 +79,7 @@ TOOLS = [
 ]
 
 resp = client.chat.completions.create(
-    model="gpt-5",
+    model="gpt-6",
     messages=[{"role": "user", "content": "Weather in Tokyo?"}],
     tools=TOOLS,
 )
@@ -101,7 +101,7 @@ messages = [
     resp.choices[0].message,
     {"role": "tool", "tool_call_id": call.id, "content": result},
 ]
-final = client.chat.completions.create(model="gpt-5", messages=messages, tools=TOOLS)
+final = client.chat.completions.create(model="gpt-6", messages=messages, tools=TOOLS)
 print(final.choices[0].message.content)
 ```
 ```python

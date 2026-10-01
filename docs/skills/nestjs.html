@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nestjs — Agent Skills Library</title>
+  <meta name="description" content="Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/nestjs.html">
+  <meta property="og:title" content="nestjs — Agent Skills Library">
+  <meta property="og:description" content="Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/nestjs.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">nestjs</span><span class="tag">nodejs</span><span class="tag">typescript</span><span class="tag">api</span><span class="tag">decorators</span>
+        </div>
+        <h1 class="skill-page-title">nestjs</h1>
+        <p class="skill-page-desc">Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>109</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('nestjs')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/nestjs">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="laravel.html">← laravel</a><a class="page-nav-link" href="rest-api-design.html">rest-api-design →</a></div>
+      <div class="skill-page-body">
+        <h1>NestJS</h1>
+<blockquote>Progressive Node.js framework with TypeScript, decorators, and DI.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm i -g @nestjs/cli &amp;&amp; nest new my-api
+cd my-api &amp;&amp; npm run start:dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Core Concepts</h2>
+<h3>Modules</h3>
+<div class="codeblock"><pre class="code"><code>@Module({ imports: [UsersModule], controllers: [AppController], providers: [AppService] })
+export class AppModule {}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Controllers</h3>
+<div class="codeblock"><pre class="code"><code>@Controller(&#x27;users&#x27;)
+export class UsersController {
+  @Get() findAll() { return this.usersService.findAll() }
+  @Post() @Body() create(dto: CreateUserDto) { return this.usersService.create(dto) }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Providers (Services)</h3>
+<div class="codeblock"><pre class="code"><code>@Injectable()
+export class UsersService {
+  private users: User[] = []
+  findAll() { return this.users }
+  create(dto: CreateUserDto) { const user = { id: Date.now(), ...dto }; this.users.push(user); return user }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Enterprise TypeScript APIs</li>
+<li>Microservices with NATS/RabbitMQ</li>
+<li>GraphQL + REST hybrid APIs</li>
+<li>Projects needing strong structure</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Init: `nest new project`</p>
+<p class='ordered'>2. Generate: `nest g module users`, `nest g controller users`, `nest g service users`</p>
+<p class='ordered'>3. Define entities and DTOs</p>
+<p class='ordered'>4. Run: `npm run start:dev`</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Full module wired with DI: controller + provider + repository
+import { Module } from &#x27;@nestjs/common&#x27;;
+import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
+import { UsersController } from &#x27;./users.controller&#x27;;
+import { UsersService } from &#x27;./users.service&#x27;;
+import { User } from &#x27;./user.entity&#x27;;
+
+@Module({
+  imports: [TypeOrmModule.forFeature([User])],
+  controllers: [UsersController],
+  providers: [UsersService],
+  exports: [UsersService],
+})
+export class UsersModule {}
+
+// Validation DTO with class-validator
+import { IsEmail, IsString, MinLength } from &#x27;class-validator&#x27;;
+
+export class CreateUserDto {
+  @IsEmail() email!: string;
+  @IsString() @MinLength(2) name!: string;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Generate a module with CRUD scaffold, then hit the endpoint
+nest g resource users --no-spec
+curl http://localhost:3000/users
+curl -X POST http://localhost:3000/users -H &quot;content-type: application/json&quot; -d &#x27;{&quot;email&quot;:&quot;a@b.c&quot;,&quot;name&quot;:&quot;Alice&quot;}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Organize by feature modules with clear providers and controllers.</li>
+<li>Use DTOs and ValidationPipe for typed request/response contracts.</li>
+<li>Inject services via constructor DI; keep controllers thin.</li>
+<li>Use interceptors for logging, guards for auth, and filters for errors.</li>
+<li>Prefer async handlers and non-blocking database access.</li>
+<li>Write e2e tests with supertest against the full Nest app.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>DI errors: verify providers are registered in the right module.</li>
+<li>Validation not firing: ensure ValidationPipe is applied globally.</li>
+<li>Circular imports: use forwardRef() and split the module.</li>
+<li>Slow handlers: move heavy work to a queue or cache results.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. Server starts on port 3000</p>
+<p class='ordered'>2. CRUD endpoints respond correctly</p>
+<p class='ordered'>3. Dependency injection resolves providers</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="laravel.html">← laravel</a><a class="page-nav-link" href="rest-api-design.html">rest-api-design →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jest — Agent Skills Library</title>
+  <meta name="description" content="Write reliable JavaScript tests with Jest: unit tests, mocking, snapshots, coverage, and CI integration. Use for JS/TS testing.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/jest.html">
+  <meta property="og:title" content="jest — Agent Skills Library">
+  <meta property="og:description" content="Write reliable JavaScript tests with Jest: unit tests, mocking, snapshots, coverage, and CI integration. Use for JS/TS testing.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/jest.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#22c55e1a;color:#22c55e;border-color:#22c55e44">qa</span>
+          <span class="tag">jest</span><span class="tag">javascript</span><span class="tag">testing</span><span class="tag">mocking</span><span class="tag">coverage</span><span class="tag">typescript</span><span class="tag">unit-tests</span>
+        </div>
+        <h1 class="skill-page-title">jest</h1>
+        <p class="skill-page-desc">Write reliable JavaScript tests with Jest: unit tests, mocking, snapshots, coverage, and CI integration. Use for JS/TS testing.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>119</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('jest')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/qa/jest">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="browser-automation.html">← browser-automation</a><a class="page-nav-link" href="pytest.html">pytest →</a></div>
+      <div class="skill-page-body">
+        <h1>Jest</h1>
+<blockquote>Testing JavaScript and TypeScript with Jest.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm i -D jest @types/jest ts-jest
+npx jest</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Unit tests for JS/TS code</li>
+<li>React/Node component logic</li>
+<li>API and utility function testing</li>
+<li>Coverage and regression suites</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Test Structure</h3>
+<ul>
+<li>Name tests by behavior: `test(&#x27;adds numbers&#x27;)`</li>
+<li>Arrange, act, assert per test</li>
+<li>One behavior per test</li>
+<li>Colocate or use `__tests__`</li>
+</ul>
+<h3>Matchers &amp; Assertions</h3>
+<ul>
+<li>Use natural matchers (`toBe`, `toEqual`, `toContain`)</li>
+<li>Use `expect` with descriptive messages</li>
+<li>Test edge cases and errors</li>
+<li>Prefer `toEqual` for objects</li>
+</ul>
+<h3>Mocking</h3>
+<ul>
+<li>Mock external modules and side effects</li>
+<li>Use `jest.fn()` and `jest.spyOn()`</li>
+<li>Reset mocks between tests (`clearMocks`)</li>
+<li>Avoid over-mocking your own code</li>
+</ul>
+<h3>Coverage &amp; CI</h3>
+<ul>
+<li>Set coverage thresholds</li>
+<li>Run in CI on every PR</li>
+<li>Use `--ci` and `--coverage`</li>
+<li>Keep tests fast and isolated</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm i -D jest @types/jest ts-jest
+# React: @testing-library/react</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Basic test
+function add(a: number, b: number) {
+  return a + b;
+}
+
+test(&quot;adds two numbers&quot;, () =&gt; {
+  expect(add(2, 3)).toBe(5);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Mocking a module
+import { fetchUsers } from &quot;./api&quot;;
+jest.mock(&quot;./api&quot;);
+
+test(&quot;renders users&quot;, async () =&gt; {
+  fetchUsers.mockResolvedValue([{ id: 1, name: &quot;Alice&quot; }]);
+  const users = await loadUsers();
+  expect(users).toHaveLength(1);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Parameterized tests
+test.each([
+  [1, 1, 2],
+  [2, 3, 5],
+  [-1, 1, 0],
+])(&quot;adds %i + %i = %i&quot;, (a, b, expected) =&gt; {
+  expect(add(a, b)).toBe(expected);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Spy and error test
+const spy = jest.spyOn(console, &quot;error&quot;).mockImplementation(() =&gt; {});
+expect(() =&gt; risky()).toThrow();
+spy.mockRestore();</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install Jest and configure for your stack.</p>
+<p class='ordered'>2. Add the test script and coverage thresholds.</p>
+<p class='ordered'>3. Write focused unit tests.</p>
+<p class='ordered'>4. Mock external dependencies.</p>
+<p class='ordered'>5. Add edge case and error tests.</p>
+<p class='ordered'>6. Run with `--coverage` and review gaps.</p>
+<p class='ordered'>7. Wire Jest into CI.</p>
+<p class='ordered'>8. Keep tests deterministic and fast.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. All tests pass locally and in CI</p>
+<p class='ordered'>2. Coverage meets the threshold</p>
+<p class='ordered'>3. Mocks are reset between tests</p>
+<p class='ordered'>4. No tests depend on network or timers</p>
+<p class='ordered'>5. Failures pinpoint the behavior</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Flaky tests: remove shared state and timing.</li>
+<li>Over-mocked: mock only boundaries, not internals.</li>
+<li>Slow suite: use `--maxWorkers` and isolate heavy tests.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="browser-automation.html">← browser-automation</a><a class="page-nav-link" href="pytest.html">pytest →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

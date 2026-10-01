@@ -3,7 +3,7 @@ name: agent-development
 description: "Build reliable LLM agents and agentic workflows: tool use, memory, loops, guardrails, and evaluation. Use for autonomous AI systems."
 category: ai
 tags: [agents, agentic, tool-use, orchestration, llm, workflows, autonomy]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>git-workflow — Agent Skills Library</title>
+  <meta name="description" content="Use Git effectively: branching, commits, rebase vs merge, history hygiene, conflict resolution, and collaboration workflows. Use for any git-based project.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/git-workflow.html">
+  <meta property="og:title" content="git-workflow — Agent Skills Library">
+  <meta property="og:description" content="Use Git effectively: branching, commits, rebase vs merge, history hygiene, conflict resolution, and collaboration workflows. Use for any git-based project.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/git-workflow.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#a855f71a;color:#a855f7;border-color:#a855f744">engineering</span>
+          <span class="tag">git</span><span class="tag">github</span><span class="tag">branching</span><span class="tag">rebase</span><span class="tag">merge</span><span class="tag">commits</span><span class="tag">collaboration</span><span class="tag">vcs</span>
+        </div>
+        <h1 class="skill-page-title">git-workflow</h1>
+        <p class="skill-page-desc">Use Git effectively: branching, commits, rebase vs merge, history hygiene, conflict resolution, and collaboration workflows. Use for any git-based project.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>112</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('git-workflow')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/engineering/git-workflow">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="code-review.html">← code-review</a><a class="page-nav-link" href="system-design.html">system-design →</a></div>
+      <div class="skill-page-body">
+        <h1>Git Workflow</h1>
+<blockquote>Using Git effectively for clean history and smooth collaboration.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>git clone &lt;repo&gt;
+git checkout -b feat/my-feature
+# ... work, commit ...
+git push -u origin feat/my-feature</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Every software project (or even docs and config)</li>
+<li>Working with branches and pull requests</li>
+<li>Recovering from mistakes safely</li>
+<li>Auditing who changed what and when</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Branching</h3>
+<ul>
+<li>Use feature branches off main; keep them short-lived</li>
+<li>Follow a naming convention: `feat/`, `fix/`, `docs/`, `chore/`</li>
+<li>Sync with main regularly (`git fetch &amp;&amp; git rebase`)</li>
+<li>Delete merged branches</li>
+</ul>
+<h3>Commits</h3>
+<ul>
+<li>Commit small, focused changes with clear messages</li>
+<li>Follow conventional commits: `feat:`, `fix:`, `refactor:`</li>
+<li>Explain the &quot;why&quot; in the body when needed</li>
+<li>Never commit secrets or large binaries</li>
+</ul>
+<h3>History</h3>
+<ul>
+<li>Prefer rebase for local cleanup; merge for shared integration</li>
+<li>Squash WIP commits before merging</li>
+<li>Use `git log --oneline --graph` to review</li>
+<li>Avoid rewriting pushed history on shared branches</li>
+</ul>
+<h3>Collaboration</h3>
+<ul>
+<li>Pull with rebase to keep history linear</li>
+<li>Resolve conflicts by understanding both sides</li>
+<li>Use `git stash` for interruptions</li>
+<li>Keep `main` always green and releasable</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Git 2.40+ recommended
+git --version
+# Optional: GitHub CLI for PRs
+gh --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Start a feature branch and commit well
+git switch -c feat/user-auth
+git add src/ tests/
+git commit -m &quot;feat: add user authentication
+
+Adds email/password login with JWT issuance.&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Rebase onto latest main
+git fetch origin
+git rebase origin/main
+git push --force-with-lease</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Undo safely
+git restore src/          # discard working changes
+git reset --soft HEAD~1   # undo commit, keep changes
+git revert &lt;sha&gt;          # safe undo on shared history</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Inspect history
+git log --oneline --graph -15
+git show &lt;sha&gt;
+git diff HEAD~1</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Pull the latest main and create a focused feature branch.</p>
+<p class='ordered'>2. Implement in small, logical commits with clear messages.</p>
+<p class='ordered'>3. Rebase onto main before pushing to keep history clean.</p>
+<p class='ordered'>4. Open a PR, run CI, and address review feedback.</p>
+<p class='ordered'>5. Merge with squash once green; delete the branch.</p>
+<p class='ordered'>6. On conflicts, understand both sides before resolving.</p>
+<p class='ordered'>7. Use `git reflog` to recover from accidental resets.</p>
+<p class='ordered'>8. Keep `main` green; tag releases for traceability.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. History is linear and readable (`git log --graph`)</p>
+<p class='ordered'>2. Every commit builds and passes tests</p>
+<p class='ordered'>3. No secrets or large files in history</p>
+<p class='ordered'>4. PRs are small and focused</p>
+<p class='ordered'>5. `main` is always in a releasable state</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Conflict confusion: fetch both sides, edit carefully, then `git add` + commit.</li>
+<li>Accidentally reset: `git reflog` to find the commit and `git reset --hard &lt;sha&gt;`.</li>
+<li>Push rejected: rebase onto the remote branch, then `--force-with-lease`.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="code-review.html">← code-review</a><a class="page-nav-link" href="system-design.html">system-design →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

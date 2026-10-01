@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nginx — Agent Skills Library</title>
+  <meta name="description" content="Configure and operate Nginx: reverse proxy, load balancing, TLS, caching, and security headers. Use for web serving and proxying.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/nginx.html">
+  <meta property="og:title" content="nginx — Agent Skills Library">
+  <meta property="og:description" content="Configure and operate Nginx: reverse proxy, load balancing, TLS, caching, and security headers. Use for web serving and proxying.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/nginx.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">nginx</span><span class="tag">reverse-proxy</span><span class="tag">load-balancing</span><span class="tag">tls</span><span class="tag">caching</span><span class="tag">web-server</span>
+        </div>
+        <h1 class="skill-page-title">nginx</h1>
+        <p class="skill-page-desc">Configure and operate Nginx: reverse proxy, load balancing, TLS, caching, and security headers. Use for web serving and proxying.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>130</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('nginx')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/nginx">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="loki.html">← loki</a><a class="page-nav-link" href="observability-llm.html">observability-llm →</a></div>
+      <div class="skill-page-body">
+        <h1>Nginx</h1>
+<blockquote>Reverse proxying, load balancing, and TLS with Nginx.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>sudo apt install nginx
+sudo nginx -t &amp;&amp; sudo systemctl reload nginx</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Reverse proxy in front of app servers</li>
+<li>Load balancing across backends</li>
+<li>TLS termination and static asset serving</li>
+<li>Caching and rate limiting</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Proxy Setup</h3>
+<ul>
+<li>Use `upstream` blocks for backend groups</li>
+<li>Set proxy timeouts and headers explicitly</li>
+<li>Pass the original host/IP via `proxy_set_header`</li>
+<li>Enable keepalive to upstreams</li>
+</ul>
+<h3>TLS</h3>
+<ul>
+<li>Terminate TLS at Nginx with a current cert</li>
+<li>Redirect HTTP to HTTPS</li>
+<li>Set strong protocols and ciphers</li>
+<li>Auto-renew with certbot</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Serve static assets directly with expires</li>
+<li>Enable gzip for compressible responses</li>
+<li>Cache responses with `proxy_cache`</li>
+<li>Tune worker_processes and connections</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li>Add security headers (HSTS, X-Frame-Options)</li>
+<li>Rate-limit sensitive endpoints</li>
+<li>Hide server version</li>
+<li>Restrict access where needed</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>sudo apt install nginx
+sudo nginx -t</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Reverse proxy to an app
+server {
+    listen 80;
+    server_name app.example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Load balancing across backends
+upstream app {
+    server 10.0.0.1:8000;
+    server 10.0.0.2:8000;
+    keepalive 32;
+}
+
+server {
+    listen 443 ssl;
+    location / {
+        proxy_pass http://app;
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># TLS termination
+server {
+    listen 443 ssl http2;
+    server_name app.example.com;
+    ssl_certificate /etc/letsencrypt/live/app/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/app/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    add_header Strict-Transport-Security &quot;max-age=31536000&quot; always;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Static caching + gzip
+location /static/ {
+    alias /var/www/app/static/;
+    expires 30d;
+    gzip on;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install Nginx and check the default config.</p>
+<p class='ordered'>2. Add an upstream for your backends.</p>
+<p class='ordered'>3. Write a server block for your domain.</p>
+<p class='ordered'>4. Terminate TLS (certbot) and redirect HTTP.</p>
+<p class='ordered'>5. Set proxy headers and timeouts.</p>
+<p class='ordered'>6. Add caching, gzip, and static serving.</p>
+<p class='ordered'>7. Harden with security headers and limits.</p>
+<p class='ordered'>8. Test with `nginx -t` and reload.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `nginx -t` passes</p>
+<p class='ordered'>2. Requests reach backends with correct headers</p>
+<p class='ordered'>3. HTTPS works with a valid cert</p>
+<p class='ordered'>4. Static assets cache correctly</p>
+<p class='ordered'>5. Load balancer distributes across upstreams</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>502 Bad Gateway: backend down or wrong address.</li>
+<li>Slow proxying: check timeouts and keepalive.</li>
+<li>Cert errors: renew and check permissions.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="loki.html">← loki</a><a class="page-nav-link" href="observability-llm.html">observability-llm →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

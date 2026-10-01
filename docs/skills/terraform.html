@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>terraform — Agent Skills Library</title>
+  <meta name="description" content="Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends. Use for cloud resource management.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/terraform.html">
+  <meta property="og:title" content="terraform — Agent Skills Library">
+  <meta property="og:description" content="Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends. Use for cloud resource management.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/terraform.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">terraform</span><span class="tag">iac</span><span class="tag">infrastructure</span><span class="tag">cloud</span><span class="tag">modules</span><span class="tag">state</span><span class="tag">aws</span>
+        </div>
+        <h1 class="skill-page-title">terraform</h1>
+        <p class="skill-page-desc">Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends. Use for cloud resource management.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>137</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('terraform')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/terraform">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="sre-slos.html">← sre-slos</a></div>
+      <div class="skill-page-body">
+        <h1>Terraform</h1>
+<blockquote>Provisioning cloud infrastructure as code with Terraform.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>terraform init
+terraform plan
+terraform apply
+terraform destroy  # when done</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Reproducible cloud infrastructure</li>
+<li>Managing AWS/GCP/Azure resources as code</li>
+<li>Environments that must be identical</li>
+<li>Team-wide infrastructure changes with review</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Configuration</h3>
+<ul>
+<li>Organize by environment and component</li>
+<li>Use variables for config; locals for derived values</li>
+<li>Define outputs for inter-module references</li>
+<li>Pin provider and module versions</li>
+</ul>
+<h3>Modules</h3>
+<ul>
+<li>Extract reusable units into modules</li>
+<li>Keep modules small and focused</li>
+<li>Validate inputs with variables</li>
+<li>Document inputs/outputs</li>
+</ul>
+<h3>State</h3>
+<ul>
+<li>Use a remote backend (S3/OSS/Terraform Cloud)</li>
+<li>Enable state locking to prevent conflicts</li>
+<li>Never edit state by hand; use `terraform state`</li>
+<li>Protect state with permissions and versioning</li>
+</ul>
+<h3>Workflow</h3>
+<ul>
+<li>Plan before apply; review the diff</li>
+<li>Use workspaces or separate dirs per environment</li>
+<li>Run in CI with approval for production</li>
+<li>Clean up unused resources with destroy</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Terraform CLI
+terraform version
+# providers configured in code</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Provider + resource
+terraform {
+  required_version = &quot;&gt;= 1.5&quot;
+  backend &quot;s3&quot; {
+    bucket = &quot;my-tf-state&quot;
+    key    = &quot;prod/terraform.tfstate&quot;
+    region = &quot;us-east-1&quot;
+  }
+}
+
+provider &quot;aws&quot; {
+  region = var.region
+}
+
+resource &quot;aws_s3_bucket&quot; &quot;app&quot; {
+  bucket = &quot;my-app-bucket&quot;
+  tags   = { Environment = var.environment }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Variable + output
+variable &quot;region&quot; {
+  type    = string
+  default = &quot;us-east-1&quot;
+}
+
+variable &quot;environment&quot; {
+  type        = string
+  description = &quot;Deployment environment&quot;
+}
+
+output &quot;bucket_id&quot; {
+  value = aws_s3_bucket.app.id
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Simple module usage
+module &quot;vpc&quot; {
+  source = &quot;./modules/vpc&quot;
+  cidr   = &quot;10.0.0.0/16&quot;
+  name   = var.environment
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Standard workflow
+terraform init
+terraform fmt
+terraform validate
+terraform plan -out=plan.tfplan
+terraform apply plan.tfplan</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Initialize the project and configure the provider.</p>
+<p class='ordered'>2. Set up a remote backend with locking.</p>
+<p class='ordered'>3. Write resources for the core infrastructure.</p>
+<p class='ordered'>4. Extract repeated logic into modules.</p>
+<p class='ordered'>5. Parameterize with variables; define outputs.</p>
+<p class='ordered'>6. Run `fmt`, `validate`, and `plan` before apply.</p>
+<p class='ordered'>7. Apply in CI with approval for prod environments.</p>
+<p class='ordered'>8. Keep state secure and reviewed.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `terraform validate` passes</p>
+<p class='ordered'>2. `terraform plan` shows the intended changes only</p>
+<p class='ordered'>3. State is consistent with real resources (`refresh`)</p>
+<p class='ordered'>4. Destroy removes all created resources</p>
+<p class='ordered'>5. Plan diff is reviewed before apply</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>State lock: release stale locks via the backend or force-unlock.</li>
+<li>Drift: run `terraform plan` to detect and reconcile.</li>
+<li>&quot;Provider not found&quot;: run `terraform init` to fetch providers.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="sre-slos.html">← sre-slos</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

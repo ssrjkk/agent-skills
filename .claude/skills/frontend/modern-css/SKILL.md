@@ -3,7 +3,7 @@ name: modern-css
 description: "Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling."
 category: frontend
 tags: [css, grid, flexbox, custom-properties, container-queries, responsive]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nextjs — Agent Skills Library</title>
+  <meta name="description" content="Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/nextjs.html">
+  <meta property="og:title" content="nextjs — Agent Skills Library">
+  <meta property="og:description" content="Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/nextjs.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">nextjs</span><span class="tag">react</span><span class="tag">fullstack</span><span class="tag">app-router</span><span class="tag">ssr</span><span class="tag">web</span>
+        </div>
+        <h1 class="skill-page-title">nextjs</h1>
+        <p class="skill-page-desc">Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>128</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('nextjs')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/nextjs">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="modern-css.html">← modern-css</a><a class="page-nav-link" href="react-19.html">react-19 →</a></div>
+      <div class="skill-page-body">
+        <h1>Next.js</h1>
+<blockquote>Full-stack React framework with App Router, SSR, and serverless deployment.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npx create-next-app@latest my-app -- --typescript --tailwind --app
+cd my-app
+npm run dev
+# http://localhost:3000</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Full-stack React apps that need SSR, SSG, or ISR</li>
+<li>SEO-critical pages and marketing sites</li>
+<li>APIs and backend logic colocated with frontend</li>
+<li>Applications deployed to Vercel, Netlify, or Node servers</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>App Router</h3>
+<ul>
+<li>Use Server Components by default; add `&quot;use client&quot;` only for interactivity</li>
+<li>Fetch data in Server Components or Route Handlers</li>
+<li>Use `loading.tsx`, `error.tsx`, and `not-found.tsx` for each route segment</li>
+<li>Stream with `&lt;Suspense&gt;` instead of blocking whole routes</li>
+</ul>
+<h3>Routing</h3>
+<ul>
+<li>File-based routing in `app/` with `page.tsx`, `layout.tsx`, `route.ts`</li>
+<li>Dynamic segments with `[slug]`; catch-all with `[...slug]`</li>
+<li>`generateStaticParams` for SSG on dynamic routes</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Optimize images with `next/image`</li>
+<li>Use `next/font` for self-hosted fonts</li>
+<li>Implement ISR with `revalidate` or `export const dynamic`</li>
+<li>Add metadata via `export const metadata`</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npx create-next-app@latest my-app -- --typescript --tailwind --app
+npm i next react react-dom
+npm i -D typescript @types/node @types/react @types/react-dom</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Server Component page with metadata and ISR
+export const metadata = { title: &quot;Blog&quot;, description: &quot;Posts&quot; };
+
+export const revalidate = 3600; // ISR every hour
+
+export default async function BlogPage() {
+  const posts = await fetch(&quot;https://api.example.com/posts&quot;).then((r) =&gt; r.json());
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Blog&lt;/h1&gt;
+      {posts.map((p) =&gt; &lt;article key={p.id}&gt;{p.title}&lt;/article&gt;)}
+    &lt;/main&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Route Handler (API) with validation
+import { NextResponse } from &quot;next/server&quot;;
+
+export async function POST(req: Request) {
+  const { email } = await req.json();
+  if (!email || !email.includes(&quot;@&quot;)) {
+    return NextResponse.json({ error: &quot;Invalid email&quot; }, { status: 400 });
+  }
+  return NextResponse.json({ ok: true }, { status: 201 });
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Client component for interactive UI
+&quot;use client&quot;;
+import { useState } from &quot;react&quot;;
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Count: {count}&lt;/button&gt;;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Dynamic route with generateStaticParams (SSG)
+export async function generateStaticParams() {
+  const posts = await fetch(&quot;https://api.example.com/posts&quot;).then((r) =&gt; r.json());
+  return posts.map((p) =&gt; ({ slug: p.slug }));
+}
+
+export default function PostPage({ params }: { params: Promise&lt;{ slug: string }&gt; }) {
+  const { slug } = await params;
+  return &lt;h1&gt;Post: {slug}&lt;/h1&gt;;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold with `create-next-app` using the App Router and TypeScript.</p>
+<p class='ordered'>2. Plan routes as folders in `app/`; add `layout.tsx` and `page.tsx` per segment.</p>
+<p class='ordered'>3. Default to Server Components; add `&quot;use client&quot;` only for interactive parts.</p>
+<p class='ordered'>4. Fetch data in Server Components or Route Handlers; cache with ISR or revalidate.</p>
+<p class='ordered'>5. Add `loading.tsx`/`error.tsx` for resilience and Suspense for streaming.</p>
+<p class='ordered'>6. Add middleware for auth, redirects, or i18n when needed.</p>
+<p class='ordered'>7. Optimize assets with `next/image` and `next/font`.</p>
+<p class='ordered'>8. Deploy to Vercel or your Node host; set environment variables in the platform.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `npm run build` succeeds with no type errors</p>
+<p class='ordered'>2. `npm run lint` passes (next/core-web-vitals)</p>
+<p class='ordered'>3. Routes render correct metadata and status codes</p>
+<p class='ordered'>4. API routes validate input and return proper status codes</p>
+<p class='ordered'>5. Lighthouse scores &gt;= 90 on key pages</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Hydration errors: Server and Client markup must match; avoid random values in render.</li>
+<li>404 on dynamic route: check the route folder name and `generateStaticParams`.</li>
+<li>Build-time fetch fails: mark the route dynamic or provide a fallback.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="modern-css.html">← modern-css</a><a class="page-nav-link" href="react-19.html">react-19 →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

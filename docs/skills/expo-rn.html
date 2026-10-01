@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>expo-rn — Agent Skills Library</title>
+  <meta name="description" content="Expo SDK for React Native development">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/expo-rn.html">
+  <meta property="og:title" content="expo-rn — Agent Skills Library">
+  <meta property="og:description" content="Expo SDK for React Native development">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/expo-rn.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#ec48991a;color:#ec4899;border-color:#ec489944">mobile</span>
+          <span class="tag">expo</span><span class="tag">react-native</span><span class="tag">mobile</span><span class="tag">ios</span><span class="tag">android</span><span class="tag">cross-platform</span>
+        </div>
+        <h1 class="skill-page-title">expo-rn</h1>
+        <p class="skill-page-desc">Expo SDK for React Native development</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>141</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('expo-rn')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/mobile/expo-rn">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="flutter.html">flutter →</a></div>
+      <div class="skill-page-body">
+        <h1>Expo SDK</h1>
+<blockquote>Build cross-platform mobile apps with Expo SDK and React Native.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>// app/index.tsx — Expo Router file-based routing
+import { router } from &#x27;expo-router&#x27;;
+import { View, Text, FlatList, TouchableOpacity } from &#x27;react-native&#x27;;
+import { useSQLiteContext } from &#x27;expo-sqlite&#x27;;
+
+export default function HomeScreen() {
+  const db = useSQLiteContext();
+
+  const [items, setItems] = useState&lt;Todo[]&gt;([]);
+
+  useEffect(() =&gt; {
+    db.getAllAsync(&#x27;SELECT * FROM todos ORDER BY created_at DESC&#x27;)
+      .then(setItems);
+  }, []);
+
+  return (
+    &lt;View className=&quot;flex-1 p-4&quot;&gt;
+      &lt;FlatList
+        data={items}
+        keyExtractor={(item) =&gt; item.id.toString()}
+        renderItem={({ item }) =&gt; (
+          &lt;TouchableOpacity
+            onPress={() =&gt; router.push(`/todo/${item.id}`)}
+            className=&quot;p-3 bg-white rounded-lg mb-2 shadow&quot;
+          &gt;
+            &lt;Text className={`text-lg ${item.completed ? &#x27;line-through text-gray-400&#x27; : &#x27;&#x27;}`}&gt;
+              {item.title}
+            &lt;/Text&gt;
+          &lt;/TouchableOpacity&gt;
+        )}
+      /&gt;
+      &lt;TouchableOpacity
+        onPress={() =&gt; router.push(&#x27;/todo/new&#x27;)}
+        className=&quot;bg-blue-500 p-4 rounded-full absolute bottom-8 right-8 shadow-lg&quot;
+      &gt;
+        &lt;Text className=&quot;text-white text-2xl text-center&quot;&gt;+&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    &lt;/View&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Create and develop
+npx create-expo-app my-app --template blank-typescript
+cd my-app
+npx expo start
+
+# Native builds
+npx expo run:ios    # iOS simulator
+npx expo run:android  # Android emulator
+
+# Production builds
+eas build --platform all
+eas submit --platform ios
+eas submit --platform android
+
+# OTA updates
+npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Expo provides a managed workflow with built-in APIs (camera, location, SQLite, notifications, auth). Expo Router provides file-based navigation. EAS Build handles native compilation. OTA updates skip app store review.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Cross-platform iOS + Android apps from one codebase</li>
+<li>Apps needing native features (camera, GPS, biometrics)</li>
+<li>MVPs requiring fast iteration with OTA updates</li>
+<li>Teams wanting to avoid native build tooling setup</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold: `npx create-expo-app my-app --template blank-typescript`, then `cd my-app &amp;&amp; npx expo start`.</p>
+<p class='ordered'>2. Add routing: install `expo-router` and use file-based routes under `app/` (or run with the default router template).</p>
+<p class='ordered'>3. Configure native APIs: run `npx expo install expo-camera expo-location expo-sqlite` and add the plugin config in `app.json`.</p>
+<p class='ordered'>4. Develop on device: open in Expo Go or run `npx expo run:ios`/`run:android` for a native dev build.</p>
+<p class='ordered'>5. Store data locally: use `expo-sqlite` (SQL via `db.getAllAsync`) or AsyncStorage for key-value state.</p>
+<p class='ordered'>6. Ship: `eas build --platform all`, then `eas submit`; iterate with `npx expo update` (OTA).</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// app/todo/[id].tsx — dynamic route with local SQLite
+import { useLocalSearchParams } from &#x27;expo-router&#x27;;
+import { useSQLiteContext } from &#x27;expo-sqlite&#x27;;
+import { View, Text } from &#x27;react-native&#x27;;
+
+export default function TodoDetail() {
+  const { id } = useLocalSearchParams&lt;{ id: string }&gt;();
+  const db = useSQLiteContext();
+  const todo = db.getFirstSync(&#x27;SELECT * FROM todos WHERE id = ?&#x27;, [id]);
+
+  return (
+    &lt;View className=&quot;p-4&quot;&gt;
+      &lt;Text className=&quot;text-xl&quot;&gt;{todo?.title}&lt;/Text&gt;
+      &lt;Text&gt;{todo?.completed ? &#x27;Done&#x27; : &#x27;Pending&#x27;}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Native build &amp; OTA
+npx expo prebuild
+eas build --platform android --profile preview
+npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Use Expo SDK with Expo Go for fast development iteration.</li>
+<li>Manage dependencies with `expo install` for compatible versions.</li>
+<li>Structure with typed components and hooks for shared logic.</li>
+<li>Handle deep links and navigation with expo-router.</li>
+<li>Optimize images and use expo-av for media carefully.</li>
+<li>Test on both platforms; use EAS for builds.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Version mismatch: run `npx expo install --fix`.</li>
+<li>Build failures: check EAS credentials and app config.</li>
+<li>Native module missing: prebuild and add the config plugin.</li>
+<li>Slow reload: split the bundle and avoid heavy imports.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. `npx expo start` launches Metro bundler successfully</p>
+<p class='ordered'>2. App renders on both iOS simulator and Android emulator</p>
+<p class='ordered'>3. Native features (camera, SQLite) work on both platforms</p>
+<p class='ordered'>4. `eas build` produces installable binaries</p>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="flutter.html">flutter →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

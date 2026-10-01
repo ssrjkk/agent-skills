@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>multi-agent-orchestration — Agent Skills Library</title>
+  <meta name="description" content="Design and run multi-agent systems: orchestrator-worker, routing, handoffs, shared state, and coordination patterns. Use for complex agent teams.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/multi-agent-orchestration.html">
+  <meta property="og:title" content="multi-agent-orchestration — Agent Skills Library">
+  <meta property="og:description" content="Design and run multi-agent systems: orchestrator-worker, routing, handoffs, shared state, and coordination patterns. Use for complex agent teams.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/multi-agent-orchestration.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">multi-agent</span><span class="tag">orchestration</span><span class="tag">agents</span><span class="tag">coordination</span><span class="tag">workflows</span><span class="tag">teams</span>
+        </div>
+        <h1 class="skill-page-title">multi-agent-orchestration</h1>
+        <p class="skill-page-desc">Design and run multi-agent systems: orchestrator-worker, routing, handoffs, shared state, and coordination patterns. Use for complex agent teams.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>123</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('multi-agent-orchestration')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/multi-agent-orchestration">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="mlops.html">← mlops</a><a class="page-nav-link" href="prompt-caching.html">prompt-caching →</a></div>
+      <div class="skill-page-body">
+        <h1>Multi-Agent Orchestration</h1>
+<blockquote>Coordinating multiple specialized agents into reliable systems.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Orchestrator picks a worker per task; workers return results
+from dataclasses import dataclass
+
+@dataclass
+class AgentResult:
+    task: str
+    output: str</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Tasks needing different specializations (research, code, review)</li>
+<li>Parallelizable independent subtasks</li>
+<li>Long workflows broken into reliable steps</li>
+<li>Complex domains a single agent handles poorly</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Orchestrator-Worker</h3>
+<ul>
+<li>Orchestrator plans, delegates, and collects results</li>
+<li>Workers are single-purpose and stateless</li>
+<li>Define a clear task handoff contract</li>
+<li>Cap concurrent workers and total steps</li>
+</ul>
+<h3>Routing &amp; Handoffs</h3>
+<ul>
+<li>Route by task type, not by guesswork</li>
+<li>Use explicit handoff messages (intent + context)</li>
+<li>Validate worker outputs before handoff</li>
+<li>Fall back to a default worker on routing failure</li>
+</ul>
+<h3>Shared State</h3>
+<ul>
+<li>Use a shared store for facts and artifacts</li>
+<li>Avoid duplicated context; reference by ID</li>
+<li>Coordinate writes to avoid races</li>
+<li>Log the full execution trace</li>
+</ul>
+<h3>Reliability</h3>
+<ul>
+<li>Retry failed workers with backoff</li>
+<li>Set timeouts and budgets per worker</li>
+<li>Detect loops and deadlocks</li>
+<li>Aggregate partial results on failure</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic
+# optional: langgraph, autogen, crewai</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Minimal orchestrator
+def orchestrate(task: str, workers: dict) -&gt; dict:
+    plan = plan_task(task)          # picks worker names
+    results = {}
+    for name, sub in plan.items():
+        results[name] = workers[name](sub)
+    return {&quot;plan&quot;: plan, &quot;results&quot;: results}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Worker contract
+def researcher(query: str) -&gt; str:
+    return run_llm(f&quot;Research: {query}&quot;)
+
+def reviewer(text: str) -&gt; str:
+    return run_llm(f&quot;Review for correctness and style:\n{text}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Routing by intent
+def route(task: str) -&gt; str:
+    intent = classify(task)
+    if intent == &quot;research&quot;:
+        return &quot;researcher&quot;
+    if intent == &quot;review&quot;:
+        return &quot;reviewer&quot;
+    return &quot;general&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Parallel execution with a thread pool
+from concurrent.futures import ThreadPoolExecutor
+
+def run_parallel(workers: dict, tasks: dict) -&gt; dict:
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        futures = {name: ex.submit(workers[name], task) for name, task in tasks.items()}
+        return {name: f.result() for name, f in futures.items()}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Split the domain into single-purpose worker roles.</p>
+<p class='ordered'>2. Define the handoff contract (task, context, output format).</p>
+<p class='ordered'>3. Build an orchestrator that plans and routes.</p>
+<p class='ordered'>4. Add a shared state store for artifacts.</p>
+<p class='ordered'>5. Run independent subtasks in parallel with limits.</p>
+<p class='ordered'>6. Add retries, timeouts, and budgets.</p>
+<p class='ordered'>7. Validate outputs at each handoff.</p>
+<p class='ordered'>8. Trace and log the full execution.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Or orchestrator completes within step/time budgets</p>
+<p class='ordered'>2. Workers receive well-formed tasks</p>
+<p class='ordered'>3. Handoffs carry necessary context</p>
+<p class='ordered'>4. Parallel tasks don&#x27;t corrupt shared state</p>
+<p class='ordered'>5. Failures degrade gracefully with partial results</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Deadlock: remove circular handoffs; add timeouts.</li>
+<li>Context loss on handoff: carry intent + summary explicitly.</li>
+<li>Rogue worker: validate outputs and add a review step.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="mlops.html">← mlops</a><a class="page-nav-link" href="prompt-caching.html">prompt-caching →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

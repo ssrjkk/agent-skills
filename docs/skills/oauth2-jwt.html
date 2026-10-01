@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>oauth2-jwt — Agent Skills Library</title>
+  <meta name="description" content="Implements OAuth 2.0 authentication and JWT-based authorization with refresh tokens. Use for secure API access.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/oauth2-jwt.html">
+  <meta property="og:title" content="oauth2-jwt — Agent Skills Library">
+  <meta property="og:description" content="Implements OAuth 2.0 authentication and JWT-based authorization with refresh tokens. Use for secure API access.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/oauth2-jwt.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#dc26261a;color:#dc2626;border-color:#dc262644">security</span>
+          <span class="tag">oauth2</span><span class="tag">jwt</span><span class="tag">auth</span><span class="tag">security</span><span class="tag">authentication</span>
+        </div>
+        <h1 class="skill-page-title">oauth2-jwt</h1>
+        <p class="skill-page-desc">Implements OAuth 2.0 authentication and JWT-based authorization with refresh tokens. Use for secure API access.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>9</strong></span>
+          <span>Lines <strong>127</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('oauth2-jwt')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/security/oauth2-jwt">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="api-security.html">← api-security</a><a class="page-nav-link" href="owasp-web-security.html">owasp-web-security →</a></div>
+      <div class="skill-page-body">
+        <h1>OAuth2 &amp; JWT</h1>
+<blockquote>Secure API authentication with OAuth 2.0 and JSON Web Tokens.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>import jwt from &#x27;jsonwebtoken&#x27;;
+import bcrypt from &#x27;bcrypt&#x27;;
+
+// Login
+const user = await db.user.findUnique({ where: { email } });
+const valid = await bcrypt.compare(password, user.password);
+if (!valid) throw new Error(&#x27;Invalid credentials&#x27;);
+
+// Generate tokens
+const accessToken = jwt.sign(
+  { userId: user.id, role: user.role },
+  process.env.JWT_SECRET!,
+  { expiresIn: &#x27;15m&#x27; }
+);
+const refreshToken = jwt.sign(
+  { userId: user.id },
+  process.env.JWT_REFRESH_SECRET!,
+  { expiresIn: &#x27;7d&#x27; }
+);
+
+// Middleware
+function authMiddleware(req, res, next) {
+  const token = req.headers.authorization?.split(&#x27; &#x27;)[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    req.user = decoded;
+    next();
+  } catch {
+    res.status(401).json({ error: &#x27;Invalid token&#x27; });
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>API authentication and authorization</li>
+<li>Single sign-on (SSO) with OAuth providers</li>
+<li>Not for server-to-server with API keys</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Store passwords hashed (bcrypt/argon2), never plaintext.</li>
+<li>Use short-lived access tokens (15m) and rotating refresh tokens.</li>
+<li>Store refresh tokens server-side or in httpOnly cookies.</li>
+<li>Verify signature, expiry, issuer, and audience on every token.</li>
+<li>Use the Authorization Code + PKCE flow for browser clients.</li>
+<li>Rotate signing keys and support JWKS with caching.</li>
+</ul>
+<h2>Step-by-Step Instructions</h2>
+<p class='ordered'>1. Install packages: `npm install jsonwebtoken bcrypt`</p>
+<p class='ordered'>2. Set up user model with hashed passwords</p>
+<p class='ordered'>3. Create login endpoint returning access + refresh tokens</p>
+<p class='ordered'>4. Add auth middleware to protected routes</p>
+<p class='ordered'>5. Implement token refresh with rotation</p>
+<p class='ordered'>6. Add scopes and audience checks</p>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm install jsonwebtoken bcrypt
+# For OAuth providers: passport, passport-google-oauth20, etc.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<p>Input: Login with email/password → Output: `{ accessToken, refreshToken, expiresIn }`</p>
+<div class="codeblock"><pre class="code"><code>// Refresh with rotation
+router.post(&quot;/refresh&quot;, async (req, res) =&gt; {
+  const old = req.body.refreshToken;
+  const decoded = jwt.verify(old, process.env.JWT_REFRESH_SECRET!);
+  if (!isStored(old)) return res.status(401).json({ error: &quot;revoked&quot; });
+  revoke(old);
+  const accessToken = jwt.sign(
+    { userId: decoded.userId },
+    process.env.JWT_SECRET!,
+    { expiresIn: &quot;15m&quot; }
+  );
+  const refreshToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_REFRESH_SECRET!, { expiresIn: &quot;7d&quot; });
+  res.json({ accessToken, refreshToken });
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Authorization check with scopes
+function requireScope(scope: string) {
+  return (req, res, next) =&gt; {
+    if (!req.user?.scopes?.includes(scope)) {
+      return res.status(403).json({ error: &quot;insufficient_scope&quot; });
+    }
+    next();
+  };
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Resources</h2>
+<ul>
+<li>[JWT.io](https://jwt.io/)</li>
+<li>[OAuth 2.0 Spec](https://oauth.net/2/)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>**JWT `kid` mismatch** — the signing key rotated but the client cached</li>
+</ul>
+<p>the old JWKS. Refresh the key set and honor `cache-control` on the JWKS.</p>
+<ul>
+<li>**`exp` claims rejected after a clock skew** — allow leeway (~30s) on</li>
+</ul>
+<p>verification and compare with the issuer&#x27;s `nbf`/`iat`, not wall time.</p>
+<ul>
+<li>**Audience leaks cross-app** — tokens minted for one audience validate</li>
+</ul>
+<p>elsewhere. Pin `aud` per client and reject tokens without an `aud` claim.</p>
+<ul>
+<li>**Refresh tokens stolen in localStorage** — never store them in the</li>
+</ul>
+<p>browser. Use httpOnly, SameSite cookies or a backend session.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Tokens sign and verify correctly</p>
+<p class='ordered'>2. Expired tokens are rejected</p>
+<p class='ordered'>3. Refresh tokens issue new access tokens</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="api-security.html">← api-security</a><a class="page-nav-link" href="owasp-web-security.html">owasp-web-security →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

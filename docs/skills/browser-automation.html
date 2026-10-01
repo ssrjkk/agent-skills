@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>browser-automation — Agent Skills Library</title>
+  <meta name="description" content="Automate browsers with Playwright: selectors, waits, assertions, screenshots, network interception, and CI. Use for E2E tests and scraping.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/browser-automation.html">
+  <meta property="og:title" content="browser-automation — Agent Skills Library">
+  <meta property="og:description" content="Automate browsers with Playwright: selectors, waits, assertions, screenshots, network interception, and CI. Use for E2E tests and scraping.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/browser-automation.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#22c55e1a;color:#22c55e;border-color:#22c55e44">qa</span>
+          <span class="tag">playwright</span><span class="tag">browser</span><span class="tag">e2e</span><span class="tag">testing</span><span class="tag">automation</span><span class="tag">scraping</span><span class="tag">selectors</span>
+        </div>
+        <h1 class="skill-page-title">browser-automation</h1>
+        <p class="skill-page-desc">Automate browsers with Playwright: selectors, waits, assertions, screenshots, network interception, and CI. Use for E2E tests and scraping.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>127</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('browser-automation')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/qa/browser-automation">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="jest.html">jest →</a></div>
+      <div class="skill-page-body">
+        <h1>Browser Automation</h1>
+<blockquote>Automating real browsers with Playwright for E2E tests and scraping.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm init playwright@latest
+npx playwright test
+# or in Python:
+pip install playwright &amp;&amp; playwright install</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>End-to-end tests of user flows</li>
+<li>Visual regression and screenshot checks</li>
+<li>Web scraping and data collection</li>
+<li>Monitoring critical user journeys</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Selectors</h3>
+<ul>
+<li>Prefer role and text selectors over CSS/XPath</li>
+<li>Use `getByRole`, `getByLabel`, `getByText` for robust queries</li>
+<li>Add `data-testid` for complex components</li>
+<li>Avoid brittle CSS selectors tied to layout</li>
+</ul>
+<h3>Waits &amp; Timing</h3>
+<ul>
+<li>Use auto-waiting actions; avoid fixed sleeps</li>
+<li>Wait for explicit conditions (`waitFor` network idle)</li>
+<li>Prefer `expect().toBeVisible()` over sleep</li>
+<li>Set generous timeouts for slow environments</li>
+</ul>
+<h3>Assertions</h3>
+<ul>
+<li>Assert user-visible behavior, not internals</li>
+<li>Use soft assertions where failure shouldn&#x27;t abort</li>
+<li>Take screenshots on failure for debugging</li>
+<li>Verify network requests and responses</li>
+</ul>
+<h3>Reliability</h3>
+<ul>
+<li>Run tests in CI with retries on flakiness</li>
+<li>Isolate tests: fresh state per test</li>
+<li>Use parallel workers carefully with shared state</li>
+<li>Handle popups, dialogs, and multi-tab flows</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm init playwright@latest
+npx playwright install --with-deps
+# or Python:
+pip install pytest-playwright</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>from playwright.sync_api import sync_playwright, expect
+
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto(&quot;https://example.com/login&quot;)
+    page.get_by_label(&quot;Email&quot;).fill(&quot;user@example.com&quot;)
+    page.get_by_label(&quot;Password&quot;).fill(&quot;secret&quot;)
+    page.get_by_role(&quot;button&quot;, name=&quot;Sign in&quot;).click()
+    expect(page).to_have_url(&quot;https://example.com/dashboard&quot;)
+    browser.close()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Test file with Playwright test runner
+from playwright.sync_api import Page, expect
+
+def test_login(page: Page):
+    page.goto(&quot;/login&quot;)
+    page.get_by_label(&quot;Email&quot;).fill(&quot;user@example.com&quot;)
+    page.get_by_role(&quot;button&quot;, name=&quot;Sign in&quot;).click()
+    expect(page.get_by_text(&quot;Welcome back&quot;)).to_be_visible()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// JavaScript E2E test
+const { test, expect } = require(&quot;@playwright/test&quot;);
+
+test(&quot;search flow&quot;, async ({ page }) =&gt; {
+  await page.goto(&quot;/&quot;);
+  await page.getByPlaceholder(&quot;Search...&quot;).fill(&quot;playwright&quot;);
+  await page.keyboard.press(&quot;Enter&quot;);
+  await expect(page.locator(&quot;h1&quot;)).toContainText(&quot;Results&quot;);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Network interception and screenshot
+def test_intercept(page):
+    page.route(&quot;**/api/data&quot;, lambda route: route.fulfill(json={&quot;ok&quot;: True}))
+    page.goto(&quot;/&quot;)
+    page.screenshot(path=&quot;home.png&quot;, full_page=True)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install Playwright and set up the test project.</p>
+<p class='ordered'>2. Identify the critical user flows to cover first.</p>
+<p class='ordered'>3. Write tests with role-based selectors and auto-waiting.</p>
+<p class='ordered'>4. Assert user-visible behavior; add screenshots on failure.</p>
+<p class='ordered'>5. Intercept external APIs to isolate tests.</p>
+<p class='ordered'>6. Run locally; fix flakiness with retries and waits.</p>
+<p class='ordered'>7. Add tests to CI with parallel workers.</p>
+<p class='ordered'>8. Extend coverage to visual regression and monitoring.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Tests pass consistently across 3+ runs</p>
+<p class='ordered'>2. Selectors survive minor UI changes</p>
+<p class='ordered'>3. Failure screenshots capture the failing state</p>
+<p class='ordered'>4. No network dependency leaks into tests</p>
+<p class='ordered'>5. CI runs them on every PR with acceptable runtime</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Flaky waits: replace sleeps with explicit waits and assertions.</li>
+<li>Element not found: use role/text selectors; check iframes and shadow DOM.</li>
+<li>Slow suite: parallelize and limit full-page screenshots.</li>
+</ul>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="jest.html">jest →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

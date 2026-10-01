@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>electron — Agent Skills Library</title>
+  <meta name="description" content="Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/electron.html">
+  <meta property="og:title" content="electron — Agent Skills Library">
+  <meta property="og:description" content="Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/electron.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#6366f11a;color:#6366f1;border-color:#6366f144">desktop</span>
+          <span class="tag">electron</span><span class="tag">desktop</span><span class="tag">react</span><span class="tag">native</span><span class="tag">cross-platform</span>
+        </div>
+        <h1 class="skill-page-title">electron</h1>
+        <p class="skill-page-desc">Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>5</strong></span>
+          <span>Sections <strong>9</strong></span>
+          <span>Lines <strong>124</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('electron')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/desktop/electron">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      
+      <div class="skill-page-body">
+        <h1>Electron</h1>
+<blockquote>Cross-platform desktop apps with JavaScript, HTML, and CSS.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>// main.js
+const { app, BrowserWindow, ipcMain } = require(&#x27;electron&#x27;);
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: __dirname + &#x27;/preload.js&#x27;,
+    },
+  });
+  win.loadURL(&#x27;http://localhost:5173&#x27;); // or loadFile(&#x27;dist/index.html&#x27;)
+}
+
+app.whenReady().then(createWindow);
+
+// IPC handler
+ipcMain.handle(&#x27;get-user-data&#x27;, async () =&gt; {
+  return { name: &#x27;Alice&#x27;, role: &#x27;admin&#x27; };
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// preload.js
+const { contextBridge, ipcRenderer } = require(&#x27;electron&#x27;);
+contextBridge.exposeInMainWorld(&#x27;electronAPI&#x27;, {
+  getUserData: () =&gt; ipcRenderer.invoke(&#x27;get-user-data&#x27;),
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Cross-platform desktop apps (Windows, Mac, Linux)</li>
+<li>Apps built with web frameworks (React, Vue, Svelte)</li>
+<li>Not for lightweight apps (better Tauri)</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Keep the main process thin; renderer owns the UI.</li>
+<li>Use `contextIsolation: true` and a minimal preload for IPC.</li>
+<li>Communicate via `ipcMain`/`ipcRenderer` with validated payloads.</li>
+<li>Use `asar` packaging and exclude dev dependencies.</li>
+<li>Handle window lifecycle across platforms.</li>
+<li>Sign and notarize for production distribution.</li>
+</ul>
+<h2>Step-by-Step Instructions</h2>
+<p class='ordered'>1. Init: `npm init; npm install electron --save-dev`</p>
+<p class='ordered'>2. Create `main.js` with window creation</p>
+<p class='ordered'>3. Create `preload.js` for secure IPC</p>
+<p class='ordered'>4. Build and package: `npx electron-builder`</p>
+<p class='ordered'>5. Sign/notarize for release</p>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm install electron --save-dev
+npm install electron-builder --save-dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<p>Input: `npm run start` → Output: Native desktop window with web app</p>
+<div class="codeblock"><pre class="code"><code>// Secure main process with contextIsolation
+const { app, BrowserWindow, ipcMain } = require(&quot;electron&quot;);
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    webPreferences: {
+      preload: path.join(__dirname, &quot;preload.js&quot;),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+  win.loadURL(&quot;http://localhost:3000&quot;);
+}
+
+app.whenReady().then(createWindow);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// preload.js — safe IPC bridge
+const { contextBridge, ipcRenderer } = require(&quot;electron&quot;);
+
+contextBridge.exposeInMainWorld(&quot;api&quot;, {
+  getData: () =&gt; ipcRenderer.invoke(&quot;data:get&quot;),
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Resources</h2>
+<ul>
+<li>[Electron Docs](https://www.electronjs.org/docs)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>**App bloat from `node_modules`** — the build packed everything.</li>
+</ul>
+<p>Use `electron-builder` `files`/`asar` and exclude dev dependencies.</p>
+<ul>
+<li>**Blank white screen** — renderer crashed. Check DevTools console and</li>
+</ul>
+<p>verify the preload script has `contextIsolation`-safe IPC wiring.</p>
+<ul>
+<li>**App not restarting** — main window destroys on close. Prevent `window-all-closed`</li>
+</ul>
+<p>quit on macOS, or attach the `before-quit` lifecycle hook.</p>
+<ul>
+<li>**Native modules fail to load** — ABI mismatch after a Node upgrade.</li>
+</ul>
+<p>Rebuild with `electron-rebuild` and pin the Electron ABI version.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. App window opens correctly</p>
+<p class='ordered'>2. IPC communication works</p>
+<p class='ordered'>3. App packages for target OS</p>
+      </div>
+      
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

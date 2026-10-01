@@ -3,7 +3,7 @@ name: llm-evals
 description: "Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration. Use for trustworthy model behavior."
 category: ai
 tags: [llm-evals, evaluation, metrics, judge, testing, llm, regression]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28
@@ -66,7 +66,7 @@ client = openai.OpenAI()
 
 def run_case(prompt: str, user_input: str) -> str:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": user_input},
@@ -101,7 +101,7 @@ Return only the number."""
 
 def judge(answer: str) -> int:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[
             {"role": "system", "content": JUDGE_PROMPT},
             {"role": "user", "content": answer},

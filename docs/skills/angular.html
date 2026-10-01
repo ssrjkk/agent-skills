@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>angular — Agent Skills Library</title>
+  <meta name="description" content="Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/angular.html">
+  <meta property="og:title" content="angular — Agent Skills Library">
+  <meta property="og:description" content="Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/angular.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">angular</span><span class="tag">typescript</span><span class="tag">components</span><span class="tag">signals</span><span class="tag">dependency-injection</span><span class="tag">rxjs</span>
+        </div>
+        <h1 class="skill-page-title">angular</h1>
+        <p class="skill-page-desc">Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>130</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('angular')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/angular">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="astro.html">astro →</a></div>
+      <div class="skill-page-body">
+        <h1>Angular</h1>
+<blockquote>Building scalable enterprise frontends with Angular.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>npm install -g @angular/cli
+ng new my-app
+cd my-app &amp;&amp; ng serve</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Enterprise single-page applications</li>
+<li>Teams wanting structure and conventions</li>
+<li>Large apps with many developers</li>
+<li>Reactive data flows with RxJS</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Components &amp; Signals</h3>
+<ul>
+<li>Use signals (`signal()`) for reactive state</li>
+<li>Use `computed()` for derived values</li>
+<li>Use `@Input()`/`@Output()` for boundaries</li>
+<li>Keep components focused; use `OnPush` change detection</li>
+</ul>
+<h3>Dependency Injection</h3>
+<ul>
+<li>Provide services at the right scope</li>
+<li>Use `inject()` over constructor injection</li>
+<li>Prefer `providedIn: &#x27;root&#x27;` for shared services</li>
+<li>Abstract external APIs behind services</li>
+</ul>
+<h3>Reactive State</h3>
+<ul>
+<li>Prefer signals over manual subjects for UI state</li>
+<li>Use RxJS for async streams and events</li>
+<li>Manage server state with `httpClient` + effects</li>
+<li>Unsubscribe or use `takeUntilDestroyed`</li>
+</ul>
+<h3>Structure</h3>
+<ul>
+<li>Organize by feature modules (standalone components)</li>
+<li>Use lazy-loaded routes</li>
+<li>Keep templates declarative with pipes</li>
+<li>Centralize API calls in services</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>ng new my-app --style scss --routing
+npm i @angular/common</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Signal-based component
+import { Component, signal, computed } from &quot;@angular/core&quot;;
+
+@Component({
+  selector: &quot;app-counter&quot;,
+  template: `
+    &lt;button (click)=&quot;increment()&quot;&gt;Count: {{ count() }}&lt;/button&gt;
+    &lt;p&gt;Doubled: {{ doubled() }}&lt;/p&gt;
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CounterComponent {
+  count = signal(0);
+  doubled = computed(() =&gt; this.count() * 2);
+  increment() { this.count.update(c =&gt; c + 1); }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Injectable service
+import { Injectable, inject } from &quot;@angular/core&quot;;
+import { HttpClient } from &quot;@angular/common/http&quot;;
+
+@Injectable({ providedIn: &quot;root&quot; })
+export class UserService {
+  private http = inject(HttpClient);
+  getUsers() { return this.http.get&lt;User[]&gt;(&quot;/api/users&quot;); }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Standalone component with DI
+@Component({
+  standalone: true,
+  imports: [CommonModule],
+  template: `&lt;ul&gt;&lt;li *ngFor=&quot;let u of users$ | async&quot;&gt;{{ u.name }}&lt;/li&gt;&lt;/ul&gt;`,
+})
+export class UserListComponent {
+  private users = inject(UserService);
+  users$ = this.users.getUsers();
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Route with lazy loading
+const routes: Routes = [
+  { path: &quot;users&quot;, loadComponent: () =&gt; import(&quot;./users.component&quot;).then(m =&gt; m.UsersComponent) },
+];</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold with the Angular CLI.</p>
+<p class='ordered'>2. Set up routing and a shell layout.</p>
+<p class='ordered'>3. Build feature modules with standalone components.</p>
+<p class='ordered'>4. Add services with DI for data access.</p>
+<p class='ordered'>5. Use signals for UI state, RxJS for streams.</p>
+<p class='ordered'>6. Lazy-load routes.</p>
+<p class='ordered'>7. Add forms and validation.</p>
+<p class='ordered'>8. Write tests with the Angular testing library.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `ng build` passes with type checking</p>
+<p class='ordered'>2. Components render and react to signals</p>
+<p class='ordered'>3. Services are provided and injectable</p>
+<p class='ordered'>4. Lazy routes load on demand</p>
+<p class='ordered'>5. Tests pass for components/services</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Change detection issues: use OnPush and signals.</li>
+<li>Memory leaks: use takeUntilDestroyed for subscriptions.</li>
+<li>DI errors: check provider scope and `providedIn`.</li>
+</ul>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="astro.html">astro →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

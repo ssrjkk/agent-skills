@@ -71,7 +71,7 @@ SCHEMA = {
 
 def extract(text: str) -> dict:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[{"role": "user", "content": f"Extract from: {text}"}],
         response_format={"type": "json_schema", "json_schema": {"name": "person", "schema": SCHEMA}},
     )
@@ -99,7 +99,7 @@ class Person(BaseModel):
     emails: list[str] = []
 
 resp = client.beta.chat.completions.parse(
-    model="gpt-5",
+    model="gpt-6",
     messages=[{"role": "user", "content": "Alice is 30, email a@b.com"}],
     response_format=Person,
 )
@@ -109,7 +109,7 @@ print(resp.choices[0].message.parsed.model_dump())
 # JSON mode фолбэк для провайдеров без json_schema
 def extract_json_mode(text: str) -> dict:
     resp = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-6",
         messages=[
             {"role": "system", "content": "Respond only with valid JSON matching the schema."},
             {"role": "user", "content": text},

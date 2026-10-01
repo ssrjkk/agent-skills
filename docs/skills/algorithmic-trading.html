@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>algorithmic-trading — Agent Skills Library</title>
+  <meta name="description" content="Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/algorithmic-trading.html">
+  <meta property="og:title" content="algorithmic-trading — Agent Skills Library">
+  <meta property="og:description" content="Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/algorithmic-trading.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#eab3081a;color:#eab308;border-color:#eab30844">finance</span>
+          <span class="tag">algorithmic-trading</span><span class="tag">backtesting</span><span class="tag">strategy</span><span class="tag">quantitative</span><span class="tag">finance</span><span class="tag">market-data</span><span class="tag">execution</span><span class="tag">risk</span>
+        </div>
+        <h1 class="skill-page-title">algorithmic-trading</h1>
+        <p class="skill-page-desc">Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>8</strong></span>
+          <span>Sections <strong>7</strong></span>
+          <span>Lines <strong>260</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('algorithmic-trading')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/finance/algorithmic-trading">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="risk-modeling.html">risk-modeling →</a></div>
+      <div class="skill-page-body">
+        <h1>Algorithmic Trading</h1>
+<blockquote>Building algorithmic trading systems with backtesting, strategies, and risk management.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>import pandas as pd
+import numpy as np
+
+class MovingAverageCrossover:
+    &quot;&quot;&quot;Simple mean-reversion strategy.&quot;&quot;&quot;
+
+    def __init__(self, short_window=20, long_window=50):
+        self.short_window = short_window
+        self.long_window = long_window
+
+    def generate_signals(self, prices: pd.Series) -&gt; pd.Series:
+        short_ma = prices.rolling(self.short_window).mean()
+        long_ma = prices.rolling(self.long_window).mean()
+
+        signals = pd.Series(0, index=prices.index)
+        signals[short_ma &gt; long_ma] = 1   # Buy
+        signals[short_ma &lt; long_ma] = -1  # Sell
+
+        return signals
+
+    def backtest(self, prices: pd.Series, initial_capital=100000):
+        signals = self.generate_signals(prices)
+        positions = signals.diff().fillna(0)
+
+        portfolio = pd.DataFrame(index=prices.index)
+        portfolio[&#x27;returns&#x27;] = prices.pct_change()
+        portfolio[&#x27;position&#x27;] = signals.shift(1)
+        portfolio[&#x27;strategy_returns&#x27;] = portfolio[&#x27;position&#x27;] * portfolio[&#x27;returns&#x27;]
+
+        portfolio[&#x27;cumulative_returns&#x27;] = (1 + portfolio[&#x27;strategy_returns&#x27;]).cumprod()
+        portfolio[&#x27;equity&#x27;] = initial_capital * portfolio[&#x27;cumulative_returns&#x27;]
+
+        return portfolio</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Building automated trading systems for stocks, crypto, or futures</li>
+<li>Backtesting trading strategies before live deployment</li>
+<li>When manual trading is too slow or emotional</li>
+<li>Need for systematic risk management</li>
+</ul>
+<h2>Step-by-Step</h2>
+<h3>1. Market Data Pipeline</h3>
+<div class="codeblock"><pre class="code"><code>import asyncio
+from dataclasses import dataclass
+
+@dataclass
+class Tick:
+    symbol: str
+    price: float
+    volume: float
+    timestamp: float
+
+class MarketDataFeed:
+    def __init__(self):
+        self.subscribers: list[callable] = []
+
+    def subscribe(self, callback):
+        self.subscribers.append(callback)
+
+    async def stream(self, symbols: list[str]):
+        &quot;&quot;&quot;Connect to exchange WebSocket and emit ticks.&quot;&quot;&quot;
+        while True:
+            tick = await self._receive_tick(symbols)
+            for callback in self.subscribers:
+                callback(tick)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Strategy Design</h3>
+<div class="codeblock"><pre class="code"><code>from abc import ABC, abstractmethod
+
+class Strategy(ABC):
+    @abstractmethod
+    def on_tick(self, tick: Tick) -&gt; float:
+        &quot;&quot;&quot;Return target position size (-1 to 1).&quot;&quot;&quot;
+        pass
+
+    @abstractmethod
+    def on_bar(self, bars: pd.DataFrame) -&gt; float:
+        &quot;&quot;&quot;Return signal based on OHLCV bars.&quot;&quot;&quot;
+        pass
+
+class MeanReversionStrategy(Strategy):
+    def __init__(self, lookback=20, threshold=2.0):
+        self.lookback = lookback
+        self.threshold = threshold
+
+    def on_bar(self, bars: pd.DataFrame) -&gt; float:
+        prices = bars[&#x27;close&#x27;].tail(self.lookback)
+        z_score = (prices.iloc[-1] - prices.mean()) / prices.std()
+
+        if z_score &gt; self.threshold:
+            return -1.0  # Overbought, sell
+        elif z_score &lt; -self.threshold:
+            return 1.0   # Oversold, buy
+        return 0.0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Backtesting Engine</h3>
+<div class="codeblock"><pre class="code"><code>class BacktestEngine:
+    def __init__(self, initial_capital=100000, commission=0.001):
+        self.initial_capital = initial_capital
+        self.commission = commission
+
+    def run(self, strategy: Strategy, data: pd.DataFrame) -&gt; dict:
+        capital = self.initial_capital
+        position = 0
+        trades = []
+
+        for i in range(len(data)):
+            signal = strategy.on_bar(data.iloc[:i+1])
+
+            if signal &gt; 0 and position &lt;= 0:
+                # Buy
+                shares = int(capital * signal / data.iloc[i][&#x27;close&#x27;])
+                cost = shares * data.iloc[i][&#x27;close&#x27;] * (1 + self.commission)
+                capital -= cost
+                position += shares
+                trades.append((&#x27;BUY&#x27;, i, shares, data.iloc[i][&#x27;close&#x27;]))
+
+            elif signal &lt; 0 and position &gt; 0:
+                # Sell
+                revenue = position * data.iloc[i][&#x27;close&#x27;] * (1 - self.commission)
+                capital += revenue
+                trades.append((&#x27;SELL&#x27;, i, position, data.iloc[i][&#x27;close&#x27;]))
+                position = 0
+
+        final_value = capital + position * data.iloc[-1][&#x27;close&#x27;]
+        return {
+            &#x27;final_value&#x27;: final_value,
+            &#x27;total_return&#x27;: (final_value - self.initial_capital) / self.initial_capital,
+            &#x27;num_trades&#x27;: len(trades),
+            &#x27;trades&#x27;: trades,
+        }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Risk Management</h3>
+<div class="codeblock"><pre class="code"><code>class RiskManager:
+    def __init__(self, max_position_pct=0.1, max_drawdown_pct=0.2):
+        self.max_position_pct = max_position_pct
+        self.max_drawdown_pct = max_drawdown_pct
+        self.peak_equity = 0
+
+    def check_position_size(self, order_value: float, portfolio_value: float) -&gt; bool:
+        return order_value / portfolio_value &lt;= self.max_position_pct
+
+    def check_drawdown(self, current_equity: float) -&gt; bool:
+        self.peak_equity = max(self.peak_equity, current_equity)
+        drawdown = (self.peak_equity - current_equity) / self.peak_equity
+        return drawdown &lt;= self.max_drawdown_pct
+
+    def calculate_stop_loss(self, entry_price: float, risk_pct: float = 0.02) -&gt; float:
+        return entry_price * (1 - risk_pct)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Order Execution</h3>
+<div class="codeblock"><pre class="code"><code>import aiohttp
+
+class OrderExecutor:
+    def __init__(self, api_url: str, api_key: str):
+        self.api_url = api_url
+        self.api_key = api_key
+
+    async def place_order(self, symbol: str, side: str, quantity: float, price: float):
+        async with aiohttp.ClientSession() as session:
+            order = {
+                &#x27;symbol&#x27;: symbol,
+                &#x27;side&#x27;: side,
+                &#x27;quantity&#x27;: quantity,
+                &#x27;price&#x27;: price,
+                &#x27;type&#x27;: &#x27;LIMIT&#x27;,
+            }
+            headers = {&#x27;Authorization&#x27;: f&#x27;Bearer {self.api_key}&#x27;}
+            async with session.post(f&#x27;{self.api_url}/orders&#x27;, json=order, headers=headers) as resp:
+                return await resp.json()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>**Always backtest** before live trading</li>
+<li>**Include slippage and commission** in backtests</li>
+<li>**Use walk-forward analysis** to avoid overfitting</li>
+<li>**Implement circuit breakers** for extreme market conditions</li>
+<li>**Log everything** — trades, signals, errors</li>
+<li>**Start with paper trading** before real money</li>
+</ul>
+<h2>Common Pitfalls</h2>
+<ul>
+<li>Overfitting to historical data (curve fitting)</li>
+<li>Ignoring transaction costs and slippage</li>
+<li>Look-ahead bias in backtests</li>
+<li>Not handling market data gaps or errors</li>
+<li>Running without risk limits</li>
+</ul>
+<h2>Examples</h2>
+<h3>Performance Metrics</h3>
+<div class="codeblock"><pre class="code"><code>def calculate_metrics(returns: pd.Series) -&gt; dict:
+    total_return = (1 + returns).prod() - 1
+    annual_return = (1 + total_return) ** (252 / len(returns)) - 1
+    volatility = returns.std() * np.sqrt(252)
+    sharpe = annual_return / volatility if volatility &gt; 0 else 0
+
+    cumulative = (1 + returns).cumprod()
+    drawdown = cumulative / cumulative.cummax() - 1
+    max_drawdown = drawdown.min()
+
+    return {
+        &#x27;total_return&#x27;: total_return,
+        &#x27;annual_return&#x27;: annual_return,
+        &#x27;volatility&#x27;: volatility,
+        &#x27;sharpe_ratio&#x27;: sharpe,
+        &#x27;max_drawdown&#x27;: max_drawdown,
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Validation</h2>
+<div class="codeblock"><pre class="code"><code>def test_strategy():
+    prices = pd.Series(np.random.randn(100).cumsum() + 100)
+    strategy = MovingAverageCrossover()
+    portfolio = strategy.backtest(prices)
+    assert &#x27;equity&#x27; in portfolio.columns
+    assert len(portfolio) == len(prices)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="risk-modeling.html">risk-modeling →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

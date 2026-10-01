@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sql-querying — Agent Skills Library</title>
+  <meta name="description" content="Write correct and efficient SQL: joins, aggregations, window functions, CTEs, and query optimization. Use for any relational data access.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/sql-querying.html">
+  <meta property="og:title" content="sql-querying — Agent Skills Library">
+  <meta property="og:description" content="Write correct and efficient SQL: joins, aggregations, window functions, CTEs, and query optimization. Use for any relational data access.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/sql-querying.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#10b9811a;color:#10b981;border-color:#10b98144">data</span>
+          <span class="tag">sql</span><span class="tag">database</span><span class="tag">queries</span><span class="tag">joins</span><span class="tag">aggregations</span><span class="tag">window-functions</span><span class="tag">cte</span>
+        </div>
+        <h1 class="skill-page-title">sql-querying</h1>
+        <p class="skill-page-desc">Write correct and efficient SQL: joins, aggregations, window functions, CTEs, and query optimization. Use for any relational data access.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>128</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('sql-querying')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/data/sql-querying">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="pandas.html">← pandas</a></div>
+      <div class="skill-page-body">
+        <h1>SQL Querying</h1>
+<blockquote>Writing correct, efficient SQL for analysis and applications.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>SELECT status, COUNT(*) AS cnt
+FROM orders
+WHERE created_at &gt;= NOW() - INTERVAL &#x27;30 days&#x27;
+GROUP BY status
+ORDER BY cnt DESC;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Reporting and ad-hoc analysis</li>
+<li>Application data access (ORMs under the hood)</li>
+<li>Data pipelines and ETL validation</li>
+<li>Any time you need relational answers</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Readability</h3>
+<ul>
+<li>Format queries with clear clauses and aliases</li>
+<li>Use CTEs (WITH) to break complex logic into steps</li>
+<li>Name columns meaningfully with aliases</li>
+<li>Add comments for non-obvious business logic</li>
+</ul>
+<h3>Correctness</h3>
+<ul>
+<li>Know join semantics: INNER vs LEFT vs FULL</li>
+<li>Watch for fan-out: one-to-many joins multiply rows</li>
+<li>Use DISTINCT deliberately, not by reflex</li>
+<li>Handle NULLs in WHERE/aggregations explicitly</li>
+</ul>
+<h3>Aggregation</h3>
+<ul>
+<li>Aggregate with GROUP BY on non-aggregated columns</li>
+<li>Use window functions for rankings, running totals, deltas</li>
+<li>Filter with HAVING on aggregates, WHERE on rows</li>
+<li>Use COUNT(DISTINCT ...) for unique counts</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Only select needed columns</li>
+<li>Filter early with WHERE before joins</li>
+<li>Ensure indexes support filters and joins</li>
+<li>Avoid functions on indexed columns in WHERE</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># psql (PostgreSQL), sqlite3, or your database client
+psql &quot;postgres://localhost/app&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>-- CTE + window function: top product per category
+WITH ranked AS (
+  SELECT
+    category,
+    product,
+    revenue,
+    ROW_NUMBER() OVER (PARTITION BY category ORDER BY revenue DESC) AS rn
+  FROM sales
+)
+SELECT category, product, revenue
+FROM ranked
+WHERE rn = 1;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Running total with window function
+SELECT
+  date,
+  amount,
+  SUM(amount) OVER (ORDER BY date) AS running_total
+FROM daily_revenue;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Join with aggregation, filter early
+SELECT c.name, COUNT(o.id) AS orders
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id
+WHERE o.created_at &gt;= &#x27;2026-01-01&#x27;
+GROUP BY c.name
+HAVING COUNT(o.id) &gt; 0
+ORDER BY orders DESC;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Compare this month vs last month
+SELECT
+  product,
+  SUM(CASE WHEN date_trunc(&#x27;month&#x27;, d) = date_trunc(&#x27;month&#x27;, CURRENT_DATE)
+           THEN amount ELSE 0 END) AS this_month,
+  SUM(CASE WHEN date_trunc(&#x27;month&#x27;, d) = date_trunc(&#x27;month&#x27;, CURRENT_DATE) - INTERVAL &#x27;1 month&#x27;
+           THEN amount ELSE 0 END) AS last_month
+FROM revenue
+GROUP BY product;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. State the question you need answered in plain language.</p>
+<p class='ordered'>2. Identify the tables and the join keys.</p>
+<p class='ordered'>3. Write WHERE filters first, then joins, then aggregation.</p>
+<p class='ordered'>4. Add GROUP BY / window functions for the desired shape.</p>
+<p class='ordered'>5. Format with CTEs if the query is complex.</p>
+<p class='ordered'>6. Check correctness on a small sample.</p>
+<p class='ordered'>7. Review the plan (EXPLAIN) for obvious inefficiency.</p>
+<p class='ordered'>8. Validate the numbers against a known baseline.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Query returns expected row counts (no fan-out surprises)</p>
+<p class='ordered'>2. Aggregations match independent totals</p>
+<p class='ordered'>3. NULLs and edge dates handled correctly</p>
+<p class='ordered'>4. Runs within target time on production data</p>
+<p class='ordered'>5. Results are reproducible</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Duplicate rows: check join fan-out; dedupe keys.</li>
+<li>Slow query: filter earlier, add indexes, simplify.</li>
+<li>Wrong totals: verify join semantics and NULL handling.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="pandas.html">← pandas</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

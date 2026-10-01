@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kafka — Agent Skills Library</title>
+  <meta name="description" content="Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/kafka.html">
+  <meta property="og:title" content="kafka — Agent Skills Library">
+  <meta property="og:description" content="Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/kafka.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">kafka</span><span class="tag">event-streaming</span><span class="tag">message-queue</span><span class="tag">topics</span><span class="tag">consumers</span><span class="tag">partitioning</span><span class="tag">streaming</span>
+        </div>
+        <h1 class="skill-page-title">kafka</h1>
+        <p class="skill-page-desc">Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>134</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('kafka')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/kafka">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="jenkins.html">← jenkins</a><a class="page-nav-link" href="kubernetes.html">kubernetes →</a></div>
+      <div class="skill-page-body">
+        <h1>Kafka</h1>
+<blockquote>Building reliable event streaming with Apache Kafka.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>docker compose up -d  # single-node kafka
+kafka-topics --bootstrap-server localhost:9092 --create --topic events --partitions 3
+kafka-console-producer --bootstrap-server localhost:9092 --topic events</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Event-driven architecture and decoupling</li>
+<li>High-throughput log ingestion and analytics</li>
+<li>Stream processing (join, aggregate, window)</li>
+<li>Durable message replay for consumers</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Topics &amp; Partitioning</h3>
+<ul>
+<li>Model topics by event type, not by consumer</li>
+<li>Partition by key for ordering within a key</li>
+<li>Choose partition count based on throughput</li>
+<li>Set retention per topic (time and size)</li>
+</ul>
+<h3>Producers</h3>
+<ul>
+<li>Use a key for order/co-partitioning needs</li>
+<li>Set acks (all) for durability; tune batching</li>
+<li>Handle retries and idempotence (enable idempotent producer)</li>
+<li>Monitor `record-error-rate` and latency</li>
+</ul>
+<h3>Consumers</h3>
+<ul>
+<li>Use consumer groups for scale</li>
+<li>Handle rebalance gracefully</li>
+<li>Commit offsets after processing (at-least-once)</li>
+<li>Make consumption idempotent for exactly-once semantics</li>
+</ul>
+<h3>Operations</h3>
+<ul>
+<li>Run at least 3 brokers with replication factor 3</li>
+<li>Monitor lag, under-replicated partitions, and disk</li>
+<li>Use Schema Registry for schema evolution</li>
+<li>Set alerts on consumer lag</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Python client
+pip install confluent-kafka
+# or Java:
+# org.apache.kafka:kafka-clients</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>from confluent_kafka import Producer
+
+p = Producer({&quot;bootstrap.servers&quot;: &quot;localhost:9092&quot;})
+
+def acked(err, msg):
+    if err is not None:
+        print(f&quot;failed: {err}&quot;)
+
+p.produce(&quot;events&quot;, key=&quot;user-42&quot;, value=b&#x27;{&quot;action&quot;:&quot;login&quot;}&#x27;, callback=acked)
+p.flush()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from confluent_kafka import Consumer, KafkaError
+
+c = Consumer({
+    &quot;bootstrap.servers&quot;: &quot;localhost:9092&quot;,
+    &quot;group.id&quot;: &quot;analytics&quot;,
+    &quot;auto.offset.reset&quot;: &quot;earliest&quot;,
+})
+c.subscribe([&quot;events&quot;])
+
+while True:
+    msg = c.poll(1.0)
+    if msg is None:
+        continue
+    if msg.error():
+        if msg.error().code() == KafkaError._PARTITION_EOF:
+            continue
+        break
+    process(msg.value())        # idempotent processing
+    c.commit(asynchronous=False)  # commit after processing</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Java producer with acks and idempotence
+Properties props = new Properties();
+props.put(&quot;bootstrap.servers&quot;, &quot;localhost:9092&quot;);
+props.put(&quot;key.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+props.put(&quot;value.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+props.put(&quot;acks&quot;, &quot;all&quot;);
+props.put(&quot;enable.idempotence&quot;, &quot;true&quot;);
+KafkaProducer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(props);
+producer.send(new ProducerRecord&lt;&gt;(&quot;events&quot;, &quot;user-42&quot;, &quot;login&quot;));</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Monitor consumer lag
+kafka-consumer-groups --bootstrap-server localhost:9092 \
+  --describe --group analytics</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Define event types and topic names up front.</p>
+<p class='ordered'>2. Choose partitioning strategy per key.</p>
+<p class='ordered'>3. Set replication factor and retention.</p>
+<p class='ordered'>4. Implement producers with acks and idempotence.</p>
+<p class='ordered'>5. Implement consumers with graceful rebalance and offsets.</p>
+<p class='ordered'>6. Make processing idempotent for safe replays.</p>
+<p class='ordered'>7. Use Schema Registry for contract evolution.</p>
+<p class='ordered'>8. Monitor lag, disk, and error rates.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Producers send without errors under load</p>
+<p class='ordered'>2. Consumers process in order within a key</p>
+<p class='ordered'>3. Consumer lag stays near zero at steady state</p>
+<p class='ordered'>4. Rebalances don&#x27;t lose or duplicate processed events</p>
+<p class='ordered'>5. Replaying from an offset produces identical results</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>High lag: scale consumers or optimize processing.</li>
+<li>Out-of-order: partition by key and check single-consumer-per-partition.</li>
+<li>Duplicates: make processing idempotent or use exactly-once.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="jenkins.html">← jenkins</a><a class="page-nav-link" href="kubernetes.html">kubernetes →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

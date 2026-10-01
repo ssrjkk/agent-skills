@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hipaa-compliance — Agent Skills Library</title>
+  <meta name="description" content="Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification. Use for health IT security.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/hipaa-compliance.html">
+  <meta property="og:title" content="hipaa-compliance — Agent Skills Library">
+  <meta property="og:description" content="Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification. Use for health IT security.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/hipaa-compliance.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#06b6d41a;color:#06b6d4;border-color:#06b6d444">healthcare</span>
+          <span class="tag">hipaa</span><span class="tag">compliance</span><span class="tag">healthcare</span><span class="tag">security</span><span class="tag">phi</span><span class="tag">encryption</span><span class="tag">audit</span><span class="tag">access-control</span>
+        </div>
+        <h1 class="skill-page-title">hipaa-compliance</h1>
+        <p class="skill-page-desc">Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification. Use for health IT security.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>8</strong></span>
+          <span>Sections <strong>7</strong></span>
+          <span>Lines <strong>302</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('hipaa-compliance')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/healthcare/hipaa-compliance">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="hl7-fhir.html">hl7-fhir →</a></div>
+      <div class="skill-page-body">
+        <h1>HIPAA Compliance</h1>
+<blockquote>Implementing HIPAA compliance in healthcare software with PHI protection and audit logging.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>import hashlib
+import hmac
+import json
+import logging
+from datetime import datetime
+from functools import wraps
+
+class HIPAACompliance:
+    &quot;&quot;&quot;Core HIPAA compliance utilities for healthcare applications.&quot;&quot;&quot;
+
+    def __init__(self, organization_id: str):
+        self.organization_id = organization_id
+        self.audit_logger = logging.getLogger(&#x27;hipaa.audit&#x27;)
+
+    def hash_phi(self, value: str, salt: str = &quot;&quot;) -&gt; str:
+        &quot;&quot;&quot;One-way hash for PHI (useful for analytics without exposing data).&quot;&quot;&quot;
+        return hashlib.sha256(f&quot;{salt}{value}&quot;.encode()).hexdigest()
+
+    def mask_phi(self, value: str, visible_chars: int = 4) -&gt; str:
+        &quot;&quot;&quot;Mask PHI for display (e.g., SSN: ***-**-1234).&quot;&quot;&quot;
+        if len(value) &lt;= visible_chars:
+            return &#x27;*&#x27; * len(value)
+        return &#x27;*&#x27; * (len(value) - visible_chars) + value[-visible_chars:]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Building healthcare applications that handle Protected Health Information (PHI)</li>
+<li>When you need to comply with HIPAA Privacy and Security Rules</li>
+<li>Implementing access controls and audit logging for health data</li>
+<li>Preparing for HIPAA audits or risk assessments</li>
+</ul>
+<h2>Step-by-Step</h2>
+<h3>1. Access Control</h3>
+<div class="codeblock"><pre class="code"><code>from enum import Enum
+from dataclasses import dataclass
+
+class Role(Enum):
+    PHYSICIAN = &quot;physician&quot;
+    NURSE = &quot;nurse&quot;
+    ADMIN = &quot;admin&quot;
+    BILLING = &quot;billing&quot;
+    PATIENT = &quot;patient&quot;
+
+@dataclass
+class AccessPolicy:
+    allowed_roles: set[Role]
+    requires_break_glass: bool = False
+    max_access_duration_minutes: int = 480
+
+class AccessControl:
+    def __init__(self):
+        self.policies: dict[str, AccessPolicy] = {}
+
+    def define_policy(self, resource_type: str, policy: AccessPolicy):
+        self.policies[resource_type] = policy
+
+    def check_access(self, user_role: Role, resource_type: str, patient_id: str) -&gt; bool:
+        policy = self.policies.get(resource_type)
+        if not policy:
+            return False
+
+        if user_role not in policy.allowed_roles:
+            self._log_access_denied(user_role, resource_type, patient_id)
+            return False
+
+        return True
+
+    def _log_access_denied(self, role: Role, resource: str, patient_id: str):
+        self.audit_logger.warning(
+            f&quot;ACCESS_DENIED: role={role.value} resource={resource} patient={patient_id}&quot;
+        )</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Audit Logging</h3>
+<div class="codeblock"><pre class="code"><code>class AuditLogger:
+    &quot;&quot;&quot;HIPAA-compliant audit logging for PHI access.&quot;&quot;&quot;
+
+    def __init__(self, log_path: str = &quot;audit.log&quot;):
+        self.logger = logging.getLogger(&#x27;hipaa.audit&#x27;)
+        handler = logging.FileHandler(log_path)
+        handler.setFormatter(logging.Formatter(
+            &#x27;%(asctime)s | %(message)s&#x27;
+        ))
+        self.logger.addHandler(handler)
+        self.logger.setLevel(logging.INFO)
+
+    def log_access(self, user_id: str, action: str, resource_type: str,
+                   resource_id: str, patient_id: str, reason: str = &quot;&quot;):
+        entry = {
+            &#x27;timestamp&#x27;: datetime.utcnow().isoformat(),
+            &#x27;user_id&#x27;: user_id,
+            &#x27;action&#x27;: action,
+            &#x27;resource_type&#x27;: resource_type,
+            &#x27;resource_id&#x27;: resource_id,
+            &#x27;patient_id&#x27;: patient_id,
+            &#x27;reason&#x27;: reason,
+        }
+        self.logger.info(json.dumps(entry))
+
+    def log_modification(self, user_id: str, resource_type: str,
+                         resource_id: str, changes: dict):
+        entry = {
+            &#x27;timestamp&#x27;: datetime.utcnow().isoformat(),
+            &#x27;user_id&#x27;: user_id,
+            &#x27;action&#x27;: &#x27;MODIFY&#x27;,
+            &#x27;resource_type&#x27;: resource_type,
+            &#x27;resource_id&#x27;: resource_id,
+            &#x27;changes&#x27;: list(changes.keys()),
+        }
+        self.logger.info(json.dumps(entry))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Encryption</h3>
+<div class="codeblock"><pre class="code"><code>from cryptography.fernet import Fernet
+import base64
+import os
+
+class PHIEncryption:
+    &quot;&quot;&quot;Encrypt PHI at rest and in transit.&quot;&quot;&quot;
+
+    def __init__(self, key: bytes = None):
+        if key is None:
+            key = Fernet.generate_key()
+        self.cipher = Fernet(key)
+
+    def encrypt(self, data: str) -&gt; bytes:
+        return self.cipher.encrypt(data.encode())
+
+    def decrypt(self, encrypted: bytes) -&gt; str:
+        return self.cipher.decrypt(encrypted).decode()
+
+    @staticmethod
+    def generate_key() -&gt; bytes:
+        return Fernet.generate_key()
+
+class DatabaseEncryption:
+    &quot;&quot;&quot;Column-level encryption for PHI in databases.&quot;&quot;&quot;
+
+    def __init__(self, encryption_key: bytes):
+        self.cipher = Fernet(encryption_key)
+
+    def encrypt_column(self, value: str) -&gt; str:
+        encrypted = self.cipher.encrypt(value.encode())
+        return base64.b64encode(encrypted).decode()
+
+    def decrypt_column(self, encrypted_b64: str) -&gt; str:
+        encrypted = base64.b64decode(encrypted_b64)
+        return self.cipher.decrypt(encrypted).decode()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Session Management</h3>
+<div class="codeblock"><pre class="code"><code>import secrets
+from datetime import datetime, timedelta
+
+class SecureSession:
+    &quot;&quot;&quot;HIPAA-compliant session management with auto-timeout.&quot;&quot;&quot;
+
+    MAX_SESSION_DURATION = timedelta(hours=8)
+    IDLE_TIMEOUT = timedelta(minutes=15)
+
+    def __init__(self, user_id: str):
+        self.user_id = user_id
+        self.session_id = secrets.token_urlsafe(32)
+        self.created_at = datetime.utcnow()
+        self.last_activity = datetime.utcnow()
+
+    def is_valid(self) -&gt; bool:
+        now = datetime.utcnow()
+        if now - self.created_at &gt; self.MAX_SESSION_DURATION:
+            return False
+        if now - self.last_activity &gt; self.IDLE_TIMEOUT:
+            return False
+        return True
+
+    def touch(self):
+        self.last_activity = datetime.utcnow()
+
+    def require_reauth(self) -&gt; bool:
+        &quot;&quot;&quot;Sensitive operations require re-authentication.&quot;&quot;&quot;
+        return (datetime.utcnow() - self.last_activity) &gt; timedelta(minutes=5)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Breach Detection</h3>
+<div class="codeblock"><pre class="code"><code>class BreachDetector:
+    &quot;&quot;&quot;Detect potential PHI breaches from access patterns.&quot;&quot;&quot;
+
+    def __init__(self, audit_logger: AuditLogger):
+        self.audit_logger = audit_logger
+        self.access_counts: dict[str, int] = {}
+        self.threshold = 50  # Accesses per hour before alert
+
+    def record_access(self, user_id: str):
+        self.access_counts[user_id] = self.access_counts.get(user_id, 0) + 1
+
+    def check_for_breach(self, user_id: str) -&gt; bool:
+        if self.access_counts.get(user_id, 0) &gt; self.threshold:
+            self.audit_logger.logger.error(
+                f&quot;POTENTIAL_BREACH: user={user_id} &quot;
+                f&quot;access_count={self.access_counts[user_id]}&quot;
+            )
+            return True
+        return False</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>**Minimum necessary access** — only grant access to PHI needed for the role</li>
+<li>**Encrypt PHI at rest and in transit** — use AES-256 minimum</li>
+<li>**Log all PHI access** — who, what, when, why</li>
+<li>**Auto-timeout sessions** — 15 min idle, 8 hour max</li>
+<li>**Implement break-glass** — emergency access with enhanced logging</li>
+<li>**Regular risk assessments** — at least annually</li>
+<li>**Train all staff** — HIPAA training within 30 days of hire</li>
+</ul>
+<h2>Common Pitfalls</h2>
+<ul>
+<li>Storing PHI in logs or error messages</li>
+<li>Not encrypting database backups</li>
+<li>Sharing PHI over unencrypted channels (email, chat)</li>
+<li>Not implementing proper session timeouts</li>
+<li>Failing to document access policies</li>
+<li>Not having a breach notification plan</li>
+</ul>
+<h2>Examples</h2>
+<h3>Decorator for PHI Access</h3>
+<div class="codeblock"><pre class="code"><code>def require_phi_access(resource_type: str):
+    &quot;&quot;&quot;Decorator to enforce HIPAA access controls.&quot;&quot;&quot;
+    def decorator(func):
+        @wraps(func)
+        def wrapper(user, patient_id, *args, **kwargs):
+            acl = AccessControl()
+            if not acl.check_access(user.role, resource_type, patient_id):
+                raise PermissionError(&quot;Access denied&quot;)
+
+            audit = AuditLogger()
+            audit.log_access(
+                user_id=user.id,
+                action=&#x27;READ&#x27;,
+                resource_type=resource_type,
+                resource_id=patient_id,
+                patient_id=patient_id,
+            )
+
+            return func(user, patient_id, *args, **kwargs)
+        return wrapper
+    return decorator
+
+@require_phi_access(&#x27;PatientRecord&#x27;)
+def get_patient_record(user, patient_id):
+    # Only runs if access is granted and logged
+    return fetch_record(patient_id)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Validation</h2>
+<div class="codeblock"><pre class="code"><code>def test_phi_masking():
+    compliance = HIPAACompliance(&quot;test-org&quot;)
+    assert compliance.mask_phi(&quot;123-45-6789&quot;) == &quot;*****6789&quot;
+    assert compliance.mask_phi(&quot;John&quot;) == &quot;****&quot;
+
+def test_session_timeout():
+    session = SecureSession(&quot;user123&quot;)
+    assert session.is_valid()
+    session.last_activity = datetime.utcnow() - timedelta(hours=9)
+    assert not session.is_valid()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="hl7-fhir.html">hl7-fhir →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

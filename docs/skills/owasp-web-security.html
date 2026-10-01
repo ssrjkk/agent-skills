@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>owasp-web-security — Agent Skills Library</title>
+  <meta name="description" content="Harden web applications against the OWASP Top 10: injection, XSS, auth flaws, CSRF, SSRF, and insecure dependencies. Use for any web app security review.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/owasp-web-security.html">
+  <meta property="og:title" content="owasp-web-security — Agent Skills Library">
+  <meta property="og:description" content="Harden web applications against the OWASP Top 10: injection, XSS, auth flaws, CSRF, SSRF, and insecure dependencies. Use for any web app security review.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/owasp-web-security.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#dc26261a;color:#dc2626;border-color:#dc262644">security</span>
+          <span class="tag">owasp</span><span class="tag">security</span><span class="tag">web</span><span class="tag">injection</span><span class="tag">xss</span><span class="tag">csrf</span><span class="tag">ssrf</span><span class="tag">pentest</span>
+        </div>
+        <h1 class="skill-page-title">owasp-web-security</h1>
+        <p class="skill-page-desc">Harden web applications against the OWASP Top 10: injection, XSS, auth flaws, CSRF, SSRF, and insecure dependencies. Use for any web app security review.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>110</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('owasp-web-security')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/security/owasp-web-security">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="oauth2-jwt.html">← oauth2-jwt</a><a class="page-nav-link" href="secrets-management.html">secrets-management →</a></div>
+      <div class="skill-page-body">
+        <h1>OWASP Web Security</h1>
+<blockquote>Hardening web applications against the OWASP Top 10.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Scan dependencies for known vulnerabilities
+pip-audit --format full
+npm audit
+# then review the OWASP Top 10 checklist against your app</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Before launching or major releases</li>
+<li>When handling auth, payments, or PII</li>
+<li>After dependency or framework upgrades</li>
+<li>Regular security hardening of existing apps</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Injection</h3>
+<ul>
+<li>Parameterize all SQL/query construction</li>
+<li>Escape output for the context (HTML, JS, URL)</li>
+<li>Validate and whitelist inputs server-side</li>
+<li>Use ORM/query builders; never string-concatenate queries</li>
+</ul>
+<h3>Authentication &amp; Authorization</h3>
+<ul>
+<li>Use a proven auth library (not homegrown)</li>
+<li>Hash passwords with bcrypt/argon2</li>
+<li>Enforce MFA for sensitive actions</li>
+<li>Check authorization on every endpoint, not just the UI</li>
+</ul>
+<h3>XSS &amp; CSRF</h3>
+<ul>
+<li>Auto-escape template output; sanitize rich content</li>
+<li>Set CSP headers; use strict `Trusted Types` where possible</li>
+<li>CSRF tokens on all state-changing requests</li>
+<li>Set `SameSite=Lax/Strict` on cookies</li>
+</ul>
+<h3>Data &amp; Dependencies</h3>
+<ul>
+<li>Encrypt data in transit (TLS) and at rest</li>
+<li>Keep dependencies updated; scan regularly</li>
+<li>Restrict SSRF: block private ranges, pin redirects</li>
+<li>Limit file uploads: type, size, and execution</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install bandit pip-audit
+npm install -g npm-audit-resolver
+# scanners: semgrep, gitleaks, trivy</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># SQL injection safe pattern
+cursor.execute(&quot;SELECT * FROM users WHERE email = %s&quot;, (email,))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Escape output in templates (Django auto-escapes)
+# context = {&quot;user_input&quot;: user_input}
+# Template: {{ user_input }}   # auto-escaped</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CSRF protection (Django middleware default)
+from django.views.decorators.csrf import csrf_exempt
+# never use @csrf_exempt on state-changing views</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># SSRF guard
+import ipaddress, socket
+
+def safe_fetch(url: str) -&gt; str:
+    host = urlparse(url).hostname
+    ip = ipaddress.ip_address(socket.gethostbyname(host))
+    if not ip.is_private:          # block local/private ranges
+        return requests.get(url).text
+    raise ValueError(&quot;Blocked private address&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Run dependency scanners (pip-audit/npm audit/trivy).</p>
+<p class='ordered'>2. Review authN/authZ: password storage, sessions, roles.</p>
+<p class='ordered'>3. Check all inputs: validation, escaping, parameterization.</p>
+<p class='ordered'>4. Audit CSRF, XSS, and CSP headers.</p>
+<p class='ordered'>5. Review file uploads, SSRF vectors, and redirect handling.</p>
+<p class='ordered'>6. Check secrets: gitleaks scan and env-based config.</p>
+<p class='ordered'>7. Harden headers: CSP, HSTS, X-Content-Type-Options.</p>
+<p class='ordered'>8. Re-scan after fixes; document residual risks.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. No injection points found in code scan</p>
+<p class='ordered'>2. Passwords stored with a strong hash</p>
+<p class='ordered'>3. Authorization enforced server-side on all endpoints</p>
+<p class='ordered'>4. CSP and security headers present</p>
+<p class='ordered'>5. Dependency scan reports no critical vulnerabilities</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Broken auth flows: test with the same browser/network rules users hit.</li>
+<li>False positives: verify scanners&#x27; claims in a safe environment.</li>
+<li>Legacy code risk: prioritize by exposed attack surface.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="oauth2-jwt.html">← oauth2-jwt</a><a class="page-nav-link" href="secrets-management.html">secrets-management →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

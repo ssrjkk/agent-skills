@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>observability-llm — Agent Skills Library</title>
+  <meta name="description" content="LLM observability with Langfuse/LangSmith">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/observability-llm.html">
+  <meta property="og:title" content="observability-llm — Agent Skills Library">
+  <meta property="og:description" content="LLM observability with Langfuse/LangSmith">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/observability-llm.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">observability</span><span class="tag">llm</span><span class="tag">langfuse</span><span class="tag">langsmith</span><span class="tag">tracing</span><span class="tag">monitoring</span>
+        </div>
+        <h1 class="skill-page-title">observability-llm</h1>
+        <p class="skill-page-desc">LLM observability with Langfuse/LangSmith</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>130</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('observability-llm')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/observability-llm">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="nginx.html">← nginx</a><a class="page-nav-link" href="platform-engineering.html">platform-engineering →</a></div>
+      <div class="skill-page-body">
+        <h1>LLM Observability</h1>
+<blockquote>Monitor, trace, and debug LLM applications with Langfuse and LangSmith.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Langfuse — LLM observability platform
+from langfuse import Langfuse
+from langfuse.decorators import observe, langfuse_context
+
+langfuse = Langfuse(
+    secret_key=&quot;sk-lf-...&quot;,
+    public_key=&quot;pk-lf-...&quot;
+)
+
+@observe(name=&quot;rag-query&quot;, as_type=&quot;generation&quot;)
+def rag_query(question: str, context: str) -&gt; str:
+    # Automatically traces token usage, latency, and metadata
+    langfuse_context.update_current_generation(
+        input=question,
+        output=&quot;generated answer&quot;,
+        usage={&quot;promptTokens&quot;: 150, &quot;completionTokens&quot;: 80, &quot;totalTokens&quot;: 230},
+        metadata={&quot;retrieved_docs&quot;: 3, &quot;model&quot;: &quot;claude-sonnet-4&quot;}
+    )
+    return &quot;Generated answer&quot;
+
+# Manual tracing
+trace = langfuse.trace(name=&quot;document-pipeline&quot;)
+span = trace.span(name=&quot;embedding-generation&quot;)
+span.end()
+trace.update(
+    input={&quot;query&quot;: &quot;user question&quot;},
+    output={&quot;answer&quot;: &quot;AI response&quot;}
+)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># LangSmith — LangChain observability
+from langsmith import Client
+from langchain.callbacks.tracers import LangSmithTracer
+
+# Environment setup
+import os
+os.environ[&quot;LANGCHAIN_TRACING_V2&quot;] = &quot;true&quot;
+os.environ[&quot;LANGCHAIN_API_KEY&quot;] = &quot;ls-...&quot;
+os.environ[&quot;LANGCHAIN_PROJECT&quot;] = &quot;my-llm-app&quot;
+
+# Automatic tracing with callback
+tracer = LangSmithTracer()
+llm.invoke(&quot;Hello&quot;, config={&quot;callbacks&quot;: [tracer]})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Trace every LLM call with latency, tokens, cost, and metadata. Track prompt versions, model parameters, and retrieval context. Debug with full trace visualization. Set up monitoring for cost alerts and quality metrics.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Production LLM applications needing debugging</li>
+<li>Tracking token usage and costs across teams</li>
+<li>A/B testing prompt variations</li>
+<li>Monitoring response quality and latency regressions</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install: `pip install langfuse` and set env keys `LANGFUSE_PUBLIC_KEY`/`LANGFUSE_SECRET_KEY`.</p>
+<p class='ordered'>2. Add decorators: wrap your generation/RAG functions with `@observe` so the SDK traces latency, tokens, and metadata.</p>
+<p class='ordered'>3. Add context: capture input/output, usage dict, and retrieval metadata (doc ids, model name, versions).</p>
+<p class='ordered'>4. Build dashboards: use Langfuse/LangSmith views to group by session, project, or prompt version.</p>
+<p class='ordered'>5. Set monitoring: alerts for cost spikes, latency regressions, and error rates per prompt/model.</p>
+<p class='ordered'>6. Iterate on prompts: use trace comparison and prompt playground to A/B versions and pin winners.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Trace a full RAG pipeline as nested spans
+from langfuse.decorators import observe, langfuse_context
+
+@observe(name=&quot;retrieve&quot;)
+def retrieve(query: str) -&gt; list[str]:
+    return [&quot;doc-1&quot;, &quot;doc-2&quot;]  # from your vector store
+
+@observe(name=&quot;generate&quot;)
+def generate(query: str, docs: list[str]) -&gt; str:
+    langfuse_context.update_current_generation(
+        input=query,
+        output=&quot;answer text&quot;,
+        usage={&quot;promptTokens&quot;: 120, &quot;completionTokens&quot;: 40, &quot;totalTokens&quot;: 160},
+        metadata={&quot;docs&quot;: docs, &quot;model&quot;: &quot;claude-sonnet-4&quot;},
+    )
+    return &quot;answer text&quot;
+
+@observe(name=&quot;rag&quot;)
+def rag(question: str) -&gt; str:
+    docs = retrieve(question)
+    return generate(question, docs)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Export traces for offline analysis
+python -m langfuse export-json --project your-project --output ./traces.json
+# or use the CLI dashboard
+langfuse-compose up    # self-hosted Langfuse stack</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Trace every LLM call with prompt, model, tokens, and latency.</li>
+<li>Track cost per call and per user to catch abuse.</li>
+<li>Add input/output logging for debugging and evals.</li>
+<li>Alert on error rates, token overruns, and latency.</li>
+<li>Use OpenTelemetry or a vendor like Langfuse/LangSmith.</li>
+<li>Correlate LLM traces with app metrics and logs.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Missing traces: ensure the SDK auto-instruments the provider.</li>
+<li>High cost: review prompts, caching, and model tier.</li>
+<li>Latency spikes: check model load and retries.</li>
+<li>Privacy: redact PII in logged prompts and responses.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. Traces appear in Langfuse/LangSmith dashboard</p>
+<p class='ordered'>2. Token usage and costs are accurately tracked</p>
+<p class='ordered'>3. Latency breakdown shows where time is spent</p>
+<p class='ordered'>4. Search and filter by metadata/tags works correctly</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="nginx.html">← nginx</a><a class="page-nav-link" href="platform-engineering.html">platform-engineering →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

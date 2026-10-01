@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tailwind-v4 — Agent Skills Library</title>
+  <meta name="description" content="Tailwind CSS v4 features">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/tailwind-v4.html">
+  <meta property="og:title" content="tailwind-v4 — Agent Skills Library">
+  <meta property="og:description" content="Tailwind CSS v4 features">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/tailwind-v4.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">tailwind</span><span class="tag">css</span><span class="tag">v4</span><span class="tag">design</span><span class="tag">styling</span>
+        </div>
+        <h1 class="skill-page-title">tailwind-v4</h1>
+        <p class="skill-page-desc">Tailwind CSS v4 features</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>145</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('tailwind-v4')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/tailwind-v4">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="svelte.html">← svelte</a><a class="page-nav-link" href="typescript.html">typescript →</a></div>
+      <div class="skill-page-body">
+        <h1>Tailwind CSS v4</h1>
+<blockquote>Harness Tailwind CSS v4&#x27;s CSS-first configuration, new utilities, and performance improvements.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>/* app.css — Tailwind v4 CSS-first configuration */
+@import &quot;tailwindcss&quot;;
+
+/* Native CSS custom properties for theme */
+@theme {
+  --color-brand: #6c5ce7;
+  --color-brand-light: #a29bfe;
+  --font-display: &quot;Inter&quot;, sans-serif;
+  --breakpoint-3xl: 120rem;
+  --animate-fade-in: fade-in 0.5s ease-in-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* @apply with modern CSS features */
+.btn-primary {
+  @apply bg-brand text-white px-4 py-2 rounded-lg 
+         hover:bg-brand-light transition-colors
+         focus-visible:outline-2 focus-visible:outline-brand;
+}
+
+/* Container queries with @cq-* */
+.card-grid {
+  @apply grid grid-cols-1 gap-4;
+  @container (min-width: 30rem) {
+    @apply grid-cols-2;
+  }
+  @container (min-width: 50rem) {
+    @apply grid-cols-3;
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>&lt;!-- v4 new features --&gt;
+&lt;div class=&quot;
+  /* 3D transforms */
+  perspective-1000 rotate-x-45 rotate-y-30
+  
+  /* Scroll-driven animations */
+  scroll-mt-20 scroll-snap-align-start
+  
+  /* New color functions */
+  bg-linear-to-r from-red-500 to-blue-500
+  
+  /* Field sizing */
+  field-sizing-content
+
+  /* Text balancing */
+  text-balance
+  
+  /* Inset shadows */
+  shadow-inner-sm
+
+  /* Container queries */  
+  @max-md:flex-col @min-lg:flex-row
+&quot;&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Tailwind v4 is CSS-first (no tailwind.config.js). New features: `@theme` directive, container queries, 3D transforms, scroll-driven animations, CSS `@layer` support, `text-balance`, and `field-sizing`.</p>
+<h2>When to Use</h2>
+<ul>
+<li>New projects starting with Tailwind v4</li>
+<li>Upgrading from v3 for smaller config and new features</li>
+<li>Projects needing container queries or 3D transforms</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install v4: `npm install tailwindcss @tailwindcss/vite` and add the Vite plugin (or the PostCSS equivalent).</p>
+<p class='ordered'>2. Create CSS entry: `@import &quot;tailwindcss&quot;;` in your main CSS file — no `tailwind.config.js` needed.</p>
+<p class='ordered'>3. Theme via `@theme`: define design tokens (colors, fonts, breakpoints, animations) as CSS custom properties.</p>
+<p class='ordered'>4. Use v4 utilities: container queries (`@container`, `@min-*`/`@max-*`), 3D transforms, `text-balance`, `field-sizing`.</p>
+<p class='ordered'>5. Compose with `@apply` inside modern CSS (`@layer`, nesting) and reference `@theme` tokens.</p>
+<p class='ordered'>6. Build and verify: run the dev server, then compare production CSS size vs a v3 baseline; no v3 migration warnings.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>/* app.css — custom variant + data attribute styling */
+@import &quot;tailwindcss&quot;;
+
+@theme {
+  --color-brand: #6c5ce7;
+  --font-display: &quot;Inter&quot;, sans-serif;
+}
+
+@custom-variant data-active (&amp;[data-active=&quot;true&quot;]);
+
+.card[data-active=&quot;true&quot;] {
+  @apply border-brand text-brand bg-brand/10;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>&lt;!-- v4 responsive + container query combo --&gt;
+&lt;div class=&quot;@container&quot;&gt;
+  &lt;div class=&quot;
+    grid grid-cols-1
+    @min-lg:grid-cols-3
+    max-md:flex-col
+    space-y-4
+  &quot;&gt;
+    &lt;section class=&quot;text-balance shadow-inner-sm&quot;&gt;Card A&lt;/section&gt;
+    &lt;section class=&quot;bg-linear-to-r from-violet-500 to-fuchsia-500&quot;&gt;Card B&lt;/section&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Configure the theme via CSS `@theme` tokens, not config files.</li>
+<li>Use utility-first classes; extract components only when repeated.</li>
+<li>Leverage responsive and state variants (`hover:`, `md:`).</li>
+<li>Use `@apply` sparingly; prefer utilities in markup.</li>
+<li>Add custom utilities with `@utility` for repeated patterns.</li>
+<li>Enable content scanning for your template paths.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Classes not generated: check the content globs.</li>
+<li>Build too slow: narrow the content paths.</li>
+<li>Override issues: use variant ordering or `!` for important.</li>
+<li>v4 vs v3 config: migrate `tailwind.config` to CSS `@theme`.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. `@theme` custom properties are available in all utility classes</p>
+<p class='ordered'>2. Container queries respond at correct breakpoints</p>
+<p class='ordered'>3. Build output is smaller than equivalent v3 configuration</p>
+<p class='ordered'>4. No v3 migration warnings during build</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="svelte.html">← svelte</a><a class="page-nav-link" href="typescript.html">typescript →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

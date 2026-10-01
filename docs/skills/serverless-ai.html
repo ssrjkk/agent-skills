@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>serverless-ai — Agent Skills Library</title>
+  <meta name="description" content="Serverless AI inference (Cloudflare Workers, Lambda)">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/serverless-ai.html">
+  <meta property="og:title" content="serverless-ai — Agent Skills Library">
+  <meta property="og:description" content="Serverless AI inference (Cloudflare Workers, Lambda)">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/serverless-ai.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">serverless</span><span class="tag">ai</span><span class="tag">inference</span><span class="tag">cloudflare-workers</span><span class="tag">lambda</span><span class="tag">edge</span>
+        </div>
+        <h1 class="skill-page-title">serverless-ai</h1>
+        <p class="skill-page-desc">Serverless AI inference (Cloudflare Workers, Lambda)</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>4</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>148</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('serverless-ai')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/serverless-ai">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="prometheus-grafana.html">← prometheus-grafana</a><a class="page-nav-link" href="sre-slos.html">sre-slos →</a></div>
+      <div class="skill-page-body">
+        <h1>Serverless AI</h1>
+<blockquote>Run AI inference at the edge with serverless platforms like Cloudflare Workers and AWS Lambda.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>// Cloudflare Workers AI — edge inference
+export default {
+  async fetch(request: Request, env: Env): Promise&lt;Response&gt; {
+    const { pathname } = new URL(request.url);
+
+    if (pathname === &quot;/generate&quot;) {
+      const { prompt } = await request.json() as { prompt: string };
+      
+      const response = await env.AI.run(&quot;@cf/meta/llama-3.2-3b-instruct&quot;, {
+        prompt: prompt,
+        max_tokens: 500,
+        temperature: 0.7
+      });
+
+      return Response.json(response);
+    }
+
+    // Text embeddings
+    if (pathname === &quot;/embed&quot;) {
+      const { text } = await request.json() as { text: string | string[] };
+      const embeddings = await env.AI.run(&quot;@cf/baai/bge-base-en-v1.5&quot;, {
+        text: Array.isArray(text) ? text : [text]
+      });
+      return Response.json(embeddings);
+    }
+
+    return new Response(&quot;Not found&quot;, { status: 404 });
+  }
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># AWS Lambda with SageMaker
+import boto3
+import json
+import os
+
+sagemaker = boto3.client(&quot;sagemaker-runtime&quot;)
+ENDPOINT_NAME = os.environ[&quot;ENDPOINT_NAME&quot;]
+
+def lambda_handler(event, context):
+    body = json.loads(event[&quot;body&quot;])
+    
+    response = sagemaker.invoke_endpoint(
+        EndpointName=ENDPOINT_NAME,
+        ContentType=&quot;application/json&quot;,
+        Body=json.dumps({
+            &quot;inputs&quot;: body[&quot;prompt&quot;],
+            &quot;parameters&quot;: {
+                &quot;max_new_tokens&quot;: 200,
+                &quot;temperature&quot;: 0.7
+            }
+        })
+    )
+    
+    result = json.loads(response[&quot;Body&quot;].read().decode())
+    return {
+        &quot;statusCode&quot;: 200,
+        &quot;body&quot;: json.dumps({&quot;response&quot;: result})
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>Serverless AI trades cold starts for zero idle cost. Cloudflare Workers run inference at the edge (near users). Lambda with SageMaker provides scalable GPU inference. Best for lightweight models and on-demand workloads.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Lightweight inference (&lt; 3B parameter models)</li>
+<li>Variable workloads with unpredictable traffic</li>
+<li>Edge-based applications (low latency requirements)</li>
+<li>Prototyping and low-cost deployments</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Pick the platform: Workers AI for near-user edge inference, Lambda + SageMaker endpoint for heavier GPU models, or a hybrid split by route.</p>
+<p class='ordered'>2. Design stateless handlers: keep model/prompt logic in code, put embedding/retrieval state in external storage (KV, S3, DB).</p>
+<p class='ordered'>3. Add concurrency and size limits: Workers `wait`/`event.waitUntil`, Lambda `maxBatchSize`, and enforce memory/timeout budgets.</p>
+<p class='ordered'>4. Handle cold starts: pre-warm critical path (WarmPool / cron ping), keep payloads small to reduce transfer time.</p>
+<p class='ordered'>5. Instrument: log latency, tokens, cost, and errors; set alarms on P95 above budget.</p>
+<p class='ordered'>6. Cut cold-start cost for spikes: rely on provider auto-scaling and cache; A/B test model size vs latency.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Workers AI with caching and embeddings lookup
+export default {
+  async fetch(request: Request, env: Env): Promise&lt;Response&gt; {
+    const cache = caches.default;
+    const url = new URL(request.url);
+    const cached = await cache.match(request);
+    if (cached) return cached;
+
+    if (url.pathname === &quot;/summarize&quot;) {
+      const { text } = await request.json() as { text: string };
+      const out = await env.AI.run(&quot;@cf/meta/llama-3.2-3b-instruct&quot;, {
+        prompt: `Summarize in one sentence:\n${text}`,
+        max_tokens: 120,
+      });
+      const json = Response.json(out);
+      json.headers.set(&quot;Cache-Control&quot;, &quot;max-age=300&quot;);
+      // store in Cache API only if deterministic
+      await cache.put(request, json.clone());
+      return json;
+    }
+    return Response.json({ ok: false, reason: &quot;not found&quot; }, { status: 404 });
+  },
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Measure cold starts over time
+curl -w &quot;@dns_time=%{time_starttransfer}\n&quot; https://edge.example.com/summarize
+# lambda load test
+hey -n 1000 -c 50 -m POST https://api-aws.example.com/generate</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Keep cold-start low: smaller models, warmers, and minimal deps.</li>
+<li>Use GPU/CPU-appropriate runtimes; batch when possible.</li>
+<li>Cache model weights in layer or shared storage.</li>
+<li>Set timeouts and memory to match the workload.</li>
+<li>Monitor invocations, duration, and cold-start rate.</li>
+<li>Fall back to a dedicated endpoint for long requests.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Cold starts high: use provisioned concurrency or a warmer.</li>
+<li>Timeout: split work or raise the function timeout.</li>
+<li>Memory errors: right-size the allocation for the model.</li>
+<li>Cost spikes: review invocation patterns and caching.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. Function deploys and responds to requests</p>
+<p class='ordered'>2. Cold start latency is acceptable for the use case</p>
+<p class='ordered'>3. Inference quality matches expectations for the model size</p>
+<p class='ordered'>4. Cost is lower than always-on GPU instances for variable traffic</p>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="prometheus-grafana.html">← prometheus-grafana</a><a class="page-nav-link" href="sre-slos.html">sre-slos →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

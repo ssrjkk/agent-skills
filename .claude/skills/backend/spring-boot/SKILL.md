@@ -3,7 +3,7 @@ name: spring-boot
 description: "Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services."
 category: backend
 tags: [spring-boot, java, kotlin, rest, dependency-injection, jvm, backend]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

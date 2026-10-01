@@ -3,7 +3,7 @@ name: algorithmic-trading
 description: "Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance."
 category: finance
 tags: [algorithmic-trading, backtesting, strategy, quantitative, finance, market-data, execution, risk]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

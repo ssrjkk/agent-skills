@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dbt — Agent Skills Library</title>
+  <meta name="description" content="Build analytics engineering workflows with dbt: models, tests, sources, macros, and documentation. Use for transform-layer data pipelines.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/dbt.html">
+  <meta property="og:title" content="dbt — Agent Skills Library">
+  <meta property="og:description" content="Build analytics engineering workflows with dbt: models, tests, sources, macros, and documentation. Use for transform-layer data pipelines.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/dbt.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#10b9811a;color:#10b981;border-color:#10b98144">data</span>
+          <span class="tag">dbt</span><span class="tag">analytics</span><span class="tag">data-engineering</span><span class="tag">models</span><span class="tag">sql</span><span class="tag">testing</span><span class="tag">warehouse</span>
+        </div>
+        <h1 class="skill-page-title">dbt</h1>
+        <p class="skill-page-desc">Build analytics engineering workflows with dbt: models, tests, sources, macros, and documentation. Use for transform-layer data pipelines.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>120</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('dbt')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/data/dbt">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="data-visualization.html">← data-visualization</a><a class="page-nav-link" href="elasticsearch.html">elasticsearch →</a></div>
+      <div class="skill-page-body">
+        <h1>dbt</h1>
+<blockquote>Transform-layer analytics engineering with dbt.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install dbt-postgres
+dbt init my_project
+dbt run</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>SQL-based transformation pipelines</li>
+<li>Data warehouse modeling (staging, marts)</li>
+<li>Testing and documenting data models</li>
+<li>Version-controlled analytics code</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Project Structure</h3>
+<ul>
+<li>Use layers: staging, intermediate, marts</li>
+<li>Model per grain; clear naming</li>
+<li>Use `ref()` for dependencies</li>
+<li>Keep models small and focused</li>
+</ul>
+<h3>Modeling</h3>
+<ul>
+<li>Build incremental models with `incremental_strategy`</li>
+<li>Use materialized views for base layers</li>
+<li>Deduplicate and type-cast in staging</li>
+<li>Add surrogate keys for dims</li>
+</ul>
+<h3>Tests &amp; Quality</h3>
+<ul>
+<li>Add singular and generic tests</li>
+<li>Test primary keys, nulls, and relationships</li>
+<li>Use freshness tests on sources</li>
+<li>Gate merges on test pass</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li>Document models, columns, and sources</li>
+<li>Use `dbt docs generate` for the docs site</li>
+<li>Add `description` to every model</li>
+<li>Keep lineage clean</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install dbt-postgres dbt-bigquery
+dbt init my_project</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># dbt_project.yml
+name: analytics
+profile: default
+model-paths: [&quot;models&quot;]
+tests:
+  +store_failures: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- models/staging/stg_orders.sql
+SELECT
+  id AS order_id,
+  customer_id,
+  amount,
+  status,
+  created_at
+FROM {{ source(&#x27;raw&#x27;, &#x27;orders&#x27;) }}
+WHERE status IS NOT NULL</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- models/marts/fct_orders.sql
+SELECT
+  customer_id,
+  SUM(amount) AS lifetime_value,
+  COUNT(*) AS order_count
+FROM {{ ref(&#x27;stg_orders&#x27;) }}
+GROUP BY 1</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># models/marts/schema.yml
+version: 2
+models:
+  - name: fct_orders
+    columns:
+      - name: customer_id
+        tests: [not_null]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Initialize the project and configure the profile.</p>
+<p class='ordered'>2. Define sources for raw tables.</p>
+<p class='ordered'>3. Build staging models (clean, typed).</p>
+<p class='ordered'>4. Build intermediate and mart models with `ref()`.</p>
+<p class='ordered'>5. Add tests for keys, nulls, and freshness.</p>
+<p class='ordered'>6. Add incremental strategies for large tables.</p>
+<p class='ordered'>7. Document models and columns.</p>
+<p class='ordered'>8. Run `dbt run &amp;&amp; dbt test` in CI.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `dbt run` succeeds</p>
+<p class='ordered'>2. `dbt test` passes with no failures</p>
+<p class='ordered'>3. Models build in dependency order</p>
+<p class='ordered'>4. Incremental models only process new data</p>
+<p class='ordered'>5. Docs generate with lineage</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Test failures: fix the data or the model logic.</li>
+<li>Slow runs: add incremental and narrow the models.</li>
+<li>Dependency cycles: refactor model references.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="data-visualization.html">← data-visualization</a><a class="page-nav-link" href="elasticsearch.html">elasticsearch →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

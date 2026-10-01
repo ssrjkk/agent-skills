@@ -3,7 +3,7 @@ name: typescript
 description: "Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase."
 category: frontend
 tags: [typescript, javascript, typing, generics, static-analysis, tooling]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 author: ssrjkk
 created: 2026-09-20

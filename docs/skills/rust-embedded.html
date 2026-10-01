@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rust-embedded — Agent Skills Library</title>
+  <meta name="description" content="Rust for embedded systems">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/rust-embedded.html">
+  <meta property="og:title" content="rust-embedded — Agent Skills Library">
+  <meta property="og:description" content="Rust for embedded systems">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/rust-embedded.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#84cc161a;color:#84cc16;border-color:#84cc1644">embedded</span>
+          <span class="tag">rust</span><span class="tag">embedded</span><span class="tag">microcontroller</span><span class="tag">no-std</span><span class="tag">arm</span><span class="tag">risc-v</span>
+        </div>
+        <h1 class="skill-page-title">rust-embedded</h1>
+        <p class="skill-page-desc">Rust for embedded systems</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>5</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>160</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('rust-embedded')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/embedded/rust-embedded">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      
+      <div class="skill-page-body">
+        <h1>Rust Embedded</h1>
+<blockquote>Develop embedded systems firmware with Rust for safety, performance, and modern tooling.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>//! Blinky example for STM32 microcontroller
+#![no_std]
+#![no_main]
+
+use cortex_m_rt::entry;
+use panic_halt as _;
+use stm32f4xx_hal::{
+    pac,
+    prelude::*,
+    timer::Timer,
+};
+use embedded_hal::digital::OutputPin;
+
+#[entry]
+fn main() -&gt; ! {
+    // Get peripherals
+    let dp = pac::Peripherals::take().unwrap();
+    let cp = cortex_m::Peripherals::take().unwrap();
+
+    // Configure clocks
+    let rcc = dp.RCC.constrain();
+    let clocks = rcc.cfgr.sysclk(48.MHz()).freeze();
+
+    // Configure LED pin (PC13 on many STM32 boards)
+    let gpioc = dp.GPIOC.split();
+    let mut led = gpioc.pc13.into_push_pull_output();
+
+    // Configure timer
+    let mut timer = Timer::syst(cp.SYST, 1.Hz(), &amp;clocks);
+
+    // Blink loop
+    loop {
+        led.set_high().unwrap();
+        timer.wait(); // 1 second delay
+        led.set_low().unwrap();
+        timer.wait();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># .cargo/config.toml — Cross-compilation target
+[target.thumbv7em-none-eabihf]
+runner = &quot;gdb-multiarch&quot;
+rustflags = [&quot;-C&quot;, &quot;link-arg=-Tlink.x&quot;, &quot;-C&quot;, &quot;linker=arm-none-eabi-gcc&quot;]
+
+[build]
+target = &quot;thumbv7em-none-eabihf&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Embedded HAL traits — abstraction for portability
+use embedded_hal::{
+    blocking::delay::DelayMs,
+    digital::OutputPin,
+    spi::SpiDevice,
+};
+
+fn control_display&lt;D: DelayMs&lt;u32&gt;, P: OutputPin&gt;(
+    delay: &amp;mut D,
+    reset: &amp;mut P,
+) {
+    reset.set_low().unwrap();
+    delay.delay_ms(10);
+    reset.set_high().unwrap();
+    delay.delay_ms(100);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Key Concepts</h2>
+<p>`#![no_std]` enables bare-metal code without the standard library. The Embedded HAL provides portable hardware abstraction. `cortex-m-rt` handles vector table and startup. Use probe-rs for flashing and debugging.</p>
+<h2>When to Use</h2>
+<ul>
+<li>Firmware for ARM Cortex-M, RISC-V microcontrollers</li>
+<li>IoT sensor nodes and actuators</li>
+<li>Safety-critical embedded systems</li>
+<li>Replacing C/C++ with memory-safe Rust</li>
+</ul>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Pick the board/target: install `rustup target add thumbv7em-none-eabihf` for Cortex-M4F or the RISC-V equivalent.</p>
+<p class='ordered'>2. Configure the linker: add `.cargo/config.toml` with `rustflags` (link.x) and default build target.</p>
+<p class='ordered'>3. Scaffold a `no_std` crate: use `#![no_std]` + `#![no_main]`, add `cortex-m-rt` for startup and a panic handler.</p>
+<p class='ordered'>4. Get a HAL: enable `stm32f4xx_hal` (or `nrf-hal`, `esp-hal`) peripheral features matching the chip.</p>
+<p class='ordered'>5. Flash &amp; debug: use `probe-rs`/`cargo embed` (or `openocd + gdb-multiarch`) with the target config.</p>
+<p class='ordered'>6. Verify on device: blink an LED, then exercise a sensor/UART; check binary size with `cargo size`.</p>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Read a button and toggle an LED via embedded-hal traits
+#![no_std]
+#![no_main]
+use cortex_m_rt::entry;
+use panic_halt as _;
+use stm32f4xx_hal::{pac, prelude::*, gpio::Edge};
+use embedded_hal::digital::{InputPin, OutputPin};
+
+#[entry]
+fn main() -&gt; ! {
+    let dp = pac::Peripherals::take().unwrap();
+    let rcc = dp.RCC.constrain();
+    let clocks = rcc.cfgr.sysclk(48.MHz()).freeze();
+    let gpioa = dp.GPIOA.split(&amp;clocks);
+    let gpioc = dp.GPIOC.split();
+
+    let mut led = gpioc.pc13.into_push_pull_output();
+    let btn = gpioa.pa0.into_pull_up_input();
+
+    loop {
+        if btn.is_low().unwrap() {
+            led.set_high().unwrap();
+        } else {
+            led.set_low().unwrap();
+        }
+        cortex_m::asm::delay(100_000);
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Build, flash, and inspect the binary
+cargo build --release
+cargo size --release
+cargo embed --release   # flashes via probe-rs using the target config</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>Use `no_std` crates for bare-metal targets.</li>
+<li>Keep memory and stack usage bounded and profiled.</li>
+<li>Use interrupts and DMA for I/O; avoid busy polling.</li>
+<li>Pin toolchain and target for reproducible builds.</li>
+<li>Test on hardware with a CI runner or QEMU.</li>
+<li>Use a RTOS (RTIC/embassy) for concurrency.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Link errors: check target triple and memory layout.</li>
+<li>Stack overflow: increase stack or profile usage.</li>
+<li>Flaky interrupts: check priorities and critical sections.</li>
+<li>No output: verify the UART config and baud rate.</li>
+</ul>
+<h2>Validation</h2>
+<p class='ordered'>1. `cargo build --target thumbv7em-none-eabihf` compiles without std</p>
+<p class='ordered'>2. Firmware flashes to device and runs (LED blinks)</p>
+<p class='ordered'>3. UART/sensor output matches expected values</p>
+<p class='ordered'>4. Binary size fits within target flash memory</p>
+      </div>
+      
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

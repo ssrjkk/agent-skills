@@ -3,7 +3,7 @@ name: kubernetes
 description: "Deploy and operate applications on Kubernetes: workloads, services, config, scaling, and GitOps. Use for container orchestration at scale."
 category: devops
 tags: [kubernetes, k8s, containers, orchestration, deployment, gitops, helm]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

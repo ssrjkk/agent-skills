@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>function-calling — Agent Skills Library</title>
+  <meta name="description" content="Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/function-calling.html">
+  <meta property="og:title" content="function-calling — Agent Skills Library">
+  <meta property="og:description" content="Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/function-calling.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">function-calling</span><span class="tag">tool-use</span><span class="tag">llm</span><span class="tag">structured-output</span><span class="tag">agents</span><span class="tag">json-schema</span>
+        </div>
+        <h1 class="skill-page-title">function-calling</h1>
+        <p class="skill-page-desc">Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>156</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('function-calling')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/function-calling">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="few-shot-learning.html">← few-shot-learning</a><a class="page-nav-link" href="llm-evals.html">llm-evals →</a></div>
+      <div class="skill-page-body">
+        <h1>Function Calling</h1>
+<blockquote>Wiring LLMs to real functions with robust tool calling.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai
+# declare tools, let the model call them, execute, and loop</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Letting the model query data, compute, or take actions</li>
+<li>Structured extraction into defined function inputs</li>
+<li>Agentic workflows that alternate reasoning and tool calls</li>
+<li>Reducing hallucination by constraining output to schemas</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Tool Schemas</h3>
+<ul>
+<li>Write clear, complete JSON schemas per function</li>
+<li>Use `description` on every param to guide the model</li>
+<li>Enforce `required` and sensible `enum`/`pattern`</li>
+<li>Keep parameter names self-explanatory</li>
+</ul>
+<h3>Calling Loop</h3>
+<ul>
+<li>Detect tool_calls; execute them; append results as `tool` messages</li>
+<li>Support multiple tool calls in one response</li>
+<li>Include the `tool_call_id` on every result</li>
+<li>Cap iterations to avoid runaway loops</li>
+</ul>
+<h3>Validation &amp; Recovery</h3>
+<ul>
+<li>Validate arguments before execution</li>
+<li>Return structured errors that the model can read</li>
+<li>Never auto-execute dangerous tools without approval</li>
+<li>Log the full call trace for debugging</li>
+</ul>
+<h3>Prompting</h3>
+<ul>
+<li>Give the model context on when to call each tool</li>
+<li>Ask it to use tools instead of guessing answers</li>
+<li>Provide examples of tool usage in the system prompt</li>
+<li>Keep tool descriptions aligned with actual behavior</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic
+# optional: instructor for schema-guided calls</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import openai
+
+client = openai.OpenAI()
+
+TOOLS = [
+    {
+        &quot;type&quot;: &quot;function&quot;,
+        &quot;function&quot;: {
+            &quot;name&quot;: &quot;get_weather&quot;,
+            &quot;description&quot;: &quot;Get current weather for a city&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {&quot;city&quot;: {&quot;type&quot;: &quot;string&quot;}},
+                &quot;required&quot;: [&quot;city&quot;],
+            },
+        },
+    }
+]
+
+resp = client.chat.completions.create(
+    model=&quot;gpt-6&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Weather in Tokyo?&quot;}],
+    tools=TOOLS,
+)
+call = resp.choices[0].message.tool_calls[0]
+print(call.function.name, call.function.arguments)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Execute the call and feed the result back
+import json
+
+def dispatch(name: str, args: dict) -&gt; str:
+    if name == &quot;get_weather&quot;:
+        return weather_api(args[&quot;city&quot;])
+    return json.dumps({&quot;error&quot;: f&quot;unknown tool: {name}&quot;})
+
+result = dispatch(call.function.name, json.loads(call.function.arguments))
+messages = [
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Weather in Tokyo?&quot;},
+    resp.choices[0].message,
+    {&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: call.id, &quot;content&quot;: result},
+]
+final = client.chat.completions.create(model=&quot;gpt-6&quot;, messages=messages, tools=TOOLS)
+print(final.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Multi-call handling
+def run_tools(message) -&gt; list[dict]:
+    results = []
+    for call in message.tool_calls:
+        args = json.loads(call.function.arguments)
+        results.append(
+            {&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: call.id, &quot;content&quot;: dispatch(call.function.name, args)}
+        )
+    return results</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Validation with pydantic before execution
+from pydantic import BaseModel, ValidationError
+
+class WeatherArgs(BaseModel):
+    city: str
+    units: str = &quot;metric&quot;
+
+def safe_dispatch(name: str, args: dict) -&gt; str:
+    try:
+        if name == &quot;get_weather&quot;:
+            w = WeatherArgs(**args)
+            return weather_api(w.city, w.units)
+        return f&#x27;{{&quot;error&quot;: &quot;unknown tool {name}&quot;}}&#x27;
+    except ValidationError as e:
+        return f&#x27;{{&quot;error&quot;: &quot;invalid args: {e}&quot;}}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Write the tool functions you want the model to call.</p>
+<p class='ordered'>2. Define JSON schemas with descriptions and required fields.</p>
+<p class='ordered'>3. Send the first request with `tools` and user intent.</p>
+<p class='ordered'>4. Execute returned `tool_calls` and append results with IDs.</p>
+<p class='ordered'>5. Loop until the model returns a final text answer.</p>
+<p class='ordered'>6. Validate args; return structured errors the model can use.</p>
+<p class='ordered'>7. Add guardrails for dangerous actions.</p>
+<p class='ordered'>8. Log traces; test with edge cases and malformed args.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Model emits valid, schema-conforming calls for the test set</p>
+<p class='ordered'>2. Multi-call responses are executed in order</p>
+<p class='ordered'>3. Errors are surfaced back to the model for recovery</p>
+<p class='ordered'>4. Loop terminates within the iteration cap</p>
+<p class='ordered'>5. Dangerous tools require explicit approval</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Model skips tools: add tool usage examples to the system prompt.</li>
+<li>Invalid JSON args: loosen schemas or use guided generation.</li>
+<li>Loops: cap iterations and detect repeated identical calls.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="few-shot-learning.html">← few-shot-learning</a><a class="page-nav-link" href="llm-evals.html">llm-evals →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

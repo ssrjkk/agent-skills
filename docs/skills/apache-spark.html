@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>apache-spark — Agent Skills Library</title>
+  <meta name="description" content="Process large-scale data with Apache Spark: DataFrames, SQL, joins, partitioning, and optimization. Use for big data and ETL.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/apache-spark.html">
+  <meta property="og:title" content="apache-spark — Agent Skills Library">
+  <meta property="og:description" content="Process large-scale data with Apache Spark: DataFrames, SQL, joins, partitioning, and optimization. Use for big data and ETL.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/apache-spark.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#10b9811a;color:#10b981;border-color:#10b98144">data</span>
+          <span class="tag">apache-spark</span><span class="tag">spark</span><span class="tag">big-data</span><span class="tag">dataframe</span><span class="tag">etl</span><span class="tag">pyspark</span><span class="tag">distributed</span>
+        </div>
+        <h1 class="skill-page-title">apache-spark</h1>
+        <p class="skill-page-desc">Process large-scale data with Apache Spark: DataFrames, SQL, joins, partitioning, and optimization. Use for big data and ETL.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>115</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('apache-spark')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/data/apache-spark">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="airflow.html">← airflow</a><a class="page-nav-link" href="data-visualization.html">data-visualization →</a></div>
+      <div class="skill-page-body">
+        <h1>Apache Spark</h1>
+<blockquote>Large-scale distributed data processing with Spark.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install pyspark
+pyspark  # interactive shell</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Processing datasets too big for a single machine</li>
+<li>Distributed ETL and analytics</li>
+<li>Streaming (Structured Streaming)</li>
+<li>Machine learning at scale (MLlib)</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>DataFrames &amp; SQL</h3>
+<ul>
+<li>Prefer DataFrames over RDDs for most work</li>
+<li>Use Spark SQL for familiar declarative queries</li>
+<li>Cache intermediate DataFrames when reused</li>
+<li>Use `broadcast` for small join tables</li>
+</ul>
+<h3>Optimization</h3>
+<ul>
+<li>Avoid shuffles; use partitioning and bucketing</li>
+<li>Filter and select early to reduce data</li>
+<li>Use `repartition`/`coalesce` deliberately</li>
+<li>Monitor stages and shuffle in the UI</li>
+</ul>
+<h3>Joins &amp; Aggregations</h3>
+<ul>
+<li>Broadcast small tables with `broadcast()`</li>
+<li>Join on bucketed/partitioned keys</li>
+<li>Use `groupBy` with aggregation functions</li>
+<li>Prefer window functions carefully</li>
+</ul>
+<h3>Resource Tuning</h3>
+<ul>
+<li>Set `spark.executor.memory` and cores</li>
+<li>Tune `spark.sql.shuffle.partitions`</li>
+<li>Use dynamic allocation</li>
+<li>Balance partitions to avoid skew</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install pyspark</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+spark = SparkSession.builder.appName(&quot;etl&quot;).getOrCreate()
+
+df = spark.read.parquet(&quot;s3://bucket/events&quot;)
+print(df.printSchema())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># ETL with filters and aggregations
+result = (
+    df.filter(F.col(&quot;status&quot;) == &quot;paid&quot;)
+      .groupBy(&quot;region&quot;)
+      .agg(F.sum(&quot;amount&quot;).alias(&quot;total&quot;), F.count(&quot;*&quot;).alias(&quot;orders&quot;))
+      .orderBy(F.desc(&quot;total&quot;))
+)
+result.show()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Broadcast join
+from pyspark.sql.functions import broadcast
+
+users = spark.read.parquet(&quot;users.parquet&quot;).cache()
+joined = df.join(broadcast(users), &quot;user_id&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Spark SQL
+SELECT region, sum(amount) AS total
+FROM events
+WHERE status = &#x27;paid&#x27;
+GROUP BY region
+ORDER BY total DESC</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Start a SparkSession with tuned config.</p>
+<p class='ordered'>2. Load data (parquet/json/table).</p>
+<p class='ordered'>3. Transform with DataFrames/SQL.</p>
+<p class='ordered'>4. Optimize: broadcast, partitioning, caching.</p>
+<p class='ordered'>5. Write results in a columnar format.</p>
+<p class='ordered'>6. Monitor the Spark UI for skew and shuffles.</p>
+<p class='ordered'>7. Tune executors and partitions.</p>
+<p class='ordered'>8. Schedule jobs (Airflow/spark-submit).</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Results match a small reference computation</p>
+<p class='ordered'>2. Shuffles are minimized</p>
+<p class='ordered'>3. No task skew (balanced partitions)</p>
+<p class='ordered'>4. Caching speeds up reused data</p>
+<p class='ordered'>5. Job completes within the budget</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>OOM: reduce executor memory or partition data.</li>
+<li>Skew: salt keys or repartition.</li>
+<li>Slow shuffles: tune shuffle.partitions and bucketing.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="airflow.html">← airflow</a><a class="page-nav-link" href="data-visualization.html">data-visualization →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

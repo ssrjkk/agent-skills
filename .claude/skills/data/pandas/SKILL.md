@@ -3,7 +3,7 @@ name: pandas
 description: "Analyze and transform tabular data with pandas: dataframes, cleaning, aggregation, joins, and time series. Use for any data analysis or ETL task."
 category: data
 tags: [pandas, python, data-analysis, dataframe, etl, csv, time-series]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-20
 updated: 2026-09-28

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prometheus-grafana — Agent Skills Library</title>
+  <meta name="description" content="Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking. Use for observability.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/prometheus-grafana.html">
+  <meta property="og:title" content="prometheus-grafana — Agent Skills Library">
+  <meta property="og:description" content="Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking. Use for observability.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/prometheus-grafana.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">prometheus</span><span class="tag">grafana</span><span class="tag">monitoring</span><span class="tag">metrics</span><span class="tag">alerting</span><span class="tag">dashboards</span><span class="tag">observability</span>
+        </div>
+        <h1 class="skill-page-title">prometheus-grafana</h1>
+        <p class="skill-page-desc">Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking. Use for observability.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>125</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('prometheus-grafana')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/prometheus-grafana">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="platform-engineering.html">← platform-engineering</a><a class="page-nav-link" href="serverless-ai.html">serverless-ai →</a></div>
+      <div class="skill-page-body">
+        <h1>Prometheus &amp; Grafana</h1>
+<blockquote>Monitoring systems with Prometheus metrics and Grafana dashboards.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>docker run -p 9090:9090 -v prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus
+docker run -p 3000:3000 -d grafana/grafana
+# Grafana: localhost:3000 admin/admin</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Collecting time-series metrics from services</li>
+<li>Dashboards for latency, errors, and saturation</li>
+<li>Alerting on thresholds and SLO burn</li>
+<li>Kubernetes and infra monitoring</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Instrumentation</h3>
+<ul>
+<li>Expose `/metrics` in Prometheus format</li>
+<li>Use counters (increasing), gauges, histograms</li>
+<li>Label metrics moderately (avoid cardinality explosion)</li>
+<li>Use client libraries for the language</li>
+</ul>
+<h3>Scraping &amp; Storage</h3>
+<ul>
+<li>Set sane scrape intervals (15-60s)</li>
+<li>Use `service_discovery` or static targets</li>
+<li>Limit retention and use TSDB best practices</li>
+<li>Configure recording rules for hot queries</li>
+</ul>
+<h3>Alerting</h3>
+<ul>
+<li>Define alerts with PromQL thresholds</li>
+<li>Use Alertmanager for routing and dedup</li>
+<li>Alert on symptoms (SLOs), not just metrics</li>
+<li>Set for, `pending`, and proper severity</li>
+</ul>
+<h3>Dashboards</h3>
+<ul>
+<li>Build focused dashboards per service</li>
+<li>Use RED (Rate, Errors, Duration) and USE patterns</li>
+<li>Add panels with meaningful units</li>
+<li>Track SLOs with burn-rate panels</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Python client
+pip install prometheus-client
+# or Node:
+npm i prom-client</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># prometheus.yml
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: app
+    static_configs:
+      - targets: [&quot;app:8080&quot;]
+rule_files:
+  - alerts.yml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># alerts.yml
+groups:
+  - name: app
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~&quot;5..&quot;}[5m]) / rate(http_requests_total[5m]) &gt; 0.05
+        for: 10m
+        labels: { severity: critical }
+        annotations: { summary: &quot;Error rate above 5%&quot; }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from prometheus_client import Counter, Histogram, start_http_server
+import random, time
+
+REQUESTS = Counter(&quot;http_requests_total&quot;, &quot;Total HTTP requests&quot;, [&quot;status&quot;])
+LATENCY = Histogram(&quot;http_request_duration_seconds&quot;, &quot;Request latency&quot;)
+
+start_http_server(8080)
+while True:
+    REQUESTS.labels(status=&quot;200&quot;).inc()
+    with LATENCY.time():
+        time.sleep(random.uniform(0.01, 0.2))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># PromQL: error ratio per service
+sum(rate(http_requests_total{status=~&quot;5..&quot;}[5m]))
+  / sum(rate(http_requests_total[5m]))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Instrument services to expose `/metrics`.</p>
+<p class='ordered'>2. Configure Prometheus scraping and storage.</p>
+<p class='ordered'>3. Add alerting rules and Alertmanager.</p>
+<p class='ordered'>4. Connect Grafana as the data source.</p>
+<p class='ordered'>5. Build dashboards with RED/USE patterns.</p>
+<p class='ordered'>6. Track SLOs with burn-rate alerts.</p>
+<p class='ordered'>7. Secure with auth and TLS.</p>
+<p class='ordered'>8. Monitor the monitor: alert on Prometheus itself.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `/metrics` exposed and scraped successfully</p>
+<p class='ordered'>2. Dashboards show correct metrics and units</p>
+<p class='ordered'>3. Alerts fire and route correctly</p>
+<p class='ordered'>4. Cardinality stays within limits</p>
+<p class='ordered'>5. Retention matches your needs</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Missing metrics: check the scrape target and path.</li>
+<li>High cardinality: reduce dynamic label values.</li>
+<li>No data in Grafana: verify the data source and time range.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="platform-engineering.html">← platform-engineering</a><a class="page-nav-link" href="serverless-ai.html">serverless-ai →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -158,7 +158,7 @@ python scripts/list-skills.py
 
 ## Questions?
 
-- Telegram: [@ssrjkk](https://t.me/ssrjkk)
+- Telegram: [@ssrjkk](https://t.me/ssrjkk) · Bot: [@ssrjkk_bot](https://t.me/ssrjkk_bot)
 - Email: [ray013lefe@gmail.com](mailto:ray013lefe@gmail.com)
 - GitHub Issues: [Create an issue](https://github.com/ssrjkk/agent-skills/issues/new)
 

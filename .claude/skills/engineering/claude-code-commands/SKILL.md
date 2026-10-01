@@ -3,7 +3,7 @@ name: claude-code-commands
 description: "Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code."
 category: engineering
 tags: [claude-code, claude, commands, agent, cli, workflow, skills]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-25
 updated: 2026-09-28

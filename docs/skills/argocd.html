@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>argocd — Agent Skills Library</title>
+  <meta name="description" content="Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks. Use for declarative deployments.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/argocd.html">
+  <meta property="og:title" content="argocd — Agent Skills Library">
+  <meta property="og:description" content="Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks. Use for declarative deployments.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/argocd.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">argocd</span><span class="tag">gitops</span><span class="tag">kubernetes</span><span class="tag">deployments</span><span class="tag">sync</span><span class="tag">rollback</span>
+        </div>
+        <h1 class="skill-page-title">argocd</h1>
+        <p class="skill-page-desc">Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks. Use for declarative deployments.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>5</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>123</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('argocd')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/argocd">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="ansible.html">← ansible</a><a class="page-nav-link" href="aws-lambda.html">aws-lambda →</a></div>
+      <div class="skill-page-body">
+        <h1>Argo CD</h1>
+<blockquote>GitOps deployments on Kubernetes with Argo CD.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Declarative GitOps deployments</li>
+<li>Multi-environment consistency</li>
+<li>Self-healing cluster state</li>
+<li>Auditability via git history</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Git as Source of Truth</h3>
+<ul>
+<li>Keep manifests in git; never apply directly</li>
+<li>Use Kustomize/Helm for templating</li>
+<li>One repo per app or a monorepo with paths</li>
+<li>Tag versions for traceability</li>
+</ul>
+<h3>Applications</h3>
+<ul>
+<li>Define an Application per service</li>
+<li>Use app-of-apps for large fleets</li>
+<li>Set sync policy (manual/automated) deliberately</li>
+<li>Add health checks via CRDs</li>
+</ul>
+<h3>Sync &amp; Self-Healing</h3>
+<ul>
+<li>Enable automated sync with prune for CI repos</li>
+<li>Use `selfHeal` carefully with PR review</li>
+<li>Add sync waves for dependency order</li>
+<li>Monitor sync status and history</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li>Restrict who can sync (RBAC)</li>
+<li>Use SSO (dex/okta) for auth</li>
+<li>Keep repo credentials in secrets</li>
+<li>Approve destructive syncs</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+argocd login &lt;server&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Application manifest
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/org/app-config
+    path: overlays/prod
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># App-of-apps pattern
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  source:
+    repoURL: https://github.com/org/apps
+    path: apps
+    directory:
+      recurse: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CLI sync and rollback
+argocd app sync web
+argocd app rollback web &lt;revision&gt;
+argocd app get web</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Install Argo CD and expose the server.</p>
+<p class='ordered'>2. Connect the git repo (with credentials).</p>
+<p class='ordered'>3. Create an Application per service.</p>
+<p class='ordered'>4. Define sync policy and health checks.</p>
+<p class='ordered'>5. Enable automated sync with pruning where safe.</p>
+<p class='ordered'>6. Add RBAC and SSO for access control.</p>
+<p class='ordered'>7. Monitor sync status and history.</p>
+<p class='ordered'>8. Roll back via git revert or argocd rollback.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Apps sync from git to the desired state</p>
+<p class='ordered'>2. Sync status is Healthy/Synced</p>
+<p class='ordered'>3. Self-heal corrects drift</p>
+<p class='ordered'>4. Rollback restores a prior revision</p>
+<p class='ordered'>5. RBAC restricts who can sync</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>OutOfSync: drift detected — review and sync.</li>
+<li>Sync failed: check manifests and permissions.</li>
+<li>Health degraded: fix the workload probes.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="ansible.html">← ansible</a><a class="page-nav-link" href="aws-lambda.html">aws-lambda →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

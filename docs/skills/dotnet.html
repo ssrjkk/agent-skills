@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dotnet — Agent Skills Library</title>
+  <meta name="description" content="Build .NET backends with ASP.NET Core: minimal APIs, EF Core, dependency injection, middleware, and testing. Use for C# services.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/dotnet.html">
+  <meta property="og:title" content="dotnet — Agent Skills Library">
+  <meta property="og:description" content="Build .NET backends with ASP.NET Core: minimal APIs, EF Core, dependency injection, middleware, and testing. Use for C# services.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/dotnet.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#0ea5e91a;color:#0ea5e9;border-color:#0ea5e944">backend</span>
+          <span class="tag">dotnet</span><span class="tag">csharp</span><span class="tag">aspnet-core</span><span class="tag">ef-core</span><span class="tag">minimal-api</span><span class="tag">backend</span>
+        </div>
+        <h1 class="skill-page-title">dotnet</h1>
+        <p class="skill-page-desc">Build .NET backends with ASP.NET Core: minimal APIs, EF Core, dependency injection, middleware, and testing. Use for C# services.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>133</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('dotnet')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/backend/dotnet">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="django.html">← django</a><a class="page-nav-link" href="express.html">express →</a></div>
+      <div class="skill-page-body">
+        <h1>.NET / ASP.NET Core</h1>
+<blockquote>Building C# backends with ASP.NET Core.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>dotnet new webapi -n MyApi
+cd MyApi &amp;&amp; dotnet run
+# https://localhost:5001</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>C# services and enterprise backends</li>
+<li>Teams using strongly-typed languages</li>
+<li>High-performance HTTP APIs</li>
+<li>Integration with the .NET ecosystem</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Structure</h3>
+<ul>
+<li>Use Minimal APIs or controllers consistently</li>
+<li>Separate by feature: endpoints, services, data</li>
+<li>Register dependencies in DI; constructor injection</li>
+<li>Keep handlers/services focused</li>
+</ul>
+<h3>Data Access</h3>
+<ul>
+<li>Use EF Core with migrations</li>
+<li>Define entities and DTOs separately</li>
+<li>Add indexes for hot queries</li>
+<li>Use async/await end to end</li>
+</ul>
+<h3>Middleware &amp; Errors</h3>
+<ul>
+<li>Compose middleware in order (auth -&gt; endpoints -&gt; error)</li>
+<li>Handle errors with ProblemDetails</li>
+<li>Validate inputs with DataAnnotations or FluentValidation</li>
+<li>Return correct status codes</li>
+</ul>
+<h3>Testing</h3>
+<ul>
+<li>Unit test services with mocks</li>
+<li>Integration test with WebApplicationFactory</li>
+<li>Use test containers for DB</li>
+<li>Keep tests deterministic</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>dotnet new webapi -n MyApi
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>// Minimal API
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet(&quot;/users/{id}&quot;, async (int id, UserService svc) =&gt;
+{
+    var user = await svc.GetAsync(id);
+    return user is null ? Results.NotFound() : Results.Ok(user);
+});
+
+app.Run();</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// EF Core entity + context
+public class User
+{
+    public int Id { get; set; }
+    public string Email { get; set; } = &quot;&quot;;
+}
+
+public class AppDbContext : DbContext
+{
+    public DbSet&lt;User&gt; Users =&gt; Set&lt;User&gt;();
+    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; o) : base(o) { }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Service with DI
+public class UserService
+{
+    private readonly AppDbContext _db;
+    public UserService(AppDbContext db) { _db = db; }
+
+    public async Task&lt;User?&gt; GetAsync(int id)
+        =&gt; await _db.Users.FindAsync(id);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Error handling with ProblemDetails
+app.UseExceptionHandler(err =&gt; err.Run(async ctx =&gt;
+{
+    ctx.Response.StatusCode = 500;
+    await ctx.Response.WriteAsJsonAsync(new ProblemDetails
+    {
+        Title = &quot;Unexpected error&quot;,
+        Status = 500,
+    });
+}));</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Scaffold with `dotnet new webapi`.</p>
+<p class='ordered'>2. Set up EF Core and migrations.</p>
+<p class='ordered'>3. Build services with DI and async data access.</p>
+<p class='ordered'>4. Add endpoints (Minimal API or controllers).</p>
+<p class='ordered'>5. Add validation and ProblemDetails errors.</p>
+<p class='ordered'>6. Register middleware in the right order.</p>
+<p class='ordered'>7. Write unit and integration tests.</p>
+<p class='ordered'>8. Configure deployment (appsettings, container).</p>
+<h2>Validation</h2>
+<p class='ordered'>1. `dotnet build` and `dotnet test` pass</p>
+<p class='ordered'>2. Endpoints return correct status and shape</p>
+<p class='ordered'>3. Validation rejects bad input</p>
+<p class='ordered'>4. No async-blocking calls</p>
+<p class='ordered'>5. App runs in production config</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Blocking async: use async/await consistently.</li>
+<li>DI errors: register services before use.</li>
+<li>Slow queries: add indexes and AsNoTracking for reads.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="django.html">← django</a><a class="page-nav-link" href="express.html">express →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

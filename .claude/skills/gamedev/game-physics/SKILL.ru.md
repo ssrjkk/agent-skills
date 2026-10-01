@@ -3,7 +3,7 @@ name: game-physics
 description: "Реализация 2D/3D игровой физики: твёрдые тела, столкновения, ограничения, рейкастинг и оптимизация производительности. Для реалистичной игровой механики."
 category: gamedev
 tags: [physics, game-dev, rigid-body, collision, raycast, simulation, 2d, 3d]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-29
 updated: 2026-09-29

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>api-security — Agent Skills Library</title>
+  <meta name="description" content="Secure web APIs: authentication, authorization, rate limiting, input validation, and abuse protection. Use for hardening any API.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/api-security.html">
+  <meta property="og:title" content="api-security — Agent Skills Library">
+  <meta property="og:description" content="Secure web APIs: authentication, authorization, rate limiting, input validation, and abuse protection. Use for hardening any API.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/api-security.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#dc26261a;color:#dc2626;border-color:#dc262644">security</span>
+          <span class="tag">api-security</span><span class="tag">authentication</span><span class="tag">authorization</span><span class="tag">rate-limiting</span><span class="tag">validation</span>
+        </div>
+        <h1 class="skill-page-title">api-security</h1>
+        <p class="skill-page-desc">Secure web APIs: authentication, authorization, rate limiting, input validation, and abuse protection. Use for hardening any API.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>124</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('api-security')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/security/api-security">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="oauth2-jwt.html">oauth2-jwt →</a></div>
+      <div class="skill-page-body">
+        <h1>API Security</h1>
+<blockquote>Hardening APIs against common threats.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>1. Authenticate every request
+2. Authorize every action
+3. Validate all input
+4. Rate-limit abuse</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Public and internal APIs</li>
+<li>Auth, payments, and data endpoints</li>
+<li>Any API exposed to untrusted clients</li>
+<li>Security reviews before release</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Authentication</h3>
+<ul>
+<li>Use a proven auth scheme (OAuth2, API keys, JWT)</li>
+<li>Never roll your own crypto</li>
+<li>Store tokens hashed, with expiry</li>
+<li>Support key rotation</li>
+</ul>
+<h3>Authorization</h3>
+<ul>
+<li>Check permissions on every endpoint</li>
+<li>Use least privilege scopes</li>
+<li>Never trust the client&#x27;s claims alone</li>
+<li>Enforce ownership checks</li>
+</ul>
+<h3>Input Validation</h3>
+<ul>
+<li>Validate types, lengths, and ranges</li>
+<li>Parameterize all queries</li>
+<li>Reject unexpected fields</li>
+<li>Limit payload sizes</li>
+</ul>
+<h3>Abuse Protection</h3>
+<ul>
+<li>Rate limit per user/IP/key</li>
+<li>Set per-endpoint quotas</li>
+<li>Detect and block anomalies</li>
+<li>Return consistent error responses</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># language-agnostic; use the framework&#x27;s security middleware</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Rate limiting (pseudo)
+def rate_limit(key: str, limit: int, window: int) -&gt; bool:
+    count = redis.incr(f&quot;rl:{key}&quot;)
+    if count == 1:
+        redis.expire(f&quot;rl:{key}&quot;, window)
+    return count &lt;= limit
+
+@app.route(&quot;/api/login&quot;, methods=[&quot;POST&quot;])
+def login():
+    if not rate_limit(request.remote_addr, limit=10, window=60):
+        return jsonify({&quot;error&quot;: &quot;rate_limited&quot;}), 429
+    ...</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Input validation
+from pydantic import BaseModel, EmailStr
+
+class SignupRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=128)
+
+    @field_validator(&quot;password&quot;)
+    def _strong(cls, v):
+        if not re.search(r&quot;[A-Za-z]&quot;, v) or not re.search(r&quot;\d&quot;, v):
+            raise ValueError(&quot;password needs letters and digits&quot;)
+        return v</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Ownership check
+def get_order(user_id: int, order_id: int):
+    order = db.get_order(order_id)
+    if order is None or order.user_id != user_id:
+        raise NotFound(&quot;order&quot;)  # no info leak
+    return order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Consistent errors
+def error(code: str, status: int):
+    return jsonify({&quot;error&quot;: {&quot;code&quot;: code, &quot;status&quot;: status}}), status</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Authenticate all endpoints (except public health).</p>
+<p class='ordered'>2. Enforce authorization per resource and action.</p>
+<p class='ordered'>3. Validate every input with schemas.</p>
+<p class='ordered'>4. Parameterize queries; reject extra fields.</p>
+<p class='ordered'>5. Rate-limit per user/IP and endpoint.</p>
+<p class='ordered'>6. Set payload and response limits.</p>
+<p class='ordered'>7. Return consistent, minimal error responses.</p>
+<p class='ordered'>8. Run a security review before release.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Unauthenticated requests are rejected</p>
+<p class='ordered'>2. Unauthorized actions are denied</p>
+<p class='ordered'>3. Invalid input returns 400/422</p>
+<p class='ordered'>4. Rate limits trigger under abuse</p>
+<p class='ordered'>5. Errors don&#x27;t leak internals</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Auth bypass: verify checks run on every endpoint.</li>
+<li>Enumeration: return generic errors for not-found vs forbidden.</li>
+<li>Abuse: tune rate limits and add anomaly detection.</li>
+</ul>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="oauth2-jwt.html">oauth2-jwt →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

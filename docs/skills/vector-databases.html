@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vector-databases — Agent Skills Library</title>
+  <meta name="description" content="Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/vector-databases.html">
+  <meta property="og:title" content="vector-databases — Agent Skills Library">
+  <meta property="og:description" content="Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/vector-databases.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#14b8a61a;color:#14b8a6;border-color:#14b8a644">database</span>
+          <span class="tag">vector-db</span><span class="tag">embeddings</span><span class="tag">hnsw</span><span class="tag">similarity-search</span><span class="tag">rag</span><span class="tag">retrieval</span><span class="tag">pgvector</span>
+        </div>
+        <h1 class="skill-page-title">vector-databases</h1>
+        <p class="skill-page-desc">Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>130</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('vector-databases')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/database/vector-databases">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="sqlite.html">← sqlite</a></div>
+      <div class="skill-page-body">
+        <h1>Vector Databases</h1>
+<blockquote>Storing and searching embeddings for semantic retrieval and RAG.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># pgvector on Postgres
+docker run -e POSTGRES_PASSWORD=secret -p 5432:5432 -d pgvector/pgvector:pg17
+# or Chroma:
+pip install chromadb</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Semantic search over unstructured data</li>
+<li>RAG retrieval backends</li>
+<li>Recommendation by similarity</li>
+<li>Deduplication and clustering of texts</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Embeddings</h3>
+<ul>
+<li>Use retrieval-tuned embedding models</li>
+<li>Normalize vectors for cosine similarity</li>
+<li>Choose dimension balanced with storage and speed</li>
+<li>Embed at indexing time and query time consistently</li>
+</ul>
+<h3>Indexes</h3>
+<ul>
+<li>Prefer HNSW for balanced speed/recall</li>
+<li>Set `m` (connections) and `ef_construction` for build quality</li>
+<li>Use IVF for very large collections with disk budget</li>
+<li>Match the index to the metric (cosine/euclidean)</li>
+</ul>
+<h3>Filtering &amp; Hybrid</h3>
+<ul>
+<li>Combine vector search with metadata filters</li>
+<li>Support hybrid retrieval (vector + keyword) when needed</li>
+<li>Re-rank top-k with a cross-encoder for quality</li>
+<li>Return scores for confidence thresholds</li>
+</ul>
+<h3>Operations</h3>
+<ul>
+<li>Set replication and backup for durability</li>
+<li>Monitor recall, latency, and index size</li>
+<li>Re-index when the embedding model changes</li>
+<li>Version the embedding model with the data</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># pgvector
+docker run -e POSTGRES_PASSWORD=secret -p 5432:5432 -d pgvector/pgvector:pg17
+# or Python-native
+pip install chromadb qdrant-client</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>-- pgvector setup and query
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE documents (
+  id bigserial PRIMARY KEY,
+  content text,
+  embedding vector(384)
+);
+
+CREATE INDEX ON documents USING hnsw (embedding vector_cosine_ops);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Similarity search with filter
+SELECT id, content, 1 - (embedding &lt;=&gt; $1) AS similarity
+FROM documents
+WHERE category = &#x27;docs&#x27;
+ORDER BY embedding &lt;=&gt; $1
+LIMIT 5;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import chromadb
+
+client = chromadb.PersistentClient(path=&quot;./db&quot;)
+col = client.get_or_create_collection(&quot;docs&quot;)
+
+col.add(
+    ids=[&quot;1&quot;, &quot;2&quot;],
+    embeddings=[[0.1] * 384, [0.9] * 384],
+    documents=[&quot;Alpha docs&quot;, &quot;Beta docs&quot;],
+    metadatas=[{&quot;cat&quot;: &quot;guide&quot;}, {&quot;cat&quot;: &quot;api&quot;}],
+)
+
+res = col.query(query_embeddings=[[0.1] * 384], n_results=2, where={&quot;cat&quot;: &quot;guide&quot;})
+print(res[&quot;documents&quot;])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Embed + store with sentence-transformers
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+vec = model.encode(&quot;query text&quot;).tolist()
+col.add(ids=[id], embeddings=[vec], documents=[text])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Choose a store: pgvector, Chroma, Qdrant, or managed services.</p>
+<p class='ordered'>2. Pick an embedding model and vector dimension.</p>
+<p class='ordered'>3. Index your corpus in batches with metadata.</p>
+<p class='ordered'>4. Create an HNSW index tuned to your recall/latency goals.</p>
+<p class='ordered'>5. Query with filters and hybrid options.</p>
+<p class='ordered'>6. Re-rank results for quality where it matters.</p>
+<p class='ordered'>7. Set backups, replication, and monitoring.</p>
+<p class='ordered'>8. Re-index when you upgrade the embedding model.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Recall@k meets the target on a labeled set</p>
+<p class='ordered'>2. Query latency is within budget at scale</p>
+<p class='ordered'>3. Metadata filters return correct subsets</p>
+<p class='ordered'>4. Scores are meaningful and thresholdable</p>
+<p class='ordered'>5. Backups restore successfully</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Low recall: tune HNSW params or switch index type.</li>
+<li>Slow queries: reduce dimensions, add filters, or scale shards.</li>
+<li>Stale results: re-index after embedding model changes.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="sqlite.html">← sqlite</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

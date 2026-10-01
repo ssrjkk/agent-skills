@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mysql — Agent Skills Library</title>
+  <meta name="description" content="Design and operate MySQL: schema, InnoDB tuning, indexing, transactions, replication, and query optimization. Use for relational workloads.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/mysql.html">
+  <meta property="og:title" content="mysql — Agent Skills Library">
+  <meta property="og:description" content="Design and operate MySQL: schema, InnoDB tuning, indexing, transactions, replication, and query optimization. Use for relational workloads.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/mysql.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#14b8a61a;color:#14b8a6;border-color:#14b8a644">database</span>
+          <span class="tag">mysql</span><span class="tag">database</span><span class="tag">innodb</span><span class="tag">indexing</span><span class="tag">transactions</span><span class="tag">replication</span><span class="tag">sql</span>
+        </div>
+        <h1 class="skill-page-title">mysql</h1>
+        <p class="skill-page-desc">Design and operate MySQL: schema, InnoDB tuning, indexing, transactions, replication, and query optimization. Use for relational workloads.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>111</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('mysql')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/database/mysql">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="mongodb.html">← mongodb</a><a class="page-nav-link" href="postgresql.html">postgresql →</a></div>
+      <div class="skill-page-body">
+        <h1>MySQL</h1>
+<blockquote>Designing and operating MySQL databases.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql:8
+mysql -h 127.0.0.1 -u root -p</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Relational data with strong consistency</li>
+<li>Web application backends (read-heavy)</li>
+<li>Transactions and standard SQL</li>
+<li>Proven operational tooling</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Schema</h3>
+<ul>
+<li>Use InnoDB (default) for transactions and FK</li>
+<li>Choose column types deliberately (INT, VARCHAR, DATETIME)</li>
+<li>Use utf8mb4 for full Unicode</li>
+<li>Normalize core; denormalize for hot reads</li>
+</ul>
+<h3>Indexing</h3>
+<ul>
+<li>Index columns used in WHERE/JOIN/ORDER BY</li>
+<li>Leftmost-prefix rule for composite indexes</li>
+<li>Cover frequently used columns to avoid lookups</li>
+<li>Avoid functions on indexed columns in WHERE</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Use `EXPLAIN` to read query plans</li>
+<li>Batch inserts; avoid row-by-row in loops</li>
+<li>Set `innodb_buffer_pool_size` for cache</li>
+<li>Use connection pooling in apps</li>
+</ul>
+<h3>Operations</h3>
+<ul>
+<li>Enable binary logging for replication/backup</li>
+<li>Use a replica for reads when needed</li>
+<li>Set `max_connections` and monitor slow queries</li>
+<li>Back up with mysqldump or Percona tools</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql:8
+# client: mysql -h 127.0.0.1 -u root -p</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>-- Schema with types and indexes
+CREATE TABLE users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT &#x27;member&#x27;,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_email (email),
+  KEY idx_created (created_at)
+) ENGINE=InnoDB;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Transaction with rollback safety
+START TRANSACTION;
+INSERT INTO orders (user_id, amount) VALUES (1, 99.99);
+UPDATE users SET balance = balance - 99.99 WHERE id = 1;
+COMMIT; -- or ROLLBACK on error</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- EXPLAIN to verify index usage
+EXPLAIN SELECT id, email FROM users
+WHERE created_at &gt;= &#x27;2026-01-01&#x27; ORDER BY created_at LIMIT 50;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Batch insert
+INSERT INTO logs (ts, level, msg) VALUES
+  (&#x27;2026-09-01&#x27;, &#x27;info&#x27;, &#x27;a&#x27;),
+  (&#x27;2026-09-01&#x27;, &#x27;warn&#x27;, &#x27;b&#x27;);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Model entities; choose column types and charset.</p>
+<p class='ordered'>2. Write DDL with keys, indexes, and constraints.</p>
+<p class='ordered'>3. Migrate with a versioned tool (Flyway/Alembic).</p>
+<p class='ordered'>4. Add indexes for real query patterns.</p>
+<p class='ordered'>5. Run `EXPLAIN` on hot queries.</p>
+<p class='ordered'>6. Tune InnoDB and connection pooling.</p>
+<p class='ordered'>7. Set up replication and backups.</p>
+<p class='ordered'>8. Monitor slow queries and lock waits.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Schema applies cleanly via migrations</p>
+<p class='ordered'>2. `EXPLAIN` shows index usage</p>
+<p class='ordered'>3. Transactions roll back on failure</p>
+<p class='ordered'>4. Replica is in sync (for read scaling)</p>
+<p class='ordered'>5. Backup/restore tested</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Slow query: check EXPLAIN and composite index order.</li>
+<li>Deadlocks: keep transactions short; consistent lock order.</li>
+<li>High load: buffer pool, connection pool, read replicas.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="mongodb.html">← mongodb</a><a class="page-nav-link" href="postgresql.html">postgresql →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

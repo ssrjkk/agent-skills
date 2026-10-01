@@ -3,7 +3,7 @@ name: mlops
 description: "Operate machine learning in production: experiment tracking, pipelines, model registry, serving, monitoring, and CI/CD for ML. Use for ML lifecycle."
 category: ai
 tags: [mlops, machine-learning, pipelines, model-registry, serving, monitoring, ml]
-models: [sonnet, opus, gpt-5, gemini-2.5, glm-4.6]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-09-26
 updated: 2026-09-28

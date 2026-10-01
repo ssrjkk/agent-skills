@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mlops — Agent Skills Library</title>
+  <meta name="description" content="Operate machine learning in production: experiment tracking, pipelines, model registry, serving, monitoring, and CI/CD for ML. Use for ML lifecycle.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/mlops.html">
+  <meta property="og:title" content="mlops — Agent Skills Library">
+  <meta property="og:description" content="Operate machine learning in production: experiment tracking, pipelines, model registry, serving, monitoring, and CI/CD for ML. Use for ML lifecycle.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/mlops.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#8b5cf61a;color:#8b5cf6;border-color:#8b5cf644">ai</span>
+          <span class="tag">mlops</span><span class="tag">machine-learning</span><span class="tag">pipelines</span><span class="tag">model-registry</span><span class="tag">serving</span><span class="tag">monitoring</span><span class="tag">ml</span>
+        </div>
+        <h1 class="skill-page-title">mlops</h1>
+        <p class="skill-page-desc">Operate machine learning in production: experiment tracking, pipelines, model registry, serving, monitoring, and CI/CD for ML. Use for ML lifecycle.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>6</strong></span>
+          <span>Sections <strong>8</strong></span>
+          <span>Lines <strong>135</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('mlops')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/ai/mlops">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="mcp-servers.html">← mcp-servers</a><a class="page-nav-link" href="multi-agent-orchestration.html">multi-agent-orchestration →</a></div>
+      <div class="skill-page-body">
+        <h1>MLOps</h1>
+<blockquote>Running machine learning reliably in production.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>pip install mlflow
+mlflow ui  # experiment tracking UI</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Models that need reproducible training</li>
+<li>Teams shipping models to production repeatedly</li>
+<li>Data drift and model monitoring</li>
+<li>Collaboration between data science and engineering</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Experiments</h3>
+<ul>
+<li>Track every run: params, metrics, artifacts</li>
+<li>Use MLflow or W&amp;B for tracking</li>
+<li>Version datasets and code with the run</li>
+<li>Compare runs systematically</li>
+</ul>
+<h3>Pipelines</h3>
+<ul>
+<li>Build reproducible data → train → evaluate pipelines</li>
+<li>Use orchestrators (Airflow, Prefect, TFX)</li>
+<li>Cache intermediate artifacts</li>
+<li>Separate train vs serve code paths</li>
+</ul>
+<h3>Model Registry</h3>
+<ul>
+<li>Register candidate models with metadata</li>
+<li>Stage models: staging → production</li>
+<li>Store the exact artifact + signature</li>
+<li>Version and rollback models</li>
+</ul>
+<h3>Serving &amp; Monitoring</h3>
+<ul>
+<li>Serve via REST/gRPC or serverless inference</li>
+<li>Monitor input/output data drift</li>
+<li>Track latency, throughput, and error rates</li>
+<li>Set alerts and define rollback triggers</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>pip install mlflow scikit-learn
+# orchestrators: airflow / prefect
+# serving: bentoml / triton / fastapi</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>import mlflow
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+mlflow.set_experiment(&quot;churn&quot;)
+
+with mlflow.start_run():
+    mlflow.log_param(&quot;n_estimators&quot;, 100)
+    mlflow.log_param(&quot;max_depth&quot;, 5)
+
+    model = RandomForestClassifier(n_estimators=100, max_depth=5)
+    model.fit(X_train, y_train)
+    acc = accuracy_score(y_test, model.predict(X_test))
+
+    mlflow.log_metric(&quot;accuracy&quot;, acc)
+    mlflow.sklearn.log_model(model, &quot;model&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Load a registered model for serving
+import mlflow.sklearn
+
+model = mlflow.sklearn.load_model(&quot;models:/churn/Production&quot;)
+
+def predict(features: dict) -&gt; dict:
+    pred = model.predict([list(features.values())])[0]
+    proba = model.predict_proba([list(features.values())])[0].tolist()
+    return {&quot;prediction&quot;: int(pred), &quot;probabilities&quot;: proba}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CI/CD for ML (pseudo)
+stages:
+  - train:
+      script: python train.py
+      artifacts: [model.pkl, metrics.json]
+  - register:
+      when: metrics.accuracy &gt;= 0.85
+      command: mlflow register -m run/model
+  - deploy:
+      when: stage == register
+      command: deploy_to_prod model</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Drift monitoring
+import numpy as np
+
+def drift_score(train_mean: float, live_mean: float, train_std: float) -&gt; float:
+    return abs(live_mean - train_mean) / max(train_std, 1e-9)
+
+def alert_if_drift(score: float, threshold: float = 2.0) -&gt; str:
+    return &quot;ALERT&quot; if score &gt; threshold else &quot;ok&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Set up experiment tracking for all training runs.</p>
+<p class='ordered'>2. Version code, data, and model together.</p>
+<p class='ordered'>3. Build reproducible training pipelines.</p>
+<p class='ordered'>4. Evaluate with a fixed holdout and thresholds.</p>
+<p class='ordered'>5. Register models with metadata and stage promotion.</p>
+<p class='ordered'>6. Serve with a consistent interface and signature.</p>
+<p class='ordered'>7. Monitor drift, latency, and errors.</p>
+<p class='ordered'>8. Define rollback and retraining triggers.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Every run is reproducible (seed, data, code versions)</p>
+<p class='ordered'>2. Metrics are tracked and comparable</p>
+<p class='ordered'>3. Registered models have a clear stage lifecycle</p>
+<p class='ordered'>4. Serving matches training preprocessing</p>
+<p class='ordered'>5. Drift alerts fire before quality degrades</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Train/serve skew: share preprocessing code between both.</li>
+<li>Model drift: monitor inputs; retrain on schedule or alerts.</li>
+<li>Slow serving: batch requests and scale the endpoint.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="mcp-servers.html">← mcp-servers</a><a class="page-nav-link" href="multi-agent-orchestration.html">multi-agent-orchestration →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

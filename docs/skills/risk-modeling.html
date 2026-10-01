@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>risk-modeling — Agent Skills Library</title>
+  <meta name="description" content="Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/risk-modeling.html">
+  <meta property="og:title" content="risk-modeling — Agent Skills Library">
+  <meta property="og:description" content="Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/risk-modeling.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#eab3081a;color:#eab308;border-color:#eab30844">finance</span>
+          <span class="tag">risk-modeling</span><span class="tag">var</span><span class="tag">cvar</span><span class="tag">monte-carlo</span><span class="tag">stress-testing</span><span class="tag">portfolio</span><span class="tag">quantitative</span><span class="tag">finance</span>
+        </div>
+        <h1 class="skill-page-title">risk-modeling</h1>
+        <p class="skill-page-desc">Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>8</strong></span>
+          <span>Sections <strong>7</strong></span>
+          <span>Lines <strong>227</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('risk-modeling')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/finance/risk-modeling">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="algorithmic-trading.html">← algorithmic-trading</a></div>
+      <div class="skill-page-body">
+        <h1>Risk Modeling</h1>
+<blockquote>Building financial risk models with VaR, Monte Carlo simulation, and stress testing.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>import numpy as np
+import pandas as pd
+
+def calculate_var(returns: pd.Series, confidence: float = 0.95) -&gt; float:
+    &quot;&quot;&quot;Historical Value at Risk.&quot;&quot;&quot;
+    return np.percentile(returns, (1 - confidence) * 100)
+
+def calculate_cvar(returns: pd.Series, confidence: float = 0.95) -&gt; float:
+    &quot;&quot;&quot;Conditional VaR (Expected Shortfall).&quot;&quot;&quot;
+    var = calculate_var(returns, confidence)
+    return returns[returns &lt;= var].mean()
+
+# Example usage
+returns = pd.Series(np.random.randn(1000) * 0.02)
+print(f&quot;VaR (95%): {calculate_var(returns):.4f}&quot;)
+print(f&quot;CVaR (95%): {calculate_cvar(returns):.4f}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Measuring portfolio risk for regulatory compliance (Basel III/IV)</li>
+<li>Setting risk limits for trading desks</li>
+<li>Stress testing portfolios against market shocks</li>
+<li>When you need to quantify potential losses</li>
+</ul>
+<h2>Step-by-Step</h2>
+<h3>1. Historical Simulation VaR</h3>
+<div class="codeblock"><pre class="code"><code>class HistoricalVaR:
+    def __init__(self, confidence=0.95, horizon_days=1):
+        self.confidence = confidence
+        self.horizon_days = horizon_days
+
+    def calculate(self, returns: pd.DataFrame, portfolio_weights: np.ndarray) -&gt; dict:
+        portfolio_returns = returns.dot(portfolio_weights)
+
+        var = np.percentile(portfolio_returns, (1 - self.confidence) * 100)
+        cvar = portfolio_returns[portfolio_returns &lt;= var].mean()
+
+        return {
+            &#x27;var&#x27;: var * np.sqrt(self.horizon_days),
+            &#x27;cvar&#x27;: cvar * np.sqrt(self.horizon_days),
+            &#x27;confidence&#x27;: self.confidence,
+        }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Monte Carlo Simulation</h3>
+<div class="codeblock"><pre class="code"><code>def monte_carlo_var(
+    mean_returns: np.ndarray,
+    cov_matrix: np.ndarray,
+    weights: np.ndarray,
+    simulations: int = 10000,
+    horizon_days: int = 10,
+    confidence: float = 0.95
+) -&gt; dict:
+    &quot;&quot;&quot;Parametric VaR using Monte Carlo simulation.&quot;&quot;&quot;
+    daily_returns = np.random.multivariate_normal(
+        mean_returns, cov_matrix * horizon_days, simulations
+    )
+
+    portfolio_returns = daily_returns.dot(weights)
+
+    var = np.percentile(portfolio_returns, (1 - confidence) * 100)
+    cvar = portfolio_returns[portfolio_returns &lt;= var].mean()
+
+    return {
+        &#x27;var&#x27;: var,
+        &#x27;cvar&#x27;: cvar,
+        &#x27;mean_loss&#x27;: -portfolio_returns.mean(),
+        &#x27;worst_case&#x27;: portfolio_returns.min(),
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Stress Testing</h3>
+<div class="codeblock"><pre class="code"><code>class StressTest:
+    SCENARIOS = {
+        &#x27;market_crash&#x27;: {&#x27;equities&#x27;: -0.30, &#x27;bonds&#x27;: 0.05, &#x27;commodities&#x27;: -0.20},
+        &#x27;rate_shock&#x27;: {&#x27;equities&#x27;: -0.10, &#x27;bonds&#x27;: -0.15, &#x27;commodities&#x27;: 0.05},
+        &#x27;credit_crisis&#x27;: {&#x27;equities&#x27;: -0.25, &#x27;bonds&#x27;: -0.10, &#x27;commodities&#x27;: -0.15},
+        &#x27;pandemic&#x27;: {&#x27;equities&#x27;: -0.35, &#x27;bonds&#x27;: 0.10, &#x27;commodities&#x27;: -0.30},
+    }
+
+    def run_scenario(self, portfolio: dict, scenario: str) -&gt; dict:
+        if scenario not in self.SCENARIOS:
+            raise ValueError(f&quot;Unknown scenario: {scenario}&quot;)
+
+        shocks = self.SCENARIOS[scenario]
+        total_loss = 0
+        results = {}
+
+        for asset_class, value in portfolio.items():
+            if asset_class in shocks:
+                loss = value * shocks[asset_class]
+                total_loss += loss
+                results[asset_class] = {&#x27;value&#x27;: value, &#x27;shock&#x27;: shocks[asset_class], &#x27;loss&#x27;: loss}
+
+        return {
+            &#x27;scenario&#x27;: scenario,
+            &#x27;total_loss&#x27;: total_loss,
+            &#x27;details&#x27;: results,
+        }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Risk Decomposition</h3>
+<div class="codeblock"><pre class="code"><code>def risk_decomposition(returns: pd.DataFrame, weights: np.ndarray) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Decompose portfolio risk by asset.&quot;&quot;&quot;
+    cov = returns.cov()
+    portfolio_var = weights.dot(cov).dot(weights)
+    marginal_contrib = cov.dot(weights)
+    component_contrib = weights * marginal_contrib
+    pct_contrib = component_contrib / portfolio_var
+
+    return pd.DataFrame({
+        &#x27;weight&#x27;: weights,
+        &#x27;marginal_contrib&#x27;: marginal_contrib,
+        &#x27;component_contrib&#x27;: component_contrib,
+        &#x27;pct_contrib&#x27;: pct_contrib,
+    }, index=returns.columns)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Correlation Stress</h3>
+<div class="codeblock"><pre class="code"><code>def correlation_stress_test(
+    returns: pd.DataFrame,
+    weights: np.ndarray,
+    correlation_multiplier: float = 1.5
+) -&gt; dict:
+    &quot;&quot;&quot;Test portfolio under increased correlation regime.&quot;&quot;&quot;
+    normal_corr = returns.corr()
+    stressed_corr = normal_corr * correlation_multiplier
+    np.fill_diagonal(stressed_corr.values, 1.0)
+
+    normal_vol = returns.std()
+    stressed_cov = np.outer(normal_vol, normal_vol) * stressed_corr
+
+    normal_var = weights.dot(returns.cov()).dot(weights)
+    stressed_var = weights.dot(stressed_cov).dot(weights)
+
+    return {
+        &#x27;normal_var&#x27;: normal_var,
+        &#x27;stressed_var&#x27;: stressed_var,
+        &#x27;var_increase&#x27;: (stressed_var - normal_var) / normal_var,
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Best Practices</h2>
+<ul>
+<li>**Use multiple methods** — historical, parametric, and Monte Carlo</li>
+<li>**Backtest your risk models** against actual losses</li>
+<li>**Update correlation matrices** regularly — they change in crises</li>
+<li>**Include tail risk** — normal distributions underestimate extreme events</li>
+<li>**Document assumptions** — all models are wrong, some are useful</li>
+</ul>
+<h2>Common Pitfalls</h2>
+<ul>
+<li>Assuming normal distributions (fat tails matter)</li>
+<li>Using stale correlation matrices</li>
+<li>Ignoring liquidity risk</li>
+<li>Not stress testing against unprecedented scenarios</li>
+<li>Treating VaR as the only risk measure</li>
+</ul>
+<h2>Examples</h2>
+<h3>Portfolio Risk Report</h3>
+<div class="codeblock"><pre class="code"><code>def generate_risk_report(portfolio_returns: pd.DataFrame, weights: np.ndarray) -&gt; dict:
+    var_95 = calculate_var(portfolio_returns.dot(weights), 0.95)
+    var_99 = calculate_var(portfolio_returns.dot(weights), 0.99)
+    cvar_95 = calculate_cvar(portfolio_returns.dot(weights), 0.95)
+
+    decomposition = risk_decomposition(portfolio_returns, weights)
+
+    return {
+        &#x27;var_95&#x27;: var_95,
+        &#x27;var_99&#x27;: var_99,
+        &#x27;cvar_95&#x27;: cvar_95,
+        &#x27;max_drawdown&#x27;: (portfolio_returns.dot(weights).cumsum().cummax() -
+                        portfolio_returns.dot(weights).cumsum()).max(),
+        &#x27;risk_contributions&#x27;: decomposition[&#x27;pct_contrib&#x27;].to_dict(),
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Validation</h2>
+<div class="codeblock"><pre class="code"><code>def test_var_calculation():
+    returns = pd.Series(np.random.randn(10000) * 0.01)
+    var = calculate_var(returns, 0.95)
+    assert var &lt; 0  # VaR should be negative (loss)
+    assert abs(var) &lt; 0.05  # Sanity check
+
+def test_stress_test():
+    portfolio = {&#x27;equities&#x27;: 1000000, &#x27;bonds&#x27;: 500000}
+    st = StressTest()
+    result = st.run_scenario(portfolio, &#x27;market_crash&#x27;)
+    assert result[&#x27;total_loss&#x27;] &lt; 0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="algorithmic-trading.html">← algorithmic-trading</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

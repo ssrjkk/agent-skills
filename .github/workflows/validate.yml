@@ -22,10 +22,10 @@ jobs:
       matrix:
         python-version: ["3.9", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -89,6 +89,9 @@ jobs:
       - name: Build documentation site
         run: python scripts/build_docs.py --catalog skills_catalog.json --output-dir docs
 
+      - name: Verify site consistency (links, CSS paths, search index)
+        run: python scripts/check_site_consistency.py
+
       - name: Verify catalog consistency
         run: |
           python -c "
@@ -129,16 +132,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: docs
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
