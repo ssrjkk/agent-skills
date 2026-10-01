@@ -86,7 +86,7 @@ def load_all(path: Path) -> tuple[dict, dict, dict]:
     return meta, skills, metrics
 
 
-def page_head(title: str, desc: str, canonical: str, extra: str = "") -> str:
+def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: str = "../style.css", nav_index: str = "../index.html") -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,17 +103,17 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "") -> str:
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="{css_path}">
   {extra}
 </head>
 <body data-theme="dark">
   <div class="bg-glow" aria-hidden="true"></div>
   <nav class="nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="../index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <a class="nav-brand" href="{nav_index}"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
-        <a class="nav-link" href="../index.html#catalog">Catalog</a>
-        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="{nav_index}#catalog">Catalog</a>
+        <a class="nav-link" href="{nav_index}#dashboard">Stats</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
       </div>
@@ -229,6 +229,8 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         "100 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.",
         BASE,
         '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Agent Skills Library","url":"' + BASE + '"}</script>',
+        css_path="style.css",
+        nav_index="index.html",
     ) + f"""
     <header class="hero">
       <div class="hero-badge">Universal Agent Skills Format</div>
