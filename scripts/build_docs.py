@@ -43,6 +43,40 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     meta = data["metadata"]
     skills = data["skills"]
 
+    # Compute per-skill quality metrics by reading the actual files
+    skill_metrics = {}
+    for s in skills:
+        en_path = Path(s["path"])
+        if not en_path.exists():
+            skill_metrics[s["name"]] = {"score": 100, "lines": 0, "blocks": 0, "sections": 0}
+            continue
+        text = en_path.read_text(encoding="utf-8")
+        lines = text.count("\n") + 1
+        blocks = text.count("```") // 2
+        sections = text.count("\n## ")
+        # rough freshness based on updated date
+        try:
+            updated = s.get("updated", "")
+            if updated:
+                dt = datetime.fromisoformat(updated.replace("Z", "+00:00"))
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                days = (datetime.now(timezone.utc) - dt).days
+            else:
+                days = 365
+        except ValueError:
+            days = 365
+        score = 100
+        if days > 90:
+            score = 80
+        if blocks < 4:
+            score -= 10
+        if lines < 90:
+            score -= 10
+        if sections < 7:
+            score -= 5
+        skill_metrics[s["name"]] = {"score": max(0, score), "lines": lines, "blocks": blocks, "sections": sections}
+
     model_names = set()
     for s in skills:
         for m in s.get("models", []):
@@ -66,12 +100,19 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
         tags = s.get("tags", [])[:3]
         tag_html = "".join(f'<span class="tag">{esc(t)}</span>' for t in tags)
         ru_badge = '<span class="ru-badge">RU</span>' if s.get("has_ru") else ""
+        m = skill_metrics.get(s["name"], {"score": 100, "lines": 0, "blocks": 0, "sections": 0})
+        score = m["score"]
+        bar_color = "#22c55e" if score >= 95 else "#f59e0b" if score >= 85 else "#ef4444"
         cards.append(
             f'<div class="card" data-name="{esc(s["name"].lower())}" '
             f'data-domain="{esc(s["category"].lower())}" '
+            f'data-score="{score}" '
             f'data-tags=\'{esc(" ".join(s.get("tags", [])).lower())}\'>'
             f'<div class="card-top"><span class="card-name" onclick="copySkill(\'{esc(s["name"])}\')" title="Click to copy path">{esc(s["name"])}</span>{ru_badge}</div>'
             f'<div class="card-desc">{esc(s["description"])}</div>'
+            f'<div class="card-score"><div class="score-row"><span>Quality</span><strong>{score}%</strong></div>'
+            f'<div class="bar"><div class="bar-fill" style="width:{score}%;background:{bar_color}"></div></div></div>'
+            f'<div class="card-meta"><span>{m["blocks"]} code blocks</span><span>{m["sections"]} sections</span><span>{m["lines"]} lines</span></div>'
             f'<div class="card-tags">{tag_html}</div>'
             f'<div class="card-domain" style="color:{color}">{esc(s["category"])}</div>'
             f'<div class="card-copy" onclick="copySkill(\'{esc(s["name"])}\')">copy path</div>'
@@ -131,7 +172,14 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     </section>
 
     <section class="search-section">
-      <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
+      <div class="search-row">
+        <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
+        <select id="sort" class="sort" onchange="applyFilter()">
+          <option value="domain">Sort: domain</option>
+          <option value="name">Sort: name</option>
+          <option value="score" selected>Sort: quality (high→low)</option>
+        </select>
+      </div>
       <div class="pills" id="pills">
         <button class="pill active" data-domain="all" onclick="filterByDomain('all', this)">all<span class="pill-count">{meta["total_skills"]}</span></button>
         {"".join(domain_pills)}
@@ -179,7 +227,8 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
   }}
   function applyFilter() {{
     var q = (document.getElementById('search').value || '').toLowerCase();
-    var cards = document.querySelectorAll('.card');
+    var sort = document.getElementById('sort').value;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
     var visible = 0;
     cards.forEach(function(c) {{
       var name = c.getAttribute('data-name');
@@ -191,6 +240,13 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       c.style.display = show ? '' : 'none';
       if (show) visible++;
     }});
+    cards.sort(function(a, b) {{
+      if (sort === 'score') return (b.getAttribute('data-score') || 0) - (a.getAttribute('data-score') || 0);
+      if (sort === 'name') return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
+      return a.getAttribute('data-domain').localeCompare(b.getAttribute('data-domain'));
+    }});
+    var grid = document.getElementById('cards');
+    cards.forEach(function(c) {{ grid.appendChild(c); }});
     document.getElementById('empty').hidden = visible !== 0;
   }}
   </script>
@@ -262,11 +318,17 @@ body{
 .install-links a{color:var(--accent);text-decoration:none}
 .install-links a:hover{text-decoration:underline}
 .search-section{margin:2rem 0 1.4rem}
+.search-row{display:flex;gap:.6rem;flex-wrap:wrap}
 .search{
-  width:100%;padding:.95rem 1.2rem;border-radius:12px;font-size:1rem;color:var(--text);
+  flex:1;min-width:220px;padding:.95rem 1.2rem;border-radius:12px;font-size:1rem;color:var(--text);
   background:var(--card);border:1px solid var(--border);outline:none;transition:border-color .2s,box-shadow .2s;
 }
 .search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+.sort{
+  padding:.95rem 1rem;border-radius:12px;font-size:.9rem;color:var(--text);
+  background:var(--card);border:1px solid var(--border);outline:none;cursor:pointer;
+}
+.sort:hover{border-color:var(--accent)}
 .pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
 .pill{
   display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .9rem;border-radius:999px;
@@ -295,6 +357,14 @@ body{
   background:linear-gradient(90deg,#22c55e,#84cc16);border-radius:6px;padding:.12rem .45rem;flex-shrink:0;
 }
 .card-desc{color:var(--muted);font-size:.85rem;margin:.5rem 0 .7rem;line-height:1.5}
+.card-score{margin:.4rem 0 .5rem}
+.score-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.3rem;font-size:.78rem}
+.score-row span{color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-size:.68rem}
+.score-row strong{color:var(--text);font-size:.85rem}
+.bar{height:6px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar-fill{height:100%;border-radius:999px;transition:width .4s ease}
+.card-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;font-size:.66rem;color:var(--muted)}
+.card-meta span{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:.1rem .45rem}
 .card-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.7rem}
 .tag{
   font-size:.68rem;padding:.12rem .55rem;border-radius:6px;color:var(--muted);
