@@ -142,9 +142,18 @@ def page_foot() -> str:
     var b = document.body;
     var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
     var btn = document.querySelector('.theme-toggle');
     if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
   }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
   </script>
 </body>
 </html>"""
@@ -286,8 +295,37 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a></p>
     </footer>
 """ + """
+  <div class="toast" id="toast"></div>
   <script>
   var activeDomain = 'all';
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
   function filterByDomain(domain, btn) {
     activeDomain = domain;
     document.querySelectorAll('.pill').forEach(function(b) { b.classList.remove('active'); });

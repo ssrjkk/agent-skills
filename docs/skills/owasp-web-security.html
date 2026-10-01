@@ -162,9 +162,18 @@ def safe_fetch(url: str) -&gt; str:
     var b = document.body;
     var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
     var btn = document.querySelector('.theme-toggle');
     if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
   }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
   </script>
 </body>
 </html>
