@@ -333,6 +333,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     requestAnimationFrame(step);
   });
   </script>
+  </div>
 </body>
 </html>"""
 
