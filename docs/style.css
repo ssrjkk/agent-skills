@@ -6,6 +6,11 @@
   --mono:'JetBrains Mono','Consolas','Menlo',monospace;
   --grid:linear-gradient(rgba(125,255,74,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(125,255,74,.03) 1px,transparent 1px);
 }
+body[data-theme="light"]{
+  --bg:#f4f6f1;--bg2:#eef1ea;--card:#ffffff;--card-hover:#e9efe4;
+  --text:#14321f;--muted:#4a6a52;--accent:#1a7f37;--accent2:#007f6a;
+  --border:rgba(20,80,40,.16);--radius:4px;
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 ::selection{background:var(--accent);color:#0b0f0a}
@@ -205,4 +210,21 @@ footer a:hover{text-decoration:underline}
   .install-box{flex-direction:column;align-items:stretch}
   .dash-row{grid-template-columns:80px 1fr 34px}
   .skill-page-title{font-size:1.4rem}
+}
+body[data-theme="light"] .hero-badge{color:#1a7f37;background:rgba(26,127,55,.08)}
+body[data-theme="light"] .card-name{color:#1a7f37}
+body[data-theme="light"] .card-name::before{opacity:.4}
+body[data-theme="light"] .card-code{color:#2a5a3a}
+body[data-theme="light"] .term-box{background:#f0f3ec}
+body[data-theme="light"] .term-body{color:#14321f}
+body[data-theme="light"] .term-body .ln{color:#4a6a52}
+body[data-theme="light"] .install-box{background:#f0f3ec}
+body[data-theme="light"] .bar{background:rgba(20,80,40,.12)}
+body[data-theme="light"] .dash-bar{background:rgba(20,80,40,.1)}
+body[data-theme="light"] .codeblock{background:#f0f3ec}
+body[data-theme="light"] .pill-count{background:rgba(0,0,0,.1)}
+body[data-theme="light"] .bg-glow{
+  background:
+    radial-gradient(700px 500px at 15% -10%,rgba(26,127,55,.06),transparent 60%),
+    radial-gradient(800px 500px at 90% 0%,rgba(0,127,106,.05),transparent 60%);
 }
