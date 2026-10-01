@@ -184,16 +184,9 @@ snarkjs generatecall
     var b = document.body;
     var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     b.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
     var btn = document.querySelector('.theme-toggle');
     if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
   }
-  (function() {
-    var saved = localStorage.getItem('theme');
-    if (saved) document.body.setAttribute('data-theme', saved);
-    var btn = document.querySelector('.theme-toggle');
-    if (btn) btn.textContent = saved === 'light' ? '☀️' : '🌙';
-  })();
   </script>
 </body>
 </html>
