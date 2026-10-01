@@ -5,7 +5,7 @@ click>=8.1,<9.0
 
 # Development
 pytest>=7.0,<10.0
-pytest-cov>=4.0,<7.0
+pytest-cov>=4.0,<8.0
 hypothesis>=6.0
 
 # Code quality

@@ -39,8 +39,8 @@ PyPI = "https://pypi.org/project/agent-skills-library/"
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0,<10.0",
-    "pytest-cov>=4.0,<7.0",
+"pytest>=7.0,<10.0",
+    "pytest-cov>=4.0,<8.0",
     "hypothesis>=6.0",
     "mypy>=1.0",
     "ruff>=0.1.0",
