@@ -228,6 +228,15 @@ class TestSiteGenerator:
         assert "filterByDomain" in index
         assert "applyFilter" in index
 
+    def test_tabbed_layout_present(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert "showTab" in index
+        for tab in ["catalog", "stats", "how", "install", "roadmaps"]:
+            assert f'data-panel="{tab}"' in index, f"missing tab panel: {tab}"
+            assert f"showTab('{tab}'" in index, f"missing tab button: {tab}"
+        assert index.count("tab-panel active") >= 2  # search + results in catalog
+
     def test_light_theme_css_present(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         css = (docs / "style.css").read_text(encoding="utf-8")

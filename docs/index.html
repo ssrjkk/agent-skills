@@ -33,7 +33,7 @@
       <div class="nav-right">
         <a class="nav-link" href="index.html#catalog">Catalog</a>
         <a class="nav-link nav-hot" href="roadmaps.html">Roadmaps<span class="soon-dot">soon</span></a>
-        <a class="nav-link" href="index.html#dashboard">Stats</a>
+        <a class="nav-link" href="index.html#stats">Stats</a>
         <a class="nav-link" href="index.html#how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
         <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
@@ -62,7 +62,7 @@
       </div>
     </header>
 
-    <section class="how reveal" id="how" aria-label="How it works">
+    <section class="how reveal tab-panel" id="how" data-panel="how" aria-label="How it works">
       <h2>How it works <span class="h-sub">— 3 steps, 30 seconds</span></h2>
       <div class="how-grid">
         <div class="how-card"><span class="how-num">01</span><h3>Find</h3><p>Search by task, domain or tag. Every card shows quality, blocks and RU badge.</p></div>
@@ -78,7 +78,15 @@
       <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Quality</span></div>
     </section>
 
-    <section class="install reveal" id="install">
+    <div class="tabs reveal in" role="tablist" aria-label="Site sections">
+      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog', this)">Catalog</button>
+      <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats', this)">Stats</button>
+      <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how', this)">How it works</button>
+      <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install', this)">Install</button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps', this)">Roadmaps <span class="soon-pill">soon</span></button>
+    </div>
+
+    <section class="install reveal tab-panel" id="install" data-panel="install">
       <div class="install-header"><h2>Install in one line <span class="h-sub">— pick your agent</span></h2></div>
       <div class="agent-tabs" role="tablist">
         <button class="agent-tab active" onclick="showAgent('claude', this)">Claude Code</button>
@@ -98,14 +106,14 @@
       </div>
     </section>
 
-    <section class="dashboard reveal" id="dashboard">
+    <section class="dashboard reveal tab-panel" id="stats" data-panel="stats">
       <h2>Distribution by domain <span class="h-sub">— click a pill to filter ↓</span></h2>
       <div class="dash-list">
         <div class="dash-row"><span class="dash-name">devops</span><div class="dash-bar"><div class="dash-fill" style="width:100%;background:#f43f5e"></div></div><span class="dash-count">19</span></div><div class="dash-row"><span class="dash-name">ai</span><div class="dash-bar"><div class="dash-fill" style="width:78%;background:#8b5cf6"></div></div><span class="dash-count">15</span></div><div class="dash-row"><span class="dash-name">backend</span><div class="dash-bar"><div class="dash-fill" style="width:73%;background:#0ea5e9"></div></div><span class="dash-count">14</span></div><div class="dash-row"><span class="dash-name">frontend</span><div class="dash-bar"><div class="dash-fill" style="width:52%;background:#3b82f6"></div></div><span class="dash-count">10</span></div><div class="dash-row"><span class="dash-name">database</span><div class="dash-bar"><div class="dash-fill" style="width:42%;background:#14b8a6"></div></div><span class="dash-count">8</span></div><div class="dash-row"><span class="dash-name">data</span><div class="dash-bar"><div class="dash-fill" style="width:36%;background:#10b981"></div></div><span class="dash-count">7</span></div><div class="dash-row"><span class="dash-name">engineering</span><div class="dash-bar"><div class="dash-fill" style="width:36%;background:#a855f7"></div></div><span class="dash-count">7</span></div><div class="dash-row"><span class="dash-name">mobile</span><div class="dash-bar"><div class="dash-fill" style="width:21%;background:#ec4899"></div></div><span class="dash-count">4</span></div><div class="dash-row"><span class="dash-name">security</span><div class="dash-bar"><div class="dash-fill" style="width:21%;background:#dc2626"></div></div><span class="dash-count">4</span></div><div class="dash-row"><span class="dash-name">qa</span><div class="dash-bar"><div class="dash-fill" style="width:15%;background:#22c55e"></div></div><span class="dash-count">3</span></div><div class="dash-row"><span class="dash-name">design</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#f472b6"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">finance</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#eab308"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">gamedev</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#ef4444"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">healthcare</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#06b6d4"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">blockchain</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#f59e0b"></div></div><span class="dash-count">1</span></div><div class="dash-row"><span class="dash-name">desktop</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#6366f1"></div></div><span class="dash-count">1</span></div><div class="dash-row"><span class="dash-name">embedded</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#84cc16"></div></div><span class="dash-count">1</span></div>
       </div>
     </section>
 
-    <section class="roadmaps-teaser reveal" id="roadmaps">
+    <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
         <h2>IT Roadmaps <span class="soon-pill big">soon everywhere</span></h2>
         <p>Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
@@ -114,7 +122,7 @@
       <a class="btn-primary shine" href="roadmaps.html">Open roadmaps →</a>
     </section>
 
-    <section class="search-section reveal" id="catalog">
+    <section class="search-section reveal tab-panel active" id="catalog" data-panel="catalog">
       <h2>Catalog <span class="h-sub">— 102 skills, 102 with RU</span></h2>
       <div class="search-row">
         <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
@@ -130,7 +138,7 @@
       </div>
     </section>
 
-    <section class="results">
+    <section class="results tab-panel active" data-panel="catalog">
       <div class="cards" id="cards">
         <a class="card" href="skills/agent-development.html" data-name="agent-development" data-domain="ai" data-score="100" data-tags='agents agentic tool-use orchestration llm workflows autonomy'><div class="card-top"><span class="card-name">agent-development</span><span class="ru-badge">RU</span></div><div class="card-desc">Build reliable LLM agents and agentic workflows: tool use, memory, loops, guardrails, and evaluation. Use for autonomous AI systems.</div><pre class="card-code"><code>pip install openai
 # define tools, a loop, and safety limits</code></pre><div class="card-score"><div class="score-row"><span>Quality</span><strong>100%</strong></div><div class="bar"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div></div><div class="card-meta"><span>6 blocks</span><span>8 sections</span><span>126 lines</span></div><div class="card-tags"><span class="tag">agents</span><span class="tag">agentic</span><span class="tag">tool-use</span></div><div class="card-domain" style="color:#8b5cf6">ai</div></a><a class="card" href="skills/context-engineering.html" data-name="context-engineering" data-domain="ai" data-score="100" data-tags='context-engineering context-window tokens agents compaction retrieval'><div class="card-top"><span class="card-name">context-engineering</span><span class="ru-badge">RU</span></div><div class="card-desc">Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets. Use for effective agent context.</div><pre class="card-code"><code># Keep a small stable system prompt, fetch only what the task needs
@@ -568,6 +576,34 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     more.className = 'rm-chip more';
     more.textContent = '+' + (RM_TRACKS.length - 8) + ' more →';
     strip.appendChild(more);
+  })();
+  // tabs: one screen instead of a long ribbon (deep-linkable via hash)
+  var TAB_NAMES = ['catalog', 'stats', 'how', 'install', 'roadmaps'];
+  function showTab(name, btn) {
+    if (TAB_NAMES.indexOf(name) < 0) name = 'catalog';
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      var on = b.getAttribute('data-tab') === name;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+      var on = p.getAttribute('data-panel') === name;
+      p.classList.toggle('active', on);
+      if (on) {
+        p.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in'); });
+        Array.prototype.forEach.call(p.querySelectorAll('.card'), function(c, i) {
+          c.style.transitionDelay = Math.min(i * 30, 600) + 'ms';
+          c.classList.add('in');
+        });
+      }
+    });
+    if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  (function() {
+    var h = (location.hash || '').replace('#', '');
+    if (h === 'dashboard') h = 'stats';
+    showTab(TAB_NAMES.indexOf(h) >= 0 ? h : 'catalog', null);
   })();
   // reveal on scroll + stagger cards
   (function() {

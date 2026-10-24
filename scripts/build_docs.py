@@ -204,7 +204,7 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
       <div class="nav-right">
         <a class="nav-link" href="{nav_index}#catalog">Catalog</a>
         <a class="nav-link nav-hot" href="{roadmaps_href}">Roadmaps<span class="soon-dot">soon</span></a>
-        <a class="nav-link" href="{nav_index}#dashboard">Stats</a>
+        <a class="nav-link" href="{nav_index}#stats">Stats</a>
         <a class="nav-link" href="{nav_index}#how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
         <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
@@ -342,7 +342,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       </div>
     </header>
 
-    <section class="how reveal" id="how" aria-label="How it works">
+    <section class="how reveal tab-panel" id="how" data-panel="how" aria-label="How it works">
       <h2>How it works <span class="h-sub">— 3 steps, 30 seconds</span></h2>
       <div class="how-grid">
         <div class="how-card"><span class="how-num">01</span><h3>Find</h3><p>Search by task, domain or tag. Every card shows quality, blocks and RU badge.</p></div>
@@ -358,7 +358,15 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Quality</span></div>
     </section>
 
-    <section class="install reveal" id="install">
+    <div class="tabs reveal in" role="tablist" aria-label="Site sections">
+      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog', this)">Catalog</button>
+      <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats', this)">Stats</button>
+      <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how', this)">How it works</button>
+      <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install', this)">Install</button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps', this)">Roadmaps <span class="soon-pill">soon</span></button>
+    </div>
+
+    <section class="install reveal tab-panel" id="install" data-panel="install">
       <div class="install-header"><h2>Install in one line <span class="h-sub">— pick your agent</span></h2></div>
       <div class="agent-tabs" role="tablist">
         <button class="agent-tab active" onclick="showAgent('claude', this)">Claude Code</button>
@@ -378,14 +386,14 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       </div>
     </section>
 
-    <section class="dashboard reveal" id="dashboard">
+    <section class="dashboard reveal tab-panel" id="stats" data-panel="stats">
       <h2>Distribution by domain <span class="h-sub">— click a pill to filter ↓</span></h2>
       <div class="dash-list">
         {"".join(dash_rows)}
       </div>
     </section>
 
-    <section class="roadmaps-teaser reveal" id="roadmaps">
+    <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
         <h2>IT Roadmaps <span class="soon-pill big">soon everywhere</span></h2>
         <p>Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
@@ -394,7 +402,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <a class="btn-primary shine" href="roadmaps.html">Open roadmaps →</a>
     </section>
 
-    <section class="search-section reveal" id="catalog">
+    <section class="search-section reveal tab-panel active" id="catalog" data-panel="catalog">
       <h2>Catalog <span class="h-sub">— {meta["total_skills"]} skills, {meta["total_ru"]} with RU</span></h2>
       <div class="search-row">
         <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
@@ -410,7 +418,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       </div>
     </section>
 
-    <section class="results">
+    <section class="results tab-panel active" data-panel="catalog">
       <div class="cards" id="cards">
         {"".join(cards)}
       </div>
@@ -564,6 +572,34 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     more.className = 'rm-chip more';
     more.textContent = '+' + (RM_TRACKS.length - 8) + ' more →';
     strip.appendChild(more);
+  })();
+  // tabs: one screen instead of a long ribbon (deep-linkable via hash)
+  var TAB_NAMES = ['catalog', 'stats', 'how', 'install', 'roadmaps'];
+  function showTab(name, btn) {
+    if (TAB_NAMES.indexOf(name) < 0) name = 'catalog';
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      var on = b.getAttribute('data-tab') === name;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+      var on = p.getAttribute('data-panel') === name;
+      p.classList.toggle('active', on);
+      if (on) {
+        p.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in'); });
+        Array.prototype.forEach.call(p.querySelectorAll('.card'), function(c, i) {
+          c.style.transitionDelay = Math.min(i * 30, 600) + 'ms';
+          c.classList.add('in');
+        });
+      }
+    });
+    if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  (function() {
+    var h = (location.hash || '').replace('#', '');
+    if (h === 'dashboard') h = 'stats';
+    showTab(TAB_NAMES.indexOf(h) >= 0 ? h : 'catalog', null);
   })();
   // reveal on scroll + stagger cards
   (function() {
@@ -1090,6 +1126,13 @@ body[data-theme="light"] .bg-glow{
 .agent-tab{padding:.4rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.75rem;border-radius:20px;transition:all .15s}
 .agent-tab:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
 .agent-tab.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent);font-weight:700}
+.tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.8rem 0 1.2rem;position:sticky;top:57px;z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding:.55rem;border:1px solid var(--border);border-radius:10px}
+.tab-btn{padding:.5rem 1.1rem;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:600;border-radius:8px;transition:all .15s}
+.tab-btn:hover{color:var(--text);border-color:var(--border);transform:translateY(-1px)}
+.tab-btn.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent)}
+.tab-btn.active .soon-pill{background:#0b0f0a;color:var(--accent);animation:none}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeSlide .35s ease}
 .soon-pill{display:inline-block;background:#f59e0b;color:#0b0f0a;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .45rem;border-radius:20px;margin-left:.4rem;vertical-align:middle;animation:pulseB 2s infinite}
 .soon-pill.big{font-size:.68rem;padding:.2rem .7rem}
 .soon-dot{background:#f59e0b;color:#0b0f0a;font-size:.55rem;font-weight:800;border-radius:10px;padding:.05rem .35rem;margin-left:.35rem;text-transform:uppercase;letter-spacing:.06em}
