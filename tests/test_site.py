@@ -237,6 +237,32 @@ class TestSiteGenerator:
         for key in sorted(used):
             assert text.count(f'{key}:"') >= 2, f"key {key!r} missing in en+ru dicts"
 
+    def test_i18n_dicts_in_source_stay_aligned(self):
+        src = (SCRIPTS / "build_docs.py").read_text(encoding="utf-8")
+        blocks = []
+        start = 0
+        while True:
+            i = src.find("var I18N = {", start)
+            if i < 0:
+                break
+            j = src.find("\n  };", i)
+            assert j > i, "unclosed I18N block"
+            blocks.append(src[i:j])
+            start = j + 1
+        assert len(blocks) == 2, f"expected footer + index dicts, got {len(blocks)}"
+
+        def lang_keys(block: str, lang: str) -> set[str]:
+            halves = block.split(f"\n    {lang}: ", 1)
+            assert len(halves) == 2, f"no {lang} dict"
+            return set(re.findall(r"(\w+):\"", halves[1]))
+
+        foot = next(b for b in blocks if "hero_sub" not in b)
+        index = next(b for b in blocks if "hero_sub" in b)
+        for lang in ("en", "ru"):
+            extra = lang_keys(foot, lang) - lang_keys(index, lang)
+            assert not extra, f"footer {lang} keys missing in index dict: {sorted(extra)}"
+        assert "hero_sub" in lang_keys(index, "en")
+
     def test_div_tags_balanced(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         for page in docs.rglob("*.html"):
