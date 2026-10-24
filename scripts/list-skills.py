@@ -5,11 +5,11 @@ import json
 import sys
 from collections import defaultdict
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _console import ensure_utf8_console
 
 
 def main() -> int:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _console import ensure_utf8_console
     ensure_utf8_console()
     catalog_path = Path("skills_catalog.json")
     if not catalog_path.exists():

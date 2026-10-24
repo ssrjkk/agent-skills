@@ -56,6 +56,35 @@ def test_ensure_utf8_console_never_raises(capsys):
         ensure_utf8_console()
 
 
+def test_ensure_utf8_console_skips_plain_objects():
+    class Plain:
+        pass
+
+    import sys
+
+    old = sys.stdout
+    sys.stdout = Plain()  # type: ignore[assignment]
+    try:
+        ensure_utf8_console()
+    finally:
+        sys.stdout = old
+
+
+def test_ensure_utf8_console_tolerates_broken_streams():
+    class Broken(io.TextIOWrapper):
+        def reconfigure(self, *args, **kwargs):
+            raise OSError("frozen stream")
+
+    import sys
+
+    buf = io.BytesIO()
+    old, sys.stdout = sys.stdout, Broken(buf)
+    try:
+        ensure_utf8_console()
+    finally:
+        sys.stdout = old
+
+
 def test_search_prints_cyrillic_description(tmp_path: Path):
     _make_skill(tmp_path, "console-test", "qa", "Тестовая проверка консоли и кириллицы")
     result = CliRunner().invoke(

@@ -14,8 +14,6 @@ import json
 import re
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _console import ensure_utf8_console
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "skills_catalog.json"
@@ -105,6 +103,8 @@ def render(readme: str, data: dict) -> str:
 
 
 def main() -> int:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _console import ensure_utf8_console
     ensure_utf8_console()
     data = load_catalog()
     current = README.read_text(encoding="utf-8")

@@ -17,8 +17,6 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _console import ensure_utf8_console
 
 from claude_skills.models import parse_frontmatter
 
@@ -36,6 +34,8 @@ DUPLICATE_NAME = "E_ASSET8"
 
 
 def main() -> int:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _console import ensure_utf8_console
     ensure_utf8_console()
     root = Path(__file__).resolve().parent.parent
     skills_dir = root / ".claude" / "skills"

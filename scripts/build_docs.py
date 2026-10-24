@@ -16,8 +16,6 @@ import re
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _console import ensure_utf8_console
 
 BASE = "https://ssrjkk.github.io/agent-skills/"
 REPO = "https://github.com/ssrjkk/agent-skills"
@@ -1403,6 +1401,8 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
 
 
 def main() -> int:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _console import ensure_utf8_console
     ensure_utf8_console()
     import argparse
     parser = argparse.ArgumentParser(description="Build documentation site")

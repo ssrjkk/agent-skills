@@ -7,8 +7,6 @@ import argparse
 import json
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _console import ensure_utf8_console
 
 import yaml
 
@@ -130,6 +128,8 @@ def audit_quality_score(skill_path: Path) -> QualityScore:
 
 
 def main() -> int:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _console import ensure_utf8_console
     ensure_utf8_console()
     parser = argparse.ArgumentParser(description="Audit skill quality")
     parser.add_argument("--dir", default=".claude/skills", help="Skills directory")
