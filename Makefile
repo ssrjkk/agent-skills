@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats docs sync-readme check-readme clean all
+.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats docs sync-readme check-readme consistency clean all ci
 
 help:
 	@echo "Claude Skills Library - Makefile"
@@ -17,7 +17,10 @@ help:
 	@echo "  docs          Build docs site from catalog"
 	@echo "  sync-readme   Sync README.md with skills_catalog.json"
 	@echo "  check-readme  Fail if README.md is stale"
+	@echo "  consistency   Verify built site (links, CSS, index, roadmaps)"
 	@echo "  clean         Remove Python cache files"
+	@echo "  all           Full chain: lint > test > validate > catalog > docs"
+	@echo "  ci            Same as all (CI entrypoint)"
 
 install:
 	pip install -e .
@@ -64,9 +67,14 @@ sync-readme:
 check-readme:
 	python scripts/sync_readme.py --check
 
+consistency:
+	python scripts/check_site_consistency.py
+
 clean:
 	python -c "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]"
 	python -c "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]"
 
-all: lint typecheck test interop fences validate quality catalog
+all: lint typecheck test interop fences validate quality catalog sync-readme check-readme docs consistency
 	@echo "All checks passed!"
+
+ci: all

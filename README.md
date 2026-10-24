@@ -319,6 +319,23 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 - [ ] `make test` passes
 - [ ] `make lint` passes
 
+## Development
+
+```bash
+pip install -e ".[dev]"   # ruff, mypy, pytest
+make all                  # lint → typecheck → test → validate → catalog → docs
+```
+
+Optional, recommended for contributors:
+
+```bash
+pip install pre-commit && pre-commit install   # ruff + mypy + validate on every commit
+```
+
+Layout: `.claude/skills/{domain}/{skill}/SKILL.md` (skills) · `roadmaps/<slug>.json`
+(standalone IT maps, schema: `roadmaps.schema.json`) · `src/claude_skills/` (SDK +
+CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
+
 ## Links
 
 - [Live Catalog Site](https://ssrjkk.github.io/agent-skills/)
@@ -331,7 +348,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Quick checklist:
 
 ## Why this library
 
-- **Curated, not generated** — 100 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — 102 hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No

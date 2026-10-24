@@ -40,8 +40,10 @@ make validate      # validate all skills (EN + RU)
 make quality       # quality analysis
 make catalog       # rebuild skills_catalog.json
 make interop       # cross-agent portability check
-make docs          # rebuild docs site
+make docs          # rebuild docs site (use --jobs N for 1000+ skills)
 make sync-readme   # sync README.md with skills_catalog.json
+make consistency   # verify built site (links, CSS, index, roadmaps)
+make all           # full gate: lint → test → validate → catalog → docs
 ```
 
 Or use the CLI:

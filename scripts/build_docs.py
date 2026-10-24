@@ -11,8 +11,10 @@ from __future__ import annotations
 
 import html as html_lib
 import json
+import os
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 BASE = "https://ssrjkk.github.io/agent-skills/"
@@ -83,7 +85,11 @@ def skill_metrics(name: str, path_str: str) -> dict:
     en_path = Path(path_str)
     if not en_path.exists():
         return {"score": 100, "lines": 0, "blocks": 0, "sections": 0, "preview": ""}
-    text = en_path.read_text(encoding="utf-8")
+    try:
+        text = en_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as e:
+        print(f"warning: cannot read {en_path}: {e}", file=sys.stderr)
+        return {"score": 0, "lines": 0, "blocks": 0, "sections": 0, "preview": ""}
     lines = text.count("\n") + 1
     blocks = text.count("```") // 2
     sections = text.count("\n## ")
@@ -131,14 +137,32 @@ def skill_search_text(skill_path: Path) -> str:
     return " ".join(out)
 
 
-def load_all(path: Path) -> tuple[dict, dict, dict]:
+def load_all(path: Path, jobs: int | None = None) -> tuple[dict, dict, dict]:
     data = read_catalog(path)
     meta = data["metadata"]
     skills = data["skills"]
-    metrics = {}
+    # Edge case: duplicate names (keep first, deterministic) and nameless entries.
+    seen: set[str] = set()
+    unique: list = []
+    for s in skills:
+        name = s.get("name")
+        if not name:
+            print("warning: catalog entry without name skipped", file=sys.stderr)
+            continue
+        if name in seen:
+            print(f"warning: duplicate skill {name!r} ignored (keeping first)", file=sys.stderr)
+            continue
+        seen.add(name)
+        unique.append(s)
+    skills = unique
+    # Metrics are per-file I/O: parallelize so 1000+ skills still build fast.
+    # executor.map preserves input order; results keyed by name (unique here).
+    workers = jobs or min(8, os.cpu_count() or 4)
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        computed = list(ex.map(lambda s: skill_metrics(s["name"], s["path"]), skills))
+    metrics = {s["name"]: m for s, m in zip(skills, computed)}
     by_category: dict[str, list] = {}
     for s in skills:
-        metrics[s["name"]] = skill_metrics(s["name"], s["path"])
         by_category.setdefault(s["category"], []).append(s)
     return meta, skills, metrics
 
@@ -153,10 +177,17 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(desc)}">
   <link rel="canonical" href="{canonical}">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{REPO}/raw/main/.github/social-preview.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{esc(title)}">
+  <meta name="twitter:description" content="{esc(desc)}">
+  <meta name="twitter:image" content="{REPO}/raw/main/.github/social-preview.svg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,6 +197,7 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
 </head>
 <body data-theme="dark">
   <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="{nav_index}#catalog">Skip to catalog</a>
   <nav class="nav">
     <div class="nav-inner">
       <a class="nav-brand" href="{nav_index}"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
@@ -220,8 +252,8 @@ def page_foot() -> str:
 </html>"""
 
 
-def build_index_html(catalog_path: Path, output_dir: Path) -> str:
-    meta, skills, metrics = load_all(catalog_path)
+def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = None) -> str:
+    meta, skills, metrics = load_all(catalog_path, jobs=jobs)
 
     model_names = set()
     for s in skills:
@@ -562,57 +594,50 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     return html_doc
 
 
-def build_skill_pages(catalog_path: Path, output_dir: Path) -> int:
-    _meta, skills, metrics = load_all(catalog_path)
-    skills_dir = output_dir / "skills"
-    skills_dir.mkdir(parents=True, exist_ok=True)
-    count = 0
+def _write_skill_page(s: dict, domain_skills: list, metrics: dict, skills_dir: Path) -> None:
+    name = s["name"]
+    cat = s["category"]
+    color = DOMAIN_COLORS.get(cat, "#64748b")
+    m = metrics[name]
+    en_path = Path(s["path"])
+    body = ""
+    if en_path.exists():
+        text = en_path.read_text(encoding="utf-8")
+        # strip frontmatter
+        parts = re.split(r"^---\s*$", text, maxsplit=2, flags=re.MULTILINE)
+        if len(parts) >= 3:
+            body = parts[2].strip()
 
-    for s in skills:
-        name = s["name"]
-        cat = s["category"]
-        color = DOMAIN_COLORS.get(cat, "#64748b")
-        m = metrics[name]
-        en_path = Path(s["path"])
-        body = ""
-        if en_path.exists():
-            text = en_path.read_text(encoding="utf-8")
-            # strip frontmatter
-            parts = re.split(r"^---\s*$", text, maxsplit=2, flags=re.MULTILINE)
-            if len(parts) >= 3:
-                body = parts[2].strip()
+    tags_html = "".join(f'<span class="tag">{esc(t)}</span>' for t in s.get("tags", []))
+    models_html = "".join(f'<span class="model-badge">{esc(mod)}</span>' for mod in s.get("models", []))
+    prev_name = None
+    next_name = None
+    for i, ds in enumerate(domain_skills):
+        if ds["name"] == name:
+            if i > 0:
+                prev_name = domain_skills[i - 1]["name"]
+            if i < len(domain_skills) - 1:
+                next_name = domain_skills[i + 1]["name"]
 
-        tags_html = "".join(f'<span class="tag">{esc(t)}</span>' for t in s.get("tags", []))
-        models_html = "".join(f'<span class="model-badge">{esc(mod)}</span>' for mod in s.get("models", []))
-        prev_name = None
-        next_name = None
-        domain_skills = sorted([x for x in skills if x["category"] == cat], key=lambda x: x["name"])
-        for i, ds in enumerate(domain_skills):
-            if ds["name"] == name:
-                if i > 0:
-                    prev_name = domain_skills[i - 1]["name"]
-                if i < len(domain_skills) - 1:
-                    next_name = domain_skills[i + 1]["name"]
-
-        nav_html = ""
-        if prev_name or next_name:
-            nav_html = '<div class="page-nav">'
-            if prev_name:
-                nav_html += f'<a class="page-nav-link" href="{esc(prev_name)}.html">← {esc(prev_name)}</a>'
-            else:
-                nav_html += '<span></span>'
-            if next_name:
-                nav_html += f'<a class="page-nav-link" href="{esc(next_name)}.html">{esc(next_name)} →</a>'
-            nav_html += "</div>"
+    nav_html = ""
+    if prev_name or next_name:
+        nav_html = '<div class="page-nav">'
+        if prev_name:
+            nav_html += f'<a class="page-nav-link" href="{esc(prev_name)}.html">← {esc(prev_name)}</a>'
+        else:
+            nav_html += '<span></span>'
+        if next_name:
+            nav_html += f'<a class="page-nav-link" href="{esc(next_name)}.html">{esc(next_name)} →</a>'
+        nav_html += "</div>"
 
         # render markdown-ish body: code fences, headings, lists, paragraphs
-        rendered = render_skill_body(body)
+    rendered = render_skill_body(body)
 
-        html_doc = page_head(
-            f"{name} — Agent Skills Library",
-            s["description"],
-            BASE + f"skills/{name}.html",
-        ) + f"""
+    html_doc = page_head(
+        f"{name} — Agent Skills Library",
+        s["description"],
+        BASE + f"skills/{name}.html",
+    ) + f"""
     <article class="skill-page">
       <div class="skill-page-head">
         <div class="skill-page-badges">
@@ -641,10 +666,41 @@ def build_skill_pages(catalog_path: Path, output_dir: Path) -> int:
       {nav_html}
     </article>
 """ + page_foot()
-        (skills_dir / f"{name}.html").write_text(html_doc, encoding="utf-8")
-        count += 1
+    (skills_dir / f"{name}.html").write_text(html_doc, encoding="utf-8")
 
-    print(f"Wrote {count} skill pages to {skills_dir}")
+
+def build_skill_pages(catalog_path: Path, output_dir: Path, jobs: int | None = None) -> int:
+    _meta, skills, metrics = load_all(catalog_path, jobs=jobs)
+    skills_dir = output_dir / "skills"
+    skills_dir.mkdir(parents=True, exist_ok=True)
+    by_category: dict[str, list] = {}
+    for s in skills:
+        by_category.setdefault(s.get("category", ""), []).append(s)
+
+    # One output file per skill: embarrassingly parallel, which keeps
+    # 1000+ skill builds I/O-bound instead of serial. A single broken
+    # skill must never abort the whole site (graceful degradation).
+    def _safe(s: dict) -> tuple[str, str | None]:
+        try:
+            domain_skills = sorted(by_category.get(s.get("category", ""), []), key=lambda x: x["name"])
+            _write_skill_page(s, domain_skills, metrics, skills_dir)
+            return s["name"], None
+        except (OSError, UnicodeDecodeError, KeyError) as e:
+            return s.get("name", "?"), str(e)
+
+    workers = jobs or min(8, os.cpu_count() or 4)
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        results = list(ex.map(_safe, skills))
+
+    count, errors = 0, []
+    for name, err in results:
+        if err is None:
+            count += 1
+        else:
+            errors.append(f"{name}: {err}")
+    for e in errors:
+        print(f"warning: skill page failed, skipped: {e}", file=sys.stderr)
+    print(f"Wrote {count} skill pages to {skills_dir} ({len(errors)} failed)")
     return count
 
 
@@ -749,6 +805,21 @@ def build_domain_pages(catalog_path: Path, output_dir: Path) -> int:
     return count
 
 
+def minify_css(css: str) -> str:
+    """Collapse the generated stylesheet without changing rendering.
+
+    Quoted strings (content:"> ", font names) are shielded first, then
+    comments and redundant whitespace are stripped outside of them.
+    """
+    parts = re.split(r'("[^"]*"|\'[^\']*\')', css)
+    for i in range(0, len(parts), 2):
+        p = re.sub(r"/\*.*?\*/", "", parts[i], flags=re.DOTALL)
+        p = re.sub(r"\s+", " ", p)
+        p = re.sub(r"\s*([{}:;,>+])\s*", r"\1", p)
+        parts[i] = p
+    return "".join(parts).strip()
+
+
 def build_style_css(output_dir: Path) -> None:
     css = """:root{
   --bg:#0b0f0a;--bg2:#0e140d;--card:#11170f;--card-hover:#17210f;
@@ -789,6 +860,10 @@ body{
 .nav-link::before{content:"> ";color:var(--accent);opacity:.7}
 .theme-toggle{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);width:32px;height:32px;cursor:pointer;font-size:1rem}
 .theme-toggle:hover{border-color:var(--accent)}
+.skip-link{position:absolute;left:1rem;top:-3rem;z-index:100;background:var(--accent);color:#0b0f0a;font-family:var(--mono);font-size:.78rem;font-weight:700;padding:.5rem 1rem;border-radius:var(--radius);text-decoration:none;transition:top .15s}
+.skip-link:focus{top:.6rem}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.search:focus-visible,.sort:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
 .container{max-width:1180px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
 .hero{text-align:center;padding:2rem 0 1rem}
 .hero-badge{
@@ -1057,8 +1132,10 @@ body[data-theme="light"] .bg-glow{
 @media (max-width:600px){.rm-detail{padding:1rem}.how-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.reveal{opacity:1;transform:none}}
 """
+    raw_len = len(css)
+    css = minify_css(css)
     (output_dir / "style.css").write_text(css, encoding="utf-8")
-    print(f"Stylesheet written to {output_dir / 'style.css'}")
+    print(f"Stylesheet written to {output_dir / 'style.css'} ({raw_len} -> {len(css)} bytes)")
 
 
 def build_search_index(catalog_path: Path, output_dir: Path) -> None:
@@ -1093,6 +1170,8 @@ def load_roadmap_tracks(source_dir: Path | None = None) -> list[dict]:
                 continue
     if tracks:
         return tracks
+    # Graceful degradation: corrupt or empty roadmaps/ still yields a site.
+    print("warning: no usable roadmap tracks, using built-in seed", file=sys.stderr)
     return [
         {
             "slug": t["slug"], "name": t["name"], "icon": t["icon"],
@@ -1283,13 +1362,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build documentation site")
     parser.add_argument("--catalog", default="skills_catalog.json", help="Path to catalog JSON")
     parser.add_argument("--output-dir", default="docs", help="Output directory")
+    parser.add_argument("--jobs", type=int, default=None, help="Parallel workers for page builds (default: CPU count, max 8)")
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    build_index_html(Path(args.catalog), output_dir)
-    build_skill_pages(Path(args.catalog), output_dir)
+    build_index_html(Path(args.catalog), output_dir, jobs=args.jobs)
+    build_skill_pages(Path(args.catalog), output_dir, jobs=args.jobs)
     build_domain_pages(Path(args.catalog), output_dir)
     build_roadmaps(Path(args.catalog), output_dir)
     build_style_css(output_dir)

@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ["--maxkb=2048"]
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      # NOTE: ruff check only. The repo does NOT enforce ruff-format
+      # (21 files predate it); enabling format here would spam huge diffs.
+      - id: ruff
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        args: [src/, tests/]
+        additional_dependencies: [types-PyYAML]
+
+  - repo: local
+    hooks:
+      - id: validate-skills
+        name: validate skills (EN + RU)
+        entry: python -m claude_skills.cli validate --dir .claude/skills
+        language: system
+        pass_filenames: false
+      - id: check-fences
+        name: python code fences are valid
+        entry: python scripts/check_python_fences.py
+        language: system
+        pass_filenames: false
+      - id: readme-in-sync
+        name: README in sync with catalog
+        entry: python scripts/sync_readme.py --check
+        language: system
+        pass_filenames: false

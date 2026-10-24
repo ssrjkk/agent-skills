@@ -100,12 +100,7 @@ def _build_site(tmp_path: Path) -> Path:
         "stages": [{"title": "Fundamentals", "items": ["Map drops soon"], "status": "soon"}],
     }), encoding="utf-8")
 
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location("build_docs", SCRIPTS / "build_docs.py")
-    assert spec is not None and spec.loader is not None
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
+    mod = _load_mod()
 
     out = tmp_path / "docs"
     out.mkdir(parents=True, exist_ok=True)
@@ -118,6 +113,48 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_style_css(out)
     mod.build_search_index(catalog_path, out)
     return out
+
+def _load_mod():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("build_docs", SCRIPTS / "build_docs.py")
+    assert spec is not None and spec.loader is not None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _write_catalog(tmp_path: Path, skills: list[dict]) -> Path:
+    catalog = {
+        "metadata": {
+            "schema_version": "3.0",
+            "generated_at": "2026-09-28T00:00:00Z",
+            "total_skills": len(skills),
+            "total_ru": sum(1 for s in skills if s.get("has_ru")),
+            "domains": sorted({s["category"] for s in skills}),
+            "bilingual": True,
+        },
+        "skills": skills,
+    }
+    catalog_path = tmp_path / "skills_catalog.json"
+    catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+    return catalog_path
+
+
+def _skill_entry(tmp_path: Path, name: str, category: str) -> dict:
+    return {
+        "name": name,
+        "description": f"A test {category} skill",
+        "category": category,
+        "tags": ["testing"],
+        "models": ["sonnet"],
+        "version": "1.0.0",
+        "path": str(tmp_path / ".claude" / "skills" / category / name / "SKILL.md"),
+        "languages": ["en", "ru"],
+        "has_ru": True,
+        "created": "2026-09-01",
+        "updated": "2026-09-28",
+    }
 
 
 class TestSiteGenerator:
@@ -205,3 +242,53 @@ class TestSiteGenerator:
         assert len(idx) == 2
         for page in docs.rglob("*.html"):
             assert page.read_text(encoding="utf-8").count("<div") == page.read_text(encoding="utf-8").count("</div>")
+
+
+class TestBuildRobustness:
+    """Graceful degradation: duplicates, missing files, empty inputs."""
+
+    def test_duplicate_skill_names_keep_first(self, tmp_path: Path):
+        _make_skill(tmp_path, "alpha", "backend")
+        mod = _load_mod()
+        catalog_path = _write_catalog(tmp_path, [
+            _skill_entry(tmp_path, "alpha", "backend"),
+            _skill_entry(tmp_path, "alpha", "backend"),
+        ])
+        out = tmp_path / "docs"
+        (out / "skills").mkdir(parents=True)
+        assert mod.build_skill_pages(catalog_path, out) == 1
+        assert (out / "skills" / "alpha.html").exists()
+
+    def test_missing_skill_file_degrades(self, tmp_path: Path):
+        mod = _load_mod()
+        catalog_path = _write_catalog(tmp_path, [
+            _skill_entry(tmp_path, "ghost", "backend"),
+        ])
+        out = tmp_path / "docs"
+        (out / "skills").mkdir(parents=True)
+        assert mod.build_skill_pages(catalog_path, out) == 1
+        assert (out / "skills" / "ghost.html").exists()
+
+    def test_empty_catalog_builds_index(self, tmp_path: Path):
+        mod = _load_mod()
+        catalog_path = _write_catalog(tmp_path, [])
+        out = tmp_path / "docs"
+        out.mkdir(parents=True)
+        mod.build_index_html(catalog_path, out)
+        assert (out / "index.html").exists()
+
+    def test_corrupt_roadmaps_fall_back_to_seed(self, tmp_path: Path):
+        mod = _load_mod()
+        rm_dir = tmp_path / "roadmaps"
+        rm_dir.mkdir(parents=True)
+        (rm_dir / "broken.json").write_text("{not json", encoding="utf-8")
+        tracks = mod.load_roadmap_tracks(source_dir=tmp_path)
+        assert len(tracks) == len(mod.ROADMAP_TRACKS)
+        assert all(t["slug"] for t in tracks)
+
+    def test_minify_css_preserves_quoted_strings(self):
+        mod = _load_mod()
+        out = mod.minify_css('.a::before{content:"> ";color:red} /* x */\n.b{margin:0 auto}')
+        assert 'content:"> "' in out
+        assert "/*" not in out
+        assert "\n" not in out

@@ -66,7 +66,7 @@ def render(readme: str, data: dict) -> str:
     )
     out = re.sub(r"\| Domains \| \*\*\d+\*\* \|", f"| Domains | **{len(domains)}** |", out)
     out = re.sub(r"\b100 production-grade\b", f"{total} production-grade", out)
-    out = re.sub(r"\*\*100 hand-reviewed", f"**{total} hand-reviewed", out)
+    out = re.sub(r"\b100 hand-reviewed\b", f"{total} hand-reviewed", out)
 
     lines = out.split("\n")
     try:
@@ -81,7 +81,7 @@ def render(readme: str, data: dict) -> str:
     lines[hdr : end + 1] = table_rows(skills)
 
     try:
-        dstart = next(i for i, ln in enumerate(lines) if ln.strip() == "## Domains (16)")
+        dstart = next(i for i, ln in enumerate(lines) if re.fullmatch(r"## Domains \(\d+\)", ln.strip()))
     except StopIteration:
         dstart = None
     if dstart is not None:
