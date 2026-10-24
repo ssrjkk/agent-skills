@@ -10,6 +10,10 @@ Gemini CLI, GLM Coding, Codex, etc.) work correctly in this repository.
 - `src/claude_skills/` — Python SDK (validator, quality, catalog, CLI)
 - `scripts/` — CI helper scripts
 - `docs/` — architecture, release notes, catalog site
+- `roadmaps/<slug>.json` — IT roadmap tracks, standalone source (independent
+  from the skills catalog; each track gets its own page under
+  `docs/roadmaps/`). To add a map, edit the track file: replace
+  `stages`/`items` and set `status` to `live`. Schema: `roadmaps.schema.json`.
 
 ## Skill file requirements
 
@@ -37,6 +41,7 @@ make quality       # quality analysis
 make catalog       # rebuild skills_catalog.json
 make interop       # cross-agent portability check
 make docs          # rebuild docs site
+make sync-readme   # sync README.md with skills_catalog.json
 ```
 
 Or use the CLI:
@@ -52,7 +57,7 @@ python -m claude_skills.cli quality --dir .claude/skills
 2. Run `make validate` and `make quality` — expect 0 errors, 100% score.
 3. Run `python scripts/check_agent_interop.py`.
 4. Run `make test`.
-5. Rebuild catalog and docs: `make catalog && make docs`.
+5. Rebuild catalog, README and docs: `make catalog && make sync-readme && make docs`.
 
 ## Commit conventions
 

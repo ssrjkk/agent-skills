@@ -1,15 +1,16 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-10-01T15:51:03Z",
-    "total_skills": 100,
-    "total_ru": 100,
+    "generated_at": "2026-10-24T16:15:11Z",
+    "total_skills": 102,
+    "total_ru": 102,
     "domains": [
       "ai",
       "backend",
       "blockchain",
       "data",
       "database",
+      "design",
       "desktop",
       "devops",
       "embedded",
@@ -46,7 +47,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/agent-development/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/agent-development/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -75,7 +76,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/context-engineering/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/context-engineering/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -104,7 +105,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/embeddings/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/embeddings/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -129,7 +130,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/few-shot-learning/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/few-shot-learning/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -158,7 +159,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/function-calling/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/function-calling/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -188,7 +189,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/llm-evals/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/llm-evals/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -213,7 +214,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/llm-finetuning/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/llm-finetuning/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -242,7 +243,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/llm-guardrails/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/llm-guardrails/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -272,7 +273,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/mcp-servers/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/mcp-servers/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -302,7 +303,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/mlops/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/mlops/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -331,7 +332,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/multi-agent-orchestration/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/multi-agent-orchestration/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -361,7 +362,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/prompt-caching/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/prompt-caching/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -389,7 +390,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/prompt-engineering/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/prompt-engineering/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -419,7 +420,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/rag-pipeline/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/rag-pipeline/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -448,7 +449,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/ai/structured-output/SKILL.md",
+      "path": "D:/skills/.claude/skills/ai/structured-output/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -473,7 +474,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/deno-runtime/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/deno-runtime/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -504,7 +505,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/django/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/django/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -533,7 +534,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/dotnet/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/dotnet/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -563,7 +564,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/express/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/express/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -593,7 +594,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/fastapi/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/fastapi/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -623,7 +624,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/go-rest-api/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/go-rest-api/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -653,7 +654,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/graphql/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/graphql/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -683,7 +684,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/grpc/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/grpc/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -713,7 +714,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/laravel/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/laravel/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -738,7 +739,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/nestjs/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/nestjs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -768,7 +769,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/rest-api-design/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/rest-api-design/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -793,7 +794,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/rust-tokio/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/rust-tokio/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -823,7 +824,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/spring-boot/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/spring-boot/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -852,7 +853,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/backend/websockets/SKILL.md",
+      "path": "D:/skills/.claude/skills/backend/websockets/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -877,7 +878,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/blockchain/zk-proofs/SKILL.md",
+      "path": "D:/skills/.claude/skills/blockchain/zk-proofs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -907,7 +908,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/airflow/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/airflow/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -937,7 +938,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/apache-spark/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/apache-spark/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -967,7 +968,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/data-visualization/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/data-visualization/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -997,7 +998,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/dbt/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/dbt/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1027,7 +1028,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/elasticsearch/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/elasticsearch/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1057,7 +1058,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/pandas/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/pandas/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1087,7 +1088,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/data/sql-querying/SKILL.md",
+      "path": "D:/skills/.claude/skills/data/sql-querying/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1116,7 +1117,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/clickhouse/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/clickhouse/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1146,7 +1147,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/mongodb/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/mongodb/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1176,7 +1177,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/mysql/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/mysql/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1206,7 +1207,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/postgresql/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/postgresql/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1231,7 +1232,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/prisma-orm/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/prisma-orm/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1261,7 +1262,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/redis/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/redis/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1290,7 +1291,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/sqlite/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/sqlite/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1320,7 +1321,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/database/vector-databases/SKILL.md",
+      "path": "D:/skills/.claude/skills/database/vector-databases/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1328,6 +1329,68 @@
       "has_ru": true,
       "created": "2026-09-25",
       "updated": "2026-09-28"
+    },
+    {
+      "name": "design-spec-md",
+      "description": "Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly.",
+      "category": "design",
+      "tags": [
+        "design",
+        "spec",
+        "markdown",
+        "ui-ux",
+        "tokens",
+        "a11y",
+        "responsive",
+        "frontend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/design/design-spec-md/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-24",
+      "updated": "2026-10-24"
+    },
+    {
+      "name": "diagram-as-code",
+      "description": "Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram.",
+      "category": "design",
+      "tags": [
+        "diagrams",
+        "mermaid",
+        "c4",
+        "plantuml",
+        "architecture",
+        "workflows",
+        "visualization",
+        "docs"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/design/diagram-as-code/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-24",
+      "updated": "2026-10-24"
     },
     {
       "name": "electron",
@@ -1345,7 +1408,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/desktop/electron/SKILL.md",
+      "path": "D:/skills/.claude/skills/desktop/electron/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1374,7 +1437,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/ansible/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/ansible/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1403,7 +1466,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/argocd/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/argocd/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1428,7 +1491,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/aws-lambda/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/aws-lambda/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1453,7 +1516,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/cloud-native-ai/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/cloud-native-ai/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1483,7 +1546,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/docker/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/docker/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1513,7 +1576,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/github-actions/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/github-actions/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1538,7 +1601,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/gitlab-ci/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/gitlab-ci/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1567,7 +1630,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/istio/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/istio/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1597,7 +1660,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/jenkins/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/jenkins/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1627,7 +1690,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/kafka/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/kafka/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1657,7 +1720,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/kubernetes/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/kubernetes/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1686,7 +1749,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/loki/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/loki/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1715,7 +1778,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/nginx/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/nginx/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1741,7 +1804,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/observability-llm/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/observability-llm/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1766,7 +1829,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/platform-engineering/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/platform-engineering/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1796,7 +1859,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/prometheus-grafana/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/prometheus-grafana/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1822,7 +1885,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/serverless-ai/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/serverless-ai/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1848,7 +1911,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/sre-slos/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/sre-slos/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1878,7 +1941,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/devops/terraform/SKILL.md",
+      "path": "D:/skills/.claude/skills/devops/terraform/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1904,7 +1967,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/embedded/rust-embedded/SKILL.md",
+      "path": "D:/skills/.claude/skills/embedded/rust-embedded/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1929,7 +1992,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/ai-testing/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/ai-testing/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1959,7 +2022,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/claude-code-commands/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/claude-code-commands/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1987,7 +2050,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/clean-architecture/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/clean-architecture/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2016,7 +2079,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/code-review/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/code-review/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2047,7 +2110,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/git-workflow/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/git-workflow/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2075,7 +2138,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/system-design/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/system-design/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2104,7 +2167,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/engineering/test-driven-development/SKILL.md",
+      "path": "D:/skills/.claude/skills/engineering/test-driven-development/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2135,7 +2198,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/finance/algorithmic-trading/SKILL.md",
+      "path": "D:/skills/.claude/skills/finance/algorithmic-trading/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2166,7 +2229,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/finance/risk-modeling/SKILL.md",
+      "path": "D:/skills/.claude/skills/finance/risk-modeling/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2195,7 +2258,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/angular/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/angular/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2224,7 +2287,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/astro/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/astro/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2249,7 +2312,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/bun-runtime/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/bun-runtime/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2278,7 +2341,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/modern-css/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/modern-css/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2307,7 +2370,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/nextjs/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/nextjs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2336,7 +2399,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/react-19/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/react-19/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2365,7 +2428,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/svelte/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/svelte/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2390,7 +2453,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/tailwind-v4/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/tailwind-v4/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2419,7 +2482,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/typescript/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/typescript/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2449,7 +2512,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/frontend/vue/SKILL.md",
+      "path": "D:/skills/.claude/skills/frontend/vue/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2480,7 +2543,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/gamedev/game-physics/SKILL.md",
+      "path": "D:/skills/.claude/skills/gamedev/game-physics/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2511,7 +2574,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/gamedev/unity-ecs/SKILL.md",
+      "path": "D:/skills/.claude/skills/gamedev/unity-ecs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2542,7 +2605,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/healthcare/hipaa-compliance/SKILL.md",
+      "path": "D:/skills/.claude/skills/healthcare/hipaa-compliance/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2573,7 +2636,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/healthcare/hl7-fhir/SKILL.md",
+      "path": "D:/skills/.claude/skills/healthcare/hl7-fhir/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2599,7 +2662,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/mobile/expo-rn/SKILL.md",
+      "path": "D:/skills/.claude/skills/mobile/expo-rn/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2630,7 +2693,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/mobile/flutter/SKILL.md",
+      "path": "D:/skills/.claude/skills/mobile/flutter/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2659,7 +2722,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/mobile/kotlin-android/SKILL.md",
+      "path": "D:/skills/.claude/skills/mobile/kotlin-android/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2689,7 +2752,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/mobile/swift-ios/SKILL.md",
+      "path": "D:/skills/.claude/skills/mobile/swift-ios/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2719,7 +2782,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/qa/browser-automation/SKILL.md",
+      "path": "D:/skills/.claude/skills/qa/browser-automation/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2749,7 +2812,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/qa/jest/SKILL.md",
+      "path": "D:/skills/.claude/skills/qa/jest/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2779,7 +2842,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/qa/pytest/SKILL.md",
+      "path": "D:/skills/.claude/skills/qa/pytest/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2807,7 +2870,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/security/api-security/SKILL.md",
+      "path": "D:/skills/.claude/skills/security/api-security/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2832,7 +2895,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/security/oauth2-jwt/SKILL.md",
+      "path": "D:/skills/.claude/skills/security/oauth2-jwt/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2863,7 +2926,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/security/owasp-web-security/SKILL.md",
+      "path": "D:/skills/.claude/skills/security/owasp-web-security/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2892,7 +2955,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/harvest/.claude/skills/security/secrets-management/SKILL.md",
+      "path": "D:/skills/.claude/skills/security/secrets-management/SKILL.md",
       "languages": [
         "en",
         "ru"

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>diagram-as-code — Agent Skills Library</title>
+  <meta name="description" content="Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/diagram-as-code.html">
+  <meta property="og:title" content="diagram-as-code — Agent Skills Library">
+  <meta property="og:description" content="Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/diagram-as-code.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html">Roadmaps<span class="soon-dot">soon</span></a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="../index.html#how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f472b61a;color:#f472b6;border-color:#f472b644">design</span>
+          <span class="tag">diagrams</span><span class="tag">mermaid</span><span class="tag">c4</span><span class="tag">plantuml</span><span class="tag">architecture</span><span class="tag">workflows</span><span class="tag">visualization</span><span class="tag">docs</span>
+        </div>
+        <h1 class="skill-page-title">diagram-as-code</h1>
+        <p class="skill-page-desc">Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>8</strong></span>
+          <span>Sections <strong>9</strong></span>
+          <span>Lines <strong>154</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('diagram-as-code')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/design/diagram-as-code">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="design-spec-md.html">← design-spec-md</a></div>
+      <div class="skill-page-body">
+        <h1>Diagram as Code</h1>
+<blockquote>Workflows, architecture and business processes as validated code, not pixels.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code>flowchart TD
+  A[User request] --&gt; B{Needs diagram?}
+  B --&gt;|yes| C[Pick type: flowchart/sequence/C4]
+  B --&gt;|no| D[Skip]
+  C --&gt; E[Write Mermaid]
+  E --&gt; F[Validate + render]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># render locally or paste into Mermaid Live
+npx @mermaid-js/mermaid-cli -i docs/arch.mmd -o docs/arch.svg
+python scripts/validate_mermaid.py docs/arch.mmd</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>System architecture and service maps</li>
+<li>Business processes and approval flows</li>
+<li>Sequence diagrams for APIs and auth</li>
+<li>State machines, ER diagrams, C4 models</li>
+<li>Docs that must stay in sync with code</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Picking the Type</h3>
+<ul>
+<li>Flowchart: decisions and processes, max 12 nodes per view</li>
+<li>Sequence: interactions over time, name every actor</li>
+<li>Class/ER: data models, no methods except key behavior</li>
+<li>State: explicit initial/final, every transition labeled</li>
+<li>C4: Context for stakeholders, Container for teams, Component for devs</li>
+</ul>
+<h3>Readability</h3>
+<ul>
+<li>One idea per diagram, split large flows into subgraphs</li>
+<li>Left-to-right for processes, top-to-bottom for hierarchies</li>
+<li>Short node labels (3-5 words), details in notes</li>
+<li>Stable ids in latin, human labels separate</li>
+</ul>
+<h3>Correctness</h3>
+<ul>
+<li>Every branch has a condition label</li>
+<li>No orphan nodes, no crossing arrows without need</li>
+<li>Actors and services match the real codebase names</li>
+<li>Version the diagram next to the code it describes</li>
+</ul>
+<h3>Rendering</h3>
+<ul>
+<li>Prefer Mermaid for Markdown-native docs</li>
+<li>C4-PlantUML for enterprise architecture</li>
+<li>SVG output for docs site, dark + light tested</li>
+<li>Keep source `.mmd` in git, render on CI</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code>npm i -g @mermaid-js/mermaid-cli
+# optional: java + plantuml for C4
+java -version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code>sequenceDiagram
+  participant U as User
+  participant A as Agent
+  participant T as Tools
+  U-&gt;&gt;A: Build checkout form
+  A-&gt;&gt;A: Read design-spec-md
+  A-&gt;&gt;T: search styles + tokens
+  T--&gt;&gt;A: design system
+  A-&gt;&gt;U: Code + checklist</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>stateDiagram-v2
+  [*] --&gt; Draft
+  Draft --&gt; Review: submit
+  Review --&gt; Approved: accept
+  Review --&gt; Draft: request changes
+  Approved --&gt; [*]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>@startsalt
+salt
+{
+  {T
+   + Order | Status | Total
+   + #1234 | paid | $89
+   + #1235 | pending | $12
+  }
+}
+@endsalt</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>erDiagram
+  USER ||--o{ ORDER : places
+  ORDER ||--|{ LINE_ITEM : contains
+  USER {
+    string id PK
+    string email
+  }
+  ORDER {
+    string id PK
+    string status
+  }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>## Decision cheat-sheet
+- Process with branches -&gt; flowchart TD/LR
+- Two+ actors over time -&gt; sequenceDiagram
+- Data tables and keys -&gt; erDiagram
+- Lifecycle with transitions -&gt; stateDiagram-v2
+- Enterprise landscape -&gt; C4 Context/Container</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. State the single question the diagram answers.</p>
+<p class='ordered'>2. Pick the minimal type (flowchart, sequence, ER, state, C4).</p>
+<p class='ordered'>3. Draft nodes with stable ids and short labels.</p>
+<p class='ordered'>4. Label every edge and condition.</p>
+<p class='ordered'>5. Validate syntax with the CLI script.</p>
+<p class='ordered'>6. Render SVG and check dark/light readability.</p>
+<p class='ordered'>7. Split if more than 12 nodes or 3 swimlanes.</p>
+<p class='ordered'>8. Commit `.mmd` source next to docs, link from README.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Mermaid/PlantUML parses with zero errors</p>
+<p class='ordered'>2. One question answered, no second story hidden inside</p>
+<p class='ordered'>3. All branches labeled, no orphan nodes</p>
+<p class='ordered'>4. Names match code and docs terminology</p>
+<p class='ordered'>5. Renders cleanly in GitHub, docs site, and print</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Render fails: check unescaped brackets, quotes, and `#` in labels.</li>
+<li>Spaghetti arrows: switch direction TD/LR or split into subgraphs.</li>
+<li>Too dense: extract a subgraph per actor or per phase.</li>
+<li>GitHub shows code not diagram: fence must be `mermaid` language tag exactly.</li>
+<li>C4 too abstract: drop one level (Context -&gt; Container -&gt; Component).</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="design-spec-md.html">← design-spec-md</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

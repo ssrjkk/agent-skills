@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats docs clean all
+.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats docs sync-readme check-readme clean all
 
 help:
 	@echo "Claude Skills Library - Makefile"
@@ -15,6 +15,8 @@ help:
 	@echo "  catalog       Regenerate skills_catalog.json"
 	@echo "  stats         Show library statistics"
 	@echo "  docs          Build docs site from catalog"
+	@echo "  sync-readme   Sync README.md with skills_catalog.json"
+	@echo "  check-readme  Fail if README.md is stale"
 	@echo "  clean         Remove Python cache files"
 
 install:
@@ -55,6 +57,12 @@ stats:
 
 docs:
 	python scripts/build_docs.py --catalog skills_catalog.json --output-dir docs
+
+sync-readme:
+	python scripts/sync_readme.py
+
+check-readme:
+	python scripts/sync_readme.py --check
 
 clean:
 	python -c "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]"

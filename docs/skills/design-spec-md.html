@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>design-spec-md — Agent Skills Library</title>
+  <meta name="description" content="Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/design-spec-md.html">
+  <meta property="og:title" content="design-spec-md — Agent Skills Library">
+  <meta property="og:description" content="Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/design-spec-md.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html">Roadmaps<span class="soon-dot">soon</span></a>
+        <a class="nav-link" href="../index.html#dashboard">Stats</a>
+        <a class="nav-link" href="../index.html#how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f472b61a;color:#f472b6;border-color:#f472b644">design</span>
+          <span class="tag">design</span><span class="tag">spec</span><span class="tag">markdown</span><span class="tag">ui-ux</span><span class="tag">tokens</span><span class="tag">a11y</span><span class="tag">responsive</span><span class="tag">frontend</span>
+        </div>
+        <h1 class="skill-page-title">design-spec-md</h1>
+        <p class="skill-page-desc">Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly.</p>
+        <div class="skill-page-meta">
+          <span>Quality <strong>100%</strong></span>
+          <span>Code blocks <strong>7</strong></span>
+          <span>Sections <strong>23</strong></span>
+          <span>Lines <strong>166</strong></span>
+          <span>RU translation <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copySkill('design-spec-md')">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/design/design-spec-md">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="diagram-as-code.html">diagram-as-code →</a></div>
+      <div class="skill-page-body">
+        <h1>Design Spec in Markdown</h1>
+<blockquote>Precise Markdown specs that make agents understand design exactly.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Feature: Checkout form
+## Goal
+Let users pay in under 60 seconds with zero confusion.
+
+## Audience
+Mobile-first shoppers, low patience, possible screen readers.
+
+## Tokens
+- colors: bg/surface/foreground/primary/border/ring
+- spacing: 4/8/16/24 scale only
+- radii: sm 6px, md 12px, lg 20px
+
+## Out of scope
+- No new brand colors, no custom fonts.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># validate the spec before building
+python scripts/check_spec.py docs/specs/checkout.md</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Any UI task given to an AI agent</li>
+<li>Landing pages, dashboards, forms, mobile screens</li>
+<li>Retheme or redesign of existing apps</li>
+<li>Handoff between human and agent</li>
+<li>Design reviews and pre-delivery checks</li>
+</ul>
+<h2>Best Practices</h2>
+<h3>Goal</h3>
+<ul>
+<li>One sentence, one measurable outcome</li>
+<li>State the user job, not the component list</li>
+<li>Add a time or quality bar when possible</li>
+<li>No marketing fluff in the goal</li>
+</ul>
+<h3>Audience</h3>
+<ul>
+<li>Device, context, constraints (one-handed, sunlight, keyboard-only)</li>
+<li>Accessibility needs up front</li>
+<li>What the user already knows (skip re-explaining)</li>
+<li>Edge users: zoom 200%, slow network, old phones</li>
+</ul>
+<h3>Tokens</h3>
+<ul>
+<li>Reuse existing semantic tokens, never hard-code hex</li>
+<li>Map roles: background, surface, foreground, primary, border, ring</li>
+<li>Typography: font, sizes, line-height, weights</li>
+<li>Spacing and radii from the scale, no magic numbers</li>
+</ul>
+<h3>Components and States</h3>
+<ul>
+<li>List components with props and variants</li>
+<li>Every interactive element needs default/hover/focus/disabled/error/empty/loading</li>
+<li>Focus visible for keyboard, 44px+ touch targets</li>
+<li>Reduced motion respected, no bounce easing</li>
+</ul>
+<h3>Responsive and A11y</h3>
+<ul>
+<li>Breakpoints 375/768/1024/1440 with behavior per breakpoint</li>
+<li>Contrast 4.5:1 minimum for text</li>
+<li>Meaning never by color alone</li>
+<li>Chips and badges reflow, long tokens wrap safely</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># no runtime required, spec is plain Markdown
+# optional local checks
+python3 --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Spec: SaaS pricing section
+## Goal
+Visitors compare 3 plans and click CTA without scrolling confusion.
+
+## Tokens
+- primary: indigo-600, hover indigo-700
+- surface: white, border slate-200
+- font: Inter/ system fallback, h2 32/40 bold
+
+## Components
+- PricingCard x3: title, price, features[5 max], CTA
+- States: default, highlighted (middle), focus-visible ring
+
+## A11y
+- h2 hierarchy, list semantics for features
+- CTA contrast 5.1:1, keyboard reachable</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Spec: Ops dashboard table
+## Goal
+Operators scan 500 rows and spot failures in seconds.
+
+## Tokens
+- danger: red-600 with icon + text (never color alone)
+- density: comfortable/compact toggle
+- font: tabular numbers for metrics
+
+## States
+- loading skeleton, empty with action, error with retry
+- row hover subtle, selected with checkbox + aria-selected</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Spec: Mobile onboarding (3 steps)
+## Goal
+80% completion, under 90 seconds.
+
+## Constraints
+- One primary action per screen
+- Back + skip always visible
+- No keyboard traps, safe-area respected
+
+## Validation
+- Test on 360px wide, 200% text scaling
+- Screen reader order matches visual order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>## Anti-patterns to forbid in the spec
+- &quot;Make it beautiful&quot; without tokens or constraints
+- Emojis as icons (use SVG: Lucide/Heroicons)
+- Cards nested in cards, gray text on colored bg
+- Pure black (#000) or pure gray fills</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Write Goal in one measurable sentence.</p>
+<p class='ordered'>2. Describe Audience, devices, and constraints.</p>
+<p class='ordered'>3. Lock Tokens: colors, typography, spacing, radii.</p>
+<p class='ordered'>4. List Components with all interaction states.</p>
+<p class='ordered'>5. Define Responsive behavior per breakpoint.</p>
+<p class='ordered'>6. Add A11y requirements: contrast, focus, semantics.</p>
+<p class='ordered'>7. Declare Out of scope explicitly.</p>
+<p class='ordered'>8. Run the Validation checklist before building.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Goal is measurable and single-sentence</p>
+<p class='ordered'>2. Tokens cover all colors and fonts used, no hard-coded hex</p>
+<p class='ordered'>3. Every button and input has hover, focus, disabled, error states</p>
+<p class='ordered'>4. Contrast 4.5:1 minimum, focus visible, touch targets 44px+</p>
+<p class='ordered'>5. Layout works at 375/768/102vpx without clipping</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Agent ignores spec: shorten to one page, move details to appendix.</li>
+<li>Vague output: replace adjectives with tokens and numbers.</li>
+<li>Clipped chips: require wrap or +n disclosure in the spec.</li>
+<li>Color-only meaning: add icon + text rule to A11y section.</li>
+<li>Scope creep: enforce Out of scope, new asks go to v2.</li>
+</ul>
+      </div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="diagram-as-code.html">diagram-as-code →</a></div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  }
+  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+  }
+  function toggleTheme() {
+    var b = document.body;
+    var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    b.setAttribute('data-theme', next);
+    sessionStorage.setItem('theme', next);
+    var btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+  (function() {
+    var saved = sessionStorage.getItem('theme');
+    if (saved === 'light') {
+      document.body.setAttribute('data-theme', 'light');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '☀️';
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -13,7 +13,6 @@ import html as html_lib
 import json
 import re
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 BASE = "https://ssrjkk.github.io/agent-skills/"
@@ -36,7 +35,37 @@ DOMAIN_COLORS = {
     "mobile": "#ec4899",
     "qa": "#22c55e",
     "security": "#dc2626",
+    "design": "#f472b6",
+    "communications": "#fb923c",
+    "education": "#a3e635",
+    "media": "#c084fc",
 }
+
+# IT roadmap tracks. Status is "soon" until real maps land.
+# Shape is stable so future maps drop in without template changes:
+# each track gets stages[] with title, items[], status per stage.
+ROADMAP_TRACKS = [
+    {"slug": "frontend", "name": "Frontend", "icon": "🖥️", "tagline": "React, Next.js, CSS, UI engineering", "status": "soon", "eta": "soon", "skills": 10, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "backend", "name": "Backend", "icon": "⚙️", "tagline": "APIs, frameworks, runtimes, realtime", "status": "soon", "eta": "soon", "skills": 14, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "mobile", "name": "Mobile", "icon": "📱", "tagline": "Flutter, SwiftUI, Kotlin, React Native", "status": "soon", "eta": "soon", "skills": 4, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "devops", "name": "DevOps", "icon": "🚀", "tagline": "Docker, K8s, CI/CD, observability", "status": "soon", "eta": "soon", "skills": 19, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "qa", "name": "QA", "icon": "🧪", "tagline": "Jest, Playwright, pytest, E2E", "status": "soon", "eta": "soon", "skills": 3, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "data", "name": "Data", "icon": "📊", "tagline": "Spark, Airflow, dbt, SQL, viz", "status": "soon", "eta": "soon", "skills": 7, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "database", "name": "Databases", "icon": "🗄️", "tagline": "Postgres, Redis, Mongo, vectors", "status": "soon", "eta": "soon", "skills": 8, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "ai", "name": "AI / LLM", "icon": "🤖", "tagline": "Agents, RAG, evals, prompt, MCP", "status": "soon", "eta": "soon", "skills": 15, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "security", "name": "Security", "icon": "🔒", "tagline": "OWASP, API security, secrets, OAuth", "status": "soon", "eta": "soon", "skills": 4, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "engineering", "name": "Engineering", "icon": "🏗️", "tagline": "Architecture, TDD, review, git", "status": "soon", "eta": "soon", "skills": 7, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "gamedev", "name": "GameDev", "icon": "🎮", "tagline": "Unity ECS, physics, gameplay", "status": "soon", "eta": "soon", "skills": 2, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "healthcare", "name": "Healthcare IT", "icon": "🏥", "tagline": "FHIR, HIPAA, integrations", "status": "soon", "eta": "soon", "skills": 2, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "finance", "name": "FinTech", "icon": "💹", "tagline": "Trading, risk, quant models", "status": "soon", "eta": "soon", "skills": 2, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "blockchain", "name": "Blockchain", "icon": "⛓️", "tagline": "ZK-proofs, protocols, dApps", "status": "soon", "eta": "soon", "skills": 1, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "desktop", "name": "Desktop", "icon": "🖥️", "tagline": "Electron, native apps", "status": "soon", "eta": "soon", "skills": 1, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "embedded", "name": "Embedded", "icon": "🔌", "tagline": "Rust embedded, firmware", "status": "soon", "eta": "soon", "skills": 1, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "design", "name": "Design", "icon": "🎨", "tagline": "Specs, diagrams, systems, taste", "status": "soon", "eta": "soon", "skills": 2, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "communications", "name": "Writing", "icon": "✍️", "tagline": "Humanize, no-slop, docs", "status": "soon", "eta": "soon", "skills": 0, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "education", "name": "Education", "icon": "🎓", "tagline": "Explain anything, onboarding", "status": "soon", "eta": "soon", "skills": 0, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+    {"slug": "media", "name": "Media / Slides", "icon": "📽️", "tagline": "Decks as code, visuals", "status": "soon", "eta": "soon", "skills": 0, "stages": ["Fundamentals", "Core", "Advanced", "Expert"]},
+]
 
 MODEL_ORDER = ["opus", "sonnet", "gpt-6", "gemini-3", "glm-5", "haiku"]
 
@@ -115,6 +144,7 @@ def load_all(path: Path) -> tuple[dict, dict, dict]:
 
 
 def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: str = "../style.css", nav_index: str = "../index.html") -> str:
+    roadmaps_href = "roadmaps.html" if nav_index == "index.html" else "../roadmaps.html"
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +157,7 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{REPO}/raw/main/.github/social-preview.svg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -135,13 +165,15 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
   {extra}
 </head>
 <body data-theme="dark">
-  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
   <nav class="nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="{nav_index}"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <a class="nav-brand" href="{nav_index}"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="{nav_index}#catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="{roadmaps_href}">Roadmaps<span class="soon-dot">soon</span></a>
         <a class="nav-link" href="{nav_index}#dashboard">Stats</a>
+        <a class="nav-link" href="{nav_index}#how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
         <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
@@ -251,26 +283,25 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
             "</a>"
         )
 
-    generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-
     html_doc = page_head(
-        "Agent Skills Library — 100 curated bilingual skills",
-        "100 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.",
+        f"Agent Skills Library — {meta['total_skills']} curated bilingual skills",
+        f"{meta['total_skills']} curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.",
         BASE,
         '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Agent Skills Library","url":"' + BASE + '"}</script>',
         css_path="style.css",
         nav_index="index.html",
     ) + f"""
-    <header class="hero">
-      <div class="hero-badge">Universal Agent Skills Format</div>
+    <header class="hero reveal in">
+      <div class="hero-badge pulse">● Universal Agent Skills Format · EN + RU</div>
       <h1>Agent Skills <span class="gradient">Library</span></h1>
-      <p class="hero-sub">Curated bilingual (EN + RU) skills for Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills–compatible agent.</p>
+      <p class="hero-sub">Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.</p>
       <div class="hero-models">Models: {models_badges}</div>
       <div class="hero-cta">
-        <a class="btn-primary" href="#catalog">Browse skills</a>
+        <a class="btn-primary shine" href="#catalog">Browse skills ↓</a>
+        <a class="btn-ghost" href="roadmaps.html">IT Roadmaps <span class="soon-pill">soon</span></a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
-      <div class="term-box" aria-hidden="true">
+      <div class="term-box tilt" aria-hidden="true">
         <div class="term-bar">
           <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
           <span class="term-title">agent-skills — zsh</span>
@@ -279,6 +310,15 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       </div>
     </header>
 
+    <section class="how reveal" id="how" aria-label="How it works">
+      <h2>How it works <span class="h-sub">— 3 steps, 30 seconds</span></h2>
+      <div class="how-grid">
+        <div class="how-card"><span class="how-num">01</span><h3>Find</h3><p>Search by task, domain or tag. Every card shows quality, blocks and RU badge.</p></div>
+        <div class="how-card"><span class="how-num">02</span><h3>Copy</h3><p>One click copies the skill path or install command for your agent.</p></div>
+        <div class="how-card"><span class="how-num">03</span><h3>Ship</h3><p>Paste <code>SKILL.md</code> into context. Validate with <code>agent-skills validate</code>.</p></div>
+      </div>
+    </section>
+
     <section class="stats" aria-label="Library statistics">
       <div class="stat"><span class="stat-num" data-count="{meta["total_skills"]}">0</span><span class="stat-label">Skills</span></div>
       <div class="stat"><span class="stat-num" data-count="{meta["total_ru"]}">0</span><span class="stat-label">Russian</span></div>
@@ -286,27 +326,44 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Quality</span></div>
     </section>
 
-    <section class="install" id="install">
-      <div class="install-header"><h2>Install in one line</h2></div>
+    <section class="install reveal" id="install">
+      <div class="install-header"><h2>Install in one line <span class="h-sub">— pick your agent</span></h2></div>
+      <div class="agent-tabs" role="tablist">
+        <button class="agent-tab active" onclick="showAgent('claude', this)">Claude Code</button>
+        <button class="agent-tab" onclick="showAgent('opencode', this)">OpenCode</button>
+        <button class="agent-tab" onclick="showAgent('cursor', this)">Cursor</button>
+        <button class="agent-tab" onclick="showAgent('windsurf', this)">Windsurf</button>
+      </div>
       <div class="install-box">
-        <code>curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash</code>
-        <button class="copy-btn" onclick="copyText('curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash')">copy</button>
+        <code id="agent-cmd">git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.claude/skills</code>
+        <button class="copy-btn" onclick="copyText(document.getElementById('agent-cmd').textContent)">copy</button>
       </div>
       <div class="install-links">
         <a href="skills_catalog.json" download>Download catalog (JSON)</a> ·
         <a href="skills_catalog.schema.json" download>JSON Schema</a> ·
+        <a href="roadmaps.html">IT Roadmaps <span class="soon-pill">soon</span></a> ·
         <a href="{REPO}">GitHub</a>
       </div>
     </section>
 
-    <section class="dashboard" id="dashboard">
-      <h2>Distribution by domain</h2>
+    <section class="dashboard reveal" id="dashboard">
+      <h2>Distribution by domain <span class="h-sub">— click a pill to filter ↓</span></h2>
       <div class="dash-list">
         {"".join(dash_rows)}
       </div>
     </section>
 
-    <section class="search-section" id="catalog">
+    <section class="roadmaps-teaser reveal" id="roadmaps">
+      <div class="rm-head">
+        <h2>IT Roadmaps <span class="soon-pill big">soon everywhere</span></h2>
+        <p>Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
+      </div>
+      <div class="rm-strip" id="rm-strip"></div>
+      <a class="btn-primary shine" href="roadmaps.html">Open roadmaps →</a>
+    </section>
+
+    <section class="search-section reveal" id="catalog">
+      <h2>Catalog <span class="h-sub">— {meta["total_skills"]} skills, {meta["total_ru"]} with RU</span></h2>
       <div class="search-row">
         <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
         <select id="sort" class="sort" onchange="applyFilter()">
@@ -329,7 +386,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     </section>
 
     <footer>
-      <p>Generated on {generated} · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
+      <p>Created by ssrjkk · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
       <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 """ + """
@@ -337,6 +394,18 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
   <script>
   var activeDomain = 'all';
   var searchIndex = null;
+  var AGENT_CMDS = {
+    claude: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.claude/skills',
+    opencode: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.opencode/skills',
+    cursor: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills',
+    windsurf: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills'
+  };
+  var RM_TRACKS = {json.dumps([{"slug": t["slug"], "name": t["name"], "icon": t["icon"]} for t in ROADMAP_TRACKS], ensure_ascii=False)};
+  function showAgent(name, btn) {
+    document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];
+    document.querySelectorAll('.agent-tab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
   function loadSearchIndex() {
     if (searchIndex) return;
     fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
@@ -423,9 +492,9 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     if (!el) return;
     var lines = [
       '<span class="ln">~$</span> <span class="cmd">pip install agent-skills-library</span>',
-      '<span class="ok">&#10003; 100 skills ready · 16 domains · EN+RU</span>',
-      '<span class="ln">~$</span> <span class="cmd">agent-skills search rag</span>',
-      '<span class="ok">&#10003; rag-pipeline · vector-databases · embeddings</span>',
+      '<span class="ok">&#10003; 102 skills ready · 17 domains · EN+RU</span>',
+      '<span class="ln">~$</span> <span class="cmd">agent-skills search diagram</span>',
+      '<span class="ok">&#10003; diagram-as-code · design-spec-md</span>',
       '<span class="ln">~$</span> <span class="cmd">agent-skills validate</span><span class="cursor"></span>',
     ];
     var idx = 0;
@@ -433,6 +502,7 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
     function typeLine() {
       if (idx >= lines.length) { setTimeout(reset, 4000); return; }
       var line = document.createElement('div');
+      line.classList.add('term-line');
       line.innerHTML = lines[idx];
       el.appendChild(line);
       idx++;
@@ -444,6 +514,43 @@ def build_index_html(catalog_path: Path, output_dir: Path) -> str:
       setTimeout(typeLine, 1500);
     }
     setTimeout(typeLine, 400);
+  })();
+  // roadmaps strip preview
+  (function() {
+    var strip = document.getElementById('rm-strip');
+    if (!strip || !RM_TRACKS) return;
+    RM_TRACKS.slice(0, 8).forEach(function(t, i) {
+      var a = document.createElement('a');
+      a.href = 'roadmaps.html#' + t.slug;
+      a.className = 'rm-chip';
+      a.style.animationDelay = (i * 60) + 'ms';
+      a.innerHTML = '<span class="rm-ico">' + t.icon + '</span>' + t.name + '<span class="soon-pill">soon</span>';
+      strip.appendChild(a);
+    });
+    var more = document.createElement('a');
+    more.href = 'roadmaps.html';
+    more.className = 'rm-chip more';
+    more.textContent = '+' + (RM_TRACKS.length - 8) + ' more →';
+    strip.appendChild(more);
+  })();
+  // reveal on scroll + stagger cards
+  (function() {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          if (e.target.classList.contains('cards')) {
+            Array.prototype.forEach.call(e.target.children, function(c, i) {
+              c.style.transitionDelay = Math.min(i * 30, 600) + 'ms';
+              c.classList.add('in');
+            });
+          }
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.08});
+    document.querySelectorAll('.reveal, .cards').forEach(function(el) { io.observe(el); });
+    document.querySelectorAll('.card').forEach(function(c) { c.classList.add('reveal'); });
   })();
   </script>
   </div>
@@ -672,7 +779,9 @@ body{
 .nav{position:sticky;top:0;z-index:50;background:rgba(11,15,10,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1180px;margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
 .nav-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text)}
-.nav-logo{width:28px;height:28px;display:grid;place-items:center;font-weight:700;color:#0b0f0a;background:var(--accent);font-family:var(--mono);font-size:.85rem}
+.nav-logo{width:30px;height:30px;display:block;flex:none}
+.nav-logo svg{display:block;width:100%;height:100%;filter:drop-shadow(0 0 6px rgba(125,255,74,.35));transition:transform .2s ease}
+.nav-brand:hover .nav-logo svg{transform:rotate(-8deg) scale(1.08)}
 .nav-name{font-weight:700;letter-spacing:.02em}
 .nav-right{display:flex;align-items:center;gap:1.2rem}
 .nav-link{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .15s}
@@ -874,6 +983,79 @@ body[data-theme="light"] .bg-glow{
     radial-gradient(700px 500px at 15% -10%,rgba(26,127,55,.06),transparent 60%),
     radial-gradient(800px 500px at 90% 0%,rgba(0,127,106,.05),transparent 60%);
 }
+/* ===== animations + expressiveness upgrade ===== */
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:drift 14s ease-in-out infinite alternate}
+.orb-a{width:420px;height:420px;left:-120px;top:-140px;background:radial-gradient(circle,rgba(125,255,74,.22),transparent 70%)}
+.orb-b{width:520px;height:520px;right:-160px;top:-100px;background:radial-gradient(circle,rgba(0,255,209,.16),transparent 70%);animation-delay:-5s}
+.orb-c{width:360px;height:360px;left:40%;top:40%;background:radial-gradient(circle,rgba(139,92,246,.14),transparent 70%);animation-delay:-9s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+.hero h1 .gradient{background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 6s linear infinite}
+@keyframes gradShift{to{background-position:200% center}}
+.pulse{animation:pulseB 2.6s ease-in-out infinite}
+@keyframes pulseB{0%,100%{box-shadow:0 0 0 0 rgba(125,255,74,.35)}50%{box-shadow:0 0 0 8px rgba(125,255,74,0)}}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:shineMove 3.2s ease-in-out infinite}
+@keyframes shineMove{0%{left:-60%}60%,100%{left:130%}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+.term-line{animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+.h-sub{color:var(--muted);font-weight:400;font-size:.82rem}
+.how{margin:2.2rem 0}
+.how h2,.roadmaps-teaser h2,.search-section h2{font-size:1.25rem;margin-bottom:1rem;letter-spacing:.02em}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}
+.how-card{background:var(--card);border:1px solid var(--border);padding:1.1rem 1.2rem;border-radius:var(--radius);transition:transform .18s,border-color .18s;position:relative;overflow:hidden}
+.how-card:hover{transform:translateY(-4px) scale(1.01);border-color:var(--accent)}
+.how-card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.7}
+.how-num{font-family:var(--mono);color:var(--accent);font-size:.75rem;letter-spacing:.15em}
+.how-card h3{margin:.3rem 0 .3rem;font-size:1rem}
+.how-card p{color:var(--muted);font-size:.82rem}
+.how-card code{color:var(--accent);font-size:.75rem}
+.agent-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.7rem}
+.agent-tab{padding:.4rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.75rem;border-radius:20px;transition:all .15s}
+.agent-tab:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
+.agent-tab.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent);font-weight:700}
+.soon-pill{display:inline-block;background:#f59e0b;color:#0b0f0a;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .45rem;border-radius:20px;margin-left:.4rem;vertical-align:middle;animation:pulseB 2s infinite}
+.soon-pill.big{font-size:.68rem;padding:.2rem .7rem}
+.soon-dot{background:#f59e0b;color:#0b0f0a;font-size:.55rem;font-weight:800;border-radius:10px;padding:.05rem .35rem;margin-left:.35rem;text-transform:uppercase;letter-spacing:.06em}
+.nav-hot{border:1px solid rgba(245,158,11,.5);border-radius:20px;padding:.15rem .6rem !important}
+.nav-hot::before{display:none}
+.roadmaps-teaser{margin:2.5rem 0;padding:1.6rem;border:1px solid var(--border);background:linear-gradient(180deg,rgba(125,255,74,.05),transparent);border-radius:8px;text-align:center}
+.rm-head p{color:var(--muted);font-size:.85rem;margin:.4rem 0 1rem}
+.rm-strip{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:1rem 0 1.3rem}
+.rm-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .85rem;background:var(--card);border:1px solid var(--border);border-radius:24px;color:var(--text);text-decoration:none;font-size:.78rem;font-family:var(--mono);animation:fadeSlide .5s ease backwards;transition:transform .15s,border-color .15s}
+.rm-chip:hover{transform:translateY(-2px) scale(1.03);border-color:var(--accent)}
+.rm-chip.more{border-style:dashed;color:var(--muted)}
+.rm-ico{font-size:.9rem}
+/* roadmaps page */
+.rm-page{max-width:1000px;margin:0 auto}
+.rm-hero{text-align:center;padding:1rem 0 1.5rem}
+.rm-hero h1{font-size:clamp(1.6rem,4vw,2.4rem)}
+.rm-hero p{color:var(--muted);max-width:640px;margin:.6rem auto}
+.rm-tabs{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin:1.2rem 0}
+.rm-tab{padding:.45rem .95rem;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:24px;cursor:pointer;font-family:var(--mono);font-size:.76rem;transition:all .15s}
+.rm-tab:hover{border-color:var(--dc,#7dff4a);transform:translateY(-1px)}
+.rm-tab.active{background:var(--dc,#7dff4a);color:#0b0f0a;border-color:var(--dc,#7dff4a);font-weight:700}
+.rm-detail{margin-top:1.2rem;border:1px solid var(--border);border-radius:8px;background:var(--card);padding:1.4rem;animation:fadeSlide .35s ease}
+.rm-detail-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.rm-detail-head h2{font-size:1.3rem}
+.rm-tag{font-size:.7rem;color:var(--muted);border:1px solid var(--border);padding:.15rem .6rem;border-radius:20px}
+.rm-timeline{display:grid;gap:.7rem;margin-top:1.1rem}
+.rm-stage{border:1px dashed var(--border);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
+.rm-stage h3{font-size:.85rem;display:flex;align-items:center;gap:.5rem}
+.rm-stage p{color:var(--muted);font-size:.78rem;margin-top:.25rem}
+.rm-note{margin-top:1rem;color:var(--muted);font-size:.78rem;text-align:center}
+.live-pill{display:inline-block;background:var(--accent);color:#0b0f0a;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .45rem;border-radius:20px;margin-left:.4rem;vertical-align:middle}
+.live-pill.big{font-size:.68rem;padding:.2rem .7rem}
+.rm-detail-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.rm-stage ul{margin:.45rem 0 .1rem 1.1rem;color:var(--muted);font-size:.78rem}
+.rm-stage li{margin:.2rem 0}
+.rm-related{margin-top:1.2rem}
+.rm-related h3{font-size:.85rem;margin-bottom:.5rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.rm-chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.ru-badge{display:inline-block;background:var(--accent2);color:#0b0f0a;font-size:.6rem;font-weight:800;padding:.1rem .4rem;border-radius:3px;letter-spacing:.05em}
+@media (max-width:600px){.rm-detail{padding:1rem}.how-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.reveal{opacity:1;transform:none}}
 """
     (output_dir / "style.css").write_text(css, encoding="utf-8")
     print(f"Stylesheet written to {output_dir / 'style.css'}")
@@ -893,6 +1075,183 @@ def build_search_index(catalog_path: Path, output_dir: Path) -> None:
     print(f"Search index written to {out}")
 
 
+def load_roadmap_tracks(source_dir: Path | None = None) -> list[dict]:
+    """Load roadmap tracks from roadmaps/*.json (repo root by default).
+
+    Maps live in their own source files, fully independent from the skills
+    catalog. Falls back to the built-in ROADMAP_TRACKS seed when the
+    directory is absent (e.g. isolated test builds).
+    """
+    root = source_dir or Path(__file__).resolve().parent.parent
+    tracks_dir = root / "roadmaps"
+    tracks: list[dict] = []
+    if tracks_dir.is_dir():
+        for path in sorted(tracks_dir.glob("*.json")):
+            try:
+                tracks.append(json.loads(path.read_text(encoding="utf-8")))
+            except (OSError, json.JSONDecodeError):
+                continue
+    if tracks:
+        return tracks
+    return [
+        {
+            "slug": t["slug"], "name": t["name"], "icon": t["icon"],
+            "tagline": t["tagline"], "status": t["status"], "eta": t["eta"],
+            "catalog_domain": None, "related_skills": [],
+            "stages": [{"title": s, "items": ["Map drops soon"], "status": "soon"} for s in t["stages"]],
+        }
+        for t in ROADMAP_TRACKS
+    ]
+
+
+def rm_status_pill(status: str, big: bool = False) -> str:
+    cls = "live-pill" if status == "live" else "soon-pill"
+    if big:
+        cls += " big"
+    return f'<span class="{cls}">{esc(status)}</span>'
+
+
+def rm_stage_html(stage: dict) -> str:
+    items = "".join(f"<li>{esc(i)}</li>" for i in stage.get("items", []))
+    return (
+        f'<div class="rm-stage"><h3>▸ {esc(stage.get("title", ""))} {rm_status_pill(stage.get("status", "soon"))}</h3>'
+        f"<ul>{items}</ul></div>"
+    )
+
+
+def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None = None) -> list[dict]:
+    """Build the roadmaps overview, one page per track, and compiled JSON.
+
+    Source: roadmaps/<slug>.json (hand-edited, standalone).
+    To plug a real map, replace that track's stages/items and set status
+    to live — no template changes needed.
+    """
+    tracks = load_roadmap_tracks(source_dir)
+    (output_dir / "roadmaps.json").write_text(json.dumps({"tracks": tracks}, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    tabs = []
+    for i, t in enumerate(tracks):
+        color = DOMAIN_COLORS.get(t["slug"], "#64748b")
+        active = " active" if i == 0 else ""
+        tabs.append(
+            f'<button class="rm-tab{active}" data-track="{esc(t["slug"])}" style="--dc:{color}" '
+            f'onclick="showTrack(\'{esc(t["slug"])}\', this)">{esc(t["icon"])} {esc(t["name"])}'
+            f'{rm_status_pill(t.get("status", "soon"))}</button>'
+        )
+
+    first = tracks[0]
+    stages0 = "".join(rm_stage_html(s) for s in first["stages"])
+    def rm_links_html(t: dict) -> str:
+        links = [f'<a class="btn-ghost" href="roadmaps/{esc(t["slug"])}.html">Open full map →</a>']
+        if t.get("catalog_domain"):
+            links.append(f'<a class="btn-ghost" href="domains/{esc(t["catalog_domain"])}.html">Related skills →</a>')
+        return "".join(links)
+    html_doc = page_head(
+        "IT Roadmaps — every direction, coming soon",
+        "Step-by-step IT roadmaps for frontend, backend, mobile, DevOps, data, AI and more. All tracks marked soon.",
+        BASE + "roadmaps.html",
+        css_path="style.css",
+        nav_index="index.html",
+    ) + f"""
+    <div class="rm-page">
+      <header class="rm-hero reveal in">
+        <div class="hero-badge pulse">Roadmaps · {len(tracks)} tracks · all soon</div>
+        <h1>IT Roadmaps <span class="gradient">soon everywhere</span></h1>
+        <p>One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in.</p>
+      </header>
+      <div class="rm-tabs" role="tablist">{"".join(tabs)}</div>
+      <div class="rm-detail" id="rm-detail">
+        <div class="rm-detail-head">
+          <h2 id="rm-name">{esc(first["icon"])} {esc(first["name"])}</h2>
+          {rm_status_pill(first.get("status", "soon"), big=True)}
+        </div>
+        <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{esc(first["tagline"])}</p>
+        <div class="rm-timeline" id="rm-stages">{stages0}</div>
+        <div class="rm-detail-actions" id="rm-actions">{rm_links_html(first)}</div>
+        <p class="rm-note">Want this map first? <a href="{REPO}/discussions">Vote in Discussions</a> · <a href="{REPO}/issues">Request a track</a></p>
+      </div>
+    </div>
+  <script>
+  var RM_DATA = {esc(json.dumps(tracks, ensure_ascii=False))};
+  function rmStageHTML(s) {{
+    var pill = s.status === 'live' ? '<span class="live-pill">live</span>' : '<span class="soon-pill">soon</span>';
+    var items = (s.items || []).map(function(i) {{ return '<li>' + i + '</li>'; }}).join('');
+    return '<div class="rm-stage"><h3>▸ ' + s.title + ' ' + pill + '</h3><ul>' + items + '</ul></div>';
+  }}
+  function showTrack(slug, btn) {{
+    document.querySelectorAll('.rm-tab').forEach(function(b) {{ b.classList.remove('active'); }});
+    btn.classList.add('active');
+    var t = RM_DATA.find(function(x) {{ return x.slug === slug; }});
+    if (!t) return;
+    document.getElementById('rm-name').textContent = t.icon + ' ' + t.name;
+    document.getElementById('rm-tagline').textContent = t.tagline;
+    var box = document.getElementById('rm-stages');
+    box.innerHTML = '';
+    t.stages.forEach(function(s) {{
+      var d = document.createElement('div');
+      d.innerHTML = rmStageHTML(s);
+      box.appendChild(d.firstChild);
+    }});
+    var actions = document.getElementById('rm-actions');
+    actions.innerHTML = '<a class=\'btn-ghost\' href=\'roadmaps/\' + t.slug + \'.html\'>Open full map →</a>'
+      + (t.catalog_domain ? '<a class=\'btn-ghost\' href=\'domains/\' + t.catalog_domain + \'.html\'>Related skills →</a>' : '');
+    box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
+    if (location.hash !== '#' + slug) history.replaceState(null, '', '#' + slug);
+  }}
+  (function() {{
+    var slug = (location.hash || '').replace('#', '');
+    if (slug) {{
+      var btn = document.querySelector('.rm-tab[data-track="' + slug + '"]');
+      if (btn) showTrack(slug, btn);
+    }}
+  }})();
+  </script>
+""" + page_foot()
+    (output_dir / "roadmaps.html").write_text(html_doc, encoding="utf-8")
+
+    rm_dir = output_dir / "roadmaps"
+    rm_dir.mkdir(parents=True, exist_ok=True)
+    for i, t in enumerate(tracks):
+        prev_slug = tracks[i - 1]["slug"] if i > 0 else None
+        next_slug = tracks[i + 1]["slug"] if i < len(tracks) - 1 else None
+        nav = '<div class="page-nav">'
+        nav += f'<a class="page-nav-link" href="{esc(prev_slug)}.html">← {esc(prev_slug)}</a>' if prev_slug else "<span></span>"
+        nav += f'<a class="page-nav-link" href="{esc(next_slug)}.html">{esc(next_slug)} →</a>' if next_slug else "<span></span>"
+        nav += "</div>"
+        rel = ""
+        if t.get("related_skills"):
+            rel = '<div class="rm-related"><h3>Related skills</h3><div class="rm-chips">' + "".join(
+                f'<a class="rm-chip" href="../skills/{esc(n)}.html">{esc(n)}</a>' for n in t["related_skills"]
+            ) + "</div></div>"
+        elif t.get("catalog_domain"):
+            rel = (f'<div class="rm-related"><a class="btn-ghost" href="../domains/{esc(t["catalog_domain"])}.html">'
+                   f'Browse {esc(t["catalog_domain"])} skills →</a></div>')
+        color = DOMAIN_COLORS.get(t["slug"], "#64748b")
+        page = page_head(
+            f'{t["name"]} roadmap — Agent Skills Library',
+            t["tagline"],
+            BASE + f'roadmaps/{t["slug"]}.html',
+        ) + f"""
+    <div class="rm-page">
+      <p class="back-link"><a href="../roadmaps.html">← All roadmaps</a></p>
+      <header class="rm-hero">
+        <span class="domain-chip" style="background:{color}1a;color:{color};border-color:{color}44">{esc(t["slug"])}</span>
+        <h1>{esc(t["icon"])} {esc(t["name"])} {rm_status_pill(t.get("status", "soon"), big=True)}</h1>
+        <p>{esc(t["tagline"])}</p>
+      </header>
+      {nav}
+      <div class="rm-timeline">{"".join(rm_stage_html(s) for s in t["stages"])}</div>
+      {rel}
+      {nav}
+      <p class="rm-note">Source: <code>roadmaps/{esc(t["slug"])}.json</code> · ETA: {esc(t.get("eta", "soon"))}</p>
+    </div>
+""" + page_foot()
+        (rm_dir / f'{t["slug"]}.html').write_text(page, encoding="utf-8")
+
+    print(f"Roadmaps written: overview + {len(tracks)} track pages + roadmaps.json")
+    return tracks
+
+
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     robots = (
         "User-agent: *\n"
@@ -906,11 +1265,14 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
         f"  <url><loc>{BASE}</loc><priority>1.0</priority></url>",
+        f"  <url><loc>{BASE}roadmaps.html</loc><priority>0.9</priority></url>",
         f"  <url><loc>{BASE}skills_catalog.json</loc></url>",
         f"  <url><loc>{BASE}skills_catalog.schema.json</loc></url>",
     ]
     for s in sorted(skills, key=lambda x: x["name"]):
         lines.append(f"  <url><loc>{BASE}skills/{esc(s['name'])}.html</loc></url>")
+    for t in load_roadmap_tracks():
+        lines.append(f"  <url><loc>{BASE}roadmaps/{esc(t['slug'])}.html</loc></url>")
     lines.append("</urlset>")
     (output_dir / "sitemap.xml").write_text("\n".join(lines), encoding="utf-8")
     print(f"robots.txt and sitemap.xml written to {output_dir}")
@@ -929,6 +1291,7 @@ def main() -> int:
     build_index_html(Path(args.catalog), output_dir)
     build_skill_pages(Path(args.catalog), output_dir)
     build_domain_pages(Path(args.catalog), output_dir)
+    build_roadmaps(Path(args.catalog), output_dir)
     build_style_css(output_dir)
     build_search_index(Path(args.catalog), output_dir)
     build_seo_files(output_dir, Path(args.catalog))

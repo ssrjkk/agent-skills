@@ -1,0 +1,824 @@
+{
+  "tracks": [
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "ai",
+      "name": "AI / LLM",
+      "icon": "🤖",
+      "tagline": "Agents, RAG, evals, prompt, MCP",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "ai",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "backend",
+      "name": "Backend",
+      "icon": "⚙️",
+      "tagline": "APIs, frameworks, runtimes, realtime",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "backend",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "blockchain",
+      "name": "Blockchain",
+      "icon": "⛓️",
+      "tagline": "ZK-proofs, protocols, dApps",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "blockchain",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "communications",
+      "name": "Writing",
+      "icon": "✍️",
+      "tagline": "Humanize, no-slop, docs",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": null,
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "data",
+      "name": "Data",
+      "icon": "📊",
+      "tagline": "Spark, Airflow, dbt, SQL, viz",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "data",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "database",
+      "name": "Databases",
+      "icon": "🗄️",
+      "tagline": "Postgres, Redis, Mongo, vectors",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "database",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "design",
+      "name": "Design",
+      "icon": "🎨",
+      "tagline": "Specs, diagrams, systems, taste",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "design",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "desktop",
+      "name": "Desktop",
+      "icon": "🖥️",
+      "tagline": "Electron, native apps",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "desktop",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "devops",
+      "name": "DevOps",
+      "icon": "🚀",
+      "tagline": "Docker, K8s, CI/CD, observability",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "devops",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "education",
+      "name": "Education",
+      "icon": "🎓",
+      "tagline": "Explain anything, onboarding",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": null,
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "embedded",
+      "name": "Embedded",
+      "icon": "🔌",
+      "tagline": "Rust embedded, firmware",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "embedded",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "engineering",
+      "name": "Engineering",
+      "icon": "🏗️",
+      "tagline": "Architecture, TDD, review, git",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "engineering",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "finance",
+      "name": "FinTech",
+      "icon": "💹",
+      "tagline": "Trading, risk, quant models",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "finance",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "frontend",
+      "name": "Frontend",
+      "icon": "🖥️",
+      "tagline": "React, Next.js, CSS, UI engineering",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "frontend",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "gamedev",
+      "name": "GameDev",
+      "icon": "🎮",
+      "tagline": "Unity ECS, physics, gameplay",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "gamedev",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "healthcare",
+      "name": "Healthcare IT",
+      "icon": "🏥",
+      "tagline": "FHIR, HIPAA, integrations",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "healthcare",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "media",
+      "name": "Media / Slides",
+      "icon": "📽️",
+      "tagline": "Decks as code, visuals",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": null,
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "mobile",
+      "name": "Mobile",
+      "icon": "📱",
+      "tagline": "Flutter, SwiftUI, Kotlin, React Native",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "mobile",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "qa",
+      "name": "QA",
+      "icon": "🧪",
+      "tagline": "Jest, Playwright, pytest, E2E",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "qa",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    },
+    {
+      "$schema": "../roadmaps.schema.json",
+      "slug": "security",
+      "name": "Security",
+      "icon": "🔒",
+      "tagline": "OWASP, API security, secrets, OAuth",
+      "status": "soon",
+      "eta": "soon",
+      "catalog_domain": "security",
+      "related_skills": [],
+      "stages": [
+        {
+          "title": "Fundamentals",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Core",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Advanced",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        },
+        {
+          "title": "Expert",
+          "items": [
+            "Map drops soon"
+          ],
+          "status": "soon"
+        }
+      ]
+    }
+  ]
+}

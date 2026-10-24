@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agent Skills Library — 100 curated bilingual skills</title>
-  <meta name="description" content="100 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.">
+  <title>Agent Skills Library — 102 curated bilingual skills</title>
+  <meta name="description" content="102 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.">
   <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/">
-  <meta property="og:title" content="Agent Skills Library — 100 curated bilingual skills">
-  <meta property="og:description" content="100 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.">
+  <meta property="og:title" content="Agent Skills Library — 102 curated bilingual skills">
+  <meta property="og:description" content="102 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/">
   <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/social-preview.svg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%238b5cf6%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -18,13 +18,15 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Agent Skills Library","url":"https://ssrjkk.github.io/agent-skills/"}</script>
 </head>
 <body data-theme="dark">
-  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
   <nav class="nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="index.html"><span class="nav-logo">S</span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <a class="nav-brand" href="index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="index.html#catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="roadmaps.html">Roadmaps<span class="soon-dot">soon</span></a>
         <a class="nav-link" href="index.html#dashboard">Stats</a>
+        <a class="nav-link" href="index.html#how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
         <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
@@ -33,16 +35,17 @@
   </nav>
   <div class="container">
 
-    <header class="hero">
-      <div class="hero-badge">Universal Agent Skills Format</div>
+    <header class="hero reveal in">
+      <div class="hero-badge pulse">● Universal Agent Skills Format · EN + RU</div>
       <h1>Agent Skills <span class="gradient">Library</span></h1>
-      <p class="hero-sub">Curated bilingual (EN + RU) skills for Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills–compatible agent.</p>
+      <p class="hero-sub">Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.</p>
       <div class="hero-models">Models: <span class="model-badge">opus</span><span class="model-badge">sonnet</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="hero-cta">
-        <a class="btn-primary" href="#catalog">Browse skills</a>
+        <a class="btn-primary shine" href="#catalog">Browse skills ↓</a>
+        <a class="btn-ghost" href="roadmaps.html">IT Roadmaps <span class="soon-pill">soon</span></a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
-      <div class="term-box" aria-hidden="true">
+      <div class="term-box tilt" aria-hidden="true">
         <div class="term-bar">
           <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
           <span class="term-title">agent-skills — zsh</span>
@@ -51,34 +54,60 @@
       </div>
     </header>
 
+    <section class="how reveal" id="how" aria-label="How it works">
+      <h2>How it works <span class="h-sub">— 3 steps, 30 seconds</span></h2>
+      <div class="how-grid">
+        <div class="how-card"><span class="how-num">01</span><h3>Find</h3><p>Search by task, domain or tag. Every card shows quality, blocks and RU badge.</p></div>
+        <div class="how-card"><span class="how-num">02</span><h3>Copy</h3><p>One click copies the skill path or install command for your agent.</p></div>
+        <div class="how-card"><span class="how-num">03</span><h3>Ship</h3><p>Paste <code>SKILL.md</code> into context. Validate with <code>agent-skills validate</code>.</p></div>
+      </div>
+    </section>
+
     <section class="stats" aria-label="Library statistics">
-      <div class="stat"><span class="stat-num" data-count="100">0</span><span class="stat-label">Skills</span></div>
-      <div class="stat"><span class="stat-num" data-count="100">0</span><span class="stat-label">Russian</span></div>
-      <div class="stat"><span class="stat-num" data-count="16">0</span><span class="stat-label">Domains</span></div>
+      <div class="stat"><span class="stat-num" data-count="102">0</span><span class="stat-label">Skills</span></div>
+      <div class="stat"><span class="stat-num" data-count="102">0</span><span class="stat-label">Russian</span></div>
+      <div class="stat"><span class="stat-num" data-count="17">0</span><span class="stat-label">Domains</span></div>
       <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Quality</span></div>
     </section>
 
-    <section class="install" id="install">
-      <div class="install-header"><h2>Install in one line</h2></div>
+    <section class="install reveal" id="install">
+      <div class="install-header"><h2>Install in one line <span class="h-sub">— pick your agent</span></h2></div>
+      <div class="agent-tabs" role="tablist">
+        <button class="agent-tab active" onclick="showAgent('claude', this)">Claude Code</button>
+        <button class="agent-tab" onclick="showAgent('opencode', this)">OpenCode</button>
+        <button class="agent-tab" onclick="showAgent('cursor', this)">Cursor</button>
+        <button class="agent-tab" onclick="showAgent('windsurf', this)">Windsurf</button>
+      </div>
       <div class="install-box">
-        <code>curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash</code>
-        <button class="copy-btn" onclick="copyText('curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash')">copy</button>
+        <code id="agent-cmd">git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.claude/skills</code>
+        <button class="copy-btn" onclick="copyText(document.getElementById('agent-cmd').textContent)">copy</button>
       </div>
       <div class="install-links">
         <a href="skills_catalog.json" download>Download catalog (JSON)</a> ·
         <a href="skills_catalog.schema.json" download>JSON Schema</a> ·
+        <a href="roadmaps.html">IT Roadmaps <span class="soon-pill">soon</span></a> ·
         <a href="https://github.com/ssrjkk/agent-skills">GitHub</a>
       </div>
     </section>
 
-    <section class="dashboard" id="dashboard">
-      <h2>Distribution by domain</h2>
+    <section class="dashboard reveal" id="dashboard">
+      <h2>Distribution by domain <span class="h-sub">— click a pill to filter ↓</span></h2>
       <div class="dash-list">
-        <div class="dash-row"><span class="dash-name">devops</span><div class="dash-bar"><div class="dash-fill" style="width:100%;background:#f43f5e"></div></div><span class="dash-count">19</span></div><div class="dash-row"><span class="dash-name">ai</span><div class="dash-bar"><div class="dash-fill" style="width:78%;background:#8b5cf6"></div></div><span class="dash-count">15</span></div><div class="dash-row"><span class="dash-name">backend</span><div class="dash-bar"><div class="dash-fill" style="width:73%;background:#0ea5e9"></div></div><span class="dash-count">14</span></div><div class="dash-row"><span class="dash-name">frontend</span><div class="dash-bar"><div class="dash-fill" style="width:52%;background:#3b82f6"></div></div><span class="dash-count">10</span></div><div class="dash-row"><span class="dash-name">database</span><div class="dash-bar"><div class="dash-fill" style="width:42%;background:#14b8a6"></div></div><span class="dash-count">8</span></div><div class="dash-row"><span class="dash-name">data</span><div class="dash-bar"><div class="dash-fill" style="width:36%;background:#10b981"></div></div><span class="dash-count">7</span></div><div class="dash-row"><span class="dash-name">engineering</span><div class="dash-bar"><div class="dash-fill" style="width:36%;background:#a855f7"></div></div><span class="dash-count">7</span></div><div class="dash-row"><span class="dash-name">mobile</span><div class="dash-bar"><div class="dash-fill" style="width:21%;background:#ec4899"></div></div><span class="dash-count">4</span></div><div class="dash-row"><span class="dash-name">security</span><div class="dash-bar"><div class="dash-fill" style="width:21%;background:#dc2626"></div></div><span class="dash-count">4</span></div><div class="dash-row"><span class="dash-name">qa</span><div class="dash-bar"><div class="dash-fill" style="width:15%;background:#22c55e"></div></div><span class="dash-count">3</span></div><div class="dash-row"><span class="dash-name">finance</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#eab308"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">gamedev</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#ef4444"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">healthcare</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#06b6d4"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">blockchain</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#f59e0b"></div></div><span class="dash-count">1</span></div><div class="dash-row"><span class="dash-name">desktop</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#6366f1"></div></div><span class="dash-count">1</span></div><div class="dash-row"><span class="dash-name">embedded</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#84cc16"></div></div><span class="dash-count">1</span></div>
+        <div class="dash-row"><span class="dash-name">devops</span><div class="dash-bar"><div class="dash-fill" style="width:100%;background:#f43f5e"></div></div><span class="dash-count">19</span></div><div class="dash-row"><span class="dash-name">ai</span><div class="dash-bar"><div class="dash-fill" style="width:78%;background:#8b5cf6"></div></div><span class="dash-count">15</span></div><div class="dash-row"><span class="dash-name">backend</span><div class="dash-bar"><div class="dash-fill" style="width:73%;background:#0ea5e9"></div></div><span class="dash-count">14</span></div><div class="dash-row"><span class="dash-name">frontend</span><div class="dash-bar"><div class="dash-fill" style="width:52%;background:#3b82f6"></div></div><span class="dash-count">10</span></div><div class="dash-row"><span class="dash-name">database</span><div class="dash-bar"><div class="dash-fill" style="width:42%;background:#14b8a6"></div></div><span class="dash-count">8</span></div><div class="dash-row"><span class="dash-name">data</span><div class="dash-bar"><div class="dash-fill" style="width:36%;background:#10b981"></div></div><span class="dash-count">7</span></div><div class="dash-row"><span class="dash-name">engineering</span><div class="dash-bar"><div class="dash-fill" style="width:36%;background:#a855f7"></div></div><span class="dash-count">7</span></div><div class="dash-row"><span class="dash-name">mobile</span><div class="dash-bar"><div class="dash-fill" style="width:21%;background:#ec4899"></div></div><span class="dash-count">4</span></div><div class="dash-row"><span class="dash-name">security</span><div class="dash-bar"><div class="dash-fill" style="width:21%;background:#dc2626"></div></div><span class="dash-count">4</span></div><div class="dash-row"><span class="dash-name">qa</span><div class="dash-bar"><div class="dash-fill" style="width:15%;background:#22c55e"></div></div><span class="dash-count">3</span></div><div class="dash-row"><span class="dash-name">design</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#f472b6"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">finance</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#eab308"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">gamedev</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#ef4444"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">healthcare</span><div class="dash-bar"><div class="dash-fill" style="width:10%;background:#06b6d4"></div></div><span class="dash-count">2</span></div><div class="dash-row"><span class="dash-name">blockchain</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#f59e0b"></div></div><span class="dash-count">1</span></div><div class="dash-row"><span class="dash-name">desktop</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#6366f1"></div></div><span class="dash-count">1</span></div><div class="dash-row"><span class="dash-name">embedded</span><div class="dash-bar"><div class="dash-fill" style="width:5%;background:#84cc16"></div></div><span class="dash-count">1</span></div>
       </div>
     </section>
 
-    <section class="search-section" id="catalog">
+    <section class="roadmaps-teaser reveal" id="roadmaps">
+      <div class="rm-head">
+        <h2>IT Roadmaps <span class="soon-pill big">soon everywhere</span></h2>
+        <p>Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
+      </div>
+      <div class="rm-strip" id="rm-strip"></div>
+      <a class="btn-primary shine" href="roadmaps.html">Open roadmaps →</a>
+    </section>
+
+    <section class="search-section reveal" id="catalog">
+      <h2>Catalog <span class="h-sub">— 102 skills, 102 with RU</span></h2>
       <div class="search-row">
         <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
         <select id="sort" class="sort" onchange="applyFilter()">
@@ -88,8 +117,8 @@
         </select>
       </div>
       <div class="pills" id="pills">
-        <button class="pill active" data-domain="all" onclick="filterByDomain('all', this)">all<span class="pill-count">100</span></button>
-        <button class="pill" data-domain="ai" style="--dc:#8b5cf6" onclick="filterByDomain('ai', this)">ai<span class="pill-count">15</span></button><button class="pill" data-domain="backend" style="--dc:#0ea5e9" onclick="filterByDomain('backend', this)">backend<span class="pill-count">14</span></button><button class="pill" data-domain="blockchain" style="--dc:#f59e0b" onclick="filterByDomain('blockchain', this)">blockchain<span class="pill-count">1</span></button><button class="pill" data-domain="data" style="--dc:#10b981" onclick="filterByDomain('data', this)">data<span class="pill-count">7</span></button><button class="pill" data-domain="database" style="--dc:#14b8a6" onclick="filterByDomain('database', this)">database<span class="pill-count">8</span></button><button class="pill" data-domain="desktop" style="--dc:#6366f1" onclick="filterByDomain('desktop', this)">desktop<span class="pill-count">1</span></button><button class="pill" data-domain="devops" style="--dc:#f43f5e" onclick="filterByDomain('devops', this)">devops<span class="pill-count">19</span></button><button class="pill" data-domain="embedded" style="--dc:#84cc16" onclick="filterByDomain('embedded', this)">embedded<span class="pill-count">1</span></button><button class="pill" data-domain="engineering" style="--dc:#a855f7" onclick="filterByDomain('engineering', this)">engineering<span class="pill-count">7</span></button><button class="pill" data-domain="finance" style="--dc:#eab308" onclick="filterByDomain('finance', this)">finance<span class="pill-count">2</span></button><button class="pill" data-domain="frontend" style="--dc:#3b82f6" onclick="filterByDomain('frontend', this)">frontend<span class="pill-count">10</span></button><button class="pill" data-domain="gamedev" style="--dc:#ef4444" onclick="filterByDomain('gamedev', this)">gamedev<span class="pill-count">2</span></button><button class="pill" data-domain="healthcare" style="--dc:#06b6d4" onclick="filterByDomain('healthcare', this)">healthcare<span class="pill-count">2</span></button><button class="pill" data-domain="mobile" style="--dc:#ec4899" onclick="filterByDomain('mobile', this)">mobile<span class="pill-count">4</span></button><button class="pill" data-domain="qa" style="--dc:#22c55e" onclick="filterByDomain('qa', this)">qa<span class="pill-count">3</span></button><button class="pill" data-domain="security" style="--dc:#dc2626" onclick="filterByDomain('security', this)">security<span class="pill-count">4</span></button>
+        <button class="pill active" data-domain="all" onclick="filterByDomain('all', this)">all<span class="pill-count">102</span></button>
+        <button class="pill" data-domain="ai" style="--dc:#8b5cf6" onclick="filterByDomain('ai', this)">ai<span class="pill-count">15</span></button><button class="pill" data-domain="backend" style="--dc:#0ea5e9" onclick="filterByDomain('backend', this)">backend<span class="pill-count">14</span></button><button class="pill" data-domain="blockchain" style="--dc:#f59e0b" onclick="filterByDomain('blockchain', this)">blockchain<span class="pill-count">1</span></button><button class="pill" data-domain="data" style="--dc:#10b981" onclick="filterByDomain('data', this)">data<span class="pill-count">7</span></button><button class="pill" data-domain="database" style="--dc:#14b8a6" onclick="filterByDomain('database', this)">database<span class="pill-count">8</span></button><button class="pill" data-domain="design" style="--dc:#f472b6" onclick="filterByDomain('design', this)">design<span class="pill-count">2</span></button><button class="pill" data-domain="desktop" style="--dc:#6366f1" onclick="filterByDomain('desktop', this)">desktop<span class="pill-count">1</span></button><button class="pill" data-domain="devops" style="--dc:#f43f5e" onclick="filterByDomain('devops', this)">devops<span class="pill-count">19</span></button><button class="pill" data-domain="embedded" style="--dc:#84cc16" onclick="filterByDomain('embedded', this)">embedded<span class="pill-count">1</span></button><button class="pill" data-domain="engineering" style="--dc:#a855f7" onclick="filterByDomain('engineering', this)">engineering<span class="pill-count">7</span></button><button class="pill" data-domain="finance" style="--dc:#eab308" onclick="filterByDomain('finance', this)">finance<span class="pill-count">2</span></button><button class="pill" data-domain="frontend" style="--dc:#3b82f6" onclick="filterByDomain('frontend', this)">frontend<span class="pill-count">10</span></button><button class="pill" data-domain="gamedev" style="--dc:#ef4444" onclick="filterByDomain('gamedev', this)">gamedev<span class="pill-count">2</span></button><button class="pill" data-domain="healthcare" style="--dc:#06b6d4" onclick="filterByDomain('healthcare', this)">healthcare<span class="pill-count">2</span></button><button class="pill" data-domain="mobile" style="--dc:#ec4899" onclick="filterByDomain('mobile', this)">mobile<span class="pill-count">4</span></button><button class="pill" data-domain="qa" style="--dc:#22c55e" onclick="filterByDomain('qa', this)">qa<span class="pill-count">3</span></button><button class="pill" data-domain="security" style="--dc:#dc2626" onclick="filterByDomain('security', this)">security<span class="pill-count">4</span></button>
       </div>
     </section>
 
@@ -196,7 +225,17 @@ CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT UNIQUE);
 INSERT INTO users (email) VALUES (&#x27;a@b.com&#x27;);</code></pre><div class="card-score"><div class="score-row"><span>Quality</span><strong>100%</strong></div><div class="bar"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div></div><div class="card-meta"><span>6 blocks</span><span>8 sections</span><span>117 lines</span></div><div class="card-tags"><span class="tag">sqlite</span><span class="tag">database</span><span class="tag">embedded</span></div><div class="card-domain" style="color:#14b8a6">database</div></a><a class="card" href="skills/vector-databases.html" data-name="vector-databases" data-domain="database" data-score="100" data-tags='vector-db embeddings hnsw similarity-search rag retrieval pgvector'><div class="card-top"><span class="card-name">vector-databases</span><span class="ru-badge">RU</span></div><div class="card-desc">Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval.</div><pre class="card-code"><code># pgvector on Postgres
 docker run -e POSTGRES_PASSWORD=secret -p 5432:5432 -d pgvector/pgvector:pg17
 # or Chroma:
-pip install chromadb</code></pre><div class="card-score"><div class="score-row"><span>Quality</span><strong>100%</strong></div><div class="bar"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div></div><div class="card-meta"><span>6 blocks</span><span>8 sections</span><span>130 lines</span></div><div class="card-tags"><span class="tag">vector-db</span><span class="tag">embeddings</span><span class="tag">hnsw</span></div><div class="card-domain" style="color:#14b8a6">database</div></a><a class="card" href="skills/electron.html" data-name="electron" data-domain="desktop" data-score="100" data-tags='electron desktop react native cross-platform'><div class="card-top"><span class="card-name">electron</span><span class="ru-badge">RU</span></div><div class="card-desc">Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.</div><pre class="card-code"><code>// main.js
+pip install chromadb</code></pre><div class="card-score"><div class="score-row"><span>Quality</span><strong>100%</strong></div><div class="bar"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div></div><div class="card-meta"><span>6 blocks</span><span>8 sections</span><span>130 lines</span></div><div class="card-tags"><span class="tag">vector-db</span><span class="tag">embeddings</span><span class="tag">hnsw</span></div><div class="card-domain" style="color:#14b8a6">database</div></a><a class="card" href="skills/design-spec-md.html" data-name="design-spec-md" data-domain="design" data-score="100" data-tags='design spec markdown ui-ux tokens a11y responsive frontend'><div class="card-top"><span class="card-name">design-spec-md</span><span class="ru-badge">RU</span></div><div class="card-desc">Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly.</div><pre class="card-code"><code># Feature: Checkout form
+## Goal
+Let users pay in under 60 seconds with zero confusion.
+
+## Audience
+Mobile-first shoppers, low patience, possible screen readers.</code></pre><div class="card-score"><div class="score-row"><span>Quality</span><strong>100%</strong></div><div class="bar"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div></div><div class="card-meta"><span>7 blocks</span><span>23 sections</span><span>166 lines</span></div><div class="card-tags"><span class="tag">design</span><span class="tag">spec</span><span class="tag">markdown</span></div><div class="card-domain" style="color:#f472b6">design</div></a><a class="card" href="skills/diagram-as-code.html" data-name="diagram-as-code" data-domain="design" data-score="100" data-tags='diagrams mermaid c4 plantuml architecture workflows visualization docs'><div class="card-top"><span class="card-name">diagram-as-code</span><span class="ru-badge">RU</span></div><div class="card-desc">Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram.</div><pre class="card-code"><code>flowchart TD
+  A[User request] --&gt; B{Needs diagram?}
+  B --&gt;|yes| C[Pick type: flowchart/sequence/C4]
+  B --&gt;|no| D[Skip]
+  C --&gt; E[Write Mermaid]
+  E --&gt; F[Validate + render]</code></pre><div class="card-score"><div class="score-row"><span>Quality</span><strong>100%</strong></div><div class="bar"><div class="bar-fill" style="width:100%;background:#22c55e"></div></div></div><div class="card-meta"><span>8 blocks</span><span>9 sections</span><span>154 lines</span></div><div class="card-tags"><span class="tag">diagrams</span><span class="tag">mermaid</span><span class="tag">c4</span></div><div class="card-domain" style="color:#f472b6">design</div></a><a class="card" href="skills/electron.html" data-name="electron" data-domain="desktop" data-score="100" data-tags='electron desktop react native cross-platform'><div class="card-top"><span class="card-name">electron</span><span class="ru-badge">RU</span></div><div class="card-desc">Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.</div><pre class="card-code"><code>// main.js
 const { app, BrowserWindow, ipcMain } = require(&#x27;electron&#x27;);
 
 function createWindow() {
@@ -375,7 +414,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     </section>
 
     <footer>
-      <p>Generated on 2026-10-01 17:48 UTC · 100 skills · 16 domains</p>
+      <p>Created by ssrjkk · 102 skills · 17 domains</p>
       <p><a href="https://github.com/ssrjkk/agent-skills">GitHub</a> · <a href="https://github.com/ssrjkk/agent-skills/issues">Report Issue</a> · <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 
@@ -383,6 +422,18 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
   <script>
   var activeDomain = 'all';
   var searchIndex = null;
+  var AGENT_CMDS = {
+    claude: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.claude/skills',
+    opencode: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.opencode/skills',
+    cursor: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills',
+    windsurf: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills'
+  };
+  var RM_TRACKS = {json.dumps([{"slug": t["slug"], "name": t["name"], "icon": t["icon"]} for t in ROADMAP_TRACKS], ensure_ascii=False)};
+  function showAgent(name, btn) {
+    document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];
+    document.querySelectorAll('.agent-tab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
   function loadSearchIndex() {
     if (searchIndex) return;
     fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
@@ -469,9 +520,9 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     if (!el) return;
     var lines = [
       '<span class="ln">~$</span> <span class="cmd">pip install agent-skills-library</span>',
-      '<span class="ok">&#10003; 100 skills ready · 16 domains · EN+RU</span>',
-      '<span class="ln">~$</span> <span class="cmd">agent-skills search rag</span>',
-      '<span class="ok">&#10003; rag-pipeline · vector-databases · embeddings</span>',
+      '<span class="ok">&#10003; 102 skills ready · 17 domains · EN+RU</span>',
+      '<span class="ln">~$</span> <span class="cmd">agent-skills search diagram</span>',
+      '<span class="ok">&#10003; diagram-as-code · design-spec-md</span>',
       '<span class="ln">~$</span> <span class="cmd">agent-skills validate</span><span class="cursor"></span>',
     ];
     var idx = 0;
@@ -479,6 +530,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     function typeLine() {
       if (idx >= lines.length) { setTimeout(reset, 4000); return; }
       var line = document.createElement('div');
+      line.classList.add('term-line');
       line.innerHTML = lines[idx];
       el.appendChild(line);
       idx++;
@@ -490,6 +542,43 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
       setTimeout(typeLine, 1500);
     }
     setTimeout(typeLine, 400);
+  })();
+  // roadmaps strip preview
+  (function() {
+    var strip = document.getElementById('rm-strip');
+    if (!strip || !RM_TRACKS) return;
+    RM_TRACKS.slice(0, 8).forEach(function(t, i) {
+      var a = document.createElement('a');
+      a.href = 'roadmaps.html#' + t.slug;
+      a.className = 'rm-chip';
+      a.style.animationDelay = (i * 60) + 'ms';
+      a.innerHTML = '<span class="rm-ico">' + t.icon + '</span>' + t.name + '<span class="soon-pill">soon</span>';
+      strip.appendChild(a);
+    });
+    var more = document.createElement('a');
+    more.href = 'roadmaps.html';
+    more.className = 'rm-chip more';
+    more.textContent = '+' + (RM_TRACKS.length - 8) + ' more →';
+    strip.appendChild(more);
+  })();
+  // reveal on scroll + stagger cards
+  (function() {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          if (e.target.classList.contains('cards')) {
+            Array.prototype.forEach.call(e.target.children, function(c, i) {
+              c.style.transitionDelay = Math.min(i * 30, 600) + 'ms';
+              c.classList.add('in');
+            });
+          }
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.08});
+    document.querySelectorAll('.reveal, .cards').forEach(function(el) { io.observe(el); });
+    document.querySelectorAll('.card').forEach(function(c) { c.classList.add('reveal'); });
   })();
   </script>
   </div>

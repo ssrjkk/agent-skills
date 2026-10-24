@@ -1,0 +1,41 @@
+{
+  "$schema": "../roadmaps.schema.json",
+  "slug": "qa",
+  "name": "QA",
+  "icon": "🧪",
+  "tagline": "Jest, Playwright, pytest, E2E",
+  "status": "soon",
+  "eta": "soon",
+  "catalog_domain": "qa",
+  "related_skills": [],
+  "stages": [
+    {
+      "title": "Fundamentals",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Core",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Advanced",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Expert",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    }
+  ]
+}

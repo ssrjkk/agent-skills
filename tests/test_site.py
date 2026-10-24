@@ -85,9 +85,25 @@ def _build_site(tmp_path: Path) -> Path:
     catalog_path = tmp_path / "skills_catalog.json"
     catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
 
+    rm_dir = tmp_path / "roadmaps"
+    rm_dir.mkdir(parents=True, exist_ok=True)
+    (rm_dir / "frontend.json").write_text(json.dumps({
+        "slug": "frontend", "name": "Frontend", "icon": "🖥️",
+        "tagline": "React, CSS, UI engineering", "status": "soon", "eta": "soon",
+        "catalog_domain": "frontend", "related_skills": ["beta"],
+        "stages": [{"title": "Fundamentals", "items": ["Map drops soon"], "status": "soon"}],
+    }), encoding="utf-8")
+    (rm_dir / "design.json").write_text(json.dumps({
+        "slug": "design", "name": "Design", "icon": "🎨",
+        "tagline": "Specs and diagrams", "status": "soon", "eta": "soon",
+        "catalog_domain": None, "related_skills": [],
+        "stages": [{"title": "Fundamentals", "items": ["Map drops soon"], "status": "soon"}],
+    }), encoding="utf-8")
+
     import importlib.util
 
     spec = importlib.util.spec_from_file_location("build_docs", SCRIPTS / "build_docs.py")
+    assert spec is not None and spec.loader is not None
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
 
@@ -98,6 +114,7 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_index_html(catalog_path, out)
     mod.build_skill_pages(catalog_path, out)
     mod.build_domain_pages(catalog_path, out)
+    mod.build_roadmaps(catalog_path, out, source_dir=tmp_path)
     mod.build_style_css(out)
     mod.build_search_index(catalog_path, out)
     return out
@@ -142,6 +159,23 @@ class TestSiteGenerator:
                     continue
                 target = (page.parent / href).resolve()
                 assert target.exists(), f"{page.name} -> broken link {href}"
+
+    def test_roadmaps_standalone(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        assert (docs / "roadmaps.html").exists()
+        assert (docs / "roadmaps.json").exists()
+        rm_dir = docs / "roadmaps"
+        assert rm_dir.is_dir()
+        pages = list(rm_dir.glob("*.html"))
+        assert len(pages) >= 1, "each roadmap track needs its own page"
+        data = json.loads((docs / "roadmaps.json").read_text(encoding="utf-8"))
+        slugs = {t["slug"] for t in data["tracks"]}
+        assert slugs, "roadmaps.json must list tracks"
+        for slug in slugs:
+            assert (rm_dir / f"{slug}.html").exists(), f"missing roadmap page: {slug}"
+        for track in data["tracks"]:
+            assert track["status"] in {"soon", "live"}
+            assert len(track["stages"]) >= 1
 
     def test_div_tags_balanced(self, tmp_path: Path):
         docs = _build_site(tmp_path)

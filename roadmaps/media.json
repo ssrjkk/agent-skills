@@ -1,0 +1,41 @@
+{
+  "$schema": "../roadmaps.schema.json",
+  "slug": "media",
+  "name": "Media / Slides",
+  "icon": "📽️",
+  "tagline": "Decks as code, visuals",
+  "status": "soon",
+  "eta": "soon",
+  "catalog_domain": null,
+  "related_skills": [],
+  "stages": [
+    {
+      "title": "Fundamentals",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Core",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Advanced",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Expert",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    }
+  ]
+}

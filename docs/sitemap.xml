@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://ssrjkk.github.io/agent-skills/</loc><priority>1.0</priority></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps.html</loc><priority>0.9</priority></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills_catalog.json</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills_catalog.schema.json</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/agent-development.html</loc></url>
@@ -25,6 +26,8 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/data-visualization.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/dbt.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/deno-runtime.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/design-spec-md.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/diagram-as-code.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/django.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/docker.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/dotnet.html</loc></url>
@@ -103,4 +106,24 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/vue.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/websockets.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/zk-proofs.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/ai.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/backend.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/blockchain.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/communications.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/data.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/database.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/design.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/desktop.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/devops.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/education.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/embedded.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/engineering.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/finance.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/frontend.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/gamedev.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/healthcare.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/media.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/mobile.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/qa.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/security.html</loc></url>
 </urlset>

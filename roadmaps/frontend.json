@@ -1,0 +1,41 @@
+{
+  "$schema": "../roadmaps.schema.json",
+  "slug": "frontend",
+  "name": "Frontend",
+  "icon": "🖥️",
+  "tagline": "React, Next.js, CSS, UI engineering",
+  "status": "soon",
+  "eta": "soon",
+  "catalog_domain": "frontend",
+  "related_skills": [],
+  "stages": [
+    {
+      "title": "Fundamentals",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Core",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Advanced",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Expert",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    }
+  ]
+}

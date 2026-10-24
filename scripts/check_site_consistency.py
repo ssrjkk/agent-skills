@@ -49,6 +49,42 @@ def main() -> int:
         if not (docs / "domains" / f"{d}.html").exists():
             errors.append(f"missing domain page: {d}")
 
+    # 2b. roadmaps: source files <-> generated pages (independent from skills)
+    rm_src = root / "roadmaps"
+    rm_required = {"slug", "name", "icon", "tagline", "status", "eta", "stages"}
+    rm_slugs: set[str] = set()
+    if not rm_src.is_dir():
+        errors.append("roadmaps/ source directory missing")
+    else:
+        for path in sorted(rm_src.glob("*.json")):
+            try:
+                track = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as e:
+                errors.append(f"roadmaps/{path.name} unreadable: {e}")
+                continue
+            missing_keys = rm_required - set(track)
+            if missing_keys:
+                errors.append(f"roadmaps/{path.name} missing keys: {sorted(missing_keys)}")
+            if track.get("slug") != path.stem:
+                errors.append(f"roadmaps/{path.name} slug mismatch: {track.get('slug')!r}")
+            if track.get("status") not in {"soon", "live"}:
+                errors.append(f"roadmaps/{path.name} bad status: {track.get('status')!r}")
+            rm_slugs.add(path.stem)
+            if not (docs / "roadmaps" / f"{path.stem}.html").exists():
+                errors.append(f"missing roadmap page: {path.stem}")
+        if not (docs / "roadmaps.html").exists():
+            errors.append("missing roadmaps.html overview")
+        compiled = docs / "roadmaps.json"
+        if not compiled.exists():
+            errors.append("roadmaps.json missing from docs")
+        else:
+            try:
+                compiled_slugs = {t["slug"] for t in json.loads(compiled.read_text(encoding="utf-8"))["tracks"]}
+                if compiled_slugs != rm_slugs:
+                    errors.append(f"roadmaps.json out of sync: {sorted(rm_slugs - compiled_slugs)[:5]} missing")
+            except (OSError, json.JSONDecodeError, KeyError) as e:
+                errors.append(f"roadmaps.json invalid: {e}")
+
     # 3. relative links resolve
     for page in list(docs.rglob("*.html")):
         html = page.read_text(encoding="utf-8")
@@ -61,7 +97,7 @@ def main() -> int:
                 errors.append(f"{page.name} -> broken link: {href}")
 
         # 4. css path correct
-        if page.name == "index.html":
+        if page.parent == docs:
             expect_css = "style.css"
         else:
             expect_css = "../style.css"
@@ -77,7 +113,7 @@ def main() -> int:
         for e in errors[:25]:
             print(f"  {e}")
         return 1
-    print(f"Site consistent: {len(names)} skills, {len(domains)} domains, all pages valid.")
+    print(f"Site consistent: {len(names)} skills, {len(domains)} domains, {len(rm_slugs)} roadmaps, all pages valid.")
     return 0
 
 

@@ -66,6 +66,9 @@ jobs:
       - name: Generate catalog
         run: python -m claude_skills.cli catalog
 
+      - name: README in sync with catalog
+        run: python scripts/sync_readme.py --check
+
       - name: Anti-pattern detection
         run: python scripts/detect_anti_patterns.py skills_catalog.json
 

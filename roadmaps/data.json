@@ -1,0 +1,41 @@
+{
+  "$schema": "../roadmaps.schema.json",
+  "slug": "data",
+  "name": "Data",
+  "icon": "📊",
+  "tagline": "Spark, Airflow, dbt, SQL, viz",
+  "status": "soon",
+  "eta": "soon",
+  "catalog_domain": "data",
+  "related_skills": [],
+  "stages": [
+    {
+      "title": "Fundamentals",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Core",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Advanced",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    },
+    {
+      "title": "Expert",
+      "items": [
+        "Map drops soon"
+      ],
+      "status": "soon"
+    }
+  ]
+}

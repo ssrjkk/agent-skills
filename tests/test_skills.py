@@ -116,6 +116,31 @@ def test_no_template_placeholders():
     assert len(issues) == 0, 'Templates with placeholders:\n' + '\n'.join(issues[:20])
 
 
+def test_readme_table_in_sync():
+    import re
+    with open(CATALOG, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    byname = {s['name']: s for s in data['skills']}
+    readme = (ROOT / "README.md").read_text(encoding='utf-8')
+    seen = set()
+    bad = []
+    for m in re.finditer(r"^\| `(\w[\w-]*)` \| `([\w-]+)` \| (.*?) \|$", readme, re.MULTILINE):
+        domain, skill, desc = m.group(1), m.group(2), m.group(3).strip()
+        seen.add(skill)
+        s = byname.get(skill)
+        if not s:
+            bad.append(f'{skill}: in README but not in catalog')
+            continue
+        if s['description'].strip() != desc:
+            bad.append(f'{skill}: description differs from SKILL.md')
+        if s['category'] != domain:
+            bad.append(f'{skill}: domain {domain} != {s["category"]}')
+    missing = [n for n in byname if n not in seen]
+    if missing:
+        bad.append(f'missing from README table: {missing[:10]}')
+    assert not bad, 'README out of sync:\n' + '\n'.join(bad[:20])
+
+
 def test_body_length():
     short = []
     for sk_path in sorted(glob.glob(str(SKILLS_DIR / "**" / "SKILL.md"), recursive=True)):
