@@ -4,6 +4,8 @@
 import json
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _console import ensure_utf8_console
 
 from colorama import Fore, Style, init
 
@@ -61,6 +63,7 @@ def detect_patterns(catalog_path: Path) -> int:
 
 
 def main() -> int:
+    ensure_utf8_console()
     import argparse
     parser = argparse.ArgumentParser(description="Detect anti-patterns in skills")
     parser.add_argument("filepath", nargs="?", default="skills_catalog.json", help="Path to skills_catalog.json")

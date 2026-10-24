@@ -14,6 +14,7 @@ from pathlib import Path
 import click
 from colorama import Fore, Style  # type: ignore[import-untyped]
 
+from claude_skills import ensure_utf8_console
 from claude_skills.catalog import CatalogBuilder
 from claude_skills.models import QualityScore, SkillFile, parse_frontmatter
 from claude_skills.quality import QualityAnalyzer, QualityReport
@@ -34,6 +35,7 @@ def resolve_skills_dir(dir_value: str | None) -> str:
 @click.group()
 def cli():
     """Claude Skills Library CLI v4.0.0 - Production Ready."""
+    ensure_utf8_console()
 
 
 @cli.command()

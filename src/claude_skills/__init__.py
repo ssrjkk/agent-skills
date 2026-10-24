@@ -1,5 +1,7 @@
 """Claude Skills SDK — validate, analyze, and manage curated bilingual skills."""
 
+import sys
+
 from claude_skills.catalog import CatalogBuilder
 from claude_skills.models import (
     Catalog,
@@ -14,7 +16,26 @@ from claude_skills.models import (
 from claude_skills.quality import QualityAnalyzer, QualityReport
 from claude_skills.validator import SkillValidator, ValidationPipeline
 
-__version__ = "3.1.0"
+__version__ = "4.0.0"
+
+
+def ensure_utf8_console() -> None:
+    """Force UTF-8 on stdout/stderr so non-ASCII skill names, descriptions
+    and paths never crash on Windows (cp1251) or C-locale containers.
+
+    Best-effort: silently skips streams that cannot be reconfigured
+    (pipes, StringIO in tests, exotic runners).
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if not callable(reconfigure):
+            continue
+        try:
+            reconfigure(encoding="utf-8")
+        except (OSError, ValueError):
+            pass
+
+
 __all__ = [
     "Catalog",
     "CatalogBuilder",
@@ -29,4 +50,5 @@ __all__ = [
     "SkillValidator",
     "ValidationPipeline",
     "ValidationResult",
+    "ensure_utf8_console",
 ]

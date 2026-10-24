@@ -1,0 +1,24 @@
+# Keep the GitHub Action image lean: only what validate/quality/catalog need.
+.git
+.github
+docs/
+tests/
+roadmaps/
+npm/
+assets/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+.benchmarks/
+dist/
+build/
+*.egg-info/
+.env
+quality-report.json
+skills_catalog.json
