@@ -673,6 +673,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     var h = (location.hash || '').replace('#', '');
     if (h === 'dashboard') h = 'stats';
     showTab(TAB_NAMES.indexOf(h) >= 0 ? h : 'catalog', null);
+    applyFilter();
   })();
   // reveal on scroll + stagger cards
   (function() {

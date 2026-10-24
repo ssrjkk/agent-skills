@@ -216,6 +216,27 @@ class TestSiteGenerator:
             assert track["status"] in {"soon", "live"}
             assert len(track["stages"]) >= 1
 
+    def test_i18n_keys_cover_markup(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        pages = (
+            list(docs.glob("*.html"))
+            + list((docs / "skills").glob("alpha.html"))
+            + list((docs / "roadmaps").glob("*.html"))
+        )
+        assert len(pages) >= 4
+        used: set[str] = set()
+        blob = []
+        for page in pages:
+            html = page.read_text(encoding="utf-8")
+            blob.append(html)
+            used.update(re.findall(r'data-i18n="([a-z_0-9]+)"', html))
+            used.update(re.findall(r'data-i18n-ph="([a-z_0-9]+)"', html))
+            used.update(re.findall(r'data-i18n-aria="([a-z_0-9]+)"', html))
+        assert used, "expected i18n hooks in markup"
+        text = "\n".join(blob)
+        for key in sorted(used):
+            assert text.count(f'{key}:"') >= 2, f"key {key!r} missing in en+ru dicts"
+
     def test_div_tags_balanced(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         for page in docs.rglob("*.html"):
