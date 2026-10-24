@@ -361,7 +361,6 @@ def test_session_timeout():
   function copyText(text) {
     navigator.clipboard.writeText(text).then(function() { showToast((I18N[lang()] || I18N.en).copied + text); });
   }
-  function copySkill(path) { copyText(path); }
   function copyBtn(btn, text) {
     copyText(text);
     if (btn.dataset.busy) return;
