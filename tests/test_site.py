@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = ROOT / "scripts"
 
@@ -237,6 +239,26 @@ class TestSiteGenerator:
             assert f"showTab('{tab}'" in index, f"missing tab button: {tab}"
         assert index.count("tab-panel active") >= 2  # search + results in catalog
 
+    def test_i18n_and_delights_present(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert "var I18N" in index
+        assert "setLang" in index and "toggleLang" in index
+        assert "lang-toggle" in index
+        assert 'data-i18n="hero_sub"' in index
+        assert 'data-i18n-ph="search_ph"' in index
+        assert 'id="result-count"' in index
+        assert 'id="back-top"' in index
+        assert "copyBtn" in index
+        assert "card-copy" in index
+        assert "<kbd>/</kbd>" in index
+        skill = (docs / "skills" / "alpha.html").read_text(encoding="utf-8")
+        assert "var I18N" in skill  # shared footer dictionary
+        assert 'data-i18n="quality"' in skill
+        assert ".claude/skills/backend/alpha" in skill  # full copy path, not bare name
+        rm = (docs / "roadmaps.html").read_text(encoding="utf-8")
+        assert 'data-i18n="rm_t"' in rm
+
     def test_light_theme_css_present(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         css = (docs / "style.css").read_text(encoding="utf-8")
@@ -301,3 +323,30 @@ class TestBuildRobustness:
         assert 'content:"> "' in out
         assert "/*" not in out
         assert "\n" not in out
+
+    def test_no_template_literals_leak_into_scripts(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        for page in list(docs.glob("*.html")) + [docs / "roadmaps.html"]:
+            html = page.read_text(encoding="utf-8")
+            for block in re.findall(r"<script>(.*?)</script>", html, re.DOTALL):
+                assert "{json.dumps" not in block
+                assert "{esc(" not in block
+                assert "{{" not in block
+                assert "&quot;" not in block
+
+    def test_inline_js_parses_with_node(self, tmp_path: Path):
+        import shutil
+        import subprocess
+
+        if shutil.which("node") is None:
+            pytest.skip("node not available")
+        docs = _build_site(tmp_path)
+        blocks = []
+        for page in list(docs.glob("*.html")) + [docs / "roadmaps.html"]:
+            html = page.read_text(encoding="utf-8")
+            blocks.extend(re.findall(r"<script>(.*?)</script>", html, re.DOTALL))
+        assert blocks, "expected inline scripts"
+        bundle = tmp_path / "inline.js"
+        bundle.write_text("\n;\n".join(blocks), encoding="utf-8")
+        proc = subprocess.run(["node", "--check", str(bundle)], check=False, capture_output=True, text=True)
+        assert proc.returncode == 0, proc.stderr[:2000]

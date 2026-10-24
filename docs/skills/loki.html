@@ -26,17 +26,18 @@
 </head>
 <body data-theme="dark">
   <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
-  <a class="skip-link" href="../index.html#catalog">Skip to catalog</a>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
   <nav class="nav">
     <div class="nav-inner">
       <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
-        <a class="nav-link" href="../index.html#catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="../roadmaps.html">Roadmaps<span class="soon-dot">soon</span></a>
-        <a class="nav-link" href="../index.html#stats">Stats</a>
-        <a class="nav-link" href="../index.html#how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
         <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
       </div>
     </div>
@@ -52,18 +53,18 @@
         <h1 class="skill-page-title">loki</h1>
         <p class="skill-page-desc">Operate log aggregation with Grafana Loki: agents, labels, queries (LogQL), retention, and dashboards. Use for log observability.</p>
         <div class="skill-page-meta">
-          <span>Quality <strong>100%</strong></span>
-          <span>Code blocks <strong>6</strong></span>
-          <span>Sections <strong>8</strong></span>
-          <span>Lines <strong>107</strong></span>
-          <span>RU translation <strong>yes</strong></span>
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>6</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>107</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
         </div>
         <div class="skill-page-actions">
-          <button class="copy-btn" onclick="copySkill('loki')">copy path</button>
-          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/loki">view source</a>
+          <button class="copy-btn" onclick="copyBtn(this,'.claude/skills/devops/loki')" data-i18n="copy">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/loki" data-i18n="view_source">view source</a>
         </div>
       </div>
-      <div class="skill-page-models">Models: <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="kubernetes.html">← kubernetes</a><a class="page-nav-link" href="nginx.html">nginx →</a></div>
       <div class="skill-page-body">
         <h1>Grafana Loki</h1>
@@ -153,12 +154,52 @@ limits_config:
       <div class="page-nav"><a class="page-nav-link" href="kubernetes.html">← kubernetes</a><a class="page-nav-link" href="nginx.html">nginx →</a></div>
     </article>
   </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
   <div class="toast" id="toast"></div>
   <script>
-  function copyText(text) {
-    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  var I18N = {
+    en: {skip:"Skip to catalog",nav_catalog:"Catalog",nav_roadmaps:"Roadmaps",nav_stats:"Stats",nav_how:"How it works",soon:"soon",back_top:"Back to top",copied:"Copied: ",copy:"copy",view_source:"view source",models:"Models:",quality:"Quality",blocks:"Code blocks",sections:"Sections",lines:"Lines",ru_tr:"RU translation",back_catalog:"← Back to catalog",back_roadmaps:"← All roadmaps",open_map:"Open full map →",rel_skills:"Related skills →",browse_domain:"Browse {d} skills →",src:"Source:",copied_btn:"✓ copied",browse:"Browse skills ↓",st_skills:"Skills",st_ru:"Russian",st_dom:"Domains",st_q:"Quality",stat_t:"Distribution by domain",stat_s:"— click a pill to filter ↓",tab_install:"Install",rm_hd:"One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in."},
+    ru: {skip:"К каталогу",nav_catalog:"Каталог",nav_roadmaps:"Роадмапы",nav_stats:"Статистика",nav_how:"Как это работает",soon:"скоро",back_top:"Наверх",copied:"Скопировано: ",copy:"копировать",view_source:"исходник",models:"Модели:",quality:"Качество",blocks:"Блоки кода",sections:"Разделы",lines:"Строк",ru_tr:"Перевод RU",back_catalog:"← Назад в каталог",back_roadmaps:"← Все роадмапы",open_map:"Открыть мапу →",rel_skills:"Смежные скиллы →",browse_domain:"Скиллы: {d} →",src:"Источник:",copied_btn:"✓ готово",browse:"Смотреть скиллы ↓",st_skills:"Скиллы",st_ru:"На русском",st_dom:"Домены",st_q:"Качество",stat_t:"По доменам",stat_s:"— клик по пилюле фильтрует ↓"}
+  };
+  function lang() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } }
+  function setLang(l) {
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    document.documentElement.setAttribute('lang', l);
+    var D = I18N[l] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n');
+      if (D[k] === undefined) return;
+      var v = D[k];
+      ['total', 'ru', 'n', 'd'].forEach(function(key) {
+        if (el.dataset[key] !== undefined) v = v.split('{' + key + '}').join(el.dataset[key]);
+      });
+      if (el.hasAttribute('data-i18n-html')) el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+      var v = (D[el.getAttribute('data-i18n-ph')] || '');
+      if (v) el.setAttribute('placeholder', v);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+      var v = D[el.getAttribute('data-i18n-aria')];
+      if (v) el.setAttribute('aria-label', v);
+    });
+    document.querySelectorAll('.lang-toggle').forEach(function(b) { b.textContent = l === 'ru' ? 'EN' : 'РУ'; });
+    if (typeof applyFilter === 'function') { try { applyFilter(); } catch (e) {} }
   }
-  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function toggleLang() { setLang(lang() === 'ru' ? 'en' : 'ru'); }
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast((I18N[lang()] || I18N.en).copied + text); });
+  }
+  function copySkill(path) { copyText(path); }
+  function copyBtn(btn, text) {
+    copyText(text);
+    if (btn.dataset.busy) return;
+    btn.dataset.busy = '1';
+    var old = btn.textContent;
+    btn.classList.add('copied');
+    btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
+    setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -170,17 +211,21 @@ limits_config:
     var b = document.body;
     var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     b.setAttribute('data-theme', next);
-    sessionStorage.setItem('theme', next);
+    try { localStorage.setItem('theme', next); sessionStorage.removeItem('theme'); } catch (e) {}
     var btn = document.querySelector('.theme-toggle');
     if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
   }
   (function() {
-    var saved = sessionStorage.getItem('theme');
+    var saved = null;
+    try { saved = localStorage.getItem('theme') || sessionStorage.getItem('theme'); } catch (e) {}
+    if (typeof setLang === 'function') setLang((function() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } })());
     if (saved === 'light') {
       document.body.setAttribute('data-theme', 'light');
       var btn = document.querySelector('.theme-toggle');
       if (btn) btn.textContent = '☀️';
     }
+    var bt = document.getElementById('back-top');
+    if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
   })();
   </script>
 </body>

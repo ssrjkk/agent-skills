@@ -76,6 +76,13 @@ def esc(s: str) -> str:
     return html_lib.escape(s, quote=True)
 
 
+def json_for_script(data: object) -> str:
+    """JSON safe to inline inside <script>: quotes stay raw (browsers do NOT
+    decode HTML entities in classic scripts), < becomes \\u003c so a future
+    track containing </script> can never break out of the block."""
+    return json.dumps(data, ensure_ascii=False).replace("<", "\\u003c")
+
+
 def read_catalog(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
@@ -197,17 +204,18 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
 </head>
 <body data-theme="dark">
   <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
-  <a class="skip-link" href="{nav_index}#catalog">Skip to catalog</a>
+  <a class="skip-link" href="{nav_index}#catalog" data-i18n="skip">Skip to catalog</a>
   <nav class="nav">
     <div class="nav-inner">
       <a class="nav-brand" href="{nav_index}"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
-        <a class="nav-link" href="{nav_index}#catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="{roadmaps_href}">Roadmaps<span class="soon-dot">soon</span></a>
-        <a class="nav-link" href="{nav_index}#stats">Stats</a>
-        <a class="nav-link" href="{nav_index}#how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="{nav_index}#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="{nav_index}#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="{nav_index}#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
         <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
       </div>
     </div>
@@ -218,12 +226,52 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
 
 def page_foot() -> str:
     return """  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
   <div class="toast" id="toast"></div>
   <script>
-  function copyText(text) {
-    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+  var I18N = {
+    en: {skip:"Skip to catalog",nav_catalog:"Catalog",nav_roadmaps:"Roadmaps",nav_stats:"Stats",nav_how:"How it works",soon:"soon",back_top:"Back to top",copied:"Copied: ",copy:"copy",view_source:"view source",models:"Models:",quality:"Quality",blocks:"Code blocks",sections:"Sections",lines:"Lines",ru_tr:"RU translation",back_catalog:"← Back to catalog",back_roadmaps:"← All roadmaps",open_map:"Open full map →",rel_skills:"Related skills →",browse_domain:"Browse {d} skills →",src:"Source:",copied_btn:"✓ copied",browse:"Browse skills ↓",st_skills:"Skills",st_ru:"Russian",st_dom:"Domains",st_q:"Quality",stat_t:"Distribution by domain",stat_s:"— click a pill to filter ↓",tab_install:"Install",rm_hd:"One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in."},
+    ru: {skip:"К каталогу",nav_catalog:"Каталог",nav_roadmaps:"Роадмапы",nav_stats:"Статистика",nav_how:"Как это работает",soon:"скоро",back_top:"Наверх",copied:"Скопировано: ",copy:"копировать",view_source:"исходник",models:"Модели:",quality:"Качество",blocks:"Блоки кода",sections:"Разделы",lines:"Строк",ru_tr:"Перевод RU",back_catalog:"← Назад в каталог",back_roadmaps:"← Все роадмапы",open_map:"Открыть мапу →",rel_skills:"Смежные скиллы →",browse_domain:"Скиллы: {d} →",src:"Источник:",copied_btn:"✓ готово",browse:"Смотреть скиллы ↓",st_skills:"Скиллы",st_ru:"На русском",st_dom:"Домены",st_q:"Качество",stat_t:"По доменам",stat_s:"— клик по пилюле фильтрует ↓"}
+  };
+  function lang() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } }
+  function setLang(l) {
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    document.documentElement.setAttribute('lang', l);
+    var D = I18N[l] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n');
+      if (D[k] === undefined) return;
+      var v = D[k];
+      ['total', 'ru', 'n', 'd'].forEach(function(key) {
+        if (el.dataset[key] !== undefined) v = v.split('{' + key + '}').join(el.dataset[key]);
+      });
+      if (el.hasAttribute('data-i18n-html')) el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+      var v = (D[el.getAttribute('data-i18n-ph')] || '');
+      if (v) el.setAttribute('placeholder', v);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+      var v = D[el.getAttribute('data-i18n-aria')];
+      if (v) el.setAttribute('aria-label', v);
+    });
+    document.querySelectorAll('.lang-toggle').forEach(function(b) { b.textContent = l === 'ru' ? 'EN' : 'РУ'; });
+    if (typeof applyFilter === 'function') { try { applyFilter(); } catch (e) {} }
   }
-  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function toggleLang() { setLang(lang() === 'ru' ? 'en' : 'ru'); }
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() { showToast((I18N[lang()] || I18N.en).copied + text); });
+  }
+  function copySkill(path) { copyText(path); }
+  function copyBtn(btn, text) {
+    copyText(text);
+    if (btn.dataset.busy) return;
+    btn.dataset.busy = '1';
+    var old = btn.textContent;
+    btn.classList.add('copied');
+    btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
+    setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -235,17 +283,21 @@ def page_foot() -> str:
     var b = document.body;
     var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     b.setAttribute('data-theme', next);
-    sessionStorage.setItem('theme', next);
+    try { localStorage.setItem('theme', next); sessionStorage.removeItem('theme'); } catch (e) {}
     var btn = document.querySelector('.theme-toggle');
     if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
   }
   (function() {
-    var saved = sessionStorage.getItem('theme');
+    var saved = null;
+    try { saved = localStorage.getItem('theme') || sessionStorage.getItem('theme'); } catch (e) {}
+    if (typeof setLang === 'function') setLang((function() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } })());
     if (saved === 'light') {
       document.body.setAttribute('data-theme', 'light');
       var btn = document.querySelector('.theme-toggle');
       if (btn) btn.textContent = '☀️';
     }
+    var bt = document.getElementById('back-top');
+    if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
   })();
   </script>
 </body>
@@ -304,10 +356,10 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
             f'<a class="card" href="skills/{esc(s["name"])}.html" data-name="{esc(s["name"].lower())}" '
             f'data-domain="{esc(s["category"].lower())}" data-score="{score}" '
             f'data-tags=\'{esc(" ".join(s.get("tags", [])).lower())}\'>'
-            f'<div class="card-top"><span class="card-name">{esc(s["name"])}</span>{ru_badge}</div>'
+            f'<div class="card-top"><span class="card-name">{esc(s["name"])}</span><span class="card-top-right">{ru_badge}<button class="card-copy" title="copy skill path" data-i18n-aria="copy" aria-label="copy skill path" onclick="event.preventDefault();event.stopPropagation();copyBtn(this,this.getAttribute(\'data-path\'))" data-path=".claude/skills/{esc(s["category"])}/{esc(s["name"])}">⧉</button></span></div>'
             f'<div class="card-desc">{esc(s["description"])}</div>'
             f'{preview_html}'
-            f'<div class="card-score"><div class="score-row"><span>Quality</span><strong>{score}%</strong></div>'
+            f'<div class="card-score"><div class="score-row"><span data-i18n="quality">Quality</span><strong>{score}%</strong></div>'
             f'<div class="bar"><div class="bar-fill" style="width:{score}%;background:{bar_color}"></div></div></div>'
             f'<div class="card-meta"><span>{m["blocks"]} blocks</span><span>{m["sections"]} sections</span><span>{m["lines"]} lines</span></div>'
             f'<div class="card-tags">{tag_html}</div>'
@@ -326,11 +378,11 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     <header class="hero reveal in">
       <div class="hero-badge pulse">● Universal Agent Skills Format · EN + RU</div>
       <h1>Agent Skills <span class="gradient">Library</span></h1>
-      <p class="hero-sub">Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.</p>
+      <p class="hero-sub" data-i18n="hero_sub" data-i18n-html>Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.</p>
       <div class="hero-models">Models: {models_badges}</div>
       <div class="hero-cta">
-        <a class="btn-primary shine" href="#catalog">Browse skills ↓</a>
-        <a class="btn-ghost" href="roadmaps.html">IT Roadmaps <span class="soon-pill">soon</span></a>
+        <a class="btn-primary shine" href="#catalog" data-i18n="browse">Browse skills ↓</a>
+        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
       <div class="term-box tilt" aria-hidden="true">
@@ -343,31 +395,31 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     </header>
 
     <section class="how reveal tab-panel" id="how" data-panel="how" aria-label="How it works">
-      <h2>How it works <span class="h-sub">— 3 steps, 30 seconds</span></h2>
+      <h2><span data-i18n="how_t">How it works</span> <span class="h-sub" data-i18n="how_s">— 3 steps, 30 seconds</span></h2>
       <div class="how-grid">
-        <div class="how-card"><span class="how-num">01</span><h3>Find</h3><p>Search by task, domain or tag. Every card shows quality, blocks and RU badge.</p></div>
-        <div class="how-card"><span class="how-num">02</span><h3>Copy</h3><p>One click copies the skill path or install command for your agent.</p></div>
-        <div class="how-card"><span class="how-num">03</span><h3>Ship</h3><p>Paste <code>SKILL.md</code> into context. Validate with <code>agent-skills validate</code>.</p></div>
+        <div class="how-card"><span class="how-num">01</span><h3 data-i18n="f1t">Find</h3><p data-i18n="f1d">Search by task, domain or tag. Every card shows quality, blocks and RU badge.</p></div>
+        <div class="how-card"><span class="how-num">02</span><h3 data-i18n="f2t">Copy</h3><p data-i18n="f2d">One click copies the skill path or install command for your agent.</p></div>
+        <div class="how-card"><span class="how-num">03</span><h3 data-i18n="f3t">Ship</h3><p data-i18n="f3d" data-i18n-html>Paste <code>SKILL.md</code> into context. Validate with <code>agent-skills validate</code>.</p></div>
       </div>
     </section>
 
     <section class="stats" aria-label="Library statistics">
-      <div class="stat"><span class="stat-num" data-count="{meta["total_skills"]}">0</span><span class="stat-label">Skills</span></div>
-      <div class="stat"><span class="stat-num" data-count="{meta["total_ru"]}">0</span><span class="stat-label">Russian</span></div>
-      <div class="stat"><span class="stat-num" data-count="{len(meta["domains"])}">0</span><span class="stat-label">Domains</span></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Quality</span></div>
+      <div class="stat"><span class="stat-num" data-count="{meta["total_skills"]}">0</span><span class="stat-label" data-i18n="st_skills">Skills</span></div>
+      <div class="stat"><span class="stat-num" data-count="{meta["total_ru"]}">0</span><span class="stat-label" data-i18n="st_ru">Russian</span></div>
+      <div class="stat"><span class="stat-num" data-count="{len(meta["domains"])}">0</span><span class="stat-label" data-i18n="st_dom">Domains</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label" data-i18n="st_q">Quality</span></div>
     </section>
 
     <div class="tabs reveal in" role="tablist" aria-label="Site sections">
-      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog', this)">Catalog</button>
-      <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats', this)">Stats</button>
-      <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how', this)">How it works</button>
-      <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install', this)">Install</button>
-      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps', this)">Roadmaps <span class="soon-pill">soon</span></button>
+      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog', this)"><span data-i18n="nav_catalog">Catalog</span></button>
+      <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats', this)"><span data-i18n="nav_stats">Stats</span></button>
+      <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how', this)"><span data-i18n="nav_how">How it works</span></button>
+      <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install', this)"><span data-i18n="tab_install">Install</span></button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps', this)"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></button>
     </div>
 
     <section class="install reveal tab-panel" id="install" data-panel="install">
-      <div class="install-header"><h2>Install in one line <span class="h-sub">— pick your agent</span></h2></div>
+      <div class="install-header"><h2><span data-i18n="inst_t">Install in one line</span> <span class="h-sub" data-i18n="inst_s">— pick your agent</span></h2></div>
       <div class="agent-tabs" role="tablist">
         <button class="agent-tab active" onclick="showAgent('claude', this)">Claude Code</button>
         <button class="agent-tab" onclick="showAgent('opencode', this)">OpenCode</button>
@@ -376,18 +428,18 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       </div>
       <div class="install-box">
         <code id="agent-cmd">git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.claude/skills</code>
-        <button class="copy-btn" onclick="copyText(document.getElementById('agent-cmd').textContent)">copy</button>
+        <button class="copy-btn" onclick="copyText(document.getElementById('agent-cmd').textContent)" data-i18n="copy">copy</button>
       </div>
       <div class="install-links">
         <a href="skills_catalog.json" download>Download catalog (JSON)</a> ·
         <a href="skills_catalog.schema.json" download>JSON Schema</a> ·
-        <a href="roadmaps.html">IT Roadmaps <span class="soon-pill">soon</span></a> ·
+        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a> ·
         <a href="{REPO}">GitHub</a>
       </div>
     </section>
 
     <section class="dashboard reveal tab-panel" id="stats" data-panel="stats">
-      <h2>Distribution by domain <span class="h-sub">— click a pill to filter ↓</span></h2>
+      <h2><span data-i18n="stat_t">Distribution by domain</span> <span class="h-sub" data-i18n="stat_s">— click a pill to filter ↓</span></h2>
       <div class="dash-list">
         {"".join(dash_rows)}
       </div>
@@ -395,23 +447,24 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
 
     <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
-        <h2>IT Roadmaps <span class="soon-pill big">soon everywhere</span></h2>
-        <p>Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
+        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s">soon everywhere</span></h2>
+        <p data-i18n="rm_d">Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
       </div>
       <div class="rm-strip" id="rm-strip"></div>
-      <a class="btn-primary shine" href="roadmaps.html">Open roadmaps →</a>
+      <a class="btn-primary shine" href="roadmaps.html" data-i18n="rm_b">Open roadmaps →</a>
     </section>
 
     <section class="search-section reveal tab-panel active" id="catalog" data-panel="catalog">
-      <h2>Catalog <span class="h-sub">— {meta["total_skills"]} skills, {meta["total_ru"]} with RU</span></h2>
+      <h2><span data-i18n="cat_t">Catalog</span> <span class="h-sub" data-i18n="cat_s" data-total="{meta["total_skills"]}" data-ru="{meta["total_ru"]}">— {meta["total_skills"]} skills, {meta["total_ru"]} with RU</span></h2>
       <div class="search-row">
-        <input type="search" id="search" class="search" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
-        <select id="sort" class="sort" onchange="applyFilter()">
-          <option value="domain">Sort: domain</option>
-          <option value="name">Sort: name</option>
-          <option value="score" selected>Sort: quality (high→low)</option>
+        <input type="search" id="search" class="search" data-i18n-ph="search_ph" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
+        <select id="sort" class="sort" onchange="applyFilter()" aria-label="Sort skills">
+          <option value="domain" data-i18n="sort_domain">Sort: domain</option>
+          <option value="name" data-i18n="sort_name">Sort: name</option>
+          <option value="score" selected data-i18n="sort_score">Sort: quality (high→low)</option>
         </select>
       </div>
+      <div class="result-count" id="result-count" data-i18n="count_t" data-i18n-html data-v="" data-t=""></div>
       <div class="pills" id="pills">
         <button class="pill active" data-domain="all" onclick="filterByDomain('all', this)">all<span class="pill-count">{meta["total_skills"]}</span></button>
         {"".join(domain_pills)}
@@ -422,14 +475,16 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <div class="cards" id="cards">
         {"".join(cards)}
       </div>
-      <div class="empty" id="empty" hidden>No skills match your search.</div>
+      <div class="empty" id="empty" hidden data-i18n="empty_t">No skills match your search.</div>
     </section>
 
     <footer>
-      <p>Created by ssrjkk · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
+      <p data-i18n="foot_t" data-i18n-html data-n="{meta["total_skills"]}" data-d="{len(meta["domains"])}">Created by ssrjkk · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
+      <p class="shortcuts" data-i18n="keys" data-i18n-html><kbd>/</kbd> search · <kbd>1–5</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear</p>
       <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 """ + """
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
   <div class="toast" id="toast"></div>
   <script>
   var activeDomain = 'all';
@@ -440,7 +495,37 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     cursor: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills',
     windsurf: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills'
   };
-  var RM_TRACKS = {json.dumps([{"slug": t["slug"], "name": t["name"], "icon": t["icon"]} for t in ROADMAP_TRACKS], ensure_ascii=False)};
+  var RM_TRACKS = """ + json_for_script([{"slug": t["slug"], "name": t["name"], "icon": t["icon"]} for t in ROADMAP_TRACKS]) + """;
+  var I18N = {
+    en: {skip:"Skip to catalog",nav_catalog:"Catalog",nav_roadmaps:"Roadmaps",nav_stats:"Stats",nav_how:"How it works",soon:"soon",back_top:"Back to top",copied:"Copied: ",copy:"copy",view_source:"view source",models:"Models:",quality:"Quality",blocks:"Code blocks",sections:"Sections",lines:"Lines",ru_tr:"RU translation",back_catalog:"← Back to catalog",back_roadmaps:"← All roadmaps",open_map:"Open full map →",rel_skills:"Related skills →",browse_domain:"Browse {d} skills →",src:"Source:",copied_btn:"✓ copied",hero_sub:"Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.",how_t:"How it works",how_s:"— 3 steps, 30 seconds",f1t:"Find",f1d:"Search by task, domain or tag. Every card shows quality, blocks and RU badge.",f2t:"Copy",f2d:"One click copies the skill path or install command for your agent.",f3t:"Ship",f3d:"Paste SKILL.md into context. Validate with agent-skills validate.",inst_t:"Install in one line",inst_s:"— pick your agent",cat_t:"Catalog",cat_s:"— {total} skills, {ru} with RU",search_ph:"Search skills by name, domain, or tag…",sort_domain:"Sort: domain",sort_name:"Sort: name",sort_score:"Sort: quality (high→low)",empty_t:"No skills match your search.",count_t:"{v} of {t} shown",rm_t:"IT Roadmaps",rm_s:"soon everywhere",rm_d:"Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.",rm_b:"Open roadmaps →",foot_t:"Created by ssrjkk · {n} skills · {d} domains",keys:"<kbd>/</kbd> search · <kbd>1–5</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear",browse:"Browse skills ↓",st_skills:"Skills",st_ru:"Russian",st_dom:"Domains",st_q:"Quality",stat_t:"Distribution by domain",stat_s:"— click a pill to filter ↓",tab_install:"Install",rm_hd:"One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in."},
+    ru: {skip:"К каталогу",nav_catalog:"Каталог",nav_roadmaps:"Роадмапы",nav_stats:"Статистика",nav_how:"Как это работает",soon:"скоро",back_top:"Наверх",copied:"Скопировано: ",copy:"копировать",view_source:"исходник",models:"Модели:",quality:"Качество",blocks:"Блоки кода",sections:"Разделы",lines:"Строк",ru_tr:"Перевод RU",back_catalog:"← Назад в каталог",back_roadmaps:"← Все роадмапы",open_map:"Открыть мапу →",rel_skills:"Смежные скиллы →",browse_domain:"Скиллы: {d} →",src:"Источник:",copied_btn:"✓ готово",hero_sub:"Двуязычные скиллы для <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> и любого совместимого агента. Найди скилл → скопируй путь → ship.",how_t:"Как это работает",how_s:"— 3 шага, 30 секунд",f1t:"Найди",f1d:"Ищи по задаче, домену или тегу. На каждой карточке — качество, блоки и бейдж RU.",f2t:"Скопируй",f2d:"Один клик копирует путь к скиллу или команду установки для твоего агента.",f3t:"Зашипь",f3d:"Вставь SKILL.md в контекст. Проверь через agent-skills validate.",inst_t:"Установка в одну строку",inst_s:"— выбери свой агент",cat_t:"Каталог",cat_s:"— {total} скиллов, {ru} с RU",search_ph:"Ищи скиллы по имени, домену или тегу…",sort_domain:"Сорт: домен",sort_name:"Сорт: имя",sort_score:"Сорт: качество (сначала лучшие)",empty_t:"Ничего не найдено.",count_t:"Показано {v} из {t}",rm_t:"IT-роадмапы",rm_s:"скоро везде",rm_d:"Пошаговые мапы по каждому IT-направлению — от фронтенда до AI. Статусы живые, контент скоро.",rm_b:"Открыть роадмапы →",foot_t:"Автор ssrjkk · {n} скиллов · {d} доменов",keys:"<kbd>/</kbd> поиск · <kbd>1–5</kbd> вкладки · <kbd>t</kbd> тема · <kbd>Esc</kbd> очистить",browse:"Смотреть скиллы ↓",st_skills:"Скиллы",st_ru:"На русском",st_dom:"Домены",st_q:"Качество",stat_t:"По доменам",stat_s:"— клик по пилюле фильтрует ↓",tab_install:"Установка",rm_hd:"Одна вкладка — одно направление. Каждая мапа живёт на своей странице и в своём файле (<code>roadmaps/&lt;slug&gt;.json</code>) — клади свои мапы туда, и они подхватятся сами."}
+  };
+  function lang() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } }
+  function setLang(l) {
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    document.documentElement.setAttribute('lang', l);
+    var D = I18N[l] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n');
+      if (D[k] === undefined) return;
+      var v = D[k];
+      ['total', 'ru', 'n', 'd', 'v', 't'].forEach(function(key) {
+        if (el.dataset[key] !== undefined) v = v.split('{' + key + '}').join(el.dataset[key]);
+      });
+      if (el.hasAttribute('data-i18n-html')) el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+      var v = (D[el.getAttribute('data-i18n-ph')] || '');
+      if (v) el.setAttribute('placeholder', v);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+      var v = D[el.getAttribute('data-i18n-aria')];
+      if (v) el.setAttribute('aria-label', v);
+    });
+    document.querySelectorAll('.lang-toggle').forEach(function(b) { b.textContent = l === 'ru' ? 'EN' : 'РУ'; });
+    if (typeof applyFilter === 'function') { try { applyFilter(); } catch (e) {} }
+  }
+  function toggleLang() { setLang(lang() === 'ru' ? 'en' : 'ru'); }
   function showAgent(name, btn) {
     document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];
     document.querySelectorAll('.agent-tab').forEach(function(b) { b.classList.remove('active'); });
@@ -454,9 +539,18 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     }).catch(function() { searchIndex = {}; });
   }
   function copyText(text) {
-    navigator.clipboard.writeText(text).then(function() { showToast('Copied: ' + text); });
+    navigator.clipboard.writeText(text).then(function() { showToast((I18N[lang()] || I18N.en).copied + text); });
   }
-  function copySkill(name) { copyText('.claude/skills/' + name); }
+  function copySkill(path) { copyText(path); }
+  function copyBtn(btn, text) {
+    copyText(text);
+    if (btn.dataset.busy) return;
+    btn.dataset.busy = '1';
+    var old = btn.textContent;
+    btn.classList.add('copied');
+    btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
+    setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     if (!t) return;
@@ -469,17 +563,21 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     var b = document.body;
     var next = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     b.setAttribute('data-theme', next);
-    sessionStorage.setItem('theme', next);
+    try { localStorage.setItem('theme', next); sessionStorage.removeItem('theme'); } catch (e) {}
     var btn = document.querySelector('.theme-toggle');
     if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
   }
   (function() {
-    var saved = sessionStorage.getItem('theme');
+    var saved = null;
+    try { saved = localStorage.getItem('theme') || sessionStorage.getItem('theme'); } catch (e) {}
+    if (typeof setLang === 'function') setLang((function() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } })());
     if (saved === 'light') {
       document.body.setAttribute('data-theme', 'light');
       var btn = document.querySelector('.theme-toggle');
       if (btn) btn.textContent = '☀️';
     }
+    var bt = document.getElementById('back-top');
+    if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
   })();
   function filterByDomain(domain, btn) {
     activeDomain = domain;
@@ -512,7 +610,29 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     var grid = document.getElementById('cards');
     cards.forEach(function(c) { grid.appendChild(c); });
     document.getElementById('empty').hidden = visible !== 0;
+    var cnt = document.getElementById('result-count');
+    if (cnt) {
+      var D = (typeof I18N !== 'undefined' && (I18N[lang()] || I18N.en)) || {count_t: '{v} of {t} shown'};
+      var total = cards.length;
+      cnt.textContent = (D.count_t || '{v} of {t} shown').split('{v}').join(visible).split('{t}').join(total);
+      cnt.dataset.v = visible;
+      cnt.dataset.t = total;
+    }
   }
+  // keyboard shortcuts: / search, 1-5 tabs, t theme, Esc clear
+  document.addEventListener('keydown', function(e) {
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    var typing = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+    if (e.key === 'Escape') {
+      var s = document.getElementById('search');
+      if (s && document.activeElement === s) { s.value = ''; applyFilter(); s.blur(); }
+      return;
+    }
+    if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === '/') { e.preventDefault(); showTab('catalog', null); var s2 = document.getElementById('search'); if (s2) s2.focus(); }
+    else if (e.key >= '1' && e.key <= '5') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1], null); }
+    else if (e.key === 't') { toggleTheme(); }
+  });
   // animated counters
   document.querySelectorAll('.stat-num[data-count]').forEach(function(el) {
     var target = parseInt(el.getAttribute('data-count'), 10);
@@ -683,18 +803,18 @@ def _write_skill_page(s: dict, domain_skills: list, metrics: dict, skills_dir: P
         <h1 class="skill-page-title">{esc(name)}</h1>
         <p class="skill-page-desc">{esc(s["description"])}</p>
         <div class="skill-page-meta">
-          <span>Quality <strong>{m["score"]}%</strong></span>
-          <span>Code blocks <strong>{m["blocks"]}</strong></span>
-          <span>Sections <strong>{m["sections"]}</strong></span>
-          <span>Lines <strong>{m["lines"]}</strong></span>
-          <span>RU translation <strong>{'yes' if s.get('has_ru') else 'no'}</strong></span>
+          <span><span data-i18n="quality">Quality</span> <strong>{m["score"]}%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>{m["blocks"]}</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>{m["sections"]}</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>{m["lines"]}</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>{'yes' if s.get('has_ru') else 'no'}</strong></span>
         </div>
         <div class="skill-page-actions">
-          <button class="copy-btn" onclick="copySkill('{esc(name)}')">copy path</button>
-          <a class="btn-ghost" href="{REPO}/tree/main/.claude/skills/{esc(cat)}/{esc(name)}">view source</a>
+          <button class="copy-btn" onclick="copyBtn(this,'.claude/skills/{esc(cat)}/{esc(name)}')" data-i18n="copy">copy path</button>
+          <a class="btn-ghost" href="{REPO}/tree/main/.claude/skills/{esc(cat)}/{esc(name)}" data-i18n="view_source">view source</a>
         </div>
       </div>
-      <div class="skill-page-models">Models: {models_html}</div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> {models_html}</div>
       {nav_html}
       <div class="skill-page-body">
         {rendered}
@@ -832,7 +952,7 @@ def build_domain_pages(catalog_path: Path, output_dir: Path) -> int:
       <div class="domain-list">
         {"".join(rows)}
       </div>
-      <p class="back-link"><a href="../index.html">← Back to catalog</a></p>
+      <p class="back-link"><a href="../index.html" data-i18n="back_catalog">← Back to catalog</a></p>
     </article>
 """ + page_foot()
         (domains_dir / f"{domain}.html").write_text(html_doc, encoding="utf-8")
@@ -896,6 +1016,19 @@ body{
 .nav-link::before{content:"> ";color:var(--accent);opacity:.7}
 .theme-toggle{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);width:32px;height:32px;cursor:pointer;font-size:1rem}
 .theme-toggle:hover{border-color:var(--accent)}
+.lang-toggle{background:var(--card);border:1px solid var(--border);color:var(--accent);border-radius:var(--radius);height:32px;min-width:40px;padding:0 .5rem;cursor:pointer;font-size:.72rem;font-weight:800;font-family:var(--mono)}
+.lang-toggle:hover{border-color:var(--accent);transform:translateY(-1px)}
+.back-top{position:fixed;right:1.2rem;bottom:1.4rem;z-index:60;width:42px;height:42px;border-radius:50%;border:1px solid var(--accent);background:var(--card);color:var(--accent);font-size:1.1rem;cursor:pointer;transition:transform .15s,opacity .2s}
+.back-top:hover{transform:translateY(-3px)}
+.back-top[hidden]{display:none}
+.result-count{margin-top:.6rem;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+.shortcuts{margin-top:.9rem;font-size:.72rem;color:var(--muted)}
+.shortcuts kbd{border:1px solid var(--border);background:var(--card);padding:.05rem .4rem;border-radius:4px;font-family:var(--mono);font-size:.66rem;color:var(--text)}
+.copy-btn.copied{background:var(--accent2);color:#0b0f0a}
+.card-top-right{display:inline-flex;align-items:center;gap:.4rem}
+.card-copy{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;width:24px;height:24px;font-size:.7rem;cursor:pointer;line-height:1;transition:all .15s}
+.card-copy:hover{color:var(--accent);border-color:var(--accent);transform:scale(1.1)}
+.card-copy.copied{color:var(--accent);border-color:var(--accent)}
 .skip-link{position:absolute;left:1rem;top:-3rem;z-index:100;background:var(--accent);color:#0b0f0a;font-family:var(--mono);font-size:.78rem;font-weight:700;padding:.5rem 1rem;border-radius:var(--radius);text-decoration:none;transition:top .15s}
 .skip-link:focus{top:.6rem}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -1264,9 +1397,9 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
     first = tracks[0]
     stages0 = "".join(rm_stage_html(s) for s in first["stages"])
     def rm_links_html(t: dict) -> str:
-        links = [f'<a class="btn-ghost" href="roadmaps/{esc(t["slug"])}.html">Open full map →</a>']
+        links = [f'<a class="btn-ghost" href="roadmaps/{esc(t["slug"])}.html"><span data-i18n="open_map">Open full map →</span></a>']
         if t.get("catalog_domain"):
-            links.append(f'<a class="btn-ghost" href="domains/{esc(t["catalog_domain"])}.html">Related skills →</a>')
+            links.append(f'<a class="btn-ghost" href="domains/{esc(t["catalog_domain"])}.html"><span data-i18n="rel_skills">Related skills →</span></a>')
         return "".join(links)
     html_doc = page_head(
         "IT Roadmaps — every direction, coming soon",
@@ -1278,8 +1411,8 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
     <div class="rm-page">
       <header class="rm-hero reveal in">
         <div class="hero-badge pulse">Roadmaps · {len(tracks)} tracks · all soon</div>
-        <h1>IT Roadmaps <span class="gradient">soon everywhere</span></h1>
-        <p>One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in.</p>
+        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s">soon everywhere</span></h1>
+        <p data-i18n="rm_hd" data-i18n-html>One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in.</p>
       </header>
       <div class="rm-tabs" role="tablist">{"".join(tabs)}</div>
       <div class="rm-detail" id="rm-detail">
@@ -1294,39 +1427,40 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
       </div>
     </div>
   <script>
-  var RM_DATA = {esc(json.dumps(tracks, ensure_ascii=False))};
-  function rmStageHTML(s) {{
+  var RM_DATA = """ + json_for_script([{k: v for k, v in t.items() if not k.startswith("$")} for t in tracks]) + """;
+  function rmStageHTML(s) {
     var pill = s.status === 'live' ? '<span class="live-pill">live</span>' : '<span class="soon-pill">soon</span>';
-    var items = (s.items || []).map(function(i) {{ return '<li>' + i + '</li>'; }}).join('');
+    var items = (s.items || []).map(function(i) { return '<li>' + i + '</li>'; }).join('');
     return '<div class="rm-stage"><h3>▸ ' + s.title + ' ' + pill + '</h3><ul>' + items + '</ul></div>';
-  }}
-  function showTrack(slug, btn) {{
-    document.querySelectorAll('.rm-tab').forEach(function(b) {{ b.classList.remove('active'); }});
+  }
+  function showTrack(slug, btn) {
+    document.querySelectorAll('.rm-tab').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    var t = RM_DATA.find(function(x) {{ return x.slug === slug; }});
+    var t = RM_DATA.find(function(x) { return x.slug === slug; });
     if (!t) return;
     document.getElementById('rm-name').textContent = t.icon + ' ' + t.name;
     document.getElementById('rm-tagline').textContent = t.tagline;
     var box = document.getElementById('rm-stages');
     box.innerHTML = '';
-    t.stages.forEach(function(s) {{
+    t.stages.forEach(function(s) {
       var d = document.createElement('div');
       d.innerHTML = rmStageHTML(s);
       box.appendChild(d.firstChild);
-    }});
+    });
+    var L = (typeof I18N !== 'undefined' && (I18N[lang()] || I18N.en)) || {open_map: 'Open full map', rel_skills: 'Related skills'};
     var actions = document.getElementById('rm-actions');
-    actions.innerHTML = '<a class=\'btn-ghost\' href=\'roadmaps/\' + t.slug + \'.html\'>Open full map →</a>'
-      + (t.catalog_domain ? '<a class=\'btn-ghost\' href=\'domains/\' + t.catalog_domain + \'.html\'>Related skills →</a>' : '');
+    actions.innerHTML = '<a class=\\'btn-ghost\\' href=\\'roadmaps/\\' + t.slug + \\'.html\\'><span>' + L.open_map + '</span></a>'
+      + (t.catalog_domain ? '<a class=\\'btn-ghost\\' href=\\'domains/\\' + t.catalog_domain + \\'.html\\'><span>' + L.rel_skills + '</span></a>' : '');
     box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
     if (location.hash !== '#' + slug) history.replaceState(null, '', '#' + slug);
-  }}
-  (function() {{
+  }
+  (function() {
     var slug = (location.hash || '').replace('#', '');
-    if (slug) {{
+    if (slug) {
       var btn = document.querySelector('.rm-tab[data-track="' + slug + '"]');
       if (btn) showTrack(slug, btn);
-    }}
-  }})();
+    }
+  })();
   </script>
 """ + page_foot()
     (output_dir / "roadmaps.html").write_text(html_doc, encoding="utf-8")
@@ -1347,7 +1481,7 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
             ) + "</div></div>"
         elif t.get("catalog_domain"):
             rel = (f'<div class="rm-related"><a class="btn-ghost" href="../domains/{esc(t["catalog_domain"])}.html">'
-                   f'Browse {esc(t["catalog_domain"])} skills →</a></div>')
+                   f'<span data-i18n="rel_skills">Related skills →</span></a></div>')
         color = DOMAIN_COLORS.get(t["slug"], "#64748b")
         page = page_head(
             f'{t["name"]} roadmap — Agent Skills Library',
@@ -1355,7 +1489,7 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
             BASE + f'roadmaps/{t["slug"]}.html',
         ) + f"""
     <div class="rm-page">
-      <p class="back-link"><a href="../roadmaps.html">← All roadmaps</a></p>
+      <p class="back-link"><a href="../roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
       <header class="rm-hero">
         <span class="domain-chip" style="background:{color}1a;color:{color};border-color:{color}44">{esc(t["slug"])}</span>
         <h1>{esc(t["icon"])} {esc(t["name"])} {rm_status_pill(t.get("status", "soon"), big=True)}</h1>
@@ -1365,7 +1499,7 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
       <div class="rm-timeline">{"".join(rm_stage_html(s) for s in t["stages"])}</div>
       {rel}
       {nav}
-      <p class="rm-note">Source: <code>roadmaps/{esc(t["slug"])}.json</code> · ETA: {esc(t.get("eta", "soon"))}</p>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/{esc(t["slug"])}.json</code> · ETA: {esc(t.get("eta", "soon"))}</p>
     </div>
 """ + page_foot()
         (rm_dir / f'{t["slug"]}.html').write_text(page, encoding="utf-8")
