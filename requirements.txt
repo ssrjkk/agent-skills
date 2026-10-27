@@ -15,4 +15,4 @@ types-PyYAML>=6.0
 
 # Packaging
 build>=1.0
-twine>=5.0
+twine>=7.0.0
