@@ -20,6 +20,10 @@ class SkillValidator:
     }
     PLACEHOLDER_NAMES: ClassVar[re.Pattern] = re.compile(r"^(skill-\d+|.*-skill-\d+)$")
     BAD_PATTERNS: ClassVar[re.Pattern] = re.compile(r"\b(TODO|FIXME|HACK|XXX|UNDONE)\b")
+    FILLER_WORDS: ClassVar[tuple[str, ...]] = (
+        "revolutionize", "supercharge", "cutting edge", "effortless",
+        "world class", "take it to the next level", "harness the power",
+    )
 
     def validate_skill_file(self, filepath: Path) -> list[ValidationResult]:
         results: list[ValidationResult] = []
@@ -45,6 +49,9 @@ class SkillValidator:
 
         results.extend(self._validate_frontmatter(filepath, frontmatter, name))
         results.extend(self._validate_body(filepath, body))
+        results.extend(self._validate_copy(filepath, frontmatter, body))
+        if filepath.name == "SKILL.ru.md":
+            results.extend(self._validate_ru(filepath, body))
 
         return results
 
@@ -103,6 +110,50 @@ class SkillValidator:
         if fence_count > 0 and fence_count % 2 != 0:
             results.append(ValidationResult(str(filepath), Severity.ERROR, "E040", f"Unbalanced code fences ({fence_count} fences)"))
 
+        return results
+
+    def _validate_copy(self, filepath: Path, frontmatter: dict, body: str) -> list[ValidationResult]:
+        """INFO-level copy signals. Never blocks: flags marketing filler so a
+        human can verify each hit is intentional (e.g. a ban-list example)."""
+        results: list[ValidationResult] = []
+        haystack = f"{frontmatter.get('description', '')}\n{body}".lower()
+        hits = [w for w in self.FILLER_WORDS if w in haystack]
+        if hits:
+            results.append(ValidationResult(str(filepath), Severity.INFO, "I030", f"Mentions filler words, verify intentional: {hits}"))
+        return results
+
+    @staticmethod
+    def _prose_text(body: str) -> str:
+        """Body without fenced code blocks: code is never translated, so only
+        prose counts when judging a translation."""
+        out = []
+        in_fence = False
+        for line in body.splitlines():
+            if line.strip().startswith("```"):
+                in_fence = not in_fence
+                continue
+            if not in_fence:
+                out.append(line)
+        return "\n".join(out)
+
+    def _validate_ru(self, filepath: Path, body: str) -> list[ValidationResult]:
+        """Catch machine-copy 'translations': near-zero Cyrillic or a stub
+        body next to a full English original. Warnings only."""
+        results: list[ValidationResult] = []
+        prose = self._prose_text(body)
+        letters = [c for c in prose if c.isalpha()]
+        cyrillic = sum(1 for c in letters if "Ѐ" <= c <= "џ")
+        if letters and cyrillic / len(letters) < 0.05:
+            results.append(ValidationResult(str(filepath), Severity.WARNING, "W040", f"Almost no Cyrillic ({cyrillic}/{len(letters)} letters) - machine translation?"))
+        try:
+            en_text = (filepath.parent / "SKILL.md").read_text(encoding="utf-8")
+            en_parts = en_text.split("---", 2)
+            en_body = en_parts[2].strip() if len(en_parts) >= 3 else ""
+        except (OSError, UnicodeDecodeError):
+            en_body = ""
+        en_prose = self._prose_text(en_body).strip()
+        if en_prose and len(prose.strip()) < 0.3 * len(en_prose):
+            results.append(ValidationResult(str(filepath), Severity.WARNING, "W041", "Suspiciously short vs English original - incomplete translation?"))
         return results
 
     def _find_duplicates(self, items: list) -> list:

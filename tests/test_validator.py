@@ -36,6 +36,68 @@ class TestSkillValidator:
         errors = [r for r in results if r.severity == Severity.ERROR]
         assert len(errors) == 0
 
+    def test_filler_words_are_info_only(self, validator: SkillValidator, tmp_path: Path):
+        path = tmp_path / "test" / "SKILL.md"
+        path.parent.mkdir(parents=True)
+        path.write_text(
+            "---\nname: test\ndescription: We will revolutionize your workflow\n"
+            "category: qa\ntags: []\nmodels: []\nversion: 1.0.0\n---\n"
+            "# Test\n\n## Quick Start\n\nContent here.\n\n## Validation\n\nContent here.\n"
+        )
+        results = validator.validate_skill_file(path)
+        codes = [r.code for r in results]
+        assert "I030" in codes
+        assert not [r for r in results if r.severity == Severity.ERROR]
+
+    def test_ru_without_cyrillic_warns(self, validator: SkillValidator, tmp_path: Path):
+        d = tmp_path / "test"
+        d.mkdir(parents=True)
+        (d / "SKILL.md").write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0.0\n---\n"
+            "# Test\n\n## Quick Start\n\nContent here.\n\n## Validation\n\nContent here.\n"
+        )
+        path = d / "SKILL.ru.md"
+        path.write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0\n---\n"
+            "# Test\n\nJust an English copy of the whole thing without translation.\n"
+        )
+        results = validator.validate_skill_file(path)
+        assert any(r.code == "W040" for r in results)
+        assert not [r for r in results if r.severity == Severity.ERROR]
+
+    def test_ru_stub_warns_on_length(self, validator: SkillValidator, tmp_path: Path):
+        d = tmp_path / "test"
+        d.mkdir(parents=True)
+        (d / "SKILL.md").write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0.0\n---\n"
+            "# Test\n\n" + ("Full English body sentence number one. " * 100) + "\n"
+        )
+        path = d / "SKILL.ru.md"
+        path.write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0\n---\n"
+            "# Тест\n\nКороткий перевод, который явно не покрывает оригинал целиком и полностью.\n",
+            encoding="utf-8",
+        )
+        results = validator.validate_skill_file(path)
+        assert any(r.code == "W041" for r in results)
+        assert not any(r.code == "W040" for r in results)
+
+    def test_good_ru_passes_clean(self, validator: SkillValidator, tmp_path: Path):
+        d = tmp_path / "test"
+        d.mkdir(parents=True)
+        (d / "SKILL.md").write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0.0\n---\n"
+            "# Test\n\n" + ("Full English body sentence number one. " * 20) + "\n"
+        )
+        path = d / "SKILL.ru.md"
+        path.write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0\n---\n"
+            "# Тест\n\n" + ("Полноценный русский перевод каждого предложения оригинала. " * 20) + "\n",
+            encoding="utf-8",
+        )
+        results = validator.validate_skill_file(path)
+        assert not [r.code for r in results if r.code in ("W040", "W041")]
+
     def test_missing_frontmatter(self, validator: SkillValidator, tmp_path: Path):
         path = tmp_path / "test" / "SKILL.md"
         path.parent.mkdir(parents=True)

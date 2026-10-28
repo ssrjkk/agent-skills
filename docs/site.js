@@ -147,7 +147,7 @@
   if (typeof showTab === 'function' && document.querySelector('.tab-btn')) {
     var h = (location.hash || '').replace('#', '');
     if (h === 'dashboard') h = 'stats';
-    showTab(['catalog', 'stats', 'how', 'install', 'roadmaps'].indexOf(h) >= 0 ? h : 'catalog', null);
+    showTab(['catalog', 'stats', 'how', 'install', 'roadmaps'].indexOf(h) >= 0 ? h : 'catalog');
     if (typeof applyFilter === 'function') applyFilter();
   }
   // reveal on scroll + stagger cards

@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats docs sync-readme check-readme consistency clean all ci
+.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats stale docs sync-readme check-readme consistency clean all ci
 
 help:
 	@echo "Claude Skills Library - Makefile"
@@ -57,6 +57,9 @@ catalog:
 
 stats:
 	python -m claude_skills.cli stats --dir .claude/skills
+
+stale:
+	python -m claude_skills.cli stale --dir .claude/skills
 
 docs:
 	python scripts/build_docs.py --catalog skills_catalog.json --output-dir docs

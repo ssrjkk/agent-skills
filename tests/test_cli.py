@@ -40,7 +40,7 @@ def _make_skill(root: Path, name: str, category: str, description: str = "A test
 class TestCliImport:
     def test_cli_group(self):
         names = sorted(cli.commands.keys())
-        assert set(names) == {"stats", "validate", "quality", "search", "catalog", "install"}
+        assert set(names) == {"stats", "validate", "quality", "search", "catalog", "install", "stale"}
 
     def test_cli_help(self):
         import subprocess
@@ -50,7 +50,7 @@ class TestCliImport:
             capture_output=True, text=True, check=False
         )
         assert result.returncode == 0
-        for name in ("stats", "validate", "quality", "search", "catalog", "install"):
+        for name in ("stats", "validate", "quality", "search", "catalog", "install", "stale"):
             assert name in result.stdout
 
 
@@ -182,6 +182,49 @@ class TestCommandStats:
         data = json.loads(out.read_text(encoding="utf-8"))
         assert data["total_skills"] == 1
         assert "domains" in data
+
+
+class TestCommandStale:
+    def _make_dated_skill(self, root: Path, name: str, updated: str) -> None:
+        skill_dir = root / ".claude" / "skills" / "qa" / name
+        skill_dir.mkdir(parents=True)
+        (skill_dir / "SKILL.md").write_text(
+            "---\n"
+            f"name: {name}\n"
+            "description: A test skill\n"
+            "category: qa\n"
+            "tags: [testing]\n"
+            "models: [sonnet]\n"
+            "version: 1.0.0\n"
+            f"created: 2026-01-01\n"
+            f"updated: {updated}\n"
+            "---\n# Skill\n\n## Quick Start\ncode\n\n## Validation\ntests\n",
+            encoding="utf-8",
+        )
+
+    def test_stale_flags_old_skill(self, tmp_path: Path):
+        import datetime
+
+        old = (datetime.datetime.now(tz=datetime.timezone.utc).date() - datetime.timedelta(days=200)).isoformat()
+        self._make_dated_skill(tmp_path, "old-skill", old)
+        result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code == 0
+        assert "old-skill" in _strip_ansi(result.output)
+
+    def test_stale_clean_when_fresh(self, tmp_path: Path):
+        import datetime
+
+        today = datetime.datetime.now(tz=datetime.timezone.utc).date().isoformat()
+        self._make_dated_skill(tmp_path, "fresh-skill", today)
+        result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code == 0
+        assert "Nothing stale" in _strip_ansi(result.output)
+
+    def test_stale_lists_undated(self, tmp_path: Path):
+        _make_skill(tmp_path, "nodate-skill", "qa")
+        result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code == 0
+        assert "nodate-skill" in _strip_ansi(result.output)
 
 
 class TestCommandQuality:

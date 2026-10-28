@@ -307,5 +307,43 @@ def catalog(dir: str | None, output: str):
     print(f"  Time: {duration:.2f}s\n")
 
 
+@cli.command()
+@click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
+@click.option('--days', type=int, default=180, help='Flag skills not updated within N days')
+def stale(dir: str | None, days: int):
+    """List skills whose `updated` date is older than N days (review queue)."""
+    import datetime
+
+    builder = CatalogBuilder(base=resolve_skills_dir(dir))
+    catalog = builder.build_catalog()
+    today = datetime.datetime.now(tz=datetime.timezone.utc).date()
+
+    rows = []
+    for skill in sorted(catalog.skills, key=lambda s: s.updated or ""):
+        if not skill.updated:
+            rows.append((skill.name, skill.category, "never", -1))
+            continue
+        try:
+            age = (today - datetime.date.fromisoformat(skill.updated)).days
+        except ValueError:
+            rows.append((skill.name, skill.category, skill.updated, -1))
+            continue
+        if age > days:
+            rows.append((skill.name, skill.category, skill.updated, age))
+
+    print(f"\n{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}Stale skills (>{days}d without update){Style.RESET_ALL}")
+    print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}\n")
+
+    if not rows:
+        print(f"  {Fore.GREEN}Nothing stale - all {len(catalog.skills)} skills updated within {days} days{Style.RESET_ALL}\n")
+        return
+
+    for name, category, updated, age in rows:
+        age_str = f"{age}d" if age >= 0 else "unknown date"
+        print(f"  {Fore.YELLOW}{name}{Style.RESET_ALL} ({category}) - {updated} [{age_str}]")
+    print()
+
+
 if __name__ == '__main__':  # pragma: no cover
     cli()
