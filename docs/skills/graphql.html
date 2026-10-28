@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="go-rest-api.html">← go-rest-api</a><a class="page-nav-link" href="grpc.html">grpc →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>GraphQL</h1>
 <blockquote>Designing and implementing flexible GraphQL APIs.</blockquote>
 <h2>Quick Start</h2>
@@ -173,6 +174,111 @@ const { createComplexityLimitRule } = require(&quot;graphql-validation-complexit
 <li>Circular types: use lazy references in the schema.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>GraphQL (ГрафКьюЭл)</h1>
+<blockquote>Проектирование и реализация гибких GraphQL API.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm init -y &amp;&amp; npm i graphql @apollo/server
+node server.js  # http://localhost:4000/graphql</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Клиент-ориентированная выборка из нескольких источников</li>
+<li>Мобильные приложения с минимальными пейлоадами</li>
+<li>Агрегация нескольких сервисов за одним API</li>
+<li>Сложные графы объектов с глубокими связями</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн схемы</h3>
+<ul>
+<li>Моделируйте домен как типизированный граф</li>
+<li>Ясные типы, enums и интерфейсы</li>
+<li>Запросы — под нужды клиентов</li>
+<li>Мутации небольшие и явные</li>
+</ul>
+<h3>Резолверы</h3>
+<ul>
+<li>Резолвите поля по требованию, не заранее</li>
+<li>N+1 избегайте через DataLoader</li>
+<li>Ошибки на поле через массив errors</li>
+<li>Резолверы тонкие; логика — в сервисах</li>
+</ul>
+<h3>Мутации и подписки</h3>
+<ul>
+<li>Мутации-действия (`createUser`)</li>
+<li>Возвращайте затронутый объект + client mutation ID</li>
+<li>Подписки для real-time событий</li>
+<li>Валидируйте вход до мутации</li>
+</ul>
+<h3>Производительность и безопасность</h3>
+<ul>
+<li>Лимиты глубины и сложности запроса</li>
+<li>Авторизация на уровне полей</li>
+<li>Кэш резолверов и persisted queries</li>
+<li>Мониторинг времени резолверов</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm i graphql @apollo/server graphql-tools dataloader
+# Python: pip install strawberry-graphql</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># schema.graphql
+type User {
+  id: ID!
+  name: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  author: User!
+}
+
+type Query {
+  user(id: ID!): User
+  recentPosts(limit: Int = 10): [Post!]!
+}
+
+type Mutation {
+  createPost(title: String!, authorId: ID!): Post!
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Резолвер с DataLoader батчингом
+import DataLoader from &quot;dataloader&quot;;
+
+const userLoader = new DataLoader(ids =&gt; fetchUsersByIds(ids));
+const resolvers = {
+  Post: {
+    author: post =&gt; userLoader.load(post.authorId),
+  },
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Настройка Apollo Server
+import { ApolloServer } from &quot;@apollo/server&quot;;
+import { startStandaloneServer } from &quot;@apollo/server/standalone&quot;;
+
+const server = new ApolloServer({ typeDefs, resolvers });
+startStandaloneServer(server, { listen: { port: 4000 } });</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Лимиты сложности
+const { createComplexityLimitRule } = require(&quot;graphql-validation-complexity&quot;);
+// depthLimit(7), complexityLimit(100) как validationRules</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Смоделируйте типы домена и связи.</p>
+<p class='ordered'>2. Определите queries, mutations и subscriptions в схеме.</p>
+<p class='ordered'>3. Напишите резолверы с DataLoader против N+1.</p>
+<p class='ordered'>4. Добавьте валидацию входа и авторизацию полей.</p>
+<p class='ordered'>5. Добавьте лимиты глубины/сложности.</p>
+<p class='ordered'>6. Реализуйте подписки для real-time.</p>
+<p class='ordered'>7. Мониторьте задержку резолверов и ошибки.</p>
+<p class='ordered'>8. В проде — persisted queries.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Схема компилируется и валидна для интроспекции</p>
+<p class='ordered'>2. Запросы возвращают ровно запрошенные поля</p>
+<p class='ordered'>3. N+1 исключён (loader батчит)</p>
+<p class='ordered'>4. Мутации валидируют и возвращают затронутые объекты</p>
+<p class='ordered'>5. Лимиты глубины/сложности отклоняют злоупотребления</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>N+1: батчите через DataLoader, а не per-field запросами.</li>
+<li>Утечки интроспекции: отключите в проде или ограничьте.</li>
+<li>Циркулярные типы: ленивые ссылки в схеме.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="go-rest-api.html">← go-rest-api</a><a class="page-nav-link" href="grpc.html">grpc →</a></div>
     </article>
   </div>
@@ -221,6 +327,15 @@ const { createComplexityLimitRule } = require(&quot;graphql-validation-complexit
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -247,6 +362,9 @@ const { createComplexityLimitRule } = require(&quot;graphql-validation-complexit
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

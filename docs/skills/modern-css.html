@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="bun-runtime.html">← bun-runtime</a><a class="page-nav-link" href="nextjs.html">nextjs →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Modern CSS</h1>
 <blockquote>Maintainable, performant styling with modern CSS.</blockquote>
 <h2>Quick Start</h2>
@@ -156,6 +157,94 @@
 <li>Old browser support: check target browsers for modern features.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Modern CSS (Современный CSS)</h1>
+<blockquote>Поддерживаемые и производительные стили на современном CSS.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>:root { --accent: #8b5cf6; }
+.card { padding: 1rem; border: 1px solid color-mix(in srgb, var(--accent), white 40%); }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Стилизация без тяжёлых фреймворков</li>
+<li>Адаптивные и поддерживаемые макеты</li>
+<li>Дизайн-системы с токенами</li>
+<li>Библиотеки компонентов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Layout</h3>
+<ul>
+<li>Grid для макета страницы/компонента</li>
+<li>Flexbox для одномерного выравнивания</li>
+<li>Логические свойства (inline/block)</li>
+<li>`auto-fit`/`minmax` для адаптивных гридов</li>
+</ul>
+<h3>Custom properties</h3>
+<ul>
+<li>Токены дизайна как `--*` переменные</li>
+<li>Консистентное использование</li>
+<li>Переопределения через `:root` или компоненты</li>
+<li>`color-mix()` для производных цветов</li>
+</ul>
+<h3>Container queries</h3>
+<ul>
+<li>Компонентная адаптивность</li>
+<li>`container-type` на контейнере</li>
+<li>Комбинируйте с media queries</li>
+<li>Тестируйте компоненты изолированно</li>
+</ul>
+<h3>Cascade и слои</h3>
+<ul>
+<li>Организация через `@layer` (reset, tokens, base, components)</li>
+<li>Низкая специфичность</li>
+<li>Избегайте `!important` без крайней нужды</li>
+<li>Современные единицы (rem, ch, dvh)</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Сборка не нужна — современный CSS работает нативно</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>/* Адаптивный grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Токены дизайна */
+:root {
+  --color-bg: #0b0b1a;
+  --color-accent: #8b5cf6;
+  --space-1: 0.5rem;
+  --radius: 12px;
+}
+.card { background: var(--color-bg); border-radius: var(--radius); padding: var(--space-1); }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Container queries */
+.cards { container-type: inline-size; }
+@container (min-width: 500px) {
+  .card { display: grid; grid-template-columns: 1fr 2fr; }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Cascade layers */
+@layer reset, tokens, base, components;
+@layer tokens { :root { --accent: #8b5cf6; } }
+@layer components { .btn { background: var(--accent); } }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите токены дизайна как custom properties.</p>
+<p class='ordered'>2. Структурируйте через @layer.</p>
+<p class='ordered'>3. Макеты на Grid и Flexbox.</p>
+<p class='ordered'>4. Логические свойства и современные единицы.</p>
+<p class='ordered'>5. Container queries для компонентов.</p>
+<p class='ordered'>6. color-mix и современные функции.</p>
+<p class='ordered'>7. Скоуп стилей и низкая специфичность.</p>
+<p class='ordered'>8. Тестируйте адаптивность на брейкпоинтах.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Макеты адаптируются без разрастания media queries</p>
+<p class='ordered'>2. Токены консистентны между компонентами</p>
+<p class='ordered'>3. Container queries работают изолированно</p>
+<p class='ordered'>4. Нет войн специфичности или !important</p>
+<p class='ordered'>5. Производительность: без layout thrash и гигантских таблиц стилей</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Проблемы специфичности: используйте @layer и низкоспецифичные селекторы.</li>
+<li>Много брейкпоинтов: применяйте container queries.</li>
+<li>Поддержка старых браузеров: проверьте целевые браузеры для новых фич.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="bun-runtime.html">← bun-runtime</a><a class="page-nav-link" href="nextjs.html">nextjs →</a></div>
     </article>
   </div>
@@ -204,6 +293,15 @@
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -230,6 +328,9 @@
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

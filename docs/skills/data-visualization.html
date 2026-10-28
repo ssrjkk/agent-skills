@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="apache-spark.html">← apache-spark</a><a class="page-nav-link" href="dbt.html">dbt →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Data Visualization</h1>
 <blockquote>Clear, honest charts and dashboards in Python.</blockquote>
 <h2>Quick Start</h2>
@@ -156,6 +157,94 @@ fig = px.scatter(df, x=&quot;ad_spend&quot;, y=&quot;revenue&quot;, color=&quot;
 <li>Slow dashboards: pre-aggregate and limit data.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Data Visualization (Визуализация данных)</h1>
+<blockquote>Ясные, честные графики и дашборды на Python.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install matplotlib plotly pandas</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Исследование распределений и связей</li>
+<li>Отчёты метрик стейкхолдерам</li>
+<li>Интерактивные дашборды</li>
+<li>Публикационные фигуры</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Выбор графика</h3>
+<ul>
+<li>Бар для категорий, линии для трендов</li>
+<li>Scatter для связей, histograms для распределений</li>
+<li>Избегайте 3D и pie для точности</li>
+<li>График под вопрос</li>
+</ul>
+<h3>Дизайн</h3>
+<ul>
+<li>Подписывайте оси и единицы</li>
+<li>Ось Y с нуля для баров</li>
+<li>Консистентная палитра</li>
+<li>Убирайте chart junk и шум сетки</li>
+</ul>
+<h3>Интерактивность</h3>
+<ul>
+<li>Plotly/Altair для hover и zoom</li>
+<li>Связывайте вьюхи для brushing/фильтров</li>
+<li>Производительные дашборды</li>
+<li>Tooltips с контекстом</li>
+</ul>
+<h3>Честность</h3>
+<ul>
+<li>Не урезайте оси вводяще</li>
+<li>Показывайте неопределённость</li>
+<li>Лог-шкалы осознанно</li>
+<li>Цитируйте источники данных</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install matplotlib plotly pandas
+# дашборды: pip install streamlit / dash</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import matplotlib.pyplot as plt
+import pandas as pd
+
+df = pd.DataFrame({&quot;region&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;], &quot;sales&quot;: [10, 25, 15]})
+df.plot.bar(x=&quot;region&quot;, y=&quot;sales&quot;)
+plt.title(&quot;Sales by region&quot;)
+plt.ylabel(&quot;Sales ($k)&quot;)
+plt.tight_layout()
+plt.savefig(&quot;sales.png&quot;, dpi=150)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import plotly.express as px
+
+fig = px.line(df, x=&quot;month&quot;, y=&quot;revenue&quot;, color=&quot;region&quot;)
+fig.update_layout(title=&quot;Revenue trend&quot;, xaxis_title=&quot;Month&quot;, yaxis_title=&quot;Revenue&quot;)
+fig.show()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Сравнение распределений
+import plotly.graph_objects as go
+
+fig = go.Figure()
+fig.add_trace(go.Histogram(x=data_a, name=&quot;Control&quot;))
+fig.add_trace(go.Histogram(x=data_b, name=&quot;Treatment&quot;, opacity=0.6))
+fig.update_layout(barmode=&quot;overlay&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Интерактивный scatter с hover
+fig = px.scatter(df, x=&quot;ad_spend&quot;, y=&quot;revenue&quot;, color=&quot;channel&quot;, hover_data=[&quot;region&quot;])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Уточните вопрос, на который должен ответить график.</p>
+<p class='ordered'>2. Выберите правильный тип графика.</p>
+<p class='ordered'>3. Подготовьте данные (агрегация, чистка).</p>
+<p class='ordered'>4. Соберите на Matplotlib (статичный) или Plotly/Altair (интерактивный).</p>
+<p class='ordered'>5. Подпишите оси, единицы и заголовки.</p>
+<p class='ordered'>6. Примените консистентный дизайн-систем.</p>
+<p class='ordered'>7. Добавьте интерактив для исследования.</p>
+<p class='ordered'>8. Проверьте честность и ясность.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. График отвечает на заданный вопрос</p>
+<p class='ordered'>2. Оси и единицы подписаны</p>
+<p class='ordered'>3. Нет вводящего урезания или шкал</p>
+<p class='ordered'>4. Цвета доступны и консистентны</p>
+<p class='ordered'>5. Интерактивные вьюхи грузятся быстро</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Захламлённые графики: агрегируйте или фильтруйте данные.</li>
+<li>Вводящие: проверьте старт осей и шкалы.</li>
+<li>Медленные дашборды: пред-агрегируйте и ограничьте данные.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="apache-spark.html">← apache-spark</a><a class="page-nav-link" href="dbt.html">dbt →</a></div>
     </article>
   </div>
@@ -204,6 +293,15 @@ fig = px.scatter(df, x=&quot;ad_spend&quot;, y=&quot;revenue&quot;, color=&quot;
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -230,6 +328,9 @@ fig = px.scatter(df, x=&quot;ad_spend&quot;, y=&quot;revenue&quot;, color=&quot;
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

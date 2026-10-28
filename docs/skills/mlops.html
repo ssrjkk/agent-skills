@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="mcp-servers.html">← mcp-servers</a><a class="page-nav-link" href="multi-agent-orchestration.html">multi-agent-orchestration →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>MLOps</h1>
 <blockquote>Running machine learning reliably in production.</blockquote>
 <h2>Quick Start</h2>
@@ -179,6 +180,117 @@ def alert_if_drift(score: float, threshold: float = 2.0) -&gt; str:
 <li>Slow serving: batch requests and scale the endpoint.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>MLOps (ЭмЭлОпс)</h1>
+<blockquote>Надёжный продакшн машинного обучения.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install mlflow
+mlflow ui  # UI трекинга экспериментов</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Модели, которым нужен воспроизводимый тренинг</li>
+<li>Команды, регулярно выкатывающие модели в прод</li>
+<li>Data drift и мониторинг моделей</li>
+<li>Коллаборация data science и инженерии</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Эксперименты</h3>
+<ul>
+<li>Трекайте каждый запуск: params, metrics, artifacts</li>
+<li>Трекинг через MLflow или W&amp;B</li>
+<li>Версионируйте датасеты и код вместе с запуском</li>
+<li>Сравнивайте запуски систематически</li>
+</ul>
+<h3>Пайплайны</h3>
+<ul>
+<li>Воспроизводимые data → train → evaluate пайплайны</li>
+<li>Оркестраторы (Airflow, Prefect, TFX)</li>
+<li>Кэшируйте промежуточные артефакты</li>
+<li>Разделяйте кодовые пути train и serve</li>
+</ul>
+<h3>Model Registry</h3>
+<ul>
+<li>Регистрируйте модели-кандидаты с метаданными</li>
+<li>Стейджи: staging → production</li>
+<li>Храните точный артефакт + сигнатуру</li>
+<li>Версионируйте и откатывайте модели</li>
+</ul>
+<h3>Сервинг и мониторинг</h3>
+<ul>
+<li>Сервинг через REST/gRPC или serverless inference</li>
+<li>Мониторинг дрейфа ввода/вывода</li>
+<li>Трекинг задержки, throughput и error rates</li>
+<li>Алерты и триггеры отката</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install mlflow scikit-learn
+# оркестраторы: airflow / prefect
+# сервинг: bentoml / triton / fastapi</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import mlflow
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+mlflow.set_experiment(&quot;churn&quot;)
+
+with mlflow.start_run():
+    mlflow.log_param(&quot;n_estimators&quot;, 100)
+    mlflow.log_param(&quot;max_depth&quot;, 5)
+
+    model = RandomForestClassifier(n_estimators=100, max_depth=5)
+    model.fit(X_train, y_train)
+    acc = accuracy_score(y_test, model.predict(X_test))
+
+    mlflow.log_metric(&quot;accuracy&quot;, acc)
+    mlflow.sklearn.log_model(model, &quot;model&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Загрузка зарегистрированной модели для сервинга
+import mlflow.sklearn
+
+model = mlflow.sklearn.load_model(&quot;models:/churn/Production&quot;)
+
+def predict(features: dict) -&gt; dict:
+    pred = model.predict([list(features.values())])[0]
+    proba = model.predict_proba([list(features.values())])[0].tolist()
+    return {&quot;prediction&quot;: int(pred), &quot;probabilities&quot;: proba}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CI/CD для ML (псевдо)
+stages:
+  - train:
+      script: python train.py
+      artifacts: [model.pkl, metrics.json]
+  - register:
+      when: metrics.accuracy &gt;= 0.85
+      command: mlflow register -m run/model
+  - deploy:
+      when: stage == register
+      command: deploy_to_prod model</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Мониторинг дрейфа
+import numpy as np
+
+def drift_score(train_mean: float, live_mean: float, train_std: float) -&gt; float:
+    return abs(live_mean - train_mean) / max(train_std, 1e-9)
+
+def alert_if_drift(score: float, threshold: float = 2.0) -&gt; str:
+    return &quot;ALERT&quot; if score &gt; threshold else &quot;ok&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Настройте трекинг экспериментов для всех запусков.</p>
+<p class='ordered'>2. Версионируйте код, данные и модель вместе.</p>
+<p class='ordered'>3. Соберите воспроизводимые тренировочные пайплайны.</p>
+<p class='ordered'>4. Оценивайте на фиксированном holdout с порогами.</p>
+<p class='ordered'>5. Регистрируйте модели с метаданными и продвижением по стейджам.</p>
+<p class='ordered'>6. Сервите с единым интерфейсом и сигнатурой.</p>
+<p class='ordered'>7. Мониторьте дрейф, задержку и ошибки.</p>
+<p class='ordered'>8. Определите триггеры отката и переобучения.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Каждый запуск воспроизводим (seed, данные, версии кода)</p>
+<p class='ordered'>2. Метрики трекаются и сравнимы</p>
+<p class='ordered'>3. Зарегистрированные модели имеют ясный жизненный цикл стейджей</p>
+<p class='ordered'>4. Сервинг совпадает с препроцессингом тренинга</p>
+<p class='ordered'>5. Дрейф-алерты срабатывают до деградации качества</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Train/serve skew: делите код препроцессинга между обоими.</li>
+<li>Дрейф модели: мониторьте входы; переобучайте по расписанию или алертам.</li>
+<li>Медленный сервинг: батчите запросы и масштабируйте эндпоинт.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="mcp-servers.html">← mcp-servers</a><a class="page-nav-link" href="multi-agent-orchestration.html">multi-agent-orchestration →</a></div>
     </article>
   </div>
@@ -227,6 +339,15 @@ def alert_if_drift(score: float, threshold: float = 2.0) -&gt; str:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -253,6 +374,9 @@ def alert_if_drift(score: float, threshold: float = 2.0) -&gt; str:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Zero-Knowledge Proofs</h1>
 <blockquote>Build zero-knowledge proof circuits with Circom and integrate them into dApps.</blockquote>
 <h2>Quick Start</h2>
@@ -176,6 +177,114 @@ snarkjs generatecall
 <p class='ordered'>3. Verification passes for valid proofs, fails for invalid</p>
 <p class='ordered'>4. Public inputs are correctly revealed, private inputs are hidden</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Zero-Knowledge Proofs (ZK-Proofs)</h1>
+<blockquote>Создавайте zero-knowledge-схемы на Circom и интегрируйте их в dApp.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>// age-check.circom — доказать возраст &gt;= 18, не раскрывая сам возраст
+pragma circom 2.1.0;
+
+include &quot;circomlib/comparators.circom&quot;;
+
+template AgeCheck(maxAgeBits) {
+    signal input age;
+    signal input threshold;
+    signal output isAdult;
+
+    component gt = GreaterEqThan(maxAgeBits);
+    gt.in[0] &lt;== age;
+    gt.in[1] &lt;== threshold;
+    isAdult &lt;== gt.out;
+}
+
+component main { public [threshold] } = AgeCheck(8);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Генерация доказательства через snarkjs
+import { buildPoseidon } from &quot;circomlibjs&quot;;
+
+async function generateProof() {
+    // Компиляция схемы
+    // circom age-check.circom --r1cs --wasm --sym
+
+    // Генерация ключей proving/verification
+    // snarkjs groth16 setup age-check.r1cs pot12_final.ptau circuit.zkey
+
+    // Генерация witness и доказательства
+    const { proof, publicSignals } = await snarkjs.groth16.fullProve(
+        { age: 25, threshold: 18 },
+        &quot;age-check.wasm&quot;,
+        &quot;circuit_final.zkey&quot;
+    );
+
+    // Верификация доказательства
+    const vKey = JSON.parse(fs.readFileSync(&quot;verification_key.json&quot;));
+    const verified = await snarkjs.groth16.verify(
+        vKey,
+        publicSignals,
+        proof
+    );
+
+    console.log(&quot;Proven age &gt;= 18:&quot;, verified);
+    return { proof, publicSignals };
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>ZK-доказательства позволяют доказать утверждение, не раскрывая входные данные. Circom описывает арифметические схемы. Groth16 даёт маленькие быстро проверяемые доказательства. Типичные применения: приватные транзакции, проверка личности и масштабирование (zk-rollups).</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Приложения с защитой приватности (приватное голосование, личность)</li>
+<li>Масштабирование блокчейна (zk-rollups, validiums)</li>
+<li>Верифицируемые вычисления (аутсорс вычислений с доказательством)</li>
+<li>Комплаенс (доказать возраст, KYC, кредитный рейтинг без раскрытия данных)</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Напишите схему на Circom: `circom age-check.circom --r1cs --wasm --sym` компилирует в ограничения, wasm и символы.</p>
+<p class='ordered'>2. Сгенерируйте powers-of-tau: `snarkjs powersoftau new bn128 12 pot12_0000.ptau`, затем `snarkjs powersoftau prepare phase2`.</p>
+<p class='ordered'>3. Постройте ключи proving + verification: `snarkjs groth16 setup circuit.r1cs pot12_final.ptau circuit.zkey`.</p>
+<p class='ordered'>4. Экспортируйте verification key и Solidity-верификатор: `snarkjs zkey export verificationkey` и `snarkjs zkey export solidityverifier`.</p>
+<p class='ordered'>5. Вычислите witness офлайн через `snarkjs wtns calculate`, затем сгенерируйте доказательство через `groth16 prove`.</p>
+<p class='ordered'>6. Верифицируйте в dApp: вызовите on-chain верификатор (или `snarkjs groth16 verify`) с public inputs и proof.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Клиентская генерация доказательства для приватной проверки возраста
+import { buildPoseidon } from &quot;circomlibjs&quot;;
+import snarkjs from &quot;snarkjs&quot;;
+import fs from &quot;fs&quot;;
+
+const wc = await snarkjs.wtns.calculate(
+  { age: 25, threshold: 18 },
+  &quot;age-check.wasm&quot;,
+  &quot;witness.wtns&quot;
+);
+const { proof, publicSignals } = await snarkjs.groth16.prove(
+  &quot;circuit_final.zkey&quot;,
+  &quot;witness.wtns&quot;
+);
+
+const vkey = JSON.parse(fs.readFileSync(&quot;verification_key.json&quot;, &quot;utf8&quot;));
+const ok = await snarkjs.groth16.verify(vkey, publicSignals, proof);
+console.log(&quot;age &gt;= 18 proven:&quot;, ok, &quot;public threshold:&quot;, publicSignals[0]);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># On-chain: разверните Verifier.sol и верифицируйте по packed call data
+snarkjs zkey export solidityverifier circuit_final.zkey Verifier.sol
+snarkjs generatecall
+# вставьте возвращённые входные данные в `verifier.verifyProof(...)`</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Логика схемы минимальна и аудируема; используйте проверенные шаблоны.</li>
+<li>Circom для арифметических схем; тесты через witness generation.</li>
+<li>Доказательства через snarkjs; закрепите trusted setup.</li>
+<li>Валидируйте публичные входы on-chain до верификации.</li>
+<li>Артефакты trusted setup версионируйте и подписывайте.</li>
+<li>Профилируйте число ограничений; упрощайте под лимиты.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Переполнение ограничений: рефакторинг или разбиение схемы.</li>
+<li>Несовпадение доказательства: тот же hash схемы и входы.</li>
+<li>Ошибки trusted setup: перекачайте и проверьте артефакты.</li>
+<li>Верификация on-chain падает: проверьте gas и кодирование входов.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. Схема компилируется через `circom` без ошибок</p>
+<p class='ordered'>2. Генерация доказательства укладывается в приемлемое время</p>
+<p class='ordered'>3. Верификация проходит для валидных доказательств и падает для невалидных</p>
+<p class='ordered'>4. Публичные входы раскрываются корректно, приватные — остаются скрытыми</p></div>
       
     </article>
   </div>
@@ -224,6 +333,15 @@ snarkjs generatecall
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -250,6 +368,9 @@ snarkjs generatecall
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

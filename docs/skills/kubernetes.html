@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="kafka.html">← kafka</a><a class="page-nav-link" href="loki.html">loki →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Kubernetes</h1>
 <blockquote>Deploying and operating containerized applications with Kubernetes.</blockquote>
 <h2>Quick Start</h2>
@@ -193,6 +194,131 @@ kubectl rollout undo deploy/web</code></pre><button class="copy-btn code-copy" o
 <li>Pending pods: insufficient resources or node pressure — check events.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Kubernetes (Кубернетес)</h1>
+<blockquote>Деплой и эксплуатация контейнерных приложений на Kubernetes.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Локальный кластер (kind или minikube)
+kind create cluster
+kubectl apply -f deploy.yaml
+kubectl get pods</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Много сервисов, которым нужен автоматический скейлинг</li>
+<li>Self-healing нагрузки (рестарты, перепланирование)</li>
+<li>Rolling-деплои и canary</li>
+<li>Консистентность мульти-окружений в масштабе</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Нагрузки</h3>
+<ul>
+<li>Предпочитайте Deployments (stateless); StatefulSets — для БД</li>
+<li>Определяйте resources (requests/limits) на каждом контейнере</li>
+<li>Добавляйте liveness и readiness пробы</li>
+<li>В проде минимум 2 реплики</li>
+</ul>
+<h3>Конфигурация</h3>
+<ul>
+<li>Конфиг — в ConfigMaps; секреты — в Secrets (base64; для реальных секретов — внешние)</li>
+<li>Инжектируйте через env, смонтированные volumes или external secret operators</li>
+<li>Для упаковки используйте Helm; версия чарта совпадает с версией приложения</li>
+<li>Никогда не зашивайте конфиг в образы</li>
+</ul>
+<h3>Сеть и безопасность</h3>
+<ul>
+<li>Экспонируйте через Services (ClusterIP/NodePort/LoadBalancer)</li>
+<li>Для HTTP-маршрутизации используйте Ingress с TLS</li>
+<li>Применяйте RBAC с минимальными правами; используйте NetworkPolicies</li>
+<li>Ставьте quotas и limits на namespace</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># kubectl + кластер (kind/minikube/cloud)
+kubectl version --client
+# Helm (опционально)
+helm version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Deployment с пробами, ресурсами и репликами
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: web }
+  template:
+    metadata:
+      labels: { app: web }
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/org/myapp:1.0.0
+          ports: [{ containerPort: 8080 }]
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 512Mi }
+          readinessProbe:
+            httpGet: { path: /health, port: 8080 }
+          livenessProbe:
+            httpGet: { path: /health, port: 8080 }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Service + Ingress
+apiVersion: v1
+kind: Service
+metadata: { name: web }
+spec:
+  selector: { app: web }
+  ports:
+    - { port: 80, targetPort: 8080 }
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: { name: web }
+spec:
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: { name: web, port: { number: 80 } }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># ConfigMap + Secret
+apiVersion: v1
+kind: ConfigMap
+metadata: { name: app-config }
+data:
+  LOG_LEVEL: info
+---
+apiVersion: v1
+kind: Secret
+metadata: { name: app-secret }
+type: Opaque
+stringData:
+  API_KEY: change-me</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Rolling update и откат
+kubectl set image deploy/web web=ghcr.io/org/myapp:1.1.0
+kubectl rollout status deploy/web
+kubectl rollout undo deploy/web</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите Deployment с ресурсами, пробами и репликами.</p>
+<p class='ordered'>2. Добавьте Service и Ingress для маршрутизации трафика.</p>
+<p class='ordered'>3. Вынесите конфиг в ConfigMaps и Secrets.</p>
+<p class='ordered'>4. Сначала применяйте в dev-кластер; валидируйте через `kubectl get` и логи.</p>
+<p class='ordered'>5. Добавьте автопскейлинг (HPA) по CPU/памяти.</p>
+<p class='ordered'>6. Упакуйте в Helm-чарты для переиспользования.</p>
+<p class='ordered'>7. Внедрите GitOps (ArgoCD/Flux) для декларативных деплоев.</p>
+<p class='ordered'>8. Добавьте NetworkPolicies, RBAC и quotas до прода.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `kubectl apply` проходит; поды достигают Ready</p>
+<p class='ordered'>2. Пробы проходят; rolling-обновления без downtime</p>
+<p class='ordered'>3. `kubectl rollout status` показывает fully available</p>
+<p class='ordered'>4. Ingress маршрутизирует на сервис по HTTPS</p>
+<p class='ordered'>5. `kubectl describe` не показывает crash loops или OOMKills</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>CrashLoopBackOff: проверьте логи и тег образа.</li>
+<li>ImagePullBackOff: проверьте имя/тег образа и креды реестра.</li>
+<li>Pending поды: нехватка ресурсов или node pressure — проверьте события.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="kafka.html">← kafka</a><a class="page-nav-link" href="loki.html">loki →</a></div>
     </article>
   </div>
@@ -241,6 +367,15 @@ kubectl rollout undo deploy/web</code></pre><button class="copy-btn code-copy" o
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -267,6 +402,9 @@ kubectl rollout undo deploy/web</code></pre><button class="copy-btn code-copy" o
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

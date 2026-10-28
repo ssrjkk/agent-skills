@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="rest-api-design.html">← rest-api-design</a><a class="page-nav-link" href="spring-boot.html">spring-boot →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Rust Tokio</h1>
 <blockquote>Build high-performance async applications in Rust using the Tokio runtime.</blockquote>
 <h2>Quick Start</h2>
@@ -268,6 +269,161 @@ async fn main() {
 <p class='ordered'>3. Shared state synchronization is race-condition free</p>
 <p class='ordered'>4. Performance benchmarks show expected throughput</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Rust Tokio</h1>
+<blockquote>Создавайте высокопроизводительные асинхронные приложения на Rust с runtime Tokio.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>use tokio::net::TcpListener;
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
+use std::sync::Arc;
+use tokio::sync::Mutex;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let listener = TcpListener::bind(&quot;127.0.0.1:8080&quot;).await?;
+    let counter = Arc::new(Mutex::new(0u64));
+
+    println!(&quot;Server listening on :8080&quot;);
+
+    loop {
+        let (socket, addr) = listener.accept().await?;
+        let counter = counter.clone();
+
+        tokio::spawn(async move {
+            println!(&quot;New connection: {}&quot;, addr);
+
+            let (reader, mut writer) = socket.into_split();
+            let mut buf_reader = BufReader::new(reader);
+            let mut line = String::new();
+
+            loop {
+                line.clear();
+                match buf_reader.read_line(&amp;mut line).await {
+                    Ok(0) =&gt; break, // EOF
+                    Ok(_) =&gt; {
+                        let response = format!(&quot;Echo: {}&quot;, line.trim());
+
+                        let mut count = counter.lock().await;
+                        *count += 1;
+                        drop(count);
+
+                        if let Err(e) = writer.write_all(response.as_bytes()).await {
+                            eprintln!(&quot;Write error: {}&quot;, e);
+                            break;
+                        }
+                        if let Err(e) = writer.write_all(b&quot;\n&quot;).await {
+                            eprintln!(&quot;Write error: {}&quot;, e);
+                            break;
+                        }
+                    }
+                    Err(e) =&gt; {
+                        eprintln!(&quot;Read error: {}&quot;, e);
+                        break;
+                    }
+                }
+            }
+            println!(&quot;Connection closed: {}&quot;, addr);
+        });
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Асинхронный HTTP-клиент
+use reqwest;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let urls = vec![
+        &quot;https://api.example.com/users&quot;,
+        &quot;https://api.example.com/products&quot;,
+        &quot;https://api.example.com/orders&quot;,
+    ];
+
+    let mut handles = Vec::new();
+    for url in urls {
+        handles.push(tokio::spawn(async move {
+            reqwest::get(url).await.unwrap().text().await.unwrap()
+        }));
+    }
+
+    for handle in handles {
+        let result = handle.await?;
+        println!(&quot;Got response: {} bytes&quot;, result.len());
+    }
+
+    Ok(())
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Tokio — асинхронный runtime для Rust: I/O, таймеры, примитивы синхронизации и планировщик задач. `#[tokio::main]` вводит в асинхронный контекст. `tokio::spawn` создаёт конкурентные задачи. Для разделяемого состояния используйте `Mutex`/`RwLock`.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Высоконагруженные сетевые сервисы (HTTP-серверы, прокси)</li>
+<li>Системы реального времени (чат, игры, стриминг)</li>
+<li>Конвейеры конкурентной обработки данных</li>
+<li>Микросервисы с максимальной производительностью</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Добавьте Tokio: `cargo add tokio --features full` и async `main` через `#[tokio::main]`.</p>
+<p class='ordered'>2. Выберите I/O-примитив: `TcpListener`/`TcpStream` для сокетов, `UnixListener` для локальных pipe, `tokio::fs` для асинхронного доступа к файлам.</p>
+<p class='ordered'>3. Обрабатывайте каждое соединение через `tokio::spawn` — никогда не блокируйте worker-потоки синхронной работой.</p>
+<p class='ordered'>4. Разделяйте состояние через `tokio::sync::Mutex`/`RwLock` (или actor-каналы), клонируя в задачи.</p>
+<p class='ordered'>5. Добавляйте конкурентность: `tokio::join!`/`try_join!` для параллельных await и `tokio::time::timeout` для дедлайнов.</p>
+<p class='ordered'>6. Настройте runtime: задайте число worker-потоков и запускайте тесты с `--cfg tokio_unstable` при необходимости.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Fan-out на N конкурентных задач и агрегация результатов
+use tokio::time::{sleep, Duration};
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let handles: Vec&lt;_&gt; = (0..5)
+        .map(|i| tokio::spawn(async move {
+            sleep(Duration::from_millis(100 * i)).await;
+            i * i
+        }))
+        .collect();
+
+    let mut total = 0;
+    for h in handles {
+        total += h.await?;
+    }
+    println!(&quot;sum of squares = {total}&quot;);
+    Ok(())
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Graceful shutdown через CancellationToken
+use tokio_util::sync::CancellationToken;
+
+#[tokio::main]
+async fn main() {
+    let token = CancellationToken::new();
+    let child = token.clone();
+    tokio::spawn(async move {
+        tokio::select! {
+            _ = child.cancelled() =&gt; println!(&quot;task cancelled&quot;),
+            _ = tokio::time::sleep(Duration::from_secs(60)) =&gt; println!(&quot;task done&quot;),
+        }
+    });
+    tokio::time::sleep(Duration::from_millis(50)).await;
+    token.cancel();
+    tokio::time::sleep(Duration::from_millis(50)).await;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Tokio async runtime для I/O-bound задач; потоки для CPU-heavy.</li>
+<li>`tokio::spawn` с owned tasks; не блокируйте executor.</li>
+<li>Каналы для общения; `Arc&lt;Mutex&gt;` экономно.</li>
+<li>Таймауты через `tokio::time` против зависаний.</li>
+<li>`tokio::select!` для конкурентных awaitable источников.</li>
+<li>Бенчмарки с tracing при важности задержки.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Runtime не найден: добавьте `tokio` с фичей `full` или `rt-multi-thread`.</li>
+<li>Блокировка executor: переносите sync-работу в `spawn_blocking`.</li>
+<li>Deadlock: крошечные области блокировок без await под ними.</li>
+<li>Паника задачи: JoinHandle или супервизор для рестарта.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. `cargo run` запускает сервер без паник</p>
+<p class='ordered'>2. Обрабатываются несколько конкурентных соединений</p>
+<p class='ordered'>3. Синхронизация разделяемого состояния без гонок</p>
+<p class='ordered'>4. Бенчмарки показывают ожидаемую пропускную способность</p></div>
       <div class="page-nav"><a class="page-nav-link" href="rest-api-design.html">← rest-api-design</a><a class="page-nav-link" href="spring-boot.html">spring-boot →</a></div>
     </article>
   </div>
@@ -316,6 +472,15 @@ async fn main() {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -342,6 +507,9 @@ async fn main() {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

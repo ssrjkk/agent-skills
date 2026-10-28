@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="design-spec-md.html">← design-spec-md</a><a class="page-nav-link" href="landing-page-pro.html">landing-page-pro →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Diagram as Code</h1>
 <blockquote>Workflows, architecture and business processes as validated code, not pixels.</blockquote>
 <h2>Quick Start</h2>
@@ -188,6 +189,126 @@ salt
 <li>C4 too abstract: drop one level (Context -&gt; Container -&gt; Component).</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Диаграммы как код (Diagram as Code)</h1>
+<blockquote>Воркфлоу, архитектура и бизнес-процессы как проверяемый код, а не пиксели.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>flowchart TD
+  A[Запрос] --&gt; B{Нужна диаграмма?}
+  B --&gt;|да| C[Тип: flowchart/sequence/C4]
+  B --&gt;|нет| D[Пропустить]
+  C --&gt; E[Пишем Mermaid]
+  E --&gt; F[Валидация + рендер]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># рендер локально или вставьте в Mermaid Live
+npx @mermaid-js/mermaid-cli -i docs/arch.mmd -o docs/arch.svg
+python scripts/validate_mermaid.py docs/arch.mmd</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Архитектура систем и карта сервисов</li>
+<li>Бизнес-процессы и согласования</li>
+<li>Sequence-диаграммы для API и авторизации</li>
+<li>Машины состояний, ER-диаграммы, C4-модели</li>
+<li>Доки, которые обязаны жить вместе с кодом</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Выбор типа</h3>
+<ul>
+<li>Flowchart: решения и процессы, макс 12 узлов на вид</li>
+<li>Sequence: взаимодействия во времени, каждый актор поименован</li>
+<li>Class/ER: модели данных, без лишних методов</li>
+<li>State: явные initial/final, каждый переход подписан</li>
+<li>C4: Context для стейкхолдеров, Container для команд, Component для девов</li>
+</ul>
+<h3>Читаемость</h3>
+<ul>
+<li>Одна идея на диаграмму, большое режьте на подграфы</li>
+<li>Процессы слева направо, иерархии сверху вниз</li>
+<li>Короткие подписи (3-5 слов), детали в заметках</li>
+<li>Стабильные id латиницей, человеческие подписи отдельно</li>
+</ul>
+<h3>Корректность</h3>
+<ul>
+<li>У каждой ветки подписано условие</li>
+<li>Без висячих узлов и лишних пересечений стрелок</li>
+<li>Акторы и сервисы совпадают с именами в коде</li>
+<li>Диаграмма версионируется рядом с кодом</li>
+</ul>
+<h3>Рендеринг</h3>
+<ul>
+<li>Mermaid для Markdown-доков</li>
+<li>C4-PlantUML для enterprise-архитектуры</li>
+<li>SVG для сайта доков, проверяйте dark + light</li>
+<li>Исходник `.mmd` в git, рендер на CI</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm i -g @mermaid-js/mermaid-cli
+# опционально: java + plantuml для C4
+java -version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>sequenceDiagram
+  participant U as Пользователь
+  participant A as Агент
+  participant T as Инструменты
+  U-&gt;&gt;A: Собери форму оплаты
+  A-&gt;&gt;A: Читаю design-spec-md
+  A-&gt;&gt;T: поиск стилей + токенов
+  T--&gt;&gt;A: дизайн-система
+  A-&gt;&gt;U: Код + чек-лист</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>stateDiagram-v2
+  [*] --&gt; Draft
+  Draft --&gt; Review: submit
+  Review --&gt; Approved: accept
+  Review --&gt; Draft: правки
+  Approved --&gt; [*]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>@startsalt
+salt
+{
+  {T
+   + Заказ | Статус | Сумма
+   + #1234 | оплачен | $89
+   + #1235 | ждет | $12
+  }
+}
+@endsalt</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>erDiagram
+  USER ||--o{ ORDER : places
+  ORDER ||--|{ LINE_ITEM : contains
+  USER {
+    string id PK
+    string email
+  }
+  ORDER {
+    string id PK
+    string status
+  }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>## Шпаргалка выбора
+- Процесс с ветками -&gt; flowchart TD/LR
+- Два+ актора во времени -&gt; sequenceDiagram
+- Таблицы и ключи -&gt; erDiagram
+- Жизненный цикл -&gt; stateDiagram-v2
+- Enterprise-ландшафт -&gt; C4 Context/Container</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Сформулируйте один вопрос, на который отвечает диаграмма.</p>
+<p class='ordered'>2. Выберите минимальный тип (flowchart, sequence, ER, state, C4).</p>
+<p class='ordered'>3. Набросайте узлы со стабильными id и короткими подписями.</p>
+<p class='ordered'>4. Подпишите каждое ребро и условие.</p>
+<p class='ordered'>5. Проверьте синтаксис CLI-скриптом.</p>
+<p class='ordered'>6. Отрендерьте SVG и проверьте читаемость в dark/light.</p>
+<p class='ordered'>7. Разбейте, если больше 12 узлов или 3 дорожек.</p>
+<p class='ordered'>8. Закоммитьте `.mmd` рядом с доками, ссылку в README.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Mermaid/PlantUML парсится без ошибок</p>
+<p class='ordered'>2. Отвечен один вопрос, второй истории внутри нет</p>
+<p class='ordered'>3. Все ветки подписаны, висячих узлов нет</p>
+<p class='ordered'>4. Имена совпадают с кодом и терминологией</p>
+<p class='ordered'>5. Чистый рендер в GitHub, на сайте и в печати</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Рендер падает: проверьте скобки, кавычки и `#` в подписях.</li>
+<li>Спагетти-стрелки: смените направление TD/LR или режьте на подграфы.</li>
+<li>Слишком плотно: вынесите подграф на актора или фазу.</li>
+<li>GitHub показывает код: у забора должен быть языковой тег `mermaid`.</li>
+<li>C4 слишком абстрактна: спуститесь на уровень (Context -&gt; Container -&gt; Component).</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="design-spec-md.html">← design-spec-md</a><a class="page-nav-link" href="landing-page-pro.html">landing-page-pro →</a></div>
     </article>
   </div>
@@ -236,6 +357,15 @@ salt
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -262,6 +392,9 @@ salt
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

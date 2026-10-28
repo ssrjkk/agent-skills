@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="jest.html">jest →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Browser Automation</h1>
 <blockquote>Automating real browsers with Playwright for E2E tests and scraping.</blockquote>
 <h2>Quick Start</h2>
@@ -171,6 +172,109 @@ def test_intercept(page):
 <li>Slow suite: parallelize and limit full-page screenshots.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Browser Automation (Автоматизация браузера)</h1>
+<blockquote>Автоматизация реальных браузеров через Playwright для E2E-тестов и скрапинга.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm init playwright@latest
+npx playwright test
+# или в Python:
+pip install playwright &amp;&amp; playwright install</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>End-to-end тесты пользовательских сценариев</li>
+<li>Визуальные регрессии и скриншот-проверки</li>
+<li>Веб-скрапинг и сбор данных</li>
+<li>Мониторинг критичных пользовательских путей</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Селекторы</h3>
+<ul>
+<li>Предпочитайте role и text селекторы вместо CSS/XPath</li>
+<li>Используйте `getByRole`, `getByLabel`, `getByText` для надёжных запросов</li>
+<li>Добавляйте `data-testid` для сложных компонентов</li>
+<li>Избегайте хрупких CSS-селекторов, привязанных к layout</li>
+</ul>
+<h3>Ожидания и тайминги</h3>
+<ul>
+<li>Используйте auto-waiting действия; избегайте фиксированных sleep</li>
+<li>Ждите явных условий (`waitFor` network idle)</li>
+<li>Предпочитайте `expect().toBeVisible()` вместо sleep</li>
+<li>Ставьте щедрые таймауты для медленных окружений</li>
+</ul>
+<h3>Ассерты</h3>
+<ul>
+<li>Проверяйте видимое пользователю поведение, а не внутренности</li>
+<li>Используйте soft assertions, где фейл не должен прерывать</li>
+<li>Делайте скриншоты при фейле для отладки</li>
+<li>Проверяйте сетевые запросы и ответы</li>
+</ul>
+<h3>Надёжность</h3>
+<ul>
+<li>Запускайте в CI с retries на флаки</li>
+<li>Изолируйте тесты: свежее состояние на тест</li>
+<li>Осторожно с параллельными воркерами и общим состоянием</li>
+<li>Обрабатывайте popup, диалоги и multi-tab сценарии</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm init playwright@latest
+npx playwright install --with-deps
+# или Python:
+pip install pytest-playwright</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from playwright.sync_api import sync_playwright, expect
+
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto(&quot;https://example.com/login&quot;)
+    page.get_by_label(&quot;Email&quot;).fill(&quot;user@example.com&quot;)
+    page.get_by_label(&quot;Password&quot;).fill(&quot;secret&quot;)
+    page.get_by_role(&quot;button&quot;, name=&quot;Sign in&quot;).click()
+    expect(page).to_have_url(&quot;https://example.com/dashboard&quot;)
+    browser.close()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Тестовый файл с Playwright runner
+from playwright.sync_api import Page, expect
+
+def test_login(page: Page):
+    page.goto(&quot;/login&quot;)
+    page.get_by_label(&quot;Email&quot;).fill(&quot;user@example.com&quot;)
+    page.get_by_role(&quot;button&quot;, name=&quot;Sign in&quot;).click()
+    expect(page.get_by_text(&quot;Welcome back&quot;)).to_be_visible()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// JavaScript E2E тест
+const { test, expect } = require(&quot;@playwright/test&quot;);
+
+test(&quot;search flow&quot;, async ({ page }) =&gt; {
+  await page.goto(&quot;/&quot;);
+  await page.getByPlaceholder(&quot;Search...&quot;).fill(&quot;playwright&quot;);
+  await page.keyboard.press(&quot;Enter&quot;);
+  await expect(page.locator(&quot;h1&quot;)).toContainText(&quot;Results&quot;);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Перехват сети и скриншот
+def test_intercept(page):
+    page.route(&quot;**/api/data&quot;, lambda route: route.fulfill(json={&quot;ok&quot;: True}))
+    page.goto(&quot;/&quot;)
+    page.screenshot(path=&quot;home.png&quot;, full_page=True)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите Playwright и настройте тестовый проект.</p>
+<p class='ordered'>2. Определите критичные пользовательские сценарии первыми.</p>
+<p class='ordered'>3. Пишите тесты с role-селекторами и auto-waiting.</p>
+<p class='ordered'>4. Проверяйте видимое поведение; добавляйте скриншоты при фейле.</p>
+<p class='ordered'>5. Перехватывайте внешние API для изоляции тестов.</p>
+<p class='ordered'>6. Запускайте локально; чините флаки через retries и waits.</p>
+<p class='ordered'>7. Добавьте тесты в CI с параллельными воркерами.</p>
+<p class='ordered'>8. Расширяйте покрытие до визуальных регрессий и мониторинга.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Тесты стабильно проходят 3+ запуска</p>
+<p class='ordered'>2. Селекторы переживают мелкие изменения UI</p>
+<p class='ordered'>3. Скриншоты фейла фиксируют состояние</p>
+<p class='ordered'>4. Внешние сети не протекают в тесты</p>
+<p class='ordered'>5. CI гоняет их на каждом PR с приемлемым временем</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Флаки waits: заменяйте sleep явными waits и ассертами.</li>
+<li>Элемент не найден: используйте role/text селекторы; проверяйте iframes и shadow DOM.</li>
+<li>Медленный сьют: параллельте и ограничьте full-page скриншоты.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="jest.html">jest →</a></div>
     </article>
   </div>
@@ -219,6 +323,15 @@ def test_intercept(page):
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -245,6 +358,9 @@ def test_intercept(page):
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

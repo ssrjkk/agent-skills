@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="prisma-orm.html">← prisma-orm</a><a class="page-nav-link" href="sqlite.html">sqlite →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Redis</h1>
 <blockquote>High-performance in-memory data store for caching and real-time workloads.</blockquote>
 <h2>Quick Start</h2>
@@ -168,6 +169,106 @@ r.publish(&quot;events&quot;, &quot;user:created&quot;)</code></pre><button clas
 <li>Single point of failure: enable Sentinel or Cluster.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Redis (Редис)</h1>
+<blockquote>Высокопроизводительное in-memory хранилище для кэша и real-time нагрузок.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name redis -p 6379:6379 -d redis:7
+redis-cli ping  # PONG</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Кэширование горячих чтений перед базой данных</li>
+<li>Хранилище сессий и rate limiting</li>
+<li>Очереди и pub/sub для развязки сервисов</li>
+<li>Real-time счётчики, лидерборды и распределённые блокировки</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Моделирование данных</h3>
+<ul>
+<li>Выбирайте правильную структуру: STRING, HASH, LIST, SET, ZSET</li>
+<li>HASH — для объектов; ZSET — для рейтингов; SET — для уникальности</li>
+<li>Используйте короткие ключи с префиксом: `app:user:123:profile`</li>
+<li>Ставьте TTL на ключи кэша; избегайте неограниченного роста</li>
+</ul>
+<h3>Кэширование</h3>
+<ul>
+<li>Cache-aside: читайте кэш, при промахе грузите БД и заполняйте</li>
+<li>Для блокировок используйте `SET NX EX`; Lua-скрипты — для атомарности</li>
+<li>Выбирайте политику вытеснения (allkeys-lru) и maxmemory</li>
+<li>Инвалидируйте при записи или используйте короткие TTL с write-through</li>
+</ul>
+<h3>Надёжность</h3>
+<ul>
+<li>Включайте AOF или RDB персистентность</li>
+<li>В проде используйте Redis Cluster или Sentinel для HA</li>
+<li>Задайте `maxmemory` и мониторьте `INFO memory`</li>
+<li>Никогда не храните секреты или PII с длинными TTL</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name redis -p 6379:6379 -d redis:7
+# Python клиент
+pip install redis</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import redis
+
+r = redis.Redis.from_url(&quot;redis://localhost:6379/0&quot;)
+
+# Cache-aside паттерн
+def get_user(user_id: str):
+    key = f&quot;app:user:{user_id}:profile&quot;
+    cached = r.get(key)
+    if cached:
+        return cached
+    profile = db.fetch_user(user_id)   # медленный путь
+    r.set(key, profile, ex=300)
+    return profile</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Rate limiting через INCR + EXPIRE (token bucket)
+def rate_limit(user_id: str, limit: int = 10, window: int = 60) -&gt; bool:
+    key = f&quot;rate:{user_id}:{int(time.time() // window)}&quot;
+    count = r.incr(key)
+    if count == 1:
+        r.expire(key, window)
+    return count &lt;= limit</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Распределённая блокировка через Lua
+unlock = r.register_script(&quot;&quot;&quot;
+if redis.call(&#x27;get&#x27;, KEYS[1]) == ARGV[1] then
+  return redis.call(&#x27;del&#x27;, KEYS[1])
+else
+  return 0
+end
+&quot;&quot;&quot;)
+
+lock_key = &quot;app:lock:checkout&quot;
+token = &quot;uuid-123&quot;
+r.set(lock_key, token, nx=True, ex=10)
+# ... критическая секция ...
+unlock(keys=[lock_key], args=[token])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Pub/Sub
+pubsub = r.pubsub()
+pubsub.subscribe(&quot;events&quot;)
+for message in pubsub.listen():
+    print(message[&quot;data&quot;])
+r.publish(&quot;events&quot;, &quot;user:created&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите структуры данных под ваши паттерны доступа.</p>
+<p class='ordered'>2. Определите нейминг ключей и стратегию TTL заранее.</p>
+<p class='ordered'>3. Реализуйте cache-aside или write-through для горячих данных.</p>
+<p class='ordered'>4. Добавьте rate limiting и распределённые блокировки там, где есть общее состояние.</p>
+<p class='ordered'>5. Настройте персистентность (AOF) и политику вытеснения.</p>
+<p class='ordered'>6. Настройте Cluster/Sentinel для доступности в проде.</p>
+<p class='ordered'>7. Мониторьте `INFO`, slowlog и использование памяти; ставьте алерты.</p>
+<p class='ordered'>8. Добавьте health checks и учения по отказоустойчивости.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `redis-cli ping` возвращает PONG</p>
+<p class='ordered'>2. Cache hits мгновенные; промахи корректно заполняются</p>
+<p class='ordered'>3. TTL истекают ключи как ожидается</p>
+<p class='ordered'>4. Блокировки освобождаются по таймауту даже при падении</p>
+<p class='ordered'>5. Нет out-of-memory при настроенных maxmemory + eviction</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Ключ вытеснен слишком рано: поднимите maxmemory или смените политику.</li>
+<li>Stale cache: согласуйте инвалидацию с записью или укоротите TTL.</li>
+<li>Единая точка отказа: включите Sentinel или Cluster.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="prisma-orm.html">← prisma-orm</a><a class="page-nav-link" href="sqlite.html">sqlite →</a></div>
     </article>
   </div>
@@ -216,6 +317,15 @@ r.publish(&quot;events&quot;, &quot;user:created&quot;)</code></pre><button clas
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -242,6 +352,9 @@ r.publish(&quot;events&quot;, &quot;user:created&quot;)</code></pre><button clas
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

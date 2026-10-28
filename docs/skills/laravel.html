@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="grpc.html">← grpc</a><a class="page-nav-link" href="nestjs.html">nestjs →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Laravel</h1>
 <blockquote>Building robust PHP web applications with Laravel.</blockquote>
 <h2>Quick Start</h2>
@@ -174,6 +175,112 @@ class StoreUserRequest extends FormRequest
 <li>Slow responses: cache queries and views, queue jobs.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Laravel (Ларавел)</h1>
+<blockquote>Создание надёжных PHP-веб-приложений на Laravel.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>composer create-project laravel/laravel my-app
+cd my-app &amp;&amp; php artisan serve
+# http://localhost:8000</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>PHP-монолиты с чистой MVC-структурой</li>
+<li>CRUD-приложения с быстрой разработкой</li>
+<li>Команды, которым нужен полный тулинг</li>
+<li>Проекты с Blade-шаблонами или JSON API</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура</h3>
+<ul>
+<li>Следуйте структуре приложения: controllers, models, services</li>
+<li>Контроллеры тонкие; логика — в сервисах/actions</li>
+<li>Route-model binding для resourceful маршрутов</li>
+<li>По фичам, когда проект растёт</li>
+</ul>
+<h3>Eloquent и миграции</h3>
+<ul>
+<li>Миграции на каждое изменение схемы</li>
+<li>Eloquent relationships и eager loading</li>
+<li>Индексы; избегайте N+1</li>
+<li>Валидация через Form Requests</li>
+</ul>
+<h3>Валидация и ошибки</h3>
+<ul>
+<li>Валидируйте через Form Requests</li>
+<li>Консистентные JSON-ошибки для API</li>
+<li>Централизованная обработка исключений</li>
+<li>Корректные HTTP статус-коды</li>
+</ul>
+<h3>Безопасность и производительность</h3>
+<ul>
+<li>Blade escaping против XSS</li>
+<li>Mass assignment: whitelist fillable</li>
+<li>Кэш горячих запросов и вьюх</li>
+<li>Тяжёлые задачи — в очередь</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>composer create-project laravel/laravel my-app
+php artisan serve</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// routes/web.php
+Route::get(&#x27;/users/{user}&#x27;, [UserController::class, &#x27;show&#x27;]);
+
+// app/Http/Controllers/UserController.php
+class UserController extends Controller
+{
+    public function show(User $user)
+    {
+        return view(&#x27;users.show&#x27;, [&#x27;user&#x27; =&gt; $user]);
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Миграция
+Schema::create(&#x27;users&#x27;, function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string(&#x27;email&#x27;)-&gt;unique();
+    $table-&gt;timestamp(&#x27;created_at&#x27;)-&gt;nullable();
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Модель со связью и fillable
+class User extends Authenticatable
+{
+    protected $fillable = [&#x27;name&#x27;, &#x27;email&#x27;];
+    protected $hidden = [&#x27;password&#x27;];
+
+    public function posts()
+    {
+        return $this-&gt;hasMany(Post::class);
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Валидация через Form Request
+class StoreUserRequest extends FormRequest
+{
+    public function rules()
+    {
+        return [
+            &#x27;name&#x27; =&gt; &#x27;required|string|max:255&#x27;,
+            &#x27;email&#x27; =&gt; &#x27;required|email|unique:users&#x27;,
+        ];
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Скаффолд через `composer create-project`.</p>
+<p class='ordered'>2. Настройте БД и окружение.</p>
+<p class='ordered'>3. Создайте миграции и Eloquent-модели.</p>
+<p class='ordered'>4. Соберите маршруты и контроллеры.</p>
+<p class='ordered'>5. Добавьте Form Requests для валидации.</p>
+<p class='ordered'>6. Напишите Blade-шаблоны или JSON API.</p>
+<p class='ordered'>7. Добавьте auth, кэш и очереди.</p>
+<p class='ordered'>8. Тестируйте Pest/PHPUnit и деплойте.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `php artisan test` проходит</p>
+<p class='ordered'>2. Миграции применяются чисто</p>
+<p class='ordered'>3. Валидация отклоняет плохой ввод</p>
+<p class='ordered'>4. Нет явных N+1 в ключевых маршрутах</p>
+<p class='ordered'>5. Приложение работает в production-режиме</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>N+1: используйте `with()` eager loading.</li>
+<li>Mass assignment: корректно задавайте `$fillable`.</li>
+<li>Медленные ответы: кэшируйте запросы и вьюхи, ставьте задачи в очередь.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="grpc.html">← grpc</a><a class="page-nav-link" href="nestjs.html">nestjs →</a></div>
     </article>
   </div>
@@ -222,6 +329,15 @@ class StoreUserRequest extends FormRequest
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -248,6 +364,9 @@ class StoreUserRequest extends FormRequest
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

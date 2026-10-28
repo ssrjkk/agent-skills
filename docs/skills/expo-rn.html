@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="flutter.html">flutter →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Expo SDK</h1>
 <blockquote>Build cross-platform mobile apps with Expo SDK and React Native.</blockquote>
 <h2>Quick Start</h2>
@@ -186,6 +187,124 @@ npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText
 <p class='ordered'>3. Native features (camera, SQLite) work on both platforms</p>
 <p class='ordered'>4. `eas build` produces installable binaries</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Expo SDK</h1>
+<blockquote>Создавайте кросс-платформенные мобильные приложения с Expo SDK и React Native.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>// app/index.tsx — file-based роутинг Expo Router
+import { router } from &#x27;expo-router&#x27;;
+import { View, Text, FlatList, TouchableOpacity } from &#x27;react-native&#x27;;
+import { useSQLiteContext } from &#x27;expo-sqlite&#x27;;
+
+export default function HomeScreen() {
+  const db = useSQLiteContext();
+
+  const [items, setItems] = useState&lt;Todo[]&gt;([]);
+
+  useEffect(() =&gt; {
+    db.getAllAsync(&#x27;SELECT * FROM todos ORDER BY created_at DESC&#x27;)
+      .then(setItems);
+  }, []);
+
+  return (
+    &lt;View className=&quot;flex-1 p-4&quot;&gt;
+      &lt;FlatList
+        data={items}
+        keyExtractor={(item) =&gt; item.id.toString()}
+        renderItem={({ item }) =&gt; (
+          &lt;TouchableOpacity
+            onPress={() =&gt; router.push(`/todo/${item.id}`)}
+            className=&quot;p-3 bg-white rounded-lg mb-2 shadow&quot;
+          &gt;
+            &lt;Text className={`text-lg ${item.completed ? &#x27;line-through text-gray-400&#x27; : &#x27;&#x27;}`}&gt;
+              {item.title}
+            &lt;/Text&gt;
+          &lt;/TouchableOpacity&gt;
+        )}
+      /&gt;
+      &lt;TouchableOpacity
+        onPress={() =&gt; router.push(&#x27;/todo/new&#x27;)}
+        className=&quot;bg-blue-500 p-4 rounded-full absolute bottom-8 right-8 shadow-lg&quot;
+      &gt;
+        &lt;Text className=&quot;text-white text-2xl text-center&quot;&gt;+&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    &lt;/View&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Создание и разработка
+npx create-expo-app my-app --template blank-typescript
+cd my-app
+npx expo start
+
+# Нативные сборки
+npx expo run:ios    # iOS-симулятор
+npx expo run:android  # Android-эмулятор
+
+# Продакшн-сборки
+eas build --platform all
+eas submit --platform ios
+eas submit --platform android
+
+# OTA-обновления
+npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Expo даёт managed workflow со встроенными API (камера, геолокация, SQLite, уведомления, auth). Expo Router — file-based навигация. EAS Build делает нативную компиляцию. OTA-обновления минуют ревью в сторах.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Кросс-платформенные iOS + Android из одной кодовой базы</li>
+<li>Приложения с нативными фичами (камера, GPS, биометрия)</li>
+<li>MVP с быстрой итерацией и OTA-обновлениями</li>
+<li>Команды без настройки нативной сборки</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Скаффолд: `npx create-expo-app my-app --template blank-typescript`, затем `cd my-app &amp;&amp; npx expo start`.</p>
+<p class='ordered'>2. Роутинг: установите `expo-router` и используйте file-based маршруты в `app/`.</p>
+<p class='ordered'>3. Нативные API: `npx expo install expo-camera expo-location expo-sqlite` и плагин-конфиг в `app.json`.</p>
+<p class='ordered'>4. Разработка на устройстве: откройте в Expo Go или `npx expo run:ios`/`run:android` для нативного dev-билда.</p>
+<p class='ordered'>5. Локальные данные: `expo-sqlite` (SQL через `db.getAllAsync`) или AsyncStorage для key-value состояния.</p>
+<p class='ordered'>6. Релиз: `eas build --platform all`, затем `eas submit`; итерации через `npx expo update` (OTA).</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// app/todo/[id].tsx — динамический маршрут с локальным SQLite
+import { useLocalSearchParams } from &#x27;expo-router&#x27;;
+import { useSQLiteContext } from &#x27;expo-sqlite&#x27;;
+import { View, Text } from &#x27;react-native&#x27;;
+
+export default function TodoDetail() {
+  const { id } = useLocalSearchParams&lt;{ id: string }&gt;();
+  const db = useSQLiteContext();
+  const todo = db.getFirstSync(&#x27;SELECT * FROM todos WHERE id = ?&#x27;, [id]);
+
+  return (
+    &lt;View className=&quot;p-4&quot;&gt;
+      &lt;Text className=&quot;text-xl&quot;&gt;{todo?.title}&lt;/Text&gt;
+      &lt;Text&gt;{todo?.completed ? &#x27;Done&#x27; : &#x27;Pending&#x27;}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Нативная сборка и OTA
+npx expo prebuild
+eas build --platform android --profile preview
+npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Expo SDK с Expo Go для быстрой итерации.</li>
+<li>Зависимости через `expo install` для совместимых версий.</li>
+<li>Типизированные компоненты и хуки для общей логики.</li>
+<li>Deep links и навигация через expo-router.</li>
+<li>Оптимизация изображений; expo-av аккуратно.</li>
+<li>Тестируйте на обеих платформах; сборки через EAS.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Несовпадение версий: `npx expo install --fix`.</li>
+<li>Фейлы сборки: проверьте EAS-креды и app config.</li>
+<li>Нет нативного модуля: prebuild и config plugin.</li>
+<li>Медленный reload: разбейте бандл и уберите тяжёлые импорты.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. `npx expo start` запускает Metro Bundler успешно</p>
+<p class='ordered'>2. Приложение рендерится на iOS-симуляторе и Android-эмуляторе</p>
+<p class='ordered'>3. Нативные фичи (камера, SQLite) работают на обеих платформах</p>
+<p class='ordered'>4. `eas build` собирает устанавливаемые бинарники</p></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="flutter.html">flutter →</a></div>
     </article>
   </div>
@@ -234,6 +353,15 @@ npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -260,6 +388,9 @@ npx expo update</code></pre><button class="copy-btn code-copy" onclick="copyText
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

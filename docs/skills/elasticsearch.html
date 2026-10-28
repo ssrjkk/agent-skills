@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="dbt.html">← dbt</a><a class="page-nav-link" href="pandas.html">pandas →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Elasticsearch</h1>
 <blockquote>Building and operating search and analytics with Elasticsearch.</blockquote>
 <h2>Quick Start</h2>
@@ -165,6 +166,103 @@ success, _ = bulk(es, docs)</code></pre><button class="copy-btn code-copy" oncli
 <li>Disk pressure: monitor watermarks; scale or archive old indices.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Elasticsearch (ЭластикСёрч)</h1>
+<blockquote>Построение и эксплуатация поиска и аналитики на Elasticsearch.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker run -p 9200:9200 -e &quot;discovery.type=single-node&quot; -d docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+curl -s localhost:9200  # инфо о кластере</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Полнотекстовый и fuzzy поиск по документам</li>
+<li>Аналитика логов и метрик (с Kibana)</li>
+<li>Автокомплит и фасетные фильтры</li>
+<li>Большие read-heavy датасеты</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Маппинги</h3>
+<ul>
+<li>Определяйте маппинги до массовой индексации</li>
+<li>Типы полей явно (keyword vs text)</li>
+<li>`text` — для поиска, `keyword` — для фильтра/сортировки</li>
+<li>Dynamic mapping аккуратно или отключайте</li>
+</ul>
+<h3>Индексация</h3>
+<ul>
+<li>Батчами для пропускной способности</li>
+<li>Алиас — для reindex без downtime</li>
+<li>Число шардов — под размер и нагрузку</li>
+<li>Настройте refresh interval и реплики</li>
+</ul>
+<h3>Запросы</h3>
+<ul>
+<li>`match` — для поиска, `term` — для точных значений</li>
+<li>Комбинируйте через `bool` (must, should, filter)</li>
+<li>Для аналитики — aggregations</li>
+<li>Пагинация через search_after, а не глубокий from</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Безопасность: TLS и auth (xpack)</li>
+<li>Мониторинг health кластера и аллокации шардов</li>
+<li>Алерты на disk watermark</li>
+<li>Бэкапы индексов и план DR</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>docker run -p 9200:9200 -e &quot;discovery.type=single-node&quot; -d docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+# Python клиент
+pip install elasticsearch</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from elasticsearch import Elasticsearch
+
+es = Elasticsearch(&quot;https://localhost:9200&quot;, basic_auth=(&quot;elastic&quot;, &quot;password&quot;), verify_certs=False)
+print(es.info())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Маппинг: text для поиска, keyword для фильтра
+PUT /products
+{
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;title&quot;: { &quot;type&quot;: &quot;text&quot; },
+      &quot;category&quot;: { &quot;type&quot;: &quot;keyword&quot; },
+      &quot;price&quot;: { &quot;type&quot;: &quot;float&quot; }
+    }
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Поиск с bool query и агрегацией
+resp = es.search(index=&quot;products&quot;, body={
+    &quot;query&quot;: {
+        &quot;bool&quot;: {
+            &quot;must&quot;: [{&quot;match&quot;: {&quot;title&quot;: &quot;laptop&quot;}}],
+            &quot;filter&quot;: [{&quot;term&quot;: {&quot;category&quot;: &quot;electronics&quot;}}],
+        }
+    },
+    &quot;aggs&quot;: {&quot;by_category&quot;: {&quot;terms&quot;: {&quot;field&quot;: &quot;category&quot;}}},
+})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Bulk индексация
+from elasticsearch.helpers import bulk
+
+docs = [{&quot;_index&quot;: &quot;products&quot;, &quot;_id&quot;: str(i), &quot;_source&quot;: {&quot;title&quot;: f&quot;item {i}&quot;, &quot;category&quot;: &quot;x&quot;}} for i in range(1000)]
+success, _ = bulk(es, docs)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Спланируйте структуру индекса и типы полей.</p>
+<p class='ordered'>2. Создайте маппинги и алиас.</p>
+<p class='ordered'>3. Индексируйте данные батчами с обработкой ошибок.</p>
+<p class='ordered'>4. Напишите поисковые запросы с bool и фильтрами.</p>
+<p class='ordered'>5. Добавьте агрегации для аналитических дашбордов.</p>
+<p class='ordered'>6. Настройте шарды, реплики и refresh.</p>
+<p class='ordered'>7. Обеспечьте безопасность и мониторинг кластера.</p>
+<p class='ordered'>8. Настройте бэкапы и reindex-воркфлоу.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Запросы возвращают релевантные, корректно ранжированные результаты</p>
+<p class='ordered'>2. Агрегации совпадают с исходными данными</p>
+<p class='ordered'>3. Bulk-индексация завершается без ошибок</p>
+<p class='ordered'>4. Health кластера зелёный</p>
+<p class='ordered'>5. Задержка поиска в рамках бюджета под нагрузкой</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Конфликты маппингов: исправьте несоответствие типов до reindex.</li>
+<li>Медленные запросы: добавьте фильтры, настройте шарды или используйте шаблоны поиска.</li>
+<li>Диск: мониторьте watermarks; масштабируйте или архивируйте старые индексы.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="dbt.html">← dbt</a><a class="page-nav-link" href="pandas.html">pandas →</a></div>
     </article>
   </div>
@@ -213,6 +311,15 @@ success, _ = bulk(es, docs)</code></pre><button class="copy-btn code-copy" oncli
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -239,6 +346,9 @@ success, _ = bulk(es, docs)</code></pre><button class="copy-btn code-copy" oncli
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

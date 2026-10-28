@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="dotnet.html">← dotnet</a><a class="page-nav-link" href="fastapi.html">fastapi →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Express</h1>
 <blockquote>Building Node.js APIs with Express and middleware.</blockquote>
 <h2>Quick Start</h2>
@@ -179,6 +180,117 @@ app.use((err, req, res, next) =&gt; {
 <li>Slow responses: profile middleware order and DB queries.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Express (Экспресс)</h1>
+<blockquote>Создание Node.js API на Express и middleware.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm init -y
+npm i express
+node server.js  # http://localhost:3000</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Простые и гибкие HTTP API на Node</li>
+<li>Приложения с большим использованием middleware</li>
+<li>Прототипирование и небольшие сервисы</li>
+<li>Команды, знакомые с JavaScript</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура</h3>
+<ul>
+<li>Маршруты по ресурсам: `routes/`, `controllers/`</li>
+<li>`express.Router()` на ресурс</li>
+<li>Контроллеры тонкие; логика — в сервисах</li>
+<li>Конфиг отдельно от кода</li>
+</ul>
+<h3>Middleware</h3>
+<ul>
+<li>Для auth, логирования, CORS, parsing</li>
+<li>Порядок: parse → auth → routes → error</li>
+<li>Маленький и одноцелевой middleware</li>
+<li>Централизованный обработчик ошибок</li>
+</ul>
+<h3>Валидация и ошибки</h3>
+<ul>
+<li>Валидируйте тела запросов (zod/joi)</li>
+<li>Структурированные ошибки со статус-кодами</li>
+<li>Async error handlers (`express-async-errors`)</li>
+<li>404 обрабатывайте централизованно</li>
+</ul>
+<h3>Продакшн</h3>
+<ul>
+<li>Конфиг через `process.env`</li>
+<li>За reverse proxy включите `trust proxy`</li>
+<li>Rate limiting и security headers (helmet)</li>
+<li>Процесс-менеджер (PM2) или serverless</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm i express helmet cors zod
+npm i -D typescript @types/express ts-node nodemon</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>const express = require(&quot;express&quot;);
+const app = express();
+
+app.use(express.json());
+app.get(&quot;/health&quot;, (req, res) =&gt; res.json({ ok: true }));
+
+app.use((err, req, res, next) =&gt; {
+  res.status(err.status || 500).json({ error: err.message });
+});
+
+app.listen(3000);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Router для ресурса
+const { Router } = require(&quot;express&quot;);
+const router = Router();
+
+router.get(&quot;/:id&quot;, async (req, res, next) =&gt; {
+  try {
+    const user = await findUser(req.params.id);
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Валидация через zod
+const { z } = require(&quot;zod&quot;);
+
+const createSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+});
+
+router.post(&quot;/&quot;, (req, res, next) =&gt; {
+  const parsed = createSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(422).json({ error: parsed.error.flatten() });
+  }
+  res.status(201).json(createUser(parsed.data));
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Центральный обработчик ошибок + 404
+app.use((req, res) =&gt; res.status(404).json({ error: &quot;Not found&quot; }));
+app.use((err, req, res, next) =&gt; {
+  console.error(err);
+  res.status(err.status || 500).json({ error: &quot;Internal error&quot; });
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Инициализируйте проект и установите Express.</p>
+<p class='ordered'>2. Настройте middleware: json, helmet, cors.</p>
+<p class='ordered'>3. Создайте роутеры по ресурсам.</p>
+<p class='ordered'>4. Добавьте схемы валидации для входов.</p>
+<p class='ordered'>5. Реализуйте сервисы с бизнес-логикой.</p>
+<p class='ordered'>6. Добавьте центральный обработчик ошибок и 404.</p>
+<p class='ordered'>7. Обеспечьте безопасность: rate limiting и env-конфиг.</p>
+<p class='ordered'>8. Добавьте тесты и деплойте за reverse proxy.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Эндпоинты возвращают корректные статус-коды и JSON</p>
+<p class='ordered'>2. Валидация отклоняет плохой ввод с 422</p>
+<p class='ordered'>3. Ошибки обрабатываются централизованно, без падения сервера</p>
+<p class='ordered'>4. Security headers и rate limiting активны</p>
+<p class='ordered'>5. Тесты проходят в CI</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>CORS-ошибки: настройте cors с правильным origin.</li>
+<li>Unhandled rejection: добавьте process-level обработчики и async error middleware.</li>
+<li>Медленные ответы: профилируйте порядок middleware и запросы к БД.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="dotnet.html">← dotnet</a><a class="page-nav-link" href="fastapi.html">fastapi →</a></div>
     </article>
   </div>
@@ -227,6 +339,15 @@ app.use((err, req, res, next) =&gt; {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -253,6 +374,9 @@ app.use((err, req, res, next) =&gt; {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

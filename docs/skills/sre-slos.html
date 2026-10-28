@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="serverless-ai.html">← serverless-ai</a><a class="page-nav-link" href="terraform.html">terraform →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>SRE SLOs</h1>
 <blockquote>Implement Service Level Indicators, Objectives, and Agreements following SRE best practices.</blockquote>
 <h2>Quick Start</h2>
@@ -196,6 +197,133 @@ print(&quot;availability:&quot;, float(sli_good[0][&quot;value&quot;][1]) / floa
 <p class='ordered'>3. Error budget alerts fire correctly during degradation</p>
 <p class='ordered'>4. Deployment gates respect error budget policy</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>SRE SLOs</h1>
+<blockquote>Внедряйте Service Level Indicators, Objectives и Agreements по SRE-практикам.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># slo-config.yaml — конфигурация уровня сервиса
+apiVersion: sre.google.com/v1
+kind: SLO
+metadata:
+  name: api-availability
+  service: payment-api
+spec:
+  description: &quot;Payment API availability SLO&quot;
+  target: 99.9  # процент
+  window: 28d   # скользящее окно
+
+  indicator:
+    type: availability
+    definition: |
+      # SLI: доля успешных запросов
+      good_events = count(status_code &lt; 500)
+      valid_events = count(status_code != 0)
+      sli = good_events / valid_events
+
+  burnRateAlerts:
+    - severity: page
+      threshold: 0.01  # минут бюджета ошибок в минуту
+      lookback: 1h
+    - severity: ticket
+      threshold: 0.001
+      lookback: 6h
+---
+# Политика error budget
+apiVersion: sre.google.com/v1
+kind: ErrorBudget
+metadata:
+  name: api-error-budget
+spec:
+  sloRef: api-availability
+  policy:
+    deployFreeze:
+      enabled: true
+      remainingBudgetPercent: 20</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Мониторинг SLO с Prometheus
+from prometheus_client import Histogram, Counter
+import time
+
+REQUEST_LATENCY = Histogram(
+    &#x27;http_request_duration_seconds&#x27;,
+    &#x27;HTTP request latency&#x27;,
+    [&#x27;method&#x27;, &#x27;endpoint&#x27;],
+    buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0]
+)
+
+REQUEST_COUNT = Counter(
+    &#x27;http_requests_total&#x27;,
+    &#x27;Total HTTP requests&#x27;,
+    [&#x27;method&#x27;, &#x27;endpoint&#x27;, &#x27;status&#x27;]
+)
+
+def track_request(method: str, endpoint: str):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            start = time.time()
+            try:
+                result = func(*args, **kwargs)
+                REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=&quot;200&quot;).inc()
+                return result
+            except Exception:
+                REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=&quot;500&quot;).inc()
+                raise
+            finally:
+                REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(time.time() - start)
+        return wrapper
+    return decorator</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>SLI измеряют надёжность сервиса (задержка, доступность, долговечность). SLO задают цели (например, 99.9% доступность за 28 дней). Error budget = (1 - SLO) × всего событий. Burn-rate алармы дают раннее обнаружение.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Определение ожиданий надёжности для сервисов</li>
+<li>Решения на основе данных о скорости деплоя</li>
+<li>Баланс разработки фич и инвестиций в надёжность</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите границы сервиса: обещание для пользователя (например, «API отвечает за 300мс p50, доступность 99.9%»).</p>
+<p class='ordered'>2. SLI как отношения: good events / valid events, по endpoint, агрегация в скользящем окне.</p>
+<p class='ordered'>3. SLO с error budget: доступность 99.9% за 28 дней → бюджет = 43 минуты даунтайма.</p>
+<p class='ordered'>4. Подключите мониторинг: экспортируйте гистограммы задержек и счётчики в Prometheus; SLI через recording rules.</p>
+<p class='ordered'>5. Burn-rate алармы: page на 2h окне при 14.4x расходе бюджета, ticket на 6h/1d окнах.</p>
+<p class='ordered'>6. Гейты изменений: ставьте деплой на паузу, когда остаток бюджета падает ниже порога политики (например, 20%).</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Burn-rate аларма с двумя окнами
+groups:
+  - name: slo-alerts
+    rules:
+      - alert: APIAvailabilityBurnRate
+        expr: |
+          sum(rate(http_requests_total{status=~&quot;5..&quot;}[2h]))
+          / sum(rate(http_requests_total[2h])) &gt; 0.02
+        # 2h окно, ~14.4x расход бюджета при SLO 99.9%
+        annotations:
+          summary: &quot;burning through API availability budget fast&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Расчёт SLO compliance из ответа Prometheus Query API
+from prometheus_api_client import PrometheusConnect
+p = PrometheusConnect(url=&quot;http://prometheus:9090&quot;)
+sli_good = p.custom_query(&#x27;sum(rate(http_requests_total{status&lt;&quot;500&quot;}[28d]))&#x27;)
+sli_valid = p.custom_query(&#x27;sum(rate(http_requests_total[28d]))&#x27;)
+print(&quot;availability:&quot;, float(sli_good[0][&quot;value&quot;][1]) / float(sli_valid[0][&quot;value&quot;][1]))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>SLI на реальный пользовательский опыт, не внутренности.</li>
+<li>SLO с error budgets и burn-rate алертами.</li>
+<li>Четыре золотых сигнала: задержка, трафик, ошибки, насыщение.</li>
+<li>Доступность и задержка по скользящим окнам.</li>
+<li>Ежемесячный ревью достижения SLO.</li>
+<li>Релизы привязаны к здоровью error budget.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Бюджет исчерпан: заморозьте рискованные изменения и фокусируйтесь на надёжности.</li>
+<li>Шумные алерты: настройте окна burn-rate и пороги.</li>
+<li>Дрейф SLI: стабильное определение метрики и ревью.</li>
+<li>Недостижимый SLO: пересогласуйте со стейкхолдерами и улучшайте.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. SLI точно измеряются и отчёты строятся</p>
+<p class='ordered'>2. Дашборд SLO compliance показывает текущий и исторический статус</p>
+<p class='ordered'>3. Error budget алармы срабатывают при деградации</p>
+<p class='ordered'>4. Деплой-гейты учитывают политику error budget</p></div>
       <div class="page-nav"><a class="page-nav-link" href="serverless-ai.html">← serverless-ai</a><a class="page-nav-link" href="terraform.html">terraform →</a></div>
     </article>
   </div>
@@ -244,6 +372,15 @@ print(&quot;availability:&quot;, float(sli_good[0][&quot;value&quot;][1]) / floa
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -270,6 +407,9 @@ print(&quot;availability:&quot;, float(sli_good[0][&quot;value&quot;][1]) / floa
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

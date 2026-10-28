@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="claude-code-commands.html">← claude-code-commands</a><a class="page-nav-link" href="code-review.html">code-review →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Clean Architecture</h1>
 <blockquote>Organizing codebases for maintainability and testability.</blockquote>
 <h2>Quick Start</h2>
@@ -165,6 +166,103 @@ class SqlOrderRepository(OrderRepository):
 <li>Leaky boundaries: map data at the boundaries with DTOs.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Clean Architecture (Чистая архитектура)</h1>
+<blockquote>Организация кодовых баз для поддерживаемости и тестируемости.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>Слои (снаружи -&gt; внутрь):
+  Frameworks/Drivers -&gt; Interface -&gt; Application -&gt; Domain
+Правило зависимостей: зависимости направлены только внутрь.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Большие долгоживущие кодовые базы</li>
+<li>Сложные бизнес-домены</li>
+<li>Команды, которым нужна тестируемость</li>
+<li>Системы с меняющейся инфраструктурой</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Правило зависимостей</h3>
+<ul>
+<li>Зависимости только внутрь</li>
+<li>Домен без импортов фреймворков</li>
+<li>Внешние слои зависят от интерфейсов</li>
+<li>Инверсия через DI</li>
+</ul>
+<h3>Слои</h3>
+<ul>
+<li>Domain: сущности и бизнес-правила</li>
+<li>Application: use cases и порты</li>
+<li>Interface: контроллеры/презентеры</li>
+<li>Infrastructure: БД, HTTP, внешнее</li>
+</ul>
+<h3>Use cases</h3>
+<ul>
+<li>Каждое бизнес-действие — use case</li>
+<li>Use cases тонкие и сфокусированные</li>
+<li>Порты определяют интерфейсы вовне</li>
+<li>Адаптеры реализуют порты</li>
+</ul>
+<h3>Границы</h3>
+<ul>
+<li>Пересекайте границы через интерфейсы</li>
+<li>Маппинг данных на границе (DTO)</li>
+<li>Фреймворки на краях</li>
+<li>Слой тестируется изолированно</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># язык-агностик; помогает DI-контейнер</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Домен-сущность (без импортов фреймворков)
+class Order:
+    def __init__(self, items: list[float]):
+        if any(i &lt;= 0 for i in items):
+            raise ValueError(&quot;invalid item&quot;)
+        self.items = items
+
+    def total(self) -&gt; float:
+        return sum(self.items)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Порт (интерфейс вовне)
+from abc import ABC, abstractmethod
+
+class OrderRepository(ABC):
+    @abstractmethod
+    def save(self, order: Order) -&gt; None: ...
+
+    @abstractmethod
+    def find(self, order_id: int) -&gt; Order | None: ...</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Use case в application-слое
+class CreateOrder:
+    def __init__(self, repo: OrderRepository):
+        self._repo = repo
+
+    def execute(self, items: list[float]) -&gt; Order:
+        order = Order(items)
+        self._repo.save(order)
+        return order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Адаптер, реализующий порт
+class SqlOrderRepository(OrderRepository):
+    def save(self, order: Order) -&gt; None:
+        db.insert(&quot;orders&quot;, {&quot;items&quot;: order.items})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Сначала определите доменные сущности и бизнес-правила.</p>
+<p class='ordered'>2. Найдите use cases (действия), которые должно поддерживать приложение.</p>
+<p class='ordered'>3. Определите порты (интерфейсы), нужные домену.</p>
+<p class='ordered'>4. Реализуйте адаптеры (БД, HTTP) вне домена.</p>
+<p class='ordered'>5. Свяжите всё через dependency injection.</p>
+<p class='ordered'>6. Держите фреймворки на краях.</p>
+<p class='ordered'>7. Тестируйте домен и use cases без инфраструктуры.</p>
+<p class='ordered'>8. Соблюдайте правило зависимостей.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Домен без импортов фреймворков</p>
+<p class='ordered'>2. Зависимости направлены внутрь</p>
+<p class='ordered'>3. Use cases тестируются без инфраструктуры</p>
+<p class='ordered'>4. Смена БД/HTTP-библиотеки не протекает в ядро</p>
+<p class='ordered'>5. Каждый слой тестируется независимо</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Проникновение фреймворка: переносите framework-код в адаптеры.</li>
+<li>Анемичный домен: бизнес-правила в сущности.</li>
+<li>Дырявые границы: маппинг данных на границах через DTO.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="claude-code-commands.html">← claude-code-commands</a><a class="page-nav-link" href="code-review.html">code-review →</a></div>
     </article>
   </div>
@@ -213,6 +311,15 @@ class SqlOrderRepository(OrderRepository):
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -239,6 +346,9 @@ class SqlOrderRepository(OrderRepository):
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -187,6 +187,28 @@ class TestSiteGenerator:
         alpha = next(e for e in idx if e["name"] == "alpha")
         assert "quick start" in alpha["content"]
         assert "validation" in alpha["content"]
+        assert "быстрый старт" in alpha["content_ru"]
+
+    def test_skill_page_has_ru_toggle(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        html = (docs / "skills" / "alpha.html").read_text(encoding="utf-8")
+        assert "showSkillLang" in html
+        assert 'data-slang-body="en"' in html
+        assert 'data-slang-body="ru"' in html
+        assert "Быстрый старт" in html
+
+    def test_skill_page_without_ru_has_no_toggle(self, tmp_path: Path):
+        mod = _load_mod()
+        skill_dir = _make_skill(tmp_path, "solo", "backend")
+        (skill_dir / "SKILL.ru.md").unlink()
+        catalog_path = _write_catalog(tmp_path, [_skill_entry(tmp_path, "solo", "backend")])
+        out = tmp_path / "docs"
+        (out / "skills").mkdir(parents=True)
+        assert mod.build_skill_pages(catalog_path, out) == 1
+        html = (out / "skills" / "solo.html").read_text(encoding="utf-8")
+        assert "lang-tabs" not in html
+        assert 'data-slang-body="en"' not in html
+        assert "Quick Start" in html
 
     def test_no_broken_relative_links(self, tmp_path: Path):
         docs = _build_site(tmp_path)

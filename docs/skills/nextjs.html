@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="modern-css.html">← modern-css</a><a class="page-nav-link" href="react-19.html">react-19 →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Next.js</h1>
 <blockquote>Full-stack React framework with App Router, SSR, and serverless deployment.</blockquote>
 <h2>Quick Start</h2>
@@ -171,6 +172,109 @@ export default function PostPage({ params }: { params: Promise&lt;{ slug: string
 <li>Build-time fetch fails: mark the route dynamic or provide a fallback.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Next.js (НекстДжей-Эс)</h1>
+<blockquote>Full-stack React-фреймворк с App Router, SSR и бессерверным деплоем.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npx create-next-app@latest my-app -- --typescript --tailwind --app
+cd my-app
+npm run dev
+# http://localhost:3000</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Full-stack React-приложения, которым нужны SSR, SSG или ISR</li>
+<li>SEO-критичные страницы и маркетинговые сайты</li>
+<li>API и серверная логика рядом с фронтендом</li>
+<li>Приложения, деплоящиеся на Vercel, Netlify или Node-серверы</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>App Router</h3>
+<ul>
+<li>По умолчанию Server Components; добавляйте `&quot;use client&quot;` только для интерактивности</li>
+<li>Загружайте данные в Server Components или Route Handlers</li>
+<li>Используйте `loading.tsx`, `error.tsx` и `not-found.tsx` для каждого сегмента маршрута</li>
+<li>Стримите через `&lt;Suspense&gt;` вместо блокировки целых маршрутов</li>
+</ul>
+<h3>Маршрутизация</h3>
+<ul>
+<li>Файловая маршрутизация в `app/` через `page.tsx`, `layout.tsx`, `route.ts`</li>
+<li>Динамические сегменты через `[slug]`; catch-all через `[...slug]`</li>
+<li>`generateStaticParams` для SSG на динамических маршрутах</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Оптимизируйте изображения через `next/image`</li>
+<li>Используйте `next/font` для self-hosted шрифтов</li>
+<li>Реализуйте ISR через `revalidate` или `export const dynamic`</li>
+<li>Добавляйте метаданные через `export const metadata`</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npx create-next-app@latest my-app -- --typescript --tailwind --app
+npm i next react react-dom
+npm i -D typescript @types/node @types/react @types/react-dom</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Server Component страница с метаданными и ISR
+export const metadata = { title: &quot;Blog&quot;, description: &quot;Posts&quot; };
+
+export const revalidate = 3600; // ISR каждый час
+
+export default async function BlogPage() {
+  const posts = await fetch(&quot;https://api.example.com/posts&quot;).then((r) =&gt; r.json());
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Blog&lt;/h1&gt;
+      {posts.map((p) =&gt; &lt;article key={p.id}&gt;{p.title}&lt;/article&gt;)}
+    &lt;/main&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Route Handler (API) с валидацией
+import { NextResponse } from &quot;next/server&quot;;
+
+export async function POST(req: Request) {
+  const { email } = await req.json();
+  if (!email || !email.includes(&quot;@&quot;)) {
+    return NextResponse.json({ error: &quot;Invalid email&quot; }, { status: 400 });
+  }
+  return NextResponse.json({ ok: true }, { status: 201 });
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Клиентский компонент для интерактивного UI
+&quot;use client&quot;;
+import { useState } from &quot;react&quot;;
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Count: {count}&lt;/button&gt;;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Динамический маршрут с generateStaticParams (SSG)
+export async function generateStaticParams() {
+  const posts = await fetch(&quot;https://api.example.com/posts&quot;).then((r) =&gt; r.json());
+  return posts.map((p) =&gt; ({ slug: p.slug }));
+}
+
+export default function PostPage({ params }: { params: Promise&lt;{ slug: string }&gt; }) {
+  const { slug } = await params;
+  return &lt;h1&gt;Post: {slug}&lt;/h1&gt;;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Создайте проект через `create-next-app` с App Router и TypeScript.</p>
+<p class='ordered'>2. Спланируйте маршруты как папки в `app/`; добавьте `layout.tsx` и `page.tsx` на сегмент.</p>
+<p class='ordered'>3. По умолчанию Server Components; `&quot;use client&quot;` — только для интерактивных частей.</p>
+<p class='ordered'>4. Загружайте данные в Server Components или Route Handlers; кэшируйте через ISR или revalidate.</p>
+<p class='ordered'>5. Добавьте `loading.tsx`/`error.tsx` для устойчивости и Suspense для стриминга.</p>
+<p class='ordered'>6. Добавьте middleware для auth, редиректов или i18n при необходимости.</p>
+<p class='ordered'>7. Оптимизируйте ассеты через `next/image` и `next/font`.</p>
+<p class='ordered'>8. Деплойте на Vercel или ваш Node-хост; настройте переменные окружения на платформе.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `npm run build` проходит без ошибок типов</p>
+<p class='ordered'>2. `npm run lint` проходит (next/core-web-vitals)</p>
+<p class='ordered'>3. Маршруты отдают корректные метаданные и статус-коды</p>
+<p class='ordered'>4. API-маршруты валидируют вход и возвращают корректные статус-коды</p>
+<p class='ordered'>5. Lighthouse &gt;= 90 на ключевых страницах</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Ошибки гидрации: разметка Server и Client должна совпадать; избегайте случайных значений в рендере.</li>
+<li>404 на динамическом маршруте: проверьте имя папки маршрута и `generateStaticParams`.</li>
+<li>Сбой fetch на этапе сборки: пометьте маршрут динамическим или дайте fallback.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="modern-css.html">← modern-css</a><a class="page-nav-link" href="react-19.html">react-19 →</a></div>
     </article>
   </div>
@@ -219,6 +323,15 @@ export default function PostPage({ params }: { params: Promise&lt;{ slug: string
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -245,6 +358,9 @@ export default function PostPage({ params }: { params: Promise&lt;{ slug: string
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

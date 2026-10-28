@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="llm-guardrails.html">← llm-guardrails</a><a class="page-nav-link" href="mlops.html">mlops →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>MCP Servers</h1>
 <blockquote>Building Model Context Protocol servers that connect agents to real systems.</blockquote>
 <h2>Quick Start</h2>
@@ -183,6 +184,121 @@ await server.connect(new StdioServerTransport());</code></pre><button class="cop
 <li>Timeouts: enable streaming or raise limits for long operations.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>MCP Servers (ЭмСиПи-серверы)</h1>
+<blockquote>Создание Model Context Protocol серверов, подключающих агентов к реальным системам.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Быстрее всего — Python SDK
+pip install &quot;mcp[cli]&quot;
+# или Node:
+npm install @modelcontextprotocol/sdk</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Доступ агентов к внутренним API, базам данных или файлам</li>
+<li>Переиспользуемые интеграции инструментов между агентами</li>
+<li>Безопасный доступ компании к LLM-ассистентам</li>
+<li>Multi-agent системы с общими серверами возможностей</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Инструменты</h3>
+<ul>
+<li>Каждое действие — это tool с JSON-схемой</li>
+<li>Держите описания инструментов краткими и однозначными</li>
+<li>Валидируйте входы и возвращайте структурированные ошибки</li>
+<li>Группируйте связанные операции в один tool, когда можно</li>
+</ul>
+<h3>Ресурсы</h3>
+<ul>
+<li>Статичные данные — как ресурсы (файлы, конфиг, промпты)</li>
+<li>Схема URI на источник данных (`file://`, `db://`)</li>
+<li>Содержимое ресурсов read-only, если не нужно иначе</li>
+<li>Для динамических URI давайте `resourceTemplates`</li>
+</ul>
+<h3>Транспорт</h3>
+<ul>
+<li>`stdio` — для локальных однопроцессных серверов</li>
+<li>`Streamable HTTP` — для удалённых деплоев</li>
+<li>Предпочитайте стриминг для длинных операций</li>
+<li>Ставьте таймауты и корректно обрабатывайте разрывы</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>Аутентифицируйте и авторизуйте каждый запрос</li>
+<li>Никогда не отдавайте секреты или сырые креды БД</li>
+<li>Песочница для доступа к файлам; блокируйте опасные пути</li>
+<li>Аудируйте вызовы инструментов и чтения ресурсов</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install &quot;mcp[cli]&quot;
+npm install @modelcontextprotocol/sdk
+npx @modelcontextprotocol/inspector  # отладчик</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP(&quot;weather&quot;)
+
+@mcp.tool()
+def get_weather(city: str) -&gt; str:
+    &quot;&quot;&quot;Get current weather for a city.&quot;&quot;&quot;
+    return f&quot;Weather in {city}: sunny, 22C&quot;
+
+if __name__ == &quot;__main__&quot;:
+    mcp.run()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Ресурс с конфигурацией
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP(&quot;config&quot;)
+
+@mcp.resource(&quot;config://app&quot;)
+def app_config() -&gt; str:
+    return &#x27;{&quot;log_level&quot;: &quot;info&quot;, &quot;timeout&quot;: 30}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Tool с валидацией и ошибками
+from mcp.server.fastmcp import FastMCP
+from pydantic import BaseModel
+
+mcp = FastMCP(&quot;todos&quot;)
+
+class Todo(BaseModel):
+    title: str
+    done: bool = False
+
+@mcp.tool()
+def add_todo(todo: Todo) -&gt; dict:
+    if not todo.title.strip():
+        return {&quot;error&quot;: &quot;title required&quot;}
+    todos.append(todo)
+    return {&quot;ok&quot;: True, &quot;id&quot;: len(todos) - 1}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Node.js MCP сервер
+import { McpServer } from &quot;@modelcontextprotocol/sdk/server/mcp.js&quot;;
+import { StdioServerTransport } from &quot;@modelcontextprotocol/sdk/server/stdio.js&quot;;
+
+const server = new McpServer({ name: &quot;demo&quot;, version: &quot;1.0.0&quot; });
+
+server.tool(&quot;add&quot;, { a: &quot;number&quot;, b: &quot;number&quot; }, ({ a, b }) =&gt; ({
+  content: [{ type: &quot;text&quot;, text: String(a + b) }],
+}));
+
+await server.connect(new StdioServerTransport());</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите транспорт: stdio для локального, HTTP для удалённого.</p>
+<p class='ordered'>2. Определите нужные агенту инструменты; смоделируйте входы схемами.</p>
+<p class='ordered'>3. Добавьте ресурсы и промпты для статичных данных и переиспользуемых промптов.</p>
+<p class='ordered'>4. Реализуйте обработчики с валидацией и структурированными ошибками.</p>
+<p class='ordered'>5. Обеспечьте безопасность: auth, песочницу и аудит.</p>
+<p class='ordered'>6. Тестируйте через MCP Inspector и реального агента.</p>
+<p class='ordered'>7. Задокументируйте набор инструментов в README сервера.</p>
+<p class='ordered'>8. Деплойте и мониторьте использование; версионируйте API.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Inspector подключается и показывает tools/resources</p>
+<p class='ordered'>2. Каждый tool возвращает корректный вывод на валидный ввод</p>
+<p class='ordered'>3. Невалидный ввод возвращает структурированную ошибку</p>
+<p class='ordered'>4. Auth отклоняет неавторизованные запросы</p>
+<p class='ordered'>5. Агент вызывает инструменты end-to-end через выбранный транспорт</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>&quot;Server not found&quot;: проверьте конфиг транспорта и URL подключения.</li>
+<li>Неверные типы на выходе: согласуйте схемы с фактическими обработчиками.</li>
+<li>Таймауты: включите стриминг или поднимите лимиты для длинных операций.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="llm-guardrails.html">← llm-guardrails</a><a class="page-nav-link" href="mlops.html">mlops →</a></div>
     </article>
   </div>
@@ -231,6 +347,15 @@ await server.connect(new StdioServerTransport());</code></pre><button class="cop
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -257,6 +382,9 @@ await server.connect(new StdioServerTransport());</code></pre><button class="cop
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

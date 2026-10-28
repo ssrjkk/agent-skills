@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="oauth2-jwt.html">oauth2-jwt →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>API Security</h1>
 <blockquote>Hardening APIs against common threats.</blockquote>
 <h2>Quick Start</h2>
@@ -168,6 +169,106 @@ def error(code: str, status: int):
 <li>Abuse: tune rate limits and add anomaly detection.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>API Security (Безопасность API)</h1>
+<blockquote>Укрепление API против типовых угроз.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>1. Аутентифицируйте каждый запрос
+2. Авторизуйте каждое действие
+3. Валидируйте весь ввод
+4. Rate-limit злоупотребления</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Публичные и внутренние API</li>
+<li>Auth, платежи и эндпоинты данных</li>
+<li>Любой API, доступный недоверенным клиентам</li>
+<li>Ревью безопасности перед релизом</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Аутентификация</h3>
+<ul>
+<li>Проверенная схема (OAuth2, API keys, JWT)</li>
+<li>Никакой самописной криптографии</li>
+<li>Токены захешированы, с expiry</li>
+<li>Ротация ключей</li>
+</ul>
+<h3>Авторизация</h3>
+<ul>
+<li>Проверка прав на каждом эндпоинте</li>
+<li>Минимальные scopes</li>
+<li>Не доверяйте claims клиента сами по себе</li>
+<li>Проверки владения</li>
+</ul>
+<h3>Валидация ввода</h3>
+<ul>
+<li>Типы, длины и диапазоны</li>
+<li>Параметризация всех запросов</li>
+<li>Отклонение лишних полей</li>
+<li>Лимиты размера пейлоадов</li>
+</ul>
+<h3>Защита от злоупотреблений</h3>
+<ul>
+<li>Rate limit на пользователя/IP/ключ</li>
+<li>Квоты на эндпоинт</li>
+<li>Детекция и блокировка аномалий</li>
+<li>Консистентные ошибки</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># язык-агностик; используйте security middleware фреймворка</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Rate limiting (псевдо)
+def rate_limit(key: str, limit: int, window: int) -&gt; bool:
+    count = redis.incr(f&quot;rl:{key}&quot;)
+    if count == 1:
+        redis.expire(f&quot;rl:{key}&quot;, window)
+    return count &lt;= limit
+
+@app.route(&quot;/api/login&quot;, methods=[&quot;POST&quot;])
+def login():
+    if not rate_limit(request.remote_addr, limit=10, window=60):
+        return jsonify({&quot;error&quot;: &quot;rate_limited&quot;}), 429
+    ...</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Валидация ввода
+from pydantic import BaseModel, EmailStr
+
+class SignupRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=128)
+
+    @field_validator(&quot;password&quot;)
+    def _strong(cls, v):
+        if not re.search(r&quot;[A-Za-z]&quot;, v) or not re.search(r&quot;\d&quot;, v):
+            raise ValueError(&quot;password needs letters and digits&quot;)
+        return v</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Проверка владения
+def get_order(user_id: int, order_id: int):
+    order = db.get_order(order_id)
+    if order is None or order.user_id != user_id:
+        raise NotFound(&quot;order&quot;)  # без утечки информации
+    return order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Консистентные ошибки
+def error(code: str, status: int):
+    return jsonify({&quot;error&quot;: {&quot;code&quot;: code, &quot;status&quot;: status}}), status</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Аутентифицируйте все эндпоинты (кроме public health).</p>
+<p class='ordered'>2. Авторизация на каждый ресурс и действие.</p>
+<p class='ordered'>3. Валидируйте каждый ввод схемами.</p>
+<p class='ordered'>4. Параметризуйте запросы; отклоняйте лишние поля.</p>
+<p class='ordered'>5. Rate-limit на пользователя/IP и эндпоинт.</p>
+<p class='ordered'>6. Лимиты пейлоадов и ответов.</p>
+<p class='ordered'>7. Консистентные минимальные ошибки.</p>
+<p class='ordered'>8. Ревью безопасности перед релизом.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Неаутентифицированные запросы отклоняются</p>
+<p class='ordered'>2. Неавторизованные действия запрещены</p>
+<p class='ordered'>3. Невалидный ввод возвращает 400/422</p>
+<p class='ordered'>4. Rate limits срабатывают при злоупотреблении</p>
+<p class='ordered'>5. Ошибки не утекают внутренности</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Обход auth: убедитесь, что проверки на каждом эндпоинте.</li>
+<li>Энумерация: общие ошибки для not-found vs forbidden.</li>
+<li>Злоупотребления: настройте rate limits и добавьте детекцию аномалий.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="oauth2-jwt.html">oauth2-jwt →</a></div>
     </article>
   </div>
@@ -216,6 +317,15 @@ def error(code: str, status: int):
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -242,6 +352,9 @@ def error(code: str, status: int):
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

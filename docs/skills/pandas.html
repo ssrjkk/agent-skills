@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="elasticsearch.html">← elasticsearch</a><a class="page-nav-link" href="sql-querying.html">sql-querying →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Pandas</h1>
 <blockquote>Analyzing and transforming tabular data with pandas.</blockquote>
 <h2>Quick Start</h2>
@@ -148,6 +149,86 @@ print(monthly.head())</code></pre><button class="copy-btn code-copy" onclick="co
 <li>Slow loops: convert to vectorized or `groupby` operations.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Pandas (Пандас)</h1>
+<blockquote>Анализ и трансформация табличных данных через pandas.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install pandas
+python -c &quot;import pandas as pd; print(pd.read_csv(&#x27;data.csv&#x27;).head())&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Очистка и изменение формы табличных датасетов</li>
+<li>Агрегации, joins и pivot</li>
+<li>Анализ временных рядов и ресемплинг</li>
+<li>ETL-шаги перед машинным обучением</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Загрузка данных</h3>
+<ul>
+<li>Указывайте `dtype`, `parse_dates` и `usecols`, чтобы избежать сюрпризов</li>
+<li>Используйте `read_parquet`/`read_csv` с явной схемой</li>
+<li>Большие файлы читайте по частям (`chunksize`) или используйте Dask/Polars</li>
+<li>Сразу после загрузки проверяйте форму и nulls</li>
+</ul>
+<h3>Очистка</h3>
+<ul>
+<li>Используйте векторизованные операции; избегайте циклов по строкам</li>
+<li>Работайте с пропусками осознанно (`fillna` против `dropna`)</li>
+<li>Нормализуйте типы: datetime, categorical, numeric</li>
+<li>Держите трейс трансформаций</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Предпочитайте векторизацию вместо `.apply`/`.iterrows`</li>
+<li>Агрегируйте через `groupby`, а не циклы</li>
+<li>Конвертируйте object-колонки в categorical для скорости</li>
+<li>Ставьте индексы для joins; избегайте merge по object-колонкам</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install pandas numpy
+# масштаб: polars, dask, pyarrow</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import pandas as pd
+
+df = pd.read_csv(&quot;sales.csv&quot;, parse_dates=[&quot;date&quot;], dtype={&quot;qty&quot;: &quot;int32&quot;})
+df.info()
+print(df.isna().sum())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Очистка
+df[&quot;price&quot;] = df[&quot;price&quot;].str.replace(&quot;$&quot;, &quot;&quot;).astype(float)
+df = df.dropna(subset=[&quot;order_id&quot;])
+df[&quot;date&quot;] = pd.to_datetime(df[&quot;date&quot;], errors=&quot;coerce&quot;)
+df = df[df[&quot;qty&quot;] &gt; 0]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Агрегация
+by_region = (
+    df.groupby(&quot;region&quot;, as_index=False)
+      .agg(total=(&quot;amount&quot;, &quot;sum&quot;), orders=(&quot;order_id&quot;, &quot;nunique&quot;))
+      .sort_values(&quot;total&quot;, ascending=False)
+)
+print(by_region.head())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Ресемплинг временных рядов
+daily = df.set_index(&quot;date&quot;)[&quot;amount&quot;].resample(&quot;D&quot;).sum()
+monthly = daily.resample(&quot;ME&quot;).mean()
+print(monthly.head())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Загрузите данные с явными dtypes и парсингом дат.</p>
+<p class='ordered'>2. Профилируйте: форма, колонки, nulls, уникальные значения.</p>
+<p class='ordered'>3. Очистите типы и пропуски осознанно.</p>
+<p class='ordered'>4. Фильтруйте и трансформируйте векторизованно.</p>
+<p class='ordered'>5. Агрегируйте через `groupby`; изменяйте форму через pivot/merge.</p>
+<p class='ordered'>6. Для временных рядов корректно ресемплируйте и сдвигайте окна.</p>
+<p class='ordered'>7. Экспортируйте с явной схемой (лучше parquet).</p>
+<p class='ordered'>8. Сверяйте выводы с инвариантами источника.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Нет неожиданных nulls или ошибок типов после очистки</p>
+<p class='ordered'>2. Агрегации совпадают с ручным подсчётом</p>
+<p class='ordered'>3. Joins не умножают строки неожиданно</p>
+<p class='ordered'>4. Диапазоны дат и ресемплинг корректны</p>
+<p class='ordered'>5. Результаты воспроизводимы с фиксированным seed (при сэмплинге)</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>MemoryError: используйте dtypes, чанки или Polars.</li>
+<li>Неверные joins: проверяйте типы ключей и дубликаты до merge.</li>
+<li>Медленные циклы: переводите в векторизованные или `groupby` операции.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="elasticsearch.html">← elasticsearch</a><a class="page-nav-link" href="sql-querying.html">sql-querying →</a></div>
     </article>
   </div>
@@ -196,6 +277,15 @@ print(monthly.head())</code></pre><button class="copy-btn code-copy" onclick="co
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -222,6 +312,9 @@ print(monthly.head())</code></pre><button class="copy-btn code-copy" onclick="co
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

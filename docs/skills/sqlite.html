@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="redis.html">← redis</a><a class="page-nav-link" href="vector-databases.html">vector-databases →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>SQLite</h1>
 <blockquote>Embedded relational storage with SQLite.</blockquote>
 <h2>Quick Start</h2>
@@ -161,6 +162,99 @@ with conn:
 <li>Slow queries: add indexes; check `EXPLAIN QUERY PLAN`.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>SQLite (СэсКьюЭлЛайт)</h1>
+<blockquote>Встраиваемое реляционное хранилище на SQLite.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>sqlite3 app.db
+CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT UNIQUE);
+INSERT INTO users (email) VALUES (&#x27;a@b.com&#x27;);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Локальное/десктопное/мобильное хранилище</li>
+<li>Одномашинные приложения с небольшими данными</li>
+<li>Прототипы и встраиваемые инструменты</li>
+<li>Офлайн read-heavy датасеты</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Схема</h3>
+<ul>
+<li>INTEGER PRIMARY KEY или явный rowid</li>
+<li>TEXT для дат (ISO) или REAL для timestamp</li>
+<li>UNIQUE и CHECK ограничения</li>
+<li>`STRICT` таблицы (SQLite 3.37+) для типизации</li>
+</ul>
+<h3>Конкурентность</h3>
+<ul>
+<li>WAL режим для конкурентных читателей</li>
+<li>Короткие транзакции записи</li>
+<li>`busy_timeout` против SQLITE_BUSY</li>
+<li>Без длинных read-транзакций</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Индексы под WHERE/JOIN</li>
+<li>PRAGMA-тюнинг (cache_size, mmap)</li>
+<li>Батч-записи в транзакциях</li>
+<li>`VACUUM` периодически</li>
+</ul>
+<h3>Надёжность</h3>
+<ul>
+<li>Journal mode по потребности (WAL vs DELETE)</li>
+<li>`synchronous=NORMAL` в WAL для скорости</li>
+<li>Бэкап через `.backup` или VACUUM INTO</li>
+<li>Тестируйте на целевой ФС</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>sqlite3  # CLI
+# Python: sqlite3 stdlib</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>-- WAL и busy timeout
+PRAGMA journal_mode=WAL;
+PRAGMA busy_timeout=5000;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Схема с ограничениями
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  role TEXT NOT NULL DEFAULT &#x27;member&#x27;
+  CHECK (role IN (&#x27;member&#x27;,&#x27;admin&#x27;))
+);
+CREATE INDEX idx_users_role ON users(role);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Python с транзакциями
+import sqlite3
+
+conn = sqlite3.connect(&quot;app.db&quot;)
+conn.execute(&quot;PRAGMA journal_mode=WAL&quot;)
+with conn:
+    conn.execute(&quot;INSERT INTO users (email, role) VALUES (?, ?)&quot;, (&quot;a@b.com&quot;, &quot;admin&quot;))
+for row in conn.execute(&quot;SELECT * FROM users&quot;):
+    print(row)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Батч-записи в одной транзакции
+with conn:
+    conn.executemany(
+        &quot;INSERT INTO logs (ts, msg) VALUES (?, ?)&quot;,
+        [(1, &quot;a&quot;), (2, &quot;b&quot;), (3, &quot;c&quot;)],
+    )</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите путь файла и откройте с pragma (WAL).</p>
+<p class='ordered'>2. Создайте схему с ограничениями и индексами.</p>
+<p class='ordered'>3. Пишите короткими транзакциями и `busy_timeout`.</p>
+<p class='ordered'>4. Запросы с параметрами против инъекций.</p>
+<p class='ordered'>5. Настройте cache и synchronous под нагрузку.</p>
+<p class='ordered'>6. Бэкап через `.backup`/`VACUUM INTO`.</p>
+<p class='ordered'>7. Периодически vacuum и re-analyze.</p>
+<p class='ordered'>8. Тестируйте конкурентность на целевой платформе.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Записи и чтения консистентны</p>
+<p class='ordered'>2. Конкурентные чтения работают в WAL</p>
+<p class='ordered'>3. Нет SQLITE_BUSY при ожидаемой нагрузке</p>
+<p class='ordered'>4. Запросы используют индексы (EXPLAIN QUERY PLAN)</p>
+<p class='ordered'>5. Бэкап восстанавливается корректно</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>SQLITE_BUSY: поднимите busy_timeout, укоротите транзакции.</li>
+<li>База заблокирована: проверьте открытые длинные транзакции.</li>
+<li>Медленные запросы: добавьте индексы; проверьте `EXPLAIN QUERY PLAN`.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="redis.html">← redis</a><a class="page-nav-link" href="vector-databases.html">vector-databases →</a></div>
     </article>
   </div>
@@ -209,6 +303,15 @@ with conn:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -235,6 +338,9 @@ with conn:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

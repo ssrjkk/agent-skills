@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="sqlite.html">← sqlite</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Vector Databases</h1>
 <blockquote>Storing and searching embeddings for semantic retrieval and RAG.</blockquote>
 <h2>Quick Start</h2>
@@ -174,6 +175,112 @@ col.add(ids=[id], embeddings=[vec], documents=[text])</code></pre><button class=
 <li>Stale results: re-index after embedding model changes.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Vector Databases (Векторные БД)</h1>
+<blockquote>Хранение и поиск эмбеддингов для семантического поиска и RAG.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># pgvector на Postgres
+docker run -e POSTGRES_PASSWORD=secret -p 5432:5432 -d pgvector/pgvector:pg17
+# или Chroma:
+pip install chromadb</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Семантический поиск по неструктурированным данным</li>
+<li>Retrieval-бэкенд для RAG</li>
+<li>Рекомендации по похожести</li>
+<li>Дедупликация и кластеризация текстов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Эмбеддинги</h3>
+<ul>
+<li>Используйте retrieval-ориентированные модели</li>
+<li>Нормализуйте векторы для cosine similarity</li>
+<li>Размерность — баланс между хранением и скоростью</li>
+<li>Индексируйте и запрашивайте согласованно</li>
+</ul>
+<h3>Индексы</h3>
+<ul>
+<li>Предпочитайте HNSW для баланса скорость/recall</li>
+<li>`m` (connections) и `ef_construction` — для качества построения</li>
+<li>Для очень больших коллекций с дисковым бюджетом — IVF</li>
+<li>Согласуйте индекс с метрикой (cosine/euclidean)</li>
+</ul>
+<h3>Фильтрация и гибрид</h3>
+<ul>
+<li>Комбинируйте векторный поиск с метаданными-фильтрами</li>
+<li>Гибрид (vector + keyword), когда нужно</li>
+<li>Для качества — реранкинг top-k через cross-encoder</li>
+<li>Возвращайте скоре для порогов уверенности</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Репликация и бэкапы для надёжности</li>
+<li>Мониторьте recall, задержку и размер индекса</li>
+<li>Переиндексируйте при смене модели эмбеддингов</li>
+<li>Версионируйте модель эмбеддингов вместе с данными</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># pgvector
+docker run -e POSTGRES_PASSWORD=secret -p 5432:5432 -d pgvector/pgvector:pg17
+# или Python-native
+pip install chromadb qdrant-client</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>-- pgvector setup и запрос
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE documents (
+  id bigserial PRIMARY KEY,
+  content text,
+  embedding vector(384)
+);
+
+CREATE INDEX ON documents USING hnsw (embedding vector_cosine_ops);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Поиск по похожести с фильтром
+SELECT id, content, 1 - (embedding &lt;=&gt; $1) AS similarity
+FROM documents
+WHERE category = &#x27;docs&#x27;
+ORDER BY embedding &lt;=&gt; $1
+LIMIT 5;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import chromadb
+
+client = chromadb.PersistentClient(path=&quot;./db&quot;)
+col = client.get_or_create_collection(&quot;docs&quot;)
+
+col.add(
+    ids=[&quot;1&quot;, &quot;2&quot;],
+    embeddings=[[0.1] * 384, [0.9] * 384],
+    documents=[&quot;Alpha docs&quot;, &quot;Beta docs&quot;],
+    metadatas=[{&quot;cat&quot;: &quot;guide&quot;}, {&quot;cat&quot;: &quot;api&quot;}],
+)
+
+res = col.query(query_embeddings=[[0.1] * 384], n_results=2, where={&quot;cat&quot;: &quot;guide&quot;})
+print(res[&quot;documents&quot;])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Эмбеддинг + хранение через sentence-transformers
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+vec = model.encode(&quot;query text&quot;).tolist()
+col.add(ids=[id], embeddings=[vec], documents=[text])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите хранилище: pgvector, Chroma, Qdrant или managed.</p>
+<p class='ordered'>2. Выберите модель эмбеддингов и размерность вектора.</p>
+<p class='ordered'>3. Индексируйте корпус батчами с метаданными.</p>
+<p class='ordered'>4. Создайте HNSW-индекс под ваши цели recall/задержки.</p>
+<p class='ordered'>5. Запрашивайте с фильтрами и гибридными опциями.</p>
+<p class='ordered'>6. Реранките результаты там, где важно качество.</p>
+<p class='ordered'>7. Настройте бэкапы, репликацию и мониторинг.</p>
+<p class='ordered'>8. Переиндексируйте при апгрейде модели эмбеддингов.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. recall@k соответствует цели на размеченном наборе</p>
+<p class='ordered'>2. Задержка запросов в рамках бюджета в масштабе</p>
+<p class='ordered'>3. Фильтры по метаданным возвращают корректные подмножества</p>
+<p class='ordered'>4. Скоре осмысленны и допускают пороги</p>
+<p class='ordered'>5. Бэкапы восстанавливаются успешно</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Низкий recall: настройте параметры HNSW или смените тип индекса.</li>
+<li>Медленные запросы: уменьшите размерность, добавьте фильтры или шардируйте.</li>
+<li>Устаревшие результаты: переиндексируйте после смены модели эмбеддингов.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="sqlite.html">← sqlite</a></div>
     </article>
   </div>
@@ -222,6 +329,15 @@ col.add(ids=[id], embeddings=[vec], documents=[text])</code></pre><button class=
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -248,6 +364,9 @@ col.add(ids=[id], embeddings=[vec], documents=[text])</code></pre><button class=
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

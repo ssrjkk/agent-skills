@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="django.html">← django</a><a class="page-nav-link" href="express.html">express →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>.NET / ASP.NET Core</h1>
 <blockquote>Building C# backends with ASP.NET Core.</blockquote>
 <h2>Quick Start</h2>
@@ -177,6 +178,115 @@ app.UseExceptionHandler(err =&gt; err.Run(async ctx =&gt;
 <li>Slow queries: add indexes and AsNoTracking for reads.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>.NET / ASP.NET Core (ДотНет)</h1>
+<blockquote>C#-бэкенды на ASP.NET Core.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>dotnet new webapi -n MyApi
+cd MyApi &amp;&amp; dotnet run
+# https://localhost:5001</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>C# сервисы и корпоративные бэкенды</li>
+<li>Команды на строго типизированных языках</li>
+<li>Высокопроизводительные HTTP API</li>
+<li>Интеграция с экосистемой .NET</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура</h3>
+<ul>
+<li>Минимальные API или контроллеры консистентно</li>
+<li>По фичам: endpoints, services, data</li>
+<li>DI через конструктор</li>
+<li>Сфокусированные обработчики/сервисы</li>
+</ul>
+<h3>Данные</h3>
+<ul>
+<li>EF Core с миграциями</li>
+<li>Сущности и DTO раздельно</li>
+<li>Индексы для горячих запросов</li>
+<li>Сквозной async/await</li>
+</ul>
+<h3>Middleware и ошибки</h3>
+<ul>
+<li>Порядок: auth -&gt; endpoints -&gt; error</li>
+<li>Ошибки через ProblemDetails</li>
+<li>Валидация DataAnnotations или FluentValidation</li>
+<li>Корректные статус-коды</li>
+</ul>
+<h3>Тестирование</h3>
+<ul>
+<li>Юнит-тесты сервисов с моками</li>
+<li>Интеграционные — WebApplicationFactory</li>
+<li>Test containers для БД</li>
+<li>Детерминированные тесты</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>dotnet new webapi -n MyApi
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Minimal API
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet(&quot;/users/{id}&quot;, async (int id, UserService svc) =&gt;
+{
+    var user = await svc.GetAsync(id);
+    return user is null ? Results.NotFound() : Results.Ok(user);
+});
+
+app.Run();</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// EF Core сущность + контекст
+public class User
+{
+    public int Id { get; set; }
+    public string Email { get; set; } = &quot;&quot;;
+}
+
+public class AppDbContext : DbContext
+{
+    public DbSet&lt;User&gt; Users =&gt; Set&lt;User&gt;();
+    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; o) : base(o) { }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Сервис с DI
+public class UserService
+{
+    private readonly AppDbContext _db;
+    public UserService(AppDbContext db) { _db = db; }
+
+    public async Task&lt;User?&gt; GetAsync(int id)
+        =&gt; await _db.Users.FindAsync(id);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Обработка ошибок через ProblemDetails
+app.UseExceptionHandler(err =&gt; err.Run(async ctx =&gt;
+{
+    ctx.Response.StatusCode = 500;
+    await ctx.Response.WriteAsJsonAsync(new ProblemDetails
+    {
+        Title = &quot;Unexpected error&quot;,
+        Status = 500,
+    });
+}));</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Скаффолд через `dotnet new webapi`.</p>
+<p class='ordered'>2. Настройте EF Core и миграции.</p>
+<p class='ordered'>3. Соберите сервисы с DI и async-доступом к данным.</p>
+<p class='ordered'>4. Добавьте эндпоинты (Minimal API или контроллеры).</p>
+<p class='ordered'>5. Добавьте валидацию и ProblemDetails-ошибки.</p>
+<p class='ordered'>6. Зарегистрируйте middleware в правильном порядке.</p>
+<p class='ordered'>7. Напишите юнит и интеграционные тесты.</p>
+<p class='ordered'>8. Настройте деплой (appsettings, контейнер).</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `dotnet build` и `dotnet test` проходят</p>
+<p class='ordered'>2. Эндпоинты возвращают корректный статус и форму</p>
+<p class='ordered'>3. Валидация отклоняет плохой ввод</p>
+<p class='ordered'>4. Нет блокирующих async-вызовов</p>
+<p class='ordered'>5. Приложение работает в production-конфиге</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Блокирующий async: консистентно используйте async/await.</li>
+<li>Ошибки DI: регистрируйте сервисы до использования.</li>
+<li>Медленные запросы: индексы и AsNoTracking для чтений.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="django.html">← django</a><a class="page-nav-link" href="express.html">express →</a></div>
     </article>
   </div>
@@ -225,6 +335,15 @@ app.UseExceptionHandler(err =&gt; err.Run(async ctx =&gt;
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -251,6 +370,9 @@ app.UseExceptionHandler(err =&gt; err.Run(async ctx =&gt;
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

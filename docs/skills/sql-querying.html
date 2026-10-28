@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="pandas.html">← pandas</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>SQL Querying</h1>
 <blockquote>Writing correct, efficient SQL for analysis and applications.</blockquote>
 <h2>Quick Start</h2>
@@ -172,6 +173,110 @@ GROUP BY product;</code></pre><button class="copy-btn code-copy" onclick="copyTe
 <li>Wrong totals: verify join semantics and NULL handling.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>SQL Querying (СэлКьюЭл запросы)</h1>
+<blockquote>Написание корректных и эффективных SQL-запросов для анализа и приложений.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>SELECT status, COUNT(*) AS cnt
+FROM orders
+WHERE created_at &gt;= NOW() - INTERVAL &#x27;30 days&#x27;
+GROUP BY status
+ORDER BY cnt DESC;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Отчёты и ad-hoc анализ</li>
+<li>Доступ к данным приложений (под капотом ORM)</li>
+<li>Пайплайны данных и валидация ETL</li>
+<li>Любой раз, когда нужны ответы из реляционных данных</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Читаемость</h3>
+<ul>
+<li>Форматируйте запросы с ясными клаузами и алиасами</li>
+<li>Разбивайте сложную логику через CTE (WITH)</li>
+<li>Называйте колонки осмысленно через алиасы</li>
+<li>Комментируйте неочевидную бизнес-логику</li>
+</ul>
+<h3>Корректность</h3>
+<ul>
+<li>Понимайте семантику join: INNER vs LEFT vs FULL</li>
+<li>Следите за fan-out: join один-ко-многим умножает строки</li>
+<li>Используйте DISTINCT осознанно, а не по привычке</li>
+<li>Явно обрабатывайте NULL в WHERE/агрегациях</li>
+</ul>
+<h3>Агрегация</h3>
+<ul>
+<li>Агрегируйте через GROUP BY по неагрегированным колонкам</li>
+<li>Для рангов, running totals и дельт — оконные функции</li>
+<li>Фильтруйте: HAVING — по агрегатам, WHERE — по строкам</li>
+<li>Для уникальных подсчётов — COUNT(DISTINCT ...)</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Берите только нужные колонки</li>
+<li>Фильтруйте рано (WHERE до join)</li>
+<li>Убедитесь, что индексы поддерживают фильтры и join</li>
+<li>Избегайте функций на индексированных колонках в WHERE</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># psql (PostgreSQL), sqlite3 или ваш клиент БД
+psql &quot;postgres://localhost/app&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>-- CTE + оконная функция: топ-продукт по категории
+WITH ranked AS (
+  SELECT
+    category,
+    product,
+    revenue,
+    ROW_NUMBER() OVER (PARTITION BY category ORDER BY revenue DESC) AS rn
+  FROM sales
+)
+SELECT category, product, revenue
+FROM ranked
+WHERE rn = 1;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Running total через оконную функцию
+SELECT
+  date,
+  amount,
+  SUM(amount) OVER (ORDER BY date) AS running_total
+FROM daily_revenue;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Join с агрегацией, ранний фильтр
+SELECT c.name, COUNT(o.id) AS orders
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id
+WHERE o.created_at &gt;= &#x27;2026-01-01&#x27;
+GROUP BY c.name
+HAVING COUNT(o.id) &gt; 0
+ORDER BY orders DESC;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Сравнение текущего и прошлого месяца
+SELECT
+  product,
+  SUM(CASE WHEN date_trunc(&#x27;month&#x27;, d) = date_trunc(&#x27;month&#x27;, CURRENT_DATE)
+           THEN amount ELSE 0 END) AS this_month,
+  SUM(CASE WHEN date_trunc(&#x27;month&#x27;, d) = date_trunc(&#x27;month&#x27;, CURRENT_DATE) - INTERVAL &#x27;1 month&#x27;
+           THEN amount ELSE 0 END) AS last_month
+FROM revenue
+GROUP BY product;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Сформулируйте вопрос на простом языке.</p>
+<p class='ordered'>2. Определите таблицы и ключи join.</p>
+<p class='ordered'>3. Сначала WHERE-фильтры, затем join, затем агрегация.</p>
+<p class='ordered'>4. Добавьте GROUP BY / оконные функции под нужную форму.</p>
+<p class='ordered'>5. Форматируйте через CTE, если запрос сложный.</p>
+<p class='ordered'>6. Проверьте корректность на небольшой выборке.</p>
+<p class='ordered'>7. Посмотрите план (EXPLAIN) на очевидную неэффективность.</p>
+<p class='ordered'>8. Сверьте цифры с известным базлайном.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Запрос возвращает ожидаемое число строк (без fan-out сюрпризов)</p>
+<p class='ordered'>2. Агрегации совпадают с независимыми итогами</p>
+<p class='ordered'>3. NULL и граничные даты обработаны корректно</p>
+<p class='ordered'>4. Укладывается в целевое время на продакшн-данных</p>
+<p class='ordered'>5. Результаты воспроизводимы</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Дубликаты строк: проверяйте fan-out join; чините ключи.</li>
+<li>Медленный запрос: фильтруйте раньше, добавляйте индексы, упрощайте.</li>
+<li>Неверные итоги: проверяйте семантику join и обработку NULL.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="pandas.html">← pandas</a></div>
     </article>
   </div>
@@ -220,6 +325,15 @@ GROUP BY product;</code></pre><button class="copy-btn code-copy" onclick="copyTe
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -246,6 +360,9 @@ GROUP BY product;</code></pre><button class="copy-btn code-copy" onclick="copyTe
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

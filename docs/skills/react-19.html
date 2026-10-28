@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="nextjs.html">← nextjs</a><a class="page-nav-link" href="svelte.html">svelte →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>React 19</h1>
 <blockquote>Building fast, interactive user interfaces with React 19.</blockquote>
 <h2>Quick Start</h2>
@@ -183,6 +184,121 @@ export default function Dashboard() {
 <li>State reset unexpectedly: key props determine identity — keep keys stable.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>React 19 (Реакт 19)</h1>
+<blockquote>Создание быстрых интерактивных пользовательских интерфейсов на React 19.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npx create-react-app@latest my-app
+# или с инструментом сборки под ваш контроль:
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm run dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Любой интерактивный веб-интерфейс — от небольших виджетов до полноценных приложений</li>
+<li>Команды, уже работающие в экосистеме React</li>
+<li>Проекты, которым нужно богатое клиентское состояние и рендеринг</li>
+<li>Server Components, когда нужно уменьшить объём клиентского JS</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн компонентов</h3>
+<ul>
+<li>Делите UI на небольшие сфокусированные компоненты с понятными props</li>
+<li>Держите компоненты чистыми: вычисляйте состояние вместо мутаций во время рендера</li>
+<li>Используйте композицию вместо prop drilling</li>
+<li>Применяйте `useMemo`/`useCallback` только если профайлер показывает необходимость</li>
+</ul>
+<h3>Server Components (App Router)</h3>
+<ul>
+<li>По умолчанию используйте Server Components; добавляйте `&quot;use client&quot;` только там, где нужно</li>
+<li>Держите загрузку данных в Server Components</li>
+<li>Передавайте сериализуемые props через границу</li>
+<li>Обработчики событий и интерактивное состояние — в Client Components</li>
+</ul>
+<h3>Управление состоянием</h3>
+<ul>
+<li>Сначала локальное состояние и производные значения</li>
+<li>Стор (Zustand/Redux) — только когда состояние действительно общее</li>
+<li>Размещайте состояние рядом с компонентами, которые его используют</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm create vite@latest app -- --template react-ts
+cd app
+npm i react@19 react-dom@19
+npm i -D typescript @types/react @types/react-dom</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Server Component, который загружает и рендерит данные
+export default async function PostsPage() {
+  const posts = await getPosts();
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Posts&lt;/h1&gt;
+      {posts.map((p) =&gt; &lt;PostCard key={p.id} post={p} /&gt;)}
+    &lt;/main&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Client Component с Actions и оптимистичными обновлениями
+&quot;use client&quot;;
+import { useActionState, useOptimistic } from &quot;react&quot;;
+
+async function addTodo(prev: string[], formData: FormData) {
+  const title = String(formData.get(&quot;title&quot;));
+  return [...prev, title];
+}
+
+export function TodoList() {
+  const [items, setItems] = useActionState(addTodo, []);
+  return (
+    &lt;form action={addTodo}&gt;
+      &lt;input name=&quot;title&quot; /&gt;
+      &lt;button&gt;Add&lt;/button&gt;
+      &lt;ul&gt;{items.map((t) =&gt; &lt;li key={t}&gt;{t}&lt;/li&gt;)}&lt;/ul&gt;
+    &lt;/form&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Паттерн кастомного хука с очисткой
+import { useEffect, useState } from &quot;react&quot;;
+
+export function useWindowSize() {
+  const [size, setSize] = useState({ w: window.innerWidth, h: window.innerHeight });
+  useEffect(() =&gt; {
+    const onResize = () =&gt; setSize({ w: window.innerWidth, h: window.innerHeight });
+    window.addEventListener(&quot;resize&quot;, onResize);
+    return () =&gt; window.removeEventListener(&quot;resize&quot;, onResize);
+  }, []);
+  return size;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Suspense с ленивой загрузкой
+import { lazy, Suspense } from &quot;react&quot;;
+const Chart = lazy(() =&gt; import(&quot;./Chart&quot;));
+
+export default function Dashboard() {
+  return (
+    &lt;Suspense fallback={&lt;div&gt;Loading chart...&lt;/div&gt;}&gt;
+      &lt;Chart /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Создайте проект через Vite (шаблон `react-ts`) — он быстрее и гибче, чем CRA.</p>
+<p class='ordered'>2. Настройте TypeScript strict mode и ESLint + Prettier до написания фич.</p>
+<p class='ordered'>3. Смоделируйте UI как дерево небольших компонентов; наметьте props на каждом уровне.</p>
+<p class='ordered'>4. По умолчанию Server Components; `&quot;use client&quot;` — только для интерактивных частей.</p>
+<p class='ordered'>5. Используйте Actions для мутаций (form actions, оптимистичные обновления) вместо цепочек fetch.</p>
+<p class='ordered'>6. Добавьте Suspense-границы вокруг асинхронных секций; не блокируйте всю страницу.</p>
+<p class='ordered'>7. Профилируйте React DevTools; мемоизируйте только то, что профайлер показывает горячим.</p>
+<p class='ordered'>8. Пишите тесты на Vitest + React Testing Library, предпочитая user-centric запросы.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Приложение собирается: `npm run build` и проходит `tsc --noEmit`</p>
+<p class='ordered'>2. Все интерактивные элементы доступны с клавиатуры</p>
+<p class='ordered'>3. Нет layout shift после асинхронной загрузки данных</p>
+<p class='ordered'>4. React DevTools не показывает лишних ре-рендеров</p>
+<p class='ordered'>5. Lighthouse производительность &gt;= 90 для ключевых маршрутов</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>&quot;Too many re-renders&quot;: setState вызывается во время рендера — перенесите в событие или эффект.</li>
+<li>Hydration mismatch: Server и Client должны рендерить одинаковую разметку; избегайте `Date.now()` в рендере.</li>
+<li>Состояние неожиданно сбрасывается: ключи props определяют идентичность — держите keys стабильными.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="nextjs.html">← nextjs</a><a class="page-nav-link" href="svelte.html">svelte →</a></div>
     </article>
   </div>
@@ -231,6 +347,15 @@ export default function Dashboard() {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -257,6 +382,9 @@ export default function Dashboard() {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

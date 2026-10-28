@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="observability-llm.html">← observability-llm</a><a class="page-nav-link" href="prometheus-grafana.html">prometheus-grafana →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Platform Engineering</h1>
 <blockquote>Build internal developer platforms with Backstage and Port for streamlined developer workflows.</blockquote>
 <h2>Quick Start</h2>
@@ -190,6 +191,125 @@ curl http://localhost:7007/api/catalog/entities?filter=kind=component</code></pr
 <p class='ordered'>3. TechDocs renders documentation from code repositories</p>
 <p class='ordered'>4. Scorecards track service maturity metrics</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Platform Engineering</h1>
+<blockquote>Стройте внутренние developer-платформы на Backstage и Port для удобных процессов разработки.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># app-config.yaml — конфигурация Backstage
+app:
+  title: Internal Developer Platform
+  baseUrl: https://developer.example.com
+
+backend:
+  baseUrl: https://developer.example.com
+  listen: { port: 7007 }
+
+organization:
+  name: My Company
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+techdocs:
+  builder: &#x27;local&#x27;
+  generators:
+    techdocs: &#x27;docker&#x27;
+
+catalog:
+  rules:
+    - allow: [Component, API, Resource, System, Domain]
+  locations:
+    - type: url
+      target: https://github.com/org/service-catalog/blob/main/catalog-info.yaml
+      rules:
+        - allow: [Component, API]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># catalog-info.yaml — определение сущности сервиса
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-service
+  description: Payment processing service
+  annotations:
+    github.com/project-slug: org/payment-service
+    backstage.io/techdocs-ref: dir:.
+    jenkins.io/github-folder: org/payment-service
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: payment-platform
+  dependsOn:
+    - resource:default/postgres-main
+    - api:default/payment-api
+  providesApis: [payment-api]
+  consumedApis: [fraud-detection-api]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Platform engineering рассматривает платформу как продукт. Backstage/Port дают service catalog, software templates, tech docs и scorecards. Golden paths снижают когнитивную нагрузку на разработчиков.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Организации с 10+ микросервисами, которым нужна стандартизация</li>
+<li>Команды, тратящие слишком много времени на конфигурацию инфраструктуры</li>
+<li>Стандартизация деплоя и окружений</li>
+<li>Улучшение developer experience и сокращение onboarding</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Запустите developer-портал: скаффолд Backstage (`npx @backstage/create-app`) или blueprint в Port с полями метаданных сервиса.</p>
+<p class='ordered'>2. Смоделируйте golden path: определите шаблоны сервисов (API, service, worker) через software templates / self-service actions Port.</p>
+<p class='ordered'>3. Зарегистрируйте каталог: закоммитьте `catalog-info.yaml` для каждого сервиса с owner, system, зависимостями и API-границами.</p>
+<p class='ordered'>4. Подключите CI/CD: настройте SCM-интеграцию и repository-backend события для авторегистрации новых репозиториев.</p>
+<p class='ordered'>5. Опубликуйте документацию: включите TechDocs из markdown репозитория — живая документация из кода.</p>
+<p class='ordered'>6. Добавьте governance: scorecards с проверками зрелости (покрытие SLO, обновление зависимостей, cost tags) и отчёты в портале.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># catalog-info.yaml — полная сущность со связями
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: payment-platform
+  description: Core payments system
+spec:
+  owner: platform-team
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-service
+  annotations:
+    github.com/project-slug: org/payment-service
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: payment-platform
+  dependsOn:
+    - resource:default/postgres-main
+  providesApis: [payment-api]
+  consumedApis: [fraud-detection-api]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Добавьте сущность в catalog locations, затем запушьте для синхронизации
+kubectl port-forward svc/backstage-backend 7007:7007
+curl http://localhost:7007/api/catalog/entities?filter=kind=component</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Golden paths с self-service шаблонами и guardrails.</li>
+<li>Backstage или Port для портала разработчика и каталога.</li>
+<li>Стандартизируйте CI/CD, окружения и секреты между командами.</li>
+<li>Меряйте принятие и фидбек; итерируйте платформу.</li>
+<li>Автоматизируйте провижининг через IaC и апрув-воркфлоу.</li>
+<li>Платформенные команды подотчётны через SLO на golden paths.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Низкое принятие: снизьте трение и документируйте golden path.</li>
+<li>Дрейф: энфорсьте политики и шаблоны в CI.</li>
+<li>Проблемы доступа: аудит RBAC и ролей портала.</li>
+<li>Медленный онбординг: автоматизируйте скаффолдинг end to end.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. Backstage/Port стартует и рендерит service catalog</p>
+<p class='ordered'>2. Software templates создают репозитории с корректным скаффолдом</p>
+<p class='ordered'>3. TechDocs рендерит документацию из репозиториев кода</p>
+<p class='ordered'>4. Scorecards отслеживают метрики зрелости сервисов</p></div>
       <div class="page-nav"><a class="page-nav-link" href="observability-llm.html">← observability-llm</a><a class="page-nav-link" href="prometheus-grafana.html">prometheus-grafana →</a></div>
     </article>
   </div>
@@ -238,6 +358,15 @@ curl http://localhost:7007/api/catalog/entities?filter=kind=component</code></pr
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -264,6 +393,9 @@ curl http://localhost:7007/api/catalog/entities?filter=kind=component</code></pr
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

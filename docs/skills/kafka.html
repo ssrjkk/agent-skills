@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="jenkins.html">← jenkins</a><a class="page-nav-link" href="kubernetes.html">kubernetes →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Kafka</h1>
 <blockquote>Building reliable event streaming with Apache Kafka.</blockquote>
 <h2>Quick Start</h2>
@@ -178,6 +179,116 @@ kafka-consumer-groups --bootstrap-server localhost:9092 \
 <li>Duplicates: make processing idempotent or use exactly-once.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Kafka (Кафка)</h1>
+<blockquote>Построение надёжного event streaming на Apache Kafka.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker compose up -d  # однонодовый kafka
+kafka-topics --bootstrap-server localhost:9092 --create --topic events --partitions 3
+kafka-console-producer --bootstrap-server localhost:9092 --topic events</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Event-driven архитектура и развязка</li>
+<li>Высокопропускная обработка логов и аналитика</li>
+<li>Stream processing (join, aggregate, window)</li>
+<li>Надёжный replay событий для консьюмеров</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Топики и партиции</h3>
+<ul>
+<li>Моделируйте топики по типу события, а не по консьюмеру</li>
+<li>Партиционируйте по ключу для порядка внутри ключа</li>
+<li>Число партиций — под пропускную способность</li>
+<li>Задавайте retention на топик (по времени и размеру)</li>
+</ul>
+<h3>Продюсеры</h3>
+<ul>
+<li>Ключ — для порядка и co-partitioning</li>
+<li>acks (all) для надёжности; настройте batching</li>
+<li>Обрабатывайте retries и идемпотентность</li>
+<li>Мониторьте `record-error-rate` и задержку</li>
+</ul>
+<h3>Консьюмеры</h3>
+<ul>
+<li>Для масштаба — consumer groups</li>
+<li>Корректно обрабатывайте rebalance</li>
+<li>Коммитьте offsets после обработки (at-least-once)</li>
+<li>Идемпотентная обработка для exactly-once семантики</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Минимум 3 брокера с replication factor 3</li>
+<li>Мониторьте lag, under-replicated partitions и диск</li>
+<li>Для эволюции схем — Schema Registry</li>
+<li>Алерты на consumer lag</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Python клиент
+pip install confluent-kafka
+# или Java:
+# org.apache.kafka:kafka-clients</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from confluent_kafka import Producer
+
+p = Producer({&quot;bootstrap.servers&quot;: &quot;localhost:9092&quot;})
+
+def acked(err, msg):
+    if err is not None:
+        print(f&quot;failed: {err}&quot;)
+
+p.produce(&quot;events&quot;, key=&quot;user-42&quot;, value=b&#x27;{&quot;action&quot;:&quot;login&quot;}&#x27;, callback=acked)
+p.flush()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from confluent_kafka import Consumer, KafkaError
+
+c = Consumer({
+    &quot;bootstrap.servers&quot;: &quot;localhost:9092&quot;,
+    &quot;group.id&quot;: &quot;analytics&quot;,
+    &quot;auto.offset.reset&quot;: &quot;earliest&quot;,
+})
+c.subscribe([&quot;events&quot;])
+
+while True:
+    msg = c.poll(1.0)
+    if msg is None:
+        continue
+    if msg.error():
+        if msg.error().code() == KafkaError._PARTITION_EOF:
+            continue
+        break
+    process(msg.value())        # идемпотентная обработка
+    c.commit(asynchronous=False)  # коммит после обработки</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Java producer с acks и идемпотентностью
+Properties props = new Properties();
+props.put(&quot;bootstrap.servers&quot;, &quot;localhost:9092&quot;);
+props.put(&quot;key.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+props.put(&quot;value.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+props.put(&quot;acks&quot;, &quot;all&quot;);
+props.put(&quot;enable.idempotence&quot;, &quot;true&quot;);
+KafkaProducer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(props);
+producer.send(new ProducerRecord&lt;&gt;(&quot;events&quot;, &quot;user-42&quot;, &quot;login&quot;));</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Мониторинг consumer lag
+kafka-consumer-groups --bootstrap-server localhost:9092 \
+  --describe --group analytics</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите типы событий и имена топиков заранее.</p>
+<p class='ordered'>2. Выберите стратегию партиционирования по ключу.</p>
+<p class='ordered'>3. Задайте replication factor и retention.</p>
+<p class='ordered'>4. Реализуйте продюсеров с acks и идемпотентностью.</p>
+<p class='ordered'>5. Реализуйте консьюмеров с аккуратным rebalance и offsets.</p>
+<p class='ordered'>6. Сделайте обработку идемпотентной для безопасных реплеев.</p>
+<p class='ordered'>7. Для эволюции контракта — Schema Registry.</p>
+<p class='ordered'>8. Мониторьте lag, диск и error rates.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Продюсеры шлют без ошибок под нагрузкой</p>
+<p class='ordered'>2. Консьюмеры обрабатывают по порядку внутри ключа</p>
+<p class='ordered'>3. Consumer lag около нуля в стабильном состоянии</p>
+<p class='ordered'>4. Rebalance не теряет и не дублирует события</p>
+<p class='ordered'>5. Реплей с offset даёт идентичные результаты</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Высокий lag: масштабируйте консьюмеров или оптимизируйте обработку.</li>
+<li>Нарушен порядок: партиционируйте по ключу, один консьюмер на партицию.</li>
+<li>Дубликаты: сделайте обработку идемпотентной или используйте exactly-once.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="jenkins.html">← jenkins</a><a class="page-nav-link" href="kubernetes.html">kubernetes →</a></div>
     </article>
   </div>
@@ -226,6 +337,15 @@ kafka-consumer-groups --bootstrap-server localhost:9092 \
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -252,6 +372,9 @@ kafka-consumer-groups --bootstrap-server localhost:9092 \
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="ai-testing.html">← ai-testing</a><a class="page-nav-link" href="clean-architecture.html">clean-architecture →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Claude Code Commands</h1>
 <blockquote>Getting the most out of Claude Code with commands, hooks, and skills.</blockquote>
 <h2>Quick Start</h2>
@@ -159,6 +160,97 @@ claude -p &quot;Explain the architecture of this repo&quot; --output-format json
 <li>Slow agent: reduce context size and file count.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Claude Code Commands (Команды Клод-Код)</h1>
+<blockquote>Максимальная польза от Claude Code: команды, хуки и скиллы.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Установка и запуск
+npm install -g @anthropic-ai/claude-code
+cd your-project
+claude
+# в REPL: /help, /clear, /add &lt;file&gt;, /model sonnet</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Повседневное agentic-кодирование в терминале</li>
+<li>Мультифайловые рефакторинги и фичи</li>
+<li>Ревью кода и прогон тестов с агентом</li>
+<li>Расширение агента скиллами и MCP</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Slash-команды</h3>
+<ul>
+<li>`/init` — создание AGENTS.md в начале проекта</li>
+<li>`/add` и `/drop` — управление контекстными файлами</li>
+<li>`/compact` — сжатие длинных диалогов</li>
+<li>`/status` — обзор правок и стоимости</li>
+</ul>
+<h3>Управление контекстом</h3>
+<ul>
+<li>Держите `AGENTS.md` с конвенциями проекта</li>
+<li>Загружайте только нужные файлы; выкидывайте шум</li>
+<li>Ссылайтесь на файлы через `@path/to/file`</li>
+<li>`/clear` между несвязанными задачами</li>
+</ul>
+<h3>Хуки и права</h3>
+<ul>
+<li>Добавляйте хуки на форматирование и линтинг до/после правок</li>
+<li>Правила permissions — меньше промптов для рутины</li>
+<li>Ревью апрувов для разрушительных команд</li>
+<li>Настройки на проект или пользователя</li>
+</ul>
+<h3>Скиллы и MCP</h3>
+<ul>
+<li>Ставьте скиллы в `.claude/skills/`</li>
+<li>Подключайте MCP-серверы для внешних инструментов</li>
+<li>Держите скиллы короткими и сфокусированными</li>
+<li>Тестируйте скилл на репрезентативной задаче</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm install -g @anthropic-ai/claude-code
+claude --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Настройка проекта
+claude
+&gt; /init            # создание AGENTS.md
+&gt; /model sonnet    # выбор модели
+&gt; /permissions     # настройка правил</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Работа с файлами
+&gt; /add src/core.py tests/test_core.py
+&gt; /status
+&gt; /compact
+&gt; /clear</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Одноразовый неинтерактивный режим
+claude -p &quot;Run the tests and fix failures&quot;
+claude -p &quot;Explain the architecture of this repo&quot; --output-format json</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Пример хука (форматирование до правки)
+# .claude/settings.json
+{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [
+      { &quot;matcher&quot;: &quot;Edit|Write&quot;, &quot;hooks&quot;: [{ &quot;type&quot;: &quot;command&quot;, &quot;command&quot;: &quot;ruff format .&quot; }] }
+    ]
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите Claude Code и запустите сессию в проекте.</p>
+<p class='ordered'>2. Выполните `/init` для контекста и конвенций.</p>
+<p class='ordered'>3. Загрузите нужные файлы через `/add`; уберите шум.</p>
+<p class='ordered'>4. Работайте итеративно; смотрите `/status`.</p>
+<p class='ordered'>5. Компактизируйте длинные сессии; чистите между задачами.</p>
+<p class='ordered'>6. Добавьте хуки на линтинг и форматирование.</p>
+<p class='ordered'>7. Установите скиллы и MCP-серверы под ваш стек.</p>
+<p class='ordered'>8. Настройте permissions для скорости и безопасности.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. AGENTS.md фиксирует конвенции проекта</p>
+<p class='ordered'>2. Контекст сфокусирован (нет устаревших файлов)</p>
+<p class='ordered'>3. Хуки работают и держат код отформатированным</p>
+<p class='ordered'>4. Разрушительные действия требуют апрува</p>
+<p class='ordered'>5. Скиллы/MCP работают на репрезентативной задаче</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Неверный контекст: `/add` нужные файлы, `/clear` устаревшее.</li>
+<li>Слишком много промптов: ужесточите правила permissions.</li>
+<li>Медленный агент: уменьшите размер контекста и число файлов.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="ai-testing.html">← ai-testing</a><a class="page-nav-link" href="clean-architecture.html">clean-architecture →</a></div>
     </article>
   </div>
@@ -207,6 +299,15 @@ claude -p &quot;Explain the architecture of this repo&quot; --output-format json
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -233,6 +334,9 @@ claude -p &quot;Explain the architecture of this repo&quot; --output-format json
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

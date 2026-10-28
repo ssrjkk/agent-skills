@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="cloud-native-ai.html">← cloud-native-ai</a><a class="page-nav-link" href="github-actions.html">github-actions →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Docker</h1>
 <blockquote>Containerizing applications with Docker for consistent deployment.</blockquote>
 <h2>Quick Start</h2>
@@ -175,6 +176,113 @@ docker image prune -f</code></pre><button class="copy-btn code-copy" onclick="co
 <li>&quot;Address already in use&quot;: change host port mapping or stop the conflicting container.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Docker (Докер)</h1>
+<blockquote>Контейнеризация приложений через Docker для консистентного деплоя.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker build -t myapp .
+docker run -p 8080:8080 myapp
+docker compose up -d</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Консистентные окружения между dev, test и prod</li>
+<li>Микросервисы и изолированные зависимости</li>
+<li>CI/CD артефакты, одинаковые везде</li>
+<li>Локальная разработка с базами данных и сервисами</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Dockerfile</h3>
+<ul>
+<li>Используйте multi-stage сборки для лёгких образов</li>
+<li>Предпочитайте официальные и закреплённые базовые образы (`alpine:3.20`)</li>
+<li>Запускайте от non-root; копируйте только нужное</li>
+<li>Порядок слоёв: зависимости сначала, код последним (лучше кэш)</li>
+</ul>
+<h3>Образы</h3>
+<ul>
+<li>Держите образы маленькими: distroless или alpine, если можно</li>
+<li>Тегируйте по SHA коммита и semver; избегайте `latest` в проде</li>
+<li>Сканируйте образы через `docker scout` или Trivy</li>
+<li>Используйте `--platform` для multi-arch сборок</li>
+</ul>
+<h3>Рантайм</h3>
+<ul>
+<li>Задавайте лимиты ресурсов (`--memory`, `--cpus`)</li>
+<li>Для персистентных данных используйте volumes</li>
+<li>Предпочитайте `init: true` или `tini` для переработки зомби</li>
+<li>Добавляйте healthcheck, чтобы оркестраторы управляли жизненным циклом</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Docker Desktop или docker engine + compose plugin
+docker --version
+docker compose version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Multi-stage Node сборка
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+USER node
+EXPOSE 3000
+CMD [&quot;node&quot;, &quot;dist/server.js&quot;]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># docker-compose.yml
+services:
+  web:
+    build: .
+    ports:
+      - &quot;8080:8080&quot;
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;wget&quot;, &quot;-qO-&quot;, &quot;http://localhost:8080/health&quot;]
+      interval: 10s
+      retries: 3
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U postgres&quot;]
+volumes:
+  pgdata:</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Сборка и пуш с метаданными
+docker build -t ghcr.io/org/myapp:${GITHUB_SHA} .
+docker push ghcr.io/org/myapp:${GITHUB_SHA}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Инспекция и отладка
+docker exec -it myapp sh
+docker logs --follow myapp
+docker image prune -f</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Напишите multi-stage Dockerfile с закреплёнными базовыми образами.</p>
+<p class='ordered'>2. Упорядочьте слои для эффективного кэша (зависимости до кода).</p>
+<p class='ordered'>3. Запускайте от non-root; добавьте healthcheck.</p>
+<p class='ordered'>4. Собирайте и тестируйте локально через `docker build` и `docker run`.</p>
+<p class='ordered'>5. Соберите сервисы через Compose для локальной интеграции (app + db + cache).</p>
+<p class='ordered'>6. Тегируйте образы по SHA коммита; пушите в registry.</p>
+<p class='ordered'>7. Сканируйте на уязвимости перед деплоем.</p>
+<p class='ordered'>8. Задайте лимиты ресурсов и настройте ротацию логов.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `docker build` проходит без предупреждений</p>
+<p class='ordered'>2. `docker run` стартует и отвечает на healthcheck</p>
+<p class='ordered'>3. Скан образа не показывает критических уязвимостей</p>
+<p class='ordered'>4. Compose-стек стартует чисто через `docker compose up`</p>
+<p class='ordered'>5. Non-root контейнер не может писать в защищённые пути</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>&quot;Cannot connect to the Docker daemon&quot;: запустите Docker Desktop/engine.</li>
+<li>Образ слишком большой: перейдите на multi-stage и более лёгкий базовый образ.</li>
+<li>&quot;Address already in use&quot;: смените маппинг порта или остановите конфликтующий контейнер.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="cloud-native-ai.html">← cloud-native-ai</a><a class="page-nav-link" href="github-actions.html">github-actions →</a></div>
     </article>
   </div>
@@ -223,6 +331,15 @@ docker image prune -f</code></pre><button class="copy-btn code-copy" onclick="co
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -249,6 +366,9 @@ docker image prune -f</code></pre><button class="copy-btn code-copy" onclick="co
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

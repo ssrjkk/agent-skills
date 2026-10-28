@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="function-calling.html">← function-calling</a><a class="page-nav-link" href="llm-finetuning.html">llm-finetuning →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>LLM Evals</h1>
 <blockquote>Measuring and guarding LLM application quality with evaluation suites.</blockquote>
 <h2>Quick Start</h2>
@@ -189,6 +190,127 @@ def test_no_regression():
 <li>Too many cases: prioritize high-signal inputs and trim duplicates.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>LLM Evals (Оценка LLM)</h1>
+<blockquote>Измерение и защита качества LLM-приложений через evaluation-сьюты.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest openai
+# соберите golden-набор, оцените ответы, гейтите релизы в CI</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Отслеживание качества промптов и моделей со временем</li>
+<li>Сравнение вариантов промптов и версий моделей</li>
+<li>Поиск регрессий до релиза</li>
+<li>Уверенность в продакшн-агентах и RAG</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Golden-наборы</h3>
+<ul>
+<li>Покрывайте happy paths, edge cases и adversarial вводы</li>
+<li>Используйте реальные запросы плюс синтетические вариации</li>
+<li>Включайте ожидаемые ответы или рубрики на кейс</li>
+<li>Держите набор небольшим (20-100) и поддерживаемым</li>
+</ul>
+<h3>Метрики</h3>
+<ul>
+<li>exact-match — для структурированного вывода (JSON, коды)</li>
+<li>similarity — для свободного текста (семантическая или лексическая)</li>
+<li>LLM-as-judge с рубрикой — для субъективного качества</li>
+<li>Считайте скоре по метрике и агрегируйте по набору</li>
+</ul>
+<h3>LLM-as-Judge</h3>
+<ul>
+<li>Дайте судье явную рубрику оценки</li>
+<li>Где можно — референс-ответы</li>
+<li>Используйте другую модель, чем оцениваемая</li>
+<li>Калибруйте: выборочно сверяйте судью с человеческими метками</li>
+</ul>
+<h3>CI-гейтинг</h3>
+<ul>
+<li>Прогоняйте evals на каждом PR для изменённых промптов/моделей</li>
+<li>Ставьте пороги; фейльте при регрессиях</li>
+<li>Держите флаки-проверки вне блокирующего пути</li>
+<li>Репортите diff против базлайна</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest openai numpy
+# опционально: ragas, promptfoo, deepeval</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import json
+import openai
+
+client = openai.OpenAI()
+
+def run_case(prompt: str, user_input: str) -&gt; str:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: prompt},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input},
+        ],
+    )
+    return resp.choices[0].message.content</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Golden-набор с ожидаемым структурированным выводом
+GOLDEN = [
+    {
+        &quot;input&quot;: &quot;Alice works at Acme.&quot;,
+        &quot;expected&quot;: {&quot;name&quot;: &quot;Alice&quot;, &quot;org&quot;: &quot;Acme&quot;},
+    },
+    {
+        &quot;input&quot;: &quot;No company mentioned here.&quot;,
+        &quot;expected&quot;: {&quot;name&quot;: None, &quot;org&quot;: None},
+    },
+]
+
+def exact_match(out: str, expected: dict) -&gt; bool:
+    try:
+        return json.loads(out) == expected
+    except json.JSONDecodeError:
+        return False</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># LLM-as-judge с рубрикой
+JUDGE_PROMPT = &quot;&quot;&quot;Rate the answer 1-5 using this rubric:
+5 = correct, complete, well-grounded. 1 = wrong or off-topic.
+Return only the number.&quot;&quot;&quot;
+
+def judge(answer: str) -&gt; int:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: JUDGE_PROMPT},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: answer},
+        ],
+    )
+    return int(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Регрессионный гейт
+def run_suite() -&gt; float:
+    scores = []
+    for case in GOLDEN:
+        out = run_case(PROMPT, case[&quot;input&quot;])
+        scores.append(1.0 if exact_match(out, case[&quot;expected&quot;]) else 0.0)
+    return sum(scores) / len(scores)
+
+def test_no_regression():
+    assert run_suite() &gt;= 0.9, &quot;Eval score dropped below threshold&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите, что значит &quot;хорошо&quot;: формат, фактологичность, полезность.</p>
+<p class='ordered'>2. Соберите golden-набор с рубриками или ожидаемыми ответами.</p>
+<p class='ordered'>3. Выберите метрики: exact-match, similarity или LLM-as-judge.</p>
+<p class='ordered'>4. Реализуйте харнесс оценки и агрегацию результатов.</p>
+<p class='ordered'>5. Зафиксируйте базовый скоре на текущем промпте/модели.</p>
+<p class='ordered'>6. Добавьте регрессионный гейт в CI с порогом.</p>
+<p class='ordered'>7. Проверяйте качество судьи против человеческих меток.</p>
+<p class='ordered'>8. Расширяйте набор по мере нахождения фейлов в проде.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Evals детерминированы на одинаковых входах</p>
+<p class='ordered'>2. Пороговый гейт блокирует явные регрессии</p>
+<p class='ordered'>3. Скоре судьи коррелирует с человеческой оценкой</p>
+<p class='ordered'>4. Golden-набор покрывает основные фейлы</p>
+<p class='ordered'>5. Время прогона практично для каждого PR</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Дрейф судьи: перекалибруйте рубрику и сверяйте метки.</li>
+<li>Flaky скоре: чините недетерминизм (temperature, модель, seed).</li>
+<li>Слишком много кейсов: приоритизируйте сигнальные вводы, убирайте дубли.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="function-calling.html">← function-calling</a><a class="page-nav-link" href="llm-finetuning.html">llm-finetuning →</a></div>
     </article>
   </div>
@@ -237,6 +359,15 @@ def test_no_regression():
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -263,6 +394,9 @@ def test_no_regression():
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="git-workflow.html">← git-workflow</a><a class="page-nav-link" href="test-driven-development.html">test-driven-development →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>System Design</h1>
 <blockquote>Designing scalable, reliable systems.</blockquote>
 <h2>Quick Start</h2>
@@ -152,6 +153,90 @@
 <li>Unclear trade-offs: compare options with explicit criteria.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>System Design (Системный дизайн)</h1>
+<blockquote>Проектирование масштабируемых и надёжных систем.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>1. Уточните требования
+2. Оцените масштаб
+3. Набросайте архитектуру
+4. Спроектируйте модель данных
+5. Обсудите компромиссы</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Дизайн новых сервисов или фич</li>
+<li>Масштабирование существующих систем</li>
+<li>Архитектурные ревью и интервью</li>
+<li>Выбор между технологиями</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Требования</h3>
+<ul>
+<li>Функциональные и нефункциональные</li>
+<li>Оценка пользователей, QPS, объёма, хранения</li>
+<li>Цели задержки и доступности</li>
+<li>Явные допущения</li>
+</ul>
+<h3>Архитектура</h3>
+<ul>
+<li>Начните просто: сервисы, БД, кэш</li>
+<li>Компоненты только когда обосновано</li>
+<li>Поток данных end to end</li>
+<li>Точки отказа</li>
+</ul>
+<h3>Модель данных</h3>
+<ul>
+<li>Хранилище под паттерн доступа</li>
+<li>Планирование чтений vs записей</li>
+<li>Консистентность</li>
+<li>Партиционирование и репликация</li>
+</ul>
+<h3>Масштабирование</h3>
+<ul>
+<li>Сначала вертикально, затем горизонтально</li>
+<li>Кэш для горячих чтений</li>
+<li>Очереди для развязки записей</li>
+<li>Домены отказа</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># whiteboard или инструмент диаграмм</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>Требования:
+- 100M пользователей, 10K QPS пик, 1KB средний запрос
+- p99 задержка &lt; 200ms, доступность 99.9%
+- Чтения 90% / записи 10%</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>Оценки:
+- 10K QPS * 1KB = ~10 MB/s вход
+- 100M пользователей * 100 байт = ~10 GB таблица
+- retention 30 дней =&gt; ~25 TB хранилища</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>Архитектура:
+[Client] -&gt; [LB] -&gt; [API services] -&gt; [Cache] -&gt; [DB]
+                            \-&gt; [Queue] -&gt; [Workers]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>Варианты масштабирования:
+- Кэш горячих чтений (Redis) для 90/10 read-heavy
+- Шардирование user data по user_id
+- Очереди для async-обработки записей
+- Реплика БД под чтения</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Уточните требования и ограничения.</p>
+<p class='ordered'>2. Оцените масштаб (QPS, хранилище, retention).</p>
+<p class='ordered'>3. Набросайте простую архитектуру.</p>
+<p class='ordered'>4. Спроектируйте модель данных и хранилище.</p>
+<p class='ordered'>5. Добавьте кэш, очереди и репликацию.</p>
+<p class='ordered'>6. Найдите бутылочные горлышки и точки отказа.</p>
+<p class='ordered'>7. Обсудите компромиссы и альтернативы.</p>
+<p class='ordered'>8. Определите мониторинг и обработку фейлов.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Архитектура выдерживает QPS и задержку</p>
+<p class='ordered'>2. Оценки хранения покрыты</p>
+<p class='ordered'>3. Нет единой точки отказа</p>
+<p class='ordered'>4. Потребности консистентности выполнены</p>
+<p class='ordered'>5. Путь масштабирования ясен</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Пере-инжиниринг: компоненты только когда нужно.</li>
+<li>Пропущенные бутылочные горлышки: трассируйте поток данных и горячие пути.</li>
+<li>Неясные компромиссы: сравнивайте варианты по явным критериям.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="git-workflow.html">← git-workflow</a><a class="page-nav-link" href="test-driven-development.html">test-driven-development →</a></div>
     </article>
   </div>
@@ -200,6 +285,15 @@
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -226,6 +320,9 @@
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

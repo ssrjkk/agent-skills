@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="algorithmic-trading.html">← algorithmic-trading</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Risk Modeling</h1>
 <blockquote>Building financial risk models with VaR, Monte Carlo simulation, and stress testing.</blockquote>
 <h2>Quick Start</h2>
@@ -247,6 +248,185 @@ def test_stress_test():
     result = st.run_scenario(portfolio, &#x27;market_crash&#x27;)
     assert result[&#x27;total_loss&#x27;] &lt; 0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Моделирование рисков</h1>
+<blockquote>Создание финансовых моделей рисков с VaR, симуляцией Монте-Карло и стресс-тестированием.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>import numpy as np
+import pandas as pd
+
+def calculate_var(returns: pd.Series, confidence: float = 0.95) -&gt; float:
+    &quot;&quot;&quot;Исторический Value at Risk.&quot;&quot;&quot;
+    return np.percentile(returns, (1 - confidence) * 100)
+
+def calculate_cvar(returns: pd.Series, confidence: float = 0.95) -&gt; float:
+    &quot;&quot;&quot;Conditional VaR (Expected Shortfall).&quot;&quot;&quot;
+    var = calculate_var(returns, confidence)
+    return returns[returns &lt;= var].mean()
+
+# Пример использования
+returns = pd.Series(np.random.randn(1000) * 0.02)
+print(f&quot;VaR (95%): {calculate_var(returns):.4f}&quot;)
+print(f&quot;CVaR (95%): {calculate_cvar(returns):.4f}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Измерение рисков портфеля для регуляторного соответствия (Базель III/IV)</li>
+<li>Установка лимитов риска для торговых подразделений</li>
+<li>Стресс-тестирование портфелей против рыночных шоков</li>
+<li>Когда нужно количественно оценить потенциальные убытки</li>
+</ul>
+<h2>Пошагово</h2>
+<h3>1. Историческая симуляция VaR</h3>
+<div class="codeblock"><pre class="code"><code>class HistoricalVaR:
+    def __init__(self, confidence=0.95, horizon_days=1):
+        self.confidence = confidence
+        self.horizon_days = horizon_days
+
+    def calculate(self, returns: pd.DataFrame, portfolio_weights: np.ndarray) -&gt; dict:
+        portfolio_returns = returns.dot(portfolio_weights)
+
+        var = np.percentile(portfolio_returns, (1 - self.confidence) * 100)
+        cvar = portfolio_returns[portfolio_returns &lt;= var].mean()
+
+        return {
+            &#x27;var&#x27;: var * np.sqrt(self.horizon_days),
+            &#x27;cvar&#x27;: cvar * np.sqrt(self.horizon_days),
+            &#x27;confidence&#x27;: self.confidence,
+        }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Симуляция Монте-Карло</h3>
+<div class="codeblock"><pre class="code"><code>def monte_carlo_var(
+    mean_returns: np.ndarray,
+    cov_matrix: np.ndarray,
+    weights: np.ndarray,
+    simulations: int = 10000,
+    horizon_days: int = 10,
+    confidence: float = 0.95
+) -&gt; dict:
+    &quot;&quot;&quot;Параметрический VaR с использованием симуляции Монте-Карло.&quot;&quot;&quot;
+    daily_returns = np.random.multivariate_normal(
+        mean_returns, cov_matrix * horizon_days, simulations
+    )
+
+    portfolio_returns = daily_returns.dot(weights)
+
+    var = np.percentile(portfolio_returns, (1 - confidence) * 100)
+    cvar = portfolio_returns[portfolio_returns &lt;= var].mean()
+
+    return {
+        &#x27;var&#x27;: var,
+        &#x27;cvar&#x27;: cvar,
+        &#x27;mean_loss&#x27;: -portfolio_returns.mean(),
+        &#x27;worst_case&#x27;: portfolio_returns.min(),
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Стресс-тестирование</h3>
+<div class="codeblock"><pre class="code"><code>class StressTest:
+    SCENARIOS = {
+        &#x27;market_crash&#x27;: {&#x27;equities&#x27;: -0.30, &#x27;bonds&#x27;: 0.05, &#x27;commodities&#x27;: -0.20},
+        &#x27;rate_shock&#x27;: {&#x27;equities&#x27;: -0.10, &#x27;bonds&#x27;: -0.15, &#x27;commodities&#x27;: 0.05},
+        &#x27;credit_crisis&#x27;: {&#x27;equities&#x27;: -0.25, &#x27;bonds&#x27;: -0.10, &#x27;commodities&#x27;: -0.15},
+        &#x27;pandemic&#x27;: {&#x27;equities&#x27;: -0.35, &#x27;bonds&#x27;: 0.10, &#x27;commodities&#x27;: -0.30},
+    }
+
+    def run_scenario(self, portfolio: dict, scenario: str) -&gt; dict:
+        if scenario not in self.SCENARIOS:
+            raise ValueError(f&quot;Неизвестный сценарий: {scenario}&quot;)
+
+        shocks = self.SCENARIOS[scenario]
+        total_loss = 0
+        results = {}
+
+        for asset_class, value in portfolio.items():
+            if asset_class in shocks:
+                loss = value * shocks[asset_class]
+                total_loss += loss
+                results[asset_class] = {&#x27;value&#x27;: value, &#x27;shock&#x27;: shocks[asset_class], &#x27;loss&#x27;: loss}
+
+        return {
+            &#x27;scenario&#x27;: scenario,
+            &#x27;total_loss&#x27;: total_loss,
+            &#x27;details&#x27;: results,
+        }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Декомпозиция рисков</h3>
+<div class="codeblock"><pre class="code"><code>def risk_decomposition(returns: pd.DataFrame, weights: np.ndarray) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Декомпозиция рисков портфеля по активам.&quot;&quot;&quot;
+    cov = returns.cov()
+    portfolio_var = weights.dot(cov).dot(weights)
+    marginal_contrib = cov.dot(weights)
+    component_contrib = weights * marginal_contrib
+    pct_contrib = component_contrib / portfolio_var
+
+    return pd.DataFrame({
+        &#x27;weight&#x27;: weights,
+        &#x27;marginal_contrib&#x27;: marginal_contrib,
+        &#x27;component_contrib&#x27;: component_contrib,
+        &#x27;pct_contrib&#x27;: pct_contrib,
+    }, index=returns.columns)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Стресс-тест корреляций</h3>
+<div class="codeblock"><pre class="code"><code>def correlation_stress_test(
+    returns: pd.DataFrame,
+    weights: np.ndarray,
+    correlation_multiplier: float = 1.5
+) -&gt; dict:
+    &quot;&quot;&quot;Тестирование портфеля в режиме повышенных корреляций.&quot;&quot;&quot;
+    normal_corr = returns.corr()
+    stressed_corr = normal_corr * correlation_multiplier
+    np.fill_diagonal(stressed_corr.values, 1.0)
+
+    normal_vol = returns.std()
+    stressed_cov = np.outer(normal_vol, normal_vol) * stressed_corr
+
+    normal_var = weights.dot(returns.cov()).dot(weights)
+    stressed_var = weights.dot(stressed_cov).dot(weights)
+
+    return {
+        &#x27;normal_var&#x27;: normal_var,
+        &#x27;stressed_var&#x27;: stressed_var,
+        &#x27;var_increase&#x27;: (stressed_var - normal_var) / normal_var,
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>**Используйте несколько методов** — исторический, параметрический и Монте-Карло</li>
+<li>**Бэктестите модели рисков** против фактических убытков</li>
+<li>**Обновляйте матрицы корреляций** регулярно — они меняются в кризисах</li>
+<li>**Включайте хвостовые риски** — нормальные распределения недооценивают экстремальные события</li>
+<li>**Документируйте допущения** — все модели неверны, некоторые полезны</li>
+</ul>
+<h2>Типичные ошибки</h2>
+<ul>
+<li>Предположение о нормальных распределениях (тяжёлые хвосты важны)</li>
+<li>Использование устаревших матриц корреляций</li>
+<li>Игнорирование риска ликвидности</li>
+<li>Отсутствие стресс-тестирования против беспрецедентных сценариев</li>
+<li>Рассмотрение VaR как единственной меры риска</li>
+</ul>
+<h2>Примеры</h2>
+<h3>Отчёт о рисках портфеля</h3>
+<div class="codeblock"><pre class="code"><code>def generate_risk_report(portfolio_returns: pd.DataFrame, weights: np.ndarray) -&gt; dict:
+    var_95 = calculate_var(portfolio_returns.dot(weights), 0.95)
+    var_99 = calculate_var(portfolio_returns.dot(weights), 0.99)
+    cvar_95 = calculate_cvar(portfolio_returns.dot(weights), 0.95)
+
+    decomposition = risk_decomposition(portfolio_returns, weights)
+
+    return {
+        &#x27;var_95&#x27;: var_95,
+        &#x27;var_99&#x27;: var_99,
+        &#x27;cvar_95&#x27;: cvar_95,
+        &#x27;max_drawdown&#x27;: (portfolio_returns.dot(weights).cumsum().cummax() -
+                        portfolio_returns.dot(weights).cumsum()).max(),
+        &#x27;risk_contributions&#x27;: decomposition[&#x27;pct_contrib&#x27;].to_dict(),
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Валидация</h2>
+<div class="codeblock"><pre class="code"><code>def test_var_calculation():
+    returns = pd.Series(np.random.randn(10000) * 0.01)
+    var = calculate_var(returns, 0.95)
+    assert var &lt; 0  # VaR должен быть отрицательным (убыток)
+    assert abs(var) &lt; 0.05  # Проверка здравого смысла
+
+def test_stress_test():
+    portfolio = {&#x27;equities&#x27;: 1000000, &#x27;bonds&#x27;: 500000}
+    st = StressTest()
+    result = st.run_scenario(portfolio, &#x27;market_crash&#x27;)
+    assert result[&#x27;total_loss&#x27;] &lt; 0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div></div>
       <div class="page-nav"><a class="page-nav-link" href="algorithmic-trading.html">← algorithmic-trading</a></div>
     </article>
   </div>
@@ -295,6 +475,15 @@ def test_stress_test():
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -321,6 +510,9 @@ def test_stress_test():
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="hl7-fhir.html">hl7-fhir →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>HIPAA Compliance</h1>
 <blockquote>Implementing HIPAA compliance in healthcare software with PHI protection and audit logging.</blockquote>
 <h2>Quick Start</h2>
@@ -322,6 +323,260 @@ def test_session_timeout():
     session.last_activity = datetime.utcnow() - timedelta(hours=9)
     assert not session.is_valid()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Соответствие HIPAA</h1>
+<blockquote>Реализация соответствия HIPAA в программном обеспечении здравоохранения с защитой PHI и аудит-логированием.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>import hashlib
+import hmac
+import json
+import logging
+from datetime import datetime
+from functools import wraps
+
+class HIPAACompliance:
+    &quot;&quot;&quot;Основные утилиты соответствия HIPAA для медицинских приложений.&quot;&quot;&quot;
+
+    def __init__(self, organization_id: str):
+        self.organization_id = organization_id
+        self.audit_logger = logging.getLogger(&#x27;hipaa.audit&#x27;)
+
+    def hash_phi(self, value: str, salt: str = &quot;&quot;) -&gt; str:
+        &quot;&quot;&quot;Односторонний хеш для PHI (полезно для аналитики без раскрытия данных).&quot;&quot;&quot;
+        return hashlib.sha256(f&quot;{salt}{value}&quot;.encode()).hexdigest()
+
+    def mask_phi(self, value: str, visible_chars: int = 4) -&gt; str:
+        &quot;&quot;&quot;Маскировка PHI для отображения (например, SSN: ***-**-1234).&quot;&quot;&quot;
+        if len(value) &lt;= visible_chars:
+            return &#x27;*&#x27; * len(value)
+        return &#x27;*&#x27; * (len(value) - visible_chars) + value[-visible_chars:]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Создание медицинских приложений, работающих с защищённой медицинской информацией (PHI)</li>
+<li>Когда нужно соответствие Privacy и Security Rules HIPAA</li>
+<li>Реализация контроля доступа и аудит-логирования для медицинских данных</li>
+<li>Подготовка к аудитам HIPAA или оценкам рисков</li>
+</ul>
+<h2>Пошагово</h2>
+<h3>1. Контроль доступа</h3>
+<div class="codeblock"><pre class="code"><code>from enum import Enum
+from dataclasses import dataclass
+
+class Role(Enum):
+    PHYSICIAN = &quot;physician&quot;
+    NURSE = &quot;nurse&quot;
+    ADMIN = &quot;admin&quot;
+    BILLING = &quot;billing&quot;
+    PATIENT = &quot;patient&quot;
+
+@dataclass
+class AccessPolicy:
+    allowed_roles: set[Role]
+    requires_break_glass: bool = False
+    max_access_duration_minutes: int = 480
+
+class AccessControl:
+    def __init__(self):
+        self.policies: dict[str, AccessPolicy] = {}
+
+    def define_policy(self, resource_type: str, policy: AccessPolicy):
+        self.policies[resource_type] = policy
+
+    def check_access(self, user_role: Role, resource_type: str, patient_id: str) -&gt; bool:
+        policy = self.policies.get(resource_type)
+        if not policy:
+            return False
+
+        if user_role not in policy.allowed_roles:
+            self._log_access_denied(user_role, resource_type, patient_id)
+            return False
+
+        return True
+
+    def _log_access_denied(self, role: Role, resource: str, patient_id: str):
+        self.audit_logger.warning(
+            f&quot;ACCESS_DENIED: role={role.value} resource={resource} patient={patient_id}&quot;
+        )</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Аудит-логирование</h3>
+<div class="codeblock"><pre class="code"><code>class AuditLogger:
+    &quot;&quot;&quot;Аудит-логирование PHI в соответствии с HIPAA.&quot;&quot;&quot;
+
+    def __init__(self, log_path: str = &quot;audit.log&quot;):
+        self.logger = logging.getLogger(&#x27;hipaa.audit&#x27;)
+        handler = logging.FileHandler(log_path)
+        handler.setFormatter(logging.Formatter(
+            &#x27;%(asctime)s | %(message)s&#x27;
+        ))
+        self.logger.addHandler(handler)
+        self.logger.setLevel(logging.INFO)
+
+    def log_access(self, user_id: str, action: str, resource_type: str,
+                   resource_id: str, patient_id: str, reason: str = &quot;&quot;):
+        entry = {
+            &#x27;timestamp&#x27;: datetime.utcnow().isoformat(),
+            &#x27;user_id&#x27;: user_id,
+            &#x27;action&#x27;: action,
+            &#x27;resource_type&#x27;: resource_type,
+            &#x27;resource_id&#x27;: resource_id,
+            &#x27;patient_id&#x27;: patient_id,
+            &#x27;reason&#x27;: reason,
+        }
+        self.logger.info(json.dumps(entry))
+
+    def log_modification(self, user_id: str, resource_type: str,
+                         resource_id: str, changes: dict):
+        entry = {
+            &#x27;timestamp&#x27;: datetime.utcnow().isoformat(),
+            &#x27;user_id&#x27;: user_id,
+            &#x27;action&#x27;: &#x27;MODIFY&#x27;,
+            &#x27;resource_type&#x27;: resource_type,
+            &#x27;resource_id&#x27;: resource_id,
+            &#x27;changes&#x27;: list(changes.keys()),
+        }
+        self.logger.info(json.dumps(entry))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Шифрование</h3>
+<div class="codeblock"><pre class="code"><code>from cryptography.fernet import Fernet
+import base64
+import os
+
+class PHIEncryption:
+    &quot;&quot;&quot;Шифрование PHI в покое и при передаче.&quot;&quot;&quot;
+
+    def __init__(self, key: bytes = None):
+        if key is None:
+            key = Fernet.generate_key()
+        self.cipher = Fernet(key)
+
+    def encrypt(self, data: str) -&gt; bytes:
+        return self.cipher.encrypt(data.encode())
+
+    def decrypt(self, encrypted: bytes) -&gt; str:
+        return self.cipher.decrypt(encrypted).decode()
+
+    @staticmethod
+    def generate_key() -&gt; bytes:
+        return Fernet.generate_key()
+
+class DatabaseEncryption:
+    &quot;&quot;&quot;Шифрование на уровне столбцов для PHI в базах данных.&quot;&quot;&quot;
+
+    def __init__(self, encryption_key: bytes):
+        self.cipher = Fernet(encryption_key)
+
+    def encrypt_column(self, value: str) -&gt; str:
+        encrypted = self.cipher.encrypt(value.encode())
+        return base64.b64encode(encrypted).decode()
+
+    def decrypt_column(self, encrypted_b64: str) -&gt; str:
+        encrypted = base64.b64decode(encrypted_b64)
+        return self.cipher.decrypt(encrypted).decode()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Управление сессиями</h3>
+<div class="codeblock"><pre class="code"><code>import secrets
+from datetime import datetime, timedelta
+
+class SecureSession:
+    &quot;&quot;&quot;Управление сессиями в соответствии с HIPAA с автотаймаутом.&quot;&quot;&quot;
+
+    MAX_SESSION_DURATION = timedelta(hours=8)
+    IDLE_TIMEOUT = timedelta(minutes=15)
+
+    def __init__(self, user_id: str):
+        self.user_id = user_id
+        self.session_id = secrets.token_urlsafe(32)
+        self.created_at = datetime.utcnow()
+        self.last_activity = datetime.utcnow()
+
+    def is_valid(self) -&gt; bool:
+        now = datetime.utcnow()
+        if now - self.created_at &gt; self.MAX_SESSION_DURATION:
+            return False
+        if now - self.last_activity &gt; self.IDLE_TIMEOUT:
+            return False
+        return True
+
+    def touch(self):
+        self.last_activity = datetime.utcnow()
+
+    def require_reauth(self) -&gt; bool:
+        &quot;&quot;&quot;Чувствительные операции требуют повторной аутентификации.&quot;&quot;&quot;
+        return (datetime.utcnow() - self.last_activity) &gt; timedelta(minutes=5)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Обнаружение нарушений</h3>
+<div class="codeblock"><pre class="code"><code>class BreachDetector:
+    &quot;&quot;&quot;Обнаружение потенциальных нарушений PHI по паттернам доступа.&quot;&quot;&quot;
+
+    def __init__(self, audit_logger: AuditLogger):
+        self.audit_logger = audit_logger
+        self.access_counts: dict[str, int] = {}
+        self.threshold = 50  # Доступов в час перед оповещением
+
+    def record_access(self, user_id: str):
+        self.access_counts[user_id] = self.access_counts.get(user_id, 0) + 1
+
+    def check_for_breach(self, user_id: str) -&gt; bool:
+        if self.access_counts.get(user_id, 0) &gt; self.threshold:
+            self.audit_logger.logger.error(
+                f&quot;POTENTIAL_BREACH: user={user_id} &quot;
+                f&quot;access_count={self.access_counts[user_id]}&quot;
+            )
+            return True
+        return False</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>**Минимально необходимый доступ** — предоставляйте доступ к PHI только по необходимости для роли</li>
+<li>**Шифруйте PHI в покое и при передаче** — используйте минимум AES-256</li>
+<li>**Логируйте весь доступ к PHI** — кто, что, когда, почему</li>
+<li>**Автотаймаут сессий** — 15 мин простоя, 8 часов максимум</li>
+<li>**Реализуйте break-glass** — экстренный доступ с расширенным логированием</li>
+<li>**Регулярные оценки рисков** — минимум ежегодно</li>
+<li>**Обучайте весь персонал** — обучение HIPAA в течение 30 дней после найма</li>
+</ul>
+<h2>Типичные ошибки</h2>
+<ul>
+<li>Хранение PHI в логах или сообщениях об ошибках</li>
+<li>Отсутствие шифрования резервных копий базы данных</li>
+<li>Передача PHI по незашифрованным каналам (email, чат)</li>
+<li>Отсутствие правильных таймаутов сессий</li>
+<li>Недокументирование политик доступа</li>
+<li>Отсутствие плана уведомления о нарушениях</li>
+</ul>
+<h2>Примеры</h2>
+<h3>Декоратор для доступа к PHI</h3>
+<div class="codeblock"><pre class="code"><code>def require_phi_access(resource_type: str):
+    &quot;&quot;&quot;Декоратор для принудительного контроля доступа HIPAA.&quot;&quot;&quot;
+    def decorator(func):
+        @wraps(func)
+        def wrapper(user, patient_id, *args, **kwargs):
+            acl = AccessControl()
+            if not acl.check_access(user.role, resource_type, patient_id):
+                raise PermissionError(&quot;Доступ запрещён&quot;)
+
+            audit = AuditLogger()
+            audit.log_access(
+                user_id=user.id,
+                action=&#x27;READ&#x27;,
+                resource_type=resource_type,
+                resource_id=patient_id,
+                patient_id=patient_id,
+            )
+
+            return func(user, patient_id, *args, **kwargs)
+        return wrapper
+    return decorator
+
+@require_phi_access(&#x27;PatientRecord&#x27;)
+def get_patient_record(user, patient_id):
+    # Выполняется только если доступ предоставлен и залогирован
+    return fetch_record(patient_id)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Валидация</h2>
+<div class="codeblock"><pre class="code"><code>def test_phi_masking():
+    compliance = HIPAACompliance(&quot;test-org&quot;)
+    assert compliance.mask_phi(&quot;123-45-6789&quot;) == &quot;*****6789&quot;
+    assert compliance.mask_phi(&quot;John&quot;) == &quot;****&quot;
+
+def test_session_timeout():
+    session = SecureSession(&quot;user123&quot;)
+    assert session.is_valid()
+    session.last_activity = datetime.utcnow() - timedelta(hours=9)
+    assert not session.is_valid()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="hl7-fhir.html">hl7-fhir →</a></div>
     </article>
   </div>
@@ -370,6 +625,15 @@ def test_session_timeout():
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -396,6 +660,9 @@ def test_session_timeout():
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

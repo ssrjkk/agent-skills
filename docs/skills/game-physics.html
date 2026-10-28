@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="unity-ecs.html">unity-ecs →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Game Physics</h1>
 <blockquote>Building realistic game physics with collision detection, rigid bodies, and constraints.</blockquote>
 <h2>Quick Start</h2>
@@ -231,6 +232,169 @@ def test_gravity():
     body.update(1.0)
     assert body.velocity[1] &lt; 0  # Falling</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Физика в играх</h1>
+<blockquote>Создание реалистичной игровой физики с обнаружением столкновений, твёрдыми телами и ограничениями.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Базовая настройка твёрдого тела (паттерн для типичного физического движка)
+class RigidBody:
+    def __init__(self, mass, position, velocity):
+        self.mass = mass
+        self.position = position
+        self.velocity = velocity
+        self.acceleration = (0, 0, 0)
+
+    def apply_force(self, force):
+        self.acceleration = tuple(f / self.mass for f in force)
+
+    def update(self, dt):
+        self.velocity = tuple(v + a * dt for v, a in zip(self.velocity, self.acceleration))
+        self.position = tuple(p + v * dt for p, v in zip(self.position, self.velocity))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Создание платформеров, шутеров или головоломок с физикой</li>
+<li>Реализация симуляции транспорта или контроллеров персонажей</li>
+<li>Когда нужно реалистичное взаимодействие объектов</li>
+<li>Оптимизация физики для мобильных или VR</li>
+</ul>
+<h2>Пошагово</h2>
+<h3>1. Определите масштаб физики</h3>
+<p>Определите, какой уровень физики нужен вашей игре:</p>
+<ul>
+<li>**Аркадная**: простые AABB столкновения, базовая гравитация</li>
+<li>**Казуальная**: круговые/сферические столкновения, трение, отскок</li>
+<li>**Реалистичная**: полная динамика твёрдых тел, ограничения, суставы</li>
+</ul>
+<h3>2. Обнаружение столкновений</h3>
+<p>Реализуйте широкую фазу, затем узкую:</p>
+<div class="codeblock"><pre class="code"><code>def broad_phase_aabb(obj_a, obj_b):
+    &quot;&quot;&quot;Быстрое отсечение по ограничивающим коробкам.&quot;&quot;&quot;
+    return not (
+        obj_a.max_x &lt; obj_b.min_x or obj_a.min_x &gt; obj_b.max_x or
+        obj_a.max_y &lt; obj_b.min_y or obj_a.min_y &gt; obj_b.max_y
+    )
+
+def narrow_phase_circle(c1, c2):
+    &quot;&quot;&quot;Точное столкновение круг-круг.&quot;&quot;&quot;
+    dx = c1.x - c2.x
+    dy = c1.y - c2.y
+    distance = (dx * dx + dy * dy) ** 0.5
+    return distance &lt; (c1.radius + c2.radius)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Реакция на столкновение</h3>
+<p>Обработка того, что происходит после столкновения:</p>
+<div class="codeblock"><pre class="code"><code>def resolve_collision(body_a, body_b, normal, depth):
+    &quot;&quot;&quot;Простая упругая реакция на столкновение.&quot;&quot;&quot;
+    relative_velocity = tuple(b - a for a, b in zip(body_a.velocity, body_b.velocity))
+    velocity_along_normal = sum(r * n for r, n in zip(relative_velocity, normal))
+
+    if velocity_along_normal &gt; 0:
+        return  # Объекты разделяются
+
+    restitution = 0.5  # Упругость
+    impulse = -(1 + restitution) * velocity_along_normal
+    impulse /= (1 / body_a.mass + 1 / body_b.mass)
+
+    impulse_vector = tuple(impulse * n for n in normal)
+    body_a.velocity = tuple(v - impulse / body_a.mass for v in impulse_vector)
+    body_b.velocity = tuple(v + impulse / body_b.mass for v in impulse_vector)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Ограничения и суставы</h3>
+<div class="codeblock"><pre class="code"><code>class DistanceConstraint:
+    &quot;&quot;&quot;Поддержание фиксированного расстояния между двумя телами.&quot;&quot;&quot;
+    def __init__(self, body_a, body_b, distance):
+        self.body_a = body_a
+        self.body_b = body_b
+        self.distance = distance
+
+    def solve(self):
+        dx = self.body_b.position[0] - self.body_a.position[0]
+        dy = self.body_b.position[1] - self.body_a.position[1]
+        current_dist = (dx * dx + dy * dy) ** 0.5
+        error = current_dist - self.distance
+
+        if current_dist == 0:
+            return
+
+        normal = (dx / current_dist, dy / current_dist)
+        correction = error / 2
+
+        self.body_a.position = (
+            self.body_a.position[0] + normal[0] * correction,
+            self.body_a.position[1] + normal[1] * correction
+        )
+        self.body_b.position = (
+            self.body_b.position[0] - normal[0] * correction,
+            self.body_b.position[1] - normal[1] * correction
+        )</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Рейкастинг</h3>
+<div class="codeblock"><pre class="code"><code>def raycast(origin, direction, objects, max_distance):
+    &quot;&quot;&quot;Поиск первого объекта, пересечённого лучом.&quot;&quot;&quot;
+    closest_hit = None
+    closest_distance = max_distance
+
+    for obj in objects:
+        hit, distance = obj.ray_intersection(origin, direction)
+        if hit and distance &lt; closest_distance:
+            closest_distance = distance
+            closest_hit = obj
+
+    return closest_hit, closest_distance</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>**Используйте пространственное разбиение** (quadtree, octree) для широкой фазы</li>
+<li>**Фиксированный шаг времени** для детерминированной физики (важно для мультиплеера)</li>
+<li>**Спящие тела** — отключайте физику для неподвижных объектов</li>
+<li>**Непрерывное обнаружение столкновений** для быстро движущихся объектов</li>
+<li>**Разделяйте физику и рендеринг** — запускайте физику с фиксированной частотой</li>
+</ul>
+<h2>Типичные ошибки</h2>
+<ul>
+<li>Туннелирование (быстрые объекты проходят сквозь стены) — используйте CCD или меньший шаг времени</li>
+<li>Накопление ошибок плавающей точки — используйте коррекцию позиции</li>
+<li>Слишком много проверок столкновений — оптимизируйте пространственными структурами</li>
+<li>Переменный шаг времени вызывает нестабильность — используйте фиксированный шаг с интерполяцией</li>
+</ul>
+<h2>Примеры</h2>
+<h3>Контроллер персонажа для платформера</h3>
+<div class="codeblock"><pre class="code"><code>class CharacterController:
+    def __init__(self):
+        self.grounded = False
+        self.jump_force = 10
+        self.move_speed = 5
+        self.gravity = -20
+
+    def update(self, input, dt):
+        # Горизонтальное движение
+        self.velocity.x = input.horizontal * self.move_speed
+
+        # Прыжок
+        if input.jump and self.grounded:
+            self.velocity.y = self.jump_force
+            self.grounded = False
+
+        # Гравитация
+        self.velocity.y += self.gravity * dt</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Физика транспорта</h3>
+<div class="codeblock"><pre class="code"><code>class Vehicle:
+    def apply_engine_force(self, throttle):
+        force = throttle * self.engine_power
+        self.apply_force_to_rear_wheels(force)
+
+    def apply_brakes(self, brake_force):
+        self.apply_friction_to_all_wheels(brake_force)
+
+    def steer(self, angle):
+        self.front_wheel_angle = angle</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Валидация</h2>
+<div class="codeblock"><pre class="code"><code># Тестирование реализации физики
+def test_collision_detection():
+    body_a = RigidBody(1, (0, 0), (0, 0))
+    body_b = RigidBody(1, (1, 0), (0, 0))
+    assert detect_collision(body_a, body_b, radius=0.6)
+
+def test_gravity():
+    body = RigidBody(1, (0, 10), (0, 0))
+    body.apply_force((0, -9.8))
+    body.update(1.0)
+    assert body.velocity[1] &lt; 0  # Падает</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="unity-ecs.html">unity-ecs →</a></div>
     </article>
   </div>
@@ -279,6 +443,15 @@ def test_gravity():
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -305,6 +478,9 @@ def test_gravity():
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

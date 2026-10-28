@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="mongodb.html">← mongodb</a><a class="page-nav-link" href="postgresql.html">postgresql →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>MySQL</h1>
 <blockquote>Designing and operating MySQL databases.</blockquote>
 <h2>Quick Start</h2>
@@ -155,6 +156,93 @@ INSERT INTO logs (ts, level, msg) VALUES
 <li>High load: buffer pool, connection pool, read replicas.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>MySQL (МайСэсКьюЭл)</h1>
+<blockquote>Проектирование и эксплуатация баз MySQL.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql:8
+mysql -h 127.0.0.1 -u root -p</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Реляционные данные с сильной консистентностью</li>
+<li>Веб-бэкенды (read-heavy)</li>
+<li>Транзакции и стандартный SQL</li>
+<li>Проверенный операционный тулинг</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Схема</h3>
+<ul>
+<li>InnoDB (дефолт) для транзакций и FK</li>
+<li>Типы колонок осознанно (INT, VARCHAR, DATETIME)</li>
+<li>utf8mb4 для полного Unicode</li>
+<li>Нормализуйте ядро; денормализуйте для горячих чтений</li>
+</ul>
+<h3>Индексы</h3>
+<ul>
+<li>Индексы под WHERE/JOIN/ORDER BY</li>
+<li>Правило левого префикса для составных</li>
+<li>Покрывающие колонки против lookups</li>
+<li>Без функций на индексированных колонках в WHERE</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>`EXPLAIN` для чтения планов</li>
+<li>Батч-вставки; не по строкам в циклах</li>
+<li>`innodb_buffer_pool_size` под кэш</li>
+<li>Пул соединений в приложениях</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Binary logging для репликации/бэкапа</li>
+<li>Реплика для чтений при необходимости</li>
+<li>`max_connections` и мониторинг медленных запросов</li>
+<li>Бэкапы через mysqldump или Percona tools</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql:8
+# клиент: mysql -h 127.0.0.1 -u root -p</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>-- Схема с типами и индексами
+CREATE TABLE users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT &#x27;member&#x27;,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_email (email),
+  KEY idx_created (created_at)
+) ENGINE=InnoDB;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Транзакция с откатом
+START TRANSACTION;
+INSERT INTO orders (user_id, amount) VALUES (1, 99.99);
+UPDATE users SET balance = balance - 99.99 WHERE id = 1;
+COMMIT; -- или ROLLBACK при ошибке</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- EXPLAIN для проверки индексов
+EXPLAIN SELECT id, email FROM users
+WHERE created_at &gt;= &#x27;2026-01-01&#x27; ORDER BY created_at LIMIT 50;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Батч-вставка
+INSERT INTO logs (ts, level, msg) VALUES
+  (&#x27;2026-09-01&#x27;, &#x27;info&#x27;, &#x27;a&#x27;),
+  (&#x27;2026-09-01&#x27;, &#x27;warn&#x27;, &#x27;b&#x27;);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Смоделируйте сущности; выберите типы и charset.</p>
+<p class='ordered'>2. Напишите DDL с ключами, индексами и ограничениями.</p>
+<p class='ordered'>3. Мигрируйте версионированным инструментом (Flyway/Alembic).</p>
+<p class='ordered'>4. Добавьте индексы под реальные паттерны.</p>
+<p class='ordered'>5. Прогоните `EXPLAIN` на горячих запросах.</p>
+<p class='ordered'>6. Настройте InnoDB и пул соединений.</p>
+<p class='ordered'>7. Настройте репликацию и бэкапы.</p>
+<p class='ordered'>8. Мониторьте медленные запросы и lock waits.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Схема применяется чисто через миграции</p>
+<p class='ordered'>2. `EXPLAIN` показывает использование индексов</p>
+<p class='ordered'>3. Транзакции откатываются при фейле</p>
+<p class='ordered'>4. Реплика синхронизирована (для read scaling)</p>
+<p class='ordered'>5. Бэкап/восстановление протестированы</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Медленный запрос: проверьте EXPLAIN и порядок составного индекса.</li>
+<li>Deadlock: короткие транзакции; консистентный порядок блокировок.</li>
+<li>Высокая нагрузка: buffer pool, пул соединений, read-реплики.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="mongodb.html">← mongodb</a><a class="page-nav-link" href="postgresql.html">postgresql →</a></div>
     </article>
   </div>
@@ -203,6 +291,15 @@ INSERT INTO logs (ts, level, msg) VALUES
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -229,6 +326,9 @@ INSERT INTO logs (ts, level, msg) VALUES
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

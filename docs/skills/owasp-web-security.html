@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="oauth2-jwt.html">← oauth2-jwt</a><a class="page-nav-link" href="secrets-management.html">secrets-management →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>OWASP Web Security</h1>
 <blockquote>Hardening web applications against the OWASP Top 10.</blockquote>
 <h2>Quick Start</h2>
@@ -154,6 +155,92 @@ def safe_fetch(url: str) -&gt; str:
 <li>Legacy code risk: prioritize by exposed attack surface.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>OWASP Web Security (ОВАСП веб-безопасность)</h1>
+<blockquote>Укрепление веб-приложений против OWASP Top 10.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Сканирование зависимостей на известные уязвимости
+pip-audit --format full
+npm audit
+# затем пройдитесь по чек-листу OWASP Top 10 по своему приложению</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Перед запуском или крупными релизами</li>
+<li>При работе с auth, платежами или PII</li>
+<li>После обновления зависимостей или фреймворков</li>
+<li>Регулярное укрепление существующих приложений</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Инъекции</h3>
+<ul>
+<li>Параметризуйте все SQL/конструкции запросов</li>
+<li>Экранируйте вывод под контекст (HTML, JS, URL)</li>
+<li>Валидируйте и whitelist&#x27;ите входы на сервере</li>
+<li>Используйте ORM/query builders; никогда не склеивайте запросы строками</li>
+</ul>
+<h3>Аутентификация и авторизация</h3>
+<ul>
+<li>Используйте проверенную auth-библиотеку (не самописную)</li>
+<li>Хешируйте пароли через bcrypt/argon2</li>
+<li>Включайте MFA для чувствительных действий</li>
+<li>Проверяйте авторизацию на каждом эндпоинте, а не только в UI</li>
+</ul>
+<h3>XSS и CSRF</h3>
+<ul>
+<li>Авто-экранирование вывода в шаблонах; санитизируйте rich content</li>
+<li>Ставьте CSP headers; где можно — строгие `Trusted Types`</li>
+<li>CSRF-токены на все state-changing запросы</li>
+<li>Ставьте `SameSite=Lax/Strict` на куки</li>
+</ul>
+<h3>Данные и зависимости</h3>
+<ul>
+<li>Шифруйте данные в транзите (TLS) и в покое</li>
+<li>Держите зависимости обновлёнными; сканируйте регулярно</li>
+<li>Ограничивайте SSRF: блокируйте приватные диапазоны, пиньте редиректы</li>
+<li>Ограничивайте загрузку файлов: тип, размер и исполнение</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install bandit pip-audit
+npm install -g npm-audit-resolver
+# сканеры: semgrep, gitleaks, trivy</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Безопасный SQL без инъекций
+cursor.execute(&quot;SELECT * FROM users WHERE email = %s&quot;, (email,))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Экранирование вывода в шаблонах (Django авто-экранирует)
+# context = {&quot;user_input&quot;: user_input}
+# Template: {{ user_input }}   # авто-экранирован</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CSRF защита (Django middleware по умолчанию)
+from django.views.decorators.csrf import csrf_exempt
+# никогда не используйте @csrf_exempt на state-changing вьюхах</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># SSRF защита
+import ipaddress, socket
+
+def safe_fetch(url: str) -&gt; str:
+    host = urlparse(url).hostname
+    ip = ipaddress.ip_address(socket.gethostbyname(host))
+    if not ip.is_private:          # блокировка локальных/приватных диапазонов
+        return requests.get(url).text
+    raise ValueError(&quot;Blocked private address&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Запустите сканеры зависимостей (pip-audit/npm audit/trivy).</p>
+<p class='ordered'>2. Проверьте authN/authZ: хранение паролей, сессии, роли.</p>
+<p class='ordered'>3. Проверьте все входы: валидация, экранирование, параметризация.</p>
+<p class='ordered'>4. Аудит CSRF, XSS и CSP headers.</p>
+<p class='ordered'>5. Проверьте загрузки файлов, SSRF-векторы и редиректы.</p>
+<p class='ordered'>6. Проверьте секреты: gitleaks и конфиг через env.</p>
+<p class='ordered'>7. Укрепите заголовки: CSP, HSTS, X-Content-Type-Options.</p>
+<p class='ordered'>8. Пересканируйте после фиксов; задокументируйте остаточные риски.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. В коде нет точек инъекций по данным скана</p>
+<p class='ordered'>2. Пароли хранятся с сильным хешем</p>
+<p class='ordered'>3. Авторизация enforce&#x27;ится на сервере на всех эндпоинтах</p>
+<p class='ordered'>4. CSP и security headers присутствуют</p>
+<p class='ordered'>5. Скан зависимостей не показывает критических уязвимостей</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Сломанные auth-флоу: тестируйте с теми же browser/network правилами, что и пользователи.</li>
+<li>False positives: проверяйте утверждения сканеров в безопасном окружении.</li>
+<li>Риск легаси-кода: приоритизируйте по открытой поверхности атаки.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="oauth2-jwt.html">← oauth2-jwt</a><a class="page-nav-link" href="secrets-management.html">secrets-management →</a></div>
     </article>
   </div>
@@ -202,6 +289,15 @@ def safe_fetch(url: str) -&gt; str:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -228,6 +324,9 @@ def safe_fetch(url: str) -&gt; str:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

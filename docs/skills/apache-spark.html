@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="airflow.html">← airflow</a><a class="page-nav-link" href="data-visualization.html">data-visualization →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Apache Spark</h1>
 <blockquote>Large-scale distributed data processing with Spark.</blockquote>
 <h2>Quick Start</h2>
@@ -159,6 +160,97 @@ ORDER BY total DESC</code></pre><button class="copy-btn code-copy" onclick="copy
 <li>Slow shuffles: tune shuffle.partitions and bucketing.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Apache Spark (Апач Спарк)</h1>
+<blockquote>Распределённая обработка данных большого масштаба на Spark.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install pyspark
+pyspark  # интерактивный шелл</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Датaсеты, слишком большие для одной машины</li>
+<li>Распределённый ETL и аналитика</li>
+<li>Стриминг (Structured Streaming)</li>
+<li>ML в масштабе (MLlib)</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>DataFrames и SQL</h3>
+<ul>
+<li>Предпочитайте DataFrames вместо RDD</li>
+<li>Spark SQL для привычных декларативных запросов</li>
+<li>Кэшируйте переиспользуемые DataFrames</li>
+<li>`broadcast` для маленьких join-таблиц</li>
+</ul>
+<h3>Оптимизация</h3>
+<ul>
+<li>Избегайте shuffle; партиционирование и bucketing</li>
+<li>Фильтруйте и берите колонки рано</li>
+<li>`repartition`/`coalesce` осознанно</li>
+<li>Мониторинг стадий и shuffle в UI</li>
+</ul>
+<h3>Join и агрегации</h3>
+<ul>
+<li>Маленькие таблицы — `broadcast()`</li>
+<li>Join по bucket/partition ключам</li>
+<li>`groupBy` с агрегатными функциями</li>
+<li>Оконные функции аккуратно</li>
+</ul>
+<h3>Настройка ресурсов</h3>
+<ul>
+<li>`spark.executor.memory` и ядра</li>
+<li>`spark.sql.shuffle.partitions`</li>
+<li>Динамическая аллокация</li>
+<li>Баланс партиций против skew</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install pyspark</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+spark = SparkSession.builder.appName(&quot;etl&quot;).getOrCreate()
+
+df = spark.read.parquet(&quot;s3://bucket/events&quot;)
+print(df.printSchema())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># ETL с фильтрами и агрегациями
+result = (
+    df.filter(F.col(&quot;status&quot;) == &quot;paid&quot;)
+      .groupBy(&quot;region&quot;)
+      .agg(F.sum(&quot;amount&quot;).alias(&quot;total&quot;), F.count(&quot;*&quot;).alias(&quot;orders&quot;))
+      .orderBy(F.desc(&quot;total&quot;))
+)
+result.show()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Broadcast join
+from pyspark.sql.functions import broadcast
+
+users = spark.read.parquet(&quot;users.parquet&quot;).cache()
+joined = df.join(broadcast(users), &quot;user_id&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Spark SQL
+SELECT region, sum(amount) AS total
+FROM events
+WHERE status = &#x27;paid&#x27;
+GROUP BY region
+ORDER BY total DESC</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Запустите SparkSession с настроенным конфигом.</p>
+<p class='ordered'>2. Загрузите данные (parquet/json/table).</p>
+<p class='ordered'>3. Трансформируйте через DataFrames/SQL.</p>
+<p class='ordered'>4. Оптимизируйте: broadcast, партиции, кэш.</p>
+<p class='ordered'>5. Пишите результаты в колоночный формат.</p>
+<p class='ordered'>6. Мониторьте Spark UI на skew и shuffle.</p>
+<p class='ordered'>7. Настройте исполнители и партиции.</p>
+<p class='ordered'>8. Планируйте задачи (Airflow/spark-submit).</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Результаты совпадают с малым референсным расчётом</p>
+<p class='ordered'>2. Shuffle минимизирован</p>
+<p class='ordered'>3. Нет skew задач (сбалансированные партиции)</p>
+<p class='ordered'>4. Кэш ускоряет переиспользуемые данные</p>
+<p class='ordered'>5. Job завершается в рамках бюджета</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>OOM: уменьшите память исполнителя или партиционируйте.</li>
+<li>Skew: солите ключи или репартиционируйте.</li>
+<li>Медленные shuffle: настройте shuffle.partitions и bucketing.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="airflow.html">← airflow</a><a class="page-nav-link" href="data-visualization.html">data-visualization →</a></div>
     </article>
   </div>
@@ -207,6 +299,15 @@ ORDER BY total DESC</code></pre><button class="copy-btn code-copy" onclick="copy
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -233,6 +334,9 @@ ORDER BY total DESC</code></pre><button class="copy-btn code-copy" onclick="copy
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

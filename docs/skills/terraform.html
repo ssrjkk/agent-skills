@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="sre-slos.html">← sre-slos</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Terraform</h1>
 <blockquote>Provisioning cloud infrastructure as code with Terraform.</blockquote>
 <h2>Quick Start</h2>
@@ -181,6 +182,119 @@ terraform apply plan.tfplan</code></pre><button class="copy-btn code-copy" oncli
 <li>&quot;Provider not found&quot;: run `terraform init` to fetch providers.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Terraform (Терраформ)</h1>
+<blockquote>Провижининг облачной инфраструктуры как кода через Terraform.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>terraform init
+terraform plan
+terraform apply
+terraform destroy  # когда закончили</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Воспроизводимая облачная инфраструктура</li>
+<li>Управление AWS/GCP/Azure ресурсами как кодом</li>
+<li>Окружения, которые должны быть идентичны</li>
+<li>Командные изменения инфраструктуры с ревью</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Конфигурация</h3>
+<ul>
+<li>Организуйте по окружению и компоненту</li>
+<li>Переменные — для конфига; locals — для производных значений</li>
+<li>Outputs — для ссылок между модулями</li>
+<li>Пините версии провайдеров и модулей</li>
+</ul>
+<h3>Модули</h3>
+<ul>
+<li>Переиспользуемые блоки выносите в модули</li>
+<li>Держите модули небольшими и сфокусированными</li>
+<li>Валидируйте входы через variables</li>
+<li>Документируйте входы/выходы</li>
+</ul>
+<h3>State</h3>
+<ul>
+<li>Используйте remote backend (S3/OSS/Terraform Cloud)</li>
+<li>Включайте state locking против конфликтов</li>
+<li>Никогда не редактируйте state руками; используйте `terraform state`</li>
+<li>Защищайте state правами и версионированием</li>
+</ul>
+<h3>Workflow</h3>
+<ul>
+<li>Plan перед apply; ревью диффа</li>
+<li>Workspaces или отдельные папки на окружение</li>
+<li>В CI с апрувом для продакшена</li>
+<li>Убирайте неиспользуемые ресурсы через destroy</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Terraform CLI
+terraform version
+# провайдеры настраиваются в коде</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Провайдер + ресурс
+terraform {
+  required_version = &quot;&gt;= 1.5&quot;
+  backend &quot;s3&quot; {
+    bucket = &quot;my-tf-state&quot;
+    key    = &quot;prod/terraform.tfstate&quot;
+    region = &quot;us-east-1&quot;
+  }
+}
+
+provider &quot;aws&quot; {
+  region = var.region
+}
+
+resource &quot;aws_s3_bucket&quot; &quot;app&quot; {
+  bucket = &quot;my-app-bucket&quot;
+  tags   = { Environment = var.environment }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Variable + output
+variable &quot;region&quot; {
+  type    = string
+  default = &quot;us-east-1&quot;
+}
+
+variable &quot;environment&quot; {
+  type        = string
+  description = &quot;Deployment environment&quot;
+}
+
+output &quot;bucket_id&quot; {
+  value = aws_s3_bucket.app.id
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Простое использование модуля
+module &quot;vpc&quot; {
+  source = &quot;./modules/vpc&quot;
+  cidr   = &quot;10.0.0.0/16&quot;
+  name   = var.environment
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Стандартный workflow
+terraform init
+terraform fmt
+terraform validate
+terraform plan -out=plan.tfplan
+terraform apply plan.tfplan</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Инициализируйте проект и настройте провайдера.</p>
+<p class='ordered'>2. Настройте remote backend с locking.</p>
+<p class='ordered'>3. Напишите ресурсы для базовой инфраструктуры.</p>
+<p class='ordered'>4. Повторяющуюся логику вынесите в модули.</p>
+<p class='ordered'>5. Параметризуйте через variables; задайте outputs.</p>
+<p class='ordered'>6. Перед apply — `fmt`, `validate` и `plan`.</p>
+<p class='ordered'>7. В CI apply с апрувом для прод-окружений.</p>
+<p class='ordered'>8. Держите state защищённым и проверяемым.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `terraform validate` проходит</p>
+<p class='ordered'>2. `terraform plan` показывает только намеренные изменения</p>
+<p class='ordered'>3. State согласован с реальными ресурсами (`refresh`)</p>
+<p class='ordered'>4. Destroy удаляет все созданные ресурсы</p>
+<p class='ordered'>5. Plan diff просмотрен до apply</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>State lock: снимите устаревшие блокировки через backend или force-unlock.</li>
+<li>Drift: запустите `terraform plan` для детекции и сверки.</li>
+<li>&quot;Provider not found&quot;: запустите `terraform init` для загрузки провайдеров.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="sre-slos.html">← sre-slos</a></div>
     </article>
   </div>
@@ -229,6 +343,15 @@ terraform apply plan.tfplan</code></pre><button class="copy-btn code-copy" oncli
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -255,6 +378,9 @@ terraform apply plan.tfplan</code></pre><button class="copy-btn code-copy" oncli
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

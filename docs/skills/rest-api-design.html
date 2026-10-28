@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="nestjs.html">← nestjs</a><a class="page-nav-link" href="rust-tokio.html">rust-tokio →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>REST API Design</h1>
 <blockquote>Designing consistent, evolvable REST APIs.</blockquote>
 <h2>Quick Start</h2>
@@ -187,6 +188,125 @@ GET /users?limit=25&amp;cursor=eyJpZCI6MTAwfQ
 <li>Breaking changes: bump version instead of changing semantics.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>REST API Design (Проектирование REST API)</h1>
+<blockquote>Проектирование консистентных, эволюционируемых REST API.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>Ресурсы:   /users, /users/{id}, /users/{id}/orders
+Методы:    GET list/detail, POST create, PUT replace, PATCH partial, DELETE
+Статусы:   200, 201, 204, 400, 401, 403, 404, 409, 422, 429, 500</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Публичные или внутренние HTTP API</li>
+<li>Проектирование до реализации</li>
+<li>Версионирование и эволюция существующих API</li>
+<li>SDK и клиенты, потребляющие API</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Ресурсы</h3>
+<ul>
+<li>Моделируйте существительные как ресурсы, действия — как подресурсы</li>
+<li>Множественное число: `/users`, а не `/user`</li>
+<li>Вложенность только при реальном владении: `/users/{id}/orders`</li>
+<li>Связи — через ID, а не вложенные объекты</li>
+</ul>
+<h3>Методы и статусы</h3>
+<ul>
+<li>Используйте HTTP-методы по назначению (GET/POST/PUT/PATCH/DELETE)</li>
+<li>201 с Location при создании, 204 при удалении</li>
+<li>422 для валидации, 409 для конфликтов</li>
+<li>Ошибки единообразно: code, message, details</li>
+</ul>
+<h3>Пагинация и фильтрация</h3>
+<ul>
+<li>Пагинация списков: page/limit или cursor</li>
+<li>Cursor-based для стабильности</li>
+<li>Фильтрация через query-параметры, не через пути</li>
+<li>Сортировка через явный `sort`</li>
+</ul>
+<h3>Версионирование и эволюция</h3>
+<ul>
+<li>Версионируйте API: префикс URL или заголовок</li>
+<li>Аддитивные изменения внутри версии</li>
+<li>Deprecate с заголовками и уведомлениями</li>
+<li>Документируйте всё в OpenAPI</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Инструменты дизайна/документации
+npm i -D @redocly/cli
+# или Python
+pip install openapi-spec-validator</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># OpenAPI минимальный ресурс user
+openapi: 3.1.0
+info:
+  title: Users API
+  version: v1
+paths:
+  /users:
+    get:
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, maximum: 100 }
+      responses:
+        &quot;200&quot;:
+          description: Paginated users
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: &quot;#/components/schemas/UserInput&quot;
+      responses:
+        &quot;201&quot;:
+          description: Created</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Единый контракт ошибок
+{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
+    &quot;message&quot;: &quot;Invalid request body&quot;,
+    &quot;details&quot;: [{ &quot;field&quot;: &quot;email&quot;, &quot;reason&quot;: &quot;must be a valid email&quot; }],
+    &quot;request_id&quot;: &quot;req_abc123&quot;
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Форма пагинации
+GET /users?limit=25&amp;cursor=eyJpZCI6MTAwfQ
+
+{
+  &quot;data&quot;: [...],
+  &quot;pagination&quot;: {
+    &quot;next_cursor&quot;: &quot;eyJpZCI6MTI1fQ&quot;,
+    &quot;has_more&quot;: true
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Пример маршрутизации
+# GET /v1/users -&gt; list
+# POST /v1/users -&gt; create
+# GET /v1/users/{id} -&gt; detail
+# PATCH /v1/users/{id} -&gt; partial update
+# DELETE /v1/users/{id} -&gt; 204</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите ресурсы и их связи из домена.</p>
+<p class='ordered'>2. Задайте эндпоинты с корректными методами и путями.</p>
+<p class='ordered'>3. Опишите схемы запросов/ответов и статус-коды.</p>
+<p class='ordered'>4. Добавьте пагинацию, фильтрацию и сортировку в списки.</p>
+<p class='ordered'>5. Создайте единый контракт ошибок.</p>
+<p class='ordered'>6. Определите стратегию версионирования заранее.</p>
+<p class='ordered'>7. Напишите OpenAPI-спеку и провалидируйте.</p>
+<p class='ordered'>8. Сгенерируйте доки и SDK из спеки.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Все пути следуют конвенции именования ресурсов</p>
+<p class='ordered'>2. Статус-коды соответствуют семантике HTTP</p>
+<p class='ordered'>3. Ошибки имеют единую форму</p>
+<p class='ordered'>4. Списки пагинированы со стабильным курсором</p>
+<p class='ordered'>5. OpenAPI-спека валидна и полностью документирована</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Слишком вложенные пути: упрощайте, если нет реального владения.</li>
+<li>Несогласованные ошибки: централизуйте маппинг ошибок.</li>
+<li>Breaking changes: бампайте версию вместо смены семантики.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="nestjs.html">← nestjs</a><a class="page-nav-link" href="rust-tokio.html">rust-tokio →</a></div>
     </article>
   </div>
@@ -235,6 +355,15 @@ GET /users?limit=25&amp;cursor=eyJpZCI6MTAwfQ
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -261,6 +390,9 @@ GET /users?limit=25&amp;cursor=eyJpZCI6MTAwfQ
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

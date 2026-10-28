@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="mysql.html">← mysql</a><a class="page-nav-link" href="prisma-orm.html">prisma-orm →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>PostgreSQL</h1>
 <blockquote>Designing and operating reliable PostgreSQL databases.</blockquote>
 <h2>Quick Start</h2>
@@ -152,6 +153,90 @@ SELECT id FROM orders WHERE meta @&gt; &#x27;{&quot;status&quot;: &quot;paid&quo
 <li>High memory: raise `shared_buffers` and `effective_cache_size` carefully.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>PostgreSQL (ПостгреСкуэл)</h1>
+<blockquote>Проектирование и эксплуатация надёжных баз данных PostgreSQL.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name pg -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:17
+psql -h localhost -U postgres
+# CREATE DATABASE app;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Реляционные данные с высокими требованиями к консистентности</li>
+<li>Транзакции и сложные JOIN</li>
+<li>Полнотекстовый поиск, JSONB и геоданные (PostGIS)</li>
+<li>Аналитика через materialized views и оконные функции</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн схемы</h3>
+<ul>
+<li>Используйте корректные типы (uuid, timestamptz, jsonb) — не только text</li>
+<li>Добавляйте внешние ключи и ограничения для целостности</li>
+<li>Предпочитайте нормализованное ядро; денормализуйте только для горячих чтений</li>
+<li>Именуйте таблицы консистентно; используйте snake_case</li>
+</ul>
+<h3>Индексы</h3>
+<ul>
+<li>Индексируйте колонки из WHERE, JOIN, ORDER BY</li>
+<li>B-tree — для равенства/диапазонов; GIN — для JSONB/массивов; BRIN — для огромных таблиц</li>
+<li>Составные индексы должны совпадать с порядком колонок запроса</li>
+<li>Удаляйте неиспользуемые индексы; анализируйте через `pg_stat_user_indexes`</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Используйте `EXPLAIN (ANALYZE, BUFFERS)` для чтения планов</li>
+<li>Избегайте `SELECT *`; берите только нужные колонки</li>
+<li>Пакетные вставки через `COPY` или multi-row VALUES</li>
+<li>В проде используйте пул соединений (PgBouncer)</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>docker run --name pg -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:17
+# psql клиент:  psql -h localhost -U postgres</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>-- Схема с типами, ограничениями и индексами
+CREATE TABLE users (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text NOT NULL UNIQUE,
+  role text NOT NULL DEFAULT &#x27;member&#x27;,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_users_created ON users (created_at DESC);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Оптимизация запроса через EXPLAIN
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT id, email FROM users
+WHERE created_at &gt; now() - interval &#x27;7 days&#x27;
+ORDER BY created_at DESC
+LIMIT 50;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Оконная функция для аналитики
+SELECT
+  category,
+  revenue,
+  RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rnk
+FROM monthly_sales;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- JSONB-запросы с GIN индексом
+CREATE INDEX idx_meta ON orders USING gin (meta);
+SELECT id FROM orders WHERE meta @&gt; &#x27;{&quot;status&quot;: &quot;paid&quot;}&#x27;;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Смоделируйте сущности и связи; выберите тип для каждой колонки.</p>
+<p class='ordered'>2. Напишите DDL с ограничениями (PK, FK, UNIQUE, NOT NULL).</p>
+<p class='ordered'>3. Добавьте индексы под реальные паттерны запросов.</p>
+<p class='ordered'>4. Пишите миграции (Alembic/Prisma/Flyway) и версионируйте их.</p>
+<p class='ordered'>5. Загрузите репрезентативные данные и прогоните `EXPLAIN (ANALYZE)` на горячих запросах.</p>
+<p class='ordered'>6. Настройте индексы и запросы; в проде добавьте пул соединений.</p>
+<p class='ordered'>7. Настройте бэкапы (pg_dump/WAL archiving) и протестируйте восстановление.</p>
+<p class='ordered'>8. Мониторьте медленные запросы через `pg_stat_statements` и ставьте алерты.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Схема применяется чисто через миграции</p>
+<p class='ordered'>2. Ограничения отклоняют невалидные данные</p>
+<p class='ordered'>3. Горячие запросы укладываются в целевые задержки</p>
+<p class='ordered'>4. `EXPLAIN` показывает использование индексов на больших таблицах</p>
+<p class='ordered'>5. Бэкап и восстановление проверены на стейджинге</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Медленный запрос несмотря на индекс: проверьте порядок колонок составного индекса и `= NULL`.</li>
+<li>Lock waits: длинные транзакции держат блокировки — держите их короткими.</li>
+<li>Высокая память: аккуратно поднимите `shared_buffers` и `effective_cache_size`.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="mysql.html">← mysql</a><a class="page-nav-link" href="prisma-orm.html">prisma-orm →</a></div>
     </article>
   </div>
@@ -200,6 +285,15 @@ SELECT id FROM orders WHERE meta @&gt; &#x27;{&quot;status&quot;: &quot;paid&quo
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -226,6 +320,9 @@ SELECT id FROM orders WHERE meta @&gt; &#x27;{&quot;status&quot;: &quot;paid&quo
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

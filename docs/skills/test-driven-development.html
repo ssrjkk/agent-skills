@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="system-design.html">← system-design</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Test-Driven Development</h1>
 <blockquote>Writing tests first to drive clean, reliable code.</blockquote>
 <h2>Quick Start</h2>
@@ -165,6 +166,103 @@ def test_cart_negative_price_rejected():
 <li>Temptation to skip: remember tests prevent regressions.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Test-Driven Development (Разработка через тесты)</h1>
+<blockquote>Тесты первыми — для чистого и надёжного кода.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>1. RED: напишите падающий тест
+2. GREEN: минимально его пройдите
+3. REFACTOR: уберите дубли безопасно</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Новые фичи и фиксы багов</li>
+<li>Безопасный рефакторинг существующего кода</li>
+<li>Дизайн API через использование</li>
+<li>Снижение риска регрессий</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Red-Green-Refactor</h3>
+<ul>
+<li>Один падающий тест за раз</li>
+<li>Минимальная реализация для прохода</li>
+<li>Рефакторинг без смены поведения</li>
+<li>Повторяйте маленькими циклами</li>
+</ul>
+<h3>Дизайн тестов</h3>
+<ul>
+<li>Тестируйте поведение, не реализацию</li>
+<li>Одна концепция ассерта на тест</li>
+<li>Имена по ожидаемому поведению</li>
+<li>Покрывайте границы и ошибки</li>
+</ul>
+<h3>Безопасный рефакторинг</h3>
+<ul>
+<li>Тесты до/после каждого изменения</li>
+<li>Маленькие механические рефакторинги</li>
+<li>Тесты зелёные между шагами</li>
+<li>Инструменты рефакторинга IDE</li>
+</ul>
+<h3>Дисциплина</h3>
+<ul>
+<li>Никогда не пишите код без падающего теста</li>
+<li>Не пропускайте &quot;просто заработает&quot;</li>
+<li>Тесты быстрые</li>
+<li>Покрывайте happy path и edge cases</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># выберите фреймворк под ваш язык
+# Python: pytest, JS: jest, Go: testing</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># 1. Сначала пишем падающий тест
+import pytest
+
+def test_cart_total_includes_tax():
+    cart = Cart()
+    cart.add(&quot;book&quot;, 10.0)
+    assert cart.total() == pytest.approx(10.9)  # 9% налог</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># 2. Минимальная реализация для прохода
+class Cart:
+    def __init__(self):
+        self._items = []
+
+    def add(self, name: str, price: float) -&gt; None:
+        self._items.append(price)
+
+    def total(self) -&gt; float:
+        return sum(self._items) * 1.09</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># 3. Рефакторинг: налог в константу
+TAX_RATE = 0.09
+
+class Cart:
+    def total(self) -&gt; float:
+        return sum(self._items) * (1 + TAX_RATE)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Edge case тесты
+def test_cart_empty_total_is_zero():
+    assert Cart().total() == 0.0
+
+def test_cart_negative_price_rejected():
+    with pytest.raises(ValueError):
+        Cart().add(&quot;x&quot;, -1.0)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите маленькое поведение для реализации.</p>
+<p class='ordered'>2. Напишите падающий тест, выражающий его (RED).</p>
+<p class='ordered'>3. Запустите и убедитесь, что падает по правильной причине.</p>
+<p class='ordered'>4. Напишите минимальный код для прохода (GREEN).</p>
+<p class='ordered'>5. Прогоните сьют; затем рефакторите безопасно.</p>
+<p class='ordered'>6. Повторите для следующего поведения.</p>
+<p class='ordered'>7. Добавьте edge case и error тесты.</p>
+<p class='ordered'>8. Коммитьте маленькими зелёными инкрементами.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Каждое поведение покрыто тестом, падавшим сначала</p>
+<p class='ordered'>2. Рефакторинги держат все тесты зелёными</p>
+<p class='ordered'>3. Тесты быстрые и детерминированные</p>
+<p class='ordered'>4. Границы и ошибки покрыты</p>
+<p class='ordered'>5. Сьют гейтит CI</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Слишком большой тест: разбейте на мелкие поведения.</li>
+<li>Пере-реализация: пишите минимальный код для прохода.</li>
+<li>Желание пропустить: помните, тесты предотвращают регрессии.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="system-design.html">← system-design</a></div>
     </article>
   </div>
@@ -213,6 +311,15 @@ def test_cart_negative_price_rejected():
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -239,6 +346,9 @@ def test_cart_negative_price_rejected():
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

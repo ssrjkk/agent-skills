@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="spring-boot.html">← spring-boot</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>WebSockets</h1>
 <blockquote>Building real-time, bidirectional communication with WebSockets.</blockquote>
 <h2>Quick Start</h2>
@@ -180,6 +181,118 @@ const interval = setInterval(() =&gt; {
 <li>Scale limits: move state to pub/sub and add a gateway.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>WebSockets (ВебСокеты)</h1>
+<blockquote>Двунаправленная связь в реальном времени через WebSockets.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm i ws
+node server.js  # ws://localhost:8080</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Live-обновления (чат, уведомления, дашборды)</li>
+<li>Совместное редактирование и presence</li>
+<li>Стриминг данных и прогресс</li>
+<li>Двунаправленные взаимодействия клиент-сервер</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн протокола</h3>
+<ul>
+<li>Конверты сообщений: type + payload</li>
+<li>Версионируйте протокол сообщений</li>
+<li>Консистентный JSON или бинарный формат</li>
+<li>Correlation/request ID</li>
+</ul>
+<h3>Жизненный цикл соединения</h3>
+<ul>
+<li>Обрабатывайте open, message, close, error</li>
+<li>Keepalive через ping/pong</li>
+<li>Детектируйте half-open соединения</li>
+<li>Чистите ресурсы при закрытии</li>
+</ul>
+<h3>Backpressure и поток</h3>
+<ul>
+<li>Уважайте медленных потребителей; без бесконечных буферов</li>
+<li>Очереди с лимитами и политикой дропа</li>
+<li>Батчите частые обновления</li>
+<li>Пауза/закрытие при насыщении</li>
+</ul>
+<h3>Масштабирование</h3>
+<ul>
+<li>Общее состояние через pub/sub (Redis) между нодами</li>
+<li>Sticky sessions или gateway</li>
+<li>Реconnect с экспоненциальным backoff на клиенте</li>
+<li>Auth на этапе handshake</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm i ws
+# Python: pip install websockets
+# Node: socket.io для fallback/rooms</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Минимальный WebSocket сервер (Node)
+import { WebSocketServer } from &quot;ws&quot;;
+
+const wss = new WebSocketServer({ port: 8080 });
+wss.on(&quot;connection&quot;, (ws) =&gt; {
+  ws.send(JSON.stringify({ type: &quot;hello&quot;, data: &quot;welcome&quot; }));
+  ws.on(&quot;message&quot;, (raw) =&gt; {
+    const msg = JSON.parse(raw.toString());
+    broadcast({ type: &quot;chat&quot;, data: msg });
+  });
+});
+
+function broadcast(obj) {
+  const text = JSON.stringify(obj);
+  wss.clients.forEach((c) =&gt; c.readyState === 1 &amp;&amp; c.send(text));
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Python сервер через websockets
+import asyncio, websockets
+
+async def handler(ws):
+    await ws.send(&quot;hello&quot;)
+    async for raw in ws:
+        await ws.send(&quot;echo: &quot; + raw)
+
+async def main():
+    async with websockets.serve(handler, &quot;localhost&quot;, 8080):
+        await asyncio.Future()
+
+asyncio.run(main())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Клиент с реконнектом и backoff
+function connect(url) {
+  const ws = new WebSocket(url);
+  let delay = 500;
+  ws.onclose = () =&gt; setTimeout(() =&gt; connect(url), delay);
+  ws.onopen = () =&gt; { delay = 500; };
+  return ws;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Keepalive ping/pong
+const interval = setInterval(() =&gt; {
+  if (ws.readyState === 1) {
+    ws.ping();
+    if (!ws.isAlive) return ws.terminate();
+    ws.isAlive = false;
+  }
+}, 30000);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите конверт сообщений и типы событий.</p>
+<p class='ordered'>2. Настройте сервер с обработкой соединений.</p>
+<p class='ordered'>3. Добавьте keepalive (ping/pong) и реконнект.</p>
+<p class='ordered'>4. Реализуйте broadcast и роутинг по комнатам/скоупам.</p>
+<p class='ordered'>5. Добавьте обработку backpressure для медленных клиентов.</p>
+<p class='ordered'>6. Auth на handshake (token/cookie).</p>
+<p class='ordered'>7. Масштабируйте через pub/sub backbone для multi-node.</p>
+<p class='ordered'>8. Мониторьте соединения, сообщения и ошибки.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Сообщения проходят в обе стороны</p>
+<p class='ordered'>2. Реконнект возобновляется без потерь</p>
+<p class='ordered'>3. Keepalive детектирует мёртвые соединения</p>
+<p class='ordered'>4. Медленные потребители не стопорят сервер</p>
+<p class='ordered'>5. Multi-node broadcast консистентен</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Соединения падают: добавьте keepalive и проверьте таймауты прокси.</li>
+<li>Проблемы порядка: sequence numbers или один писатель на топик.</li>
+<li>Пределы масштаба: состояние в pub/sub и gateway.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="spring-boot.html">← spring-boot</a></div>
     </article>
   </div>
@@ -228,6 +341,15 @@ const interval = setInterval(() =&gt; {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -254,6 +376,9 @@ const interval = setInterval(() =&gt; {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

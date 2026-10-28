@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="rag-pipeline.html">← rag-pipeline</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Structured Output</h1>
 <blockquote>Getting LLMs to reliably emit valid, schema-constrained output.</blockquote>
 <h2>Quick Start</h2>
@@ -185,6 +186,123 @@ def extract_json_mode(text: str) -&gt; dict:
 <li>Model ignores format: switch to function calling or guided generation.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Structured Output (Структурированный вывод)</h1>
+<blockquote>Получение от LLM валидного, ограниченного схемой вывода.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic jsonschema
+# объединяйте response_format с JSON Schema для гарантированной формы</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Извлечение данных в типизированные записи</li>
+<li>Ответы API, которые должны соответствовать контракту</li>
+<li>Генерация аргументов tool/function</li>
+<li>Снижение нагрузки от битого вывода</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн схемы</h3>
+<ul>
+<li>Строгая JSON Schema под форму вывода</li>
+<li>`additionalProperties: false` — отбрасывать лишнее</li>
+<li>Держите схемы плоскими и примитивными, где можно</li>
+<li>Версионируйте схемы вместе с кодом</li>
+</ul>
+<h3>Выбор режима</h3>
+<ul>
+<li>Предпочитайте `response_format` провайдера (json_object / json_schema)</li>
+<li>Если вывод идёт в tool — function calling</li>
+<li>Без structured mode — few-shot + валидация</li>
+<li>Никогда не доверяйте невалидированному тексту</li>
+</ul>
+<h3>Валидация и восстановление</h3>
+<ul>
+<li>Валидируйте каждый ответ по схеме</li>
+<li>При ошибке — повторный промпт с сообщением об ошибке</li>
+<li>Ограничьте retries; фолбэк на запись по умолчанию</li>
+<li>Логируйте битые ответы для настройки промпта</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic jsonschema</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import json
+import openai
+from jsonschema import validate, ValidationError
+
+client = openai.OpenAI()
+
+SCHEMA = {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+        &quot;name&quot;: {&quot;type&quot;: &quot;string&quot;},
+        &quot;age&quot;: {&quot;type&quot;: &quot;integer&quot;, &quot;minimum&quot;: 0},
+        &quot;emails&quot;: {&quot;type&quot;: &quot;array&quot;, &quot;items&quot;: {&quot;type&quot;: &quot;string&quot;}},
+    },
+    &quot;required&quot;: [&quot;name&quot;, &quot;age&quot;],
+    &quot;additionalProperties&quot;: False,
+}
+
+def extract(text: str) -&gt; dict:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Extract from: {text}&quot;}],
+        response_format={&quot;type&quot;: &quot;json_schema&quot;, &quot;json_schema&quot;: {&quot;name&quot;: &quot;person&quot;, &quot;schema&quot;: SCHEMA}},
+    )
+    return json.loads(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Валидация и восстановление при фейле
+def safe_extract(text: str, retries: int = 2) -&gt; dict:
+    for attempt in range(retries):
+        raw = extract(text)
+        try:
+            validate(instance=raw, schema=SCHEMA)
+            return raw
+        except ValidationError as e:
+            print(f&quot;retry {attempt}: {e.message}&quot;)
+    return {&quot;name&quot;: &quot;unknown&quot;, &quot;age&quot;: 0}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Извлечение через Pydantic
+from pydantic import BaseModel, Field
+
+class Person(BaseModel):
+    name: str
+    age: int = Field(ge=0)
+    emails: list[str] = []
+
+resp = client.beta.chat.completions.parse(
+    model=&quot;gpt-6&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Alice is 30, email a@b.com&quot;}],
+    response_format=Person,
+)
+print(resp.choices[0].message.parsed.model_dump())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># JSON mode фолбэк для провайдеров без json_schema
+def extract_json_mode(text: str) -&gt; dict:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;Respond only with valid JSON matching the schema.&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: text},
+        ],
+        response_format={&quot;type&quot;: &quot;json_object&quot;},
+    )
+    return json.loads(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите точную форму вывода как JSON Schema.</p>
+<p class='ordered'>2. Выберите строжайший режим провайдера (schema &gt; json_object &gt; few-shot).</p>
+<p class='ordered'>3. Реализуйте извлечение со схемой.</p>
+<p class='ordered'>4. Валидируйте каждый ответ; при несовпадении — повторный промпт с ошибкой.</p>
+<p class='ordered'>5. Добавьте лимиты retries и безопасные дефолты.</p>
+<p class='ordered'>6. Логируйте фейлы для улучшения промпта или схемы.</p>
+<p class='ordered'>7. Добавьте тесты на реалистичные вводы, включая edge cases.</p>
+<p class='ordered'>8. Версионируйте схемы и мониторьте дрейф.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Весь вывод парсится как валидный JSON</p>
+<p class='ordered'>2. Каждый вывод удовлетворяет схеме (программная проверка)</p>
+<p class='ordered'>3. Невалидные вводы всё равно дают schema-conforming записи</p>
+<p class='ordered'>4. Восстановление через retry работает без бесконечных циклов</p>
+<p class='ordered'>5. Изменения контракта версионируются</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Вывод не проходит схему: ужесточите промпт, добавьте примеры или сузьте схему.</li>
+<li>Ошибки `additionalProperties`: есть лишние поля — поправьте схему.</li>
+<li>Модель игнорирует формат: переключитесь на function calling или guided generation.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="rag-pipeline.html">← rag-pipeline</a></div>
     </article>
   </div>
@@ -233,6 +351,15 @@ def extract_json_mode(text: str) -&gt; dict:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -259,6 +386,9 @@ def extract_json_mode(text: str) -&gt; dict:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

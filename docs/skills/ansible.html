@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="argocd.html">argocd →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Ansible</h1>
 <blockquote>Automating servers with Ansible playbooks and roles.</blockquote>
 <h2>Quick Start</h2>
@@ -163,6 +164,101 @@ ansible-playbook site.yml --limit web-01</code></pre><button class="copy-btn cod
 <li>Unreachable: verify SSH keys and inventory addresses.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Ansible (Ансибл)</h1>
+<blockquote>Автоматизация серверов через playbooks и роли Ansible.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install ansible
+ansible -i hosts all -m ping</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Управление конфигурацией на многих серверах</li>
+<li>Повторяемый провижининг и деплой</li>
+<li>Оркестрация multi-host задач</li>
+<li>Идемпотентная настройка серверов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Playbooks и роли</h3>
+<ul>
+<li>Структура через роли (tasks, handlers, vars, templates)</li>
+<li>Playbooks тонкие; логика в ролях</li>
+<li>Handlers для перезагрузки сервисов</li>
+<li>Именуйте каждую задачу для читаемого вывода</li>
+</ul>
+<h3>Идемпотентность</h3>
+<ul>
+<li>Задачи сходятся к желаемому состоянию</li>
+<li>Избегайте команд с сайд-эффектами; используйте модули</li>
+<li>Guard-условия `creates`/`when` где нужно</li>
+<li>Повторный прогон безопасен</li>
+</ul>
+<h3>Инвентарь и переменные</h3>
+<ul>
+<li>group_vars и host_vars для конфига</li>
+<li>Секреты через ansible-vault</li>
+<li>Inventory plugins для динамических хостов</li>
+<li>Переменные вместо хардкода</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>`--check` перед применением</li>
+<li>Ограничьте blast radius через `--limit` и serial</li>
+<li>become аккуратно и с областью</li>
+<li>Playbooks и роли в git</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install ansible
+ansible --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Playbook с ролью
+- hosts: webservers
+  become: true
+  roles:
+    - nginx</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Простой playbook
+- hosts: all
+  tasks:
+    - name: Ensure nginx installed
+      apt:
+        name: nginx
+        state: present
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Структура роли
+# roles/nginx/tasks/main.yml
+- name: Install nginx
+  apt: { name: nginx, state: present }
+  notify: reload nginx
+
+# roles/nginx/handlers/main.yml
+- name: reload nginx
+  service: { name: nginx, state: reloaded }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Check mode + apply
+ansible-playbook site.yml --check
+ansible-playbook site.yml --limit web-01</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите инвентарь и group_vars.</p>
+<p class='ordered'>2. Структурируйте логику в роли.</p>
+<p class='ordered'>3. Пишите идемпотентные задачи через модули.</p>
+<p class='ordered'>4. Добавьте handlers для перезагрузок.</p>
+<p class='ordered'>5. Шифруйте секреты через ansible-vault.</p>
+<p class='ordered'>6. Сначала `--check`, затем apply с лимитами.</p>
+<p class='ordered'>7. Playbooks и роли в git.</p>
+<p class='ordered'>8. Планируйте через AWX/Tower или CI.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Playbooks идемпотентны (повторный прогон ничего не меняет)</p>
+<p class='ordered'>2. `--check` показывает ожидаемые изменения</p>
+<p class='ordered'>3. Секреты зашифрованы в vault</p>
+<p class='ordered'>4. Handlers срабатывают только при изменениях</p>
+<p class='ordered'>5. Деплои проходят по всему инвентарю</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Изменения при каждом прогоне: найдите неидемпотентную задачу.</li>
+<li>Ошибки become: проверьте sudo-правила и become_method.</li>
+<li>Unreachable: проверьте SSH-ключи и адреса инвентаря.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="argocd.html">argocd →</a></div>
     </article>
   </div>
@@ -211,6 +307,15 @@ ansible-playbook site.yml --limit web-01</code></pre><button class="copy-btn cod
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -237,6 +342,9 @@ ansible-playbook site.yml --limit web-01</code></pre><button class="copy-btn cod
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

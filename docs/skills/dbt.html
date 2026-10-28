@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="data-visualization.html">← data-visualization</a><a class="page-nav-link" href="elasticsearch.html">elasticsearch →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>dbt</h1>
 <blockquote>Transform-layer analytics engineering with dbt.</blockquote>
 <h2>Quick Start</h2>
@@ -164,6 +165,102 @@ models:
 <li>Dependency cycles: refactor model references.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>dbt (ДиБиТи)</h1>
+<blockquote>Analytics engineering на transform-слое через dbt.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install dbt-postgres
+dbt init my_project
+dbt run</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>SQL-трансформационные пайплайны</li>
+<li>Моделирование в warehouse (staging, marts)</li>
+<li>Тестирование и документирование моделей</li>
+<li>Версионируемый analytics-код</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура проекта</h3>
+<ul>
+<li>Слои: staging, intermediate, marts</li>
+<li>Модель на grain; ясный нейминг</li>
+<li>`ref()` для зависимостей</li>
+<li>Модели небольшие и сфокусированные</li>
+</ul>
+<h3>Моделирование</h3>
+<ul>
+<li>Инкрементальные модели через `incremental_strategy`</li>
+<li>Materialized views для базовых слоёв</li>
+<li>Дедупликация и каст типов в staging</li>
+<li>Суррогатные ключи для dims</li>
+</ul>
+<h3>Тесты и качество</h3>
+<ul>
+<li>Singular и generic тесты</li>
+<li>Тесты PK, nulls и связей</li>
+<li>Freshness тесты на источниках</li>
+<li>Гейт мержей на прохождение тестов</li>
+</ul>
+<h3>Документация</h3>
+<ul>
+<li>Документируйте модели, колонки и источники</li>
+<li>`dbt docs generate` для сайта доков</li>
+<li>`description` на каждую модель</li>
+<li>Чистая lineage</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install dbt-postgres dbt-bigquery
+dbt init my_project</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># dbt_project.yml
+name: analytics
+profile: default
+model-paths: [&quot;models&quot;]
+tests:
+  +store_failures: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- models/staging/stg_orders.sql
+SELECT
+  id AS order_id,
+  customer_id,
+  amount,
+  status,
+  created_at
+FROM {{ source(&#x27;raw&#x27;, &#x27;orders&#x27;) }}
+WHERE status IS NOT NULL</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- models/marts/fct_orders.sql
+SELECT
+  customer_id,
+  SUM(amount) AS lifetime_value,
+  COUNT(*) AS order_count
+FROM {{ ref(&#x27;stg_orders&#x27;) }}
+GROUP BY 1</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># models/marts/schema.yml
+version: 2
+models:
+  - name: fct_orders
+    columns:
+      - name: customer_id
+        tests: [not_null]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Инициализируйте проект и настройте профиль.</p>
+<p class='ordered'>2. Определите sources для raw-таблиц.</p>
+<p class='ordered'>3. Соберите staging-модели (чистка, типы).</p>
+<p class='ordered'>4. Промежуточные и mart-модели через `ref()`.</p>
+<p class='ordered'>5. Тесты на ключи, nulls и freshness.</p>
+<p class='ordered'>6. Инкрементальные стратегии для больших таблиц.</p>
+<p class='ordered'>7. Документируйте модели и колонки.</p>
+<p class='ordered'>8. `dbt run &amp;&amp; dbt test` в CI.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `dbt run` проходит</p>
+<p class='ordered'>2. `dbt test` без фейлов</p>
+<p class='ordered'>3. Модели строятся в порядке зависимостей</p>
+<p class='ordered'>4. Инкрементальные модели обрабатывают только новые данные</p>
+<p class='ordered'>5. Docs генерируются с lineage</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Фейлы тестов: исправьте данные или логику модели.</li>
+<li>Медленные прогоны: добавьте incremental и сузьте модели.</li>
+<li>Циклы зависимостей: рефакторите ссылки моделей.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="data-visualization.html">← data-visualization</a><a class="page-nav-link" href="elasticsearch.html">elasticsearch →</a></div>
     </article>
   </div>
@@ -212,6 +309,15 @@ models:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -238,6 +344,9 @@ models:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

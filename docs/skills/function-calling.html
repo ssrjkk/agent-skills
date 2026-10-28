@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="few-shot-learning.html">← few-shot-learning</a><a class="page-nav-link" href="llm-evals.html">llm-evals →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Function Calling</h1>
 <blockquote>Wiring LLMs to real functions with robust tool calling.</blockquote>
 <h2>Quick Start</h2>
@@ -200,6 +201,138 @@ def safe_dispatch(name: str, args: dict) -&gt; str:
 <li>Loops: cap iterations and detect repeated identical calls.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Function Calling (Вызов функций)</h1>
+<blockquote>Подключение LLM к реальным функциям через надёжный tool calling.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai
+# объявите tools, дайте модели их вызвать, выполните и зациклите</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Запрос данных, вычислений или действий от модели</li>
+<li>Структурированное извлечение в определённые входы функций</li>
+<li>Agentic workflow с чередованием рассуждений и вызовов</li>
+<li>Снижение галлюцинаций через ограничение вывода схемами</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Схемы инструментов</h3>
+<ul>
+<li>Пишите ясные полные JSON-схемы на функцию</li>
+<li>Используйте `description` на каждом параметре</li>
+<li>Задавайте `required` и разумные `enum`/`pattern`</li>
+<li>Имена параметров должны говорить сами за себя</li>
+</ul>
+<h3>Цикл вызова</h3>
+<ul>
+<li>Детектируйте tool_calls; выполняйте; добавляйте результаты как `tool` сообщения</li>
+<li>Поддерживайте несколько вызовов в одном ответе</li>
+<li>Включайте `tool_call_id` в каждый результат</li>
+<li>Ограничьте итерации во избежание runaway-циклов</li>
+</ul>
+<h3>Валидация и восстановление</h3>
+<ul>
+<li>Валидируйте аргументы до выполнения</li>
+<li>Возвращайте структурированные ошибки, которые читает модель</li>
+<li>Никогда не выполняйте опасные tools без апрува</li>
+<li>Логируйте полный трейс вызовов для отладки</li>
+</ul>
+<h3>Промптинг</h3>
+<ul>
+<li>Давайте модели контекст: когда вызывать каждый tool</li>
+<li>Просите использовать tools вместо угадывания ответов</li>
+<li>Примеры использования tools — в system prompt</li>
+<li>Описания tools должны соответствовать реальному поведению</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic
+# опционально: instructor для schema-guided вызовов</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import openai
+
+client = openai.OpenAI()
+
+TOOLS = [
+    {
+        &quot;type&quot;: &quot;function&quot;,
+        &quot;function&quot;: {
+            &quot;name&quot;: &quot;get_weather&quot;,
+            &quot;description&quot;: &quot;Get current weather for a city&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {&quot;city&quot;: {&quot;type&quot;: &quot;string&quot;}},
+                &quot;required&quot;: [&quot;city&quot;],
+            },
+        },
+    }
+]
+
+resp = client.chat.completions.create(
+    model=&quot;gpt-6&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Weather in Tokyo?&quot;}],
+    tools=TOOLS,
+)
+call = resp.choices[0].message.tool_calls[0]
+print(call.function.name, call.function.arguments)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Выполнение вызова и возврат результата
+import json
+
+def dispatch(name: str, args: dict) -&gt; str:
+    if name == &quot;get_weather&quot;:
+        return weather_api(args[&quot;city&quot;])
+    return json.dumps({&quot;error&quot;: f&quot;unknown tool: {name}&quot;})
+
+result = dispatch(call.function.name, json.loads(call.function.arguments))
+messages = [
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Weather in Tokyo?&quot;},
+    resp.choices[0].message,
+    {&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: call.id, &quot;content&quot;: result},
+]
+final = client.chat.completions.create(model=&quot;gpt-6&quot;, messages=messages, tools=TOOLS)
+print(final.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Обработка нескольких вызовов
+def run_tools(message) -&gt; list[dict]:
+    results = []
+    for call in message.tool_calls:
+        args = json.loads(call.function.arguments)
+        results.append(
+            {&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: call.id, &quot;content&quot;: dispatch(call.function.name, args)}
+        )
+    return results</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Валидация через pydantic до выполнения
+from pydantic import BaseModel, ValidationError
+
+class WeatherArgs(BaseModel):
+    city: str
+    units: str = &quot;metric&quot;
+
+def safe_dispatch(name: str, args: dict) -&gt; str:
+    try:
+        if name == &quot;get_weather&quot;:
+            w = WeatherArgs(**args)
+            return weather_api(w.city, w.units)
+        return f&#x27;{{&quot;error&quot;: &quot;unknown tool {name}&quot;}}&#x27;
+    except ValidationError as e:
+        return f&#x27;{{&quot;error&quot;: &quot;invalid args: {e}&quot;}}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Напишите функции, которые модель должна вызывать.</p>
+<p class='ordered'>2. Определите JSON-схемы с описаниями и required-полями.</p>
+<p class='ordered'>3. Отправьте первый запрос с `tools` и намерением пользователя.</p>
+<p class='ordered'>4. Выполните возвращённые `tool_calls` и добавьте результаты с ID.</p>
+<p class='ordered'>5. Циклите, пока модель не вернёт финальный текстовый ответ.</p>
+<p class='ordered'>6. Валидируйте аргументы; возвращайте структурированные ошибки.</p>
+<p class='ordered'>7. Добавьте guardrails для опасных действий.</p>
+<p class='ordered'>8. Логируйте трейсы; тестируйте edge cases и битые аргументы.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Модель выдаёт валидные schema-conforming вызовы на тестовом наборе</p>
+<p class='ordered'>2. Multi-call ответы выполняются по порядку</p>
+<p class='ordered'>3. Ошибки возвращаются модели для восстановления</p>
+<p class='ordered'>4. Цикл завершается в пределах лимита итераций</p>
+<p class='ordered'>5. Опасные инструменты требуют явного апрува</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Модель не вызывает tools: добавьте примеры использования в system prompt.</li>
+<li>Невалидный JSON-args: ослабьте схемы или используйте guided generation.</li>
+<li>Циклы: ограничьте итерации и детектируйте повторяющиеся одинаковые вызовы.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="few-shot-learning.html">← few-shot-learning</a><a class="page-nav-link" href="llm-evals.html">llm-evals →</a></div>
     </article>
   </div>
@@ -248,6 +381,15 @@ def safe_dispatch(name: str, args: dict) -&gt; str:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -274,6 +416,9 @@ def safe_dispatch(name: str, args: dict) -&gt; str:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

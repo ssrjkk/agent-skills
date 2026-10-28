@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="diagram-as-code.html">diagram-as-code →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Design Spec in Markdown</h1>
 <blockquote>Precise Markdown specs that make agents understand design exactly.</blockquote>
 <h2>Quick Start</h2>
@@ -204,6 +205,142 @@ Operators scan 500 rows and spot failures in seconds.
 <li>Scope creep: enforce Out of scope, new asks go to v2.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Design Spec в Markdown (Спецификация дизайна)</h1>
+<blockquote>Точные Markdown-спеки, чтобы агенты понимали дизайн без догадок.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Фича: Форма оплаты
+## Цель
+Пользователь платит за 60 секунд без путаницы.
+
+## Аудитория
+Мобильные покупатели, низкая терпимость, возможны скринридеры.
+
+## Токены
+- цвета: bg/surface/foreground/primary/border/ring
+- отступы: только шкала 4/8/16/24
+- радиусы: sm 6px, md 12px, lg 20px
+
+## Вне скоупа
+- Без новых фирменных цветов и шрифтов.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># проверка спеки перед разработкой
+python scripts/check_spec.py docs/specs/checkout.md</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Любая UI-задача для ИИ-агента</li>
+<li>Лендинги, дашборды, формы, мобильные экраны</li>
+<li>Ретеминг или редизайн существующего приложения</li>
+<li>Передача между человеком и агентом</li>
+<li>Ревью дизайна и предрелизные проверки</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Цель</h3>
+<ul>
+<li>Одно предложение, один измеримый результат</li>
+<li>Формулируйте задачу пользователя, а не список компонентов</li>
+<li>Добавьте время или планку качества, если можно</li>
+<li>Без маркетинговой воды в цели</li>
+</ul>
+<h3>Аудитория</h3>
+<ul>
+<li>Устройство, контекст, ограничения (одна рука, солнце, только клавиатура)</li>
+<li>Потребности доступности — сразу</li>
+<li>Что пользователь уже знает (не переобъяснять)</li>
+<li>Крайние кейсы: зум 200%, медленная сеть, старые телефоны</li>
+</ul>
+<h3>Токены</h3>
+<ul>
+<li>Переиспользуйте семантические токены, не хардкодьте hex</li>
+<li>Роли: background, surface, foreground, primary, border, ring</li>
+<li>Типографика: шрифт, размеры, интерлиньяж, насыщенность</li>
+<li>Отступы и радиусы только из шкалы, без магических чисел</li>
+</ul>
+<h3>Компоненты и состояния</h3>
+<ul>
+<li>Список компонентов с пропсами и вариантами</li>
+<li>Каждому интерактиву нужны default/hover/focus/disabled/error/empty/loading</li>
+<li>Фокус видим с клавиатуры, тач-цели 44px+</li>
+<li>Уважайте reduced motion, без bounce-easing</li>
+</ul>
+<h3>Адаптив и доступность</h3>
+<ul>
+<li>Брейкпоинты 375/768/1024/1440 с поведением на каждом</li>
+<li>Контраст текста минимум 4.5:1</li>
+<li>Смысл никогда только цветом</li>
+<li>Чипы и бейджи переносятся, длинные токены врапятся</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># рантайм не нужен, спека — обычный Markdown
+# опциональные локальные проверки
+python3 --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Спека: Тарифная секция SaaS
+## Цель
+Посетитель сравнивает 3 тарифа и жмет CTA без путаницы.
+
+## Токены
+- primary: indigo-600, hover indigo-700
+- surface: white, border slate-200
+- шрифт: Inter/системный, h2 32/40 bold
+
+## Компоненты
+- PricingCard x3: заголовок, цена, фичи[макс 5], CTA
+- Состояния: default, выделенная (средняя), focus-visible ring
+
+## Доступность
+- иерархия h2, списки для фич
+- контраст CTA 5.1:1, доступ с клавиатуры</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Спека: Таблица опс-дашборда
+## Цель
+Оператор сканирует 500 строк и видит сбои за секунды.
+
+## Токены
+- danger: red-600 с иконкой + текстом (не только цветом)
+- плотность: переключатель comfortable/compact
+- шрифт: табличные цифры для метрик
+
+## Состояния
+- скелетон загрузки, пустое с действием, ошибка с ретраем
+- hover строки subtle, выбранное с чекбоксом + aria-selected</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Спека: Мобильный онбординг (3 шага)
+## Цель
+80% прохождения за 90 секунд.
+
+## Ограничения
+- Одно главное действие на экран
+- Назад + пропустить всегда видны
+- Без клавиатурных ловушек, safe-area учтена
+
+## Проверка
+- Тест на 360px и масштабе текста 200%
+- Порядок скринридера совпадает с визуальным</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>## Запрещенные антипаттерны в спеке
+- &quot;Сделай красиво&quot; без токенов и ограничений
+- Эмодзи вместо иконок (только SVG: Lucide/Heroicons)
+- Карточки в карточках, серый текст на цветном фоне
+- Чистый черный (#000) и плоские серые заливки</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Напишите Цель одним измеримым предложением.</p>
+<p class='ordered'>2. Опишите Аудиторию, устройства и ограничения.</p>
+<p class='ordered'>3. Зафиксируйте Токены: цвета, шрифты, отступы, радиусы.</p>
+<p class='ordered'>4. Перечислите Компоненты со всеми состояниями.</p>
+<p class='ordered'>5. Определите Адаптив под каждый брейкпоинт.</p>
+<p class='ordered'>6. Добавьте Доступность: контраст, фокус, семантика.</p>
+<p class='ordered'>7. Явно укажите Вне скоупа.</p>
+<p class='ordered'>8. Прогоните чек-лист Валидации до разработки.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Цель измерима и в одном предложении</p>
+<p class='ordered'>2. Токены покрывают все цвета и шрифты, нет хардкода hex</p>
+<p class='ordered'>3. У каждой кнопки и инпута есть hover, focus, disabled, error</p>
+<p class='ordered'>4. Контраст 4.5:1, фокус виден, тач-цели 44px+</p>
+<p class='ordered'>5. Раскладка работает на 375/768/1024/1440 без клиппинга</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Агент игнорирует спеку: сократите до страницы, детали в приложение.</li>
+<li>Размытый выхлоп: замените прилагательные токенами и числами.</li>
+<li>Клиппинг чипов: требуйте wrap или +n раскрытие.</li>
+<li>Смысл только цветом: добавьте правило иконка + текст.</li>
+<li>Расползание скоупа: держите Вне скоупа, новое — в v2.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="diagram-as-code.html">diagram-as-code →</a></div>
     </article>
   </div>
@@ -252,6 +389,15 @@ Operators scan 500 rows and spot failures in seconds.
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -278,6 +424,9 @@ Operators scan 500 rows and spot failures in seconds.
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

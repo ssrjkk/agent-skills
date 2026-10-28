@@ -492,7 +492,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     if (searchIndex) return;
     fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
       searchIndex = {};
-      data.forEach(function(e) { searchIndex[e.name] = (e.content || '').toLowerCase(); });
+      data.forEach(function(e) { searchIndex[e.name] = ((e.content || '') + ' ' + (e.content_ru || '')).toLowerCase(); });
     }).catch(function() { searchIndex = {}; });
   }
   function copyText(text) {

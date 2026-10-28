@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="fastapi.html">← fastapi</a><a class="page-nav-link" href="graphql.html">graphql →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Go REST API</h1>
 <blockquote>Building fast, concurrent REST APIs in Go.</blockquote>
 <h2>Quick Start</h2>
@@ -180,6 +181,118 @@ func logMiddleware(next http.Handler) http.Handler {
 <li>High latency: add timeouts on the server and on outbound clients.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Go REST API (Go РЕСТ-АПИ)</h1>
+<blockquote>Создание быстрых конкурентных REST API на Go.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>go mod init example.com/myapi
+go run .  # http://localhost:8080</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Сервисы и бэкенды с высокой конкурентностью</li>
+<li>Микросервисы, которым нужны маленькие статичные бинарники</li>
+<li>Команды, которым нужны простые примитивы конкурентности</li>
+<li>CLI и инструменты, которые также являются библиотеками</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура</h3>
+<ul>
+<li>Организуйте по фичам: `cmd/`, `internal/`, `pkg/`</li>
+<li>Держите обработчики тонкими; логику выносите в сервисы</li>
+<li>Используйте `net/http` с паттернами маршрутов Go 1.22+ или роутер</li>
+<li>Определяйте типы запросов/ответов явно</li>
+</ul>
+<h3>Конкурентность</h3>
+<ul>
+<li>Используйте goroutine для независимой работы; каналы — для координации</li>
+<li>Применяйте `context.Context` для отмены и дедлайнов</li>
+<li>Ограничивайте конкурентность семафорами или worker pools</li>
+<li>Защищайте общее состояние через `sync.Mutex` или атомики</li>
+</ul>
+<h3>Ошибки и логирование</h3>
+<ul>
+<li>Оборачивайте ошибки через `fmt.Errorf(&quot;%w&quot;, err)` и `errors.Is`</li>
+<li>Логируйте структурно через `slog`; включайте request ID</li>
+<li>Возвращайте корректные HTTP статус-коды и JSON-ошибки</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>go mod init example.com/myapi
+go get github.com/gin-gonic/gin   # опциональный роутер</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc(&quot;GET /health&quot;, healthHandler)
+	mux.HandleFunc(&quot;POST /items&quot;, createItem)
+	http.ListenAndServe(&quot;:8080&quot;, logMiddleware(mux))
+}
+
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+	fmt.Fprint(w, `{&quot;status&quot;:&quot;ok&quot;}`)
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Gin-обработчик с JSON binding
+package main
+
+import &quot;github.com/gin-gonic/gin&quot;
+
+type Item struct {
+	Name  string `json:&quot;name&quot; binding:&quot;required&quot;`
+	Price float64 `json:&quot;price&quot; binding:&quot;required&quot;`
+}
+
+func createItem(c *gin.Context) {
+	var item Item
+	if err := c.ShouldBindJSON(&amp;item); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{&quot;error&quot;: err.Error()})
+		return
+	}
+	c.JSON(http.StatusCreated, gin.H{&quot;ok&quot;: true, &quot;item&quot;: item})
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Обработчик с контекстом и таймаутом
+func slowHandler(ctx context.Context) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case &lt;-time.After(2 * time.Second):
+			fmt.Fprint(w, &quot;done&quot;)
+		case &lt;-ctx.Done():
+			w.WriteHeader(http.StatusGatewayTimeout)
+		}
+	}
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Паттерн middleware
+func logMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		slog.Info(&quot;request&quot;, &quot;method&quot;, r.Method, &quot;path&quot;, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Инициализируйте модуль и выберите подход к маршрутизации (stdlib паттерны или Gin).</p>
+<p class='ordered'>2. Набросайте контракт API: маршруты, методы, JSON запросов/ответов.</p>
+<p class='ordered'>3. Определите явные structs запросов/ответов с `json` тегами.</p>
+<p class='ordered'>4. Реализуйте обработчики; держите их тонкими и делегируйте в сервисы.</p>
+<p class='ordered'>5. Добавьте middleware для логирования, recovery, CORS и auth.</p>
+<p class='ordered'>6. Используйте `context.Context` везде; задайте таймауты сервера.</p>
+<p class='ordered'>7. Пишите table-driven тесты с `httptest`.</p>
+<p class='ordered'>8. Добавьте линтеры (golangci-lint), staticcheck и `go vet` в CI.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `go build ./...` проходит</p>
+<p class='ordered'>2. `go test ./...` проходит</p>
+<p class='ordered'>3. `go vet ./...` чисто</p>
+<p class='ordered'>4. Эндпоинты возвращают корректные статус-коды и JSON-форму</p>
+<p class='ordered'>5. `go test -race ./...` не показывает гонок данных</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Гонки данных: защищайте общее состояние мьютексами или используйте каналы.</li>
+<li>Context canceled: учитывайте `ctx.Done()` в длинных операциях.</li>
+<li>Высокая задержка: добавляйте таймауты на сервере и исходящих клиентах.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="fastapi.html">← fastapi</a><a class="page-nav-link" href="graphql.html">graphql →</a></div>
     </article>
   </div>
@@ -228,6 +341,15 @@ func logMiddleware(next http.Handler) http.Handler {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -254,6 +376,9 @@ func logMiddleware(next http.Handler) http.Handler {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

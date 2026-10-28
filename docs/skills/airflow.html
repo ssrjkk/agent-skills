@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="apache-spark.html">apache-spark →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Apache Airflow</h1>
 <blockquote>Scheduling and orchestrating data workflows.</blockquote>
 <h2>Quick Start</h2>
@@ -168,6 +169,106 @@ wait = FileSensor(task_id=&quot;wait&quot;, filepath=&quot;/data/ready&quot;, po
 <li>Concurrency saturation: tune max_active_tasks.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Apache Airflow (Эйрфлоу)</h1>
+<blockquote>Планирование и оркестрация рабочих процессов данных.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install apache-airflow
+airflow standalone  # dev instance</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Планируемые ETL/ELT пайплайны</li>
+<li>Многошаговые workflow с зависимостями</li>
+<li>Retries, backfills и алерты</li>
+<li>Оркестрация платформы данных</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн DAG</h3>
+<ul>
+<li>DAGs идемпотентны и детерминированы</li>
+<li>TaskFlow API для Python-задач</li>
+<li>Явные зависимости через `&gt;&gt;`</li>
+<li>`catchup` и `max_active_runs` осознанно</li>
+</ul>
+<h3>Задачи и операторы</h3>
+<ul>
+<li>Правильный оператор (Python, SQL, Kubernetes)</li>
+<li>Задачи мелкие и одноцелевые</li>
+<li>retries и retry_delays на задачу</li>
+<li>Sensors для внешних зависимостей</li>
+</ul>
+<h3>Планирование и backfill</h3>
+<ul>
+<li>Расписание через cron/interval</li>
+<li>Backfill через catchup</li>
+<li>Без зависимости от wall-clock</li>
+<li>Логика с учётом data interval</li>
+</ul>
+<h3>Надёжность</h3>
+<ul>
+<li>Состояние в реальном backend (Postgres)</li>
+<li>Airflow connections/secrets для кредов</li>
+<li>Мониторинг DAG-ранов и длительности задач</li>
+<li>Алерты на фейлы</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install apache-airflow
+airflow standalone</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from airflow import DAG
+from airflow.decorators import task
+from datetime import datetime
+
+with DAG(&quot;etl&quot;, start_date=datetime(2026, 1, 1), schedule=&quot;@daily&quot;,
+         catchup=False) as dag:
+
+    @task
+    def extract():
+        return {&quot;rows&quot;: 100}
+
+    @task
+    def transform(data: dict):
+        return {**data, &quot;processed&quot;: True}
+
+    @task
+    def load(data: dict):
+        print(&quot;loaded&quot;, data)
+
+    load(transform(extract()))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Явные зависимости через TaskFlow API
+with DAG(&quot;multi&quot;, ...) as dag:
+    t1 = BashOperator(task_id=&quot;a&quot;, bash_command=&quot;echo a&quot;)
+    t2 = BashOperator(task_id=&quot;b&quot;, bash_command=&quot;echo b&quot;)
+    t3 = BashOperator(task_id=&quot;c&quot;, bash_command=&quot;echo c&quot;)
+    t1 &gt;&gt; [t2, t3]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Задача с retries
+@task(retries=3, retry_delay=timedelta(minutes=5))
+def flaky():
+    do_work()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Sensor на внешний файл
+from airflow.sensors.filesystem import FileSensor
+
+wait = FileSensor(task_id=&quot;wait&quot;, filepath=&quot;/data/ready&quot;, poke_interval=30)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите Airflow и настройте backend БД.</p>
+<p class='ordered'>2. Определите DAGs в папке dags.</p>
+<p class='ordered'>3. Соберите задачи через TaskFlow API.</p>
+<p class='ordered'>4. Явные зависимости и расписания.</p>
+<p class='ordered'>5. Retries, sensors и алерты.</p>
+<p class='ordered'>6. Connections для кредов.</p>
+<p class='ordered'>7. Backfill исторических прогонов через catchup.</p>
+<p class='ordered'>8. Мониторинг прогонов и настройка конкурентности.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. DAGs парсятся без ошибок</p>
+<p class='ordered'>2. Прогоны завершаются по расписанию</p>
+<p class='ordered'>3. Retries восстанавливают транзиентные фейлы</p>
+<p class='ordered'>4. Backfills дают консистентные результаты</p>
+<p class='ordered'>5. Нет дублей/перекрывающихся прогонов</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Задача зависла: проверьте sensors или ресурсы.</li>
+<li>Проблемы тайминга: логика с учётом data interval.</li>
+<li>Насыщение конкурентности: настройте max_active_tasks.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="apache-spark.html">apache-spark →</a></div>
     </article>
   </div>
@@ -216,6 +317,15 @@ wait = FileSensor(task_id=&quot;wait&quot;, filepath=&quot;/data/ready&quot;, po
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -242,6 +352,9 @@ wait = FileSensor(task_id=&quot;wait&quot;, filepath=&quot;/data/ready&quot;, po
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

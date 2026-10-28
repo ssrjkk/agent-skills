@@ -271,6 +271,15 @@ def page_foot() -> str:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -297,6 +306,9 @@ def page_foot() -> str:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>
@@ -534,7 +546,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     if (searchIndex) return;
     fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
       searchIndex = {};
-      data.forEach(function(e) { searchIndex[e.name] = (e.content || '').toLowerCase(); });
+      data.forEach(function(e) { searchIndex[e.name] = ((e.content || '') + ' ' + (e.content_ru || '')).toLowerCase(); });
     }).catch(function() { searchIndex = {}; });
   }
   function copyText(text) {
@@ -763,6 +775,34 @@ def _write_skill_page(s: dict, domain_skills: list, metrics: dict, skills_dir: P
         if len(parts) >= 3:
             body = parts[2].strip()
 
+    ru_body = ""
+    ru_path = en_path.parent / "SKILL.ru.md"
+    if ru_path.exists():
+        try:
+            ru_text = ru_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"warning: cannot read {ru_path}: {e}", file=sys.stderr)
+            ru_text = ""
+        if ru_text:
+            ru_parts = re.split(r"^---\s*$", ru_text, maxsplit=2, flags=re.MULTILINE)
+            if len(ru_parts) >= 3:
+                ru_body = ru_parts[2].strip()
+
+    if ru_body.strip():
+        lang_tabs = (
+            '<div class="lang-tabs" role="tablist" aria-label="Language">'
+            '<button class="lang-tab active" data-slang="en" role="tab" '
+            'onclick="showSkillLang(\'en\')">EN</button>'
+            '<button class="lang-tab" data-slang="ru" role="tab" '
+            'onclick="showSkillLang(\'ru\')">РУ</button></div>'
+        )
+        en_open = '<div class="skill-page-body" data-slang-body="en">'
+        ru_body_div = f'<div class="skill-page-body" data-slang-body="ru" hidden>{render_skill_body(ru_body)}</div>'
+    else:
+        lang_tabs = ""
+        en_open = '<div class="skill-page-body">'
+        ru_body_div = ""
+
     tags_html = "".join(f'<span class="tag">{esc(t)}</span>' for t in s.get("tags", []))
     models_html = "".join(f'<span class="model-badge">{esc(mod)}</span>' for mod in s.get("models", []))
     prev_name = None
@@ -815,9 +855,11 @@ def _write_skill_page(s: dict, domain_skills: list, metrics: dict, skills_dir: P
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> {models_html}</div>
       {nav_html}
-      <div class="skill-page-body">
+      {lang_tabs}
+      {en_open}
         {rendered}
       </div>
+      {ru_body_div}
       {nav_html}
     </article>
 """ + page_foot()
@@ -1017,6 +1059,10 @@ body{
 .theme-toggle:hover{border-color:var(--accent)}
 .lang-toggle{background:var(--card);border:1px solid var(--border);color:var(--accent);border-radius:var(--radius);height:32px;min-width:40px;padding:0 .5rem;cursor:pointer;font-size:.72rem;font-weight:800;font-family:var(--mono)}
 .lang-toggle:hover{border-color:var(--accent);transform:translateY(-1px)}
+.lang-tabs{display:flex;gap:.4rem;margin:0 0 1rem}
+.lang-tab{padding:.35rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.72rem;font-weight:700;border-radius:20px;transition:all .15s}
+.lang-tab:hover{color:var(--text);border-color:var(--accent)}
+.lang-tab.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent)}
 .back-top{position:fixed;right:1.2rem;bottom:1.4rem;z-index:60;width:42px;height:42px;border-radius:50%;border:1px solid var(--accent);background:var(--card);color:var(--accent);font-size:1.1rem;cursor:pointer;transition:transform .15s,opacity .2s}
 .back-top:hover{transform:translateY(-3px)}
 .back-top[hidden]{display:none}
@@ -1317,10 +1363,13 @@ def build_search_index(catalog_path: Path, output_dir: Path) -> None:
     _meta, skills, _metrics = load_all(catalog_path)
     index = []
     for s in sorted(skills, key=lambda x: x["name"]):
+        ru_path = Path(s["path"]).parent / "SKILL.ru.md"
+        ru_blob = skill_search_text(ru_path) if ru_path.exists() else ""
         index.append({
             "name": s["name"],
             "category": s["category"],
             "content": skill_search_text(Path(s["path"]))[:2000],
+            "content_ru": ru_blob[:2000],
         })
     out = output_dir / "search-index.json"
     out.write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")

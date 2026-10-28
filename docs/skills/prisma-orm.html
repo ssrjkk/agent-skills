@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="postgresql.html">← postgresql</a><a class="page-nav-link" href="redis.html">redis →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Prisma ORM</h1>
 <blockquote>Type-safe database access with auto-generated queries.</blockquote>
 <h2>Quick Start</h2>
@@ -162,6 +163,100 @@ await prisma.$transaction([
 <p class='ordered'>2. Migration applies successfully</p>
 <p class='ordered'>3. Generated client is type-safe</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Prisma ORM</h1>
+<blockquote>Type-safe доступ к БД с автоматически генерируемыми запросами.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>// schema.prisma
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import { PrismaClient } from &#x27;@prisma/client&#x27;;
+const prisma = new PrismaClient();
+
+// Type-safe запрос
+const user = await prisma.user.create({
+  data: {
+    email: &#x27;alice@example.com&#x27;,
+    posts: { create: { title: &#x27;Hello Prisma&#x27; } }
+  },
+  include: { posts: true }
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Type-safe доступ к БД</li>
+<li>Быстрая эволюция схемы с миграциями</li>
+<li>Не для сложных сырых SQL-запросов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Схема — единый источник правды; генерируйте клиент.</li>
+<li>Миграции на каждое изменение схемы, коммитьте с кодом.</li>
+<li>Берите только нужные поля (`select`) против over-fetching.</li>
+<li>`include`/`relationLoadStrategy` осознанно против N+1.</li>
+<li>Батч-записи через `createMany`/`updateMany`.</li>
+<li>Транзакции для многошаговой консистентности.</li>
+</ul>
+<h2>Пошаговые инструкции</h2>
+<p class='ordered'>1. Установка: `npm install prisma @prisma/client`</p>
+<p class='ordered'>2. Инициализация: `npx prisma init`</p>
+<p class='ordered'>3. Опишите модели в `schema.prisma`</p>
+<p class='ordered'>4. Миграция: `npx prisma migrate dev`</p>
+<p class='ordered'>5. Генерация клиента и запросы с типами</p>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm install prisma @prisma/client
+npx prisma init</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<p>Вход: `prisma.user.findMany({ where: { email: { contains: &quot;@&quot; } } })` → Выход: все пользователи с @ в email</p>
+<div class="codeblock"><pre class="code"><code>// Пагинированный type-safe запрос со связями
+const page = await prisma.user.findMany({
+  where: { role: &quot;member&quot; },
+  select: { id: true, email: true, posts: { select: { title: true } } },
+  orderBy: { id: &quot;desc&quot; },
+  take: 20,
+  skip: 40,
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Транзакция для консистентности
+await prisma.$transaction([
+  prisma.order.create({ data: { userId, amount } }),
+  prisma.user.update({ where: { id: userId }, data: { balance: { decrement: amount } } }),
+]);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ресурсы</h2>
+<ul>
+<li>[Prisma Docs](https://www.prisma.io/docs)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>**`PrismaClientInitializationError`** — схема не синхронизирована.</li>
+</ul>
+<p>Повторно выполните `npx prisma generate` и проверьте `DATABASE_URL`.</p>
+<ul>
+<li>**Интроспекция перезаписывает кастомные типы** — `prisma db pull`</li>
+</ul>
+<p>работает как черновик; заново наложите типы и связи вручную.</p>
+<ul>
+<li>**Медленные relation-запросы** — не хватает индекса. Добавьте `@@index`</li>
+</ul>
+<p>на внешние ключи и анализируйте запросы через Prisma Data Platform.</p>
+<ul>
+<li>**Миграции расходятся на командных ветках** — запускайте</li>
+</ul>
+<p>`prisma migrate dev` чаще и делайте rebase миграций, а не reset БД.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Схема валидна: `npx prisma validate`</p>
+<p class='ordered'>2. Миграция применяется успешно</p>
+<p class='ordered'>3. Сгенерированный клиент type-safe</p></div>
       <div class="page-nav"><a class="page-nav-link" href="postgresql.html">← postgresql</a><a class="page-nav-link" href="redis.html">redis →</a></div>
     </article>
   </div>
@@ -210,6 +305,15 @@ await prisma.$transaction([
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -236,6 +340,9 @@ await prisma.$transaction([
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

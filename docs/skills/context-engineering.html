@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="agent-development.html">← agent-development</a><a class="page-nav-link" href="embeddings.html">embeddings →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Context Engineering</h1>
 <blockquote>Curating the context window for better answers and lower cost.</blockquote>
 <h2>Quick Start</h2>
@@ -163,6 +164,101 @@ def trim_to_budget(text: str, budget: int) -&gt; str:
 <li>Low quality with much context: reduce injected chunks, keep only relevant.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Context Engineering (Контекст-инжиниринг)</h1>
+<blockquote>Курирование контекстного окна LLM для качества и цены.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Держите маленький стабильный system prompt, берите только нужное
+SYSTEM = &quot;You are a concise senior engineer.&quot;
+TASK = &quot;Fix the bug in src/auth.py&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Длинные агентные сессии, выходящие за окно</li>
+<li>RAG, где много контекста вредит качеству</li>
+<li>Чувствительные к стоимости высоконагруженные вызовы</li>
+<li>Multi-turn агенты с потребностями в памяти</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Бюджет контекста</h3>
+<ul>
+<li>Токен-бюджет на секцию (system, задача, память, retrieval)</li>
+<li>System prompt маленький и информативный</li>
+<li>Обрезайте retrieved chunks до top-k и релевантных фрагментов</li>
+<li>Резервируйте место под ответ</li>
+</ul>
+<h3>Компакция</h3>
+<ul>
+<li>Суммаризируйте старые ходы вместо сырой истории</li>
+<li>Структурированные суммари (решения, действия, открытые вопросы)</li>
+<li>Последние ходы держите дословно для когерентности</li>
+<li>Триггер компакции по порогу токенов</li>
+</ul>
+<h3>Progressive Disclosure</h3>
+<ul>
+<li>Детали грузите только по необходимости (lazy retrieval)</li>
+<li>Суммари + указатели на глубокие доки</li>
+<li>Уточняющие вопросы до загрузки большого контекста</li>
+<li>Примеры кэшируйте, не повторяйте</li>
+</ul>
+<h3>Качество retrieval</h3>
+<ul>
+<li>Извлекайте по запросу, а не всё сразу</li>
+<li>Реранкинг и дедупликация перед вставкой</li>
+<li>Цитируйте источники для проверки</li>
+<li>Держите вставленный контекст свежим</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install tiktoken openai
+# токенизатор для бюджета</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import tiktoken
+
+enc = tiktoken.get_encoding(&quot;cl100k_base&quot;)
+
+def count_tokens(text: str) -&gt; int:
+    return len(enc.encode(text))
+
+BUDGET = {&quot;system&quot;: 500, &quot;task&quot;: 1000, &quot;memory&quot;: 1500, &quot;retrieval&quot;: 2000}
+print(count_tokens(&quot;hello world&quot;))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Компакция со структурированным суммари
+def compact(history: list[dict], summary: str, keep_last: int = 6) -&gt; list[dict]:
+    return [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: f&quot;Conversation summary so far:\n{summary}&quot;}
+    ] + history[-keep_last:]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Lazy retrieval: только по необходимости
+def build_context(question: str, memory: dict) -&gt; str:
+    chunks = []
+    if &quot;codebase&quot; in question.lower():
+        chunks += retrieve(&quot;code&quot;, question, k=4)
+    if &quot;api&quot; in question.lower():
+        chunks += retrieve(&quot;api_docs&quot;, question, k=2)
+    return &quot;\n\n&quot;.join(chunks)[:BUDGET[&quot;retrieval&quot;]]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Обрезка под бюджет токенов
+def trim_to_budget(text: str, budget: int) -&gt; str:
+    tokens = enc.encode(text)
+    if len(tokens) &lt;= budget:
+        return text
+    return enc.decode(tokens[:budget]) + &quot;\n...[trimmed]&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите токен-бюджет на секцию для задачи.</p>
+<p class='ordered'>2. Напишите плотный system prompt с ролью и ограничениями.</p>
+<p class='ordered'>3. Извлекайте только нужное текущему ходу (lazy).</p>
+<p class='ordered'>4. Вставляйте top-k, дедуплицированные, цитируемые чанки.</p>
+<p class='ordered'>5. Суммаризируйте старые ходы в структурированную память.</p>
+<p class='ordered'>6. Обрезайте длинный контент до бюджета.</p>
+<p class='ordered'>7. Меряйте использование токенов и стоимость на вызов.</p>
+<p class='ordered'>8. Итерируйте бюджеты по качеству ответов.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Ответы остаются корректными при росте сессии</p>
+<p class='ordered'>2. Стоимость токенов на вызов в рамках бюджета</p>
+<p class='ordered'>3. Извлечённый контекст релевантен (recall@k)</p>
+<p class='ordered'>4. Компакция сохраняет решения и факты</p>
+<p class='ordered'>5. Нет overflow-ошибок в проде</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Переполнение контекста: компактируйте раньше и обрезайте сильнее.</li>
+<li>Потеря фактов после компакции: улучшите формат суммари.</li>
+<li>Низкое качество при большом контексте: уменьшайте число чанков, держите релевантное.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="agent-development.html">← agent-development</a><a class="page-nav-link" href="embeddings.html">embeddings →</a></div>
     </article>
   </div>
@@ -211,6 +307,15 @@ def trim_to_budget(text: str, budget: int) -&gt; str:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -237,6 +342,9 @@ def trim_to_budget(text: str, budget: int) -&gt; str:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

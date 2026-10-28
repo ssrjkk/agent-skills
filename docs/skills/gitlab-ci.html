@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="github-actions.html">← github-actions</a><a class="page-nav-link" href="istio.html">istio →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>GitLab CI/CD</h1>
 <blockquote>Git-integrated CI/CD with powerful pipeline orchestration.</blockquote>
 <h2>Quick Start</h2>
@@ -169,6 +170,107 @@ deploy:
 <p class='ordered'>2. All stages execute in order</p>
 <p class='ordered'>3. Deployments succeed</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>GitLab CI/CD</h1>
+<blockquote>Git-интегрированный CI/CD с мощной оркестрацией пайплайнов.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  image: node:20
+  script:
+    - npm ci
+    - npm test
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Репозитории на GitLab</li>
+<li>Auto DevOps деплой</li>
+<li>Мультипроектные пайплайны</li>
+<li>Интеграция с Container Registry</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Ясные имена jobs; одна задача на стадию.</li>
+<li>Кэшируйте зависимости и используйте `needs` для скорости.</li>
+<li>Секреты в CI/CD variables, masked и scoped.</li>
+<li>`rules` вместо only/except для триггеров по веткам.</li>
+<li>Загружайте артефакты и отчёты для видимости.</li>
+<li>Переиспользуйте логику через `include` и шаблоны.</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Добавьте `.gitlab-ci.yml` в корень репозитория</p>
+<p class='ordered'>2. Настройте стадии и jobs</p>
+<p class='ordered'>3. Настройте GitLab Runner</p>
+<p class='ordered'>4. Запушьте, чтобы запустить пайплайн</p>
+<p class='ordered'>5. Добавьте кэш и rules</p>
+<p class='ordered'>6. Обезопасьте переменные и деплой</p>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Локальный runner
+gitlab-runner register</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Job с кэшем и rules
+test:
+  stage: test
+  image: node:20
+  cache:
+    key: npm
+    paths: [node_modules/]
+  rules:
+    - if: &#x27;$CI_PIPELINE_SOURCE == &quot;merge_request_event&quot;&#x27;
+  script:
+    - npm ci
+    - npm test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Переиспользуемый шаблон через include
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - local: /ci/deploy.gitlab-ci.yml
+
+deploy:
+  stage: deploy
+  image: docker:24
+  services: [docker:24-dind]
+  only:
+    - main
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+  environment: production</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ресурсы</h2>
+<ul>
+<li>[GitLab CI Docs](https://docs.gitlab.com/ee/ci)</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>**Job завис в статусе pending** — у runner не совпали теги. Добавьте</li>
+</ul>
+<p>`tags: [docker]` в job или зарегистрируйте runner с нужными тегами.</p>
+<ul>
+<li>**Падение на `npm ci`** — устаревший кэш. Очистите кэш через</li>
+</ul>
+<p>*CI/CD → Pipelines → Run pipeline* или обновите `key` у кэша.</p>
+<ul>
+<li>**Deploy-стадия пропущена** — `only: [main]` блокирует ветки;</li>
+</ul>
+<p>используйте `rules: [if: &#x27;$CI_COMMIT_BRANCH == &quot;main&quot;&#x27;]` для гибкости.</p>
+<ul>
+<li>**Runner работает на `sh`, а не `bash`** — задайте `image` каждому job</li>
+</ul>
+<p>или пишите POSIX-совместимые команды (`|| true`, без `set -o pipefail`).</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Пайплайн стартует на коммит</p>
+<p class='ordered'>2. Все стадии выполняются по порядку</p>
+<p class='ordered'>3. Деплой проходит успешно</p></div>
       <div class="page-nav"><a class="page-nav-link" href="github-actions.html">← github-actions</a><a class="page-nav-link" href="istio.html">istio →</a></div>
     </article>
   </div>
@@ -217,6 +319,15 @@ deploy:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -243,6 +354,9 @@ deploy:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

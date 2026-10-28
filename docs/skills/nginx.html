@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="loki.html">← loki</a><a class="page-nav-link" href="observability-llm.html">observability-llm →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Nginx</h1>
 <blockquote>Reverse proxying, load balancing, and TLS with Nginx.</blockquote>
 <h2>Quick Start</h2>
@@ -174,6 +175,112 @@ location /static/ {
 <li>Cert errors: renew and check permissions.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Nginx (Энджинкс)</h1>
+<blockquote>Reverse proxy, балансировка и TLS через Nginx.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>sudo apt install nginx
+sudo nginx -t &amp;&amp; sudo systemctl reload nginx</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Reverse proxy перед app-серверами</li>
+<li>Балансировка нагрузки между бэкендами</li>
+<li>TLS termination и раздача статики</li>
+<li>Кэширование и rate limiting</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Прокси</h3>
+<ul>
+<li>`upstream` блоки для групп бэкендов</li>
+<li>Таймауты и заголовки прокси явно</li>
+<li>Оригинальный host/IP через `proxy_set_header`</li>
+<li>keepalive к апстримам</li>
+</ul>
+<h3>TLS</h3>
+<ul>
+<li>TLS termination с актуальным сертификатом</li>
+<li>Редирект HTTP на HTTPS</li>
+<li>Сильные протоколы и шифры</li>
+<li>Авто-обновление через certbot</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Статика напрямую с expires</li>
+<li>gzip для сжимаемых ответов</li>
+<li>`proxy_cache` для кэша ответов</li>
+<li>Настройка worker_processes и соединений</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>Security headers (HSTS, X-Frame-Options)</li>
+<li>Rate-limit чувствительных эндпоинтов</li>
+<li>Скрывайте версию сервера</li>
+<li>Ограничивайте доступ при необходимости</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>sudo apt install nginx
+sudo nginx -t</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Reverse proxy к приложению
+server {
+    listen 80;
+    server_name app.example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Балансировка между бэкендами
+upstream app {
+    server 10.0.0.1:8000;
+    server 10.0.0.2:8000;
+    keepalive 32;
+}
+
+server {
+    listen 443 ssl;
+    location / {
+        proxy_pass http://app;
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># TLS termination
+server {
+    listen 443 ssl http2;
+    server_name app.example.com;
+    ssl_certificate /etc/letsencrypt/live/app/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/app/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    add_header Strict-Transport-Security &quot;max-age=31536000&quot; always;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Кэш статики + gzip
+location /static/ {
+    alias /var/www/app/static/;
+    expires 30d;
+    gzip on;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите Nginx и проверьте дефолтный конфиг.</p>
+<p class='ordered'>2. Добавьте upstream для бэкендов.</p>
+<p class='ordered'>3. Напишите server block для домена.</p>
+<p class='ordered'>4. TLS (certbot) и редирект HTTP.</p>
+<p class='ordered'>5. Заголовки и таймауты прокси.</p>
+<p class='ordered'>6. Кэш, gzip и раздача статики.</p>
+<p class='ordered'>7. Укрепите security headers и лимитами.</p>
+<p class='ordered'>8. Проверьте `nginx -t` и перезагрузите.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `nginx -t` проходит</p>
+<p class='ordered'>2. Запросы доходят до бэкендов с корректными заголовками</p>
+<p class='ordered'>3. HTTPS работает с валидным сертом</p>
+<p class='ordered'>4. Статика кэшируется корректно</p>
+<p class='ordered'>5. Балансировщик распределяет по апстримам</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>502 Bad Gateway: бэкенд упал или неверный адрес.</li>
+<li>Медленный прокси: проверьте таймауты и keepalive.</li>
+<li>Ошибки серта: обновите и проверьте права.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="loki.html">← loki</a><a class="page-nav-link" href="observability-llm.html">observability-llm →</a></div>
     </article>
   </div>
@@ -222,6 +329,15 @@ location /static/ {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -248,6 +364,9 @@ location /static/ {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

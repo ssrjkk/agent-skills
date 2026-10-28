@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="mlops.html">← mlops</a><a class="page-nav-link" href="prompt-caching.html">prompt-caching →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Multi-Agent Orchestration</h1>
 <blockquote>Coordinating multiple specialized agents into reliable systems.</blockquote>
 <h2>Quick Start</h2>
@@ -167,6 +168,105 @@ def run_parallel(workers: dict, tasks: dict) -&gt; dict:
 <li>Rogue worker: validate outputs and add a review step.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Multi-Agent Orchestration (Оркестрация мультиагентов)</h1>
+<blockquote>Координация нескольких специализированных агентов в надёжные системы.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Оркестратор выбирает воркера по задаче; воркеры возвращают результаты
+from dataclasses import dataclass
+
+@dataclass
+class AgentResult:
+    task: str
+    output: str</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Задачи с разной специализацией (research, код, ревью)</li>
+<li>Параллелимые независимые подзадачи</li>
+<li>Длинные workflow, разбитые на надёжные шаги</li>
+<li>Сложные домены, которые один агент обрабатывает плохо</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Оркестратор-воркер</h3>
+<ul>
+<li>Оркестратор планирует, делегирует и собирает результаты</li>
+<li>Воркеры одноцелевые и stateless</li>
+<li>Ясный контракт передачи задач</li>
+<li>Лимиты конкурентных воркеров и общих шагов</li>
+</ul>
+<h3>Роутинг и хендоффы</h3>
+<ul>
+<li>Роутите по типу задачи, а не по догадкам</li>
+<li>Явные handoff-сообщения (намерение + контекст)</li>
+<li>Валидируйте вывод воркера до передачи</li>
+<li>При фейле роутинга — дефолтный воркер</li>
+</ul>
+<h3>Общее состояние</h3>
+<ul>
+<li>Общий стор для фактов и артефактов</li>
+<li>Избегайте дублирования контекста; ссылайтесь по ID</li>
+<li>Координируйте записи против гонок</li>
+<li>Логируйте полный трейс выполнения</li>
+</ul>
+<h3>Надёжность</h3>
+<ul>
+<li>Retry фейл-воркеров с backoff</li>
+<li>Таймауты и бюджеты на воркера</li>
+<li>Детекция циклов и deadlock</li>
+<li>Агрегация частичных результатов при фейле</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic
+# опционально: langgraph, autogen, crewai</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Минимальный оркестратор
+def orchestrate(task: str, workers: dict) -&gt; dict:
+    plan = plan_task(task)          # выбирает имена воркеров
+    results = {}
+    for name, sub in plan.items():
+        results[name] = workers[name](sub)
+    return {&quot;plan&quot;: plan, &quot;results&quot;: results}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Контракт воркера
+def researcher(query: str) -&gt; str:
+    return run_llm(f&quot;Research: {query}&quot;)
+
+def reviewer(text: str) -&gt; str:
+    return run_llm(f&quot;Review for correctness and style:\n{text}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Роутинг по намерению
+def route(task: str) -&gt; str:
+    intent = classify(task)
+    if intent == &quot;research&quot;:
+        return &quot;researcher&quot;
+    if intent == &quot;review&quot;:
+        return &quot;reviewer&quot;
+    return &quot;general&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Параллельное выполнение через thread pool
+from concurrent.futures import ThreadPoolExecutor
+
+def run_parallel(workers: dict, tasks: dict) -&gt; dict:
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        futures = {name: ex.submit(workers[name], task) for name, task in tasks.items()}
+        return {name: f.result() for name, f in futures.items()}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Разбейте домен на одноцелевые роли воркеров.</p>
+<p class='ordered'>2. Определите контракт хендоффа (задача, контекст, формат вывода).</p>
+<p class='ordered'>3. Постройте оркестратор: планирование и роутинг.</p>
+<p class='ordered'>4. Добавьте стор общего состояния для артефактов.</p>
+<p class='ordered'>5. Запускайте независимые подзадачи параллельно с лимитами.</p>
+<p class='ordered'>6. Добавьте retries, таймауты и бюджеты.</p>
+<p class='ordered'>7. Валидируйте выводы на каждом хендоффе.</p>
+<p class='ordered'>8. Трассируйте и логируйте полное выполнение.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Оркестратор завершается в рамках бюджета шагов/времени</p>
+<p class='ordered'>2. Воркеры получают корректно сформированные задачи</p>
+<p class='ordered'>3. Хендоффы переносят нужный контекст</p>
+<p class='ordered'>4. Параллельные задачи не портят общее состояние</p>
+<p class='ordered'>5. Фейлы деградируют аккуратно с частичными результатами</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Deadlock: уберите циклические хендоффы; добавьте таймауты.</li>
+<li>Потеря контекста при хендоффе: передавайте намерение + суммари явно.</li>
+<li>Сбойный воркер: валидируйте выводы и добавьте шаг ревью.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="mlops.html">← mlops</a><a class="page-nav-link" href="prompt-caching.html">prompt-caching →</a></div>
     </article>
   </div>
@@ -215,6 +315,15 @@ def run_parallel(workers: dict, tasks: dict) -&gt; dict:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -241,6 +350,9 @@ def run_parallel(workers: dict, tasks: dict) -&gt; dict:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

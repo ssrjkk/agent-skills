@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="expo-rn.html">← expo-rn</a><a class="page-nav-link" href="kotlin-android.html">kotlin-android →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Flutter</h1>
 <blockquote>Building beautiful cross-platform apps with Flutter and Dart.</blockquote>
 <h2>Quick Start</h2>
@@ -188,6 +189,126 @@ Future&lt;int&gt; getBattery() async {
 <li>Platform channel errors: match method names and types across sides.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Flutter (Флаттер)</h1>
+<blockquote>Красивые кросс-платформенные приложения на Flutter и Dart.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>flutter create my_app
+cd my_app
+flutter run
+# сборка для подключённого устройства или эмулятора</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Кросс-платформенные мобильные приложения (iOS + Android)</li>
+<li>Desktop и web из одной кодовой базы</li>
+<li>Богатый кастомный UI без платформенных вьюх</li>
+<li>Быстрая итерация с hot reload</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Виджеты</h3>
+<ul>
+<li>Компонуйте мелкие виджеты, а не большие</li>
+<li>`StatelessWidget` — если состояние не нужно</li>
+<li>Переиспользуемые виджеты выносите в дерево</li>
+<li>Следуйте Material/Cupertino design-токенам</li>
+</ul>
+<h3>Управление состоянием</h3>
+<ul>
+<li>`setState` — только для локального состояния</li>
+<li>Для общего состояния — Provider/Riverpod</li>
+<li>Логику состояния держите вне виджетов (контроллеры)</li>
+<li>Иммутабельное состояние и явные пересборки</li>
+</ul>
+<h3>Навигация и жизненный цикл</h3>
+<ul>
+<li>Named routes или go_router</li>
+<li>Dispose контроллеров и подписок</li>
+<li>Обрабатывайте lifecycle (background/foreground)</li>
+<li>Не используйте context через async-промежутки (используйте mounted)</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>`const`-конструкторы где можно</li>
+<li>Не пересобирайте большие поддеревья</li>
+<li>Для длинных списков — `ListView.builder`</li>
+<li>Профилируйте через Flutter DevTools</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>flutter create my_app --platforms=android,ios
+# состояние: flutter pub add provider
+# навигация: flutter pub add go_router</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import &#x27;package:flutter/material.dart&#x27;;
+
+void main() =&gt; runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: const CounterPage());
+  }
+}
+
+class CounterPage extends StatefulWidget {
+  const CounterPage({super.key});
+  @override
+  State&lt;CounterPage&gt; createState() =&gt; _CounterPageState();
+}
+
+class _CounterPageState extends State&lt;CounterPage&gt; {
+  int _count = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Text(&#x27;Count: $_count&#x27;, style: const TextStyle(fontSize: 32))),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =&gt; setState(() =&gt; _count++),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Состояние через Provider
+class CounterController extends ChangeNotifier {
+  int _value = 0;
+  int get value =&gt; _value;
+  void increment() { _value++; notifyListeners(); }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Навигация go_router
+final router = GoRouter(
+  routes: [
+    GoRoute(path: &quot;/&quot;, builder: (_, __) =&gt; const HomeScreen()),
+    GoRoute(path: &quot;/detail/:id&quot;, builder: (_, s) =&gt; DetailScreen(id: s.pathParameters[&quot;id&quot;]!)),
+  ],
+);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Platform channel (вызов нативного кода)
+import &#x27;package:flutter/services.dart&#x27;;
+
+final channel = const MethodChannel(&quot;app/battery&quot;);
+Future&lt;int&gt; getBattery() async {
+  return await channel.invokeMethod(&quot;getBatteryLevel&quot;) as int;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Создайте проект через `flutter create`.</p>
+<p class='ordered'>2. Настройте структуру (features, theme, routes).</p>
+<p class='ordered'>3. Соберите UI из мелких компонуемых виджетов.</p>
+<p class='ordered'>4. Добавьте управление состоянием для общих данных.</p>
+<p class='ordered'>5. Подключите навигацию через go_router или named routes.</p>
+<p class='ordered'>6. Добавьте platform channels для нативных фич.</p>
+<p class='ordered'>7. Тестируйте: widget tests и integration tests.</p>
+<p class='ordered'>8. Соберите release-артефакты для публикации в сторы.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `flutter analyze` чисто</p>
+<p class='ordered'>2. `flutter test` проходит</p>
+<p class='ordered'>3. Приложение работает на эмуляторе и устройстве</p>
+<p class='ordered'>4. Нет утечек провайдеров или ошибок жизненного цикла</p>
+<p class='ordered'>5. Release-сборка проходит для целевых платформ</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>&quot;use_build_context_synchronously&quot;: проверяйте `mounted` перед async-использованием контекста.</li>
+<li>Медленный первый кадр: уменьшайте работу в build; лениво грузите тяжёлые данные.</li>
+<li>Ошибки platform channel: сверяйте имена методов и типы с обеих сторон.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="expo-rn.html">← expo-rn</a><a class="page-nav-link" href="kotlin-android.html">kotlin-android →</a></div>
     </article>
   </div>
@@ -236,6 +357,15 @@ Future&lt;int&gt; getBattery() async {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -262,6 +392,9 @@ Future&lt;int&gt; getBattery() async {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

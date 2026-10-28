@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="jest.html">← jest</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>pytest</h1>
 <blockquote>Writing reliable Python tests with pytest.</blockquote>
 <h2>Quick Start</h2>
@@ -170,6 +171,108 @@ def test_api(mock_session):
 <li>Coverage gaps: check which branches lack assertions.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>pytest (Пайтест)</h1>
+<blockquote>Написание надёжных Python-тестов через pytest.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest pytest-cov
+pytest tests/ -v --cov=src --cov-report=term-missing</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Юнит-тесты функций и классов</li>
+<li>Интеграционные тесты с реальными сервисами</li>
+<li>Регрессионные сьюты в CI</li>
+<li>Тестирование async-кода и пайплайнов данных</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура тестов</h3>
+<ul>
+<li>Ясные имена: `test_&lt;поведение&gt;`</li>
+<li>На каждый тест — arrange, act, assert</li>
+<li>Одно поведение на тест</li>
+<li>Тесты в `tests/`, зеркаля пакет</li>
+</ul>
+<h3>Фикстуры</h3>
+<ul>
+<li>Фикстуры — для setup/teardown и общих ресурсов</li>
+<li>Скоупы (`function`, `session`, `module`)</li>
+<li>Делайте фикстуры узкими и компонуемыми</li>
+<li>Yield-фикстуры для очистки</li>
+</ul>
+<h3>Параметризация</h3>
+<ul>
+<li>`@pytest.mark.parametrize` для вариантов ввода</li>
+<li>Покрывайте границы и error-кейсы</li>
+<li>`pytest.raises` для ожидаемых исключений</li>
+<li>`monkeypatch` для env и сайд-эффектов</li>
+</ul>
+<h3>Изоляция</h3>
+<ul>
+<li>Мокайте внешние вызовы (`mock.patch`)</li>
+<li>В юнит-тестах без сети и файловой системы</li>
+<li>Для файловых тестов — `tmp_path`</li>
+<li>Держите тесты детерминированными и быстрыми</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install pytest pytest-cov pytest-asyncio
+# мокинг: pytest-mock</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Базовый тест с параметризацией
+import pytest
+
+def add(a, b):
+    return a + b
+
+@pytest.mark.parametrize(&quot;a,b,expected&quot;, [
+    (1, 2, 3),
+    (0, 0, 0),
+    (-1, 1, 0),
+])
+def test_add(a, b, expected):
+    assert add(a, b) == expected</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Фикстуры с очисткой
+import pytest
+
+@pytest.fixture
+def temp_db(tmp_path):
+    db = create_db(tmp_path / &quot;test.db&quot;)
+    yield db
+    db.close()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Async тест
+import pytest
+import pytest_asyncio
+
+@pytest.mark.asyncio
+async def test_fetch():
+    data = await fetch_data()
+    assert &quot;items&quot; in data</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Мокирование внешнего вызова
+from unittest.mock import patch
+
+def test_api(mock_session):
+    with patch(&quot;app.client.get&quot;, return_value={&quot;ok&quot;: True}):
+        result = app.client.get(&quot;/health&quot;)
+    assert result == {&quot;ok&quot;: True}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите pytest и создайте директорию `tests/`.</p>
+<p class='ordered'>2. Напишите сфокусированные тесты на ядро поведения.</p>
+<p class='ordered'>3. Вынесите setup в фикстуры.</p>
+<p class='ordered'>4. Параметризуйте варианты ввода и edge cases.</p>
+<p class='ordered'>5. Для изоляции мокайте внешние сервисы.</p>
+<p class='ordered'>6. Добавьте замер покрытия и порог.</p>
+<p class='ordered'>7. Подключите pytest в CI на каждом PR.</p>
+<p class='ordered'>8. Для скорости — `-x`, `--ff`, `-p no:cacheprovider`.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Все тесты проходят локально и в CI</p>
+<p class='ordered'>2. Покрытие соответствует порогу проекта</p>
+<p class='ordered'>3. Тесты не зависят от сети или абсолютных путей</p>
+<p class='ordered'>4. Тесты детерминированы между запусками</p>
+<p class='ordered'>5. Фейлы указывают на конкретное поведение</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Флаки: ищите общее состояние или зависимость от времени.</li>
+<li>Медленный сьют: помечайте интеграционные тесты и гоняйте юнит отдельно.</li>
+<li>Пробелы покрытия: проверьте, какие ветки не имеют ассертов.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="jest.html">← jest</a></div>
     </article>
   </div>
@@ -218,6 +321,15 @@ def test_api(mock_session):
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -244,6 +356,9 @@ def test_api(mock_session):
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

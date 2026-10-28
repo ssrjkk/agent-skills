@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="flutter.html">← flutter</a><a class="page-nav-link" href="swift-ios.html">swift-ios →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Kotlin Android</h1>
 <blockquote>Building modern Android apps with Kotlin and Jetpack Compose.</blockquote>
 <h2>Quick Start</h2>
@@ -169,6 +170,107 @@ fun App() {
 <li>Memory leaks: scope coroutines to viewModelScope.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Kotlin Android (Котлин Андроид)</h1>
+<blockquote>Современные Android-приложения на Kotlin и Jetpack Compose.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Android Studio -&gt; New Project -&gt; Empty Compose Activity
+./gradlew assembleDebug</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Нативные Android-приложения</li>
+<li>Современный UI на Jetpack Compose</li>
+<li>Команды на Kotlin-корутинах</li>
+<li>Приложения для Play Store</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>UI на Compose</h3>
+<ul>
+<li>Декларативный UI через composables</li>
+<li>State hoisting; composables stateless</li>
+<li>`remember`/`derivedStateOf` для состояния</li>
+<li>Material 3 компоненты</li>
+</ul>
+<h3>Архитектура</h3>
+<ul>
+<li>MVVM: ViewModel + StateFlow</li>
+<li>Repository pattern для источников данных</li>
+<li>UI без бизнес-логики</li>
+<li>`collectAsStateWithLifecycle`</li>
+</ul>
+<h3>Конкурентность</h3>
+<ul>
+<li>Корутины для async-работы</li>
+<li>viewModelScope/lifecycleScope</li>
+<li>Flow для потоков</li>
+<li>Без блокировки main thread</li>
+</ul>
+<h3>Навигация и DI</h3>
+<ul>
+<li>Compose Navigation</li>
+<li>Hilt для DI</li>
+<li>Nav graphs по фичам</li>
+<li>Корректный скоуп зависимостей</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># build.gradle.kts
+implementation(&quot;androidx.compose.ui:ui&quot;)
+implementation(&quot;androidx.lifecycle:lifecycle-viewmodel-compose&quot;)
+implementation(&quot;com.google.dagger:hilt-android&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Composable UI
+@Composable
+fun CounterScreen(viewModel: CounterViewModel = viewModel()) {
+    val count by viewModel.count.collectAsStateWithLifecycle()
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(24.dp)
+    ) {
+        Text(text = &quot;Count: $count&quot;, style = MaterialTheme.typography.headlineMedium)
+        Button(onClick = { viewModel.increment() }) { Text(&quot;Add&quot;) }
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// ViewModel со StateFlow
+class CounterViewModel : ViewModel() {
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow&lt;Int&gt; = _count.asStateFlow()
+    fun increment() { _count.update { it + 1 } }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Корутина + репозиторий
+class UserRepository(private val api: Api) {
+    suspend fun loadUsers(): List&lt;User&gt; = withContext(Dispatchers.IO) {
+        api.fetchUsers()
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Навигация
+@Composable
+fun App() {
+    val nav = rememberNavController()
+    NavHost(navController = nav, startDestination = &quot;home&quot;) {
+        composable(&quot;home&quot;) { HomeScreen(onOpen = { nav.navigate(&quot;detail&quot;) }) }
+        composable(&quot;detail&quot;) { DetailScreen() }
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Создайте Compose-проект.</p>
+<p class='ordered'>2. Настройте Hilt и навигацию.</p>
+<p class='ordered'>3. Соберите UI на composables и Material 3.</p>
+<p class='ordered'>4. Добавьте ViewModels со StateFlow.</p>
+<p class='ordered'>5. Подключите репозитории на корутинах.</p>
+<p class='ordered'>6. Обработайте состояния loading/error.</p>
+<p class='ordered'>7. Тестируйте Compose UI-тестами.</p>
+<p class='ordered'>8. Собирайте и публикуйте.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `./gradlew build` проходит</p>
+<p class='ordered'>2. UI рендерится и реагирует на состояние</p>
+<p class='ordered'>3. Корутины скоуплены и отменяются</p>
+<p class='ordered'>4. Навигация работает между экранами</p>
+<p class='ordered'>5. Юнит/UI тесты проходят</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Блокировка main thread: перенесите работу на Dispatchers.IO.</li>
+<li>Состояние не обновляется: StateFlow + collectAsStateWithLifecycle.</li>
+<li>Утечки памяти: скоуп корутин через viewModelScope.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="flutter.html">← flutter</a><a class="page-nav-link" href="swift-ios.html">swift-ios →</a></div>
     </article>
   </div>
@@ -217,6 +319,15 @@ fun App() {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -243,6 +354,9 @@ fun App() {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

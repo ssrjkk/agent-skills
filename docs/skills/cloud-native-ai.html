@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="aws-lambda.html">← aws-lambda</a><a class="page-nav-link" href="docker.html">docker →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Cloud-Native AI</h1>
 <blockquote>Deploy and scale AI workloads using cloud-native patterns with Kubernetes and containerization.</blockquote>
 <h2>Quick Start</h2>
@@ -205,6 +206,130 @@ curl https://models.example.com/v1/chat/completions -d &#x27;{&quot;model&quot;:
 <p class='ordered'>3. Rolling update deploys new model version without downtime</p>
 <p class='ordered'>4. Batch inference jobs complete with correct results</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Cloud-Native AI</h1>
+<blockquote>Разворачивайте и масштабируйте AI-нагрузки по cloud-native паттернам: Kubernetes и контейнеризация.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># model-serving.yaml — inference-сервер на vLLM
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: vllm }
+  template:
+    metadata:
+      labels: { app: vllm }
+    spec:
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:latest
+        args: [&quot;--model&quot;, &quot;mistralai/Mistral-7B-v0.1&quot;]
+        env:
+        - name: HUGGING_FACE_HUB_TOKEN
+          valueFrom:
+            secretKeyRef: { name: hf-token, key: token }
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            memory: &quot;32Gi&quot;
+            cpu: &quot;8&quot;
+        readinessProbe:
+          httpGet: { path: /health, port: 8000 }
+          initialDelaySeconds: 60
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: vllm-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: vllm-server
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Pods
+    pods:
+      metric: { name: vllm:gpu_cache_usage_perc }
+      target: { type: AverageValue, averageValue: 80 }
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Инференс с батчингом
+curl -X POST http://localhost:8000/v1/chat/completions \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{&quot;model&quot;:&quot;mistralai/Mistral-7B-v0.1&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Hello&quot;}],&quot;max_tokens&quot;:100}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Cloud-native AI использует контейнеры, оркестрацию, service mesh и GitOps для ML-деплоя. Ключевые паттерны: serving моделей на vLLM/TGI, batch-инференс на Kueue/Volcano, модельные реестры и A/B-тестирование с разделением трафика.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Продакшн-AI-сервисы с высоким SLA</li>
+<li>Мультимодельная serving-инфраструктура</li>
+<li>CI/CD для ML-моделей с canary-деплоем</li>
+<li>Управление и планирование GPU-кластеров</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Контейнеризуйте модель: соберите образ с inference-движком (vLLM/TGI) и зафиксированными весами.</p>
+<p class='ordered'>2. Разверните в Kubernetes: `Deployment` с GPU-лимитами, секретами и readiness-probe на `/health`.</p>
+<p class='ordered'>3. Откройте API: `Service` (ClusterIP) плюс `Ingress`/Gateway с TLS и роутингом на `/v1`.</p>
+<p class='ordered'>4. Масштабируйте горизонтально: HPA по метрике GPU-кэша (`vllm:gpu_cache_usage_perc`) с окном стабилизации.</p>
+<p class='ordered'>5. Откатывайте безопасно: rolling update с readiness для новых версий; canary-трафик по весу.</p>
+<p class='ordered'>6. Запускайте batch-задачи: `Queue` + `Job` в Kueue/Volcano для оффлайн-инференса с PVC-артефактами.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Gateway + Service, открывающие API модели
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-server
+spec:
+  selector: { app: vllm }
+  ports:
+    - port: 8000
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: model-ingress
+spec:
+  rules:
+    - host: models.example.com
+      http:
+        paths:
+          - path: /v1
+            pathType: Prefix
+            backend:
+              service: { name: vllm-server, port: { number: 8000 } }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>kubectl apply -f model-serving.yaml -f hpa.yaml -f svc-ingress.yaml
+kubectl rollout status deployment/vllm-server
+kubectl get hpa vllm-hpa
+curl https://models.example.com/v1/chat/completions -d &#x27;{&quot;model&quot;:&quot;mistralai/Mistral-7B-v0.1&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;hi&quot;}],&quot;max_tokens&quot;:50}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>AI-нагрузки в контейнерах с закреплёнными базовыми образами.</li>
+<li>GPU requests/limits на Kubernetes для инференса.</li>
+<li>Кэшируйте модели и эмбеддинги против cold-start.</li>
+<li>Масштабируйте инференс горизонтально за балансировщиком.</li>
+<li>Мониторьте GPU, задержку и error rates.</li>
+<li>Service mesh или gateway для контроля трафика.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>GPU не выделен: проверьте nodeSelector, resources и драйвер.</li>
+<li>Медленный cold start: предзагрузите модели в shared memory или кэш.</li>
+<li>OOM на инференсе: батчите запросы или увеличьте контейнер.</li>
+<li>Спайки задержки: масштабируйте реплики и грейте кэш моделей.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. Деплой модели завершается, health check проходит</p>
+<p class='ordered'>2. HPA масштабируется по загрузке GPU</p>
+<p class='ordered'>3. Rolling update разворачивает новую версию без даунтайма</p>
+<p class='ordered'>4. Batch-задачи инференса завершаются с корректными результатами</p></div>
       <div class="page-nav"><a class="page-nav-link" href="aws-lambda.html">← aws-lambda</a><a class="page-nav-link" href="docker.html">docker →</a></div>
     </article>
   </div>
@@ -253,6 +378,15 @@ curl https://models.example.com/v1/chat/completions -d &#x27;{&quot;model&quot;:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -279,6 +413,9 @@ curl https://models.example.com/v1/chat/completions -d &#x27;{&quot;model&quot;:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

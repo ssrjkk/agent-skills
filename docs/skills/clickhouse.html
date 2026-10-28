@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="mongodb.html">mongodb →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>ClickHouse</h1>
 <blockquote>Columnar OLAP analytics with ClickHouse.</blockquote>
 <h2>Quick Start</h2>
@@ -163,6 +164,101 @@ print(rows)</code></pre><button class="copy-btn code-copy" onclick="copyText(thi
 <li>Memory errors: lower max_memory_usage or optimize queries.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>ClickHouse (КликХаус)</h1>
+<blockquote>Колоночная OLAP-аналитика на ClickHouse.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>docker run -p 8123:8123 -d clickhouse/clickhouse-server
+clickhouse-client</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Аналитика и отчёты больших объёмов</li>
+<li>Агрегации по большим event-датасетам</li>
+<li>Анализ таймсерий и логов</li>
+<li>Бэкенды дашбордов и BI</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Схема</h3>
+<ul>
+<li>Колоночные MergeTree-движки</li>
+<li>Правильный движок (MergeTree, Replacing, Summing)</li>
+<li>LowCardinality для строк с низкой кардинальностью</li>
+<li>Осознанные типы (DateTime, UInt, Float64)</li>
+</ul>
+<h3>Партиции и порядок</h3>
+<ul>
+<li>Партиции по времени для retention и сканов</li>
+<li>ORDER BY под фильтры/сортировки</li>
+<li>TTL для жизненного цикла данных</li>
+<li>Сбалансированные по размеру партиции</li>
+</ul>
+<h3>Запросы</h3>
+<ul>
+<li>Агрегация GROUP BY; materialized views</li>
+<li>Фильтруйте рано; без SELECT * на широких таблицах</li>
+<li>Сэмплинг для очень больших результатов</li>
+<li>`argMax`, `uniq`, `quantile` функции</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Мониторьте диск, CPU и производительность запросов</li>
+<li>`system.query_log` для диагностики</li>
+<li>Бэкапы партов и метаданных</li>
+<li>Распределение через Distributed tables</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>docker run -p 8123:8123 -d clickhouse/clickhouse-server
+# Python: pip install clickhouse-connect</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>-- Колоночная таблица с TTL и партициями
+CREATE TABLE events (
+  ts DateTime,
+  user_id UInt64,
+  action LowCardinality(String),
+  value Float64
+) ENGINE = MergeTree
+PARTITION BY toYYYYMM(ts)
+ORDER BY (user_id, ts)
+TTL toDateTime(ts) + INTERVAL 90 DAY;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Агрегационный запрос
+SELECT
+  toDate(ts) AS day,
+  uniq(user_id) AS active_users,
+  sum(value) AS total
+FROM events
+WHERE ts &gt;= now() - INTERVAL 7 DAY
+GROUP BY day
+ORDER BY day;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>-- Квантили и argMax
+SELECT
+  quantile(0.95)(value) AS p95,
+  argMax(action, ts) AS last_action
+FROM events;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import clickhouse_connect
+
+client = clickhouse_connect.get_client(host=&quot;localhost&quot;, port=8123)
+rows = client.query(&quot;SELECT count() FROM events&quot;).result_rows
+print(rows)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите MergeTree-движок и layout таблицы.</p>
+<p class='ordered'>2. Задайте партиционирование и ORDER BY под паттерны доступа.</p>
+<p class='ordered'>3. Добавьте TTL для retention.</p>
+<p class='ordered'>4. Пишите агрегации с правильными функциями.</p>
+<p class='ordered'>5. Добавьте materialized views для горячих агрегаций.</p>
+<p class='ordered'>6. Мониторьте query_log и диск.</p>
+<p class='ordered'>7. Настройте max_threads и память.</p>
+<p class='ordered'>8. Бэкапы и план масштабирования.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Агрегации возвращают корректные результаты</p>
+<p class='ordered'>2. Запросы сканируют минимум партиций</p>
+<p class='ordered'>3. TTL удаляет устаревшие данные</p>
+<p class='ordered'>4. Задержка запросов в рамках бюджета в масштабе</p>
+<p class='ordered'>5. Бэкапы восстанавливаются корректно</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Медленные запросы: проверьте сканируемые партиции и ORDER BY.</li>
+<li>Высокий диск: настройте TTL и размер партиций.</li>
+<li>Ошибки памяти: снизьте max_memory_usage или оптимизируйте запросы.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="mongodb.html">mongodb →</a></div>
     </article>
   </div>
@@ -211,6 +307,15 @@ print(rows)</code></pre><button class="copy-btn code-copy" onclick="copyText(thi
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -237,6 +342,9 @@ print(rows)</code></pre><button class="copy-btn code-copy" onclick="copyText(thi
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

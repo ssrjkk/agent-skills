@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="laravel.html">← laravel</a><a class="page-nav-link" href="rest-api-design.html">rest-api-design →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>NestJS</h1>
 <blockquote>Progressive Node.js framework with TypeScript, decorators, and DI.</blockquote>
 <h2>Quick Start</h2>
@@ -149,6 +150,87 @@ curl -X POST http://localhost:3000/users -H &quot;content-type: application/json
 <p class='ordered'>2. CRUD endpoints respond correctly</p>
 <p class='ordered'>3. Dependency injection resolves providers</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>NestJS</h1>
+<blockquote>Прогрессивный Node.js фреймворк: TypeScript, декораторы и DI.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm i -g @nestjs/cli &amp;&amp; nest new my-api
+cd my-api &amp;&amp; npm run start:dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Основные концепции</h2>
+<h3>Модули</h3>
+<div class="codeblock"><pre class="code"><code>@Module({ imports: [UsersModule], controllers: [AppController], providers: [AppService] })
+export class AppModule {}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Контроллеры</h3>
+<div class="codeblock"><pre class="code"><code>@Controller(&#x27;users&#x27;)
+export class UsersController {
+  @Get() findAll() { return this.usersService.findAll() }
+  @Post() @Body() create(dto: CreateUserDto) { return this.usersService.create(dto) }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Провайдеры (Сервисы)</h3>
+<div class="codeblock"><pre class="code"><code>@Injectable()
+export class UsersService {
+  private users: User[] = []
+  findAll() { return this.users }
+  create(dto: CreateUserDto) { const user = { id: Date.now(), ...dto }; this.users.push(user); return user }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Enterprise TypeScript API</li>
+<li>Микросервисы на NATS/RabbitMQ</li>
+<li>Гибрид GraphQL + REST</li>
+<li>Проекты, требующие строгой структуры</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Инициализация: `nest new project`</p>
+<p class='ordered'>2. Генерация: `nest g module users`, `nest g controller users`, `nest g service users`</p>
+<p class='ordered'>3. Определите сущности и DTO</p>
+<p class='ordered'>4. Запуск: `npm run start:dev`</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Полный модуль с DI: контроллер + провайдер + репозиторий
+import { Module } from &#x27;@nestjs/common&#x27;;
+import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
+import { UsersController } from &#x27;./users.controller&#x27;;
+import { UsersService } from &#x27;./users.service&#x27;;
+import { User } from &#x27;./user.entity&#x27;;
+
+@Module({
+  imports: [TypeOrmModule.forFeature([User])],
+  controllers: [UsersController],
+  providers: [UsersService],
+  exports: [UsersService],
+})
+export class UsersModule {}
+
+// Validation DTO с class-validator
+import { IsEmail, IsString, MinLength } from &#x27;class-validator&#x27;;
+
+export class CreateUserDto {
+  @IsEmail() email!: string;
+  @IsString() @MinLength(2) name!: string;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Генерация модуля с CRUD-скаффолдом, затем запрос к endpoint
+nest g resource users --no-spec
+curl http://localhost:3000/users
+curl -X POST http://localhost:3000/users -H &quot;content-type: application/json&quot; -d &#x27;{&quot;email&quot;:&quot;a@b.c&quot;,&quot;name&quot;:&quot;Alice&quot;}&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Организуйте по фичам-модулям с ясными providers и controllers.</li>
+<li>DTO и ValidationPipe для типизированных контрактов.</li>
+<li>Сервисы через конструкторный DI; контроллеры тонкие.</li>
+<li>Interceptors для логов, guards для auth, filters для ошибок.</li>
+<li>Async-обработчики и неблокирующий доступ к БД.</li>
+<li>e2e-тесты с supertest против полного Nest-приложения.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Ошибки DI: проверьте регистрацию providers в нужном модуле.</li>
+<li>Валидация не срабатывает: глобально примените ValidationPipe.</li>
+<li>Циклические импорты: forwardRef() и разбиение модуля.</li>
+<li>Медленные обработчики: очередь или кэш результатов.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. Сервер стартует на порту 3000</p>
+<p class='ordered'>2. CRUD-эндпоинты отвечают корректно</p>
+<p class='ordered'>3. Инъекция зависимостей резолвит провайдеров</p></div>
       <div class="page-nav"><a class="page-nav-link" href="laravel.html">← laravel</a><a class="page-nav-link" href="rest-api-design.html">rest-api-design →</a></div>
     </article>
   </div>
@@ -197,6 +279,15 @@ curl -X POST http://localhost:3000/users -H &quot;content-type: application/json
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -223,6 +314,9 @@ curl -X POST http://localhost:3000/users -H &quot;content-type: application/json
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

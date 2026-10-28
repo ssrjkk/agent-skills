@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="astro.html">← astro</a><a class="page-nav-link" href="modern-css.html">modern-css →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Bun Runtime</h1>
 <blockquote>Build and run JavaScript/TypeScript applications with Bun — the all-in-one toolkit.</blockquote>
 <h2>Quick Start</h2>
@@ -190,6 +191,128 @@ bun build src/index.ts --outdir=dist --minify --target=bun &amp;&amp; bun dist/i
 <p class='ordered'>3. `bun install` is faster than npm/pnpm on the same project</p>
 <p class='ordered'>4. `bun test` runs existing Jest/Vitest test suites</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Bun Runtime</h1>
+<blockquote>Создавайте и запускайте JavaScript/TypeScript-приложения на Bun — универсальном тулките.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Установка Bun
+powershell -c &quot;irm bun.sh/install.ps1 | iex&quot;
+
+# Новый проект
+bun init
+
+# Запуск TypeScript напрямую (ts-node не нужен)
+bun run server.ts
+
+# Пакетные скрипты (в 3-5 раз быстрее npm)
+bun install
+bun add express
+bun add -d typescript
+
+# Скрипты из package.json
+bun run dev
+bun run build
+
+# Тест-раннер (совместим с Jest)
+bun test
+
+# Встроенный бандлер
+bun build ./src/index.ts --outdir=./dist</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Встроенные возможности Bun
+
+// Fetch API (встроенный, полифилл не нужен)
+const response = await fetch(&quot;https://api.example.com/data&quot;);
+const data = await response.json();
+
+// SQLite (встроенный)
+import { Database } from &quot;bun:sqlite&quot;;
+const db = new Database(&quot;:memory:&quot;);
+db.run(&quot;CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)&quot;);
+db.run(&quot;INSERT INTO users (name) VALUES ($name)&quot;, { name: &quot;Alice&quot; });
+const users = db.query(&quot;SELECT * FROM users&quot;).all();
+
+// Файловый I/O (нативный Bun)
+const file = Bun.file(&quot;data.json&quot;);
+const contents = await file.json();
+
+// Переменные окружения (встроенные)
+const apiKey = Bun.env.API_KEY;
+
+// WebSocket-сервер
+Bun.serve({
+  port: 3000,
+  fetch(req, server) {
+    if (server.upgrade(req)) return; // апгрейд до WebSocket
+    return new Response(&quot;Hello&quot;);
+  },
+  websocket: {
+    message(ws, message) {
+      ws.send(`Echo: ${message}`);
+    }
+  }
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Bun — это runtime, бандлер, тест-раннер и пакетный менеджер в одном. Использует JavaScriptCore (не V8), стартует быстрее Node.js и полностью совместим с Node.js API.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Новые TypeScript/JavaScript проекты</li>
+<li>CI/CD пайплайны со скоростной установкой и сборкой</li>
+<li>Dev-серверы с hot reload</li>
+<li>Проекты, которым нужны встроенные SQLite, fetch и WebSocket</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите: однострочный инсталлятор (`irm bun.sh/install.ps1 | iex` на Windows) и проверьте `bun --version`.</p>
+<p class='ordered'>2. Скаффолд: `bun init` создаёт `package.json`, `tsconfig.json` и entry `index.ts`.</p>
+<p class='ordered'>3. Пишите код нативно: встроенные `fetch`, `Bun.file`, `bun:sqlite` и `Bun.serve` — без полифиллов и фреймворков.</p>
+<p class='ordered'>4. Быстрое управление зависимостями: `bun install`; точные версии через `bun add &lt;pkg&gt;@&lt;version&gt;`.</p>
+<p class='ordered'>5. Запуск и тесты: `bun run dev` (watch mode), `bun test` (Jest-совместимый API), отладка через `bun --inspect`.</p>
+<p class='ordered'>6. Сборка и релиз: `bun build ./src/index.ts --outdir=./dist --minify --target=bun` для деплой-артефакта.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// REST API со встроенным SQLite и типизированными маршрутами
+import { Database } from &quot;bun:sqlite&quot;;
+
+const db = new Database(&quot;:memory:&quot;);
+db.run(&quot;CREATE TABLE todos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER DEFAULT 0)&quot;);
+
+Bun.serve({
+  port: 3000,
+  async fetch(req: Request) {
+    const url = new URL(req.url);
+    if (req.method === &quot;POST&quot; &amp;&amp; url.pathname === &quot;/todos&quot;) {
+      const { title } = await req.json();
+      const res = db.query(&quot;INSERT INTO todos (title) VALUES (?) RETURNING *&quot;).get(title);
+      return Response.json(res, { status: 201 });
+    }
+    if (url.pathname === &quot;/todos&quot;) {
+      return Response.json(db.query(&quot;SELECT * FROM todos&quot;).all());
+    }
+    return Response.json({ error: &quot;not found&quot; }, { status: 404 });
+  },
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Запуск собранного артефакта и тесты
+bun run --watch src/index.ts
+bun test
+bun build src/index.ts --outdir=dist --minify --target=bun &amp;&amp; bun dist/index.js</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Bun для быстрых JS/TS рантаймов, бандлинга и тестов.</li>
+<li>`bun install` для скорости локфайла и совместимости.</li>
+<li>`bun test` — встроенный тест-раннер с покрытием.</li>
+<li>`Bun.serve` для высокопропускного HTTP.</li>
+<li>Минимум зависимостей; у Bun много встроенного.</li>
+<li>Фиксируйте версию Bun в CI для воспроизводимости.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Конфликты установки: очистите node_modules и перегенерируйте локфайл.</li>
+<li>Нативные биндинги: сведите версию Bun с пакетом.</li>
+<li>Различия рантайма: версия Bun в CI против локальной.</li>
+<li>Медленный cold start: `--smol` или твик флагов рантайма.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. `bun --version` показывает установленную версию</p>
+<p class='ordered'>2. `bun run` выполняет TypeScript без шага компиляции</p>
+<p class='ordered'>3. `bun install` быстрее npm/pnpm на том же проекте</p>
+<p class='ordered'>4. `bun test` прогоняет существующие Jest/Vitest наборы</p></div>
       <div class="page-nav"><a class="page-nav-link" href="astro.html">← astro</a><a class="page-nav-link" href="modern-css.html">modern-css →</a></div>
     </article>
   </div>
@@ -238,6 +361,15 @@ bun build src/index.ts --outdir=dist --minify --target=bun &amp;&amp; bun dist/i
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -264,6 +396,9 @@ bun build src/index.ts --outdir=dist --minify --target=bun &amp;&amp; bun dist/i
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

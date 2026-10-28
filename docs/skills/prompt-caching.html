@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="multi-agent-orchestration.html">← multi-agent-orchestration</a><a class="page-nav-link" href="prompt-engineering.html">prompt-engineering →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Prompt Caching</h1>
 <blockquote>Cutting LLM cost and latency by caching repeated prompt prefixes.</blockquote>
 <h2>Quick Start</h2>
@@ -194,6 +195,132 @@ def report_cache(usage) -&gt; dict:
 <li>Cache invalidation: changing the prefix invalidates; redesign for stability.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Prompt Caching (Кэширование промптов)</h1>
+<blockquote>Снижение стоимости и задержки LLM через кэширование повторяющихся префиксов промптов.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Стабильный контент первым, пометьте его как cacheable
+resp = client.chat.completions.create(
+    model=&quot;gpt-6&quot;,
+    messages=[
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: LONG_SYSTEM_PROMPT},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: dynamic_question},
+    ],
+    extra_headers={&quot;Cache-Control&quot;: &quot;ttl=3600, min_tokens=1024&quot;},
+)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Чат с длинными system-промптами или определениями tools</li>
+<li>Агенты с большим контекстом, повторяющимся между ходами</li>
+<li>RAG-приложения со стабильными системными инструкциями</li>
+<li>Высоконагруженные эндпоинты, где важна стоимость</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Раскладка</h3>
+<ul>
+<li>Стабильный контент первым: system prompt, tools, статичный контекст</li>
+<li>Динамический контент последним: пользовательские ходы, retrieved chunks</li>
+<li>Держите стабильный префикс во всех запросах</li>
+<li>Минимальный кэшируемый размер зависит от провайдера (например, 1024+ токенов)</li>
+</ul>
+<h3>Cache-Control</h3>
+<ul>
+<li>Пометьте кэшируемые сегменты cache-control заголовками</li>
+<li>TTL под ваш паттерн доступа</li>
+<li>Не кэшируйте секреты или per-user данные</li>
+<li>Проверяйте cache hits через usage metadata (`cached_tokens`)</li>
+</ul>
+<h3>Дизайн под кэш</h3>
+<ul>
+<li>Держите system prompt идентичным между вызовами</li>
+<li>Отделяйте статичные определения tools от динамического ввода</li>
+<li>Переиспользуйте один префикс для всего диалога</li>
+<li>Эфемерные данные — в конце контекста</li>
+</ul>
+<h3>Измерение</h3>
+<ul>
+<li>Отслеживайте cached vs uncached токены в usage</li>
+<li>Меряйте снижение задержки на запрос</li>
+<li>Мониторьте cache hit rate со временем</li>
+<li>Сравнивайте стоимость до и после оптимизации</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai anthropic</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>import openai
+
+client = openai.OpenAI()
+
+# Стабильный префикс: system + tools, помечен cacheable
+STATIC = [
+    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a senior support agent.&quot;},
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Available tools: search, refund, escalate.&quot;},
+]
+
+def ask(question: str) -&gt; str:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-6&quot;,
+        messages=STATIC + [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}],
+        extra_headers={&quot;Cache-Control&quot;: &quot;ttl=3600, min_tokens=1024&quot;},
+    )
+    usage = resp.usage
+    print(&quot;cached:&quot;, getattr(usage, &quot;prompt_tokens_details&quot;, None))
+    return resp.choices[0].message.content</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Anthropic-style cache control
+import anthropic
+
+client = anthropic.Anthropic()
+
+def ask(question: str) -&gt; str:
+    resp = client.messages.create(
+        model=&quot;claude-sonnet-4-5&quot;,
+        max_tokens=1024,
+        system=[
+            {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: SYSTEM_PROMPT, &quot;cache_control&quot;: {&quot;type&quot;: &quot;ephemeral&quot;}},
+        ],
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}],
+    )
+    print(&quot;cache:&quot;, resp.usage.cache_creation_input_tokens, resp.usage.cache_read_input_tokens)
+    return resp.content[0].text</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Сессионное кэширование: стабильный system на весь диалог
+def chat_session():
+    messages = list(STATIC)
+    while True:
+        q = input(&quot;&gt; &quot;)
+        resp = client.chat.completions.create(
+            model=&quot;gpt-6&quot;, messages=messages + [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: q}],
+            extra_headers={&quot;Cache-Control&quot;: &quot;ttl=3600, min_tokens=1024&quot;},
+        )
+        answer = resp.choices[0].message.content
+        messages.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: q})
+        messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: answer})
+        print(answer)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Проверка cache hits из usage metadata
+def report_cache(usage) -&gt; dict:
+    details = getattr(usage, &quot;prompt_tokens_details&quot;, None) or {}
+    cached = getattr(details, &quot;cached_tokens&quot;, 0)
+    total = usage.prompt_tokens
+    return {&quot;cached&quot;: cached, &quot;total&quot;: total, &quot;rate&quot;: cached / total if total else 0}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Найдите стабильный префикс в промптах (system, tools, статика).</p>
+<p class='ordered'>2. Переместите динамический контент в конец контекста.</p>
+<p class='ordered'>3. Пометьте префикс cacheable механизмом провайдера.</p>
+<p class='ordered'>4. Проверяйте cache hits в usage metadata.</p>
+<p class='ordered'>5. Меряйте задержку и стоимость до/после.</p>
+<p class='ordered'>6. Настройте TTL и минимальные токены под ваш трафик.</p>
+<p class='ordered'>7. Не кэшируйте per-user или секретные данные.</p>
+<p class='ordered'>8. Мониторьте hit rate и держите префикс байт-в-байт идентичным.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Usage показывает cached токены на повторных запросах</p>
+<p class='ordered'>2. Задержка падает для кэшируемой части</p>
+<p class='ordered'>3. Стоимость на запрос заметно снижается</p>
+<p class='ordered'>4. Ответы остаются корректными после cache hits</p>
+<p class='ordered'>5. Секретов нет в кэшируемом префиксе</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Нет cache hits: префикс различается между вызовами — держите его байт-в-байт идентичным.</li>
+<li>Короткие промпты: поднимите префикс выше минимума провайдера.</li>
+<li>Инвалидация кэша: изменение префикса инвалидирует — проектируйте под стабильность.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="multi-agent-orchestration.html">← multi-agent-orchestration</a><a class="page-nav-link" href="prompt-engineering.html">prompt-engineering →</a></div>
     </article>
   </div>
@@ -242,6 +369,15 @@ def report_cache(usage) -&gt; dict:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -268,6 +404,9 @@ def report_cache(usage) -&gt; dict:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

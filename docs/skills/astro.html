@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="angular.html">← angular</a><a class="page-nav-link" href="bun-runtime.html">bun-runtime →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Astro</h1>
 <blockquote>Building fast content-focused websites with Astro.</blockquote>
 <h2>Quick Start</h2>
@@ -159,6 +160,97 @@ export async function getStaticPaths() {
 <li>Slow builds: cache and parallelize.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Astro (АстроДжейЭс)</h1>
+<blockquote>Быстрые контентные сайты на Astro.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm create astro@latest
+cd my-site &amp;&amp; npm run dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Блоги, доки, маркетинговые сайты</li>
+<li>Контентные статические сайты</li>
+<li>Сайты с минимумом JS</li>
+<li>Острова (islands) для интерактива</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Islands архитектура</h3>
+<ul>
+<li>Ноль JS по умолчанию</li>
+<li>Интерактив через `client:load`, `client:visible`</li>
+<li>Острова маленькие и изолированные</li>
+<li>Framework-острова только где нужно</li>
+</ul>
+<h3>Content collections</h3>
+<ul>
+<li>`src/content` с схемами</li>
+<li>Zod-схемы для frontmatter</li>
+<li>Запросы через `getCollection`</li>
+<li>Валидация контента в CI</li>
+</ul>
+<h3>Маршрутизация и рендер</h3>
+<ul>
+<li>Статическая генерация (`output: &#x27;static&#x27;`)</li>
+<li>`getStaticPaths` для динамических маршрутов</li>
+<li>SSR только для динамики</li>
+<li>Оптимизация изображений через `astro:assets`</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Размеры и форматы изображений</li>
+<li>`preload` для критичных ассетов</li>
+<li>Без layout shift</li>
+<li>JS-бюджет на страницу</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm create astro@latest -- --template blog
+npm i astro</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>---
+// Frontmatter страницы
+import Layout from &quot;../layouts/Base.astro&quot;;
+export const title = &quot;Home&quot;;
+---
+&lt;Layout&gt;
+  &lt;h1&gt;Welcome&lt;/h1&gt;
+&lt;/Layout&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>---
+// Запрос content collection
+import { getCollection } from &quot;astro:content&quot;;
+const posts = await getCollection(&quot;blog&quot;);
+---
+&lt;ul&gt;
+  {posts.map(p =&gt; &lt;li&gt;&lt;a href={`/blog/${p.slug}`}&gt;{p.data.title}&lt;/a&gt;&lt;/li&gt;)}
+&lt;/ul&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>&lt;!-- Интерактивный остров --&gt;
+&lt;Counter client:visible /&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>---
+export async function getStaticPaths() {
+  const posts = await getCollection(&quot;blog&quot;);
+  return posts.map(p =&gt; ({ params: { slug: p.slug }, props: { post: p } }));
+}
+---
+&lt;p&gt;{Astro.props.post.data.body}&lt;/p&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Скаффолд через `create astro`.</p>
+<p class='ordered'>2. Настройте content collections со схемами.</p>
+<p class='ordered'>3. Соберите страницы и layout.</p>
+<p class='ordered'>4. Добавьте острова для интерактива.</p>
+<p class='ordered'>5. Статические пути для динамического контента.</p>
+<p class='ordered'>6. Оптимизируйте изображения и ассеты.</p>
+<p class='ordered'>7. Добавьте SEO-мету и RSS.</p>
+<p class='ordered'>8. Деплой на статический хост.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `npm run build` даёт статический вывод</p>
+<p class='ordered'>2. Страницы отдают минимум JS</p>
+<p class='ordered'>3. Content collections валидны</p>
+<p class='ordered'>4. Изображения оптимизированы</p>
+<p class='ordered'>5. Lighthouse высокий</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Слишком много JS: конвертируйте компоненты в острова или статику.</li>
+<li>Ошибки коллекций: исправьте zod-схему.</li>
+<li>Медленные сборки: кэшируйте и распараллеливайте.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="angular.html">← angular</a><a class="page-nav-link" href="bun-runtime.html">bun-runtime →</a></div>
     </article>
   </div>
@@ -207,6 +299,15 @@ export async function getStaticPaths() {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -233,6 +334,9 @@ export async function getStaticPaths() {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

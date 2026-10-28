@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="gitlab-ci.html">← gitlab-ci</a><a class="page-nav-link" href="jenkins.html">jenkins →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Istio</h1>
 <blockquote>Running a service mesh on Kubernetes with Istio.</blockquote>
 <h2>Quick Start</h2>
@@ -178,6 +179,116 @@ spec:
 <li>mTLS issues: check PeerAuthentication mode and certs.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Istio (Истио)</h1>
+<blockquote>Service mesh на Kubernetes через Istio.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>istioctl install --set profile=default
+kubectl label namespace default istio-injection=enabled</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Mutual TLS между сервисами</li>
+<li>Точный роутинг трафика и canary</li>
+<li>Единая телеметрия (метрики, трейсы, логи)</li>
+<li>Политики устойчивости (таймауты, retries, circuit breakers)</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Управление трафиком</h3>
+<ul>
+<li>VirtualServices для правил роутинга</li>
+<li>DestinationRules для subsets и балансировки</li>
+<li>Canary через весовые сплиты</li>
+<li>Правила явные и проверяемые</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>mTLS по всему mesh</li>
+<li>PeerAuthentication для шифрования</li>
+<li>AuthorizationPolicy для авторизации</li>
+<li>SPIFFE-идентичности сервисов</li>
+</ul>
+<h3>Наблюдаемость</h3>
+<ul>
+<li>Prometheus-метрики через сайдкары</li>
+<li>Kiali для топологии</li>
+<li>Распределённый трейсинг (Jaeger/Tempo)</li>
+<li>Мониторинг объёма, задержки и ошибок</li>
+</ul>
+<h3>Устойчивость</h3>
+<ul>
+<li>Таймауты и retries в VirtualServices</li>
+<li>Circuit breakers через DestinationRules</li>
+<li>Тест фейлов через fault injection</li>
+<li>Fail-open дефолты для низкорисковых путей</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>istioctl install --set profile=default
+kubectl label namespace default istio-injection=enabled</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># VirtualService с canary-сплитом
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata: { name: web }
+spec:
+  hosts: [web]
+  http:
+    - route:
+        - destination: { host: web, subset: stable }
+          weight: 90
+        - destination: { host: web, subset: canary }
+          weight: 10</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># DestinationRule subsets + circuit breaker
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata: { name: web }
+spec:
+  host: web
+  subsets:
+    - name: stable
+      labels: { version: v1 }
+    - name: canary
+      labels: { version: v2 }
+  trafficPolicy:
+    connectionPool:
+      tcp: { maxConnections: 100 }
+    outlierDetection:
+      consecutive5xxErrors: 5</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># AuthorizationPolicy
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata: { name: require-jwt }
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source: { requestPrincipals: [&quot;*&quot;] }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># mTLS peer authentication
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata: { name: default }
+spec:
+  mtls:
+    mode: STRICT</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите Istio и включите sidecar-инъекцию.</p>
+<p class='ordered'>2. Пометьте namespace для инъекции.</p>
+<p class='ordered'>3. Добавьте DestinationRules с subsets.</p>
+<p class='ordered'>4. Создайте VirtualServices для роутинга/canary.</p>
+<p class='ordered'>5. Включите mTLS и AuthorizationPolicies.</p>
+<p class='ordered'>6. Включите телеметрию и трейсинг.</p>
+<p class='ordered'>7. Добавьте таймауты, retries и circuit breakers.</p>
+<p class='ordered'>8. Мониторьте через Kiali и дашборды.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Сайдкары инжектированы и здоровы</p>
+<p class='ordered'>2. mTLS шифрует трафик сервис-к-сервису</p>
+<p class='ordered'>3. Canary-сплиты роутят корректные веса</p>
+<p class='ordered'>4. AuthorizationPolicy блокирует неавторизованные вызовы</p>
+<p class='ordered'>5. Метрики/трейсы идут для всех сервисов</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Сайдкар не инжектирован: проверьте label namespace и перезапуск подов.</li>
+<li>Неверный роутинг: просмотрите host VirtualService и labels subsets.</li>
+<li>Проблемы mTLS: проверьте PeerAuthentication mode и серты.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="gitlab-ci.html">← gitlab-ci</a><a class="page-nav-link" href="jenkins.html">jenkins →</a></div>
     </article>
   </div>
@@ -226,6 +337,15 @@ spec:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -252,6 +372,9 @@ spec:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="clean-architecture.html">← clean-architecture</a><a class="page-nav-link" href="git-workflow.html">git-workflow →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Code Review</h1>
 <blockquote>Conducting thorough, actionable code reviews.</blockquote>
 <h2>Quick Start</h2>
@@ -153,6 +154,91 @@ API_KEY = &quot;sk-live-abc123...&quot;   # leaked secret
 <li>Style bikeshedding: defer to the project linter/config.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Code Review (Ревью кода)</h1>
+<blockquote>Проведение тщательных, практичных ревью кода.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Систематически просмотрите diff
+git diff main...HEAD
+# проверьте корректность, безопасность, производительность и читаемость</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Каждый pull request до мержа</li>
+<li>Security-sensitive изменения (auth, платежи, данные)</li>
+<li>Рефакторинги и большие diff</li>
+<li>Онбординг и обмен знаниями</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Приоритеты</h3>
+<ul>
+<li>Сначала корректность и безопасность, стиль — в последнюю очередь</li>
+<li>Отделяйте блокирующие проблемы от мелочей</li>
+<li>Фокусируйтесь на diff, а не на всей кодовой базе</li>
+<li>Читайте тесты: покрывают ли они изменение?</li>
+</ul>
+<h3>Качество фидбека</h3>
+<ul>
+<li>Задавайте вопросы вместо требования изменений</li>
+<li>Объясняйте &quot;почему&quot; за каждой рекомендацией</li>
+<li>Предлагайте конкретные исправления с примерами</li>
+<li>Отмечайте, что сделано хорошо</li>
+</ul>
+<h3>Безопасность и производительность</h3>
+<ul>
+<li>Ищите injection, секреты и небезопасную десериализацию</li>
+<li>Проверяйте authz на каждом эндпоинте</li>
+<li>Отмечайте N+1 запросы и O(n^2) паттерны</li>
+<li>Следите за неограниченными входами и утечками ресурсов</li>
+</ul>
+<h3>Объём</h3>
+<ul>
+<li>Оценивайте намерение: решает ли это заявленную проблему?</li>
+<li>Проверяйте мёртвый код, остатки и debug-вывод</li>
+<li>Убедитесь, что тесты, доки и миграции включены</li>
+<li>Уважайте скоуп: для больших рефакторингов предлагайте follow-up</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Инструменты: ruff, mypy, eslint, golangci-lint
+# Сканеры безопасности: bandit, semgrep, gitleaks</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Риск: пользовательский ввод в SQL-запросе
+query = f&quot;SELECT * FROM users WHERE id = {request.user_id}&quot;  # SQL injection
+# Фикс: параметризация
+cursor.execute(&quot;SELECT * FROM users WHERE id = %s&quot;, (request.user_id,))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Риск: N+1 запросы в цикле
+for order in user.orders:           # 1 запрос на заказ
+    items += order.items.all()
+# Фикс: eager load
+from django.db.models import Prefetch
+user.orders.prefetch_related(Prefetch(&quot;items&quot;))</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Риск: отсутствие проверки авторизации
+@app.route(&quot;/admin/users/&lt;uid&gt;&quot;)
+def delete_user(uid):
+    User.objects.get(id=uid).delete()   # нет проверки authz
+# Фикс: сначала убедитесь, что вызывающий — админ</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Риск: секреты в коде
+API_KEY = &quot;sk-live-abc123...&quot;   # утёкший секрет
+# Фикс: используйте переменные окружения / secret manager</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Прочитайте описание PR и поймите намерение.</p>
+<p class='ordered'>2. Просмотрите diff на явные проблемы корректности и безопасности.</p>
+<p class='ordered'>3. Читайте тесты; проверяйте, что они проверяют реальное поведение.</p>
+<p class='ordered'>4. Ревьюйте файлы по порядку риска (backend, auth, данные).</p>
+<p class='ordered'>5. Запустите статический анализ, если его нет в CI.</p>
+<p class='ordered'>6. Напишите фидбек: блокирующие проблемы, вопросы, мелочи.</p>
+<p class='ordered'>7. Аппрувьте только после решения блокеров.</p>
+<p class='ordered'>8. Отложенные предложения выносите в issues.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Нет injection, сломанной authz или утёкших секретов</p>
+<p class='ordered'>2. Тесты покрывают новое поведение, включая edge cases</p>
+<p class='ordered'>3. Нет N+1 запросов или явных регрессий производительности</p>
+<p class='ordered'>4. Код соответствует стилю и конвенциям проекта</p>
+<p class='ordered'>5. Каждый блокирующий комментарий решён или обоснован</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Большой PR: просите разбить или ревьюить по коммитам.</li>
+<li>Нет тестов: просите тесты на изменённых путях.</li>
+<li>Споры о стиле: отсылайте к линтеру/конфигу проекта.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="clean-architecture.html">← clean-architecture</a><a class="page-nav-link" href="git-workflow.html">git-workflow →</a></div>
     </article>
   </div>
@@ -201,6 +287,15 @@ API_KEY = &quot;sk-live-abc123...&quot;   # leaked secret
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -227,6 +322,9 @@ API_KEY = &quot;sk-live-abc123...&quot;   # leaked secret
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

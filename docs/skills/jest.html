@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="browser-automation.html">← browser-automation</a><a class="page-nav-link" href="pytest.html">pytest →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Jest</h1>
 <blockquote>Testing JavaScript and TypeScript with Jest.</blockquote>
 <h2>Quick Start</h2>
@@ -163,6 +164,101 @@ spy.mockRestore();</code></pre><button class="copy-btn code-copy" onclick="copyT
 <li>Slow suite: use `--maxWorkers` and isolate heavy tests.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Jest (Джест)</h1>
+<blockquote>Тестирование JavaScript и TypeScript через Jest.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm i -D jest @types/jest ts-jest
+npx jest</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Юнит-тесты JS/TS кода</li>
+<li>Логика React/Node компонентов</li>
+<li>Тестирование API и утилит</li>
+<li>Покрытие и регрессионные сьюты</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура тестов</h3>
+<ul>
+<li>Имена по поведению: `test(&#x27;adds numbers&#x27;)`</li>
+<li>Arrange, act, assert на тест</li>
+<li>Одно поведение на тест</li>
+<li>Colocate или `__tests__`</li>
+</ul>
+<h3>Матчеры и ассерты</h3>
+<ul>
+<li>Естественные матчеры (`toBe`, `toEqual`, `toContain`)</li>
+<li>`expect` с описательными сообщениями</li>
+<li>Edge cases и ошибки</li>
+<li>Для объектов — `toEqual`</li>
+</ul>
+<h3>Моки</h3>
+<ul>
+<li>Мокайте внешние модули и сайд-эффекты</li>
+<li>`jest.fn()` и `jest.spyOn()`</li>
+<li>Сброс моков между тестами (`clearMocks`)</li>
+<li>Не перемокивайте свой код</li>
+</ul>
+<h3>Покрытие и CI</h3>
+<ul>
+<li>Пороги покрытия</li>
+<li>CI на каждом PR</li>
+<li>`--ci` и `--coverage`</li>
+<li>Быстрые и изолированные тесты</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm i -D jest @types/jest ts-jest
+# React: @testing-library/react</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Базовый тест
+function add(a: number, b: number) {
+  return a + b;
+}
+
+test(&quot;adds two numbers&quot;, () =&gt; {
+  expect(add(2, 3)).toBe(5);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Мок модуля
+import { fetchUsers } from &quot;./api&quot;;
+jest.mock(&quot;./api&quot;);
+
+test(&quot;renders users&quot;, async () =&gt; {
+  fetchUsers.mockResolvedValue([{ id: 1, name: &quot;Alice&quot; }]);
+  const users = await loadUsers();
+  expect(users).toHaveLength(1);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Параметризованные тесты
+test.each([
+  [1, 1, 2],
+  [2, 3, 5],
+  [-1, 1, 0],
+])(&quot;adds %i + %i = %i&quot;, (a, b, expected) =&gt; {
+  expect(add(a, b)).toBe(expected);
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Spy и тест ошибки
+const spy = jest.spyOn(console, &quot;error&quot;).mockImplementation(() =&gt; {});
+expect(() =&gt; risky()).toThrow();
+spy.mockRestore();</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите Jest и настройте под ваш стек.</p>
+<p class='ordered'>2. Добавьте test-скрипт и пороги покрытия.</p>
+<p class='ordered'>3. Напишите сфокусированные юнит-тесты.</p>
+<p class='ordered'>4. Мокайте внешние зависимости.</p>
+<p class='ordered'>5. Добавьте edge case и error тесты.</p>
+<p class='ordered'>6. Прогоните с `--coverage` и просмотрите пробелы.</p>
+<p class='ordered'>7. Подключите Jest в CI.</p>
+<p class='ordered'>8. Держите тесты детерминированными и быстрыми.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Все тесты проходят локально и в CI</p>
+<p class='ordered'>2. Покрытие соответствует порогу</p>
+<p class='ordered'>3. Моки сбрасываются между тестами</p>
+<p class='ordered'>4. Нет тестов на сеть или таймеры</p>
+<p class='ordered'>5. Фейлы указывают на поведение</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Флаки: уберите общее состояние и тайминг.</li>
+<li>Пере-моки: мокайте границы, не внутренности.</li>
+<li>Медленный сьют: `--maxWorkers` и изоляция тяжёлых тестов.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="browser-automation.html">← browser-automation</a><a class="page-nav-link" href="pytest.html">pytest →</a></div>
     </article>
   </div>
@@ -211,6 +307,15 @@ spy.mockRestore();</code></pre><button class="copy-btn code-copy" onclick="copyT
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -237,6 +342,9 @@ spy.mockRestore();</code></pre><button class="copy-btn code-copy" onclick="copyT
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

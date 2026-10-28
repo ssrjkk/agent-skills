@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="prompt-caching.html">← prompt-caching</a><a class="page-nav-link" href="rag-pipeline.html">rag-pipeline →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Prompt Engineering</h1>
 <blockquote>Designing prompts that reliably steer LLM behavior.</blockquote>
 <h2>Quick Start</h2>
@@ -158,6 +159,96 @@ def score_prompt(prompt: str, cases: list[tuple[str, str]]) -&gt; float:
 <li>Verbose answers: constrain length and format in the prompt.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Prompt Engineering (Промпт-Инжиниринг)</h1>
+<blockquote>Проектирование промптов, которые надёжно направляют поведение LLM.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>You are a senior Python code reviewer.
+Review the code below for bugs, security issues, and style.
+Output a markdown report with sections: Issues, Severity, Fix.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Получение консистентного структурированного вывода от LLM</li>
+<li>Снижение галлюцинаций в критичных процессах</li>
+<li>Устойчивость промптов к разным моделям и версиям</li>
+<li>Промпты для агентов и инструментов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Фрейминг</h3>
+<ul>
+<li>Дайте модели чёткую роль и задачу</li>
+<li>Укажите ограничения явно (формат, длина, тон)</li>
+<li>Давайте контекст до вопроса</li>
+<li>По возможности — одна задача на промпт</li>
+</ul>
+<h3>Структурированный вывод</h3>
+<ul>
+<li>Просите JSON/YAML со схемой</li>
+<li>Используйте few-shot примеры нужного формата</li>
+<li>Просите самопроверку: &quot;validate your JSON before responding&quot;</li>
+<li>Предпочитайте `response_format`/tools, если API поддерживает</li>
+</ul>
+<h3>Рассуждение</h3>
+<ul>
+<li>Используйте chain-of-thought для многошаговых задач</li>
+<li>Просите пошаговые рассуждения до финального ответа</li>
+<li>Держите рассуждения отдельно от итогового результата</li>
+<li>Не утекайте внутренние рассуждения в вывод пользователю</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai   # или anthropic, google-generativeai</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Структурированное извлечение JSON
+Extract entities from the text below as JSON.
+Schema: {&quot;name&quot;: string, &quot;org&quot;: string|null, &quot;confidence&quot;: float 0-1}
+Return only valid JSON, no commentary.
+
+Text: &quot;Alice works at Acme and handles billing.&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Chain-of-thought
+Solve the math problem step by step, then give the final answer.
+Show each calculation. End with: &quot;Answer: &lt;number&gt;&quot;.
+
+Problem: A train travels 240 km in 3 hours. What is the average speed?</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import openai
+
+client = openai.OpenAI()
+resp = client.chat.completions.create(
+    model=&quot;gpt-6&quot;,
+    messages=[
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You extract entities to JSON.&quot;},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &#x27;{&quot;text&quot;: &quot;Alice works at Acme&quot;}&#x27;},
+    ],
+    response_format={&quot;type&quot;: &quot;json_object&quot;},
+)
+print(resp.choices[0].message.content)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Оценка качества промпта на тестовом наборе
+def score_prompt(prompt: str, cases: list[tuple[str, str]]) -&gt; float:
+    correct = 0
+    for inp, expected in cases:
+        out = run_model(prompt, inp)
+        if normalize(out) == normalize(expected):
+            correct += 1
+    return correct / len(cases)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите задачу, ожидаемый вывод и режимы отказа.</p>
+<p class='ordered'>2. Напишите промпт с ролью и ограничениями; включите схему вывода.</p>
+<p class='ordered'>3. Добавьте 2-3 few-shot примера точного формата.</p>
+<p class='ordered'>4. Для задач на рассуждение — шаги с раздельным финальным ответом.</p>
+<p class='ordered'>5. Тестируйте на отложенной выборке; меряйте точность и соблюдение формата.</p>
+<p class='ordered'>6. Итерируйте: добавляйте неудачные кейсы, ужесточайте ограничения, убирайте шум.</p>
+<p class='ordered'>7. Версионируйте промпты; фиксируйте модель и temperature.</p>
+<p class='ordered'>8. Мониторьте дрейф и переоценивайте по расписанию.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Вывод парсится как валидный JSON/YAML при структурированном формате</p>
+<p class='ordered'>2. Точность на eval-наборе соответствует цели</p>
+<p class='ordered'>3. Промпт работает на целевых моделях</p>
+<p class='ordered'>4. Нет prompt injection от пользовательского контента (песочница для недоверенного ввода)</p>
+<p class='ordered'>5. Задержка и стоимость в рамках бюджета</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Вывод не JSON: ужесточите схему, добавьте few-shot, используйте response_format.</li>
+<li>Галлюцинации: добавьте grounding контекст и просите цитаты.</li>
+<li>Многословные ответы: ограничьте длину и формат в промпте.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="prompt-caching.html">← prompt-caching</a><a class="page-nav-link" href="rag-pipeline.html">rag-pipeline →</a></div>
     </article>
   </div>
@@ -206,6 +297,15 @@ def score_prompt(prompt: str, cases: list[tuple[str, str]]) -&gt; float:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -232,6 +332,9 @@ def score_prompt(prompt: str, cases: list[tuple[str, str]]) -&gt; float:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

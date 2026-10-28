@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="rust-tokio.html">← rust-tokio</a><a class="page-nav-link" href="websockets.html">websockets →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Spring Boot</h1>
 <blockquote>Building production JVM backends with Spring Boot.</blockquote>
 <h2>Quick Start</h2>
@@ -169,6 +170,107 @@ class ApiExceptionHandler {
 <li>Slow endpoints: add indexes and query methods instead of entity scans.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Spring Boot (Спринг Бут)</h1>
+<blockquote>Продакшн-бэкенды на JVM с Spring Boot.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># start.spring.io -&gt; Spring Web, Data JPA, Validation
+./mvnw spring-boot:run
+# http://localhost:8080</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Корпоративные Java/Kotlin сервисы</li>
+<li>Команды, масштабно использующие dependency injection</li>
+<li>CRUD + бизнес-логика бэкенды</li>
+<li>Батчи, messaging и data-heavy приложения</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Структура</h3>
+<ul>
+<li>По фичам: controller, service, repository</li>
+<li>Контроллеры тонкие; логика — в сервисах</li>
+<li>Конструкторная инъекция вместо field</li>
+<li>Пакеты по фичам, а не по слоям</li>
+</ul>
+<h3>Доступ к данным</h3>
+<ul>
+<li>Spring Data repositories для CRUD</li>
+<li>Явные сущности; на границе — DTO</li>
+<li>Индексы и query-методы осознанно</li>
+<li>Транзакции на сервисах, не на контроллерах</li>
+</ul>
+<h3>REST и валидация</h3>
+<ul>
+<li>`@RestController` + `@Valid` на телах запросов</li>
+<li>Клиентам возвращайте DTO, никогда сущности</li>
+<li>Ошибки через `@ControllerAdvice`</li>
+<li>Корректные HTTP статус-коды</li>
+</ul>
+<h3>Тестирование</h3>
+<ul>
+<li>Юнит-тесты сервисов с моками</li>
+<li>Интеграционные — `@SpringBootTest` + Testcontainers</li>
+<li>Контроллеры — `MockMvc`</li>
+<li>Тесты изолированы и быстры</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Maven или Gradle из start.spring.io
+./mvnw spring-boot:run</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>@RestController
+@RequestMapping(&quot;/api/users&quot;)
+class UserController {
+    private final UserService service;
+
+    UserController(UserService service) { this.service = service; }
+
+    @GetMapping(&quot;/{id}&quot;)
+    UserDto get(@PathVariable Long id) {
+        return service.get(id);
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>@Service
+@Transactional
+class UserService {
+    private final UserRepository repo;
+
+    UserService(UserRepository repo) { this.repo = repo; }
+
+    public UserDto get(Long id) {
+        return repo.findById(id).map(UserDto::from)
+            .orElseThrow(() -&gt; new NotFoundException(&quot;user&quot;));
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+    List&lt;User&gt; findByEmail(String email);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>@ControllerAdvice
+class ApiExceptionHandler {
+    @ExceptionHandler(NotFoundException.class)
+    ResponseEntity&lt;ErrorBody&gt; notFound(NotFoundException e) {
+        return ResponseEntity.status(404).body(new ErrorBody(e.getMessage()));
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Скаффолд через Spring Initializr (Web, Data JPA, Validation).</p>
+<p class='ordered'>2. Смоделируйте доменные сущности и repositories.</p>
+<p class='ordered'>3. Соберите сервисы с транзакционной бизнес-логикой.</p>
+<p class='ordered'>4. Добавьте контроллеры, возвращающие DTO с валидацией.</p>
+<p class='ordered'>5. Централизуйте обработку ошибок через @ControllerAdvice.</p>
+<p class='ordered'>6. Добавьте Spring Security для authN/authZ.</p>
+<p class='ordered'>7. Напишите юнит + интеграционные тесты.</p>
+<p class='ordered'>8. Контейнеризуйте и настройте деплой.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `./mvnw test` проходит</p>
+<p class='ordered'>2. Эндпоинты возвращают корректный статус и форму DTO</p>
+<p class='ordered'>3. Валидация отклоняет плохой ввод с 400/422</p>
+<p class='ordered'>4. Транзакции откатываются при фейле</p>
+<p class='ordered'>5. Приложение стартует чисто в production-профиле</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Циклические зависимости: конструкторная инъекция и рефакторинг.</li>
+<li>LazyInitializationException: используйте DTO и fetch в сервисе.</li>
+<li>Медленные эндпоинты: индексы и query-методы вместо сканов сущностей.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="rust-tokio.html">← rust-tokio</a><a class="page-nav-link" href="websockets.html">websockets →</a></div>
     </article>
   </div>
@@ -217,6 +319,15 @@ class ApiExceptionHandler {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -243,6 +354,9 @@ class ApiExceptionHandler {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

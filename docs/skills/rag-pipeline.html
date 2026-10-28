@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="prompt-engineering.html">← prompt-engineering</a><a class="page-nav-link" href="structured-output.html">structured-output →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>RAG Pipeline</h1>
 <blockquote>Grounding LLM answers with retrieval over your own data.</blockquote>
 <h2>Quick Start</h2>
@@ -164,6 +165,102 @@ def chunk_doc(text: str, size: int = 600, overlap: int = 100) -&gt; list[str]:
 <li>Slow queries: use ANN indexes and cache frequent queries.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>RAG Pipeline (РЭГ-пайплайн)</h1>
+<blockquote>Grounding ответов LLM через поиск по вашим данным.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai chromadb sentence-transformers
+# индексируйте документы, затем задавайте вопросы с извлечённым контекстом</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Ответы на вопросы по частным или большим наборам документов</li>
+<li>Снижение галлюцинаций через grounded контекст</li>
+<li>Поиск по продуктам и рекомендации</li>
+<li>Чат-боты, которые цитируют источники</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Чанкинг</h3>
+<ul>
+<li>Делите документы на связные чанки (по заголовкам)</li>
+<li>Цель: 200-800 токенов на чанк с перекрытием</li>
+<li>Держите чанки самодостаточными; включайте метаданные (источник, заголовок)</li>
+<li>Сохраняйте структуру: код, таблицы и списки целиком</li>
+</ul>
+<h3>Эмбеддинги</h3>
+<ul>
+<li>Используйте модели для retrieval (embedding-3, bge, e5)</li>
+<li>Нормализуйте эмбеддинги для cosine similarity</li>
+<li>Эмбеддьте чанки один раз; кэшируйте индекс</li>
+<li>Для качества — query expansion или реранкинг</li>
+</ul>
+<h3>Поиск</h3>
+<ul>
+<li>Гибрид: keyword (BM25) + vector, слияние через RRF</li>
+<li>Добавляйте фильтры по метаданным (дата, источник, категория)</li>
+<li>Берите больше, реранките top-k cross-encoder&#x27;ом</li>
+<li>Возвращайте top-k со скором для уверенности</li>
+</ul>
+<h3>Генерация</h3>
+<ul>
+<li>Инжектируйте чанки в промпт с явными разделителями</li>
+<li>Просите цитаты к ID чанков</li>
+<li>Задайте фолбэк &quot;не знаю&quot; при низких скорах</li>
+<li>Отслеживайте, какие чанки породили ответ</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai chromadb sentence-transformers rank_bm25</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from chromadb import PersistentClient
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+client = PersistentClient(path=&quot;./db&quot;)
+col = client.get_or_create_collection(&quot;docs&quot;)
+
+def index(text: str, meta: dict, cid: str):
+    col.add(ids=[cid], embeddings=[model.encode(text).tolist()], metadatas=[meta], documents=[text])
+
+def search(query: str, k: int = 4):
+    return col.query(query_embeddings=[model.encode(query).tolist()], n_results=k)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Гибрид: vector + BM25, слияние через RRF
+from rank_bm25 import BM25Okapi
+
+def hybrid(query: str, k: int = 5):
+    vec = col.query(query_embeddings=[model.encode(query).tolist()], n_results=k)
+    bm25 = BM25Okapi([doc.split() for doc in all_docs])
+    scores = bm25.get_scores(query.split())
+    top_bm25 = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:k]
+    # merge через reciprocal rank fusion...</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Генерация с цитатами
+def answer(question: str) -&gt; str:
+    chunks = search(question)
+    context = &quot;\n\n&quot;.join(f&quot;[{i}] {c}&quot; for i, c in enumerate(chunks))
+    prompt = f&quot;Answer using only the context. Cite [i].\n\nContext:\n{context}\n\nQuestion: {question}&quot;
+    return run_llm(prompt)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Хелпер чанкинга
+def chunk_doc(text: str, size: int = 600, overlap: int = 100) -&gt; list[str]:
+    words = text.split()
+    return [&quot; &quot;.join(words[i:i+size]) for i in range(0, len(words), size - overlap)]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Соберите и нормализуйте исходные документы с метаданными.</p>
+<p class='ordered'>2. Нарежьте на связные самодостаточные чанки с перекрытием.</p>
+<p class='ordered'>3. Эмбеддьте чанки и храните в vector DB с фильтрами.</p>
+<p class='ordered'>4. Реализуйте гибридный поиск (vector + keyword) через RRF.</p>
+<p class='ordered'>5. Соберите промпт с контекстом и требованием цитат.</p>
+<p class='ordered'>6. Добавьте фолбэк при низкой уверенности (&quot;не знаю&quot;).</p>
+<p class='ordered'>7. Оцените на Q&amp;A-наборе: точность ответов + корректность цитат.</p>
+<p class='ordered'>8. Мониторьте качество поиска и переиндексируйте при изменениях.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Поиск находит релевантные чанки для тестовых вопросов (recall@k)</p>
+<p class='ordered'>2. Ответы grounded в извлечённом контексте</p>
+<p class='ordered'>3. Цитаты указывают на реальные чанки</p>
+<p class='ordered'>4. Низкоуверенные запросы уходят в фолбэк</p>
+<p class='ordered'>5. Задержка в рамках цели при ожидаемой нагрузке</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Низкий recall: настройте чанкинг, смените модель эмбеддингов, добавьте гибрид.</li>
+<li>Неверные ответы: сначала проверяйте качество поиска, а не вините LLM.</li>
+<li>Медленные запросы: используйте ANN-индексы и кэшируйте частые запросы.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="prompt-engineering.html">← prompt-engineering</a><a class="page-nav-link" href="structured-output.html">structured-output →</a></div>
     </article>
   </div>
@@ -212,6 +309,15 @@ def chunk_doc(text: str, size: int = 600, overlap: int = 100) -&gt; list[str]:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -238,6 +344,9 @@ def chunk_doc(text: str, size: int = 600, overlap: int = 100) -&gt; list[str]:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

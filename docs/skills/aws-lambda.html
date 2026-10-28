@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="argocd.html">← argocd</a><a class="page-nav-link" href="cloud-native-ai.html">cloud-native-ai →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>AWS Lambda</h1>
 <blockquote>Serverless functions with AWS Lambda, API Gateway, and event triggers.</blockquote>
 <h2>Quick Start</h2>
@@ -179,6 +180,117 @@ Resources:
 <p class='ordered'>2. API Gateway endpoint responds</p>
 <p class='ordered'>3. CloudWatch logs show execution</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>AWS Lambda</h1>
+<blockquote>Серверные функции на AWS Lambda, API Gateway и событийные триггеры.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>import { Handler, APIGatewayProxyEvent, APIGatewayProxyResult } from &#x27;aws-lambda&#x27;;
+
+export const handler: Handler = async (event: APIGatewayProxyEvent): Promise&lt;APIGatewayProxyResult&gt; =&gt; {
+  return {
+    statusCode: 200,
+    headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; },
+    body: JSON.stringify({
+      message: &#x27;Hello from Lambda!&#x27;,
+      path: event.path,
+      method: event.httpMethod,
+    }),
+  };
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># template.yaml (SAM)
+AWSTemplateFormatVersion: &#x27;2010-09-09&#x27;
+Resources:
+  HelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: GET</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Событийно-ориентированные serverless API</li>
+<li>Фоновая обработка (ресайз изображений, отправка email)</li>
+<li>Не для длительных процессов (&gt; 15 минут)</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Обработчики мелкие и идемпотентные для retries.</li>
+<li>Память/таймаут под ворклоад и стоимость.</li>
+<li>Конфиг через переменные окружения, не секреты в коде.</li>
+<li>Lambda Powertools для логов, трейсинга и метрик.</li>
+<li>Низкий cold start: минимум зависимостей и лёгкий рантайм.</li>
+<li>Ошибки и dead-letter queues для async-инвокаций.</li>
+</ul>
+<h2>Пошаговые инструкции</h2>
+<p class='ordered'>1. Установите AWS SAM CLI</p>
+<p class='ordered'>2. Создайте SAM-шаблон с Lambda-функциями</p>
+<p class='ordered'>3. Напишите Handler-код</p>
+<p class='ordered'>4. Деплой: `sam deploy --guided`</p>
+<p class='ordered'>5. Добавьте наблюдаемость и алерты</p>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Установка AWS SAM CLI
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html
+npm install aws-lambda @types/aws-lambda</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Идемпотентный handler с обработкой ошибок
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from &quot;aws-lambda&quot;;
+
+export async function handler(event: APIGatewayProxyEvent): Promise&lt;APIGatewayProxyResult&gt; {
+  try {
+    const id = event.pathParameters?.id;
+    const data = await getItem(id);
+    return { statusCode: 200, body: JSON.stringify(data) };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, body: JSON.stringify({ error: &quot;internal&quot; }) };
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># SAM-шаблон с env-конфигом
+Resources:
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<p>Вход: GET /hello → Выход: `{ &quot;message&quot;: &quot;Hello from Lambda!&quot; }`</p>
+<h2>Ресурсы</h2>
+<ul>
+<li>[AWS Lambda Docs](https://docs.aws.amazon.com/lambda/)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>**Всплески cold start** — не раздувайте зависимости, включите provisioned</li>
+</ul>
+<p>concurrency для горячих путей и выбирайте лёгкие рантаймы (Node/Go).</p>
+<ul>
+<li>**Таймауты на 6s в VPC** — дефолтное время Lambda слишком мало.</li>
+</ul>
+<p>Увеличьте таймаут и проверьте маршруты NAT-шлюза в приватные подсети.</p>
+<ul>
+<li>**SDK отвечает Permission denied** — у execution role нет политик.</li>
+</ul>
+<p>Выдайте least-privilege IAM-политику и повторите запрос без них.</p>
+<ul>
+<li>**`/tmp` переполняется** — 512MB общего хранилища между вызовами.</li>
+</ul>
+<p>Очищайте его в finally-блоке или храните там только мелкие файлы.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Функция успешно деплоится</p>
+<p class='ordered'>2. Endpoint API Gateway отвечает</p>
+<p class='ordered'>3. CloudWatch логи показывают выполнение</p></div>
       <div class="page-nav"><a class="page-nav-link" href="argocd.html">← argocd</a><a class="page-nav-link" href="cloud-native-ai.html">cloud-native-ai →</a></div>
     </article>
   </div>
@@ -227,6 +339,15 @@ Resources:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -253,6 +374,9 @@ Resources:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

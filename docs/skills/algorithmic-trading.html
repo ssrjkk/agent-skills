@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="risk-modeling.html">risk-modeling →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Algorithmic Trading</h1>
 <blockquote>Building algorithmic trading systems with backtesting, strategies, and risk management.</blockquote>
 <h2>Quick Start</h2>
@@ -280,6 +281,218 @@ class OrderExecutor:
     assert &#x27;equity&#x27; in portfolio.columns
     assert len(portfolio) == len(prices)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Алгоритмическая торговля</h1>
+<blockquote>Создание систем алгоритмической торговли с бэктестингом, стратегиями и управлением рисками.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>import pandas as pd
+import numpy as np
+
+class MovingAverageCrossover:
+    &quot;&quot;&quot;Простая стратегия возврата к среднему.&quot;&quot;&quot;
+
+    def __init__(self, short_window=20, long_window=50):
+        self.short_window = short_window
+        self.long_window = long_window
+
+    def generate_signals(self, prices: pd.Series) -&gt; pd.Series:
+        short_ma = prices.rolling(self.short_window).mean()
+        long_ma = prices.rolling(self.long_window).mean()
+
+        signals = pd.Series(0, index=prices.index)
+        signals[short_ma &gt; long_ma] = 1   # Покупка
+        signals[short_ma &lt; long_ma] = -1  # Продажа
+
+        return signals
+
+    def backtest(self, prices: pd.Series, initial_capital=100000):
+        signals = self.generate_signals(prices)
+        positions = signals.diff().fillna(0)
+
+        portfolio = pd.DataFrame(index=prices.index)
+        portfolio[&#x27;returns&#x27;] = prices.pct_change()
+        portfolio[&#x27;position&#x27;] = signals.shift(1)
+        portfolio[&#x27;strategy_returns&#x27;] = portfolio[&#x27;position&#x27;] * portfolio[&#x27;returns&#x27;]
+
+        portfolio[&#x27;cumulative_returns&#x27;] = (1 + portfolio[&#x27;strategy_returns&#x27;]).cumprod()
+        portfolio[&#x27;equity&#x27;] = initial_capital * portfolio[&#x27;cumulative_returns&#x27;]
+
+        return portfolio</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Создание автоматизированных торговых систем для акций, крипто или фьючерсов</li>
+<li>Бэктестинг торговых стратегий перед реальным деплоем</li>
+<li>Когда ручная торговля слишком медленная или эмоциональная</li>
+<li>Необходимость системного управления рисками</li>
+</ul>
+<h2>Пошагово</h2>
+<h3>1. Пайплайн рыночных данных</h3>
+<div class="codeblock"><pre class="code"><code>import asyncio
+from dataclasses import dataclass
+
+@dataclass
+class Tick:
+    symbol: str
+    price: float
+    volume: float
+    timestamp: float
+
+class MarketDataFeed:
+    def __init__(self):
+        self.subscribers: list[callable] = []
+
+    def subscribe(self, callback):
+        self.subscribers.append(callback)
+
+    async def stream(self, symbols: list[str]):
+        &quot;&quot;&quot;Подключение к биржевому WebSocket и эмиссия тиков.&quot;&quot;&quot;
+        while True:
+            tick = await self._receive_tick(symbols)
+            for callback in self.subscribers:
+                callback(tick)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Проектирование стратегии</h3>
+<div class="codeblock"><pre class="code"><code>from abc import ABC, abstractmethod
+
+class Strategy(ABC):
+    @abstractmethod
+    def on_tick(self, tick: Tick) -&gt; float:
+        &quot;&quot;&quot;Возвращает целевой размер позиции (от -1 до 1).&quot;&quot;&quot;
+        pass
+
+    @abstractmethod
+    def on_bar(self, bars: pd.DataFrame) -&gt; float:
+        &quot;&quot;&quot;Возвращает сигнал на основе OHLCV баров.&quot;&quot;&quot;
+        pass
+
+class MeanReversionStrategy(Strategy):
+    def __init__(self, lookback=20, threshold=2.0):
+        self.lookback = lookback
+        self.threshold = threshold
+
+    def on_bar(self, bars: pd.DataFrame) -&gt; float:
+        prices = bars[&#x27;close&#x27;].tail(self.lookback)
+        z_score = (prices.iloc[-1] - prices.mean()) / prices.std()
+
+        if z_score &gt; self.threshold:
+            return -1.0  # Перекупленность, продавать
+        elif z_score &lt; -self.threshold:
+            return 1.0   # Перепроданность, покупать
+        return 0.0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Движок бэктестинга</h3>
+<div class="codeblock"><pre class="code"><code>class BacktestEngine:
+    def __init__(self, initial_capital=100000, commission=0.001):
+        self.initial_capital = initial_capital
+        self.commission = commission
+
+    def run(self, strategy: Strategy, data: pd.DataFrame) -&gt; dict:
+        capital = self.initial_capital
+        position = 0
+        trades = []
+
+        for i in range(len(data)):
+            signal = strategy.on_bar(data.iloc[:i+1])
+
+            if signal &gt; 0 and position &lt;= 0:
+                # Покупка
+                shares = int(capital * signal / data.iloc[i][&#x27;close&#x27;])
+                cost = shares * data.iloc[i][&#x27;close&#x27;] * (1 + self.commission)
+                capital -= cost
+                position += shares
+                trades.append((&#x27;BUY&#x27;, i, shares, data.iloc[i][&#x27;close&#x27;]))
+
+            elif signal &lt; 0 and position &gt; 0:
+                # Продажа
+                revenue = position * data.iloc[i][&#x27;close&#x27;] * (1 - self.commission)
+                capital += revenue
+                trades.append((&#x27;SELL&#x27;, i, position, data.iloc[i][&#x27;close&#x27;]))
+                position = 0
+
+        final_value = capital + position * data.iloc[-1][&#x27;close&#x27;]
+        return {
+            &#x27;final_value&#x27;: final_value,
+            &#x27;total_return&#x27;: (final_value - self.initial_capital) / self.initial_capital,
+            &#x27;num_trades&#x27;: len(trades),
+            &#x27;trades&#x27;: trades,
+        }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Управление рисками</h3>
+<div class="codeblock"><pre class="code"><code>class RiskManager:
+    def __init__(self, max_position_pct=0.1, max_drawdown_pct=0.2):
+        self.max_position_pct = max_position_pct
+        self.max_drawdown_pct = max_drawdown_pct
+        self.peak_equity = 0
+
+    def check_position_size(self, order_value: float, portfolio_value: float) -&gt; bool:
+        return order_value / portfolio_value &lt;= self.max_position_pct
+
+    def check_drawdown(self, current_equity: float) -&gt; bool:
+        self.peak_equity = max(self.peak_equity, current_equity)
+        drawdown = (self.peak_equity - current_equity) / self.peak_equity
+        return drawdown &lt;= self.max_drawdown_pct
+
+    def calculate_stop_loss(self, entry_price: float, risk_pct: float = 0.02) -&gt; float:
+        return entry_price * (1 - risk_pct)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Исполнение ордеров</h3>
+<div class="codeblock"><pre class="code"><code>import aiohttp
+
+class OrderExecutor:
+    def __init__(self, api_url: str, api_key: str):
+        self.api_url = api_url
+        self.api_key = api_key
+
+    async def place_order(self, symbol: str, side: str, quantity: float, price: float):
+        async with aiohttp.ClientSession() as session:
+            order = {
+                &#x27;symbol&#x27;: symbol,
+                &#x27;side&#x27;: side,
+                &#x27;quantity&#x27;: quantity,
+                &#x27;price&#x27;: price,
+                &#x27;type&#x27;: &#x27;LIMIT&#x27;,
+            }
+            headers = {&#x27;Authorization&#x27;: f&#x27;Bearer {self.api_key}&#x27;}
+            async with session.post(f&#x27;{self.api_url}/orders&#x27;, json=order, headers=headers) as resp:
+                return await resp.json()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>**Всегда делайте бэктест** перед реальной торговлей</li>
+<li>**Включайте проскальзывание и комиссии** в бэктесты</li>
+<li>**Используйте walk-forward анализ** для избежания переобучения</li>
+<li>**Внедряйте circuit breakers** для экстремальных рыночных условий</li>
+<li>**Логируйте всё** — сделки, сигналы, ошибки</li>
+<li>**Начинайте с paper trading** перед реальными деньгами</li>
+</ul>
+<h2>Типичные ошибки</h2>
+<ul>
+<li>Переобучение на исторических данных (curve fitting)</li>
+<li>Игнорирование транзакционных издержек и проскальзывания</li>
+<li>Look-ahead bias в бэктестах</li>
+<li>Отсутствие обработки пробелов в данных или ошибок</li>
+<li>Работа без лимитов риска</li>
+</ul>
+<h2>Примеры</h2>
+<h3>Метрики производительности</h3>
+<div class="codeblock"><pre class="code"><code>def calculate_metrics(returns: pd.Series) -&gt; dict:
+    total_return = (1 + returns).prod() - 1
+    annual_return = (1 + total_return) ** (252 / len(returns)) - 1
+    volatility = returns.std() * np.sqrt(252)
+    sharpe = annual_return / volatility if volatility &gt; 0 else 0
+
+    cumulative = (1 + returns).cumprod()
+    drawdown = cumulative / cumulative.cummax() - 1
+    max_drawdown = drawdown.min()
+
+    return {
+        &#x27;total_return&#x27;: total_return,
+        &#x27;annual_return&#x27;: annual_return,
+        &#x27;volatility&#x27;: volatility,
+        &#x27;sharpe_ratio&#x27;: sharpe,
+        &#x27;max_drawdown&#x27;: max_drawdown,
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Валидация</h2>
+<div class="codeblock"><pre class="code"><code>def test_strategy():
+    prices = pd.Series(np.random.randn(100).cumsum() + 100)
+    strategy = MovingAverageCrossover()
+    portfolio = strategy.backtest(prices)
+    assert &#x27;equity&#x27; in portfolio.columns
+    assert len(portfolio) == len(prices)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="risk-modeling.html">risk-modeling →</a></div>
     </article>
   </div>
@@ -328,6 +541,15 @@ class OrderExecutor:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -354,6 +576,9 @@ class OrderExecutor:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="nginx.html">← nginx</a><a class="page-nav-link" href="platform-engineering.html">platform-engineering →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>LLM Observability</h1>
 <blockquote>Monitor, trace, and debug LLM applications with Langfuse and LangSmith.</blockquote>
 <h2>Quick Start</h2>
@@ -175,6 +176,111 @@ langfuse-compose up    # self-hosted Langfuse stack</code></pre><button class="c
 <p class='ordered'>3. Latency breakdown shows where time is spent</p>
 <p class='ordered'>4. Search and filter by metadata/tags works correctly</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>LLM Observability (Наблюдаемость LLM)</h1>
+<blockquote>Мониторьте, трейсите и отлаживайте LLM-приложения с Langfuse и LangSmith.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Langfuse — платформа наблюдаемости LLM
+from langfuse import Langfuse
+from langfuse.decorators import observe, langfuse_context
+
+langfuse = Langfuse(
+    secret_key=&quot;sk-lf-...&quot;,
+    public_key=&quot;pk-lf-...&quot;
+)
+
+@observe(name=&quot;rag-query&quot;, as_type=&quot;generation&quot;)
+def rag_query(question: str, context: str) -&gt; str:
+    # Автоматически трейсит токены, задержку и метаданные
+    langfuse_context.update_current_generation(
+        input=question,
+        output=&quot;generated answer&quot;,
+        usage={&quot;promptTokens&quot;: 150, &quot;completionTokens&quot;: 80, &quot;totalTokens&quot;: 230},
+        metadata={&quot;retrieved_docs&quot;: 3, &quot;model&quot;: &quot;claude-sonnet-4&quot;}
+    )
+    return &quot;Generated answer&quot;
+
+# Ручной трейсинг
+trace = langfuse.trace(name=&quot;document-pipeline&quot;)
+span = trace.span(name=&quot;embedding-generation&quot;)
+span.end()
+trace.update(
+    input={&quot;query&quot;: &quot;user question&quot;},
+    output={&quot;answer&quot;: &quot;AI response&quot;}
+)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># LangSmith — наблюдаемость LangChain
+from langsmith import Client
+from langchain.callbacks.tracers import LangSmithTracer
+
+import os
+os.environ[&quot;LANGCHAIN_TRACING_V2&quot;] = &quot;true&quot;
+os.environ[&quot;LANGCHAIN_API_KEY&quot;] = &quot;ls-...&quot;
+os.environ[&quot;LANGCHAIN_PROJECT&quot;] = &quot;my-llm-app&quot;
+
+tracer = LangSmithTracer()
+llm.invoke(&quot;Hello&quot;, config={&quot;callbacks&quot;: [tracer]})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Трейсите каждый LLM-вызов: задержка, токены, стоимость, метаданные. Отслеживайте версии промптов, параметры моделей и retrieval-контекст. Отлаживайте по полному трейс-визуализатору. Настройте мониторинг стоимости и качества.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Продакшн-LLM-приложения, которым нужна отладка</li>
+<li>Контроль токенов и затрат по командам</li>
+<li>A/B-тестирование вариаций промптов</li>
+<li>Мониторинг регрессий качества и задержки</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите: `pip install langfuse` и задайте env-ключи `LANGFUSE_PUBLIC_KEY`/`LANGFUSE_SECRET_KEY`.</p>
+<p class='ordered'>2. Декораторы: оберните функции генерации/RAG в `@observe` — SDK сам трейсит задержку, токены и метаданные.</p>
+<p class='ordered'>3. Контекст: передавайте input/output, usage dict и retrieval-метаданные (id документов, модель, версии).</p>
+<p class='ordered'>4. Дашборды: используйте представления Langfuse/LangSmith для группировки по сессии, проекту или версии промпта.</p>
+<p class='ordered'>5. Мониторинг: алерты на всплеск затрат, регрессии задержки и доли ошибок по промпту/модели.</p>
+<p class='ordered'>6. Итерации по промптам: сравнение трейсов и prompt-playground для A/B и закрепления победителя.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Полный RAG-пайплайн как вложенные спаны
+from langfuse.decorators import observe, langfuse_context
+
+@observe(name=&quot;retrieve&quot;)
+def retrieve(query: str) -&gt; list[str]:
+    return [&quot;doc-1&quot;, &quot;doc-2&quot;]  # из вашего vector store
+
+@observe(name=&quot;generate&quot;)
+def generate(query: str, docs: list[str]) -&gt; str:
+    langfuse_context.update_current_generation(
+        input=query,
+        output=&quot;answer text&quot;,
+        usage={&quot;promptTokens&quot;: 120, &quot;completionTokens&quot;: 40, &quot;totalTokens&quot;: 160},
+        metadata={&quot;docs&quot;: docs, &quot;model&quot;: &quot;claude-sonnet-4&quot;},
+    )
+    return &quot;answer text&quot;
+
+@observe(name=&quot;rag&quot;)
+def rag(question: str) -&gt; str:
+    docs = retrieve(question)
+    return generate(question, docs)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Экспорт трейсов для офлайн-анализа
+python -m langfuse export-json --project your-project --output ./traces.json
+# или self-hosted стек
+langfuse-compose up</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Трейсьте каждый LLM-вызов: промпт, модель, токены, задержку.</li>
+<li>Трекайте стоимость на вызов и пользователя против злоупотреблений.</li>
+<li>Логируйте вход/выход для отладки и evals.</li>
+<li>Алерты на error rates, перерасход токенов и задержку.</li>
+<li>OpenTelemetry или вендор вроде Langfuse/LangSmith.</li>
+<li>Коррелируйте LLM-трейсы с метриками и логами приложения.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Нет трейсов: проверьте, что SDK авто-инструментирует провайдера.</li>
+<li>Высокая стоимость: просмотрите промпты, кэш и тир модели.</li>
+<li>Спайки задержки: проверьте загрузку модели и retries.</li>
+<li>Приватность: редактируйте PII в логируемых промптах и ответах.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. Трейсы появляются в дашборде Langfuse/LangSmith</p>
+<p class='ordered'>2. Токены и стоимость трекаются точно</p>
+<p class='ordered'>3. Разбивка задержки показывает, где тратится время</p>
+<p class='ordered'>4. Поиск и фильтрация по метаданным/тегам работают</p></div>
       <div class="page-nav"><a class="page-nav-link" href="nginx.html">← nginx</a><a class="page-nav-link" href="platform-engineering.html">platform-engineering →</a></div>
     </article>
   </div>
@@ -223,6 +329,15 @@ langfuse-compose up    # self-hosted Langfuse stack</code></pre><button class="c
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -249,6 +364,9 @@ langfuse-compose up    # self-hosted Langfuse stack</code></pre><button class="c
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

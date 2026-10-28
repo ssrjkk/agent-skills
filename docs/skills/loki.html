@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="kubernetes.html">← kubernetes</a><a class="page-nav-link" href="nginx.html">nginx →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Grafana Loki</h1>
 <blockquote>Log aggregation and querying with Loki.</blockquote>
 <h2>Quick Start</h2>
@@ -151,6 +152,89 @@ limits_config:
 <li>Slow queries: narrow label sets and time ranges.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Grafana Loki (Локи)</h1>
+<blockquote>Агрегация и запросы логов через Loki.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># одиночный бинарь или docker compose с promtail + loki
+docker run -p 3100:3100 -d grafana/loki:latest -config.file=/etc/loki/local-config.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Централизованное хранение и запрос логов</li>
+<li>Корреляция с Prometheus-метриками</li>
+<li>Алерты на основе логов</li>
+<li>Логи подов Kubernetes в масштабе</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Агенты и доставка</h3>
+<ul>
+<li>Promtail или Alloy для доставки</li>
+<li>Структурированные labels (app, namespace, level)</li>
+<li>Низкая кардинальность labels</li>
+<li>Парсинг строк логов в поля через pipelines</li>
+</ul>
+<h3>Labels и индексация</h3>
+<ul>
+<li>Labels по идентификаторам, не по значениям</li>
+<li>High-cardinality поля — в контент лога</li>
+<li>Структурированный парсинг (json, logfmt) в pipelines</li>
+<li>Стримы по наборам labels</li>
+</ul>
+<h3>Запросы (LogQL)</h3>
+<ul>
+<li>Фильтры `|=`, `|~`, `|json`, `|logfmt`</li>
+<li>Агрегации range-функциями (`rate`, `count_over_time`)</li>
+<li>`{app=&quot;api&quot;} |= &quot;error&quot; | json`</li>
+<li>Корреляция с PromQL-метриками</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Retention и лимиты</li>
+<li>Мониторинг ingestion и задержки запросов</li>
+<li>Хранилище (filesystem/object store)</li>
+<li>Бэкап конфига и дашбордов</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>docker run -p 3100:3100 -d grafana/loki:latest -config.file=/etc/loki/local-config.yaml
+# агент: promtail / alloy</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Promtail конфиг
+scrape_configs:
+  - job_name: app
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: app
+          __path__: /var/log/app/*.log</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Подсчёт ошибок в минуту
+sum(rate({job=&quot;app&quot;} |= &quot;error&quot; [1m])) by (level)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Парсинг JSON и фильтр по полю
+{job=&quot;api&quot;} | json | level=&quot;error&quot; | message=~&quot;timeout.*&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Loki лимиты
+limits_config:
+  retention_period: 720h
+  max_query_lookback: 720h
+  ingestion_rate_mb: 8</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Задеплойте Loki (single binary или HA).</p>
+<p class='ordered'>2. Настройте Promtail/Alloy для доставки логов.</p>
+<p class='ordered'>3. Задайте low-cardinality labels.</p>
+<p class='ordered'>4. Добавьте pipelines структурированного парсинга.</p>
+<p class='ordered'>5. Пишите LogQL-запросы для отладки и дашбордов.</p>
+<p class='ordered'>6. Добавьте алерты на основе логов.</p>
+<p class='ordered'>7. Задайте retention и лимиты.</p>
+<p class='ordered'>8. Коррелируйте логи с метриками в Grafana.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Логи появляются в Loki с ожидаемой задержкой</p>
+<p class='ordered'>2. LogQL возвращает корректные отфильтрованные результаты</p>
+<p class='ordered'>3. Кардинальность labels низкая</p>
+<p class='ordered'>4. Retention соблюдается</p>
+<p class='ordered'>5. Дашборды показывают логи с метриками</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Нет логов: проверьте targets и пути Promtail.</li>
+<li>Взрыв кардинальности: перенесите high-cardinality значения в контент лога.</li>
+<li>Медленные запросы: сузьте наборы labels и временные диапазоны.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="kubernetes.html">← kubernetes</a><a class="page-nav-link" href="nginx.html">nginx →</a></div>
     </article>
   </div>
@@ -199,6 +283,15 @@ limits_config:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -225,6 +318,9 @@ limits_config:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

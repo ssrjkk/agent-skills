@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="deno-runtime.html">← deno-runtime</a><a class="page-nav-link" href="dotnet.html">dotnet →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Django</h1>
 <blockquote>Building secure, batteries-included web apps with Django.</blockquote>
 <h2>Quick Start</h2>
@@ -172,6 +173,110 @@ def create_order(user, items) -&gt; Order:
 <li>Migration conflicts: fix model state, then regenerate migrations.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Django (Джанго)</h1>
+<blockquote>Создание безопасных веб-приложений с батарейками в комплекте на Django.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install django djangorestframework
+django-admin startproject mysite .
+python manage.py migrate
+python manage.py runserver</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Сайты с большим объёмом контента и админ-панелями</li>
+<li>Приложения со встроенным auth и ORM</li>
+<li>Быстрая CRUD-разработка</li>
+<li>Безопасные дефолты из коробки</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Модели</h3>
+<ul>
+<li>Проектируйте модели под домен</li>
+<li>Используйте явные типы полей и ограничения</li>
+<li>Добавляйте индексы для горячих запросов</li>
+<li>Схему ведите через миграции, а не сырой SQL</li>
+</ul>
+<h3>Вьюхи и URL</h3>
+<ul>
+<li>Организуйте по приложениям: `myapp/models.py`, `views.py`, `urls.py`</li>
+<li>Для переиспользуемого поведения — class-based views</li>
+<li>Для API — DRF с сериализаторами и viewsets</li>
+<li>Держите вьюхи тонкими; бизнес-логика — в сервисах</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>Не доверяйте клиентскому вводу: валидируйте формами/сериализаторами</li>
+<li>CSRF и XSS-защита Django — по умолчанию</li>
+<li>Пароли — дефолтными PBKDF2/argon2</li>
+<li>В админке минимальные права; используйте permissions</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>select_related, чтобы избежать N+1</li>
+<li>Фильтрация QuerySet, а не Python-циклы</li>
+<li>Кэшируйте тяжёлые страницы и запросы</li>
+<li>В проде `DEBUG=False` и безопасные настройки</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install django djangorestframework
+pip install -D pytest pytest-django factory-boy</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from django.db import models
+
+class Order(models.Model):
+    user = models.ForeignKey(&quot;auth.User&quot;, on_delete=models.CASCADE, related_name=&quot;orders&quot;)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=[(&quot;new&quot;, &quot;New&quot;), (&quot;paid&quot;, &quot;Paid&quot;)], default=&quot;new&quot;)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [models.Index(fields=[&quot;user&quot;, &quot;created_at&quot;])]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from django.views.generic import ListView
+
+class OrderListView(ListView):
+    model = Order
+    template_name = &quot;orders/list.html&quot;
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).select_related(&quot;user&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>from rest_framework import serializers, viewsets
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [&quot;id&quot;, &quot;amount&quot;, &quot;status&quot;, &quot;created_at&quot;]
+
+class OrderViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Паттерн сервисного слоя
+def create_order(user, items) -&gt; Order:
+    total = sum(item.price for item in items)
+    order = Order.objects.create(user=user, amount=total)
+    order.items.set(items)
+    return order</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Создайте проект и приложения через `startproject`/`startapp`.</p>
+<p class='ordered'>2. Смоделируйте домен через Django-модели и миграции.</p>
+<p class='ordered'>3. Зарегистрируйте модели в админке для внутренних инструментов.</p>
+<p class='ordered'>4. Соберите вьюхи или DRF сериализаторы/viewsets.</p>
+<p class='ordered'>5. Добавьте шаблоны для server-rendered страниц (если есть).</p>
+<p class='ordered'>6. Добавьте валидацию, permissions и тесты.</p>
+<p class='ordered'>7. Оптимизируйте запросы; добавьте кэш на горячие места.</p>
+<p class='ordered'>8. Деплойте с `collectstatic`, Gunicorn и reverse proxy.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `python manage.py check` проходит</p>
+<p class='ordered'>2. `migrate` применяется чисто</p>
+<p class='ordered'>3. Тесты проходят (модель, вьюха, API, permissions)</p>
+<p class='ordered'>4. Админка и API работают с корректным auth</p>
+<p class='ordered'>5. Нет явных N+1 в ключевых вьюхах</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>N+1: используйте `select_related`/`prefetch_related`.</li>
+<li>CSRF-ошибки в API: используйте DRF или аккуратно исключайте session-free эндпоинты.</li>
+<li>Конфликты миграций: приведите состояние моделей в порядок, затем регенерируйте миграции.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="deno-runtime.html">← deno-runtime</a><a class="page-nav-link" href="dotnet.html">dotnet →</a></div>
     </article>
   </div>
@@ -220,6 +325,15 @@ def create_order(user, items) -&gt; Order:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -246,6 +360,9 @@ def create_order(user, items) -&gt; Order:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

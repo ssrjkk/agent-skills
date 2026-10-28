@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="code-review.html">← code-review</a><a class="page-nav-link" href="system-design.html">system-design →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Git Workflow</h1>
 <blockquote>Using Git effectively for clean history and smooth collaboration.</blockquote>
 <h2>Quick Start</h2>
@@ -156,6 +157,94 @@ git diff HEAD~1</code></pre><button class="copy-btn code-copy" onclick="copyText
 <li>Push rejected: rebase onto the remote branch, then `--force-with-lease`.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Git Workflow (Гит-воркфлоу)</h1>
+<blockquote>Эффективное использование Git для чистой истории и гладкой коллаборации.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>git clone &lt;repo&gt;
+git checkout -b feat/my-feature
+# ... работа, коммиты ...
+git push -u origin feat/my-feature</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Каждый программный проект (даже доки и конфиг)</li>
+<li>Работа с ветками и pull request</li>
+<li>Безопасное восстановление после ошибок</li>
+<li>Аудит кто, что и когда менял</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Ветвление</h3>
+<ul>
+<li>Feature-ветки от main; держите их недолгоживущими</li>
+<li>Нейминг по конвенции: `feat/`, `fix/`, `docs/`, `chore/`</li>
+<li>Синхронизируйтесь с main регулярно (`git fetch &amp;&amp; git rebase`)</li>
+<li>Удаляйте смёрженные ветки</li>
+</ul>
+<h3>Коммиты</h3>
+<ul>
+<li>Коммитьте небольшими сфокусированными изменениями с ясными сообщениями</li>
+<li>Conventional commits: `feat:`, `fix:`, `refactor:`</li>
+<li>Объясняйте &quot;почему&quot; в теле сообщения при необходимости</li>
+<li>Никогда не коммитьте секреты и большие бинарники</li>
+</ul>
+<h3>История</h3>
+<ul>
+<li>Для локальной чистки — rebase; для общей интеграции — merge</li>
+<li>Скушивайте WIP-коммиты перед мержем</li>
+<li>Смотрите историю через `git log --oneline --graph`</li>
+<li>Не переписывайте запушенную историю в общих ветках</li>
+</ul>
+<h3>Коллаборация</h3>
+<ul>
+<li>Pull с rebase для линейной истории</li>
+<li>Конфликты решайте, понимая обе стороны</li>
+<li>Для прерываний используйте `git stash`</li>
+<li>Держите `main` всегда зелёным и релизабельным</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Git 2.40+ рекомендуется
+git --version
+# Опционально: GitHub CLI для PR
+gh --version</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Начните feature-ветку и коммитьте хорошо
+git switch -c feat/user-auth
+git add src/ tests/
+git commit -m &quot;feat: add user authentication
+
+Adds email/password login with JWT issuance.&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Rebase на свежий main
+git fetch origin
+git rebase origin/main
+git push --force-with-lease</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Безопасный откат
+git restore src/          # отбросить рабочие изменения
+git reset --soft HEAD~1   # отменить коммит, сохранить изменения
+git revert &lt;sha&gt;          # безопасный откат на общей истории</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Инспекция истории
+git log --oneline --graph -15
+git show &lt;sha&gt;
+git diff HEAD~1</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Подтяните свежий main и создайте сфокусированную feature-ветку.</p>
+<p class='ordered'>2. Реализуйте небольшими логичными коммитами с ясными сообщениями.</p>
+<p class='ordered'>3. Перед пушем rebase на main, чтобы держать историю чистой.</p>
+<p class='ordered'>4. Откройте PR, прогоните CI и учтите фидбек ревью.</p>
+<p class='ordered'>5. После зелёного CI мержите через squash; удалите ветку.</p>
+<p class='ordered'>6. При конфликтах понимайте обе стороны до решения.</p>
+<p class='ordered'>7. Для восстановления после случайных reset используйте `git reflog`.</p>
+<p class='ordered'>8. Держите `main` зелёным; тегируйте релизы для трассируемости.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. История линейна и читаема (`git log --graph`)</p>
+<p class='ordered'>2. Каждый коммит собирается и проходит тесты</p>
+<p class='ordered'>3. В истории нет секретов и больших файлов</p>
+<p class='ordered'>4. PR небольшие и сфокусированные</p>
+<p class='ordered'>5. `main` всегда в релизабельном состоянии</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Путаница с конфликтами: возьмите обе стороны, аккуратно отредактируйте, затем `git add` + commit.</li>
+<li>Случайный reset: `git reflog` найдите коммит и `git reset --hard &lt;sha&gt;`.</li>
+<li>Push rejected: rebase на удалённую ветку, затем `--force-with-lease`.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="code-review.html">← code-review</a><a class="page-nav-link" href="system-design.html">system-design →</a></div>
     </article>
   </div>
@@ -204,6 +293,15 @@ git diff HEAD~1</code></pre><button class="copy-btn code-copy" onclick="copyText
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -230,6 +328,9 @@ git diff HEAD~1</code></pre><button class="copy-btn code-copy" onclick="copyText
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

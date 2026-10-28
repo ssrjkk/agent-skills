@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="game-physics.html">← game-physics</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Unity ECS</h1>
 <blockquote>Building high-performance Unity games with Entity Component System and DOTS.</blockquote>
 <h2>Quick Start</h2>
@@ -264,6 +265,202 @@ public void MovementSystem_UpdatesPosition()
     Assert.Greater(transform.Position.z, 0);
 }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Unity ECS</h1>
+<blockquote>Создание высокопроизводительных игр на Unity с Entity Component System и DOTS.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>using Unity.Entities;
+using Unity.Transforms;
+using Unity.Mathematics;
+
+// Определение компонента
+public struct Health : IComponentData
+{
+    public float Current;
+    public float Max;
+}
+
+// Определение системы
+public partial class DamageSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        float dt = SystemAPI.Time.DeltaTime;
+
+        foreach (var (health, transform) in
+            SystemAPI.Query&lt;RefRW&lt;Health&gt;, RefRO&lt;LocalTransform&gt;&gt;())
+        {
+            if (health.ValueRO.Current &lt;= 0)
+                continue;
+
+            // Пример: регенерация здоровья со временем
+            health.ValueRW.Current = math.min(
+                health.ValueRO.Current + dt * 5f,
+                health.ValueRO.Max
+            );
+        }
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Создание игр с тысячами однотипных сущностей (пули, частицы, NPC)</li>
+<li>Когда производительности MonoBehaviour недостаточно</li>
+<li>Необходимость data-oriented дизайна и cache-friendly кода</li>
+<li>Масштабные симуляции или стратегические игры</li>
+</ul>
+<h2>Пошагово</h2>
+<h3>1. Проектирование компонентов (данные)</h3>
+<p>Держите компоненты маленькими и сфокусированными:</p>
+<div class="codeblock"><pre class="code"><code>public struct MovementSpeed : IComponentData { public float Value; }
+public struct TargetPosition : IComponentData { public float3 Value; }
+public struct DamageOnContact : IComponentData { public float Amount; }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Создание систем (логика)</h3>
+<p>Системы работают с сущностями, имеющими определённые комбинации компонентов:</p>
+<div class="codeblock"><pre class="code"><code>public partial class MovementSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        float dt = SystemAPI.Time.DeltaTime;
+
+        foreach (var (transform, speed) in
+            SystemAPI.Query&lt;RefRW&lt;LocalTransform&gt;, RefRO&lt;MovementSpeed&gt;&gt;())
+        {
+            var pos = transform.ValueRO.Position;
+            pos.z += speed.ValueRO.Value * dt;
+            transform.ValueRW.Position = pos;
+        }
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Использование Jobs для параллелизма</h3>
+<div class="codeblock"><pre class="code"><code>[BurstCompile]
+public partial struct CalculateDamageJob : IJobEntity
+{
+    public float DeltaTime;
+
+    void Execute(ref Health health, in DamageOverTime dot)
+    {
+        health.Current -= dot.DamagePerSecond * DeltaTime;
+        health.Current = math.max(0, health.Current);
+    }
+}
+
+public partial class DamageOverTimeSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        var job = new CalculateDamageJob
+        {
+            DeltaTime = SystemAPI.Time.DeltaTime
+        };
+        job.ScheduleParallel();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Запросы сущностей</h3>
+<div class="codeblock"><pre class="code"><code>partial class TargetingSystem : SystemBase
+{
+    private EntityQuery _enemyQuery;
+
+    protected override void OnCreate()
+    {
+        _enemyQuery = new EntityQueryBuilder(Allocator.Temp)
+            .WithAll&lt;Health, EnemyTag&gt;()
+            .WithNone&lt;DeadTag&gt;()
+            .Build(this);
+    }
+
+    protected override void OnUpdate()
+    {
+        var enemies = _enemyQuery.ToEntityArray(Allocator.Temp);
+        // Обработка врагов...
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Общие компоненты (рендеринг)</h3>
+<div class="codeblock"><pre class="code"><code>public struct SpriteRenderer : ISharedComponentData
+{
+    public Texture2D Texture;
+    public Material Material;
+}
+
+// Сущности с одинаковыми общими компонентами группируются вместе</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>**Держите компоненты маленькими** — единственная ответственность</li>
+<li>**Избегайте управляемых ссылок** в компонентах (используйте ссылки Entity)</li>
+<li>**Используйте Burst** для математически тяжёлых jobs</li>
+<li>**Группируйте сущности** по общим компонентам для рендеринга</li>
+<li>**Профилируйте с Unity Profiler** — измеряйте перед оптимизацией</li>
+</ul>
+<h2>Типичные ошибки</h2>
+<ul>
+<li>Забыли пометить job атрибутом `[BurstCompile]`</li>
+<li>Использование `foreach` вместо `IJobEntity` для больших наборов данных</li>
+<li>Создание слишком большого количества систем — группируйте связанную логику</li>
+<li>Не освобождают NativeArrays и другие нативные контейнеры</li>
+</ul>
+<h2>Примеры</h2>
+<h3>Создание сущностей</h3>
+<div class="codeblock"><pre class="code"><code>public partial class SpawnerSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        var ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+        foreach (var (spawner, transform) in
+            SystemAPI.Query&lt;RefRO&lt;Spawner&gt;, RefRO&lt;LocalTransform&gt;&gt;())
+        {
+            if (spawner.ValueRO.CanSpawn)
+            {
+                var entity = ecb.Instantiate(spawner.ValueRO.Prefab);
+                ecb.SetComponent(entity, new LocalTransform
+                {
+                    Position = transform.ValueRO.Position
+                });
+            }
+        }
+
+        ecb.Playback(SystemAPI.GetSingleton&lt;EntityManager&gt;());
+        ecb.Dispose();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Здоровье и смерть</h3>
+<div class="codeblock"><pre class="code"><code>public partial class DeathSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+        var ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+        foreach (var (health, entity) in
+            SystemAPI.Query&lt;RefRO&lt;Health&gt;&gt;().WithEntityAccess())
+        {
+            if (health.ValueRO.Current &lt;= 0)
+            {
+                ecb.AddComponent&lt;DeadTag&gt;(entity);
+                ecb.RemoveComponent&lt;Health&gt;(entity);
+            }
+        }
+
+        ecb.Playback(SystemAPI.GetSingleton&lt;EntityManager&gt;());
+        ecb.Dispose();
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Валидация</h2>
+<div class="codeblock"><pre class="code"><code>[Test]
+public void MovementSystem_UpdatesPosition()
+{
+    using var world = new World(&quot;Test&quot;);
+    var system = world.GetOrCreateSystemManaged&lt;MovementSystem&gt;();
+
+    var entity = world.EntityManager.CreateEntity();
+    world.EntityManager.AddComponentData(entity, new LocalTransform
+    {
+        Position = new float3(0, 0, 0)
+    });
+    world.EntityManager.AddComponentData(entity, new MovementSpeed { Value = 10f });
+
+    system.Update();
+
+    var transform = world.EntityManager.GetComponentData&lt;LocalTransform&gt;(entity);
+    Assert.Greater(transform.Position.z, 0);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div></div>
       <div class="page-nav"><a class="page-nav-link" href="game-physics.html">← game-physics</a></div>
     </article>
   </div>
@@ -312,6 +509,15 @@ public void MovementSystem_UpdatesPosition()
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -338,6 +544,9 @@ public void MovementSystem_UpdatesPosition()
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="docker.html">← docker</a><a class="page-nav-link" href="gitlab-ci.html">gitlab-ci →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>GitHub Actions</h1>
 <blockquote>Automating build, test, and deploy pipelines with GitHub Actions.</blockquote>
 <h2>Quick Start</h2>
@@ -199,6 +200,137 @@ jobs:
 <li>Flaky runs: pin action versions and runner images.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>GitHub Actions (ГитХаб Экшенс)</h1>
+<blockquote>Автоматизация build, test и deploy пайплайнов через GitHub Actions.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Добавьте .github/workflows/ci.yml и запушьте
+# Workflow запускается автоматически при push/PR</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Запуск тестов и линтеров на каждом PR</li>
+<li>Сборка и публикация артефактов</li>
+<li>Деплой в облако, реестры и Pages</li>
+<li>Scheduled-задачи и обновление зависимостей</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн workflow</h3>
+<ul>
+<li>Разделяйте CI/CD на отдельные workflow или jobs</li>
+<li>Для порядка используйте `needs`; для комбо версий — `matrix`</li>
+<li>Кэшируйте зависимости (`actions/cache`) для скорости</li>
+<li>Секреты храните в repo/org secrets; никогда не в YAML</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>Пиньте версии действий (`@v4`) или SHA коммитов</li>
+<li>Используйте `permissions:` минимальный скоуп на job</li>
+<li>Санизируйте недоверенный ввод (PR из форков)</li>
+<li>Избегайте `pull_request_target`, если не работаете с секретами аккуратно</li>
+</ul>
+<h3>Эффективность</h3>
+<ul>
+<li>Триггерите только по релевантным путям (`on: push: paths:`)</li>
+<li>Используйте concurrency для отмены устаревших запусков</li>
+<li>Переиспользуйте workflow через `workflow_call`</li>
+<li>Загружайте артефакты только когда нужно</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Ничего не нужно — на GitHub-hosted раннерах есть общие инструменты.
+# Пиньте версии:
+#   actions/checkout@v4, actions/setup-python@v5, actions/cache@v4</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [&quot;3.11&quot;, &quot;3.12&quot;]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -e &quot;.[dev]&quot;
+      - run: ruff check .
+      - run: pytest tests/ -q</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Деплой по тегу с permissions
+name: Deploy
+
+on:
+  push:
+    tags: [&quot;v*&quot;]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo &quot;deploying ${{ github.ref_name }}&quot;
+        env:
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Переиспользуемый workflow
+name: Quality
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci &amp;&amp; npm run lint</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Scheduled + кэш
+name: Nightly
+
+on:
+  schedule:
+    - cron: &quot;0 2 * * *&quot;
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles(&#x27;requirements.txt&#x27;) }}
+      - run: pip install -r requirements.txt</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите триггер (`on`) и разбивку на jobs.</p>
+<p class='ordered'>2. Сделайте checkout кода и настройте рантайм языка.</p>
+<p class='ordered'>3. Кэшируйте зависимости для скорости.</p>
+<p class='ordered'>4. Запускайте lint, typecheck и тесты параллельно, где возможно.</p>
+<p class='ordered'>5. Добавьте шаг сборки/публикации после успеха.</p>
+<p class='ordered'>6. Добавьте job деплоя с `needs` и защитой environment.</p>
+<p class='ordered'>7. Выставьте `permissions` минимально; секреты — в настройках репо.</p>
+<p class='ordered'>8. Смотрите логи Actions; добавляйте status badges в README.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Workflow зелёный на push и PR</p>
+<p class='ordered'>2. Matrix покрывает поддерживаемые версии</p>
+<p class='ordered'>3. Артефакты/секреты используются корректно (без утечек в логи)</p>
+<p class='ordered'>4. Кэш измеримо ускоряет запуски</p>
+<p class='ordered'>5. Устаревшие запуски отменяются через concurrency</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>&quot;Permission denied&quot; на push/deploy: проверьте `permissions` и скоуп токена.</li>
+<li>Секреты не найдены: определите их в настройках repo/org.</li>
+<li>Flaky запуски: пиньте версии действий и образы раннеров.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="docker.html">← docker</a><a class="page-nav-link" href="gitlab-ci.html">gitlab-ci →</a></div>
     </article>
   </div>
@@ -247,6 +379,15 @@ jobs:
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -273,6 +414,9 @@ jobs:
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

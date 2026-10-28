@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="tailwind-v4.html">← tailwind-v4</a><a class="page-nav-link" href="vue.html">vue →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>TypeScript</h1>
 <blockquote>Type-safe JavaScript with strong typing, generics, and strict tooling.</blockquote>
 <h2>Quick Start</h2>
@@ -157,6 +158,95 @@ function isError(x: unknown): x is { message: string } {
 <li>Weird `any` leaks: check `ts-ignore` and third-party typings.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>TypeScript (ТайпСкрипт)</h1>
+<blockquote>Type-safe JavaScript с сильной типизацией, дженериками и строгим тулингом.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm create vite@latest my-app -- --template vanilla-ts
+cd my-app
+npm i
+npm run build
+# tsconfig.json включает strict mode</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Любой JavaScript-проект, который вырастает за пару файлов</li>
+<li>Библиотеки и общие пакеты, где важен контракт API</li>
+<li>Команды, которым нужна безопасность на этапе компиляции</li>
+<li>Рефакторинг больших легаси JS-кодовых баз</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн типов</h3>
+<ul>
+<li>Моделируйте домен через union, discriminated union и литералы</li>
+<li>Выводите типы из данных, а не наоборот</li>
+<li>Предпочитайте `type` вместо `interface` для union и mapped types</li>
+<li>Экспортируйте общие типы из центрального `types.ts`</li>
+</ul>
+<h3>Строгость</h3>
+<ul>
+<li>Включайте `strict: true` с самого начала</li>
+<li>Избегайте `any`; используйте `unknown` и сужайте через type guards</li>
+<li>Используйте `satisfies` для проверки объектов без расширения типа</li>
+<li>Включайте `noUncheckedIndexedAccess` для безопасности массивов</li>
+</ul>
+<h3>Дженерики</h3>
+<ul>
+<li>Пишите generic-функции с разумными ограничениями</li>
+<li>Используйте utility types: `Pick`, `Omit`, `Partial`, `Record`, `ReturnType`</li>
+<li>Применяйте `infer` в conditional types для продвинутого извлечения</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm i -D typescript @types/node tsx
+npx tsc --init
+# задайте: strict true, noUncheckedIndexedAccess true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Discriminated union безопасно моделирует state machine
+type Result&lt;T&gt; =
+  | { status: &quot;success&quot;; data: T }
+  | { status: &quot;error&quot;; message: string };
+
+function handle(r: Result&lt;number&gt;): number {
+  if (r.status === &quot;success&quot;) return r.data;
+  console.error(r.message);
+  return 0;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Generic функция с ограничением
+function pluck&lt;T, K extends keyof T&gt;(items: T[], key: K): T[K][] {
+  return items.map((item) =&gt; item[key]);
+}
+
+const names = pluck([{ name: &quot;a&quot;, id: 1 }], &quot;name&quot;); // string[]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// satisfies сохраняет узкие типы, проверяя форму
+const config = {
+  port: 3000,
+  host: &quot;0.0.0.0&quot;,
+} satisfies Record&lt;string, string | number&gt;;
+
+config.port; // number, а не string | number</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Type guard сужает unknown
+function isError(x: unknown): x is { message: string } {
+  return typeof x === &quot;object&quot; &amp;&amp; x !== null &amp;&amp; &quot;message&quot; in x;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Включите `strict: true` и `noUncheckedIndexedAccess` в `tsconfig.json`.</p>
+<p class='ordered'>2. Сначала смоделируйте доменные типы (union, сущности) до написания функций.</p>
+<p class='ordered'>3. Пишите функции с явными возвращаемыми типами; избегайте неявного `any`.</p>
+<p class='ordered'>4. Используйте `unknown` для внешнего ввода; сужайте через guards и валидацию.</p>
+<p class='ordered'>5. Предпочитайте `satisfies` для конфигов; используйте `as const` для литералов.</p>
+<p class='ordered'>6. Выносите сложную логику в дженерики только при повторном использовании дважды и более.</p>
+<p class='ordered'>7. Добавьте `tsc --noEmit` в CI; проверяйте на каждом PR.</p>
+<p class='ordered'>8. В разработке запускайте `tsc` в watch mode для быстрой обратной связи.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `tsc --noEmit` проходит без ошибок</p>
+<p class='ordered'>2. Нет `any` в новом коде (правило `@typescript-eslint/no-explicit-any`)</p>
+<p class='ordered'>3. Публичные API общих модулей имеют явные типы</p>
+<p class='ordered'>4. Поведение в рантайме совпадает с типами (без опасных кастов)</p>
+<p class='ordered'>5. Сборка (`tsup`/`vite build`) проходит чисто</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>&quot;Property does not exist&quot;: тип уже, чем кажется — сузьте через guards.</li>
+<li>&quot;Not assignable&quot;: несовпадение объявленной и фактической формы — чините контракт данных, а не каст.</li>
+<li>Странные утечки `any`: проверьте `ts-ignore` и типы сторонних библиотек.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="tailwind-v4.html">← tailwind-v4</a><a class="page-nav-link" href="vue.html">vue →</a></div>
     </article>
   </div>
@@ -205,6 +295,15 @@ function isError(x: unknown): x is { message: string } {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -231,6 +330,9 @@ function isError(x: unknown): x is { message: string } {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

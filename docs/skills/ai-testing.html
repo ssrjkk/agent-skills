@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="claude-code-commands.html">claude-code-commands →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>AI Testing</h1>
 <blockquote>Generate, validate, and maintain test suites using AI-powered test generation.</blockquote>
 <h2>Quick Start</h2>
@@ -194,6 +195,130 @@ pip install mutmut &amp;&amp; mutmut run --paths-to-mutate src/</code></pre><but
 <p class='ordered'>3. No hallucinated function calls in generated tests</p>
 <p class='ordered'>4. Tests are deterministic (same results on each run)</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>AI Testing (AI-Тестирование)</h1>
+<blockquote>Генерируйте, валидируйте и поддерживайте тесты с помощью AI-генерации.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># AI-генерация тестов через Claude
+from anthropic import Anthropic
+import ast
+import os
+
+client = Anthropic()
+
+def generate_tests(source_file: str) -&gt; str:
+    &quot;Генерация юнит-тестов для Python-модуля с помощью AI.&quot;
+    with open(source_file) as f:
+        source = f.read()
+
+    tree = ast.parse(source)
+    functions = [node.name for node in ast.walk(tree)
+                 if isinstance(node, ast.FunctionDef) and not node.name.startswith(&#x27;_&#x27;)]
+    classes = [node.name for node in ast.walk(tree)
+               if isinstance(node, ast.ClassDef)]
+
+    prompt = f&#x27;&#x27;&#x27;Сгенерируйте полный набор pytest-тестов для модуля.
+
+Module: {os.path.basename(source_file)}
+Functions: {&#x27;, &#x27;.join(functions)}
+Classes: {&#x27;, &#x27;.join(classes)}
+
+Requirements:
+- Coverage: happy path, edge cases, error handling
+- Используйте pytest fixtures для setup
+- Включите property-based тесты там, где уместно
+- Mock внешних зависимостей (I/O, сеть, БД)
+- Достичь coverage &gt; 90%
+
+Source code:
+&lt;source&gt;
+{source}
+&lt;/source&gt;
+
+Generate tests only:&#x27;&#x27;&#x27;
+
+    response = client.messages.create(
+        model=&quot;claude-sonnet-4-5&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+        max_tokens=4096
+    )
+
+    return response.content[0].text
+
+# AI-валидация качества тестов
+def validate_test_quality(test_code: str) -&gt; dict:
+    response = client.messages.create(
+        model=&quot;claude-sonnet-4-5&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&#x27;&#x27;&#x27;Оцените набор тестов по:
+
+1. Coverage: покрыты ли edge cases?
+2. Isolation: тесты изолированы?
+3. Maintainability: читаемость?
+4. Completeness: чего не хватает?
+
+Test code:
+&lt;test_code&gt;
+{test_code}
+&lt;/test_code&gt;
+
+Score each category 1-10 и перечислите пробелы.&#x27;&#x27;&#x27;}],
+        max_tokens=1000
+    )
+    return response.content[0].text</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Запуск сгенерированных тестов
+pytest tests/ --cov=src --cov-report=term-missing
+
+# Регенерация тестов при изменении исходников в CI:
+# если coverage упал более чем на 5%, перегенерировать тесты</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>AI пишет тесты быстрее, но их нужно валидировать. Комбинируйте AI-генерацию с классическими инструментами (coverage, mutation testing). Проверяйте сгенерированные тесты — они могут галлюцинировать API или терять контекст.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Легаси-кодбазы без тестового покрытия</li>
+<li>Быстрое прототипирование, где писать тесты вручную долго</li>
+<li>Генерация тестовых данных и фикстур</li>
+<li>CI-пайплайн с подсказками тестов для нового кода</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Разберите модуль: обойдите AST и соберите публичные функции, классы и сигнатуры.</p>
+<p class='ordered'>2. Соберите промпт: попросите модель сгенерировать pytest с фикстурами, edge cases и моками внешних зависимостей.</p>
+<p class='ordered'>3. Сгенерируйте и сохраните: запишите AI-тесты в `tests/` (имя вида `test_&lt;module&gt;.py`).</p>
+<p class='ordered'>4. Запустите coverage: `pytest tests/ --cov=src --cov-report=term-missing` и посмотрите пробелы.</p>
+<p class='ordered'>5. Проверьте качество: попросите модель оценить coverage/isolation/maintainability; фиксите галлюцинации повторным прогоном.</p>
+<p class='ordered'>6. Автоматизируйте в CI: перегенерируйте тесты при падении coverage &gt; 5%; для числовых/логических функций добавьте property-based кейсы.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Автоматическая регенерация тестов после изменения исходника
+import subprocess, pathlib
+
+def regenerate_for(source: str) -&gt; None:
+    tests = generate_tests(source)          # из Quick Start
+    out = pathlib.Path(&quot;tests&quot;) / f&quot;test_{pathlib.Path(source).stem}.py&quot;
+    out.write_text(tests)
+    subprocess.run([&quot;pytest&quot;, str(out), &quot;--cov=src&quot;, &quot;--cov-report=term-missing&quot;], check=False)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Quality gate в CI
+pytest tests/ --cov=src --cov-fail-under=80 --cov-report=term-missing
+# Mutation testing spot-check
+pip install mutmut &amp;&amp; mutmut run --paths-to-mutate src/</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Тестируйте вывод модели на golden-наборе с детерминированными промптами.</li>
+<li>LLM-as-judge с рубрикой для субъективного качества.</li>
+<li>Регрессионные гейты в CI для изменений промпта/модели.</li>
+<li>Трекайте токены, стоимость и задержку вместе с корректностью.</li>
+<li>Edge cases: пустой ввод, adversarial, длинный контекст.</li>
+<li>Детерминизм: temperature 0, фиксированный seed.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Флаки скоре: чините недетерминизм сэмплинга.</li>
+<li>Предвзятость судьи: калибруйте рубрику человеческими метками.</li>
+<li>Медленный сьют: кэшируйте вызовы модели и сэмплируйте.</li>
+<li>Дрейф: переоценка по расписанию и алерты на регрессии.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. AI-тесты проходят при прогоне по исходникам</p>
+<p class='ordered'>2. Coverage достигает порога (&gt; 80%)</p>
+<p class='ordered'>3. В сгенерированных тестах нет галлюцинированных вызовов</p>
+<p class='ordered'>4. Тесты детерминированы (одинаковые результаты на каждом прогоне)</p></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="claude-code-commands.html">claude-code-commands →</a></div>
     </article>
   </div>
@@ -242,6 +367,15 @@ pip install mutmut &amp;&amp; mutmut run --paths-to-mutate src/</code></pre><but
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -268,6 +402,9 @@ pip install mutmut &amp;&amp; mutmut run --paths-to-mutate src/</code></pre><but
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

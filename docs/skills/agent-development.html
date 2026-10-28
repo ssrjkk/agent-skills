@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="context-engineering.html">context-engineering →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Agent Development</h1>
 <blockquote>Building reliable LLM agents with tools, memory, and guardrails.</blockquote>
 <h2>Quick Start</h2>
@@ -170,6 +171,108 @@ def compress(messages, keep_last=6):
 <li>Context overflow: summarize and trim older turns.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Agent Development (Разработка агентов)</h1>
+<blockquote>Создание надёжных LLM-агентов с инструментами, памятью и защитами.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai
+# определите инструменты, цикл и лимиты безопасности</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Автоматизация многошаговых задач, требующих решений</li>
+<li>Ассистенты по коду, исследовательские агенты, поддержка клиентов</li>
+<li>Workflow, которые вызывают инструменты и итерируют</li>
+<li>Когда одного промпта недостаточно</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Дизайн инструментов</h3>
+<ul>
+<li>Давайте инструментам ясные имена, описания и JSON-схемы</li>
+<li>Делайте инструменты детерминированными и осознающими сайд-эффекты</li>
+<li>Валидируйте вход инструментов; возвращайте структурированные ошибки</li>
+<li>Держите поверхность инструментов маленькой и сфокусированной</li>
+</ul>
+<h3>Цикл агента</h3>
+<ul>
+<li>Структура: perceive -&gt; decide -&gt; act -&gt; observe</li>
+<li>Ограничьте число шагов (max_iterations)</li>
+<li>Детектируйте циклы и застревания; добавьте условие остановки</li>
+<li>Логируйте каждый шаг (инструмент, вход, выход) для отладки</li>
+</ul>
+<h3>Память</h3>
+<ul>
+<li>Используйте short-term контекст + long-term хранилище (vector DB)</li>
+<li>Суммаризируйте диалог под размер контекстного окна</li>
+<li>Персистируйте важное состояние между сессиями</li>
+<li>Разделяйте факты о пользователе и факты сессии</li>
+</ul>
+<h3>Безопасность</h3>
+<ul>
+<li>Ограничьте разрушительные инструменты (delete, deploy, pay) апрувами</li>
+<li>Песочница для исполнения кода; запрет опасных команд</li>
+<li>Добавьте guardrails: фильтры контента, лимиты бюджета, таймауты</li>
+<li>Экранируйте prompt injection в выводах инструментов и пользовательских данных</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install openai pydantic
+# опционально: langgraph, crewai или свой цикл</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from pydantic import BaseModel, Field
+
+class WeatherTool:
+    name = &quot;get_weather&quot;
+    description = &quot;Get current weather for a city&quot;
+    schema = {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {&quot;city&quot;: {&quot;type&quot;: &quot;string&quot;}},
+        &quot;required&quot;: [&quot;city&quot;],
+    }
+
+    def run(self, city: str) -&gt; str:
+        return f&quot;Weather in {city}: sunny, 22C&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Минимальный цикл агента с лимитом шагов
+def run_agent(user_input: str, tools: dict, max_steps: int = 10) -&gt; str:
+    messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}]
+    for _ in range(max_steps):
+        resp = call_llm(messages, tools=list(tools.values()))
+        if not resp.tool_calls:
+            return resp.content
+        for call in resp.tool_calls:
+            result = tools[call.function.name].run(**call.function.arguments)
+            messages.append({&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: call.id, &quot;content&quot;: result})
+    return &quot;Reached max steps without final answer.&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Апрув-гейт для разрушительных действий
+def run_tool_safe(name: str, args: dict) -&gt; str:
+    if name in DANGEROUS_TOOLS:
+        if not confirm(f&quot;Approve {name}({args})? &quot;):
+            return &quot;Action denied by user.&quot;
+    return tools[name].run(**args)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Сжатие контекста под окно
+def compress(messages, keep_last=6):
+    head = messages[:2]                      # system + оригинал
+    tail = messages[-keep_last:]
+    summary = summarize(messages[2:-keep_last])
+    return head + [{&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: f&quot;[Summary] {summary}&quot;}] + tail</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите цель агента, входы и критерии остановки.</p>
+<p class='ordered'>2. Спроектируйте небольшой набор инструментов с ясными схемами.</p>
+<p class='ordered'>3. Реализуйте цикл perceive-decide-act с max steps.</p>
+<p class='ordered'>4. Добавьте память: short-term контекст и персистентное хранилище.</p>
+<p class='ordered'>5. Ограничьте опасные действия апрувами.</p>
+<p class='ordered'>6. Добавьте guardrails: бюджет, таймаут, фильтры контента.</p>
+<p class='ordered'>7. Оцените на бенчмарке репрезентативных задач.</p>
+<p class='ordered'>8. Логируйте трассы для отладки и регрессий.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Агент завершает задачи в пределах max steps</p>
+<p class='ordered'>2. Нет бесконечных циклов и повторяющихся одинаковых действий</p>
+<p class='ordered'>3. Разрушительные инструменты требуют апрува</p>
+<p class='ordered'>4. Ошибки инструментов обрабатываются корректно (retry или объяснение)</p>
+<p class='ordered'>5. Стоимость и задержка в рамках бюджета на eval-наборе</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Агент зацикливается: ужесточите max_steps и детектируйте повторные вызовы.</li>
+<li>Неверные вызовы инструментов: улучшите описания и схемы.</li>
+<li>Переполнение контекста: суммаризируйте и обрезайте старые ходы.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="context-engineering.html">context-engineering →</a></div>
     </article>
   </div>
@@ -218,6 +321,15 @@ def compress(messages, keep_last=6):
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -244,6 +356,9 @@ def compress(messages, keep_last=6):
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

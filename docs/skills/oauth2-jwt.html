@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="api-security.html">← api-security</a><a class="page-nav-link" href="owasp-web-security.html">owasp-web-security →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>OAuth2 &amp; JWT</h1>
 <blockquote>Secure API authentication with OAuth 2.0 and JSON Web Tokens.</blockquote>
 <h2>Quick Start</h2>
@@ -179,6 +180,117 @@ function requireScope(scope: string) {
 <p class='ordered'>2. Expired tokens are rejected</p>
 <p class='ordered'>3. Refresh tokens issue new access tokens</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>OAuth2 &amp; JWT</h1>
+<blockquote>Безопасная аутентификация API с OAuth 2.0 и JSON Web Tokens.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>import jwt from &#x27;jsonwebtoken&#x27;;
+import bcrypt from &#x27;bcrypt&#x27;;
+
+// Логин
+const user = await db.user.findUnique({ where: { email } });
+const valid = await bcrypt.compare(password, user.password);
+if (!valid) throw new Error(&#x27;Invalid credentials&#x27;);
+
+// Генерация токенов
+const accessToken = jwt.sign(
+  { userId: user.id, role: user.role },
+  process.env.JWT_SECRET!,
+  { expiresIn: &#x27;15m&#x27; }
+);
+const refreshToken = jwt.sign(
+  { userId: user.id },
+  process.env.JWT_REFRESH_SECRET!,
+  { expiresIn: &#x27;7d&#x27; }
+);
+
+// Middleware
+function authMiddleware(req, res, next) {
+  const token = req.headers.authorization?.split(&#x27; &#x27;)[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    req.user = decoded;
+    next();
+  } catch {
+    res.status(401).json({ error: &#x27;Invalid token&#x27; });
+  }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Аутентификация и авторизация API</li>
+<li>Single sign-on (SSO) c OAuth-провайдерами</li>
+<li>Не для server-to-server с API-ключами</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Пароли хэшированы (bcrypt/argon2), никогда в открытом виде.</li>
+<li>Короткоживущие access-токены (15m) и ротация refresh.</li>
+<li>Refresh-токены на сервере или в httpOnly cookies.</li>
+<li>Проверяйте сигнатуру, expiry, issuer и audience на каждом токене.</li>
+<li>Для браузерных клиентов — Authorization Code + PKCE.</li>
+<li>Ротация подписывающих ключей с JWKS и кэшированием.</li>
+</ul>
+<h2>Пошаговые инструкции</h2>
+<p class='ordered'>1. Установите пакеты: `npm install jsonwebtoken bcrypt`</p>
+<p class='ordered'>2. Настройте модель пользователя с хэшированными паролями</p>
+<p class='ordered'>3. Создайте login-эндпоинт с access + refresh токенами</p>
+<p class='ordered'>4. Добавьте auth middleware на защищённые маршруты</p>
+<p class='ordered'>5. Реализуйте refresh с ротацией</p>
+<p class='ordered'>6. Добавьте scopes и проверку audience</p>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm install jsonwebtoken bcrypt
+# Для OAuth-провайдеров: passport, passport-google-oauth20 и др.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<p>Вход: логин email/password → Выход: `{ accessToken, refreshToken, expiresIn }`</p>
+<div class="codeblock"><pre class="code"><code>// Refresh с ротацией
+router.post(&quot;/refresh&quot;, async (req, res) =&gt; {
+  const old = req.body.refreshToken;
+  const decoded = jwt.verify(old, process.env.JWT_REFRESH_SECRET!);
+  if (!isStored(old)) return res.status(401).json({ error: &quot;revoked&quot; });
+  revoke(old);
+  const accessToken = jwt.sign(
+    { userId: decoded.userId },
+    process.env.JWT_SECRET!,
+    { expiresIn: &quot;15m&quot; }
+  );
+  const refreshToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_REFRESH_SECRET!, { expiresIn: &quot;7d&quot; });
+  res.json({ accessToken, refreshToken });
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Проверка авторизации со scopes
+function requireScope(scope: string) {
+  return (req, res, next) =&gt; {
+    if (!req.user?.scopes?.includes(scope)) {
+      return res.status(403).json({ error: &quot;insufficient_scope&quot; });
+    }
+    next();
+  };
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ресурсы</h2>
+<ul>
+<li>[JWT.io](https://jwt.io/)</li>
+<li>[OAuth 2.0 Spec](https://oauth.net/2/)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>**Не совпадает `kid` в JWT** — ротация ключей подписи, а клиент кэшировал</li>
+</ul>
+<p>старый JWKS. Обновите набор ключей и уважайте `cache-control` на JWKS.</p>
+<ul>
+<li>**Ревью `exp` после рассинхрона часов** — дайте допуск (~30s) при</li>
+</ul>
+<p>верификации и сравнивайте с `nbf`/`iat` эмитента, а не с локальным временем.</p>
+<ul>
+<li>**Audience утекает между приложениями** — токены одного клиента</li>
+</ul>
+<p>валидируются в другом. Привяжите `aud` на клиента и отклоняйте без него.</p>
+<ul>
+<li>**Refresh-токен украден из localStorage** — не храните его в браузере.</li>
+</ul>
+<p>Используйте httpOnly/SameSite-cookie или серверную сессию.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Токены подписываются и верифицируются корректно</p>
+<p class='ordered'>2. Истёкшие токены отклоняются</p>
+<p class='ordered'>3. Refresh-токены выдают новые access-токены</p></div>
       <div class="page-nav"><a class="page-nav-link" href="api-security.html">← api-security</a><a class="page-nav-link" href="owasp-web-security.html">owasp-web-security →</a></div>
     </article>
   </div>
@@ -227,6 +339,15 @@ function requireScope(scope: string) {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -253,6 +374,9 @@ function requireScope(scope: string) {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

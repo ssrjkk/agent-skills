@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="typescript.html">← typescript</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Vue</h1>
 <blockquote>Building reactive UIs with Vue 3 and the Composition API.</blockquote>
 <h2>Quick Start</h2>
@@ -182,6 +183,120 @@ export const useCartStore = defineStore(&quot;cart&quot;, () =&gt; {
 <li>Devtools missing state: check Pinia installation and plugin order.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Vue (Вью)</h1>
+<blockquote>Создание реактивных пользовательских интерфейсов на Vue 3 и Composition API.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm create vue@latest my-app
+cd my-app
+npm install
+npm run dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Прогрессивное улучшение существующих страниц</li>
+<li>SPA из single-file компонентов</li>
+<li>Команды, которым нужна плавная кривая обучения</li>
+<li>Переиспользуемые библиотеки компонентов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Composition API</h3>
+<ul>
+<li>Используйте `&lt;script setup&gt;` для лаконичных компонентов</li>
+<li>Выносите логику в переиспользуемые composables</li>
+<li>Держите реактивное состояние минимальным и явным</li>
+<li>`ref` — для примитивов, `reactive` — для объектов</li>
+</ul>
+<h3>Компоненты</h3>
+<ul>
+<li>Делите UI на небольшие сфокусированные компоненты</li>
+<li>Определяйте props с типами и дефолтами</li>
+<li>Emit типизированных событий вместо мутаций props</li>
+<li>Для гибкой композиции используйте slots</li>
+</ul>
+<h3>Производительность</h3>
+<ul>
+<li>Для производного состояния — `computed`</li>
+<li>Виртуализируйте длинные списки</li>
+<li>Лениво грузите маршруты и тяжёлые компоненты</li>
+<li>Где уместно — `v-memo` и `shallowRef`</li>
+</ul>
+<h3>Состояние</h3>
+<ul>
+<li>Сначала локальное состояние (`ref`/`reactive`)</li>
+<li>Для общего состояния приложения — Pinia</li>
+<li>Держите сторы сфокусированными и типизированными</li>
+<li>Не переусложняйте глобальное состояние</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm create vue@latest my-app -- --typescript --router --pinia
+npm i vue</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref, computed } from &quot;vue&quot;;
+
+const count = ref(0);
+const doubled = computed(() =&gt; count.value * 2);
+
+function increment() {
+  count.value += 1;
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;button @click=&quot;increment&quot;&gt;Count: {{ count }}&lt;/button&gt;
+  &lt;p&gt;Doubled: {{ doubled }}&lt;/p&gt;
+&lt;/template&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Переиспользуемый composable
+import { ref } from &quot;vue&quot;;
+
+export function useCounter(start = 0) {
+  const count = ref(start);
+  const increment = () =&gt; count.value++;
+  const decrement = () =&gt; count.value--;
+  return { count, increment, decrement };
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>&lt;script setup lang=&quot;ts&quot;&gt;
+// Props с типами и событиями
+interface Props {
+  title: string;
+  done?: boolean;
+}
+const props = withDefaults(defineProps&lt;Props&gt;(), { done: false });
+const emit = defineEmits&lt;{ (e: &quot;toggle&quot;, id: number): void }&gt;();
+&lt;/script&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Pinia store
+import { defineStore } from &quot;pinia&quot;;
+import { ref } from &quot;vue&quot;;
+
+export const useCartStore = defineStore(&quot;cart&quot;, () =&gt; {
+  const items = ref&lt;string[]&gt;([]);
+  const total = ref(0);
+  const add = (item: string, price: number) =&gt; {
+    items.value.push(item);
+    total.value += price;
+  };
+  return { items, total, add };
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Создайте проект через `create-vue` (TypeScript, Router, Pinia).</p>
+<p class='ordered'>2. Настройте глобальный layout с навигацией.</p>
+<p class='ordered'>3. Соберите страницы как route-компоненты.</p>
+<p class='ordered'>4. Вынесите общую логику в composables.</p>
+<p class='ordered'>5. Добавьте Pinia-сторы для общего состояния.</p>
+<p class='ordered'>6. Создайте переиспользуемые компоненты с типизированными props.</p>
+<p class='ordered'>7. Оптимизируйте: ленивые маршруты, computed, виртуализация.</p>
+<p class='ordered'>8. Пишите тесты на Vitest + Vue Test Utils.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `npm run build` проходит с проверкой типов</p>
+<p class='ordered'>2. `npm run lint` чисто</p>
+<p class='ordered'>3. Компоненты рендерятся и обновляются реактивно</p>
+<p class='ordered'>4. Нет лишних ре-рендеров (Vue DevTools)</p>
+<p class='ordered'>5. Тесты проходят для ядра логики и компонентов</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Потеря реактивности: разворачивайте ref в шаблонах; для объектов — `reactive`.</li>
+<li>&quot;Cannot find module&quot;: проверьте path aliases и `tsconfig`.</li>
+<li>Нет состояния в Devtools: проверьте установку Pinia и порядок плагинов.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="typescript.html">← typescript</a></div>
     </article>
   </div>
@@ -230,6 +345,15 @@ export const useCartStore = defineStore(&quot;cart&quot;, () =&gt; {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -256,6 +380,9 @@ export const useCartStore = defineStore(&quot;cart&quot;, () =&gt; {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

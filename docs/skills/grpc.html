@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="graphql.html">← graphql</a><a class="page-nav-link" href="laravel.html">laravel →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>gRPC</h1>
 <blockquote>Building high-performance service communication with gRPC.</blockquote>
 <h2>Quick Start</h2>
@@ -185,6 +186,123 @@ reply, err := c.SayHello(ctx, &amp;hellopb.HelloRequest{Name: &quot;World&quot;}
 <li>Connection refused: check the server address and ports.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>gRPC (Джи-Ар-Пи-Си)</h1>
+<blockquote>Высокопроизводительная коммуникация сервисов через gRPC.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install grpcio grpcio-tools
+# или Go:
+go get google.golang.org/grpc</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Внутренние вызовы между сервисами</li>
+<li>Низколатентные, типизированные кросс-языковые API</li>
+<li>Стриминг (живые данные, прогресс)</li>
+<li>Микросервисы, разделяющие контракт через proto</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Схемы</h3>
+<ul>
+<li>Контракты определяйте в `.proto` сначала</li>
+<li>Семантическая нумерация полей proto3 (стабильная)</li>
+<li>Версионируйте через package и правила совместимости полей</li>
+<li>Держите сообщения небольшими и сфокусированными</li>
+</ul>
+<h3>Стили RPC</h3>
+<ul>
+<li>Unary — для запрос/ответ</li>
+<li>Server streaming — для пагинации или live-обновлений</li>
+<li>Client streaming — для загрузок и батчей</li>
+<li>Bidi streaming — для интерактивных сессий</li>
+</ul>
+<h3>Реализация</h3>
+<ul>
+<li>Генерируйте стабы в общий модуль</li>
+<li>Ставьте deadlines/timeouts на каждый вызов</li>
+<li>Interceptors — для логирования, auth, метрик</li>
+<li>Обрабатывайте статус-коды и богатые ошибки</li>
+</ul>
+<h3>Операции</h3>
+<ul>
+<li>Между сервисами — TLS/mTLS</li>
+<li>Retries с backoff для транзиентных ошибок</li>
+<li>Балансировка через client-side LB или service mesh</li>
+<li>Мониторинг задержки и ошибок по методам</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install grpcio grpcio-tools protobuf
+# Go:
+go get google.golang.org/grpc google.golang.org/protobuf</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// proto/hello.proto
+syntax = &quot;proto3&quot;;
+package hello;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc StreamGreetings (HelloRequest) returns (stream HelloReply);
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>import grpc
+import hello_pb2, hello_pb2_grpc
+
+class Greeter(hello_pb2_grpc.GreeterServicer):
+    def SayHello(self, request, context):
+        return hello_pb2.HelloReply(message=f&quot;Hello, {request.name}&quot;)
+
+    def StreamGreetings(self, request, context):
+        for i in range(5):
+            yield hello_pb2.HelloReply(message=f&quot;Hello #{i}, {request.name}&quot;)
+
+server = grpc.server(grpc.ThreadPoolExecutor(max_workers=10))
+hello_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+server.add_insecure_port(&quot;[::]:50051&quot;)
+server.start()
+server.wait_for_termination()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Клиент с deadline и retry
+channel = grpc.insecure_channel(&quot;localhost:50051&quot;)
+stub = hello_pb2_grpc.GreeterStub(channel)
+
+try:
+    reply = stub.SayHello(hello_pb2.HelloRequest(name=&quot;World&quot;), timeout=5)
+    print(reply.message)
+except grpc.RpcError as e:
+    print(&quot;status:&quot;, e.code(), e.details())</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Go клиент с deadline
+conn, _ := grpc.NewClient(&quot;localhost:50051&quot;, grpc.WithTransportCredentials(insecure.NewCredentials()))
+defer conn.Close()
+c := hellopb.NewGreeterClient(conn)
+
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+reply, err := c.SayHello(ctx, &amp;hellopb.HelloRequest{Name: &quot;World&quot;})</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Определите контракт сервиса в `.proto`.</p>
+<p class='ordered'>2. Сгенерируйте стабы для каждого языка.</p>
+<p class='ordered'>3. Реализуйте сервер с бизнес-логикой.</p>
+<p class='ordered'>4. Добавьте interceptors для auth, логирования и метрик.</p>
+<p class='ordered'>5. Реализуйте клиентов с deadlines и retries.</p>
+<p class='ordered'>6. Вне dev-окружений используйте TLS/mTLS.</p>
+<p class='ordered'>7. Добавьте load balancing и circuit breakers.</p>
+<p class='ordered'>8. Мониторьте задержку и error rates по методам.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Стабы генерируются чисто для всех языков</p>
+<p class='ordered'>2. Unary и streaming вызовы возвращают корректные данные</p>
+<p class='ordered'>3. Deadlines дают корректные статус-коды</p>
+<p class='ordered'>4. Interceptors логируют и аутентифицируют</p>
+<p class='ordered'>5. Распространение ошибок через правильные gRPC статус-коды</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>DeadlineExceeded: поднимите таймауты или проверьте задержку ниже по стеку.</li>
+<li>Unimplemented: проверьте регистрацию метода на сервере.</li>
+<li>Connection refused: проверьте адрес сервера и порты.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="graphql.html">← graphql</a><a class="page-nav-link" href="laravel.html">laravel →</a></div>
     </article>
   </div>
@@ -233,6 +351,15 @@ reply, err := c.SayHello(ctx, &amp;hellopb.HelloRequest{Name: &quot;World&quot;}
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -259,6 +386,9 @@ reply, err := c.SayHello(ctx, &amp;hellopb.HelloRequest{Name: &quot;World&quot;}
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

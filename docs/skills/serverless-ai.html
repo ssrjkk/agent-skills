@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       <div class="page-nav"><a class="page-nav-link" href="prometheus-grafana.html">← prometheus-grafana</a><a class="page-nav-link" href="sre-slos.html">sre-slos →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Serverless AI</h1>
 <blockquote>Run AI inference at the edge with serverless platforms like Cloudflare Workers and AWS Lambda.</blockquote>
 <h2>Quick Start</h2>
@@ -193,6 +194,124 @@ hey -n 1000 -c 50 -m POST https://api-aws.example.com/generate</code></pre><butt
 <p class='ordered'>3. Inference quality matches expectations for the model size</p>
 <p class='ordered'>4. Cost is lower than always-on GPU instances for variable traffic</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Serverless AI</h1>
+<blockquote>Запускайте AI-инференс на edge с serverless-платформами: Cloudflare Workers и AWS Lambda.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>// Cloudflare Workers AI — edge-инференс
+export default {
+  async fetch(request: Request, env: Env): Promise&lt;Response&gt; {
+    const { pathname } = new URL(request.url);
+
+    if (pathname === &quot;/generate&quot;) {
+      const { prompt } = await request.json() as { prompt: string };
+
+      const response = await env.AI.run(&quot;@cf/meta/llama-3.2-3b-instruct&quot;, {
+        prompt: prompt,
+        max_tokens: 500,
+        temperature: 0.7
+      });
+
+      return Response.json(response);
+    }
+
+    // Текстовые эмбеддинги
+    if (pathname === &quot;/embed&quot;) {
+      const { text } = await request.json() as { text: string | string[] };
+      const embeddings = await env.AI.run(&quot;@cf/baai/bge-base-en-v1.5&quot;, {
+        text: Array.isArray(text) ? text : [text]
+      });
+      return Response.json(embeddings);
+    }
+
+    return new Response(&quot;Not found&quot;, { status: 404 });
+  }
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># AWS Lambda с SageMaker
+import boto3
+import json
+import os
+
+sagemaker = boto3.client(&quot;sagemaker-runtime&quot;)
+ENDPOINT_NAME = os.environ[&quot;ENDPOINT_NAME&quot;]
+
+def lambda_handler(event, context):
+    body = json.loads(event[&quot;body&quot;])
+
+    response = sagemaker.invoke_endpoint(
+        EndpointName=ENDPOINT_NAME,
+        ContentType=&quot;application/json&quot;,
+        Body=json.dumps({
+            &quot;inputs&quot;: body[&quot;prompt&quot;],
+            &quot;parameters&quot;: {&quot;max_new_tokens&quot;: 200, &quot;temperature&quot;: 0.7}
+        })
+    )
+
+    result = json.loads(response[&quot;Body&quot;].read().decode())
+    return {&quot;statusCode&quot;: 200, &quot;body&quot;: json.dumps({&quot;response&quot;: result})}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ключевые концепции</h2>
+<p>Serverless AI меняет холодные старты на нулевые затраты в простое. Cloudflare Workers запускают инференс у пользователя (edge). Lambda с SageMaker даёт масштабируемый GPU-инференс. Лучше всего подходит для лёгких моделей и нагрузок по требованию.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Лёгкий инференс (модели &lt; 3B параметров)</li>
+<li>Переменная нагрузка с непредсказуемым трафиком</li>
+<li>Edge-приложения (требования к низкой задержке)</li>
+<li>Прототипы и недорогие деплои</li>
+</ul>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите платформу: Workers AI для edge-инференса у пользователя, Lambda + SageMaker endpoint для более тяжёлых GPU-моделей или гибрид по маршрутам.</p>
+<p class='ordered'>2. Проектируйте stateless-обработчики: логика модели и промптов в коде, состояние (эмбеддинги/поиск) во внешнем хранилище — KV, S3, БД.</p>
+<p class='ordered'>3. Добавьте ограничения: Workers `wait`/`event.waitUntil`, Lambda `maxBatchSize`, строгие бюджеты памяти и таймаутов.</p>
+<p class='ordered'>4. Боритесь с холодными стартами: прогревайте критичный путь (WarmPool / cron ping), держите payload небольшим.</p>
+<p class='ordered'>5. Инструментируйте: логируйте задержку, токены, стоимость и ошибки; алармы на P95 выше бюджета.</p>
+<p class='ordered'>6. Срезайте затраты на пиках: полагайтесь на автоскейлинг провайдера и кэш; A/B-тестируйте размер модели против задержки.</p>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Workers AI с кэшем и lookup эмбеддингов
+export default {
+  async fetch(request: Request, env: Env): Promise&lt;Response&gt; {
+    const cache = caches.default;
+    const url = new URL(request.url);
+    const cached = await cache.match(request);
+    if (cached) return cached;
+
+    if (url.pathname === &quot;/summarize&quot;) {
+      const { text } = await request.json() as { text: string };
+      const out = await env.AI.run(&quot;@cf/meta/llama-3.2-3b-instruct&quot;, {
+        prompt: `Summarize in one sentence:\n${text}`,
+        max_tokens: 120,
+      });
+      const json = Response.json(out);
+      json.headers.set(&quot;Cache-Control&quot;, &quot;max-age=300&quot;);
+      await cache.put(request, json.clone());
+      return json;
+    }
+    return Response.json({ ok: false, reason: &quot;not found&quot; }, { status: 404 });
+  },
+};</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Замер холодных стартов во времени
+curl -w &quot;@dns_time=%{time_starttransfer}\n&quot; https://edge.example.com/summarize
+# нагрузочный тест Lambda
+hey -n 1000 -c 50 -m POST https://api-aws.example.com/generate</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Низкий cold-start: модели меньше, warmers, минимум зависимостей.</li>
+<li>Рантаймы под CPU/GPU; батчинг где можно.</li>
+<li>Кэш весов моделей в слое или общем хранилище.</li>
+<li>Таймауты и память под ворклоад.</li>
+<li>Мониторинг invocations, длительности и cold-start rate.</li>
+<li>Для длинных запросов — выделенный эндпоинт.</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Высокие cold start: provisioned concurrency или warmer.</li>
+<li>Таймаут: разбейте работу или поднимите лимит функции.</li>
+<li>Ошибки памяти: правильно выделите под модель.</li>
+<li>Спайки стоимости: просмотрите паттерны invocations и кэш.</li>
+</ul>
+<h2>Валидация</h2>
+<p class='ordered'>1. Функция деплоится и отвечает на запросы</p>
+<p class='ordered'>2. Задержка холодного старта приемлема для кейса</p>
+<p class='ordered'>3. Качество инференса соответствует ожиданиям для размера модели</p>
+<p class='ordered'>4. Стоимость ниже always-on GPU-инстансов при переменном трафике</p></div>
       <div class="page-nav"><a class="page-nav-link" href="prometheus-grafana.html">← prometheus-grafana</a><a class="page-nav-link" href="sre-slos.html">sre-slos →</a></div>
     </article>
   </div>
@@ -241,6 +360,15 @@ hey -n 1000 -c 50 -m POST https://api-aws.example.com/generate</code></pre><butt
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -267,6 +395,9 @@ hey -n 1000 -c 50 -m POST https://api-aws.example.com/generate</code></pre><butt
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

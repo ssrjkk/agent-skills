@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="astro.html">astro →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Angular</h1>
 <blockquote>Building scalable enterprise frontends with Angular.</blockquote>
 <h2>Quick Start</h2>
@@ -174,6 +175,112 @@ const routes: Routes = [
 <li>DI errors: check provider scope and `providedIn`.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Angular (Ангуляр)</h1>
+<blockquote>Масштабируемые корпоративные фронтенды на Angular.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>npm install -g @angular/cli
+ng new my-app
+cd my-app &amp;&amp; ng serve</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Корпоративные single-page приложения</li>
+<li>Команды, которым нужна структура и конвенции</li>
+<li>Большие приложения со многими разработчиками</li>
+<li>Реактивные потоки данных через RxJS</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Компоненты и сигналы</h3>
+<ul>
+<li>Сигналы (`signal()`) для реактивного состояния</li>
+<li>`computed()` для производных значений</li>
+<li>`@Input()`/`@Output()` для границ</li>
+<li>Компоненты сфокусированы; `OnPush` change detection</li>
+</ul>
+<h3>Dependency injection</h3>
+<ul>
+<li>Сервисы с правильным скоупом</li>
+<li>`inject()` вместо конструкторной инъекции</li>
+<li>`providedIn: &#x27;root&#x27;` для общих сервисов</li>
+<li>Внешние API за сервисами</li>
+</ul>
+<h3>Реактивное состояние</h3>
+<ul>
+<li>Сигналы для UI-состояния</li>
+<li>RxJS для async-потоков и событий</li>
+<li>Серверное состояние через `httpClient` + effects</li>
+<li>Отписка через `takeUntilDestroyed`</li>
+</ul>
+<h3>Структура</h3>
+<ul>
+<li>По фичам (standalone компоненты)</li>
+<li>Лениво загружаемые маршруты</li>
+<li>Декларативные шаблоны с pipes</li>
+<li>API-вызовы централизованы в сервисах</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>ng new my-app --style scss --routing
+npm i @angular/common</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>// Компонент на сигналах
+import { Component, signal, computed } from &quot;@angular/core&quot;;
+
+@Component({
+  selector: &quot;app-counter&quot;,
+  template: `
+    &lt;button (click)=&quot;increment()&quot;&gt;Count: {{ count() }}&lt;/button&gt;
+    &lt;p&gt;Doubled: {{ doubled() }}&lt;/p&gt;
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CounterComponent {
+  count = signal(0);
+  doubled = computed(() =&gt; this.count() * 2);
+  increment() { this.count.update(c =&gt; c + 1); }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Injectable сервис
+import { Injectable, inject } from &quot;@angular/core&quot;;
+import { HttpClient } from &quot;@angular/common/http&quot;;
+
+@Injectable({ providedIn: &quot;root&quot; })
+export class UserService {
+  private http = inject(HttpClient);
+  getUsers() { return this.http.get&lt;User[]&gt;(&quot;/api/users&quot;); }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Standalone компонент с DI
+@Component({
+  standalone: true,
+  imports: [CommonModule],
+  template: `&lt;ul&gt;&lt;li *ngFor=&quot;let u of users$ | async&quot;&gt;{{ u.name }}&lt;/li&gt;&lt;/ul&gt;`,
+})
+export class UserListComponent {
+  private users = inject(UserService);
+  users$ = this.users.getUsers();
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Маршрут с ленивой загрузкой
+const routes: Routes = [
+  { path: &quot;users&quot;, loadComponent: () =&gt; import(&quot;./users.component&quot;).then(m =&gt; m.UsersComponent) },
+];</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Скаффолд через Angular CLI.</p>
+<p class='ordered'>2. Настройте роутинг и shell-layout.</p>
+<p class='ordered'>3. Соберите feature-модули из standalone-компонентов.</p>
+<p class='ordered'>4. Сервисы с DI для доступа к данным.</p>
+<p class='ordered'>5. Сигналы для UI-состояния, RxJS для потоков.</p>
+<p class='ordered'>6. Лениво грузите маршруты.</p>
+<p class='ordered'>7. Добавьте формы и валидацию.</p>
+<p class='ordered'>8. Тесты через Angular testing library.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. `ng build` проходит с проверкой типов</p>
+<p class='ordered'>2. Компоненты рендерятся и реагируют на сигналы</p>
+<p class='ordered'>3. Сервисы провайдятся и инжектируются</p>
+<p class='ordered'>4. Ленивые маршруты грузятся по требованию</p>
+<p class='ordered'>5. Тесты проходят для компонентов/сервисов</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Проблемы change detection: OnPush и сигналы.</li>
+<li>Утечки памяти: takeUntilDestroyed для подписок.</li>
+<li>Ошибки DI: проверьте скоуп провайдеров и `providedIn`.</li>
+</ul></div>
       <div class="page-nav"><span></span><a class="page-nav-link" href="astro.html">astro →</a></div>
     </article>
   </div>
@@ -222,6 +329,15 @@ const routes: Routes = [
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -248,6 +364,9 @@ const routes: Routes = [
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

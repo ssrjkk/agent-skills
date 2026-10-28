@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="hipaa-compliance.html">← hipaa-compliance</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>HL7 FHIR</h1>
 <blockquote>Building healthcare integrations with HL7 FHIR resources and SMART on FHIR apps.</blockquote>
 <h2>Quick Start</h2>
@@ -293,6 +294,231 @@ def test_resource_validation():
     patient = {&quot;resourceType&quot;: &quot;Patient&quot;, &quot;name&quot;: [{&quot;family&quot;: &quot;Test&quot;}]}
     assert patient[&#x27;resourceType&#x27;] == &#x27;Patient&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>HL7 FHIR</h1>
+<blockquote>Создание интеграций в здравоохранении с ресурсами HL7 FHIR и приложениями SMART on FHIR.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>import requests
+
+class FHIRClient:
+    def __init__(self, base_url: str, access_token: str = None):
+        self.base_url = base_url.rstrip(&#x27;/&#x27;)
+        self.headers = {
+            &#x27;Content-Type&#x27;: &#x27;application/fhir+json&#x27;,
+            &#x27;Accept&#x27;: &#x27;application/fhir+json&#x27;,
+        }
+        if access_token:
+            self.headers[&#x27;Authorization&#x27;] = f&#x27;Bearer {access_token}&#x27;
+
+    def read(self, resource_type: str, id: str) -&gt; dict:
+        &quot;&quot;&quot;Чтение ресурса FHIR по ID.&quot;&quot;&quot;
+        resp = requests.get(
+            f&#x27;{self.base_url}/{resource_type}/{id}&#x27;,
+            headers=self.headers
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    def search(self, resource_type: str, params: dict = None) -&gt; dict:
+        &quot;&quot;&quot;Поиск ресурсов FHIR.&quot;&quot;&quot;
+        resp = requests.get(
+            f&#x27;{self.base_url}/{resource_type}&#x27;,
+            params=params or {},
+            headers=self.headers
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    def create(self, resource: dict) -&gt; dict:
+        &quot;&quot;&quot;Создание нового ресурса FHIR.&quot;&quot;&quot;
+        resp = requests.post(
+            f&#x27;{self.base_url}/{resource[&quot;resourceType&quot;]}&#x27;,
+            json=resource,
+            headers=self.headers
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+# Пример: получение Patient
+client = FHIRClient(&#x27;https://fhir.example.com/fhir&#x27;)
+patient = client.read(&#x27;Patient&#x27;, &#x27;12345&#x27;)
+print(f&quot;Пациент: {patient[&#x27;name&#x27;][0][&#x27;family&#x27;]}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Создание интеграций с EHR (Epic, Cerner и др.)</li>
+<li>Создание приложений SMART on FHIR для клинических рабочих процессов</li>
+<li>Обмен клиническими данными между системами</li>
+<li>Когда нужна интероперабельность медицинских данных</li>
+</ul>
+<h2>Пошагово</h2>
+<h3>1. Понимание ресурсов FHIR</h3>
+<p>Основные ресурсы, с которыми вы будете работать:</p>
+<div class="codeblock"><pre class="code"><code># Ресурс Patient
+patient = {
+    &quot;resourceType&quot;: &quot;Patient&quot;,
+    &quot;id&quot;: &quot;12345&quot;,
+    &quot;name&quot;: [{
+        &quot;family&quot;: &quot;Smith&quot;,
+        &quot;given&quot;: [&quot;John&quot;]
+    }],
+    &quot;gender&quot;: &quot;male&quot;,
+    &quot;birthDate&quot;: &quot;1990-01-15&quot;
+}
+
+# Observation (лабораторный результат)
+observation = {
+    &quot;resourceType&quot;: &quot;Observation&quot;,
+    &quot;status&quot;: &quot;final&quot;,
+    &quot;code&quot;: {
+        &quot;coding&quot;: [{
+            &quot;system&quot;: &quot;http://loinc.org&quot;,
+            &quot;code&quot;: &quot;2339-0&quot;,
+            &quot;display&quot;: &quot;Glucose [Mass/volume] in Blood&quot;
+        }]
+    },
+    &quot;subject&quot;: {&quot;reference&quot;: &quot;Patient/12345&quot;},
+    &quot;valueQuantity&quot;: {
+        &quot;value&quot;: 95,
+        &quot;unit&quot;: &quot;mg/dL&quot;
+    }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>2. Авторизация SMART on FHIR</h3>
+<div class="codeblock"><pre class="code"><code>import secrets
+from urllib.parse import urlencode
+
+class SMARTAuth:
+    def __init__(self, client_id: str, client_secret: str, fhir_url: str):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.fhir_url = fhir_url
+
+    def get_auth_url(self, redirect_uri: str, scopes: list[str]) -&gt; str:
+        &quot;&quot;&quot;Генерация URL авторизации OAuth2.&quot;&quot;&quot;
+        params = {
+            &#x27;response_type&#x27;: &#x27;code&#x27;,
+            &#x27;client_id&#x27;: self.client_id,
+            &#x27;redirect_uri&#x27;: redirect_uri,
+            &#x27;scope&#x27;: &#x27; &#x27;.join(scopes),
+            &#x27;state&#x27;: secrets.token_urlsafe(32),
+            &#x27;aud&#x27;: self.fhir_url,
+        }
+        return f&#x27;{self.fhir_url}/auth/authorize?{urlencode(params)}&#x27;
+
+    def exchange_code(self, code: str, redirect_uri: str) -&gt; dict:
+        &quot;&quot;&quot;Обмен кода авторизации на токен доступа.&quot;&quot;&quot;
+        resp = requests.post(f&#x27;{self.fhir_url}/auth/token&#x27;, data={
+            &#x27;grant_type&#x27;: &#x27;authorization_code&#x27;,
+            &#x27;code&#x27;: code,
+            &#x27;redirect_uri&#x27;: redirect_uri,
+            &#x27;client_id&#x27;: self.client_id,
+            &#x27;client_secret&#x27;: self.client_secret,
+        })
+        return resp.json()</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>3. Клинические запросы</h3>
+<div class="codeblock"><pre class="code"><code>def get_patient_labs(client: FHIRClient, patient_id: str) -&gt; list[dict]:
+    &quot;&quot;&quot;Получение всех лабораторных результатов пациента.&quot;&quot;&quot;
+    bundle = client.search(&#x27;Observation&#x27;, {
+        &#x27;subject&#x27;: f&#x27;Patient/{patient_id}&#x27;,
+        &#x27;category&#x27;: &#x27;laboratory&#x27;,
+        &#x27;_sort&#x27;: &#x27;-date&#x27;,
+    })
+    return bundle.get(&#x27;entry&#x27;, [])
+
+def get_patient_medications(client: FHIRClient, patient_id: str) -&gt; list[dict]:
+    &quot;&quot;&quot;Получение активных назначений пациента.&quot;&quot;&quot;
+    bundle = client.search(&#x27;MedicationRequest&#x27;, {
+        &#x27;subject&#x27;: f&#x27;Patient/{patient_id}&#x27;,
+        &#x27;status&#x27;: &#x27;active&#x27;,
+    })
+    return bundle.get(&#x27;entry&#x27;, [])
+
+def get_patient_conditions(client: FHIRClient, patient_id: str) -&gt; list[dict]:
+    &quot;&quot;&quot;Получение активных состояний (диагнозов) пациента.&quot;&quot;&quot;
+    bundle = client.search(&#x27;Condition&#x27;, {
+        &#x27;subject&#x27;: f&#x27;Patient/{patient_id}&#x27;,
+        &#x27;clinical-status&#x27;: &#x27;active&#x27;,
+    })
+    return bundle.get(&#x27;entry&#x27;, [])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>4. Массовые данные FHIR</h3>
+<div class="codeblock"><pre class="code"><code>def kick_off_bulk_export(client: FHIRClient, output_format: str = &#x27;application/fhir+ndjson&#x27;):
+    &quot;&quot;&quot;Инициация массового экспорта FHIR Bulk Data.&quot;&quot;&quot;
+    resp = requests.get(
+        f&#x27;{client.base_url}/$export&#x27;,
+        headers={
+            **client.headers,
+            &#x27;Accept&#x27;: output_format,
+            &#x27;Prefer&#x27;: &#x27;respond-async&#x27;,
+        }
+    )
+    return resp.headers.get(&#x27;Content-Location&#x27;)  # Опрос этого URL для статуса
+
+def check_bulk_status(status_url: str) -&gt; dict:
+    &quot;&quot;&quot;Проверка статуса массового экспорта данных.&quot;&quot;&quot;
+    resp = requests.get(status_url)
+    if resp.status_code == 200:
+        return resp.json()  # Содержит URL для скачивания
+    return {&#x27;status&#x27;: &#x27;in-progress&#x27;}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>5. Подписки</h3>
+<div class="codeblock"><pre class="code"><code>def create_subscription(client: FHIRClient, criteria: str, endpoint: str) -&gt; dict:
+    &quot;&quot;&quot;Создание подписки FHIR для уведомлений в реальном времени.&quot;&quot;&quot;
+    subscription = {
+        &quot;resourceType&quot;: &quot;Subscription&quot;,
+        &quot;status&quot;: &quot;requested&quot;,
+        &quot;criteria&quot;: criteria,
+        &quot;channel&quot;: {
+            &quot;type&quot;: &quot;rest-hook&quot;,
+            &quot;endpoint&quot;: endpoint,
+            &quot;payload&quot;: &quot;application/fhir+json&quot;,
+        }
+    }
+    return client.create(subscription)
+
+# Пример: подписка на новые Observation для пациента
+create_subscription(
+    client,
+    &quot;Observation?subject=Patient/12345&quot;,
+    &quot;https://myapp.example.com/fhir-webhook&quot;
+)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Лучшие практики</h2>
+<ul>
+<li>**Используйте официальные схемы FHIR** для валидации</li>
+<li>**Обрабатывайте пагинацию** в результатах поиска (Bundle links)</li>
+<li>**Кэшируйте ресурсы** при необходимости для снижения нагрузки на сервер</li>
+<li>**Используйте _summary и _elements** для уменьшения размера payload</li>
+<li>**Реализуйте логику повторов** для временных сбоев</li>
+<li>**Валидируйте токены** при каждом запросе в production</li>
+</ul>
+<h2>Типичные ошибки</h2>
+<ul>
+<li>Отсутствие обработки пагинации Bundle (пропущенные результаты)</li>
+<li>Игнорирование различий версий FHIR (R4 vs R5)</li>
+<li>Отсутствие валидации ссылок на ресурсы перед использованием</li>
+<li>Забывают учитывать часовой пояс в полях даты/времени</li>
+<li>Отсутствие правильной реализации обновления токенов OAuth2</li>
+</ul>
+<h2>Примеры</h2>
+<h3>Сводка по пациенту</h3>
+<div class="codeblock"><pre class="code"><code>def build_patient_summary(client: FHIRClient, patient_id: str) -&gt; dict:
+    &quot;&quot;&quot;Создание комплексной сводки по пациенту.&quot;&quot;&quot;
+    patient = client.read(&#x27;Patient&#x27;, patient_id)
+    labs = get_patient_labs(client, patient_id)
+    meds = get_patient_medications(client, patient_id)
+    conditions = get_patient_conditions(client, patient_id)
+
+    return {
+        &#x27;patient&#x27;: patient[&#x27;name&#x27;][0],
+        &#x27;recent_labs&#x27;: [e[&#x27;resource&#x27;] for e in labs[:10]],
+        &#x27;active_medications&#x27;: [e[&#x27;resource&#x27;] for e in meds],
+        &#x27;active_conditions&#x27;: [e[&#x27;resource&#x27;] for e in conditions],
+    }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Валидация</h2>
+<div class="codeblock"><pre class="code"><code>def test_fhir_client():
+    client = FHIRClient(&#x27;https://hapi.fhir.org/baseR4&#x27;)
+    patient = client.read(&#x27;Patient&#x27;, &#x27;example&#x27;)
+    assert patient[&#x27;resourceType&#x27;] == &#x27;Patient&#x27;
+
+def test_resource_validation():
+    patient = {&quot;resourceType&quot;: &quot;Patient&quot;, &quot;name&quot;: [{&quot;family&quot;: &quot;Test&quot;}]}
+    assert patient[&#x27;resourceType&#x27;] == &#x27;Patient&#x27;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div></div>
       <div class="page-nav"><a class="page-nav-link" href="hipaa-compliance.html">← hipaa-compliance</a></div>
     </article>
   </div>
@@ -341,6 +567,15 @@ def test_resource_validation():
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -367,6 +602,9 @@ def test_resource_validation():
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

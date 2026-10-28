@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="context-engineering.html">← context-engineering</a><a class="page-nav-link" href="few-shot-learning.html">few-shot-learning →</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Embeddings</h1>
 <blockquote>Representing text as vectors for semantic similarity and retrieval.</blockquote>
 <h2>Quick Start</h2>
@@ -170,6 +171,108 @@ for i, label in enumerate(labels):
 <li>Domain drift: fine-tune embeddings or add keyword boost.</li>
 </ul>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Embeddings (Эмбеддинги)</h1>
+<blockquote>Представление текста векторами для семантической похожести и поиска.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>pip install sentence-transformers numpy scikit-learn
+python -c &quot;from sentence_transformers import SentenceTransformer; m=SentenceTransformer(&#x27;all-MiniLM-L6-v2&#x27;); print(m.encode(&#x27;hello&#x27;).shape)&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Семантический поиск и retrieval для RAG</li>
+<li>Кластеризация и дедупликация текстов</li>
+<li>Рекомендации по похожести контента</li>
+<li>Аномалии в текстовых корпусах</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Выбор модели</h3>
+<ul>
+<li>Размер модели — под объём данных и бюджет задержки</li>
+<li>Для поиска — retrieval-ориентированные (e5, bge, embedding-3)</li>
+<li>Нормализуйте векторы для cosine similarity</li>
+<li>Фиксируйте и версионируйте модель</li>
+</ul>
+<h3>Векторизация</h3>
+<ul>
+<li>Кодируйте батчами для пропускной способности</li>
+<li>Кэшируйте эмбеддинги, чтобы не считать повторно</li>
+<li>Длинные документы чанкуйте до кодирования</li>
+<li>Храните map метаданных: id -&gt; исходный текст</li>
+</ul>
+<h3>Похожесть и поиск</h3>
+<ul>
+<li>Cosine similarity для нормализованных векторов</li>
+<li>Для масштаба — ANN-индекс (HNSW)</li>
+<li>Комбинируйте с keyword-поиском для гибрида</li>
+<li>Пороговые скоре для уверенности</li>
+</ul>
+<h3>Оценка</h3>
+<ul>
+<li>Тестируйте recall на размеченном наборе</li>
+<li>Сравнивайте модели-кандидаты на вашем домене</li>
+<li>Следите за дрейфом словаря домена</li>
+<li>Меряйте trade-off задержка/качество</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>pip install sentence-transformers numpy scikit-learn
+# API-базируемые: pip install openai</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code>from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+docs = [&quot;Alpha release notes&quot;, &quot;Beta API reference&quot;, &quot;Gamma user guide&quot;]
+emb = model.encode(docs, normalize_embeddings=True)
+print(emb.shape)  # (3, 384)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Матрица cosine similarity
+import numpy as np
+
+def cosine(a, b):
+    return float(np.dot(a, b))
+
+query = model.encode([&quot;how to deploy?&quot;], normalize_embeddings=True)[0]
+scores = [cosine(query, e) for e in emb]
+best = int(np.argmax(scores))
+print(f&quot;best: {docs[best]} score={scores[best]:.3f}&quot;)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Батч-кодирование с кэшем
+import json, pathlib
+
+cache_path = pathlib.Path(&quot;embeddings.json&quot;)
+cache = json.loads(cache_path.read_text()) if cache_path.exists() else {}
+
+def get_emb(texts: list[str]) -&gt; list[list[float]]:
+    missing = [t for t in texts if t not in cache]
+    if missing:
+        for t, v in zip(missing, model.encode(missing, normalize_embeddings=True)):
+            cache[t] = v.tolist()
+        cache_path.write_text(json.dumps(cache))
+    return [cache[t] for t in texts]</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Кластеризация через k-means
+from sklearn.cluster import KMeans
+
+kmeans = KMeans(n_clusters=3, n_init=10, random_state=0)
+labels = kmeans.fit_predict(emb)
+for i, label in enumerate(labels):
+    print(docs[i], &quot;-&gt; cluster&quot;, label)</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выберите модель эмбеддингов под объём и задержку.</p>
+<p class='ordered'>2. Закодируйте корпус батчами; кэшируйте результаты.</p>
+<p class='ordered'>3. Нормализуйте векторы для cosine similarity.</p>
+<p class='ordered'>4. Индексируйте через ANN-хранилище (или numpy для малых наборов).</p>
+<p class='ordered'>5. Стройте запросы похожести с порогами.</p>
+<p class='ordered'>6. Где важен recall — добавьте гибридный keyword-поиск.</p>
+<p class='ordered'>7. Оцените recall@k на размеченном наборе.</p>
+<p class='ordered'>8. Версионируйте модель и перекодируйте при апгрейдах.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Похожие документы скорится выше несхожих</p>
+<p class='ordered'>2. recall@k соответствует цели на eval-наборе</p>
+<p class='ordered'>3. Задержка кодирования в рамках бюджета</p>
+<p class='ordered'>4. Кэш исключает повторную работу</p>
+<p class='ordered'>5. Результаты воспроизводимы с фиксированным seed</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Плохая похожесть: смените модель или нормализуйте векторы.</li>
+<li>Медленное кодирование: батчи больше или модель меньше.</li>
+<li>Дрейф домена: дообучите эмбеддинги или добавьте keyword-буст.</li>
+</ul></div>
       <div class="page-nav"><a class="page-nav-link" href="context-engineering.html">← context-engineering</a><a class="page-nav-link" href="few-shot-learning.html">few-shot-learning →</a></div>
     </article>
   </div>
@@ -218,6 +321,15 @@ for i, label in enumerate(labels):
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -244,6 +356,9 @@ for i, label in enumerate(labels):
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

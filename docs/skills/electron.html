@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
       
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Electron</h1>
 <blockquote>Cross-platform desktop apps with JavaScript, HTML, and CSS.</blockquote>
 <h2>Quick Start</h2>
@@ -173,6 +174,111 @@ contextBridge.exposeInMainWorld(&quot;api&quot;, {
 <p class='ordered'>2. IPC communication works</p>
 <p class='ordered'>3. App packages for target OS</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Electron</h1>
+<blockquote>Кросс-платформенные десктоп-приложения на JavaScript, HTML и CSS.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code>// main.js
+const { app, BrowserWindow, ipcMain } = require(&#x27;electron&#x27;);
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: __dirname + &#x27;/preload.js&#x27;,
+    },
+  });
+  win.loadURL(&#x27;http://localhost:5173&#x27;); // или loadFile(&#x27;dist/index.html&#x27;)
+}
+
+app.whenReady().then(createWindow);
+
+// IPC-обработчик
+ipcMain.handle(&#x27;get-user-data&#x27;, async () =&gt; {
+  return { name: &#x27;Alice&#x27;, role: &#x27;admin&#x27; };
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// preload.js
+const { contextBridge, ipcRenderer } = require(&#x27;electron&#x27;);
+contextBridge.exposeInMainWorld(&#x27;electronAPI&#x27;, {
+  getUserData: () =&gt; ipcRenderer.invoke(&#x27;get-user-data&#x27;),
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Кросс-платформенные десктоп-приложения (Windows, Mac, Linux)</li>
+<li>Приложения на веб-фреймворках (React, Vue, Svelte)</li>
+<li>Не для лёгких приложений (лучше Tauri)</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Держите main-процесс тонким; UI — в renderer.</li>
+<li>`contextIsolation: true` и минимальный preload для IPC.</li>
+<li>Общение через `ipcMain`/`ipcRenderer` с валидацией пейлоадов.</li>
+<li>Упаковка через `asar`; исключайте dev-зависимости.</li>
+<li>Обрабатывайте жизненный цикл окон на разных платформах.</li>
+<li>Подписывайте и нотаризуйте для продакшн-дистрибуции.</li>
+</ul>
+<h2>Пошаговые инструкции</h2>
+<p class='ordered'>1. Инициализация: `npm init; npm install electron --save-dev`</p>
+<p class='ordered'>2. Создайте `main.js` с созданием окна</p>
+<p class='ordered'>3. Создайте `preload.js` для безопасного IPC</p>
+<p class='ordered'>4. Сборка и упаковка: `npx electron-builder`</p>
+<p class='ordered'>5. Подпись/нотаризация для релиза</p>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code>npm install electron --save-dev
+npm install electron-builder --save-dev</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<p>Вход: `npm run start` → Выход: нативное десктоп-окно с веб-приложением</p>
+<div class="codeblock"><pre class="code"><code>// Безопасный main-процесс с contextIsolation
+const { app, BrowserWindow, ipcMain } = require(&quot;electron&quot;);
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    webPreferences: {
+      preload: path.join(__dirname, &quot;preload.js&quot;),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+  win.loadURL(&quot;http://localhost:3000&quot;);
+}
+
+app.whenReady().then(createWindow);</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// preload.js — безопасный IPC-мост
+const { contextBridge, ipcRenderer } = require(&quot;electron&quot;);
+
+contextBridge.exposeInMainWorld(&quot;api&quot;, {
+  getData: () =&gt; ipcRenderer.invoke(&quot;data:get&quot;),
+});</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Ресурсы</h2>
+<ul>
+<li>[Electron Docs](https://www.electronjs.org/docs)</li>
+<li>[Examples](./examples/)</li>
+</ul>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>**Раздувание из-за `node_modules`** — в сборку попало всё подряд.</li>
+</ul>
+<p>Используйте `files`/`asar` в `electron-builder` и исключите dev-зависимости.</p>
+<ul>
+<li>**Белый экран** — упал renderer. Откройте консоль DevTools и проверьте,</li>
+</ul>
+<p>что preload-скрипт безопасно работает с IPC при `contextIsolation`.</p>
+<ul>
+<li>**Приложение не перезапускается** — главное окно уничтожается при закрытии.</li>
+</ul>
+<p>Отключите выход по `window-all-closed` на macOS или повесьте `before-quit`.</p>
+<ul>
+<li>**Нативные модули не грузятся** — рассинхрон ABI после апгрейда Node.</li>
+</ul>
+<p>Пересоберите через `electron-rebuild` и зафиксируйте версию ABI.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Окно приложения открывается корректно</p>
+<p class='ordered'>2. IPC-коммуникация работает</p>
+<p class='ordered'>3. Приложение упаковывается под целевую ОС</p></div>
       
     </article>
   </div>
@@ -221,6 +327,15 @@ contextBridge.exposeInMainWorld(&quot;api&quot;, {
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -247,6 +362,9 @@ contextBridge.exposeInMainWorld(&quot;api&quot;, {
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>

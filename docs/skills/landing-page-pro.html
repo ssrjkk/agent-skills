@@ -66,7 +66,8 @@
       </div>
       <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="diagram-as-code.html">← diagram-as-code</a></div>
-      <div class="skill-page-body">
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
         <h1>Landing Page Pro</h1>
 <blockquote>Strategy first, tokens second, checklist last. One offer, one audience, one action.</blockquote>
 <h2>Quick Start</h2>
@@ -198,6 +199,136 @@ CTA: &quot;Start free trial&quot; / Proof: &quot;4.9/5 from 2,300 teams&quot;</c
 <p>(https://github.com/elayadesign/ai-design-skills), MIT licensed, rewritten</p>
 <p>for the universal Agent Skills format with bilingual and validation additions.</p>
       </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Landing Page Pro (Проектирование лендингов)</h1>
+<blockquote>Сначала стратегия, потом токены, в конце чек-лист. Один оффер, одна аудитория, одно действие.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Интейк (одним пакетом, без вопросов по одному)
+- Действие: пробная регистрация. Оффер: 14 дней команды, без карты.
+- ICP: бэкенд-команды, тонущие в flaky E2E. Возражения: цена, цена переезда.
+- Доказательства: 3 логотипа, 2 отзыва, аптайм 99.98%.
+- Трафик: поиск. Тон: деловой. Мобильные: да.</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># каркас, затем стройка по секциям (не переписывай всю страницу за итерацию)
+mkdir -p landing/{sections,assets}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Новые маркетинговые страницы и лендинги с нуля</li>
+<li>Хиро-блоки, тарифные секции, FAQ, финальные CTA</li>
+<li>Ревью конверсионных текстов и аудит редизайна</li>
+<li>Любой UI, где каждое визуальное значение идёт из токенов, а не из вкуса</li>
+</ul>
+<h2>Лучшие практики</h2>
+<h3>Стратегия раньше визуала</h3>
+<ul>
+<li>Сначала аргумент страницы, потом цвета, шрифты и анимации.</li>
+<li>Один главный CTA. Никаких конкурирующих CTA над фолдом.</li>
+<li>Сообщение под источник трафика: дублируй заголовок объявления в хиро.</li>
+<li>Сначала выгоды, потом фичи. Конкретика вместо vague-глаголов.</li>
+</ul>
+<h3>Интейк одним пакетом</h3>
+<ul>
+<li>Спрашивай только недостающее, всё одним сообщением.</li>
+<li>Если ответа нет, зафиксируй по одному допущению на пробел и иди дальше. Не стопорь стройку.</li>
+<li>Обязательно: действие, оффер, ICP, топ-3 возражения, источник трафика, доказательства, тон.</li>
+</ul>
+<h3>Выбор раскладки</h3>
+<ul>
+<li>Выбери ровно один тип и запиши почему:</li>
+<li>Классика с хиро: продукт понятен со скриншота.</li>
+<li>Длинная история: нужно учить и снимать скепсис.</li>
+<li>Минималка: горячий трафик или короткий оффер.</li>
+<li>Сравнение: в интентах есть альтернативы.</li>
+<li>Порядок стройки: хиро, выгоды, как работает, доказательства, FAQ, финальный CTA.</li>
+</ul>
+<h3>Копирайтинг</h3>
+<ul>
+<li>Формулы заголовков: &quot;{Результат} без {боли}&quot;, &quot;{Категория} для {аудитории}&quot;.</li>
+<li>CTA это глагол плюс выгода. Никогда &quot;Узнать больше&quot; или &quot;Отправить&quot;.</li>
+<li>Буллеты выгод: жирная выгода, потом доказательство. Бан слов: revolutionize,</li>
+</ul>
+<p>supercharge, cutting edge, effortless, world class. Пиши просто, что делает продукт.</p>
+<ul>
+<li>Заголовки и кнопки с заглавной только первой буквы.</li>
+</ul>
+<h3>Визуальные токены</h3>
+<ul>
+<li>Один шрифт на сайт. Жирность не выше bold, никакого italic в UI.</li>
+<li>Каждый кегль в шаг шкалы. Округляй вниз, никогда вверх.</li>
+<li>Отступы только из таблицы токенов. Кнопки: 8px по вертикали, 12px по горизонтали.</li>
+<li>Вложенный радиус: внутренний равен внешнему минус зазор, только если зазор меньше 32px и итог больше 2.</li>
+<li>Рамки либо вокруг всей карточки, либо никак. Фоны плоские, без градиентов,</li>
+</ul>
+<p>кроме текстового градиента хиро.</p>
+<ul>
+<li>Одна кривая моушна, 500ms на раскладку, 300ms на ховер. Анимируй только</li>
+</ul>
+<p>transform и opacity. Уважай prefers-reduced-motion.</p>
+<ul>
+<li>Иконки из одного сета (например Phosphor или Lucide). Никогда эмодзи вместо иконок.</li>
+</ul>
+<h3>Двуязычные страницы</h3>
+<ul>
+<li>Шрифт обязан поддерживать кириллицу (Manrope и Poppins подходят, Geist нет).</li>
+<li>Переводи смысл, а не слова. Цифры, бренды и строки кода оставь без изменений.</li>
+<li>Русские заголовки с заглавной только первой буквы. Проверяй переносы строк в обоих языках.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># рантайм не нужен, лендинг это обычный HTML/CSS/JS
+python3 --version  # опционально, только для локальных проверок</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Структура страницы (классика с хиро, тип A)
+1. Хиро: заголовок, подзаголовок, CTA, полоса доказательств, мокап продукта
+2. Выгоды x4, через результат
+3. Как работает, 3 шага
+4. Раскрывающийся таглайн, 2+ строки, слова подсвечиваются при скролле
+5. Полоса метрик рядом с тезисами, которые они подтверждают
+6. FAQ x6, возражения отдельной секцией
+7. Финальный CTA, такой же как верхний</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Хиро-копи (сначала выгода, конкретно)
+Заголовок: &quot;Сократи недельную отчётность с 4 часов до 15 минут&quot;
+Подзаголовок: &quot;Acme Reports сводит данные в один дашборд, который читает команда.&quot;
+CTA: &quot;Начать пробный период&quot; / Доказательство: &quot;4.9/5 от 2,300 команд&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>&lt;!-- Вложенный радиус: внешний 16px, паддинг 8px, внутренний 8px --&gt;
+&lt;div class=&quot;rounded-2xl border border-white/10 bg-[#181818] p-2&quot;&gt;
+  &lt;div class=&quot;rounded-lg bg-black p-6&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Моушн: одна базовая кривая, только transform и opacity */
+.reveal { opacity: 0; transform: translateY(32px); }
+.reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity 700ms cubic-bezier(0.22,1,0.36,1),
+              transform 700ms cubic-bezier(0.22,1,0.36,1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: opacity 200ms; }
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Проведи пакетный интейк. Зафиксируй допущения, не стопорься.</p>
+<p class='ordered'>2. Напиши структуру страницы и хиро-копи до любого кода.</p>
+<p class='ordered'>3. Выбери один тип раскладки и запиши почему.</p>
+<p class='ordered'>4. Набросай конверсионный копирайтинг: заголовок, подзаголовок, CTA, выгоды, FAQ.</p>
+<p class='ordered'>5. Зафиксируй токены: шрифт, шаги шкалы, таблицу отступов, радиусы, кривую моушна.</p>
+<p class='ordered'>6. Строй по секциям в порядке стройки. Ревьювь диффы посекционно.</p>
+<p class='ordered'>7. Добавь состояния каждому интерактиву: hover, active, focus, loading, empty, error.</p>
+<p class='ordered'>8. Прогони чек-лист Валидации, почини, потом ship.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Один оффер, одна аудитория, одно главное действие; нет конкурирующих CTA над фолдом</p>
+<p class='ordered'>2. Каждый кегль в шаге шкалы, каждый отступ из таблицы токенов</p>
+<p class='ordered'>3. У каждого интерактива есть hover, active, focus, loading, empty, error</p>
+<p class='ordered'>4. Контраст 4.5:1, видимый фокус, нет мёртвых ссылок, есть skip-ссылка</p>
+<p class='ordered'>5. Title, meta-описание, og-теги, favicon, alt-тексты, семантические ландмарки</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Generic-вид: жёстко держи таблицы токенов, запрети ad-hoc значения.</li>
+<li>Слабый копирайтинг: замени прилагательные цифрами и доказательствами рядом с тезисами.</li>
+<li>Захламлённое хиро: один CTA, один сигнал доверия, ширина заголовка около 680px.</li>
+<li>Тормоза скролла: IntersectionObserver один раз на секцию, никаких сырых scroll-лисенеров.</li>
+<li>Расползание скоупа: новые хотелки идут в v2, а не в текущий проход.</li>
+</ul>
+<h2>Благодарности</h2>
+<p>Структура процесса (пакетный интейк, таблицы токенов, раскрывающийся таглайн,</p>
+<p>ship-чек-лист) адаптирована из `landing-page-design` от elayadesign</p>
+<p>(https://github.com/elayadesign/ai-design-skills), лицензия MIT, переписано</p>
+<p>под универсальный формат Agent Skills с двуязычными дополнениями и валидацией.</p></div>
       <div class="page-nav"><a class="page-nav-link" href="diagram-as-code.html">← diagram-as-code</a></div>
     </article>
   </div>
@@ -246,6 +377,15 @@ CTA: &quot;Start free trial&quot; / Proof: &quot;4.9/5 from 2,300 teams&quot;</c
     btn.textContent = (I18N[lang()] || I18N.en).copied_btn;
     setTimeout(function() { btn.classList.remove('copied'); btn.textContent = old; delete btn.dataset.busy; }, 1400);
   }
+  function showSkillLang(l) {
+    try { localStorage.setItem('skill-lang', l); } catch (e) {}
+    document.querySelectorAll('[data-slang-body]').forEach(function(d) {
+      d.hidden = d.getAttribute('data-slang-body') !== l;
+    });
+    document.querySelectorAll('.lang-tab').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-slang') === l);
+    });
+  }
   function showToast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -272,6 +412,9 @@ CTA: &quot;Start free trial&quot; / Proof: &quot;4.9/5 from 2,300 teams&quot;</c
     }
     var bt = document.getElementById('back-top');
     if (bt) window.addEventListener('scroll', function() { bt.hidden = window.scrollY < 600; }, {passive: true});
+    var sl = null;
+    try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
+    if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
   </script>
 </body>
