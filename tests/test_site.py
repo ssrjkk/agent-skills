@@ -113,6 +113,7 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_domain_pages(catalog_path, out)
     mod.build_roadmaps(catalog_path, out, source_dir=tmp_path)
     mod.build_style_css(out)
+    mod.build_site_js(out)
     mod.build_search_index(catalog_path, out)
     return out
 
@@ -247,43 +248,29 @@ class TestSiteGenerator:
         )
         assert len(pages) >= 4
         used: set[str] = set()
-        blob = []
         for page in pages:
             html = page.read_text(encoding="utf-8")
-            blob.append(html)
             used.update(re.findall(r'data-i18n="([a-z_0-9]+)"', html))
             used.update(re.findall(r'data-i18n-ph="([a-z_0-9]+)"', html))
             used.update(re.findall(r'data-i18n-aria="([a-z_0-9]+)"', html))
         assert used, "expected i18n hooks in markup"
-        text = "\n".join(blob)
+        # single source of truth: every key must be defined in assets/site.js
+        site_js = (docs / "site.js").read_text(encoding="utf-8")
         for key in sorted(used):
-            assert text.count(f'{key}:"') >= 2, f"key {key!r} missing in en+ru dicts"
+            assert f'{key}:"' in site_js, f"key {key!r} missing in site.js dicts"
 
-    def test_i18n_dicts_in_source_stay_aligned(self):
+    def test_i18n_single_source_of_truth(self):
         src = (SCRIPTS / "build_docs.py").read_text(encoding="utf-8")
-        blocks = []
-        start = 0
-        while True:
-            i = src.find("var I18N = {", start)
-            if i < 0:
-                break
-            j = src.find("\n  };", i)
-            assert j > i, "unclosed I18N block"
-            blocks.append(src[i:j])
-            start = j + 1
-        assert len(blocks) == 2, f"expected footer + index dicts, got {len(blocks)}"
-
-        def lang_keys(block: str, lang: str) -> set[str]:
-            halves = block.split(f"\n    {lang}: ", 1)
-            assert len(halves) == 2, f"no {lang} dict"
-            return set(re.findall(r"(\w+):\"", halves[1]))
-
-        foot = next(b for b in blocks if "hero_sub" not in b)
-        index = next(b for b in blocks if "hero_sub" in b)
-        for lang in ("en", "ru"):
-            extra = lang_keys(foot, lang) - lang_keys(index, lang)
-            assert not extra, f"footer {lang} keys missing in index dict: {sorted(extra)}"
-        assert "hero_sub" in lang_keys(index, "en")
+        assert src.count("var I18N = {") == 0, "I18N dict must live in assets/site.js, not inline"
+        site_js = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
+        head, sep, tail = site_js.partition("\n    ru: ")
+        assert sep, "no ru dict in site.js"
+        key_re = re.compile(r"[{,]\s*([A-Za-z_][A-Za-z_0-9]*)\s*:\"")
+        en_keys = set(key_re.findall(head))
+        ru_keys = set(key_re.findall(tail))
+        assert en_keys, "no en keys parsed"
+        assert en_keys == ru_keys, f"en/ru drift: {sorted(en_keys ^ ru_keys)}"
+        assert "hero_sub" in en_keys
 
     def test_div_tags_balanced(self, tmp_path: Path):
         docs = _build_site(tmp_path)
@@ -299,6 +286,18 @@ class TestSiteGenerator:
         assert "filterByDomain" in index
         assert "applyFilter" in index
 
+    def test_shared_site_js_single_source(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        src = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
+        for fn in ["setLang", "toggleTheme", "showSkillLang", "copyBtn",
+                   "showToast", "toggleLang", "IntersectionObserver"]:
+            assert fn in src, f"assets/site.js missing {fn}"
+        built = (docs / "site.js").read_text(encoding="utf-8")
+        assert built == src, "docs/site.js must be an exact copy of assets/site.js"
+        for page in list(docs.glob("*.html")) + list((docs / "skills").glob("*.html")):
+            html = page.read_text(encoding="utf-8")
+            assert "var I18N" not in html, f"{page.name} duplicates shared JS"
+
     def test_tabbed_layout_present(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         index = (docs / "index.html").read_text(encoding="utf-8")
@@ -311,9 +310,8 @@ class TestSiteGenerator:
     def test_i18n_and_delights_present(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         index = (docs / "index.html").read_text(encoding="utf-8")
-        assert "var I18N" in index
-        assert "setLang" in index and "toggleLang" in index
-        assert "lang-toggle" in index
+        assert 'src="site.js"' in index  # shared behavior, not inline
+        assert "toggleLang" in index or "lang-toggle" in index
         assert 'data-i18n="hero_sub"' in index
         assert 'data-i18n-ph="search_ph"' in index
         assert 'id="result-count"' in index
@@ -322,7 +320,7 @@ class TestSiteGenerator:
         assert "card-copy" in index
         assert "<kbd>/</kbd>" in index
         skill = (docs / "skills" / "alpha.html").read_text(encoding="utf-8")
-        assert "var I18N" in skill  # shared footer dictionary
+        assert 'src="../site.js"' in skill  # shared script, no inline copy
         assert 'data-i18n="quality"' in skill
         assert ".claude/skills/backend/alpha" in skill  # full copy path, not bare name
         rm = (docs / "roadmaps.html").read_text(encoding="utf-8")

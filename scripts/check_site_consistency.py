@@ -102,14 +102,28 @@ def main() -> int:
         # 4. css path correct
         if page.parent == docs:
             expect_css = "style.css"
+            expect_js = 'src="site.js"'
         else:
             expect_css = "../style.css"
+            expect_js = 'src="../site.js"'
         if f'href="{expect_css}"' not in html:
             errors.append(f"{page.name} -> wrong css path (expected {expect_css})")
+        if expect_js not in html:
+            errors.append(f"{page.name} -> missing shared script ({expect_js})")
 
         # 5. div balance
         if html.count("<div") != html.count("</div>"):
             errors.append(f"{page.name} -> unbalanced <div> tags")
+
+    # 6. shared script in sync with source
+    site_built = docs / "site.js"
+    site_src = root / "assets" / "site.js"
+    if not site_built.exists():
+        errors.append("docs/site.js missing (run make docs)")
+    elif not site_src.exists():
+        errors.append("assets/site.js source missing")
+    elif site_built.read_text(encoding="utf-8") != site_src.read_text(encoding="utf-8"):
+        errors.append("docs/site.js differs from assets/site.js (run make docs)")
 
     if errors:
         print(f"Site consistency check failed: {len(errors)} issue(s)")
