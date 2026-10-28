@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-102-blue?style=for-the-badge" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-103-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-17-orange?style=for-the-badge" alt="Domains">
   <img src="https://img.shields.io/badge/quality-100%25-brightgreen?style=for-the-badge" alt="Quality">
@@ -109,8 +109,8 @@ Frontmatter is strictly validated for cross-agent portability in CI
 
 | Metric | Value |
 |--------|-------|
-| Total skills | **102** |
-| Russian translations | **102 (100%)** |
+| Total skills | **103** |
+| Russian translations | **103 (100%)** |
 | Domains | **17** |
 | Quality score | **100%** |
 | Test coverage | **100%** |
@@ -170,6 +170,7 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `database` | `vector-databases` | Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval. |
 | `design` | `design-spec-md` | Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly. |
 | `design` | `diagram-as-code` | Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram. |
+| `design` | `landing-page-pro` | Design high-converting landing pages end to end: batched intake, page structure, layout choice, conversion copywriting, SEO/AEO, plus a strict visual token system for type, spacing, radius, motion and states. Use for any marketing page, hero, or product section. |
 | `desktop` | `electron` | Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech. |
 | `devops` | `ansible` | Automate infrastructure with Ansible: playbooks, roles, inventory, modules, and idempotency. Use for config management and provisioning. |
 | `devops` | `argocd` | Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks. Use for declarative deployments. |

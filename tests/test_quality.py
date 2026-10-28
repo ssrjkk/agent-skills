@@ -49,7 +49,8 @@ class TestQualityAnalyzer:
             parts.append("## " + s)
             parts.extend(f"Detail line {j} for {s}" for j in range(12))
         body = "\n".join(parts) + "\n" + ("```python\nx = 1\n```\n" * 4)
-        sf = self._make_skill_file(body=body, created="2026-09-28",
+        recent = (datetime.datetime.now(tz=datetime.timezone.utc).date() - datetime.timedelta(days=10)).isoformat()
+        sf = self._make_skill_file(body=body, created=recent,
                                    ru_body="\n".join("## " + s for s in ["Быстрый старт", "Когда использовать", "Практики", "Шаги", "Примеры", "Валидация", "Устранение", "Зависимости"]))
         score = analyzer.analyze(sf)
         assert score.overall >= 99.5

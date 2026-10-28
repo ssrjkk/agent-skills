@@ -1,9 +1,9 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-10-24T16:15:11Z",
-    "total_skills": 102,
-    "total_ru": 102,
+    "generated_at": "2026-10-28T20:31:21Z",
+    "total_skills": 103,
+    "total_ru": 103,
     "domains": [
       "ai",
       "backend",
@@ -1391,6 +1391,37 @@
       "has_ru": true,
       "created": "2026-10-24",
       "updated": "2026-10-24"
+    },
+    {
+      "name": "landing-page-pro",
+      "description": "Design high-converting landing pages end to end: batched intake, page structure, layout choice, conversion copywriting, SEO/AEO, plus a strict visual token system for type, spacing, radius, motion and states. Use for any marketing page, hero, or product section.",
+      "category": "design",
+      "tags": [
+        "landing-page",
+        "conversion",
+        "copywriting",
+        "typography",
+        "tailwind",
+        "frontend",
+        "design",
+        "ux"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/design/landing-page-pro/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "electron",
