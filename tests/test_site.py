@@ -417,3 +417,52 @@ class TestBuildRobustness:
         bundle.write_text("\n;\n".join(blocks), encoding="utf-8")
         proc = subprocess.run(["node", "--check", str(bundle)], check=False, capture_output=True, text=True)
         assert proc.returncode == 0, proc.stderr[:2000]
+
+    def test_index_js_runs_in_stubbed_dom(self, tmp_path: Path):
+        """Execute the index inline script against DOM stubs: catches
+        ReferenceErrors (the dead-script bug class), not just syntax."""
+        import shutil
+        import subprocess
+
+        if shutil.which("node") is None:
+            pytest.skip("node not available")
+        docs = _build_site(tmp_path)
+        html = (docs / "index.html").read_text(encoding="utf-8")
+        blocks = re.findall(r"<script>(.*?)</script>", html, re.DOTALL)
+        assert blocks, "expected inline scripts on index"
+        harness = tmp_path / "runjs.js"
+        harness.write_text(
+            "var document = {"
+            "querySelectorAll: function() { return []; },"
+            "querySelector: function() { return null; },"
+            "getElementById: function() { return null; },"
+            "addEventListener: function() {},"
+            "createElement: function() { return {classList: {add: function() {}}}; },"
+            "documentElement: {setAttribute: function() {}}};\n"
+            "var window = {addEventListener: function() {}, scrollTo: function() {}};\n"
+            "var location = {hash: ''};\n"
+            "var navigator = {language: 'en'};\n"
+            "var localStorage = {getItem: function() { return null; },"
+            " setItem: function() {}, removeItem: function() {}};\n"
+            "var sessionStorage = {getItem: function() { return null; }};\n"
+            "var history = {replaceState: function() {}};\n"
+            "var requestAnimationFrame = function() { return 0; };\n"
+            + "\n;\n".join(blocks)
+            + "\nconsole.log(JSON.stringify({"
+            "scoreHit: scoreSkill('fast', 'fastapi', 'backend', 'fastapi python',"
+            " 'fast rest api', 'some body text'),"
+            "scoreMiss: scoreSkill('zzz', 'fastapi', 'backend', 'x', 'y', 'z'),"
+            "scoreEmpty: scoreSkill('', 'a', 'b', 'c', 'd', 'e'),"
+            "scoreMid: scoreSkill('api', 'go-rest-api', 'backend', 'go gin', 'rest', 'x'),"
+            "fns: [typeof showTab, typeof applyFilter, typeof onSearch,"
+            " typeof filterByDomain, typeof scoreSkill].join(',')}));\n",
+            encoding="utf-8",
+        )
+        proc = subprocess.run(["node", str(harness)], check=False, capture_output=True, text=True)
+        assert proc.returncode == 0, proc.stderr[:2000]
+        out = json.loads(proc.stdout.strip().splitlines()[-1])
+        assert out["scoreHit"] == 85, out
+        assert out["scoreMiss"] == 0, out
+        assert out["scoreEmpty"] == 0, out
+        assert out["scoreMid"] == 30, out
+        assert out["fns"] == "function,function,function,function,function", out

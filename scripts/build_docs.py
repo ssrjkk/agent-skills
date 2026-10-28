@@ -340,11 +340,11 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     </section>
 
     <div class="tabs reveal in" role="tablist" aria-label="Site sections">
-      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog', this)"><span data-i18n="nav_catalog">Catalog</span></button>
-      <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats', this)"><span data-i18n="nav_stats">Stats</span></button>
-      <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how', this)"><span data-i18n="nav_how">How it works</span></button>
-      <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install', this)"><span data-i18n="tab_install">Install</span></button>
-      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps', this)"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></button>
+      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog')"><span data-i18n="nav_catalog">Catalog</span></button>
+      <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats')"><span data-i18n="nav_stats">Stats</span></button>
+      <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how')"><span data-i18n="nav_how">How it works</span></button>
+      <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install')"><span data-i18n="tab_install">Install</span></button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></button>
     </div>
 
     <section class="install reveal tab-panel" id="install" data-panel="install">
@@ -445,6 +445,20 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     applyFilter();
   }
   function onSearch(q) { loadSearchIndex(); applyFilter(); }
+  function scoreSkill(q, name, domain, tags, desc, content) {
+    var score = 0;
+    if (!q) return score;
+    if (name.indexOf(q) === 0) score += 50;
+    else if (name.indexOf(q) >= 0) score += 30;
+    if (domain.indexOf(q) >= 0) score += 5;
+    var tagList = (tags || '').split(' ');
+    for (var i = 0; i < tagList.length; i++) {
+      if (tagList[i] && tagList[i].indexOf(q) >= 0) { score += 20; break; }
+    }
+    if ((desc || '').indexOf(q) >= 0) score += 15;
+    if ((content || '').indexOf(q) >= 0) score += 10;
+    return score;
+  }
   function applyFilter() {
     var q = (document.getElementById('search').value || '').toLowerCase();
     var sort = document.getElementById('sort').value;
@@ -456,12 +470,20 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       var tags = c.getAttribute('data-tags') || '';
       var domainMatch = activeDomain === 'all' || domain === activeDomain;
       var content = (searchIndex && searchIndex[name]) || '';
-      var textMatch = !q || name.includes(q) || domain.includes(q) || tags.includes(q) || content.includes(q);
+      var descEl = c.querySelector('.card-desc');
+      var desc = descEl ? descEl.textContent.toLowerCase() : '';
+      var score = scoreSkill(q, name, domain, tags, desc, content);
+      var textMatch = !q || score > 0;
       var show = domainMatch && textMatch;
       c.style.display = show ? '' : 'none';
+      c.setAttribute('data-rel', score);
       if (show) visible++;
     });
     cards.sort(function(a, b) {
+      if (q) {
+        var rel = (parseInt(b.getAttribute('data-rel'), 10) || 0) - (parseInt(a.getAttribute('data-rel'), 10) || 0);
+        if (rel !== 0) return rel;
+      }
       if (sort === 'score') return (b.getAttribute('data-score') || 0) - (a.getAttribute('data-score') || 0);
       if (sort === 'name') return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
       return a.getAttribute('data-domain').localeCompare(b.getAttribute('data-domain'));
@@ -488,13 +510,13 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       return;
     }
     if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (e.key === '/') { e.preventDefault(); showTab('catalog', null); var s2 = document.getElementById('search'); if (s2) s2.focus(); }
-    else if (e.key >= '1' && e.key <= '5') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1], null); }
+    if (e.key === '/') { e.preventDefault(); showTab('catalog'); var s2 = document.getElementById('search'); if (s2) s2.focus(); }
+    else if (e.key >= '1' && e.key <= '5') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1]); }
     else if (e.key === 't') { toggleTheme(); }
   });
   // tabs: one screen instead of a long ribbon (deep-linkable via hash)
   var TAB_NAMES = ['catalog', 'stats', 'how', 'install', 'roadmaps'];
-  function showTab(name, btn) {
+  function showTab(name) {
     if (TAB_NAMES.indexOf(name) < 0) name = 'catalog';
     document.querySelectorAll('.tab-btn').forEach(function(b) {
       var on = b.getAttribute('data-tab') === name;
@@ -1140,8 +1162,8 @@ def build_search_index(catalog_path: Path, output_dir: Path) -> None:
         index.append({
             "name": s["name"],
             "category": s["category"],
-            "content": skill_search_text(Path(s["path"]))[:2000],
-            "content_ru": ru_blob[:2000],
+            "content": skill_search_text(Path(s["path"]))[:1500],
+            "content_ru": ru_blob[:1500],
         })
     out = output_dir / "search-index.json"
     out.write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
