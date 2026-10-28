@@ -16,7 +16,7 @@ from claude_skills.models import (
 from claude_skills.quality import QualityAnalyzer, QualityReport
 from claude_skills.validator import SkillValidator, ValidationPipeline
 
-__version__ = "4.0.0"
+__version__ = "4.1.0"
 
 
 def ensure_utf8_console() -> None:

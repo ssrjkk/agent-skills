@@ -4,12 +4,49 @@ from __future__ import annotations
 
 import json
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = ROOT / "scripts"
+
+
+class _ScriptExtractor(HTMLParser):
+    """Collect inline <script> bodies without regex tag filtering
+    (regex-based tag matching trips CodeQL py/bad-tag-filter)."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=False)
+        self.blocks: list[str] = []
+        self._buf: list[str] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "script":
+            return
+        attrs_dict = dict(attrs)
+        if "src" in attrs_dict:
+            return
+        script_type = (attrs_dict.get("type") or "text/javascript").lower()
+        if script_type not in ("text/javascript", "module"):
+            return
+        self._buf = []
+
+    def handle_data(self, data: str) -> None:
+        if self._buf is not None:
+            self._buf.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "script" and self._buf is not None:
+            self.blocks.append("".join(self._buf))
+            self._buf = None
+
+
+def _inline_scripts(html: str) -> list[str]:
+    parser = _ScriptExtractor()
+    parser.feed(html)
+    return parser.blocks
 
 
 def _make_skill(root: Path, name: str, category: str, description: str = "A test skill") -> Path:
@@ -395,7 +432,7 @@ class TestBuildRobustness:
         docs = _build_site(tmp_path)
         for page in list(docs.glob("*.html")) + [docs / "roadmaps.html"]:
             html = page.read_text(encoding="utf-8")
-            for block in re.findall(r"<script>(.*?)</script>", html, re.DOTALL):
+            for block in _inline_scripts(html):
                 assert "{json.dumps" not in block
                 assert "{esc(" not in block
                 assert "{{" not in block
@@ -411,7 +448,7 @@ class TestBuildRobustness:
         blocks = []
         for page in list(docs.glob("*.html")) + [docs / "roadmaps.html"]:
             html = page.read_text(encoding="utf-8")
-            blocks.extend(re.findall(r"<script>(.*?)</script>", html, re.DOTALL))
+            blocks.extend(_inline_scripts(html))
         assert blocks, "expected inline scripts"
         bundle = tmp_path / "inline.js"
         bundle.write_text("\n;\n".join(blocks), encoding="utf-8")
@@ -428,7 +465,7 @@ class TestBuildRobustness:
             pytest.skip("node not available")
         docs = _build_site(tmp_path)
         html = (docs / "index.html").read_text(encoding="utf-8")
-        blocks = re.findall(r"<script>(.*?)</script>", html, re.DOTALL)
+        blocks = _inline_scripts(html)
         assert blocks, "expected inline scripts on index"
         harness = tmp_path / "runjs.js"
         harness.write_text(
