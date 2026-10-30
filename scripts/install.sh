@@ -19,7 +19,7 @@ fi
 
 # Check for Python
 if ! command -v python3 &>/dev/null && ! command -v python &>/dev/null; then
-    echo "  Python 3.9+ recommended for SDK tools"
+    echo "  Python 3.10+ recommended for SDK tools"
     echo "   Install: https://python.org/downloads/"
 fi
 

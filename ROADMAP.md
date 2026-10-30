@@ -2,7 +2,7 @@
 
 ## Current state
 
-- **102 curated skills** across 17 domains, 100% bilingual (EN + RU), 100% quality.
+- **103 curated skills** across 17 domains, 100% bilingual (EN + RU), avg quality 98.9.
 - Universal Agent Skills format, portable to Claude Code, OpenCode, Cursor,
   Windsurf, and every Agent Skills-compatible agent.
 - Python SDK + CLI, GitHub Action, live catalog site, PyPI-ready packaging.
