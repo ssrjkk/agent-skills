@@ -16,7 +16,7 @@ def main() -> int:
         print("skills_catalog.json not found. Run `make catalog` first.", file=sys.stderr)
         return 1
 
-    with open(catalog_path, "r", encoding="utf-8") as f:
+    with open(catalog_path, encoding="utf-8") as f:
         data = json.load(f)
 
     by_domain = defaultdict(list)

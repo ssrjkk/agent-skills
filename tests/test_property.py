@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from hypothesis import assume, given
 from hypothesis import strategies as st
 
@@ -19,7 +21,7 @@ def test_skill_name_validation(name):
         tags=[],
         models=[],
         version="1.0.0",
-        path=None,
+        path=Path(name),
     )
     if name.startswith("-") or name.endswith("-"):
         assert not skill.is_valid_name
@@ -54,9 +56,8 @@ def test_validation_result_always_has_code(body):
 
 @given(
     st.lists(st.text(min_size=1, max_size=20), min_size=0, max_size=10, unique=True),
-    st.text(min_size=1, max_size=30),
 )
-def test_quality_report_distribution(skill_names, report_name):
+def test_quality_report_distribution(skill_names):
     assume(len(skill_names) <= 10)
     scores = {n: QualityScore(80, 80, 80, 80, 80) for n in skill_names}
     report = QualityReport(scores)
@@ -65,11 +66,10 @@ def test_quality_report_distribution(skill_names, report_name):
         assert report.average.overall > 0
 
 
-@given(st.lists(st.text(min_size=1, max_size=5), min_size=0, max_size=20))
-def test_analyzer_empty_body(tags):
+def test_analyzer_empty_body():
     from claude_skills.models import SkillFile
 
-    sf = SkillFile(en_path=None, en_body="")
+    sf = SkillFile(en_path=Path("dummy"), en_body="")
     analyzer = QualityAnalyzer()
     score = analyzer.analyze(sf)
     assert score.completeness == 0

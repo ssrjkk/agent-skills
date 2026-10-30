@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import ClassVar
+from typing import Any, ClassVar
 
 from claude_skills.models import Severity, ValidationResult, parse_frontmatter
 
@@ -18,8 +18,8 @@ class SkillValidator:
         "scientific", "security", "supply-chain", "sustainability", "test-reporting",
         "api-testing",
     }
-    PLACEHOLDER_NAMES: ClassVar[re.Pattern] = re.compile(r"^(skill-\d+|.*-skill-\d+)$")
-    BAD_PATTERNS: ClassVar[re.Pattern] = re.compile(r"\b(TODO|FIXME|HACK|XXX|UNDONE)\b")
+    PLACEHOLDER_NAMES: ClassVar[re.Pattern[str]] = re.compile(r"^(skill-\d+|.*-skill-\d+)$")
+    BAD_PATTERNS: ClassVar[re.Pattern[str]] = re.compile(r"\b(TODO|FIXME|HACK|XXX|UNDONE)\b")
     FILLER_WORDS: ClassVar[tuple[str, ...]] = (
         "revolutionize", "supercharge", "cutting edge", "effortless",
         "world class", "take it to the next level", "harness the power",
@@ -55,7 +55,7 @@ class SkillValidator:
 
         return results
 
-    def _validate_frontmatter(self, filepath: Path, fm: dict, expected_name: str) -> list[ValidationResult]:
+    def _validate_frontmatter(self, filepath: Path, fm: dict[str, Any], expected_name: str) -> list[ValidationResult]:
         results: list[ValidationResult] = []
         missing = self.REQUIRED_FIELDS - set(fm.keys())
         if missing:
@@ -112,7 +112,7 @@ class SkillValidator:
 
         return results
 
-    def _validate_copy(self, filepath: Path, frontmatter: dict, body: str) -> list[ValidationResult]:
+    def _validate_copy(self, filepath: Path, frontmatter: dict[str, Any], body: str) -> list[ValidationResult]:
         """INFO-level copy signals. Never blocks: flags marketing filler so a
         human can verify each hit is intentional (e.g. a ban-list example)."""
         results: list[ValidationResult] = []
@@ -156,9 +156,9 @@ class SkillValidator:
             results.append(ValidationResult(str(filepath), Severity.WARNING, "W041", "Suspiciously short vs English original - incomplete translation?"))
         return results
 
-    def _find_duplicates(self, items: list) -> list:
-        seen = {}
-        dupes = []
+    def _find_duplicates(self, items: list[Any]) -> list[str]:
+        seen: dict[str, bool] = {}
+        dupes: list[str] = []
         for item in items:
             key = str(item).strip().lower()
             if key in seen:
@@ -187,7 +187,7 @@ class ValidationPipeline:
             results[name] = self.validator.validate_skill_file(sk_path)
         return results
 
-    def report(self, results: dict[str, list[ValidationResult]]) -> dict:
+    def report(self, results: dict[str, list[ValidationResult]]) -> dict[str, Any]:
         stats = {"total": len(results), "errors": 0, "warnings": 0, "info": 0}
         all_errors: list[str] = []
         all_warnings: list[str] = []

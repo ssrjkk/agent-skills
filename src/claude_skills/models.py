@@ -4,8 +4,9 @@ import re
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
+from typing import Any
 
-import yaml  # type: ignore[import-untyped]
+import yaml
 
 
 class Severity(Enum):
@@ -43,7 +44,7 @@ class QualityScore:
     @property
     def overall(self) -> float:
         weights = {"completeness": 0.25, "depth": 0.25, "code_quality": 0.2, "freshness": 0.15, "bilingual": 0.15}
-        return sum(getattr(self, k) * v for k, v in weights.items())
+        return sum(float(getattr(self, k)) * v for k, v in weights.items())
 
     @property
     def grade(self) -> str:
@@ -65,8 +66,8 @@ class SkillFile:
     ru_path: Path | None = None
     en_content: str = ""
     ru_content: str = ""
-    en_frontmatter: dict = field(default_factory=dict)
-    ru_frontmatter: dict = field(default_factory=dict)
+    en_frontmatter: dict[str, Any] = field(default_factory=dict)
+    ru_frontmatter: dict[str, Any] = field(default_factory=dict)
     en_body: str = ""
     ru_body: str = ""
 
@@ -157,7 +158,7 @@ class SkillSet:
         return sum(1 for s in self.skills if s.ru_path)
 
 
-def parse_frontmatter(content: str) -> tuple[dict | None, str, bool]:
+def parse_frontmatter(content: str) -> tuple[dict[str, Any] | None, str, bool]:
     """Split a SKILL.md file into (frontmatter dict, body, ok).
 
     Handles both ``---`` delimiters (opening/closing) regardless of whether

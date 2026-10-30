@@ -1,5 +1,6 @@
 """Claude Skills SDK — validate, analyze, and manage curated bilingual skills."""
 
+import contextlib
 import sys
 
 from claude_skills.catalog import CatalogBuilder
@@ -30,10 +31,8 @@ def ensure_utf8_console() -> None:
         reconfigure = getattr(stream, "reconfigure", None)
         if not callable(reconfigure):
             continue
-        try:
+        with contextlib.suppress(OSError, ValueError):
             reconfigure(encoding="utf-8")
-        except (OSError, ValueError):
-            pass
 
 
 __all__ = [

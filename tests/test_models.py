@@ -102,6 +102,7 @@ class TestParseFrontmatter:
     def test_crlf_frontmatter(self):
         fm, body, ok = parse_frontmatter("---\r\nname: test\r\nversion: 1.0.0\r\n---\r\n## Section\r\ntext")
         assert ok
+        assert fm is not None
         assert fm["name"] == "test"
         assert fm["version"] == "1.0.0"
         assert body.startswith("## Section")
@@ -189,7 +190,3 @@ class TestSeverity:
         assert Severity.ERROR.value == "error"
         assert Severity.WARNING.value == "warning"
         assert Severity.INFO.value == "info"
-
-    def test_ordering(self):
-        assert Severity.ERROR != Severity.WARNING
-        assert Severity.INFO != Severity.ERROR

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Claude Skills Library — Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/ssrjkk/agent-skills/main/scripts/install.sh | bash
 
 REPO="ssrjkk/agent-skills"
 BRANCH="main"

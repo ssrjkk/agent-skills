@@ -32,7 +32,28 @@
   }
   function toggleLang() { setLang(lang() === 'ru' ? 'en' : 'ru'); }
   function copyText(text) {
-    navigator.clipboard.writeText(text).then(function() { showToast((I18N[lang()] || I18N.en).copied + text); });
+    function legacyCopy() {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+      } catch (e) { return false; }
+    }
+    function done(ok) {
+      // on failure show the raw path so the user can copy it manually
+      showToast(ok ? (I18N[lang()] || I18N.en).copied + text : text);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() { done(true); }, function() { done(legacyCopy()); });
+    } else {
+      done(legacyCopy());
+    }
   }
   function copyBtn(btn, text) {
     copyText(text);

@@ -7,6 +7,7 @@ non-ASCII skill names, descriptions and paths never crash on Windows
 
 from __future__ import annotations
 
+import contextlib
 import sys
 
 
@@ -15,7 +16,5 @@ def ensure_utf8_console() -> None:
         reconfigure = getattr(stream, "reconfigure", None)
         if not callable(reconfigure):
             continue
-        try:
+        with contextlib.suppress(OSError, ValueError):
             reconfigure(encoding="utf-8")
-        except (OSError, ValueError):
-            pass
