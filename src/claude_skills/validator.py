@@ -173,18 +173,23 @@ class ValidationPipeline:
         self.skills_dir = skills_dir
         self.validator = SkillValidator()
 
+    def _result_key(self, sk_path: Path) -> str:
+        """Collision-safe key: two domains may host same-named directories."""
+        try:
+            return sk_path.parent.relative_to(self.skills_dir).as_posix()
+        except ValueError:  # pragma: no cover - rglob always stays under skills_dir
+            return sk_path.parent.name
+
     def run_all(self) -> dict[str, list[ValidationResult]]:
         results: dict[str, list[ValidationResult]] = {}
         for sk_path in sorted(self.skills_dir.rglob("SKILL.md")):
-            name = sk_path.parent.name
-            results[name] = self.validator.validate_skill_file(sk_path)
+            results[self._result_key(sk_path)] = self.validator.validate_skill_file(sk_path)
         return results
 
     def run_ru_all(self) -> dict[str, list[ValidationResult]]:
         results: dict[str, list[ValidationResult]] = {}
         for sk_path in sorted(self.skills_dir.rglob("SKILL.ru.md")):
-            name = sk_path.parent.name
-            results[name] = self.validator.validate_skill_file(sk_path)
+            results[self._result_key(sk_path)] = self.validator.validate_skill_file(sk_path)
         return results
 
     def report(self, results: dict[str, list[ValidationResult]]) -> dict[str, Any]:

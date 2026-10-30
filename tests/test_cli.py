@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 from click.testing import CliRunner
@@ -126,6 +127,22 @@ class TestCommandCatalog:
         assert catalog["metadata"]["total_skills"] == 1
         assert catalog["skills"][0]["name"] == "out-skill"
 
+    def test_catalog_reports_skipped_and_duplicates(self, tmp_path: Path):
+        _make_skill(tmp_path, "same-name", "ai")
+        _make_skill(tmp_path, "same-name", "qa")
+        broken = tmp_path / ".claude" / "skills" / "qa" / "broken"
+        broken.mkdir(parents=True)
+        (broken / "SKILL.md").write_text("# No frontmatter here\n", encoding="utf-8")
+        out = tmp_path / "catalog.json"
+        result = CliRunner().invoke(
+            cli, ["catalog", "--dir", str(tmp_path / ".claude" / "skills"), "--output", str(out)]
+        )
+        assert result.exit_code == 0
+        output = _strip_ansi(result.output)
+        assert "Skills: 1" in output
+        assert "Skipped unparseable: qa/broken/SKILL.md" in output
+        assert "Duplicate name (first kept): same-name (qa/same-name/SKILL.md)" in output
+
 
 class TestCommandValidate:
     def test_validate_clean_skill(self, tmp_path: Path):
@@ -226,6 +243,14 @@ class TestCommandStale:
         assert result.exit_code == 0
         assert "nodate-skill" in _strip_ansi(result.output)
 
+    def test_stale_accepts_zulu_timestamp(self, tmp_path: Path):
+        self._make_dated_skill(tmp_path, "zulu-skill", "2026-09-28T00:00:00Z")
+        result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills"), "--days", "30"])
+        assert result.exit_code == 0
+        output = _strip_ansi(result.output)
+        assert "zulu-skill" in output
+        assert "unknown date" not in output
+
     def test_stale_handles_malformed_date(self, tmp_path: Path):
         self._make_dated_skill(tmp_path, "baddate-skill", "not-a-date")
         result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills")])
@@ -268,6 +293,26 @@ class TestCommandQuality:
         assert result.exit_code == 0
         assert "Skills analyzed: 0" in _strip_ansi(result.output)
 
+    def test_quality_skips_file_lost_mid_run(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+        _make_skill(tmp_path, "ok-skill", "qa")
+        _make_skill(tmp_path, "gone-skill", "qa")
+        real_read_text = Path.read_text
+        calls = {"n": 0}
+
+        def flaky_read(self: Path, *args: Any, **kwargs: Any) -> str:
+            if self.name == "SKILL.md" and "gone-skill" in str(self):
+                calls["n"] += 1
+                if calls["n"] > 1:  # scan saw it, quality re-read must not crash
+                    raise OSError("file locked mid-run")
+            return real_read_text(self, *args, **kwargs)
+
+        monkeypatch.setattr(Path, "read_text", flaky_read)
+        result = CliRunner().invoke(cli, ["quality", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code == 0
+        output = _strip_ansi(result.output)
+        assert "Skills analyzed: 1" in output
+        assert "Skipped unreadable: gone-skill" in output
+
 
 class TestCommandValidateErrors:
     def _write_broken_skill(self, root: Path, name: str) -> Path:
@@ -308,6 +353,52 @@ class TestCommandInstall:
         )
         assert result.exit_code != 0
         assert "not found" in _strip_ansi(result.output)
+
+    def test_install_duplicate_dirname_picks_sorted_first(self, tmp_path: Path):
+        _make_skill(tmp_path, "dup", "qa", description="from qa")
+        _make_skill(tmp_path, "dup", "ai", description="from ai")
+        target = tmp_path / "target" / ".claude" / "skills"
+        result = CliRunner().invoke(
+            cli, ["install", "dup", "--target", str(target), "--dir", str(tmp_path / ".claude" / "skills")]
+        )
+        assert result.exit_code == 0
+        installed = (target / "ai" / "dup" / "SKILL.md").read_text(encoding="utf-8")
+        assert "from ai" in installed
+        assert not (target / "qa").exists()
+
+    def test_install_leaves_no_tmp_dir(self, tmp_path: Path):
+        _make_skill(tmp_path, "clean-me", "qa")
+        target = tmp_path / "target" / ".claude" / "skills"
+        result = CliRunner().invoke(
+            cli, ["install", "clean-me", "--target", str(target), "--dir", str(tmp_path / ".claude" / "skills")]
+        )
+        assert result.exit_code == 0
+        assert not (target / "qa" / "clean-me.tmp").exists()
+
+    def test_install_clears_stale_tmp_dir(self, tmp_path: Path):
+        _make_skill(tmp_path, "fresh-me", "qa")
+        target = tmp_path / "target" / ".claude" / "skills"
+        stale_tmp = target / "qa" / "fresh-me.tmp"
+        stale_tmp.mkdir(parents=True)
+        (stale_tmp / "leftover.txt").write_text("stale", encoding="utf-8")
+        result = CliRunner().invoke(
+            cli, ["install", "fresh-me", "--target", str(target), "--dir", str(tmp_path / ".claude" / "skills")]
+        )
+        assert result.exit_code == 0
+        assert not stale_tmp.exists()
+        assert (target / "qa" / "fresh-me" / "SKILL.md").exists()
+
+    def test_install_failure_cleans_tmp_and_raises(self, tmp_path: Path):
+        _make_skill(tmp_path, "blocked-me", "qa")
+        target = tmp_path / "target" / ".claude" / "skills"
+        dest = target / "qa" / "blocked-me"
+        dest.parent.mkdir(parents=True)
+        dest.write_text("a file blocks the skill directory", encoding="utf-8")
+        result = CliRunner().invoke(
+            cli, ["install", "blocked-me", "--target", str(target), "--dir", str(tmp_path / ".claude" / "skills")]
+        )
+        assert result.exit_code != 0
+        assert not (target / "qa" / "blocked-me.tmp").exists()
 
     def test_install_overwrites_existing(self, tmp_path: Path):
         _make_skill(tmp_path, "dup", "qa")

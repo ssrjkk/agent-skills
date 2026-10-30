@@ -128,11 +128,16 @@ def quality(dir: str | None, json: str | None, top: int) -> None:
 
     scores: dict[str, QualityScore] = {}
     skills_detail: list[dict[str, Any]] = []
+    skipped: list[str] = []
     for skill in catalog.skills:
         en_path = skill.path
         ru_path = en_path.parent / "SKILL.ru.md"
-        en_raw = en_path.read_text(encoding="utf-8")
-        ru_raw = ru_path.read_text(encoding="utf-8") if ru_path.exists() else ""
+        try:
+            en_raw = en_path.read_text(encoding="utf-8")
+            ru_raw = ru_path.read_text(encoding="utf-8") if ru_path.exists() else ""
+        except (OSError, UnicodeDecodeError):
+            skipped.append(skill.name)
+            continue
 
         fm_en, body_en, ok_en = parse_frontmatter(en_raw)
         fm_ru, body_ru, _ = parse_frontmatter(ru_raw)
@@ -172,6 +177,8 @@ def quality(dir: str | None, json: str | None, top: int) -> None:
     print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}\n")
 
     print(f"  Skills analyzed: {Fore.YELLOW}{len(scores)}{Style.RESET_ALL}")
+    if skipped:
+        print(f"  {Fore.RED}Skipped unreadable: {', '.join(sorted(skipped))}{Style.RESET_ALL}")
     print(f"  Average completeness: {Fore.YELLOW}{avg.completeness:.1f}%{Style.RESET_ALL}")
     print(f"  Average depth:        {Fore.YELLOW}{avg.depth:.1f}%{Style.RESET_ALL}")
     print(f"  Average code quality: {Fore.YELLOW}{avg.code_quality:.1f}%{Style.RESET_ALL}")
@@ -264,7 +271,7 @@ def install(name: str, target: str | None, dir: str | None) -> None:
             source_base = Path.cwd() / ".claude" / "skills"
 
     found = None
-    for sk in source_base.rglob("SKILL.md"):
+    for sk in sorted(source_base.rglob("SKILL.md")):
         if sk.parent.name == name:
             found = sk.parent
             break
@@ -275,15 +282,25 @@ def install(name: str, target: str | None, dir: str | None) -> None:
     category = found.parent.name
     dest = target_dir / category / name
 
-    if dest.exists():
-        print(f"{Fore.YELLOW}Skill '{name}' already exists at {dest}, overwriting...{Style.RESET_ALL}")
-        shutil.rmtree(dest)
+    # copy to a temp sibling first, then swap: a failure never leaves
+    # a half-written skill behind (the old dest stays intact until rename)
+    tmp_dest = dest.parent / (dest.name + ".tmp")
+    if tmp_dest.exists():
+        shutil.rmtree(tmp_dest)
+    try:
+        shutil.copytree(found, tmp_dest)
+        if dest.exists():
+            print(f"{Fore.YELLOW}Skill '{name}' already exists at {dest}, overwriting...{Style.RESET_ALL}")
+            shutil.rmtree(dest)
+        tmp_dest.rename(dest)
+    except Exception:
+        if tmp_dest.exists():
+            shutil.rmtree(tmp_dest)
+        raise
 
-    shutil.copytree(found, dest)
-
-    ru_count = sum(1 for _ in dest.glob("SKILL*.md"))
+    file_count = sum(1 for _ in dest.glob("SKILL*.md"))
     print(f"\n{Fore.GREEN}Installed '{name}' -> {dest}{Style.RESET_ALL}")
-    print(f"  Files: {ru_count}")
+    print(f"  Files: {file_count}")
     print(f"  Agent: {target_dir}\n")
 
 
@@ -302,6 +319,10 @@ def catalog(dir: str | None, output: str) -> None:
 
     print(f"\n{Fore.GREEN}Catalog regenerated{Style.RESET_ALL}")
     print(f"  Skills: {cat.metadata.total_skills}")
+    for rel in builder.skipped:
+        print(f"  {Fore.RED}Skipped unparseable: {rel}{Style.RESET_ALL}")
+    for dup in builder.duplicates:
+        print(f"  {Fore.YELLOW}Duplicate name (first kept): {dup}{Style.RESET_ALL}")
     print(f"  Time: {duration:.2f}s\n")
 
 
@@ -321,9 +342,13 @@ def stale(dir: str | None, days: int) -> None:
         if not skill.updated:
             rows.append((skill.name, skill.category, "never", -1))
             continue
+        # same parsing as QualityAnalyzer._score_freshness: date-only,
+        # datetime, and trailing-Z stamps are all accepted
+        stamp = skill.updated
+        stamp = stamp.replace("Z", "+00:00") if stamp.endswith(("Z", "z")) else stamp
         try:
-            age = (today - datetime.date.fromisoformat(skill.updated)).days
-        except ValueError:
+            age = (today - datetime.datetime.fromisoformat(stamp).date()).days
+        except (ValueError, TypeError):
             rows.append((skill.name, skill.category, skill.updated, -1))
             continue
         if age > days:

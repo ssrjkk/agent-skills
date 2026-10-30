@@ -348,9 +348,24 @@ class TestValidationPipeline:
     def test_run_all(self, pipeline: ValidationPipeline):
         results = pipeline.run_all()
         assert len(results) == 3
-        assert "skill-a" in results
-        assert "skill-b" in results
-        assert "skill-c" in results
+        assert "qa/skill-a" in results
+        assert "ai/skill-b" in results
+        assert "backend/skill-c" in results
+
+    def test_run_all_keeps_same_named_dirs_in_different_domains(
+        self, pipeline: ValidationPipeline, tmp_path: Path
+    ):
+        dup = tmp_path / ".claude" / "skills" / "ai" / "skill-a" / "SKILL.md"
+        dup.parent.mkdir(parents=True)
+        dup.write_text(
+            "---\nname: skill-a\ndescription: desc\ncategory: ai\n"
+            "tags: [test]\nmodels: [sonnet]\nversion: 1.0.0\n"
+            "---\n# Test\n\n## Quick Start\n\nContent\n\n## Validation\n\nContent\n"
+        )
+        results = pipeline.run_all()
+        assert "qa/skill-a" in results
+        assert "ai/skill-a" in results
+        assert len(results) == 4
 
     def test_run_all_no_errors(self, pipeline: ValidationPipeline):
         results = pipeline.run_all()
@@ -396,4 +411,4 @@ class TestValidationPipeline:
             "---\nname: skill-a\ndescription: desc-ru\ncategory: qa\ntags: [test]\nmodels: [sonnet]\nversion: 1.0.0\nlanguage: ru\n---\nContent"
         )
         results = pipeline.run_ru_all()
-        assert "skill-a" in results
+        assert "qa/skill-a" in results
