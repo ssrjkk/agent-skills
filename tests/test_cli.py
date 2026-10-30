@@ -226,6 +226,13 @@ class TestCommandStale:
         assert result.exit_code == 0
         assert "nodate-skill" in _strip_ansi(result.output)
 
+    def test_stale_handles_malformed_date(self, tmp_path: Path):
+        self._make_dated_skill(tmp_path, "baddate-skill", "not-a-date")
+        result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code == 0
+        assert "baddate-skill" in _strip_ansi(result.output)
+        assert "unknown date" in _strip_ansi(result.output)
+
 
 class TestCommandQuality:
     def test_quality_json_report(self, tmp_path: Path):

@@ -9,6 +9,7 @@ from __future__ import annotations
 import io
 import sys
 from pathlib import Path
+from typing import Any
 
 from click.testing import CliRunner
 
@@ -63,7 +64,7 @@ def test_ensure_utf8_console_skips_plain_objects():
     import sys
 
     old = sys.stdout
-    sys.stdout = Plain()  # type: ignore[assignment]
+    sys.stdout = Plain()
     try:
         ensure_utf8_console()
     finally:
@@ -72,7 +73,7 @@ def test_ensure_utf8_console_skips_plain_objects():
 
 def test_ensure_utf8_console_tolerates_broken_streams():
     class Broken(io.TextIOWrapper):
-        def reconfigure(self, *args, **kwargs):
+        def reconfigure(self, *_args: Any, **_kwargs: Any) -> None:
             raise OSError("frozen stream")
 
     import sys

@@ -143,7 +143,7 @@ def main() -> int:
     total = len(all_skills)
 
     results = []
-    for i, sk_path in enumerate(all_skills[: args.top]):
+    for sk_path in all_skills[: args.top]:
         name = sk_path.parent.name
         audit = audit_skill(sk_path)
         qs = audit_quality_score(sk_path)

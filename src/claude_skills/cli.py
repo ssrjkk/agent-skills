@@ -10,13 +10,14 @@ from __future__ import annotations
 import json as json_lib
 import time
 from pathlib import Path
+from typing import Any
 
 import click
 from colorama import Fore, Style  # type: ignore[import-untyped]
 
 from claude_skills import ensure_utf8_console
 from claude_skills.catalog import CatalogBuilder
-from claude_skills.models import QualityScore, SkillFile, parse_frontmatter
+from claude_skills.models import QualityScore, SkillFile, ValidationResult, parse_frontmatter
 from claude_skills.quality import QualityAnalyzer, QualityReport
 from claude_skills.validator import ValidationPipeline
 
@@ -33,7 +34,7 @@ def resolve_skills_dir(dir_value: str | None) -> str:
 
 
 @click.group()
-def cli():
+def cli() -> None:
     """Claude Skills Library CLI v4.1.1 - Production Ready."""
     ensure_utf8_console()
 
@@ -41,7 +42,7 @@ def cli():
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--json', '--output', 'json', type=click.Path(), help='Output JSON report')
-def stats(dir: str | None, json: str | None):
+def stats(dir: str | None, json: str | None) -> None:
     """Show library statistics."""
     start = time.perf_counter()
 
@@ -74,7 +75,7 @@ def stats(dir: str | None, json: str | None):
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--json', '--output', 'json', type=click.Path(), help='Output JSON report')
-def validate(dir: str | None, json: str | None):
+def validate(dir: str | None, json: str | None) -> None:
     """Validate all skills (EN + RU)."""
     start = time.perf_counter()
 
@@ -83,7 +84,7 @@ def validate(dir: str | None, json: str | None):
     en_results = pipeline.run_all()
     ru_results = pipeline.run_ru_all()
 
-    combined: dict[str, list] = {}
+    combined: dict[str, list[ValidationResult]] = {}
     for name, results in en_results.items():
         combined[name] = list(results)
     for name, results in ru_results.items():
@@ -117,7 +118,7 @@ def validate(dir: str | None, json: str | None):
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--json', '--output', 'json', type=click.Path(), help='Output JSON report')
 @click.option('--top', type=int, default=10, help='Show top N skills')
-def quality(dir: str | None, json: str | None, top: int):
+def quality(dir: str | None, json: str | None, top: int) -> None:
     """Analyze quality of all skills."""
     start = time.perf_counter()
 
@@ -126,7 +127,7 @@ def quality(dir: str | None, json: str | None, top: int):
     analyzer = QualityAnalyzer()
 
     scores: dict[str, QualityScore] = {}
-    skills_detail: list[dict] = []
+    skills_detail: list[dict[str, Any]] = []
     for skill in catalog.skills:
         en_path = skill.path
         ru_path = en_path.parent / "SKILL.ru.md"
@@ -207,7 +208,7 @@ def quality(dir: str | None, json: str | None, top: int):
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--domain', help='Filter by domain')
 @click.option('--limit', type=int, default=10, help='Max results')
-def search(query: str, dir: str | None, domain: str | None, limit: int):
+def search(query: str, dir: str | None, domain: str | None, limit: int) -> None:
     """Search skills."""
     builder = CatalogBuilder(base=resolve_skills_dir(dir))
     catalog = builder.build_catalog()
@@ -238,7 +239,7 @@ def search(query: str, dir: str | None, domain: str | None, limit: int):
         print(f"  {Fore.YELLOW}No skills found matching '{query}'{Style.RESET_ALL}\n")
         return
 
-    for i, (skill, score) in enumerate(results[:limit], 1):
+    for i, (skill, _score) in enumerate(results[:limit], 1):
         print(f"  {i}. {Fore.CYAN}{skill.name}{Style.RESET_ALL}")
         print(f"     {skill.description[:60]}...")
         print(f"      {skill.category} |  {', '.join(skill.languages)}")
@@ -249,14 +250,11 @@ def search(query: str, dir: str | None, domain: str | None, limit: int):
 @click.argument('name')
 @click.option('--target', default=None, help='Target agent skills dir (e.g. ~/.claude/skills)')
 @click.option('--dir', type=click.Path(), default=None, help='Source skills dir (default: bundled library)')
-def install(name: str, target: str | None, dir: str | None):
+def install(name: str, target: str | None, dir: str | None) -> None:
     """Install a single skill by name into an agent's skills directory."""
     import shutil
 
-    if target:
-        target_dir = Path(target).expanduser()
-    else:
-        target_dir = Path.home() / ".claude" / "skills"
+    target_dir = Path(target).expanduser() if target else Path.home() / ".claude" / "skills"
 
     if dir:
         source_base = Path(dir)
@@ -292,7 +290,7 @@ def install(name: str, target: str | None, dir: str | None):
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--output', type=click.Path(), default='skills_catalog.json', help='Output catalog path')
-def catalog(dir: str | None, output: str):
+def catalog(dir: str | None, output: str) -> None:
     """Regenerate catalog."""
     start = time.perf_counter()
 
@@ -310,7 +308,7 @@ def catalog(dir: str | None, output: str):
 @cli.command()
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--days', type=int, default=180, help='Flag skills not updated within N days')
-def stale(dir: str | None, days: int):
+def stale(dir: str | None, days: int) -> None:
     """List skills whose `updated` date is older than N days (review queue)."""
     import datetime
 

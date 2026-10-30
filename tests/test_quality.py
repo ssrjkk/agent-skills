@@ -181,20 +181,20 @@ class TestQualityAnalyzer:
 
 class TestQualityReport:
     @pytest.fixture
-    def scores(self):
+    def scores(self) -> dict[str, QualityScore]:
         return {
             "skill-a": QualityScore(90, 90, 90, 90, 90),
             "skill-b": QualityScore(70, 70, 70, 70, 70),
             "skill-c": QualityScore(30, 30, 30, 30, 30),
         }
 
-    def test_average(self, scores: dict):
+    def test_average(self, scores: dict[str, QualityScore]):
         report = QualityReport(scores)
         avg = report.average
         assert avg.completeness == pytest.approx(63.33, 0.1)
         assert avg.overall == pytest.approx(63.33, 0.1)
 
-    def test_grade_distribution(self, scores: dict):
+    def test_grade_distribution(self, scores: dict[str, QualityScore]):
         report = QualityReport(scores)
         dist = report.grade_distribution
         assert dist["A"] == 1
@@ -202,19 +202,19 @@ class TestQualityReport:
         assert dist["C"] == 1
         assert dist["F"] == 1
 
-    def test_top_skills(self, scores: dict):
+    def test_top_skills(self, scores: dict[str, QualityScore]):
         report = QualityReport(scores)
         top = report.top_skills(2)
         assert len(top) == 2
         assert top[0][0] == "skill-a"
 
-    def test_bottom_skills(self, scores: dict):
+    def test_bottom_skills(self, scores: dict[str, QualityScore]):
         report = QualityReport(scores)
         bottom = report.bottom_skills(2)
         assert len(bottom) == 2
         assert bottom[0][0] == "skill-c"
 
-    def test_summary_contains_key_metrics(self, scores: dict):
+    def test_summary_contains_key_metrics(self, scores: dict[str, QualityScore]):
         report = QualityReport(scores)
         summary = report.summary()
         assert "QUALITY REPORT" in summary

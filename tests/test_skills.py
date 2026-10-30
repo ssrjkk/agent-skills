@@ -14,7 +14,7 @@ def test_catalog_exists():
 
 
 def test_catalog_valid_json():
-    with open(CATALOG, 'r', encoding='utf-8') as f:
+    with open(CATALOG, encoding='utf-8') as f:
         data = json.load(f)
     assert "metadata" in data
     assert "skills" in data
@@ -22,7 +22,7 @@ def test_catalog_valid_json():
 
 
 def test_catalog_metadata():
-    with open(CATALOG, 'r', encoding='utf-8') as f:
+    with open(CATALOG, encoding='utf-8') as f:
         data = json.load(f)
     meta = data["metadata"]
     assert meta["total_skills"] == len(data["skills"])
@@ -31,14 +31,14 @@ def test_catalog_metadata():
 
 
 def test_catalog_paths_are_correct():
-    with open(CATALOG, 'r', encoding='utf-8') as f:
+    with open(CATALOG, encoding='utf-8') as f:
         data = json.load(f)
     bad = [s for s in data["skills"] if ".claude/skills/.claude/skills" in s.get("path", "")]
     assert len(bad) == 0, f"{len(bad)} skills have double-prefixed paths"
 
 
 def test_all_skills_exist_on_disk():
-    with open(CATALOG, 'r', encoding='utf-8') as f:
+    with open(CATALOG, encoding='utf-8') as f:
         data = json.load(f)
     missing = []
     for s in data["skills"]:
@@ -50,7 +50,7 @@ def test_all_skills_exist_on_disk():
     assert len(missing) == 0, f"{len(missing)} skills missing: {missing[:10]}"
 
 
-def _get_skill_name(sk_path):
+def _get_skill_name(sk_path: str | Path) -> str:
     parent = Path(sk_path).parent
     if parent.name == "SKILL":
         return parent.parent.name
@@ -59,7 +59,7 @@ def _get_skill_name(sk_path):
 def test_all_skill_files_have_frontmatter():
     for sk_path in sorted(glob.glob(str(SKILLS_DIR / "**" / "SKILL.md"), recursive=True)):
         name = _get_skill_name(sk_path)
-        with open(sk_path, 'r', encoding='utf-8') as f:
+        with open(sk_path, encoding='utf-8') as f:
             content = f.read()
         assert content.startswith('---'), f'{name}: Missing frontmatter'
 
@@ -69,7 +69,7 @@ def test_all_skills_have_required_frontmatter_fields():
     errors = []
     for sk_path in sorted(glob.glob(str(SKILLS_DIR / "**" / "SKILL.md"), recursive=True)):
         name = _get_skill_name(sk_path)
-        with open(sk_path, 'r', encoding='utf-8') as f:
+        with open(sk_path, encoding='utf-8') as f:
             content = f.read()
         if not content.startswith('---'):
             continue
@@ -88,7 +88,7 @@ def test_all_skills_have_required_frontmatter_fields():
 
 
 def test_catalog_domains_match_disk():
-    with open(CATALOG, 'r', encoding='utf-8') as f:
+    with open(CATALOG, encoding='utf-8') as f:
         data = json.load(f)
     catalog_domains = set(data["metadata"]["domains"])
     disk_domains = set()
@@ -108,7 +108,7 @@ def test_no_template_placeholders():
     issues = []
     for sk_path in sorted(glob.glob(str(SKILLS_DIR / "**" / "SKILL.md"), recursive=True)):
         name = Path(sk_path).parent.name
-        with open(sk_path, 'r', encoding='utf-8') as f:
+        with open(sk_path, encoding='utf-8') as f:
             content = f.read()
         for pat in bad_patterns:
             if pat in content:
@@ -118,7 +118,7 @@ def test_no_template_placeholders():
 
 def test_readme_table_in_sync():
     import re
-    with open(CATALOG, 'r', encoding='utf-8') as f:
+    with open(CATALOG, encoding='utf-8') as f:
         data = json.load(f)
     byname = {s['name']: s for s in data['skills']}
     readme = (ROOT / "README.md").read_text(encoding='utf-8')
@@ -145,7 +145,7 @@ def test_body_length():
     short = []
     for sk_path in sorted(glob.glob(str(SKILLS_DIR / "**" / "SKILL.md"), recursive=True)):
         name = _get_skill_name(sk_path)
-        with open(sk_path, 'r', encoding='utf-8') as f:
+        with open(sk_path, encoding='utf-8') as f:
             content = f.read()
         if not content.startswith('---'):
             continue

@@ -6,6 +6,7 @@ import json
 import re
 from html.parser import HTMLParser
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -148,13 +149,13 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_index_html(catalog_path, out)
     mod.build_skill_pages(catalog_path, out)
     mod.build_domain_pages(catalog_path, out)
-    mod.build_roadmaps(catalog_path, out, source_dir=tmp_path)
+    mod.build_roadmaps(out, source_dir=tmp_path)
     mod.build_style_css(out)
     mod.build_site_js(out)
     mod.build_search_index(catalog_path, out)
     return out
 
-def _load_mod():
+def _load_mod() -> Any:
     import importlib.util
 
     spec = importlib.util.spec_from_file_location("build_docs", SCRIPTS / "build_docs.py")
@@ -164,7 +165,7 @@ def _load_mod():
     return mod
 
 
-def _write_catalog(tmp_path: Path, skills: list[dict]) -> Path:
+def _write_catalog(tmp_path: Path, skills: list[dict[str, Any]]) -> Path:
     catalog = {
         "metadata": {
             "schema_version": "3.0",
@@ -181,7 +182,7 @@ def _write_catalog(tmp_path: Path, skills: list[dict]) -> Path:
     return catalog_path
 
 
-def _skill_entry(tmp_path: Path, name: str, category: str) -> dict:
+def _skill_entry(tmp_path: Path, name: str, category: str) -> dict[str, Any]:
     return {
         "name": name,
         "description": f"A test {category} skill",

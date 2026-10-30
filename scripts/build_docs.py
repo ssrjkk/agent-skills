@@ -84,14 +84,14 @@ def json_for_script(data: object) -> str:
 
 
 def read_catalog(path: Path) -> dict:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def skill_metrics(name: str, path_str: str) -> dict:
+def skill_metrics(path_str: str) -> dict:
     en_path = Path(path_str)
     if not en_path.exists():
-        return {"score": 100, "lines": 0, "blocks": 0, "sections": 0, "preview": ""}
+        return {"score": 0, "lines": 0, "blocks": 0, "sections": 0, "preview": ""}
     try:
         text = en_path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as e:
@@ -166,8 +166,8 @@ def load_all(path: Path, jobs: int | None = None) -> tuple[dict, dict, dict]:
     # executor.map preserves input order; results keyed by name (unique here).
     workers = jobs or min(8, os.cpu_count() or 4)
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        computed = list(ex.map(lambda s: skill_metrics(s["name"], s["path"]), skills))
-    metrics = {s["name"]: m for s, m in zip(skills, computed)}
+        computed = list(ex.map(lambda s: skill_metrics(s["path"]), skills))
+    metrics = {s["name"]: m for s, m in zip(skills, computed, strict=True)}
     by_category: dict[str, list] = {}
     for s in skills:
         by_category.setdefault(s["category"], []).append(s)
@@ -190,11 +190,11 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="{REPO}/raw/main/.github/social-preview.svg">
+  <meta property="og:image" content="{REPO}/raw/main/.github/site-preview.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(desc)}">
-  <meta name="twitter:image" content="{REPO}/raw/main/.github/social-preview.svg">
+  <meta name="twitter:image" content="{REPO}/raw/main/.github/site-preview.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -250,7 +250,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     for domain in sorted(by_category):
         color = DOMAIN_COLORS.get(domain, "#64748b")
         domain_pills.append(
-            f'<button class="pill" data-domain="{esc(domain)}" style="--dc:{color}" onclick="filterByDomain(\'{esc(domain)}\', this)">'
+            f'<button class="pill" data-domain="{esc(domain)}" style="--dc:{color}" onclick="filterByDomain(this.getAttribute(\'data-domain\'), this)">'
             f'{esc(domain)}<span class="pill-count">{len(by_category[domain])}</span></button>'
         )
 
@@ -277,15 +277,12 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
         score = m["score"]
         bar_color = "#22c55e" if score >= 95 else "#f59e0b" if score >= 85 else "#ef4444"
         preview = esc(m["preview"])
-        if preview:
-            preview_html = f'<pre class="card-code"><code>{preview}</code></pre>'
-        else:
-            preview_html = ""
+        preview_html = f'<pre class="card-code"><code>{preview}</code></pre>' if preview else ""
         cards.append(
             f'<a class="card" href="skills/{esc(s["name"])}.html" data-name="{esc(s["name"].lower())}" '
             f'data-domain="{esc(s["category"].lower())}" data-score="{score}" '
             f'data-tags=\'{esc(" ".join(s.get("tags", [])).lower())}\'>'
-            f'<div class="card-top"><span class="card-name">{esc(s["name"])}</span><span class="card-top-right">{ru_badge}<button class="card-copy" title="copy skill path" data-i18n-aria="copy" aria-label="copy skill path" onclick="event.preventDefault();event.stopPropagation();copyBtn(this,this.getAttribute(\'data-path\'))" data-path=".claude/skills/{esc(s["category"])}/{esc(s["name"])}">⧉</button></span></div>'
+            f'<div class="card-top"><span class="card-name">{esc(s["name"])}</span><span class="card-top-right">{ru_badge}<span class="card-copy" role="button" tabindex="0" title="copy skill path" data-i18n-aria="copy" aria-label="copy skill path" onclick="event.preventDefault();event.stopPropagation();copyBtn(this,this.getAttribute(\'data-path\'))" data-path=".claude/skills/{esc(s["category"])}/{esc(s["name"])}">⧉</span></span></div>'
             f'<div class="card-desc">{esc(s["description"])}</div>'
             f'{preview_html}'
             f'<div class="card-score"><div class="score-row"><span data-i18n="quality">Quality</span><strong>{score}%</strong></div>'
@@ -432,10 +429,11 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     btn.classList.add('active');
   }
   function loadSearchIndex() {
-    if (searchIndex) return;
-    fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
+    if (searchIndex) return Promise.resolve(searchIndex);
+    return fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
       searchIndex = {};
       data.forEach(function(e) { searchIndex[e.name] = ((e.content || '') + ' ' + (e.content_ru || '')).toLowerCase(); });
+      applyFilter();
     }).catch(function() { searchIndex = {}; });
   }
   function filterByDomain(domain, btn) {
@@ -513,6 +511,14 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     if (e.key === '/') { e.preventDefault(); showTab('catalog'); var s2 = document.getElementById('search'); if (s2) s2.focus(); }
     else if (e.key >= '1' && e.key <= '5') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1]); }
     else if (e.key === 't') { toggleTheme(); }
+  });
+  // card copy action is a span[role=button]: Enter/Space must trigger it
+  document.addEventListener('keydown', function(e) {
+    var t = e.target;
+    if (t && t.classList && t.classList.contains('card-copy') && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      if (typeof copyBtn === 'function') copyBtn(t, t.getAttribute('data-path'));
+    }
   });
   // tabs: one screen instead of a long ribbon (deep-linkable via hash)
   var TAB_NAMES = ['catalog', 'stats', 'how', 'install', 'roadmaps'];
@@ -636,7 +642,7 @@ def _write_skill_page(s: dict, domain_skills: list, metrics: dict, skills_dir: P
           <span><span data-i18n="ru_tr">RU translation</span> <strong>{'yes' if s.get('has_ru') else 'no'}</strong></span>
         </div>
         <div class="skill-page-actions">
-          <button class="copy-btn" onclick="copyBtn(this,'.claude/skills/{esc(cat)}/{esc(name)}')" data-i18n="copy">copy path</button>
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/{esc(cat)}/{esc(name)}" data-i18n="copy">copy path</button>
           <a class="btn-ghost" href="{REPO}/tree/main/.claude/skills/{esc(cat)}/{esc(name)}" data-i18n="view_source">view source</a>
         </div>
       </div>
@@ -858,7 +864,7 @@ body{
 .shortcuts kbd{border:1px solid var(--border);background:var(--card);padding:.05rem .4rem;border-radius:4px;font-family:var(--mono);font-size:.66rem;color:var(--text)}
 .copy-btn.copied{background:var(--accent2);color:#0b0f0a}
 .card-top-right{display:inline-flex;align-items:center;gap:.4rem}
-.card-copy{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;width:24px;height:24px;font-size:.7rem;cursor:pointer;line-height:1;transition:all .15s}
+.card-copy{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;width:24px;height:24px;font-size:.7rem;cursor:pointer;line-height:1;transition:all .15s;display:inline-flex;align-items:center;justify-content:center}
 .card-copy:hover{color:var(--accent);border-color:var(--accent);transform:scale(1.1)}
 .card-copy.copied{color:var(--accent);border-color:var(--accent)}
 .skip-link{position:absolute;left:1rem;top:-3rem;z-index:100;background:var(--accent);color:#0b0f0a;font-family:var(--mono);font-size:.78rem;font-weight:700;padding:.5rem 1rem;border-radius:var(--radius);text-decoration:none;transition:top .15s}
@@ -1216,7 +1222,7 @@ def rm_stage_html(stage: dict) -> str:
     )
 
 
-def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None = None) -> list[dict]:
+def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dict]:
     """Build the roadmaps overview, one page per track, and compiled JSON.
 
     Source: roadmaps/<slug>.json (hand-edited, standalone).
@@ -1270,10 +1276,17 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
     </div>
   <script>
   var RM_DATA = """ + json_for_script([{k: v for k, v in t.items() if not k.startswith("$")} for t in tracks]) + """;
+  function escH(s) {
+    // numeric refs for quotes (not named entities): equivalent HTML,
+    // and keeps the no-leaked-entities invariant for inline scripts
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&#34;', "'": '&#39;'}[c];
+    });
+  }
   function rmStageHTML(s) {
     var pill = s.status === 'live' ? '<span class="live-pill">live</span>' : '<span class="soon-pill">soon</span>';
-    var items = (s.items || []).map(function(i) { return '<li>' + i + '</li>'; }).join('');
-    return '<div class="rm-stage"><h3>▸ ' + s.title + ' ' + pill + '</h3><ul>' + items + '</ul></div>';
+    var items = (s.items || []).map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
+    return '<div class="rm-stage"><h3>▸ ' + escH(s.title) + ' ' + pill + '</h3><ul>' + items + '</ul></div>';
   }
   function showTrack(slug, btn) {
     document.querySelectorAll('.rm-tab').forEach(function(b) { b.classList.remove('active'); });
@@ -1291,15 +1304,18 @@ def build_roadmaps(catalog_path: Path, output_dir: Path, source_dir: Path | None
     });
     var L = (typeof I18N !== 'undefined' && (I18N[lang()] || I18N.en)) || {open_map: 'Open full map', rel_skills: 'Related skills'};
     var actions = document.getElementById('rm-actions');
-    actions.innerHTML = '<a class=\\'btn-ghost\\' href=\\'roadmaps/\\' + t.slug + \\'.html\\'><span>' + L.open_map + '</span></a>'
-      + (t.catalog_domain ? '<a class=\\'btn-ghost\\' href=\\'domains/\\' + t.catalog_domain + \\'.html\\'><span>' + L.rel_skills + '</span></a>' : '');
+    actions.innerHTML = '<a class=\\'btn-ghost\\' href=\\'roadmaps/\\' + encodeURIComponent(t.slug) + \\'.html\\'><span>' + L.open_map + '</span></a>'
+      + (t.catalog_domain ? '<a class=\\'btn-ghost\\' href=\\'domains/\\' + encodeURIComponent(t.catalog_domain) + \\'.html\\'><span>' + L.rel_skills + '</span></a>' : '');
     box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
     if (location.hash !== '#' + slug) history.replaceState(null, '', '#' + slug);
   }
   (function() {
     var slug = (location.hash || '').replace('#', '');
     if (slug) {
-      var btn = document.querySelector('.rm-tab[data-track="' + slug + '"]');
+      var btn = null;
+      try {
+        btn = document.querySelector('.rm-tab[data-track="' + slug.replace(/"/g, '') + '"]');
+      } catch (e) { btn = null; }
       if (btn) showTrack(slug, btn);
     }
   })();
@@ -1369,6 +1385,8 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     ]
     for s in sorted(skills, key=lambda x: x["name"]):
         lines.append(f"  <url><loc>{BASE}skills/{esc(s['name'])}.html</loc></url>")
+    for d in sorted(_meta.get("domains", [])):
+        lines.append(f"  <url><loc>{BASE}domains/{esc(d)}.html</loc></url>")
     for t in load_roadmap_tracks():
         lines.append(f"  <url><loc>{BASE}roadmaps/{esc(t['slug'])}.html</loc></url>")
     lines.append("</urlset>")
@@ -1393,7 +1411,7 @@ def main() -> int:
     build_index_html(Path(args.catalog), output_dir, jobs=args.jobs)
     build_skill_pages(Path(args.catalog), output_dir, jobs=args.jobs)
     build_domain_pages(Path(args.catalog), output_dir)
-    build_roadmaps(Path(args.catalog), output_dir)
+    build_roadmaps(output_dir)
     build_style_css(output_dir)
     build_site_js(output_dir)
     build_search_index(Path(args.catalog), output_dir)

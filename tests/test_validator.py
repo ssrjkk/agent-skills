@@ -98,6 +98,38 @@ class TestSkillValidator:
         results = validator.validate_skill_file(path)
         assert not [r.code for r in results if r.code in ("W040", "W041")]
 
+    def test_ru_code_fences_excluded_from_prose(self, validator: SkillValidator, tmp_path: Path):
+        d = tmp_path / "test"
+        d.mkdir(parents=True)
+        (d / "SKILL.md").write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0.0\n---\n"
+            "# Test\n\n" + ("Full English body sentence number one. " * 20) + "\n"
+        )
+        path = d / "SKILL.ru.md"
+        path.write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0\n---\n"
+            "# Тест\n\n"
+            + ("Полноценный русский перевод каждого предложения оригинала. " * 20)
+            + "\n```python\nprint('latin code stays out of prose metrics')\n```\n",
+            encoding="utf-8",
+        )
+        results = validator.validate_skill_file(path)
+        assert not [r.code for r in results if r.code in ("W040", "W041")]
+
+    def test_ru_without_english_original_skips_length_check(self, validator: SkillValidator, tmp_path: Path):
+        d = tmp_path / "test"
+        d.mkdir(parents=True)
+        path = d / "SKILL.ru.md"
+        path.write_text(
+            "---\nname: test\ndescription: desc\ncategory: qa\ntags: []\nmodels: []\nversion: 1.0\n---\n"
+            "# Тест\n\n"
+            + ("Полноценный русский перевод без английского оригинала рядом. " * 10)
+            + "\n",
+            encoding="utf-8",
+        )
+        results = validator.validate_skill_file(path)
+        assert not [r.code for r in results if r.code in ("W040", "W041")]
+
     def test_missing_frontmatter(self, validator: SkillValidator, tmp_path: Path):
         path = tmp_path / "test" / "SKILL.md"
         path.parent.mkdir(parents=True)

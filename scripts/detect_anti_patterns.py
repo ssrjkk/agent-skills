@@ -17,7 +17,7 @@ ANTI_PATTERNS = {
 
 
 def detect_patterns(catalog_path: Path) -> int:
-    with open(catalog_path, "r", encoding="utf-8") as f:
+    with open(catalog_path, encoding="utf-8") as f:
         data = json.load(f)
 
     issues = 0

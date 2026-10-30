@@ -5,6 +5,7 @@ import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 from claude_skills.models import Catalog, CatalogMetadata, Skill, parse_frontmatter
 
@@ -98,7 +99,7 @@ class CatalogBuilder:
             path.write_text(text, encoding="utf-8")
         return text
 
-    def _parse_frontmatter(self, filepath: Path) -> dict | None:
+    def _parse_frontmatter(self, filepath: Path) -> dict[str, Any] | None:
         try:
             content = filepath.read_text(encoding="utf-8")
             frontmatter, _, ok = parse_frontmatter(content)
@@ -107,7 +108,7 @@ class CatalogBuilder:
             return None
 
     @staticmethod
-    def _parse_list(value) -> list[str]:
+    def _parse_list(value: Any) -> list[str]:
         if isinstance(value, list):
             return [str(v).strip() for v in value if v]
         if isinstance(value, str):
