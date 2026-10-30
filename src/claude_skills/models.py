@@ -89,7 +89,7 @@ class Skill:
     validation_results: list[ValidationResult] = field(default_factory=list)
 
     NAME_RE = re.compile(r"^[a-z0-9][a-z0-9-]*[a-z0-9]$|^[a-z0-9]$")
-    SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
+    SEMVER_RE = re.compile(r"^\d+\.\d+(\.\d+)?$")
 
     @property
     def is_valid_name(self) -> bool:

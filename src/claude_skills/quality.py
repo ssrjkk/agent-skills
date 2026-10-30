@@ -74,6 +74,9 @@ class QualityAnalyzer:
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=datetime.timezone.utc)
             days_old = (datetime.datetime.now(tz=datetime.timezone.utc) - dt).days
+            if days_old < -1:
+                return 30.0  # future beyond clock skew: typo year, not "perfectly fresh"
+            days_old = max(days_old, 0)
             if days_old < 30:
                 return 100.0
             if days_old < 90:

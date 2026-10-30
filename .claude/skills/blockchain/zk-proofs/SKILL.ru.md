@@ -1,6 +1,6 @@
 ---
 name: zk-proofs
-description: "Zero-knowledge proof development"
+description: "Develop zero-knowledge proofs: private voting and identity, zk-rollups, verifiable computation, and compliance without exposing data. Use for privacy-preserving apps."
 category: blockchain
 tags: [zk-proofs, blockchain, russian]
 models: [sonnet, opus]

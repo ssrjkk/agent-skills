@@ -1,6 +1,6 @@
 ---
 name: expo-rn
-description: "Expo SDK for React Native development"
+description: "Ship iOS and Android from one codebase with Expo: native features, OTA updates, EAS build, and no native tooling setup. Use for cross-platform MVPs."
 category: mobile
 tags: [expo, react-native, mobile, ios, android, cross-platform]
 models: [sonnet, opus]

@@ -138,7 +138,7 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `ai` | `prompt-engineering` | Design effective prompts for LLMs: role framing, structured output, chain-of-thought, few-shot, and evaluation. Use to get reliable model behavior. |
 | `ai` | `rag-pipeline` | Build retrieval-augmented generation pipelines: chunking, embeddings, vector search, hybrid retrieval, and citation. Use for grounded LLM answers over your data. |
 | `ai` | `structured-output` | Force LLMs to emit valid, schema-constrained structured output: JSON modes, function calling, JSON Schema validation, and error recovery. Use for reliable data extraction. |
-| `backend` | `deno-runtime` | Deno runtime and standard library |
+| `backend` | `deno-runtime` | Build secure TypeScript apps with Deno: least-privilege permissions, web-standard APIs, zero-config tooling, and standalone binaries via deno compile. Use for server-side JS without Node. |
 | `backend` | `django` | Build secure web applications with Django: models, views, ORM, admin, auth, REST APIs, and deployment. Use for Python web backends. |
 | `backend` | `dotnet` | Build .NET backends with ASP.NET Core: minimal APIs, EF Core, dependency injection, middleware, and testing. Use for C# services. |
 | `backend` | `express` | Build Node.js web APIs with Express: routing, middleware, error handling, validation, and production hardening. Use for Node backends. |
@@ -149,10 +149,10 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `backend` | `laravel` | Build PHP web applications with Laravel: routing, Eloquent ORM, Blade, migrations, validation, and deployment. Use for PHP backends. |
 | `backend` | `nestjs` | Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs. |
 | `backend` | `rest-api-design` | Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task. |
-| `backend` | `rust-tokio` | Async Rust with Tokio runtime |
+| `backend` | `rust-tokio` | Build async Rust services with Tokio: high-throughput networking, tasks, channels, timers, and testing. Use for chat, proxies, streaming, and data pipelines. |
 | `backend` | `spring-boot` | Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services. |
 | `backend` | `websockets` | Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection. Use for live updates and chat. |
-| `blockchain` | `zk-proofs` | Zero-knowledge proof development |
+| `blockchain` | `zk-proofs` | Develop zero-knowledge proofs: private voting and identity, zk-rollups, verifiable computation, and compliance without exposing data. Use for privacy-preserving apps. |
 | `data` | `airflow` | Orchestrate data pipelines with Apache Airflow: DAGs, tasks, dependencies, sensors, and retries. Use for scheduled workflows. |
 | `data` | `apache-spark` | Process large-scale data with Apache Spark: DataFrames, SQL, joins, partitioning, and optimization. Use for big data and ETL. |
 | `data` | `data-visualization` | Create clear data visualizations with Matplotlib, Plotly, and Altair: chart selection, design, interactivity, and dashboards. Use for communicating data. |
@@ -175,7 +175,7 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `devops` | `ansible` | Automate infrastructure with Ansible: playbooks, roles, inventory, modules, and idempotency. Use for config management and provisioning. |
 | `devops` | `argocd` | Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks. Use for declarative deployments. |
 | `devops` | `aws-lambda` | Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures. |
-| `devops` | `cloud-native-ai` | Cloud-native AI deployment patterns |
+| `devops` | `cloud-native-ai` | Run production AI on cloud-native stacks: HA serving, multi-model infrastructure, ML canary deploys, and GPU scheduling. Use for ML platforms. |
 | `devops` | `docker` | Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening. Use for any deployable service. |
 | `devops` | `github-actions` | Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines. |
 | `devops` | `gitlab-ci` | Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment. |
@@ -189,9 +189,9 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `devops` | `platform-engineering` | Platform engineering with Backstage/Port |
 | `devops` | `prometheus-grafana` | Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking. Use for observability. |
 | `devops` | `serverless-ai` | Serverless AI inference (Cloudflare Workers, Lambda) |
-| `devops` | `sre-slos` | SRE SLI/SLO/SLA implementation |
+| `devops` | `sre-slos` | Define reliability with SRE practices: SLIs, SLOs, error budgets, and data-driven deploy decisions. Use for balancing features with reliability. |
 | `devops` | `terraform` | Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends. Use for cloud resource management. |
-| `embedded` | `rust-embedded` | Rust for embedded systems |
+| `embedded` | `rust-embedded` | Write embedded firmware in Rust: ARM Cortex-M and RISC-V, no-std, HALs, and memory safety over C/C++. Use for IoT and safety-critical devices. |
 | `engineering` | `ai-testing` | AI-powered test generation and validation |
 | `engineering` | `claude-code-commands` | Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code. |
 | `engineering` | `clean-architecture` | Structure codebases with clean architecture: layers, dependency rule, use cases, ports and adapters. Use for maintainable large codebases. |
@@ -203,19 +203,19 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `finance` | `risk-modeling` | Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management. |
 | `frontend` | `angular` | Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends. |
 | `frontend` | `astro` | Build content-focused websites with Astro: islands architecture, content collections, static generation, and integrations. Use for fast content sites. |
-| `frontend` | `bun-runtime` | Bun runtime for JavaScript/TypeScript |
+| `frontend` | `bun-runtime` | Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling. |
 | `frontend` | `modern-css` | Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling. |
 | `frontend` | `nextjs` | Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps. |
 | `frontend` | `react-19` | Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work. |
 | `frontend` | `svelte` | Build reactive UIs with Svelte 5: runes, stores, components, and transitions. Use for efficient interactive frontends. |
-| `frontend` | `tailwind-v4` | Tailwind CSS v4 features |
+| `frontend` | `tailwind-v4` | Style with Tailwind CSS v4: smaller config, container queries, 3D transforms, and the v3 upgrade path. Use for utility-first responsive UIs. |
 | `frontend` | `typescript` | Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase. |
 | `frontend` | `vue` | Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work. |
 | `gamedev` | `game-physics` | Implement 2D/3D game physics: rigid bodies, collisions, constraints, raycasting, and performance optimization. Use for realistic game mechanics. |
 | `gamedev` | `unity-ecs` | Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity. |
 | `healthcare` | `hipaa-compliance` | Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification. Use for health IT security. |
 | `healthcare` | `hl7-fhir` | Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange. Use for health IT interoperability. |
-| `mobile` | `expo-rn` | Expo SDK for React Native development |
+| `mobile` | `expo-rn` | Ship iOS and Android from one codebase with Expo: native features, OTA updates, EAS build, and no native tooling setup. Use for cross-platform MVPs. |
 | `mobile` | `flutter` | Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds. Use for iOS/Android/desktop. |
 | `mobile` | `kotlin-android` | Build Android apps with Kotlin: Compose UI, coroutines, architecture components, and Gradle. Use for modern native Android development. |
 | `mobile` | `swift-ios` | Build iOS apps with Swift and SwiftUI: views, state, navigation, concurrency, and Combine. Use for native Apple platforms. |

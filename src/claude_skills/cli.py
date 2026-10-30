@@ -91,6 +91,9 @@ def validate(dir: str | None, json: str | None) -> None:
         combined.setdefault(name, []).extend(results)
 
     report = pipeline.report(combined)
+    # total counts skills (EN files); RU-only leftovers merge into details
+    # but must not inflate the skill count
+    report["total"] = len(en_results)
 
     print(f"\n{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Validation Report{Style.RESET_ALL}")
@@ -120,6 +123,8 @@ def validate(dir: str | None, json: str | None) -> None:
 @click.option('--top', type=int, default=10, help='Show top N skills')
 def quality(dir: str | None, json: str | None, top: int) -> None:
     """Analyze quality of all skills."""
+    if top <= 0:
+        raise click.ClickException("--top must be > 0")
     start = time.perf_counter()
 
     builder = CatalogBuilder(base=resolve_skills_dir(dir))
@@ -217,6 +222,10 @@ def quality(dir: str | None, json: str | None, top: int) -> None:
 @click.option('--limit', type=int, default=10, help='Max results')
 def search(query: str, dir: str | None, domain: str | None, limit: int) -> None:
     """Search skills."""
+    if not query.strip():
+        raise click.ClickException("query must not be empty")
+    if limit <= 0:
+        raise click.ClickException("--limit must be > 0")
     builder = CatalogBuilder(base=resolve_skills_dir(dir))
     catalog = builder.build_catalog()
 
@@ -331,6 +340,8 @@ def catalog(dir: str | None, output: str) -> None:
 @click.option('--days', type=int, default=180, help='Flag skills not updated within N days')
 def stale(dir: str | None, days: int) -> None:
     """List skills whose `updated` date is older than N days (review queue)."""
+    if days <= 0:
+        raise click.ClickException("--days must be > 0")
     import datetime
 
     builder = CatalogBuilder(base=resolve_skills_dir(dir))

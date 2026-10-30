@@ -1,6 +1,6 @@
 ---
 name: bun-runtime
-description: "Bun runtime for JavaScript/TypeScript"
+description: "Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling."
 category: frontend
 tags: [bun, javascript, typescript, runtime, bundler]
 models: [sonnet, opus]
