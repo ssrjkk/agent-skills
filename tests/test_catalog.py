@@ -93,6 +93,7 @@ class TestCatalogBuilder:
         builder = CatalogBuilder(root=tmp_path)
         skills = builder.scan()
         assert len(skills) == 0
+        assert builder.skipped == ["qa/no-fm/SKILL.md"]
 
     def test_parse_list_from_yaml_list(self, builder: CatalogBuilder):
         result = builder._parse_list(["a", "b", "c"])
@@ -140,3 +141,15 @@ class TestCatalogBuilderDuplicate:
         builder = CatalogBuilder(root=tmp_path)
         skills = builder.scan()
         assert len(skills) == 1
+        # sorted order: ai/same-name wins, qa/same-name is reported, not dropped silently
+        assert skills[0].category == "ai"
+        assert builder.duplicates == ["same-name (qa/same-name/SKILL.md)"]
+
+    def test_from_json_rejects_nameless_entry(self, tmp_path: Path):
+        path = tmp_path / "catalog.json"
+        path.write_text(
+            json.dumps({"metadata": {}, "skills": [{"description": "no name here"}]}),
+            encoding="utf-8",
+        )
+        with pytest.raises(ValueError, match="no 'name'"):
+            CatalogBuilder.from_json(path)

@@ -17,18 +17,28 @@ class CatalogBuilder:
         self.root = Path(root or os.getcwd())
         self.base = base or self.BASE
         self.skills_dir = self.root / self.base
+        # Non-fatal input problems, surfaced by CLI commands instead of
+        # silently dropping skills (see scan): paths that failed to parse
+        # and duplicate frontmatter names (first occurrence wins).
+        self.skipped: list[str] = []
+        self.duplicates: list[str] = []
 
     def scan(self) -> list[Skill]:
         skills: list[Skill] = []
         seen: set[str] = set()
+        self.skipped = []
+        self.duplicates = []
 
         for sk_path in sorted(self.skills_dir.rglob("SKILL.md")):
+            rel = sk_path.relative_to(self.skills_dir).as_posix()
             meta = self._parse_frontmatter(sk_path)
             if not meta or "name" not in meta:
+                self.skipped.append(rel)
                 continue
 
             name = meta["name"]
             if name in seen:
+                self.duplicates.append(f"{name} ({rel})")
                 continue
             seen.add(name)
 
@@ -131,9 +141,13 @@ class CatalogBuilder:
             bilingual=meta.get("bilingual", True),
         )
 
-        skills = [
-            Skill(
-                name=s["name"],
+        skills = []
+        for i, s in enumerate(data.get("skills", [])):
+            if not isinstance(s, dict) or not s.get("name"):
+                raise ValueError(f"catalog entry #{i} has no 'name': {str(s)[:80]}")
+            skills.append(
+                Skill(
+                    name=s["name"],
                 description=s.get("description", ""),
                 category=s.get("category", ""),
                 tags=CatalogBuilder._parse_list(s.get("tags", [])),
@@ -144,7 +158,6 @@ class CatalogBuilder:
                 has_ru=s.get("has_ru", False),
                 created=s.get("created", ""),
                 updated=s.get("updated", ""),
+                )
             )
-            for s in data.get("skills", [])
-        ]
         return Catalog(metadata=metadata, skills=skills)
