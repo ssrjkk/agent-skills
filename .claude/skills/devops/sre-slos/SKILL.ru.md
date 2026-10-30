@@ -1,6 +1,6 @@
 ---
 name: sre-slos
-description: "SRE SLI/SLO/SLA implementation"
+description: "Define reliability with SRE practices: SLIs, SLOs, error budgets, and data-driven deploy decisions. Use for balancing features with reliability."
 category: devops
 tags: [sre-slos, devops, russian]
 models: [sonnet, opus]

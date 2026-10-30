@@ -1,6 +1,6 @@
 ---
 name: deno-runtime
-description: "Deno runtime and standard library"
+description: "Build secure TypeScript apps with Deno: least-privilege permissions, web-standard APIs, zero-config tooling, and standalone binaries via deno compile. Use for server-side JS without Node."
 category: backend
 tags: [deno-runtime, backend, russian]
 models: [sonnet, opus]

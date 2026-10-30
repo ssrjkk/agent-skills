@@ -49,6 +49,18 @@ class TestSkillValidator:
         assert "I030" in codes
         assert not [r for r in results if r.severity == Severity.ERROR]
 
+    def test_filler_words_in_ban_list_are_skipped(self, validator: SkillValidator, tmp_path: Path):
+        path = tmp_path / "test" / "SKILL.md"
+        path.parent.mkdir(parents=True)
+        path.write_text(
+            "---\nname: test\ndescription: Plain copy guide\n"
+            "category: qa\ntags: []\nmodels: []\nversion: 1.0.0\n---\n"
+            "# Test\n\n## Quick Start\n\nBan filler: revolutionize, supercharge, cutting edge.\n\n"
+            "## Validation\n\nWrite plainly.\n"
+        )
+        results = validator.validate_skill_file(path)
+        assert "I030" not in [r.code for r in results]
+
     def test_ru_without_cyrillic_warns(self, validator: SkillValidator, tmp_path: Path):
         d = tmp_path / "test"
         d.mkdir(parents=True)

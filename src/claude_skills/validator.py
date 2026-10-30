@@ -102,6 +102,11 @@ class SkillValidator:
             results.append(ValidationResult(str(filepath), Severity.WARNING, "W021", "Contains TODO/FIXME placeholder"))
 
         required_sections = ["Quick Start", "Validation"]
+        if filepath.name == "SKILL.ru.md":
+            # RU files carry translated headers; checking English names here
+            # produced 100+ bogus I020 infos. Both RU headers below are
+            # present in every shipped translation (verified 103/103).
+            required_sections = ["Быстрый старт", "Валидация"]
         for section in required_sections:
             if section not in body:
                 results.append(ValidationResult(str(filepath), Severity.INFO, "I020", f'Missing section "{section}"'))
@@ -116,8 +121,13 @@ class SkillValidator:
         """INFO-level copy signals. Never blocks: flags marketing filler so a
         human can verify each hit is intentional (e.g. a ban-list example)."""
         results: list[ValidationResult] = []
-        haystack = f"{frontmatter.get('description', '')}\n{body}".lower()
-        hits = [w for w in self.FILLER_WORDS if w in haystack]
+        hits: list[str] = []
+        for line in f"{frontmatter.get('description', '')}\n{body}".splitlines():
+            low = line.lower()
+            if "ban" in low:
+                continue  # ban-list examples name the filler to forbid it
+            hits.extend(w for w in self.FILLER_WORDS if w in low)
+        hits = sorted(set(hits))
         if hits:
             results.append(ValidationResult(str(filepath), Severity.INFO, "I030", f"Mentions filler words, verify intentional: {hits}"))
         return results

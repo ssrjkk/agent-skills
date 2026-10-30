@@ -1,6 +1,6 @@
 ---
 name: tailwind-v4
-description: "Tailwind CSS v4 features"
+description: "Style with Tailwind CSS v4: smaller config, container queries, 3D transforms, and the v3 upgrade path. Use for utility-first responsive UIs."
 category: frontend
 tags: [tailwind, css, v4, design, styling]
 models: [sonnet, opus]

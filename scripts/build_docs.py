@@ -383,7 +383,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     <section class="search-section reveal tab-panel active" id="catalog" data-panel="catalog">
       <h2><span data-i18n="cat_t">Catalog</span> <span class="h-sub" data-i18n="cat_s" data-total="{meta["total_skills"]}" data-ru="{meta["total_ru"]}">— {meta["total_skills"]} skills, {meta["total_ru"]} with RU</span></h2>
       <div class="search-row">
-        <input type="search" id="search" class="search" data-i18n-ph="search_ph" placeholder="Search skills by name, domain, or tag…" autocomplete="off" oninput="onSearch(this.value)">
+        <input type="search" id="search" class="search" data-i18n-ph="search_ph" placeholder="Search skills by name, domain, or tag…" aria-label="Search skills" data-i18n-aria="search_aria" autocomplete="off" oninput="onSearch(this.value)">
         <select id="sort" class="sort" onchange="applyFilter()" aria-label="Sort skills" data-i18n-aria="sort_aria">
           <option value="domain" data-i18n="sort_domain">Sort: domain</option>
           <option value="name" data-i18n="sort_name">Sort: name</option>
@@ -392,7 +392,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       </div>
       <div class="result-count" id="result-count" data-i18n="count_t" data-i18n-html data-v="" data-t=""></div>
       <div class="pills" id="pills">
-        <button class="pill active" data-domain="all" onclick="filterByDomain('all', this)">all<span class="pill-count">{meta["total_skills"]}</span></button>
+        <button class="pill active" data-domain="all" onclick="filterByDomain(this.getAttribute('data-domain'), this)">all<span class="pill-count">{meta["total_skills"]}</span></button>
         {"".join(domain_pills)}
       </div>
     </section>
@@ -642,7 +642,7 @@ def _write_skill_page(s: dict, domain_skills: list, metrics: dict, skills_dir: P
           <span><span data-i18n="ru_tr">RU translation</span> <strong>{'yes' if s.get('has_ru') else 'no'}</strong></span>
         </div>
         <div class="skill-page-actions">
-          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/{esc(cat)}/{esc(name)}" data-i18n="copy">copy path</button>
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/{esc(cat)}/{esc(name)}" data-i18n="copy_path">copy path</button>
           <a class="btn-ghost" href="{REPO}/tree/main/.claude/skills/{esc(cat)}/{esc(name)}" data-i18n="view_source">view source</a>
         </div>
       </div>
@@ -1097,7 +1097,7 @@ body[data-theme="light"] .bg-glow{
 .agent-tab{padding:.4rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.75rem;border-radius:20px;transition:all .15s}
 .agent-tab:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
 .agent-tab.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent);font-weight:700}
-.tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.8rem 0 1.2rem;position:sticky;top:57px;z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding:.55rem;border:1px solid var(--border);border-radius:10px}
+.tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.8rem 0 1.2rem;position:sticky;top:57px;z-index:40;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding:.55rem;border:1px solid var(--border);border-radius:10px}
 .tab-btn{padding:.5rem 1.1rem;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:600;border-radius:8px;transition:all .15s}
 .tab-btn:hover{color:var(--text);border-color:var(--border);transform:translateY(-1px)}
 .tab-btn.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent)}

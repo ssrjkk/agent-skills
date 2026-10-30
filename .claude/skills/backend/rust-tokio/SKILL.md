@@ -1,6 +1,6 @@
 ---
 name: rust-tokio
-description: "Async Rust with Tokio runtime"
+description: "Build async Rust services with Tokio: high-throughput networking, tasks, channels, timers, and testing. Use for chat, proxies, streaming, and data pipelines."
 category: backend
 tags: [rust, tokio, async, concurrency, runtime]
 models: [sonnet, opus]

@@ -106,6 +106,14 @@ class TestQualityAnalyzer:
         sf.en_frontmatter = {"updated": iso}
         assert analyzer._score_freshness(sf) == 100.0
 
+    def test_freshness_future_date_clamped(self, analyzer: QualityAnalyzer):
+        sf = self._make_skill_file(body="Content")
+        future = datetime.datetime.now(tz=datetime.timezone.utc).date() + datetime.timedelta(days=400)
+        sf.en_frontmatter = {"updated": future.isoformat()}
+        assert analyzer._score_freshness(sf) == 30.0
+        sf.en_frontmatter = {"updated": "2099-01-01"}
+        assert analyzer._score_freshness(sf) == 30.0
+
     def test_freshness_datetime_object(self, analyzer: QualityAnalyzer):
         sf = self._make_skill_file(body="Content")
         today = datetime.datetime.now(tz=datetime.timezone.utc)

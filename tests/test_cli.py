@@ -99,6 +99,20 @@ class TestCommandSearch:
         assert result.exit_code == 0
         assert "tag-matched" in result.output
 
+    def test_search_empty_query_rejected(self, tmp_path: Path):
+        _make_skill(tmp_path, "some-skill", "qa")
+        result = CliRunner().invoke(cli, ["search", "   ", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code != 0
+        assert "must not be empty" in _strip_ansi(result.output)
+
+    def test_search_negative_limit_rejected(self, tmp_path: Path):
+        _make_skill(tmp_path, "some-skill", "qa")
+        result = CliRunner().invoke(
+            cli, ["search", "skill", "--dir", str(tmp_path / ".claude" / "skills"), "--limit", "-5"]
+        )
+        assert result.exit_code != 0
+        assert "--limit must be > 0" in _strip_ansi(result.output)
+
 
 class TestCommandCatalog:
     def test_catalog_regenerates(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -176,6 +190,19 @@ class TestCommandValidate:
         assert data["errors"] == 0
         assert data["total"] >= 1
 
+    def test_validate_total_counts_en_skills_only(self, tmp_path: Path):
+        _make_skill(tmp_path, "en-skill", "qa")
+        orphan = tmp_path / ".claude" / "skills" / "qa" / "orphan-ru" / "SKILL.ru.md"
+        orphan.parent.mkdir(parents=True)
+        orphan.write_text(
+            "---\nname: orphan-ru\ndescription: desc\ncategory: qa\n"
+            "tags: [test]\nmodels: [sonnet]\nversion: 1.0\n---\n# Тест\n\nПросто перевод без английского оригинала.\n",
+            encoding="utf-8",
+        )
+        result = CliRunner().invoke(cli, ["validate", "--dir", str(tmp_path / ".claude" / "skills")])
+        assert result.exit_code == 0
+        assert "Total skills: 1" in _strip_ansi(result.output)
+
 
 class TestCommandStats:
     def test_stats(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -251,6 +278,12 @@ class TestCommandStale:
         assert "zulu-skill" in output
         assert "unknown date" not in output
 
+    def test_stale_nonpositive_days_rejected(self, tmp_path: Path):
+        _make_skill(tmp_path, "any-skill", "qa")
+        result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills"), "--days", "0"])
+        assert result.exit_code != 0
+        assert "--days must be > 0" in _strip_ansi(result.output)
+
     def test_stale_handles_malformed_date(self, tmp_path: Path):
         self._make_dated_skill(tmp_path, "baddate-skill", "not-a-date")
         result = CliRunner().invoke(cli, ["stale", "--dir", str(tmp_path / ".claude" / "skills")])
@@ -284,6 +317,12 @@ class TestCommandQuality:
         assert out.exists()
         data = json.loads(out.read_text(encoding="utf-8"))
         assert data["skills"][0]["name"] == "alias-skill"
+
+    def test_quality_nonpositive_top_rejected(self, tmp_path: Path):
+        _make_skill(tmp_path, "any-skill", "qa")
+        result = CliRunner().invoke(cli, ["quality", "--dir", str(tmp_path / ".claude" / "skills"), "--top", "0"])
+        assert result.exit_code != 0
+        assert "--top must be > 0" in _strip_ansi(result.output)
 
     def test_quality_skips_broken_frontmatter(self, tmp_path: Path):
         broken = tmp_path / ".claude" / "skills" / "qa" / "broken"

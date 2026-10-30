@@ -35,8 +35,12 @@ class TestSkill:
     def test_valid_semver(self):
         assert Skill(name="t", description="", category="qa", tags=[], models=[], version="1.0.0", path=Path("")).is_valid_semver
 
+    def test_two_part_version_matches_validator(self):
+        # unified with W014 (^\d+\.\d+(\.\d+)?$) and the shipped RU files ("1.0")
+        assert Skill(name="t", description="", category="qa", tags=[], models=[], version="1.0", path=Path("")).is_valid_semver
+
     def test_invalid_semver(self):
-        assert not Skill(name="t", description="", category="qa", tags=[], models=[], version="1.0", path=Path("")).is_valid_semver
+        assert not Skill(name="t", description="", category="qa", tags=[], models=[], version="1.0-beta", path=Path("")).is_valid_semver
 
     def test_invalid_version_format(self):
         assert not Skill(name="t", description="", category="qa", tags=[], models=[], version="v1.0.0", path=Path("")).is_valid_semver

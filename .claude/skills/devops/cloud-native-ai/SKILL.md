@@ -1,6 +1,6 @@
 ---
 name: cloud-native-ai
-description: "Cloud-native AI deployment patterns"
+description: "Run production AI on cloud-native stacks: HA serving, multi-model infrastructure, ML canary deploys, and GPU scheduling. Use for ML platforms."
 category: devops
 tags: [cloud-native, ai, kubernetes, inference, deployment]
 models: [sonnet, opus]
