@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/skills-103-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-17-orange?style=for-the-badge" alt="Domains">
-  <img src="https://img.shields.io/badge/quality-100%25-brightgreen?style=for-the-badge" alt="Quality">
+  <img src="https://img.shields.io/badge/quality-98.9%25-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
@@ -55,7 +55,7 @@ Or clone directly into your agent's skills directory:
 
 ## What is this?
 
-102 production-grade, bilingual (English + Russian) skills following the
+103 production-grade, bilingual (English + Russian) skills following the
 **universal Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
@@ -112,11 +112,11 @@ Frontmatter is strictly validated for cross-agent portability in CI
 | Total skills | **103** |
 | Russian translations | **103 (100%)** |
 | Domains | **17** |
-| Quality score | **100%** |
+| Quality score | **98.9% avg (min 97.0)** |
 | Test coverage | **100%** |
 | License | MIT |
 
-Only skills meeting the quality bar (100% score, no validation errors) are
+Only skills that pass validation with zero errors and zero warnings are
 kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 
 ## Skills by domain
@@ -295,10 +295,6 @@ Every skill is scored on 5 dimensions:
 `devops` · `embedded` · `engineering` · `finance` · `frontend` · `gamedev` ·
 `healthcare` · `mobile` · `qa` · `security`
 
-`ai` · `backend` · `blockchain` · `data` · `database` · `desktop` · `devops` ·
-`embedded` · `engineering` · `finance` · `frontend` · `gamedev` · `healthcare` ·
-`mobile` · `qa` · `security`
-
 ## Author
 
 **ssrjkk** — creator & maintainer
@@ -349,7 +345,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 
 ## Why this library
 
-- **Curated, not generated** — 102 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — 103 hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No
