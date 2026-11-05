@@ -277,6 +277,48 @@ class TestSiteGenerator:
             assert track["status"] in {"soon", "live"}
             assert len(track["stages"]) >= 1
 
+    def test_bilingual_track_pages_render_mirror(self, tmp_path: Path):
+        tracks = tmp_path / "roadmaps"
+        tracks.mkdir(exist_ok=True)
+        (tracks / "qa.json").write_text(json.dumps({
+            "slug": "qa", "name": "QA", "name_ru": "QA / SDET", "icon": "🧪",
+            "tagline": "Test design to SDET", "tagline_ru": "От тест-дизайна до SDET",
+            "status": "live", "eta": "2026-11", "catalog_domain": "frontend", "related_skills": ["beta"],
+            "stages": [{
+                "title": "Stage 0. Foundations", "title_ru": "Этап 0. Основы",
+                "items": ["equivalence classes", "bug reports"],
+                "items_ru": ["классы эквивалентности", "баг-репорты"],
+                "status": "live",
+            }],
+        }), encoding="utf-8")
+        mod = _load_mod()
+        out = tmp_path / "docs"
+        out.mkdir()
+        mod.build_roadmaps(out, source_dir=tmp_path)
+        page = (out / "roadmaps" / "qa.html").read_text(encoding="utf-8")
+        assert '<span data-slang-body="en">QA</span><span data-slang-body="ru" hidden>QA / SDET</span>' in page
+        assert '<span data-slang-body="ru" hidden>Этап 0. Основы</span>' in page
+        assert '<ul data-slang-body="ru" hidden>' in page
+        assert "классы эквивалентности" in page
+        overview = (out / "roadmaps.html").read_text(encoding="utf-8")
+        assert "items_ru" in overview  # RM_DATA carries the RU mirror for client re-render
+        assert "refreshTrack" in overview
+        assert "· 1 live" in overview  # honest hero badge per build
+        assert 'data-live="1" data-total="0"' in overview
+
+    def test_stub_track_pages_stay_monolingual(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "roadmaps" / "frontend.html").read_text(encoding="utf-8")
+        assert '<ul data-slang' not in page, "no RU mirror until the track JSON ships one"
+        assert "Map drops soon" in page
+
+    def test_hero_counts_reflect_track_statuses(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'data-live="0" data-total="2"' in index  # fixture tracks: frontend + design, both soon
+        rm = (docs / "roadmaps.html").read_text(encoding="utf-8")
+        assert "· 0 live" in rm
+
     def test_i18n_keys_cover_markup(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         pages = (

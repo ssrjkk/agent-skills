@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-10-28T20:31:21Z",
+    "generated_at": "2026-10-30T10:56:42Z",
     "total_skills": 103,
     "total_ru": 103,
     "domains": [
@@ -460,7 +460,7 @@
     },
     {
       "name": "deno-runtime",
-      "description": "Deno runtime and standard library",
+      "description": "Build secure TypeScript apps with Deno: least-privilege permissions, web-standard APIs, zero-config tooling, and standalone binaries via deno compile. Use for server-side JS without Node.",
       "category": "backend",
       "tags": [
         "deno",
@@ -780,7 +780,7 @@
     },
     {
       "name": "rust-tokio",
-      "description": "Async Rust with Tokio runtime",
+      "description": "Build async Rust services with Tokio: high-throughput networking, tasks, channels, timers, and testing. Use for chat, proxies, streaming, and data pipelines.",
       "category": "backend",
       "tags": [
         "rust",
@@ -864,7 +864,7 @@
     },
     {
       "name": "zk-proofs",
-      "description": "Zero-knowledge proof development",
+      "description": "Develop zero-knowledge proofs: private voting and identity, zk-rollups, verifiable computation, and compliance without exposing data. Use for privacy-preserving apps.",
       "category": "blockchain",
       "tags": [
         "zk-proofs",
@@ -1533,7 +1533,7 @@
     },
     {
       "name": "cloud-native-ai",
-      "description": "Cloud-native AI deployment patterns",
+      "description": "Run production AI on cloud-native stacks: HA serving, multi-model infrastructure, ML canary deploys, and GPU scheduling. Use for ML platforms.",
       "category": "devops",
       "tags": [
         "cloud-native",
@@ -1927,7 +1927,7 @@
     },
     {
       "name": "sre-slos",
-      "description": "SRE SLI/SLO/SLA implementation",
+      "description": "Define reliability with SRE practices: SLIs, SLOs, error budgets, and data-driven deploy decisions. Use for balancing features with reliability.",
       "category": "devops",
       "tags": [
         "sre",
@@ -1983,7 +1983,7 @@
     },
     {
       "name": "rust-embedded",
-      "description": "Rust for embedded systems",
+      "description": "Write embedded firmware in Rust: ARM Cortex-M and RISC-V, no-std, HALs, and memory safety over C/C++. Use for IoT and safety-critical devices.",
       "category": "embedded",
       "tags": [
         "rust",
@@ -2329,7 +2329,7 @@
     },
     {
       "name": "bun-runtime",
-      "description": "Bun runtime for JavaScript/TypeScript",
+      "description": "Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling.",
       "category": "frontend",
       "tags": [
         "bun",
@@ -2470,7 +2470,7 @@
     },
     {
       "name": "tailwind-v4",
-      "description": "Tailwind CSS v4 features",
+      "description": "Style with Tailwind CSS v4: smaller config, container queries, 3D transforms, and the v3 upgrade path. Use for utility-first responsive UIs.",
       "category": "frontend",
       "tags": [
         "tailwind",
@@ -2678,7 +2678,7 @@
     },
     {
       "name": "expo-rn",
-      "description": "Expo SDK for React Native development",
+      "description": "Ship iOS and Android from one codebase with Expo: native features, OTA updates, EAS build, and no native tooling setup. Use for cross-platform MVPs.",
       "category": "mobile",
       "tags": [
         "expo",

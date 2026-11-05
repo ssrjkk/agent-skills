@@ -2,40 +2,99 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "backend",
   "name": "Backend",
+  "name_ru": "Бэкенд",
   "icon": "⚙️",
-  "tagline": "APIs, frameworks, runtimes, realtime",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Python-first path: fundamentals to production systems — 16 modules, 5 projects, 12–18 months at 10 h/wk",
+  "tagline_ru": "Python-путь от фундамента до прод-систем: 16 модулей, 5 проектов, 12–18 месяцев при 10 ч/нед",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "backend",
-  "related_skills": [],
+  "related_skills": ["fastapi", "postgresql", "redis", "docker", "sql-querying", "rest-api-design", "kafka", "system-design"],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Part I. Foundation (months 1–4)",
+      "title_ru": "Часть I. Фундамент (месяцы 1–4)",
       "items": [
-        "Map drops soon"
+        "Environment, terminal, Git: branches, pull requests, clean history",
+        "Python core: types, containers, comprehensions, error handling",
+        "OOP and idiomatic Python: dataclasses, protocols, typing",
+        "Testing basics: pytest fixtures and parametrization",
+        "Algorithms: arrays, hash tables, two pointers, complexity analysis",
+        "Project #1: CLI application with tests and CI"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Окружение, терминал, Git: ветки, pull request, чистая история",
+        "Основы Python: типы, коллекции, включения, обработка ошибок",
+        "ООП и идиоматичный Python: dataclasses, протоколы, типизация",
+        "Начало тестов: фикстуры и параметризация в pytest",
+        "Алгоритмы: массивы, хеш-таблицы, два указателя, оценка сложности",
+        "Проект №1: CLI-приложение с тестами и CI"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Part II. Backend developer (months 4–9)",
+      "title_ru": "Часть II. Бэкенд-разработчик (месяцы 4–9)",
       "items": [
-        "Map drops soon"
+        "Network, HTTP, Linux: methods, headers, auth, curl, DevTools",
+        "SQL and PostgreSQL: schema design, joins, transactions, indexes",
+        "Web frameworks: FastAPI and Django, API design crafts",
+        "Docker, CI/CD, deploy: multi-stage images, pipelines, readiness",
+        "Project #2: deployed REST API with authorization and PostgreSQL",
+        "Outcome: ready to respond to junior openings"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Сеть, HTTP, Linux: методы, заголовки, аутентификация, curl, DevTools",
+        "SQL и PostgreSQL: проектирование схемы, соединения, транзакции, индексы",
+        "Веб-фреймворки: FastAPI и Django, дизайн API",
+        "Docker, CI/CD, деплой: multi-stage образы, пайплайны, готовность",
+        "Проект №2: задеплоенное REST API с авторизацией и PostgreSQL",
+        "Результат: можно откликаться на junior-вакансии"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Part III. Professional engineering (months 9–15)",
+      "title_ru": "Часть III. Профессиональная инженерия (месяцы 9–15)",
       "items": [
-        "Map drops soon"
+        "Python internals: typing, concurrency, performance profiling",
+        "Architecture: ports and adapters, layered design, review culture",
+        "Caches, queues, events: Redis, broker patterns, idempotency, outbox",
+        "Middle-level testing: integration, contract-like suites, quality gates",
+        "Observability and operations: RED metrics, logs, incidents, postmortems",
+        "Backend security: OWASP, secrets management, rate limiting",
+        "System design: capacity, consistency, graceful degradation",
+        "Projects #3–4 plus capstone system"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Python изнутри: типизация, конкурентность, профилирование производительности",
+        "Архитектура: порты и адаптеры, слоистый дизайн, культура ревью",
+        "Кэши, очереди, события: Redis, паттерны брокеров, идемпотентность, outbox",
+        "Тестирование уровня middle: интеграционные наборы, quality gates",
+        "Наблюдаемость и эксплуатация: RED-метрики, логи, инциденты, постмортемы",
+        "Безопасность бэкенда: OWASP, секреты, ограничение частоты запросов",
+        "System Design: ёмкость, согласованность, деградация без падения",
+        "Проекты №3–4 и капстоун-система"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Part IV. Work and growth (from month 8–9)",
+      "title_ru": "Часть IV. Работа и рост (с 8–9-го месяца)",
       "items": [
-        "Map drops soon"
+        "Interviews: coding, system design, behavioral",
+        "First 12–24 months on the job",
+        "Feedback loops: interview gaps re-prioritize learning",
+        "Senior track: ownership, mentoring"
+
       ],
-      "status": "soon"
+      "items_ru": [
+        "Собеседования: кодинг, system design, поведенческое интервью",
+        "Первые 12–24 месяца на работе",
+        "Обратная связь: пробелы с интервью расставляют приоритеты учёбы",
+        "Трек к senior: владение зоной, менторство"
+      ],
+      "status": "live"
     }
   ]
 }

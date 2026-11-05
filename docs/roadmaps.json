@@ -4,40 +4,190 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "ai",
       "name": "AI / LLM",
+      "name_ru": "ML и AI",
       "icon": "🤖",
-      "tagline": "Agents, RAG, evals, prompt, MCP",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "From Python backend to ML and AI engineer — 8 stages, fast track 16–20 weeks, full track 10–14 months",
+      "tagline_ru": "От Python-бэкенда к ML и AI-инженеру — 8 этапов, быстрый трек 16–20 недель, полный 10–14 месяцев",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "ai",
-      "related_skills": [],
+      "related_skills": [
+        "agent-development",
+        "rag-pipeline",
+        "prompt-engineering",
+        "structured-output",
+        "embeddings",
+        "vector-databases",
+        "mcp-servers",
+        "llm-evals"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 0. Python for data (2–3 wk)",
+          "title_ru": "Этап 0. Python для данных (2–3 недели)",
           "items": [
-            "Map drops soon"
+            "NumPy: arrays, vectorization instead of loops, broadcasting",
+            "pandas or polars: loading, cleaning, groupby, merge, windows",
+            "Visualization and notebooks: matplotlib, Jupyter, uv environments",
+            "Formats and scale: Parquet, Arrow, DuckDB for SQL on files",
+            "Assignment: reproducible real-dataset EDA report"
           ],
-          "status": "soon"
+          "items_ru": [
+            "NumPy: массивы, векторизация вместо циклов, broadcasting",
+            "pandas или polars: загрузка, очистка, groupby, merge, оконные операции",
+            "Визуализация и ноутбуки: matplotlib, Jupyter, окружения uv",
+            "Форматы и большие данные: Parquet, Arrow, DuckDB для SQL по файлам",
+            "Практика: воспроизводимый EDA-отчёт по реальному датасету"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage A. Math and statistics (6–8 wk, parallel)",
+          "title_ru": "Этап A. Математика и статистика (6–8 недель, параллельно)",
           "items": [
-            "Map drops soon"
+            "Linear algebra: vectors, matrices, norms, SVD idea, cosine similarity",
+            "Calculus: derivatives, gradients, chain rule as the base of backpropagation",
+            "Probability: Bayes, distributions, expectation, CLT",
+            "Statistics: MLE, confidence intervals, hypothesis testing, A/B tests",
+            "Optimization: gradient descent, SGD, momentum, Adam idea",
+            "Information theory: entropy, cross-entropy, KL-divergence",
+            "Assignment: linear regression from scratch on NumPy"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Линейная алгебра: векторы, матрицы, нормы, идея SVD, косинусная близость",
+            "Матанализ: производные, градиенты, цепное правило как основа backpropagation",
+            "Вероятность: Байес, распределения, матожидание, ЦПТ",
+            "Статистика: MLE, доверительные интервалы, проверка гипотез, A/B-тесты",
+            "Оптимизация: градиентный спуск, SGD, моментум, идея Adam",
+            "Теория информации: энтропия, кросс-энтропия, KL-дивергенция",
+            "Практика: линейная регрессия с нуля на NumPy"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage B. Classical ML (8–10 wk)",
+          "title_ru": "Этап B. Классический ML (8–10 недель)",
           "items": [
-            "Map drops soon"
+            "Tasks: regression, classification, clustering, dimensionality (PCA)",
+            "Models: linear/logistic, trees, gradient boosting (XGBoost, LightGBM, CatBoost)",
+            "Metrics: accuracy, precision, recall, F1, ROC-AUC vs PR-AUC on rare classes",
+            "Honest validation: CV, stratification, time splits, leakage detection",
+            "Practices: baselines first, sklearn Pipeline, Optuna, SHAP, reproducibility",
+            "Portfolio ML-1: tabular ML project with a leakage-free report"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Задачи: регрессия, классификация, кластеризация, снижение размерности (PCA)",
+            "Модели: линейная и логистическая, деревья, бустинг (XGBoost, LightGBM, CatBoost)",
+            "Метрики: accuracy, precision, recall, F1, ROC-AUC против PR-AUC на редких классах",
+            "Честная валидация: кросс-валидация, стратификация, разбиение по времени, утечки",
+            "Практики: сначала бейзлайны, sklearn Pipeline, Optuna, SHAP, воспроизводимость",
+            "Портфолио ML-1: табличный ML-проект с отчётом без утечек"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage C. Deep learning (8–12 wk)",
+          "title_ru": "Этап C. Глубокое обучение (8–12 недель)",
           "items": [
-            "Map drops soon"
+            "PyTorch: tensors, autograd, nn.Module, training loop from scratch",
+            "Networks: MLP, CNN, RNN ideas; normalization, dropout, weight decay",
+            "Optimization: AdamW, LR schedules, gradient clipping, mixed precision",
+            "Transfer learning: pretrained weights, freeze layers, fine-tune",
+            "Transformers: tokenization, embeddings, self-attention, masks, encoder/decoder",
+            "Hugging Face ecosystem: Transformers, Datasets, PEFT, TRL",
+            "Experiment tracking: MLflow or Weights & Biases, seeds and configs",
+            "Portfolio ML-2: CNN experiments, text fine-tune, mini-GPT by hand"
           ],
-          "status": "soon"
+          "items_ru": [
+            "PyTorch: тензоры, autograd, nn.Module, обучающий цикл с нуля",
+            "Сети: MLP, идеи CNN и RNN; нормализация, dropout, weight decay",
+            "Оптимизация: AdamW, расписания LR, клиппинг градиентов, mixed precision",
+            "Перенос обучения: предобученные веса, заморозка слоёв, дообучение",
+            "Трансформеры: токенизация, эмбеддинги, self-attention, маска, encoder/decoder",
+            "Экосистема Hugging Face: Transformers, Datasets, PEFT, TRL",
+            "Трекинг экспериментов: MLflow или Weights & Biases, seed и конфиги",
+            "Портфолио ML-2: эксперименты с CNN, дообучение на тексте, мини-GPT руками"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage D. LLM and AI engineering (8–12 wk)",
+          "title_ru": "Этап D. LLM и AI Engineering (8–12 недель)",
+          "items": [
+            "LLM API craft: tokens, streaming, structured output, function calling, limits",
+            "Prompts as code; context engineering: what to keep in the window",
+            "Embeddings and vector stores: pgvector, Qdrant, FAISS, HNSW",
+            "RAG: chunking, hybrid search with RRF, reranking, citations, per-document ACL",
+            "Evals: 50–200 golden questions, LLM-as-judge, quality gates in CI",
+            "Agents: tool loop, step and budget limits, human confirmations, MCP",
+            "LLM security: prompt injection, OWASP Top 10 for LLM, least-privilege tools",
+            "Cost and latency: model routing, prompt caching, streaming, max_tokens",
+            "Fine-tuning when justified: LoRA/QLoRA, DPO; self-hosting with vLLM",
+            "Portfolio ML-3 (RAG with evals) and ML-4 (agent with injection defense)"
+          ],
+          "items_ru": [
+            "Инженерия LLM API: токены, стриминг, structured output, function calling, лимиты",
+            "Промпты как код; инженерия контекста: что держать в окне",
+            "Эмбеддинги и векторные хранилища: pgvector, Qdrant, FAISS, HNSW",
+            "RAG: разбиение на фрагменты, гибридный поиск с RRF, переранжирование, цитаты, права на документы",
+            "Evals: 50–200 эталонных вопросов, LLM-as-judge, гейты качества в CI",
+            "Агенты: цикл инструментов, лимиты шагов и бюджета, подтверждения, MCP",
+            "Безопасность LLM: prompt injection, OWASP Top 10 for LLM, минимальные права",
+            "Стоимость и задержка: маршрутизация моделей, кэш промптов, стриминг, max_tokens",
+            "Дообучение по показаниям: LoRA/QLoRA, DPO; self-hosting на vLLM",
+            "Портфолио ML-3 (RAG с evals) и ML-4 (агент с защитой от инъекций)"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage E. MLOps and ML systems (6–10 wk)",
+          "title_ru": "Этап E. MLOps и ML-системы (6–10 недель)",
+          "items": [
+            "Reproducibility: code/data/model versioning (DVC), Docker, seeds",
+            "Experiment registry: MLflow or W&B; model lifecycle stages",
+            "Pipelines: Airflow, Prefect, Dagster; idempotent tasks and retries",
+            "Train-serving skew; shared feature code; feature stores (Feast)",
+            "Serving: FastAPI with ONNX/TorchScript, Triton, BentoML, vLLM",
+            "Rollouts: shadow, canary, A/B, automatic rollback",
+            "Monitoring: latency, data drift (PSI), alerts, prediction logging",
+            "Portfolio ML-5: deploy, drift monitoring, one-command retrain"
+          ],
+          "items_ru": [
+            "Воспроизводимость: версионирование кода/данных/моделей (DVC), Docker, seed",
+            "Реестр экспериментов: MLflow или W&B; стадии жизненного цикла моделей",
+            "Пайплайны: Airflow, Prefect, Dagster; идемпотентные задачи и ретраи",
+            "Train-serving skew; общий код признаков; feature store (Feast)",
+            "Serving: FastAPI с ONNX/TorchScript, Triton, BentoML, vLLM",
+            "Выкатки: shadow, canary, A/B, автоматический откат",
+            "Мониторинг: латентность, дрейф данных (PSI), алерты, логирование предсказаний",
+            "Портфолио ML-5: деплой, мониторинг дрейфа, ретрейн одной командой"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage F. Specializations (by choice)",
+          "title_ru": "Этап F. Специализации (по выбору)",
+          "items": [
+            "Recommenders: two-tower models, NDCG/MAP, cold start, feedback loops",
+            "Search and ranking: BM25, hybrid retrieval, learning-to-rank",
+            "LLM training: pretraining, SFT, RLHF/DPO, scaling laws, distributed runs",
+            "Computer vision: detection, segmentation, ViT, diffusion models",
+            "Time series: seasonality, ARIMA/Prophet vs boosting, time-aware validation",
+            "Antifraud: heavy imbalance, graph features, labeler feedback loops",
+            "Speech: ASR/TTS like Whisper, streaming latency",
+            "Inference infrastructure: GPU profiling, KV-cache, continuous batching, vLLM internals"
+          ],
+          "items_ru": [
+            "Рекомендательные системы: two-tower модели, NDCG/MAP, холодный старт, петли обратной связи",
+            "Поиск и ранжирование: BM25, гибридный поиск, learning-to-rank",
+            "Обучение LLM: претрейнинг, SFT, RLHF/DPO, scaling laws, распределённые запуски",
+            "Компьютерное зрение: детекция, сегментация, ViT, диффузионные модели",
+            "Временные ряды: сезонность, ARIMA/Prophet против бустинга, валидация по времени",
+            "Антифрод: сильный дисбаланс, графовые признаки, петли разметки",
+            "Речь: ASR/TTS вроде Whisper, потоковая обработка и задержка",
+            "Инференс и инфраструктура: профилирование GPU, KV-кэш, continuous batching, устройство vLLM"
+          ],
+          "status": "live"
         }
       ]
     },
@@ -45,40 +195,107 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "backend",
       "name": "Backend",
+      "name_ru": "Бэкенд",
       "icon": "⚙️",
-      "tagline": "APIs, frameworks, runtimes, realtime",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Python-first path: fundamentals to production systems — 16 modules, 5 projects, 12–18 months at 10 h/wk",
+      "tagline_ru": "Python-путь от фундамента до прод-систем: 16 модулей, 5 проектов, 12–18 месяцев при 10 ч/нед",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "backend",
-      "related_skills": [],
+      "related_skills": [
+        "fastapi",
+        "postgresql",
+        "redis",
+        "docker",
+        "sql-querying",
+        "rest-api-design",
+        "kafka",
+        "system-design"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Part I. Foundation (months 1–4)",
+          "title_ru": "Часть I. Фундамент (месяцы 1–4)",
           "items": [
-            "Map drops soon"
+            "Environment, terminal, Git: branches, pull requests, clean history",
+            "Python core: types, containers, comprehensions, error handling",
+            "OOP and idiomatic Python: dataclasses, protocols, typing",
+            "Testing basics: pytest fixtures and parametrization",
+            "Algorithms: arrays, hash tables, two pointers, complexity analysis",
+            "Project #1: CLI application with tests and CI"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Окружение, терминал, Git: ветки, pull request, чистая история",
+            "Основы Python: типы, коллекции, включения, обработка ошибок",
+            "ООП и идиоматичный Python: dataclasses, протоколы, типизация",
+            "Начало тестов: фикстуры и параметризация в pytest",
+            "Алгоритмы: массивы, хеш-таблицы, два указателя, оценка сложности",
+            "Проект №1: CLI-приложение с тестами и CI"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Part II. Backend developer (months 4–9)",
+          "title_ru": "Часть II. Бэкенд-разработчик (месяцы 4–9)",
           "items": [
-            "Map drops soon"
+            "Network, HTTP, Linux: methods, headers, auth, curl, DevTools",
+            "SQL and PostgreSQL: schema design, joins, transactions, indexes",
+            "Web frameworks: FastAPI and Django, API design crafts",
+            "Docker, CI/CD, deploy: multi-stage images, pipelines, readiness",
+            "Project #2: deployed REST API with authorization and PostgreSQL",
+            "Outcome: ready to respond to junior openings"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Сеть, HTTP, Linux: методы, заголовки, аутентификация, curl, DevTools",
+            "SQL и PostgreSQL: проектирование схемы, соединения, транзакции, индексы",
+            "Веб-фреймворки: FastAPI и Django, дизайн API",
+            "Docker, CI/CD, деплой: multi-stage образы, пайплайны, готовность",
+            "Проект №2: задеплоенное REST API с авторизацией и PostgreSQL",
+            "Результат: можно откликаться на junior-вакансии"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Part III. Professional engineering (months 9–15)",
+          "title_ru": "Часть III. Профессиональная инженерия (месяцы 9–15)",
           "items": [
-            "Map drops soon"
+            "Python internals: typing, concurrency, performance profiling",
+            "Architecture: ports and adapters, layered design, review culture",
+            "Caches, queues, events: Redis, broker patterns, idempotency, outbox",
+            "Middle-level testing: integration, contract-like suites, quality gates",
+            "Observability and operations: RED metrics, logs, incidents, postmortems",
+            "Backend security: OWASP, secrets management, rate limiting",
+            "System design: capacity, consistency, graceful degradation",
+            "Projects #3–4 plus capstone system"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Python изнутри: типизация, конкурентность, профилирование производительности",
+            "Архитектура: порты и адаптеры, слоистый дизайн, культура ревью",
+            "Кэши, очереди, события: Redis, паттерны брокеров, идемпотентность, outbox",
+            "Тестирование уровня middle: интеграционные наборы, quality gates",
+            "Наблюдаемость и эксплуатация: RED-метрики, логи, инциденты, постмортемы",
+            "Безопасность бэкенда: OWASP, секреты, ограничение частоты запросов",
+            "System Design: ёмкость, согласованность, деградация без падения",
+            "Проекты №3–4 и капстоун-система"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Part IV. Work and growth (from month 8–9)",
+          "title_ru": "Часть IV. Работа и рост (с 8–9-го месяца)",
           "items": [
-            "Map drops soon"
+            "Interviews: coding, system design, behavioral",
+            "First 12–24 months on the job",
+            "Feedback loops: interview gaps re-prioritize learning",
+            "Senior track: ownership, mentoring"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Собеседования: кодинг, system design, поведенческое интервью",
+            "Первые 12–24 месяца на работе",
+            "Обратная связь: пробелы с интервью расставляют приоритеты учёбы",
+            "Трек к senior: владение зоной, менторство"
+          ],
+          "status": "live"
         }
       ]
     },
@@ -742,40 +959,249 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "qa",
       "name": "QA",
+      "name_ru": "QA / SDET",
       "icon": "🧪",
-      "tagline": "Jest, Playwright, pytest, E2E",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "From test design to SDET and AI-system QA — 10 stages, fast track 12–16 weeks, full track 10–14 months",
+      "tagline_ru": "От тест-дизайна до SDET и QA AI-систем — 10 этапов, быстрый трек 12–16 недель, полный 10–14 месяцев",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "qa",
-      "related_skills": [],
+      "related_skills": [
+        "pytest",
+        "jest",
+        "browser-automation",
+        "ai-testing"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 0. QA fundamentals and test design (3–5 wk)",
+          "title_ru": "Этап 0. Основы QA и тест-дизайн (3–5 недель)",
           "items": [
-            "Map drops soon"
+            "Testing principles, levels and kinds of testing",
+            "Design techniques: equivalence classes, boundaries, decision tables, peer-to-peer",
+            "Artifacts: test plan, bug report with severity and priority, traceability",
+            "Requirements, acceptance criteria, BDD, Definition of Done",
+            "Processes: Agile, Scrum, Kanban, release flows, the QA role",
+            "Risk-based testing: priority as probability and damage",
+            "Portfolio QA-1: test design artifacts plus 10 quality bug reports"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Принципы, уровни и виды тестирования",
+            "Техники тест-дизайна: классы эквивалентности, границы, таблицы решений, попарное тестирование",
+            "Артефакты: тест-план, баг-репорт с severity и priority, трассируемость",
+            "Требования, критерии приёмки, BDD, Definition of Done",
+            "Процессы: Agile, Scrum, Kanban, релизные процессы, роль QA",
+            "Риск-ориентированное тестирование: приоритет как вероятность и ущерб",
+            "Портфолио QA-1: наборы проверок и десять качественных баг-репортов"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 1. Technical basics (3–4 wk)",
+          "title_ru": "Этап 1. Технические основы (3–4 недели)",
           "items": [
-            "Map drops soon"
+            "Git and GitHub: branches, pull requests, reading diffs",
+            "HTTP: methods, codes, headers, cookies, caching, CORS, auth",
+            "DevTools: Network, Console, Application tabs; curl",
+            "SQL: SELECT, JOIN, GROUP BY; verifying data after operations",
+            "Application layers: client, server, API, DB, queues, cache",
+            "Logs and tracing: reading service logs, searching by request_id"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Git и GitHub: ветки, pull request, чтение диффов",
+            "HTTP: методы, коды, заголовки, cookies, кэширование, CORS, аутентификация",
+            "DevTools: вкладки Network, Console, Application; curl",
+            "SQL: SELECT, JOIN, GROUP BY; проверка данных после операций",
+            "Архитектура приложения: клиент, сервер, API, БД, очереди, кэш",
+            "Логи и трассировка: чтение логов сервисов, поиск по request_id"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 2. API testing (3–4 wk)",
+          "title_ru": "Этап 2. API-тестирование (3–4 недели)",
           "items": [
-            "Map drops soon"
+            "REST semantics, idempotency, pagination, versioning, OpenAPI contract",
+            "Auth schemes: Bearer, JWT, OAuth 2.0; roles and permissions",
+            "Postman or Bruno collections; httpx plus pytest in code",
+            "What to test: negatives, validation, boundary, IDOR, error contracts",
+            "Consistency with the database; backward compatibility",
+            "GraphQL and gRPC basics; mocking external services (WireMock, respx)",
+            "Portfolio QA-2: API suite that catches IDOR and duplicate POSTs"
           ],
-          "status": "soon"
+          "items_ru": [
+            "REST: семантика, идемпотентность, пагинация, версионирование, контракт OpenAPI",
+            "Схемы авторизации: Bearer, JWT, OAuth 2.0; роли и права",
+            "Коллекции Postman или Bruno; проверки на httpx и pytest",
+            "Что проверять: негативные сценарии, валидация, границы, IDOR, контракт ошибок",
+            "Согласованность с БД; обратная совместимость",
+            "GraphQL и gRPC: основы; моки внешних сервисов (WireMock, respx)",
+            "Портфолио QA-2: набор API-тестов, ловящий IDOR и дубли POST"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 3. pytest automation framework (4–6 wk)",
+          "title_ru": "Этап 3. Автоматизация на pytest (4–6 недель)",
           "items": [
-            "Map drops soon"
+            "Fixtures with scopes and cleanup, parametrization, markers, conftest",
+            "Plugins: pytest-xdist, pytest-timeout, pytest-randomly, pytest-cov, Allure",
+            "Framework layout: tests per level, clients, environment config",
+            "AAA or Given–When–Then discipline, one behavior per test",
+            "Test data: factories (factory_boy, Faker), isolation and cleanup",
+            "Determinism: frozen time, seeds, mocked boundaries, no sleeps",
+            "Property-based (Hypothesis) and snapshot tests where they fit"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Фикстуры со scope и очисткой, параметризация, маркеры, conftest",
+            "Плагины: pytest-xdist, pytest-timeout, pytest-randomly, pytest-cov, Allure",
+            "Структура фреймворка: каталоги по уровням, клиенты, конфигурация окружений",
+            "Дисциплина AAA или Given–When–Then, одно поведение на тест",
+            "Тестовые данные: фабрики (factory_boy, Faker), изоляция и очистка",
+            "Детерминизм: фиксированное время, seed, моки на границах, без sleep",
+            "Property-based (Hypothesis) и snapshot-тесты там, где уместны"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 4. UI automation: Playwright (4–6 wk)",
+          "title_ru": "Этап 4. UI-автоматизация: Playwright (4–6 недель)",
+          "items": [
+            "pytest-playwright: page, context, browser fixtures; run options",
+            "Resilient locators: get_by_role, get_by_label, get_by_test_id",
+            "Auto-waiting with expect; zero sleeps in E2E suites",
+            "Isolation: fresh browser context per test; saved storage_state",
+            "Failure debugging: Trace Viewer, screenshots, video",
+            "Page Objects and agreed data-testid contract with developers",
+            "Cross-browser, mobile emulation, visual regression, accessibility",
+            "Portfolio QA-3: 10–15 E2E scenarios, flaky rate under 1%"
+          ],
+          "items_ru": [
+            "pytest-playwright: фикстуры page, context, browser; параметры запуска",
+            "Устойчивые локаторы: get_by_role, get_by_label, get_by_test_id",
+            "Автоожидание и expect; никакие sleep в E2E-наборе",
+            "Изоляция: новый контекст браузера на тест; сохранённое storage_state",
+            "Отладка падений: Trace Viewer, скриншоты, видео",
+            "Page Object и договорённость об атрибутах data-testid",
+            "Кросс-браузерность, мобильная эмуляция, визуальная регрессия, доступность",
+            "Портфолио QA-3: 10–15 E2E-сценариев, flaky rate ниже 1%"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. CI/CD, environments, data, reports (3–4 wk)",
+          "title_ru": "Этап 5. CI/CD, окружения, данные, отчёты (3–4 недели)",
+          "items": [
+            "GitHub Actions: matrices, dependency cache, artifacts, services for PostgreSQL",
+            "Docker Compose for test environments; healthchecks; testcontainers",
+            "Data factories and seeding; isolation by schema or transaction",
+            "Parallel runs: pytest-xdist, suite splitting across runners",
+            "Quality gates: red CI blocks merge; quarantine policy for flaky tests",
+            "Allure reporting; pipeline metrics: feedback time, flaky rate",
+            "Portfolio: pipeline lint → unit → API → E2E → report"
+          ],
+          "items_ru": [
+            "GitHub Actions: матрицы, кэш зависимостей, артефакты, services для PostgreSQL",
+            "Docker Compose для тестовых окружений; healthcheck; testcontainers",
+            "Фабрики и сидинг данных; изоляция по схемам или транзакциям",
+            "Параллельность: pytest-xdist, разбиение набора по машинам",
+            "Quality gates: красный CI блокирует merge; карантин для flaky-тестов",
+            "Отчётность Allure; метрики пайплайна: время обратной связи, flaky rate",
+            "Портфолио: пайплайн линтер → unit → API → E2E → отчёт"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 6. Non-functional testing (4–6 wk)",
+          "title_ru": "Этап 6. Нефункциональное тестирование (4–6 недель)",
+          "items": [
+            "Performance: load, stress, spike, soak; RPS, percentile latencies, saturation",
+            "Open-loop scenarios (Locust, k6) built from real user flows; bottleneck hunt",
+            "Security per OWASP Top 10 and API Security Top 10; IDOR checks",
+            "Tooling: ZAP, Burp, pip-audit, SAST, image scanners",
+            "Accessibility: WCAG 2.2 A/AA, axe-core, keyboard navigation",
+            "Compatibility and localization: timezones, encodings, RTL",
+            "Portfolio QA-4: load report plus OWASP-based security report"
+          ],
+          "items_ru": [
+            "Производительность: load, stress, spike, soak; RPS, перцентили латентности, насыщение",
+            "Нагрузка по пользовательским сценариям (Locust, k6); поиск узких мест",
+            "Безопасность по OWASP Top 10 и API Security Top 10; проверки IDOR",
+            "Инструменты: ZAP, Burp, pip-audit, SAST, сканеры образов",
+            "Доступность: WCAG 2.2 A/AA, axe-core, навигация с клавиатуры",
+            "Совместимость и локализация: часовые пояса, кодировки, RTL",
+            "Портфолио QA-4: нагрузочный отчёт и отчёт по OWASP-чеклисту"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 7. SDET practices (4–6 wk)",
+          "title_ru": "Этап 7. SDET-практики (4–6 недель)",
+          "items": [
+            "Framework architecture: layers, configurability, docs and onboarding",
+            "Code testability: DI, ports and adapters, managed time and randomness",
+            "Contract tests: consumer-driven (Pact), schema-driven (schemathesis)",
+            "Mutation testing: evaluate your tests, not line coverage",
+            "DB migration and concurrency suites; idempotency and outbox events",
+            "Production testing: feature flags, canary, synthetic monitoring",
+            "Flaky management: rate metric, quarantine, fix-or-delete rule",
+            "Portfolio QA-5: SDET template framework with gates and docs"
+          ],
+          "items_ru": [
+            "Архитектура фреймворка: слои, конфигурация, документация и онбординг",
+            "Тестируемость кода: внедрение зависимостей, порты и адаптеры, управляемое время",
+            "Контрактные тесты: consumer-driven (Pact), по схеме (schemathesis)",
+            "Мутационное тестирование: оценивай свои тесты, а не покрытие строк",
+            "Тесты миграций БД и конкурентности; идемпотентность и события outbox",
+            "Тестирование в продакшене: feature flags, canary, синтетические проверки",
+            "Управление нестабильностью: метрика flaky rate, карантин, правило чини или удаляй",
+            "Портфолио QA-5: шаблон SDET-фреймворка с гейтами и документацией"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 8. QA for AI systems (3–4 wk)",
+          "title_ru": "Этап 8. QA для AI-систем (3–4 недели)",
+          "items": [
+            "Why LLM QA is not pass/fail: quality criteria, drift, context dependence",
+            "Evals: golden questions, automated checks, LLM-as-judge calibrated on people",
+            "RAG metrics: recall@k, MRR, nDCG for retrieval, faithfulness for generation",
+            "Agent QA: trajectories, tool-call limits, dangerous-action confirmations",
+            "Security: prompt injection, jailbreak, red teaming (promptfoo, garak)",
+            "Responsible AI: bias, fairness, transparency, regulation",
+            "LLM as a QA helper: review everything, never leak secrets"
+          ],
+          "items_ru": [
+            "Почему QA для LLM — не pass/fail: критерии качества, дрейф, зависимость от контекста",
+            "Evals: эталонные вопросы, автоматические проверки, LLM-as-judge с калибровкой",
+            "RAG-метрики: recall@k, MRR, nDCG для поиска, faithfulness для генерации",
+            "QA агентов: траектории, лимиты вызовов инструментов, подтверждение опасных действий",
+            "Безопасность: prompt injection, jailbreak, red teaming (promptfoo, garak)",
+            "Ответственный ИИ: смещения, справедливость, прозрачность, регулирование",
+            "LLM как помощник QA: всё проверять, не отдавать секреты внешним сервисам"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 9. Quality leadership (as you grow)",
+          "title_ru": "Этап 9. Лидерство в качестве (по мере роста)",
+          "items": [
+            "Quality strategy: risk-based, pyramid levels, release go/no-go criteria",
+            "Processes: Definition of Ready and Done, gates, bug triage, bug bash",
+            "Dashboards: escaped defects, feedback time, flaky rate, DORA",
+            "Communication in risk and cost language for business",
+            "People: hiring QA, mentoring, guild; shift-left with developers",
+            "Management tools: TestRail, Zephyr, Allure TestOps — process beats tooling"
+          ],
+          "items_ru": [
+            "Стратегия качества: риск-ориентированный подход, уровни пирамиды, критерии go/no-go",
+            "Процессы: Definition of Ready и Done, гейты, разбор багов, bug bash",
+            "Дашборды: дефекты в продакшене, время обратной связи, flaky rate, DORA",
+            "Коммуникация на языке рисков и стоимости для бизнеса",
+            "Люди: найм QA, менторство, guild; shift-left с разработчиками",
+            "Инструменты управления тестированием: TestRail, Zephyr, Allure TestOps — процесс важнее инструмента"
+          ],
+          "status": "live"
         }
       ]
     },

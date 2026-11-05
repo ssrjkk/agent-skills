@@ -92,7 +92,20 @@ def render(readme: str, data: dict) -> str:
         lines[dstart + 1 : dend] = domains_line(domains)
 
     text = "\n".join(lines)
-    rm_link = "- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (every direction, soon)"
+    live = total = 0
+    tracks_dir = ROOT / "roadmaps"
+    if tracks_dir.is_dir():
+        for p in sorted(tracks_dir.glob("*.json")):
+            try:
+                t = json.loads(p.read_text(encoding="utf-8"))
+                total += 1
+                live += 1 if t.get("status") == "live" else 0
+            except (OSError, json.JSONDecodeError):
+                continue
+    if live:
+        rm_link = f"- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) ({live} of {total} maps live: backend, QA, AI/ML)"
+    else:
+        rm_link = "- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (every direction, soon)"
     if rm_link not in text:
         text = text.replace(
             "- [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)",
