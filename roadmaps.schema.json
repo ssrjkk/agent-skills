@@ -2,14 +2,16 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://ssrjkk.github.io/agent-skills/roadmaps.schema.json",
   "title": "IT Roadmap Track",
-  "description": "One IT direction roadmap. Independent from the skills catalog: edit stages/items by hand, set status to live when the map lands.",
+  "description": "One IT direction roadmap. Independent from the skills catalog: edit stages/items by hand, set status to live when the map lands. Optional *_ru fields carry the Russian mirror; a live track must ship the complete mirror.",
   "type": "object",
   "required": ["slug", "name", "icon", "tagline", "status", "eta", "stages"],
   "properties": {
     "slug": {"type": "string", "pattern": "^[a-z0-9-]+$"},
     "name": {"type": "string", "minLength": 1},
+    "name_ru": {"type": "string", "minLength": 1},
     "icon": {"type": "string", "minLength": 1},
     "tagline": {"type": "string", "minLength": 1},
+    "tagline_ru": {"type": "string", "minLength": 1},
     "status": {"type": "string", "enum": ["soon", "live"]},
     "eta": {"type": "string", "minLength": 1},
     "catalog_domain": {"type": ["string", "null"]},
@@ -22,7 +24,9 @@
         "required": ["title", "items", "status"],
         "properties": {
           "title": {"type": "string", "minLength": 1},
+          "title_ru": {"type": "string", "minLength": 1},
           "items": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "items_ru": {"type": "array", "items": {"type": "string"}, "minItems": 1},
           "status": {"type": "string", "enum": ["soon", "live"]}
         }
       }

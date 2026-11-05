@@ -2,40 +2,244 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "qa",
   "name": "QA",
+  "name_ru": "QA / SDET",
   "icon": "🧪",
-  "tagline": "Jest, Playwright, pytest, E2E",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "From test design to SDET and AI-system QA — 10 stages, fast track 12–16 weeks, full track 10–14 months",
+  "tagline_ru": "От тест-дизайна до SDET и QA AI-систем — 10 этапов, быстрый трек 12–16 недель, полный 10–14 месяцев",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "qa",
-  "related_skills": [],
+  "related_skills": ["pytest", "jest", "browser-automation", "ai-testing"],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 0. QA fundamentals and test design (3–5 wk)",
+      "title_ru": "Этап 0. Основы QA и тест-дизайн (3–5 недель)",
       "items": [
-        "Map drops soon"
+        "Testing principles, levels and kinds of testing",
+        "Design techniques: equivalence classes, boundaries, decision tables, peer-to-peer",
+        "Artifacts: test plan, bug report with severity and priority, traceability",
+        "Requirements, acceptance criteria, BDD, Definition of Done",
+        "Processes: Agile, Scrum, Kanban, release flows, the QA role",
+        "Risk-based testing: priority as probability and damage",
+        "Portfolio QA-1: test design artifacts plus 10 quality bug reports"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Принципы, уровни и виды тестирования",
+        "Техники тест-дизайна: классы эквивалентности, границы, таблицы решений, попарное тестирование",
+        "Артефакты: тест-план, баг-репорт с severity и priority, трассируемость",
+        "Требования, критерии приёмки, BDD, Definition of Done",
+        "Процессы: Agile, Scrum, Kanban, релизные процессы, роль QA",
+        "Риск-ориентированное тестирование: приоритет как вероятность и ущерб",
+        "Портфолио QA-1: наборы проверок и десять качественных баг-репортов"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 1. Technical basics (3–4 wk)",
+      "title_ru": "Этап 1. Технические основы (3–4 недели)",
       "items": [
-        "Map drops soon"
+        "Git and GitHub: branches, pull requests, reading diffs",
+        "HTTP: methods, codes, headers, cookies, caching, CORS, auth",
+        "DevTools: Network, Console, Application tabs; curl",
+        "SQL: SELECT, JOIN, GROUP BY; verifying data after operations",
+        "Application layers: client, server, API, DB, queues, cache",
+        "Logs and tracing: reading service logs, searching by request_id"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Git и GitHub: ветки, pull request, чтение диффов",
+        "HTTP: методы, коды, заголовки, cookies, кэширование, CORS, аутентификация",
+        "DevTools: вкладки Network, Console, Application; curl",
+        "SQL: SELECT, JOIN, GROUP BY; проверка данных после операций",
+        "Архитектура приложения: клиент, сервер, API, БД, очереди, кэш",
+        "Логи и трассировка: чтение логов сервисов, поиск по request_id"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 2. API testing (3–4 wk)",
+      "title_ru": "Этап 2. API-тестирование (3–4 недели)",
       "items": [
-        "Map drops soon"
+        "REST semantics, idempotency, pagination, versioning, OpenAPI contract",
+        "Auth schemes: Bearer, JWT, OAuth 2.0; roles and permissions",
+        "Postman or Bruno collections; httpx plus pytest in code",
+        "What to test: negatives, validation, boundary, IDOR, error contracts",
+        "Consistency with the database; backward compatibility",
+        "GraphQL and gRPC basics; mocking external services (WireMock, respx)",
+        "Portfolio QA-2: API suite that catches IDOR and duplicate POSTs"
       ],
-      "status": "soon"
+      "items_ru": [
+        "REST: семантика, идемпотентность, пагинация, версионирование, контракт OpenAPI",
+        "Схемы авторизации: Bearer, JWT, OAuth 2.0; роли и права",
+        "Коллекции Postman или Bruno; проверки на httpx и pytest",
+        "Что проверять: негативные сценарии, валидация, границы, IDOR, контракт ошибок",
+        "Согласованность с БД; обратная совместимость",
+        "GraphQL и gRPC: основы; моки внешних сервисов (WireMock, respx)",
+        "Портфолио QA-2: набор API-тестов, ловящий IDOR и дубли POST"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 3. pytest automation framework (4–6 wk)",
+      "title_ru": "Этап 3. Автоматизация на pytest (4–6 недель)",
       "items": [
-        "Map drops soon"
+        "Fixtures with scopes and cleanup, parametrization, markers, conftest",
+        "Plugins: pytest-xdist, pytest-timeout, pytest-randomly, pytest-cov, Allure",
+        "Framework layout: tests per level, clients, environment config",
+        "AAA or Given–When–Then discipline, one behavior per test",
+        "Test data: factories (factory_boy, Faker), isolation and cleanup",
+        "Determinism: frozen time, seeds, mocked boundaries, no sleeps",
+        "Property-based (Hypothesis) and snapshot tests where they fit"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Фикстуры со scope и очисткой, параметризация, маркеры, conftest",
+        "Плагины: pytest-xdist, pytest-timeout, pytest-randomly, pytest-cov, Allure",
+        "Структура фреймворка: каталоги по уровням, клиенты, конфигурация окружений",
+        "Дисциплина AAA или Given–When–Then, одно поведение на тест",
+        "Тестовые данные: фабрики (factory_boy, Faker), изоляция и очистка",
+        "Детерминизм: фиксированное время, seed, моки на границах, без sleep",
+        "Property-based (Hypothesis) и snapshot-тесты там, где уместны"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 4. UI automation: Playwright (4–6 wk)",
+      "title_ru": "Этап 4. UI-автоматизация: Playwright (4–6 недель)",
+      "items": [
+        "pytest-playwright: page, context, browser fixtures; run options",
+        "Resilient locators: get_by_role, get_by_label, get_by_test_id",
+        "Auto-waiting with expect; zero sleeps in E2E suites",
+        "Isolation: fresh browser context per test; saved storage_state",
+        "Failure debugging: Trace Viewer, screenshots, video",
+        "Page Objects and agreed data-testid contract with developers",
+        "Cross-browser, mobile emulation, visual regression, accessibility",
+        "Portfolio QA-3: 10–15 E2E scenarios, flaky rate under 1%"
+      ],
+      "items_ru": [
+        "pytest-playwright: фикстуры page, context, browser; параметры запуска",
+        "Устойчивые локаторы: get_by_role, get_by_label, get_by_test_id",
+        "Автоожидание и expect; никакие sleep в E2E-наборе",
+        "Изоляция: новый контекст браузера на тест; сохранённое storage_state",
+        "Отладка падений: Trace Viewer, скриншоты, видео",
+        "Page Object и договорённость об атрибутах data-testid",
+        "Кросс-браузерность, мобильная эмуляция, визуальная регрессия, доступность",
+        "Портфолио QA-3: 10–15 E2E-сценариев, flaky rate ниже 1%"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. CI/CD, environments, data, reports (3–4 wk)",
+      "title_ru": "Этап 5. CI/CD, окружения, данные, отчёты (3–4 недели)",
+      "items": [
+        "GitHub Actions: matrices, dependency cache, artifacts, services for PostgreSQL",
+        "Docker Compose for test environments; healthchecks; testcontainers",
+        "Data factories and seeding; isolation by schema or transaction",
+        "Parallel runs: pytest-xdist, suite splitting across runners",
+        "Quality gates: red CI blocks merge; quarantine policy for flaky tests",
+        "Allure reporting; pipeline metrics: feedback time, flaky rate",
+        "Portfolio: pipeline lint → unit → API → E2E → report"
+      ],
+      "items_ru": [
+        "GitHub Actions: матрицы, кэш зависимостей, артефакты, services для PostgreSQL",
+        "Docker Compose для тестовых окружений; healthcheck; testcontainers",
+        "Фабрики и сидинг данных; изоляция по схемам или транзакциям",
+        "Параллельность: pytest-xdist, разбиение набора по машинам",
+        "Quality gates: красный CI блокирует merge; карантин для flaky-тестов",
+        "Отчётность Allure; метрики пайплайна: время обратной связи, flaky rate",
+        "Портфолио: пайплайн линтер → unit → API → E2E → отчёт"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 6. Non-functional testing (4–6 wk)",
+      "title_ru": "Этап 6. Нефункциональное тестирование (4–6 недель)",
+      "items": [
+        "Performance: load, stress, spike, soak; RPS, percentile latencies, saturation",
+        "Open-loop scenarios (Locust, k6) built from real user flows; bottleneck hunt",
+        "Security per OWASP Top 10 and API Security Top 10; IDOR checks",
+        "Tooling: ZAP, Burp, pip-audit, SAST, image scanners",
+        "Accessibility: WCAG 2.2 A/AA, axe-core, keyboard navigation",
+        "Compatibility and localization: timezones, encodings, RTL",
+        "Portfolio QA-4: load report plus OWASP-based security report"
+      ],
+      "items_ru": [
+        "Производительность: load, stress, spike, soak; RPS, перцентили латентности, насыщение",
+        "Нагрузка по пользовательским сценариям (Locust, k6); поиск узких мест",
+        "Безопасность по OWASP Top 10 и API Security Top 10; проверки IDOR",
+        "Инструменты: ZAP, Burp, pip-audit, SAST, сканеры образов",
+        "Доступность: WCAG 2.2 A/AA, axe-core, навигация с клавиатуры",
+        "Совместимость и локализация: часовые пояса, кодировки, RTL",
+        "Портфолио QA-4: нагрузочный отчёт и отчёт по OWASP-чеклисту"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 7. SDET practices (4–6 wk)",
+      "title_ru": "Этап 7. SDET-практики (4–6 недель)",
+      "items": [
+        "Framework architecture: layers, configurability, docs and onboarding",
+        "Code testability: DI, ports and adapters, managed time and randomness",
+        "Contract tests: consumer-driven (Pact), schema-driven (schemathesis)",
+        "Mutation testing: evaluate your tests, not line coverage",
+        "DB migration and concurrency suites; idempotency and outbox events",
+        "Production testing: feature flags, canary, synthetic monitoring",
+        "Flaky management: rate metric, quarantine, fix-or-delete rule",
+        "Portfolio QA-5: SDET template framework with gates and docs"
+      ],
+      "items_ru": [
+        "Архитектура фреймворка: слои, конфигурация, документация и онбординг",
+        "Тестируемость кода: внедрение зависимостей, порты и адаптеры, управляемое время",
+        "Контрактные тесты: consumer-driven (Pact), по схеме (schemathesis)",
+        "Мутационное тестирование: оценивай свои тесты, а не покрытие строк",
+        "Тесты миграций БД и конкурентности; идемпотентность и события outbox",
+        "Тестирование в продакшене: feature flags, canary, синтетические проверки",
+        "Управление нестабильностью: метрика flaky rate, карантин, правило чини или удаляй",
+        "Портфолио QA-5: шаблон SDET-фреймворка с гейтами и документацией"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 8. QA for AI systems (3–4 wk)",
+      "title_ru": "Этап 8. QA для AI-систем (3–4 недели)",
+      "items": [
+        "Why LLM QA is not pass/fail: quality criteria, drift, context dependence",
+        "Evals: golden questions, automated checks, LLM-as-judge calibrated on people",
+        "RAG metrics: recall@k, MRR, nDCG for retrieval, faithfulness for generation",
+        "Agent QA: trajectories, tool-call limits, dangerous-action confirmations",
+        "Security: prompt injection, jailbreak, red teaming (promptfoo, garak)",
+        "Responsible AI: bias, fairness, transparency, regulation",
+        "LLM as a QA helper: review everything, never leak secrets"
+      ],
+      "items_ru": [
+        "Почему QA для LLM — не pass/fail: критерии качества, дрейф, зависимость от контекста",
+        "Evals: эталонные вопросы, автоматические проверки, LLM-as-judge с калибровкой",
+        "RAG-метрики: recall@k, MRR, nDCG для поиска, faithfulness для генерации",
+        "QA агентов: траектории, лимиты вызовов инструментов, подтверждение опасных действий",
+        "Безопасность: prompt injection, jailbreak, red teaming (promptfoo, garak)",
+        "Ответственный ИИ: смещения, справедливость, прозрачность, регулирование",
+        "LLM как помощник QA: всё проверять, не отдавать секреты внешним сервисам"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 9. Quality leadership (as you grow)",
+      "title_ru": "Этап 9. Лидерство в качестве (по мере роста)",
+      "items": [
+        "Quality strategy: risk-based, pyramid levels, release go/no-go criteria",
+        "Processes: Definition of Ready and Done, gates, bug triage, bug bash",
+        "Dashboards: escaped defects, feedback time, flaky rate, DORA",
+        "Communication in risk and cost language for business",
+        "People: hiring QA, mentoring, guild; shift-left with developers",
+        "Management tools: TestRail, Zephyr, Allure TestOps — process beats tooling"
+      ],
+      "items_ru": [
+        "Стратегия качества: риск-ориентированный подход, уровни пирамиды, критерии go/no-go",
+        "Процессы: Definition of Ready и Done, гейты, разбор багов, bug bash",
+        "Дашборды: дефекты в продакшене, время обратной связи, flaky rate, DORA",
+        "Коммуникация на языке рисков и стоимости для бизнеса",
+        "Люди: найм QA, менторство, guild; shift-left с разработчиками",
+        "Инструменты управления тестированием: TestRail, Zephyr, Allure TestOps — процесс важнее инструмента"
+      ],
+      "status": "live"
     }
   ]
 }

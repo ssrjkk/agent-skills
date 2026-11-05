@@ -2,40 +2,181 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "ai",
   "name": "AI / LLM",
+  "name_ru": "ML и AI",
   "icon": "🤖",
-  "tagline": "Agents, RAG, evals, prompt, MCP",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "From Python backend to ML and AI engineer — 8 stages, fast track 16–20 weeks, full track 10–14 months",
+  "tagline_ru": "От Python-бэкенда к ML и AI-инженеру — 8 этапов, быстрый трек 16–20 недель, полный 10–14 месяцев",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "ai",
-  "related_skills": [],
+  "related_skills": ["agent-development", "rag-pipeline", "prompt-engineering", "structured-output", "embeddings", "vector-databases", "mcp-servers", "llm-evals"],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 0. Python for data (2–3 wk)",
+      "title_ru": "Этап 0. Python для данных (2–3 недели)",
       "items": [
-        "Map drops soon"
+        "NumPy: arrays, vectorization instead of loops, broadcasting",
+        "pandas or polars: loading, cleaning, groupby, merge, windows",
+        "Visualization and notebooks: matplotlib, Jupyter, uv environments",
+        "Formats and scale: Parquet, Arrow, DuckDB for SQL on files",
+        "Assignment: reproducible real-dataset EDA report"
       ],
-      "status": "soon"
+      "items_ru": [
+        "NumPy: массивы, векторизация вместо циклов, broadcasting",
+        "pandas или polars: загрузка, очистка, groupby, merge, оконные операции",
+        "Визуализация и ноутбуки: matplotlib, Jupyter, окружения uv",
+        "Форматы и большие данные: Parquet, Arrow, DuckDB для SQL по файлам",
+        "Практика: воспроизводимый EDA-отчёт по реальному датасету"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage A. Math and statistics (6–8 wk, parallel)",
+      "title_ru": "Этап A. Математика и статистика (6–8 недель, параллельно)",
       "items": [
-        "Map drops soon"
+        "Linear algebra: vectors, matrices, norms, SVD idea, cosine similarity",
+        "Calculus: derivatives, gradients, chain rule as the base of backpropagation",
+        "Probability: Bayes, distributions, expectation, CLT",
+        "Statistics: MLE, confidence intervals, hypothesis testing, A/B tests",
+        "Optimization: gradient descent, SGD, momentum, Adam idea",
+        "Information theory: entropy, cross-entropy, KL-divergence",
+        "Assignment: linear regression from scratch on NumPy"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Линейная алгебра: векторы, матрицы, нормы, идея SVD, косинусная близость",
+        "Матанализ: производные, градиенты, цепное правило как основа backpropagation",
+        "Вероятность: Байес, распределения, матожидание, ЦПТ",
+        "Статистика: MLE, доверительные интервалы, проверка гипотез, A/B-тесты",
+        "Оптимизация: градиентный спуск, SGD, моментум, идея Adam",
+        "Теория информации: энтропия, кросс-энтропия, KL-дивергенция",
+        "Практика: линейная регрессия с нуля на NumPy"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage B. Classical ML (8–10 wk)",
+      "title_ru": "Этап B. Классический ML (8–10 недель)",
       "items": [
-        "Map drops soon"
+        "Tasks: regression, classification, clustering, dimensionality (PCA)",
+        "Models: linear/logistic, trees, gradient boosting (XGBoost, LightGBM, CatBoost)",
+        "Metrics: accuracy, precision, recall, F1, ROC-AUC vs PR-AUC on rare classes",
+        "Honest validation: CV, stratification, time splits, leakage detection",
+        "Practices: baselines first, sklearn Pipeline, Optuna, SHAP, reproducibility",
+        "Portfolio ML-1: tabular ML project with a leakage-free report"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Задачи: регрессия, классификация, кластеризация, снижение размерности (PCA)",
+        "Модели: линейная и логистическая, деревья, бустинг (XGBoost, LightGBM, CatBoost)",
+        "Метрики: accuracy, precision, recall, F1, ROC-AUC против PR-AUC на редких классах",
+        "Честная валидация: кросс-валидация, стратификация, разбиение по времени, утечки",
+        "Практики: сначала бейзлайны, sklearn Pipeline, Optuna, SHAP, воспроизводимость",
+        "Портфолио ML-1: табличный ML-проект с отчётом без утечек"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage C. Deep learning (8–12 wk)",
+      "title_ru": "Этап C. Глубокое обучение (8–12 недель)",
       "items": [
-        "Map drops soon"
+        "PyTorch: tensors, autograd, nn.Module, training loop from scratch",
+        "Networks: MLP, CNN, RNN ideas; normalization, dropout, weight decay",
+        "Optimization: AdamW, LR schedules, gradient clipping, mixed precision",
+        "Transfer learning: pretrained weights, freeze layers, fine-tune",
+        "Transformers: tokenization, embeddings, self-attention, masks, encoder/decoder",
+        "Hugging Face ecosystem: Transformers, Datasets, PEFT, TRL",
+        "Experiment tracking: MLflow or Weights & Biases, seeds and configs",
+        "Portfolio ML-2: CNN experiments, text fine-tune, mini-GPT by hand"
       ],
-      "status": "soon"
+      "items_ru": [
+        "PyTorch: тензоры, autograd, nn.Module, обучающий цикл с нуля",
+        "Сети: MLP, идеи CNN и RNN; нормализация, dropout, weight decay",
+        "Оптимизация: AdamW, расписания LR, клиппинг градиентов, mixed precision",
+        "Перенос обучения: предобученные веса, заморозка слоёв, дообучение",
+        "Трансформеры: токенизация, эмбеддинги, self-attention, маска, encoder/decoder",
+        "Экосистема Hugging Face: Transformers, Datasets, PEFT, TRL",
+        "Трекинг экспериментов: MLflow или Weights & Biases, seed и конфиги",
+        "Портфолио ML-2: эксперименты с CNN, дообучение на тексте, мини-GPT руками"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage D. LLM and AI engineering (8–12 wk)",
+      "title_ru": "Этап D. LLM и AI Engineering (8–12 недель)",
+      "items": [
+        "LLM API craft: tokens, streaming, structured output, function calling, limits",
+        "Prompts as code; context engineering: what to keep in the window",
+        "Embeddings and vector stores: pgvector, Qdrant, FAISS, HNSW",
+        "RAG: chunking, hybrid search with RRF, reranking, citations, per-document ACL",
+        "Evals: 50–200 golden questions, LLM-as-judge, quality gates in CI",
+        "Agents: tool loop, step and budget limits, human confirmations, MCP",
+        "LLM security: prompt injection, OWASP Top 10 for LLM, least-privilege tools",
+        "Cost and latency: model routing, prompt caching, streaming, max_tokens",
+        "Fine-tuning when justified: LoRA/QLoRA, DPO; self-hosting with vLLM",
+        "Portfolio ML-3 (RAG with evals) and ML-4 (agent with injection defense)"
+      ],
+      "items_ru": [
+        "Инженерия LLM API: токены, стриминг, structured output, function calling, лимиты",
+        "Промпты как код; инженерия контекста: что держать в окне",
+        "Эмбеддинги и векторные хранилища: pgvector, Qdrant, FAISS, HNSW",
+        "RAG: разбиение на фрагменты, гибридный поиск с RRF, переранжирование, цитаты, права на документы",
+        "Evals: 50–200 эталонных вопросов, LLM-as-judge, гейты качества в CI",
+        "Агенты: цикл инструментов, лимиты шагов и бюджета, подтверждения, MCP",
+        "Безопасность LLM: prompt injection, OWASP Top 10 for LLM, минимальные права",
+        "Стоимость и задержка: маршрутизация моделей, кэш промптов, стриминг, max_tokens",
+        "Дообучение по показаниям: LoRA/QLoRA, DPO; self-hosting на vLLM",
+        "Портфолио ML-3 (RAG с evals) и ML-4 (агент с защитой от инъекций)"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage E. MLOps and ML systems (6–10 wk)",
+      "title_ru": "Этап E. MLOps и ML-системы (6–10 недель)",
+      "items": [
+        "Reproducibility: code/data/model versioning (DVC), Docker, seeds",
+        "Experiment registry: MLflow or W&B; model lifecycle stages",
+        "Pipelines: Airflow, Prefect, Dagster; idempotent tasks and retries",
+        "Train-serving skew; shared feature code; feature stores (Feast)",
+        "Serving: FastAPI with ONNX/TorchScript, Triton, BentoML, vLLM",
+        "Rollouts: shadow, canary, A/B, automatic rollback",
+        "Monitoring: latency, data drift (PSI), alerts, prediction logging",
+        "Portfolio ML-5: deploy, drift monitoring, one-command retrain"
+      ],
+      "items_ru": [
+        "Воспроизводимость: версионирование кода/данных/моделей (DVC), Docker, seed",
+        "Реестр экспериментов: MLflow или W&B; стадии жизненного цикла моделей",
+        "Пайплайны: Airflow, Prefect, Dagster; идемпотентные задачи и ретраи",
+        "Train-serving skew; общий код признаков; feature store (Feast)",
+        "Serving: FastAPI с ONNX/TorchScript, Triton, BentoML, vLLM",
+        "Выкатки: shadow, canary, A/B, автоматический откат",
+        "Мониторинг: латентность, дрейф данных (PSI), алерты, логирование предсказаний",
+        "Портфолио ML-5: деплой, мониторинг дрейфа, ретрейн одной командой"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage F. Specializations (by choice)",
+      "title_ru": "Этап F. Специализации (по выбору)",
+      "items": [
+        "Recommenders: two-tower models, NDCG/MAP, cold start, feedback loops",
+        "Search and ranking: BM25, hybrid retrieval, learning-to-rank",
+        "LLM training: pretraining, SFT, RLHF/DPO, scaling laws, distributed runs",
+        "Computer vision: detection, segmentation, ViT, diffusion models",
+        "Time series: seasonality, ARIMA/Prophet vs boosting, time-aware validation",
+        "Antifraud: heavy imbalance, graph features, labeler feedback loops",
+        "Speech: ASR/TTS like Whisper, streaming latency",
+        "Inference infrastructure: GPU profiling, KV-cache, continuous batching, vLLM internals"
+      ],
+      "items_ru": [
+        "Рекомендательные системы: two-tower модели, NDCG/MAP, холодный старт, петли обратной связи",
+        "Поиск и ранжирование: BM25, гибридный поиск, learning-to-rank",
+        "Обучение LLM: претрейнинг, SFT, RLHF/DPO, scaling laws, распределённые запуски",
+        "Компьютерное зрение: детекция, сегментация, ViT, диффузионные модели",
+        "Временные ряды: сезонность, ARIMA/Prophet против бустинга, валидация по времени",
+        "Антифрод: сильный дисбаланс, графовые признаки, петли разметки",
+        "Речь: ASR/TTS вроде Whisper, потоковая обработка и задержка",
+        "Инференс и инфраструктура: профилирование GPU, KV-кэш, continuous batching, устройство vLLM"
+      ],
+      "status": "live"
     }
   ]
 }

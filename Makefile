@@ -1,4 +1,4 @@
-.PHONY: help install install-dev lint typecheck test coverage interop fences validate quality catalog stats stale docs sync-readme check-readme consistency clean all ci
+.PHONY: help install install-dev lint typecheck test coverage interop fences validate roadmaps quality catalog stats stale docs sync-readme check-readme consistency clean all ci
 
 help:
 	@echo "Claude Skills Library - Makefile"
@@ -11,6 +11,7 @@ help:
 	@echo "  interop       Cross-agent portability check"
 	@echo "  fences        Validate python code fences in skills"
 	@echo "  validate      Validate all skills"
+	@echo "  roadmaps      Validate roadmap track JSON files"
 	@echo "  quality       Quality analysis report"
 	@echo "  catalog       Regenerate skills_catalog.json"
 	@echo "  stats         Show library statistics"
@@ -49,6 +50,9 @@ fences:
 validate:
 	python -m claude_skills.cli validate --dir .claude/skills
 
+roadmaps:
+	python scripts/validate_roadmaps.py
+
 quality:
 	python -m claude_skills.cli quality --dir .claude/skills --json quality-report.json
 
@@ -77,7 +81,7 @@ clean:
 	python -c "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]"
 	python -c "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]"
 
-all: lint typecheck test interop fences validate quality catalog sync-readme check-readme docs consistency
+all: lint typecheck test interop fences validate roadmaps quality catalog sync-readme check-readme docs consistency
 	@echo "All checks passed!"
 
 ci: all

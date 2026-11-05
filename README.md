@@ -341,7 +341,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 - [Release Notes](docs/RELEASE_NOTES_v4.0.md)
 - [Roadmap](ROADMAP.md)
 - [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)
-- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (every direction, soon)
+- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (3 of 20 maps live: backend, QA, AI/ML)
 
 ## Why this library
 

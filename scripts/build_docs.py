@@ -233,8 +233,18 @@ def page_foot(js_path: str = "../site.js") -> str:
 </html>"""
 
 
+def rm_statuses(tracks: list[dict]) -> tuple[int, int]:
+    """(live, soon) track counts — keeps hero claims honest per build."""
+    live = sum(1 for t in tracks if t.get("status") == "live")
+    return live, len(tracks) - live
+
+
 def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = None) -> str:
     meta, skills, metrics = load_all(catalog_path, jobs=jobs)
+
+    # roadmaps/ lives beside the catalog repo root (tests build into tmp/<out>)
+    tracks = load_roadmap_tracks(output_dir.parent)
+    rm_live, rm_soon = rm_statuses(tracks)
 
     model_names = set()
     for s in skills:
@@ -373,7 +383,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
 
     <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
-        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s">soon everywhere</span></h2>
+        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="{rm_live}" data-total="{rm_soon}">soon everywhere</span></h2>
         <p data-i18n="rm_d">Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
       </div>
       <div class="rm-strip" id="rm-strip"></div>
@@ -1214,12 +1224,44 @@ def rm_status_pill(status: str, big: bool = False) -> str:
     return f'<span class="{cls}">{esc(status)}</span>'
 
 
-def rm_stage_html(stage: dict) -> str:
-    items = "".join(f"<li>{esc(i)}</li>" for i in stage.get("items", []))
+def rm_pair(en: str, ru: str | None) -> str:
+    """EN text always visible; RU mirror hidden until showSkillLang flips it."""
+    if not ru:
+        return esc(en)
     return (
-        f'<div class="rm-stage"><h3>▸ {esc(stage.get("title", ""))} {rm_status_pill(stage.get("status", "soon"))}</h3>'
-        f"<ul>{items}</ul></div>"
+        f'<span data-slang-body="en">{esc(en)}</span>'
+        f'<span data-slang-body="ru" hidden>{esc(ru)}</span>'
     )
+
+
+def rm_heading(t: dict) -> str:
+    return f'{esc(t["icon"])} {rm_pair(t["name"], t.get("name_ru"))} {rm_status_pill(t.get("status", "soon"), big=True)}'
+
+
+def rm_tagline_html(t: dict) -> str:
+    return rm_pair(t["tagline"], t.get("tagline_ru"))
+
+
+def rm_stage_html(stage: dict) -> str:
+    """Bilingual stage block: EN always; the *_ru mirror is hidden until
+    site.js showSkillLang() flips it (auto-applied per reader language)."""
+    title = esc(stage.get("title", ""))
+    title_ru = stage.get("title_ru")
+    if title_ru:
+        title = (
+            f'<span data-slang-body="en">{title}</span>'
+            f'<span data-slang-body="ru" hidden>{esc(title_ru)}</span>'
+        )
+    parts = ['<div class="rm-stage"><h3>▸ ', title, " ", rm_status_pill(stage.get("status", "soon")), "</h3>"]
+    items = "".join(f"<li>{esc(i)}</li>" for i in stage.get("items", []))
+    if stage.get("items_ru"):
+        parts.append(f'<ul data-slang-body="en">{items}</ul>')
+        ru_items = "".join(f"<li>{esc(i)}</li>" for i in stage["items_ru"])
+        parts.append(f'<ul data-slang-body="ru" hidden>{ru_items}</ul>')
+    else:
+        parts.append(f"<ul>{items}</ul>")
+    parts.append("</div>")
+    return "".join(parts)
 
 
 def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dict]:
@@ -1230,6 +1272,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
     to live — no template changes needed.
     """
     tracks = load_roadmap_tracks(source_dir)
+    live_n, soon_n = rm_statuses(tracks)
     (output_dir / "roadmaps.json").write_text(json.dumps({"tracks": tracks}, indent=2, ensure_ascii=False), encoding="utf-8")
 
     tabs = []
@@ -1250,25 +1293,25 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
             links.append(f'<a class="btn-ghost" href="domains/{esc(t["catalog_domain"])}.html"><span data-i18n="rel_skills">Related skills →</span></a>')
         return "".join(links)
     html_doc = page_head(
-        "IT Roadmaps — every direction, coming soon",
-        "Step-by-step IT roadmaps for frontend, backend, mobile, DevOps, data, AI and more. All tracks marked soon.",
+        "IT Roadmaps — backend, QA, AI/ML and more",
+        f"Step-by-step IT roadmaps for frontend, backend, mobile, DevOps, data, AI and more. {live_n} maps live, more landing soon.",
         BASE + "roadmaps.html",
         css_path="style.css",
         nav_index="index.html",
     ) + f"""
     <div class="rm-page">
       <header class="rm-hero reveal in">
-        <div class="hero-badge pulse">Roadmaps · {len(tracks)} tracks · all soon</div>
-        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s">soon everywhere</span></h1>
+        <div class="hero-badge pulse">Roadmaps · {len(tracks)} tracks · {live_n} live</div>
+        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s" data-live="{live_n}" data-total="{soon_n}">soon everywhere</span></h1>
         <p data-i18n="rm_hd" data-i18n-html>One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in.</p>
       </header>
       <div class="rm-tabs" role="tablist">{"".join(tabs)}</div>
       <div class="rm-detail" id="rm-detail">
         <div class="rm-detail-head">
-          <h2 id="rm-name">{esc(first["icon"])} {esc(first["name"])}</h2>
+          <h2 id="rm-name">{esc(first["icon"])} {rm_pair(first["name"], first.get("name_ru"))}</h2>
           {rm_status_pill(first.get("status", "soon"), big=True)}
         </div>
-        <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{esc(first["tagline"])}</p>
+        <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{rm_pair(first["tagline"], first.get("tagline_ru"))}</p>
         <div class="rm-timeline" id="rm-stages">{stages0}</div>
         <div class="rm-detail-actions" id="rm-actions">{rm_links_html(first)}</div>
         <p class="rm-note">Want this map first? <a href="{REPO}/discussions">Vote in Discussions</a> · <a href="{REPO}/issues">Request a track</a></p>
@@ -1283,18 +1326,38 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
       return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&#34;', "'": '&#39;'}[c];
     });
   }
+  function rmPair(en, ru) {
+    var h = en == null ? '' : escH(en);
+    if (!ru) return h;
+    return '<span data-slang-body="en">' + h + '</span>'
+      + '<span data-slang-body="ru" hidden>' + escH(ru) + '</span>';
+  }
   function rmStageHTML(s) {
     var pill = s.status === 'live' ? '<span class="live-pill">live</span>' : '<span class="soon-pill">soon</span>';
     var items = (s.items || []).map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
-    return '<div class="rm-stage"><h3>▸ ' + escH(s.title) + ' ' + pill + '</h3><ul>' + items + '</ul></div>';
+    var lists;
+    if (s.items_ru) {
+      var ru = s.items_ru.map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
+      lists = '<ul data-slang-body="en">' + items + '</ul>'
+        + '<ul data-slang-body="ru" hidden>' + ru + '</ul>';
+    } else {
+      lists = '<ul>' + items + '</ul>';
+    }
+    return '<div class="rm-stage"><h3>▸ ' + rmPair(s.title, s.title_ru) + ' ' + pill + '</h3>' + lists + '</div>';
+  }
+  function refreshTrack() {
+    // re-render the active track head + stages, then re-apply the reader language
+    var btn = document.querySelector('.rm-tab.active');
+    if (btn && btn.getAttribute('data-track')) { try { showTrack(btn.getAttribute('data-track'), btn); } catch (e) {} }
+    if (typeof showSkillLang === 'function') { try { showSkillLang(lang()); } catch (e2) {} }
   }
   function showTrack(slug, btn) {
     document.querySelectorAll('.rm-tab').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
     var t = RM_DATA.find(function(x) { return x.slug === slug; });
     if (!t) return;
-    document.getElementById('rm-name').textContent = t.icon + ' ' + t.name;
-    document.getElementById('rm-tagline').textContent = t.tagline;
+    document.getElementById('rm-name').innerHTML = escH(t.icon) + ' ' + rmPair(t.name, t.name_ru);
+    document.getElementById('rm-tagline').innerHTML = rmPair(t.tagline, t.tagline_ru);
     var box = document.getElementById('rm-stages');
     box.innerHTML = '';
     t.stages.forEach(function(s) {
@@ -1350,8 +1413,8 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
       <p class="back-link"><a href="../roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
       <header class="rm-hero">
         <span class="domain-chip" style="background:{color}1a;color:{color};border-color:{color}44">{esc(t["slug"])}</span>
-        <h1>{esc(t["icon"])} {esc(t["name"])} {rm_status_pill(t.get("status", "soon"), big=True)}</h1>
-        <p>{esc(t["tagline"])}</p>
+        <h1>{rm_heading(t)}</h1>
+        <p>{rm_tagline_html(t)}</p>
       </header>
       {nav}
       <div class="rm-timeline">{"".join(rm_stage_html(s) for s in t["stages"])}</div>
