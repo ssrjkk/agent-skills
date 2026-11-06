@@ -33,12 +33,8 @@ BAD_FM = "E_ASSET7"
 DUPLICATE_NAME = "E_ASSET8"
 
 
-def main() -> int:
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from _console import ensure_utf8_console
-    ensure_utf8_console()
-    root = Path(__file__).resolve().parent.parent
-    skills_dir = root / ".claude" / "skills"
+def collect_errors(skills_dir: Path) -> tuple[list[str], set[str]]:
+    """Scan a skills tree; returns (errors, seen_names)."""
     errors: list[str] = []
     seen: set[str] = set()
 
@@ -77,6 +73,15 @@ def main() -> int:
                 errors.append(f"[{DUPLICATE_NAME}] {sk}: duplicate skill name '{name}'")
             seen.add(name)
 
+    return errors, seen
+
+
+def main() -> int:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _console import ensure_utf8_console
+    ensure_utf8_console()
+    root = Path(__file__).resolve().parent.parent
+    errors, seen = collect_errors(root / ".claude" / "skills")
     if errors:
         print(f"Agent-interop check failed: {len(errors)} error(s)")
         for e in errors:

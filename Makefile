@@ -39,7 +39,7 @@ test:
 	python -m pytest tests/ -v --tb=short
 
 coverage:
-	python -m pytest --cov=claude_skills --cov-report=term-missing tests/
+	python -m pytest --cov=src/claude_skills --cov=scripts --cov-report=term-missing --cov-fail-under=90 tests/
 
 interop:
 	python scripts/check_agent_interop.py

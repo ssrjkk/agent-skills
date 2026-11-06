@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import importlib.util
 from pathlib import Path
+from typing import Any
 
 from hypothesis import assume, given
 from hypothesis import strategies as st
@@ -87,3 +89,26 @@ def test_depth_never_exceeds_100(line_count):
     analyzer = QualityAnalyzer()
     depth = analyzer._score_depth(sf)
     assert 0 <= depth <= 100
+
+
+# --- guide renderer safety properties (build_docs.py) ---
+
+_SCRIPTS = Path(__file__).resolve().parent.parent / "scripts"
+
+
+def _load_build_docs() -> Any:
+    spec = importlib.util.spec_from_file_location("build_docs_prop", _SCRIPTS / "build_docs.py")
+    assert spec is not None and spec.loader is not None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+@given(st.text(max_size=300))
+def test_guide_renderer_never_leaks_raw_markup(text):
+    """Whatever the input line, the renderer must escape it: no raw <script>,
+    <img onerror, or similar markup can survive from markdown into HTML."""
+    mod = _load_build_docs()
+    html = mod.render_guide_markdown(text)
+    for raw in ("<script", "<img", "<iframe", "<svg", "onerror="):
+        assert raw.lower() not in html.lower() or raw not in text
