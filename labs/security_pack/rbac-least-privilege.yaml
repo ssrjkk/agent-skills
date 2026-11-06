@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-api-sa
+  namespace: production
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: configmap-reader-role
+  namespace: production
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["backend-api-config"]
+    verbs: ["get", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: backend-api-configmap-binding
+  namespace: production
+subjects:
+  - kind: ServiceAccount
+    name: backend-api-sa
+    namespace: production
+roleRef:
+  kind: Role
+  name: configmap-reader-role
+  apiGroup: rbac.authorization.k8s.io

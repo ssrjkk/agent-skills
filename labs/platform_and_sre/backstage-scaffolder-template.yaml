@@ -1,0 +1,50 @@
+# Шаблон портала самообслуживания разработчиков Backstage (Golden Path Template)
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: go-microservice-golden-path
+  title: Go Production Microservice (with Helm, ArgoCD & Prometheus)
+  description: Создает новый сервис на Go с готовым CI/CD, мониторингом RED и деплоем в Kubernetes
+spec:
+  owner: platform-engineering-team
+  type: service
+  parameters:
+    - title: Параметры микросервиса
+      required:
+        - service_name
+        - owner
+      properties:
+        service_name:
+          title: Имя сервиса
+          type: string
+          description: Уникальное имя микросервиса (например, billing-api)
+        owner:
+          title: Команда-владелец
+          type: string
+        needs_postgres:
+          title: Выделить базу данных PostgreSQL (через Crossplane)?
+          type: boolean
+          default: true
+  steps:
+    - id: fetch-base
+      name: Генерация каркаса из эталонного шаблона
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.service_name }}
+          owner: ${{ parameters.owner }}
+
+    - id: publish
+      name: Создание Git-репозитория
+      action: publish:github
+      input:
+        repoUrl: github.com?owner=my-org&repo=${{ parameters.service_name }}
+        defaultBranch: main
+
+    - id: register
+      name: Регистрация сервиса в каталоге Backstage
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'

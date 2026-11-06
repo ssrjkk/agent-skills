@@ -1,41 +1,92 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "data",
-  "name": "Data",
+  "name": "Data Engineering",
+  "name_ru": "Дата-инженерия",
   "icon": "📊",
-  "tagline": "Spark, Airflow, dbt, SQL, viz",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "SQL, Python/Polars, Apache Kafka KRaft (Strimzi), Spark, Airflow, dbt, ClickHouse OLAP and S3 Lakehouse (Map 19)",
+  "tagline_ru": "Аналитический SQL, Python/Polars, стриминг Apache Kafka KRaft (Strimzi), Spark, Airflow, dbt, ClickHouse и S3 Lakehouse (Карта 19)",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "data",
-  "related_skills": [],
+  "related_skills": [
+    "sql-querying",
+    "pandas",
+    "apache-spark",
+    "airflow",
+    "dbt",
+    "elasticsearch",
+    "data-visualization",
+    "clickhouse",
+    "kafka"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Analytical SQL, Columnar Formats & Python Data Tooling",
+      "title_ru": "Этап 1. Аналитический SQL, колоночные форматы и обработка данных на Python",
       "items": [
-        "Map drops soon"
+        "Advanced analytical SQL: window functions (ROW_NUMBER, LAG/LEAD), CTEs, lateral joins, and query cost optimization",
+        "Vectorized data processing with pandas, Polars, and DuckDB over Parquet and Apache Arrow files"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Продвинутый аналитический SQL: оконные функции, рекурсивные CTE, LATERAL-джойны и оптимизация планов выполнения",
+        "Векторизованная обработка табличных данных в pandas, Polars и быстрые SQL-запросы через DuckDB поверх файлов Parquet и Arrow"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Event Streaming with Apache Kafka KRaft & Strimzi (Map 19)",
+      "title_ru": "Этап 2. Потоковая передача данных в Apache Kafka KRaft и Strimzi (Карта 19)",
       "items": [
-        "Map drops soon"
+        "Apache Kafka in KRaft mode (ZooKeeper-less Raft metadata quorum) deployed on Kubernetes via Strimzi KafkaNodePools",
+        "Producer/consumer reliability: acks=all, min.insync.replicas=2, idempotent producers, partitioning keys, and consumer lag control",
+        "Kafka Tiered Storage: offloading historical log segments to S3 while keeping hot tail data on fast local NVMe"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Эксплуатация Apache Kafka в режиме KRaft (без ZooKeeper) в Kubernetes через оператор Strimzi и раздельные пулы узлов",
+        "Гарантии доставки в Kafka: acks=all, min.insync.replicas=2, идемпотентные продюсеры, ключи партиционирования и мониторинг лага",
+        "Многоуровневое хранение (Tiered Storage) в Kafka: выгрузка старых сегментов в объектное хранилище S3 для удешевления дисков"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Orchestration & Analytics Engineering (Airflow & dbt)",
+      "title_ru": "Этап 3. Оркестрация пайплайнов и аналитическая инженерия (Airflow и dbt)",
       "items": [
-        "Map drops soon"
+        "Idempotent DAG engineering in Apache Airflow: TaskFlow API, dynamic task mapping, backfills, sensors, and SLA alerts",
+        "Modular transformation layers with dbt (staging -> intermediate -> marts), incremental models, macros, and schema/data tests"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Разработка идемпотентных пайплайнов в Apache Airflow: TaskFlow API, бэкфиллы, сенсоры и контроль выполнения по SLA",
+        "Слоеная трансформация данных в dbt (staging -> marts), инкрементальные витрины, макросы и автотесты качества данных"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Distributed Batch/Stream Processing (Spark & Elasticsearch)",
+      "title_ru": "Этап 4. Распределенная обработка больших данных (Apache Spark и Elasticsearch)",
       "items": [
-        "Map drops soon"
+        "Apache Spark optimization: Catalyst query planner, broadcast joins vs sort-merge joins, partition skew mitigation, and caching",
+        "Full-text and log search at scale with Elasticsearch: index mappings, analyzers, shard sizing, and ILM lifecycle policies"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Оптимизация джобов Apache Spark: планировщик Catalyst, broadcast-джойны, борьба с перекосом партиций (data skew) и кэширование",
+        "Полнотекстовый поиск и агрегации в Elasticsearch: настройка маппингов, анализаторов, шардов и политик жизненного цикла ILM"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. Real-Time OLAP & S3 Lakehouse Architecture (ClickHouse)",
+      "title_ru": "Этап 5. Витрины реального времени в ClickHouse и архитектура S3 Lakehouse",
+      "items": [
+        "Zero-code Kafka-to-ClickHouse ingestion pipelines using Kafka table engines and Materialized Views",
+        "Open Lakehouse tables (Apache Iceberg / Delta Lake) on S3 with expressive executive dashboards (Plotly, Altair, Grafana)"
+      ],
+      "items_ru": [
+        "Прямая потоковая заливка событий из топиков Kafka в витрины ClickHouse через движок таблицы Kafka и Materialized Views",
+        "Хранение исторических данных в открытых форматах Lakehouse (Iceberg/Parquet на S3) и визуализация метрик"
+      ],
+      "status": "live"
     }
   ]
 }

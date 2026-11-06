@@ -1,0 +1,42 @@
+# Chaos Engineering: проверка устойчивости микросервиса к сетевым лагам и падению подов
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: inject-postgres-latency
+  namespace: production
+spec:
+  action: delay
+  mode: all
+  selector:
+    namespaces:
+      - production
+    labelSelectors:
+      app.kubernetes.io/name: backend-api
+  delay:
+    latency: "150ms"
+    correlation: "50"
+    jitter: "25ms"
+  direction: to
+  target:
+    mode: all
+    selector:
+      namespaces:
+        - production
+      labelSelectors:
+        app.kubernetes.io/name: postgres
+  duration: "5m"
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: kill-random-api-pod
+  namespace: production
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces:
+      - production
+    labelSelectors:
+      app.kubernetes.io/name: backend-api
+  gracePeriod: 0

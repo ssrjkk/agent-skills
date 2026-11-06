@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Desktop roadmap — Agent Skills Library</title>
-  <meta name="description" content="Electron, native apps">
+  <title>Desktop Apps roadmap — Agent Skills Library</title>
+  <meta name="description" content="Cross-platform desktop engineering with Electron, process sandboxing, typed IPC bridges, and local SQLite WAL storage">
   <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/roadmaps/desktop.html">
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
-  <meta property="og:title" content="Desktop roadmap — Agent Skills Library">
-  <meta property="og:description" content="Electron, native apps">
+  <meta property="og:title" content="Desktop Apps roadmap — Agent Skills Library">
+  <meta property="og:description" content="Cross-platform desktop engineering with Electron, process sandboxing, typed IPC bridges, and local SQLite WAL storage">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/roadmaps/desktop.html">
   <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Desktop roadmap — Agent Skills Library">
-  <meta name="twitter:description" content="Electron, native apps">
+  <meta name="twitter:title" content="Desktop Apps roadmap — Agent Skills Library">
+  <meta name="twitter:description" content="Cross-platform desktop engineering with Electron, process sandboxing, typed IPC bridges, and local SQLite WAL storage">
   <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,14 +48,14 @@
       <p class="back-link"><a href="../roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
       <header class="rm-hero">
         <span class="domain-chip" style="background:#6366f11a;color:#6366f1;border-color:#6366f144">desktop</span>
-        <h1>🖥️ Desktop <span class="soon-pill big">soon</span></h1>
-        <p>Electron, native apps</p>
+        <h1>🖥️ <span data-slang-body="en">Desktop Apps</span><span data-slang-body="ru" hidden>Десктоп-разработка</span> <span class="live-pill big">live</span></h1>
+        <p><span data-slang-body="en">Cross-platform desktop engineering with Electron, process sandboxing, typed IPC bridges, and local SQLite WAL storage</span><span data-slang-body="ru" hidden>Кроссплатформенные десктопные приложения на Electron: изоляция процессов, типизированный мост IPC и локальная БД SQLite</span></p>
       </header>
       <div class="page-nav"><a class="page-nav-link" href="design.html">← design</a><a class="page-nav-link" href="devops.html">devops →</a></div>
-      <div class="rm-timeline"><div class="rm-stage"><h3>▸ Fundamentals <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Core <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Advanced <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Expert <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div></div>
-      <div class="rm-related"><a class="btn-ghost" href="../domains/desktop.html"><span data-i18n="rel_skills">Related skills →</span></a></div>
+      <div class="rm-timeline"><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 1. Process Isolation, ContextBridge &amp; Security Hardening</span><span data-slang-body="ru" hidden>Этап 1. Изоляция процессов Main/Renderer и защита моста ContextBridge</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Enforcing nodeIntegration: false, contextIsolation: true, and sandbox: true on all BrowserWindow instances</li><li>Exposing narrow, schema-validated asynchronous APIs via contextBridge.exposeInMainWorld and ipcMain.handle</li></ul><ul data-slang-body="ru" hidden><li>Включение жесткой изоляции окна браузера: nodeIntegration: false, contextIsolation: true и песочница sandbox: true</li><li>Построение узкого типизированного API между интерфейсом и ОС через contextBridge и асинхронные обработчики ipcMain.handle</li></ul></div><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 2. Local SQLite Storage, Native OS Integration &amp; Auto-Updates</span><span data-slang-body="ru" hidden>Этап 2. Локальное хранилище SQLite, системная интеграция и автообновления</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Running embedded SQLite in WAL mode inside the Main process or utility worker thread for instant local search</li><li>Code signing (macOS Notarization, Windows Authenticode), system tray menus, and differential auto-updates</li></ul><ul data-slang-body="ru" hidden><li>Работа со встроенной базой SQLite в режиме WAL в основном процессе или воркер-потоке без заморозки интерфейса</li><li>Криптографическая подпись сборок под macOS и Windows, интеграция с системным треем и безопасная доставка автообновлений</li></ul></div></div>
+      <div class="rm-related"><h3>Related skills</h3><div class="rm-chips"><a class="rm-chip" href="../skills/electron.html">electron</a><a class="rm-chip" href="../skills/sqlite.html">sqlite</a><a class="rm-chip" href="../skills/typescript.html">typescript</a></div></div>
       <div class="page-nav"><a class="page-nav-link" href="design.html">← design</a><a class="page-nav-link" href="devops.html">devops →</a></div>
-      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/desktop.json</code> · ETA: soon</p>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/desktop.json</code> · ETA: 2026-11</p>
     </div>
   </div>
   <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>

@@ -1,0 +1,71 @@
+---
+- name: Production Linux Server Hardening & Highload Tuning
+  hosts: all
+  become: true
+  vars:
+    ssh_port: 22
+    allowed_tcp_ports: "{22, 80, 443}"
+
+  tasks:
+    - name: 1. Установка базовых утилит диагностики и безопасности
+      ansible.builtin.apt:
+        name:
+          - curl
+          - jq
+          - htop
+          - iotop
+          - sysstat
+          - lsof
+          - tcpdump
+          - nftables
+          - fail2ban
+          - unattended-upgrades
+        state: present
+        update_cache: true
+
+    - name: 2. Тюнинг параметров ядра Linux (sysctl) под Highload и контейнеры
+      ansible.posix.sysctl:
+        name: "{{ item.key }}"
+        value: "{{ item.value }}"
+        sysctl_set: true
+        state: present
+        reload: true
+      loop:
+        - { key: "net.core.somaxconn", value: "32768" }
+        - { key: "net.ipv4.ip_local_port_range", value: "1024 65000" }
+        - { key: "net.ipv4.tcp_tw_reuse", value: "1" }
+        - { key: "net.ipv4.tcp_fin_timeout", value: "15" }
+        - { key: "net.netfilter.nf_conntrack_max", value: "524288" }
+        - { key: "fs.file-max", value: "2097152" }
+        - { key: "fs.inotify.max_user_watches", value: "524288" }
+        - { key: "vm.swappiness", value: "10" }
+        - { key: "vm.overcommit_memory", value: "1" }
+
+    - name: 3. Харденинг SSH (запрет входа по паролю и от root)
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        validate: "sshd -t -f %s"
+      loop:
+        - { regexp: "^#?PermitRootLogin", line: "PermitRootLogin no" }
+        - { regexp: "^#?PasswordAuthentication", line: "PasswordAuthentication no" }
+        - { regexp: "^#?X11Forwarding", line: "X11Forwarding no" }
+        - { regexp: "^#?MaxAuthTries", line: "MaxAuthTries 3" }
+      notify: Restart sshd
+
+    - name: 4. Увеличение лимитов открытых дескрипторов (ulimit nofile)
+      ansible.builtin.copy:
+        dest: /etc/security/limits.d/99-highload.conf
+        mode: "0644"
+        content: |
+          * soft nofile 1048576
+          * hard nofile 1048576
+          root soft nofile 1048576
+          root hard nofile 1048576
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted

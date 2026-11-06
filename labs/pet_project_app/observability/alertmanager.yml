@@ -1,0 +1,21 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname', 'service']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 2h
+  receiver: 'telegram-oncall'
+
+receivers:
+  - name: 'telegram-oncall'
+    telegram_configs:
+      - bot_token: 'YOUR_TELEGRAM_BOT_TOKEN'
+        chat_id: -1001234567890
+        parse_mode: 'HTML'
+        message: |
+          🚨 <b>[{{ .Status | toUpper }}] {{ .CommonLabels.alertname }}</b>
+          <b>Сервис:</b> {{ .CommonLabels.service }}
+          <b>Описание:</b> {{ range .Alerts }}{{ .Annotations.summary }}
+{{ end }}

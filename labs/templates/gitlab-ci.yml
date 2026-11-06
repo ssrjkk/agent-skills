@@ -1,0 +1,76 @@
+stages:
+  - lint
+  - test
+  - build
+  - security
+  - deploy
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  DOCKER_DRIVER: overlay2
+
+# --- 1. Linting ---
+hadolint:
+  stage: lint
+  image: hadolint/hadolint:latest-debian
+  script:
+    - hadolint Dockerfile
+
+gitleaks:
+  stage: lint
+  image:
+    name: zricethezav/gitleaks:latest
+    entrypoint: [""]
+  script:
+    - gitleaks detect --source . -v
+
+# --- 2. Unit Tests ---
+unit-tests:
+  stage: test
+  image: golang:1.23-alpine
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .cache/go-build
+  script:
+    - go test -v -race ./...
+
+# --- 3. Rootless Image Build via Kaniko ---
+build-image:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${IMAGE_TAG}"
+      --cache=true
+
+# --- 4. Container Vulnerability Scan ---
+trivy-scan:
+  stage: security
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  script:
+    - trivy image --exit-code 1 --ignore-unfixed --severity CRITICAL,HIGH "${IMAGE_TAG}"
+
+# --- 5. GitOps Tag Update ---
+update-gitops-manifest:
+  stage: deploy
+  image: alpine/git:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  script:
+    - apk add --no-cache yq
+    - git clone "https://gitlab-ci-token:${GITOPS_PAT}@${CI_SERVER_HOST}/infra/gitops-repo.git"
+    - cd gitops-repo
+    - yq -i '.image.tag = strenv(CI_COMMIT_SHORT_SHA)' apps/backend-api/values-prod.yaml
+    - git config user.email "ci-bot@example.com"
+    - git config user.name "GitLab CI Bot"
+    - git commit -am "chore(release): bump backend-api to ${CI_COMMIT_SHORT_SHA}"
+    - git push origin main

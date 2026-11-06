@@ -2,40 +2,43 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "gamedev",
   "name": "GameDev",
+  "name_ru": "Геймдев",
   "icon": "🎮",
-  "tagline": "Unity ECS, physics, gameplay",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "2D/3D game physics, spatial trees, raycasting, and high-performance Unity ECS / DOTS architecture",
+  "tagline_ru": "Физика 2D/3D игр, пространственные индексы, рейкастинг и высокопроизводительная архитектура Unity ECS / DOTS",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "gamedev",
-  "related_skills": [],
+  "related_skills": [
+    "unity-ecs",
+    "game-physics"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Fixed-Timestep Game Loop, 2D/3D Math & Rigid-Body Physics",
+      "title_ru": "Этап 1. Игровой цикл с фиксированным шагом, математика 2D/3D и физика твердых тел",
       "items": [
-        "Map drops soon"
+        "Decoupling fixed physics ticks (dt) from variable render frames with transform interpolation",
+        "Collision detection (AABB, SAT, BVH spatial trees), impulse resolution, raycasting, and continuous collision detection (CCD)"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Разделение фиксированного шага симуляции физики (FixedUpdate) и частоты отрисовки кадров с интерполяцией координат",
+        "Обнаружение столкновений (AABB, SAT, пространственные деревья BVH), рейкастинг и защита от пролета быстрых объектов сквозь стены (CCD)"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Data-Oriented Design with Unity ECS, Jobs & Burst",
+      "title_ru": "Этап 2. Дата-ориентированная архитектура Unity ECS, C# Jobs и компилятор Burst",
       "items": [
-        "Map drops soon"
+        "Cache-friendly Archetype/Chunk memory layout in Unity Entities (ECS): unmanaged IComponentData and ISystem",
+        "Parallelizing simulation across CPU cores with IJobEntity and SIMD native compilation via the Burst compiler"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Укладка данных в кэш процессора по архетипам и чанкам в Unity ECS: компоненты IComponentData и системы ISystem",
+        "Распараллеливание игровой логики на все ядра CPU через IJobEntity и векторизация машинного кода компилятором Burst"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

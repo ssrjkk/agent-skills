@@ -1,41 +1,199 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "devops",
-  "name": "DevOps",
+  "name": "DevOps & SRE",
+  "name_ru": "DevOps и SRE",
   "icon": "🚀",
-  "tagline": "Docker, K8s, CI/CD, observability",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "2026–2027 path from Linux kernel and eBPF to Bare-Metal Talos/Cilium BGP, vLLM GPU clusters, and Chaos Drills (Maps 01–20)",
+  "tagline_ru": "Путь 2026–2027 от ядра Linux и eBPF до Bare-Metal Talos/Cilium BGP, GPU-кластеров vLLM и траблшутинга (Карты 01–20)",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "devops",
-  "related_skills": [],
+  "related_skills": [
+    "devops-sre-portal-architect",
+    "linux-ebpf-troubleshooting",
+    "ci-cd-gitops-iac",
+    "k8s-baremetal-multicluster",
+    "ai-gpu-infra-llmops",
+    "observability-sre-highload",
+    "docker",
+    "kubernetes",
+    "terraform",
+    "argocd",
+    "github-actions",
+    "gitlab-ci",
+    "ansible",
+    "prometheus-grafana",
+    "loki",
+    "sre-slos",
+    "platform-engineering"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Linux Kernel Internals, eBPF & Networking (Map 01)",
+      "title_ru": "Этап 1. Внутреннее устройство ядра Linux, eBPF и сети (Карта 01)",
       "items": [
-        "Map drops soon"
+        "Process scheduler (CFS), states R/S/D (uninterruptible I/O sleep) and Z (zombies), PID 1 signal handling with tini",
+        "Namespaces (pid, net, mnt, user) and cgroups v2 (memory.max, cpu.max, OOM Killer scoring)",
+        "Filesystems, inodes (df -i), and fixing 100% disk usage from deleted open files via lsof +L1 and /proc/<PID>/fd",
+        "USE/RED triage in 60 seconds: uptime, vmstat 1, iostat -xz 1, ss -tulpan, and eBPF kernel tracing",
+        "TCP/IP handshake, TLS 1.3, DNS troubleshooting (dig +trace), nf_conntrack tuning, and hardened Nginx/Envoy"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Планировщик CFS, статусы процессов R/S/D (ожидание диска/NFS) и Z (зомби), обработка сигналов PID 1 через tini",
+        "Изоляция namespaces (pid, net, mnt, user) и лимиты cgroups v2 (memory.max, cpu.max, работа OOM Killer)",
+        "Файловые системы, иноды (df -i) и очистка удаленных открытых файлов через lsof +L1 без рестарта процесса",
+        "Методологии USE и RED за 60 секунд: uptime, vmstat 1, iostat -xz 1, ss -tulpan и трассировка ядра eBPF",
+        "Стек TCP/IP, TLS 1.3, отладка DNS (dig +trace), тюнинг таблицы nf_conntrack и боевой Nginx/Envoy"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Engineering in Python/Go & Container Internals (Map 02)",
+      "title_ru": "Этап 2. Кодинг на Python/Go и устройство контейнеров (Карта 02)",
       "items": [
-        "Map drops soon"
+        "Python automation with uv, httpx, boto3, official kubernetes client, Click/Typer CLIs, pytest, and ruff",
+        "Go for cloud-native engineers: goroutines, channels, context timeouts, Cobra CLIs, and static CGO_ENABLED=0 builds",
+        "OCI runtime internals: containerd -> containerd-shim -> runc, and OverlayFS lowerdir/upperdir/merged layers",
+        "Multi-stage distroless Dockerfiles running as nonroot (UID 65532) with readOnlyRootFilesystem"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Автоматизация на Python: пакетный менеджер uv, httpx, boto3, клиент kubernetes, CLI на Typer, pytest и ruff",
+        "Go для инфраструктурщиков: горутины, каналы, отмена через context, CLI на Cobra и статическая сборка CGO_ENABLED=0",
+        "Анатомия контейнера: цепочка containerd -> shim -> runc и слоеная файловая система OverlayFS",
+        "Эталонные multi-stage Dockerfile на базе distroless:nonroot (UID 65532) с режимом readOnlyRootFilesystem"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. CI/CD Pipelines, Dagger, OIDC & OpenTofu GitOps (Map 03)",
+      "title_ru": "Этап 3. Пайплайны CI/CD, Dagger, OIDC, OpenTofu и GitOps (Карта 03)",
       "items": [
-        "Map drops soon"
+        "GitHub Actions and GitLab CI with rootless BuildKit/Kaniko instead of privileged Docker-in-Docker",
+        "Zero static cloud keys in CI via short-lived OIDC JWT federation (AssumeRoleWithWebIdentity)",
+        "Programmable pipelines as code in Go using the Dagger SDK for 100% local-to-CI parity",
+        "Modular OpenTofu/Terraform with remote S3 state locking, DRY Terragrunt wrappers, and idempotent Ansible roles",
+        "Pull-based GitOps delivery with ArgoCD (App-of-Apps, ApplicationSet) and Argo Rollouts Canary with Prometheus rollback"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Конвейеры GitHub Actions и GitLab CI со сборкой через BuildKit rootless и Kaniko без привилегированного DinD",
+        "Отказ от вечных облачных ключей в секретах CI в пользу временных токенов OIDC (id-token: write)",
+        "Программируемые пайплайны на Go через Dagger SDK для полной идентичности локального и CI-запуска",
+        "Модульный OpenTofu/Terraform с блокировкой стейта в S3, обертками Terragrunt и идемпотентными ролями Ansible",
+        "GitOps-доставка через ArgoCD (App-of-Apps, ApplicationSet) и канареечные релизы Argo Rollouts с автооткатом по метрикам"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Kubernetes Architecture, Cilium eBPF & Autoscaling (Map 04)",
+      "title_ru": "Этап 4. Архитектура Kubernetes, Cilium eBPF и автоскейлинг (Карта 04)",
       "items": [
-        "Map drops soon"
+        "Control Plane internals: kube-apiserver, etcd Raft quorum and snapshot restore, kube-scheduler, and kubelet",
+        "Workload resilience: startup/liveness/readiness probes, QoS classes (Guaranteed/Burstable), PDB, and TopologySpreadConstraints",
+        "Cilium eBPF CNI replacing kube-proxy iptables, L7 Envoy policies, and Kubernetes Gateway API (HTTPRoute)",
+        "Event-driven workload scaling with KEDA (Kafka lag, Prometheus queries) and bin-packing Spot node provisioning with Karpenter"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Устройство Control Plane: kube-apiserver, кворум etcd Raft и восстановление снапшотов, планировщик и kubelet",
+        "Надежность подов: пробы startup/liveness/readiness, классы QoS, бюджеты PDB и распределение по зонам (AZ)",
+        "Сетевой стек Cilium eBPF вместо iptables, фильтрация на уровне L7 и переход с Ingress на Gateway API (HTTPRoute)",
+        "Масштабирование подов по длине очереди через KEDA и быстрый заказ Spot-узлов через Karpenter"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. Observability Stack, eBPF Profiling & Supply Chain Security (Maps 05, 13, 14)",
+      "title_ru": "Этап 5. Наблюдаемость, eBPF-профилирование и DevSecOps (Карты 05, 13, 14)",
+      "items": [
+        "Prometheus and VictoriaMetrics (PromQL rate/histogram_quantile) with cardinality discipline and Alertmanager routing",
+        "Structured JSON logging with Vector and Grafana Loki (LogQL) correlated with OpenTelemetry and Tempo traces via trace_id",
+        "Zero-code eBPF telemetry with Grafana Beyla and continuous CPU/memory FlameGraph profiling with Pyroscope",
+        "Secrets management with Vault/OpenBao + ExternalSecrets, SBOMs (Syft), keyless Cosign signatures, and Kyverno policies"
+      ],
+      "items_ru": [
+        "Метрики в Prometheus и VictoriaMetrics (PromQL), защита от взрыва кардинальности и маршрутизация в Alertmanager",
+        "Структурированные JSON-логи через Vector и Grafana Loki (LogQL), связанные с трейсами OpenTelemetry/Tempo по trace_id",
+        "Автоматическая eBPF-инструментация через Grafana Beyla и непрерывное профилирование FlameGraph в Pyroscope",
+        "Секреты в Vault/OpenBao + ExternalSecrets, генерация SBOM (Syft), бесключевая подпись Cosign и политики Kyverno"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 6. SRE Practices, Error Budgets & Incident Playbooks (Maps 06, 09, 10, 12)",
+      "title_ru": "Этап 6. Практики SRE, Error Budget и боевые плейбуки аварий (Карты 06, 09, 10, 12)",
+      "items": [
+        "SLI/SLO/SLA math (99.9% = 43.2m monthly downtime), Error Budget burn-rate alerts, and Blameless Postmortems (5 Whys)",
+        "First-5-minute incident runbooks: CrashLoopBackOff exit codes (137/143/126/127), OOMKilled, and 502/504 storms",
+        "On-call DBA runbook: pg_stat_activity lock trees, lock_timeout DDL, autovacuum dead tuples, and PgBouncer transaction pooling",
+        "Continuous resilience verification with Chaos Mesh fault injection and Grafana k6 stress testing"
+      ],
+      "items_ru": [
+        "Расчет SLI/SLO/SLA (99.9% = 43.2 мин простоя в месяц), алерты выгорания Error Budget и культура Blameless Postmortems",
+        "Боевые плейбуки первых 5 минут аварии: разбор кодов выхода CrashLoopBackOff, OOMKilled и штормов 502/504 Bad Gateway",
+        "Шпаргалка дежурного по БД: поиск блокировок в pg_stat_activity, лаг репликации, тюнинг autovacuum и пулер PgBouncer",
+        "Проверка отказоустойчивости боем через инъекцию сбоев в Chaos Mesh и нагрузочное тестирование на Grafana k6"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 7. Bare-Metal Kubernetes: Talos Linux, Cilium BGP & Storage (Map 17)",
+      "title_ru": "Этап 7. Bare-Metal Kubernetes: Talos Linux, Cilium BGP и СХД (Карта 17)",
+      "items": [
+        "Immutable API-driven Talos Linux: zero SSH, zero shell, declarative upgrades and recovery via mTLS talosctl gRPC API",
+        "Cilium BGP Control Plane on bare metal: announcing LoadBalancer VIPs via ECMP to Top-of-Rack switches",
+        "Bare-metal CSI architecture: distributed Rook-Ceph (RWO/RWX/S3) vs local NVMe TopoLVM for replicated databases"
+      ],
+      "items_ru": [
+        "Неизменяемая ОС Talos Linux без SSH и пакета утилит: управление и обновление узлов исключительно через mTLS gRPC API talosctl",
+        "Анонсы внешних IP для Service: LoadBalancer по протоколу BGP (ECMP) в Cilium напрямую на коммутаторы стойки (ToR)",
+        "Выбор СХД на голом железе: распределенный Rook-Ceph для общих томов против локальных NVMe (TopoLVM) для кластерных БД"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 8. Platform Engineering: Go Operators, Backstage IDP & Multi-Cluster (Maps 16, 18)",
+      "title_ru": "Этап 8. Платформенная инженерия: Go-операторы, Backstage и мульти-кластер (Карты 16, 18)",
+      "items": [
+        "Custom Kubernetes Operators in Go with Kubebuilder (controller-runtime): CRDs, idempotent Reconcile, OwnerReferences, Finalizers",
+        "Internal Developer Portal (IDP) with Backstage Software Templates and Crossplane XRDs for 3-minute service onboarding",
+        "Fleet lifecycle management via Cluster API (CAPI), 5-second ephemeral PR clusters via vCluster, and Cilium Cluster Mesh"
+      ],
+      "items_ru": [
+        "Разработка операторов K8s на Go (Kubebuilder): описание CRD, идемпотентный цикл Reconcile, OwnerReferences и Finalizers",
+        "Внутренний портал разработчика Backstage IDP и композиции Crossplane XRD для создания сервиса с БД за 3 минуты",
+        "Управление флотом кластеров через Cluster API (CAPI), временные PR-окружения за 5 секунд на vCluster и сеть Cilium Cluster Mesh"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 9. AI/GPU Infrastructure & Highload Data Streaming (Maps 14, 19)",
+      "title_ru": "Этап 9. Инфраструктура AI/GPU и потоковые системы данных (Карты 14, 19)",
+      "items": [
+        "GPU orchestration in Kubernetes (NVIDIA GPU Operator, DRA/MIG) and LLM serving with vLLM, KEDA, and LiteLLM/Envoy AI Gateway",
+        "ZooKeeper-less Apache Kafka in KRaft mode via Strimzi Operator with S3 Tiered Storage",
+        "Petabyte OLAP clusters on ClickHouse with ReplicatedMergeTree, C++ ClickHouse Keeper, and S3 Lakehouse tiers"
+      ],
+      "items_ru": [
+        "Оркестрация GPU в Kubernetes (NVIDIA GPU Operator, DRA/MIG) и сервинг LLM через vLLM, KEDA и шлюз LiteLLM / Envoy AI Gateway",
+        "Кластеры Apache Kafka в режиме KRaft без ZooKeeper под управлением оператора Strimzi с выгрузкой истории в S3",
+        "Аналитические кластеры ClickHouse в Kubernetes с координацией через ClickHouse Keeper и холодным уровнем хранения в S3"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 10. Chaos Drill Lab, System Design (10k+ RPS) & Career XYZ (Maps 07, 08, 11, 15, 20)",
+      "title_ru": "Этап 10. Полигон Chaos Drill, System Design (10k+ RPS) и карьера XYZ (Карты 07, 08, 11, 15, 20)",
+      "items": [
+        "Hands-on Chaos Drill Simulator (break-my-cluster.yaml + verify-fixes.sh): fixing readOnlyRootFilesystem, OOM/probes, selectors, and NetworkPolicy",
+        "Production Pet-Project Blueprint: Go/Python service + Postgres + Redis + Terraform + ArgoCD + Prometheus/Loki + k6",
+        "Senior/Staff System Design (10k+ RPS, Multi-AZ, RTO/RPO) and ATS-proof resume engineering with the Google XYZ formula"
+      ],
+      "items_ru": [
+        "Практический полигон поломок Chaos Drill (break-my-cluster.yaml + verify-fixes.sh): 4 боевых сценария с автопроверкой",
+        "Сквозной продакшн пет-проект для портфолио: микросервис + БД + кэш + пайплайн CI/CD + IaC + GitOps + мониторинг",
+        "Защита архитектуры System Design на 10 000+ RPS и упаковка резюме по формуле измеримых достижений XYZ"
+      ],
+      "status": "live"
     }
   ]
 }

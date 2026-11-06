@@ -1,0 +1,110 @@
+# Лабораторный стенд с 4 намеренными поломками для тренировки траблшутинга
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: chaos-drill
+---
+# Поломка 1: Контейнер падает из-за попытки записи в Read-Only Root Filesystem без примонтированного тома
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broken-readonly-app
+  namespace: chaos-drill
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broken-readonly-app
+  template:
+    metadata:
+      labels:
+        app: broken-readonly-app
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["/bin/sh", "-c", "echo $$ > /var/run/app.pid && sleep 3600"]
+          securityContext:
+            readOnlyRootFilesystem: true
+---
+# Поломка 2: Неправильный порт в livenessProbe, который постоянно убивает живой Nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oom-and-probe-trap
+  namespace: chaos-drill
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oom-trap
+  template:
+    metadata:
+      labels:
+        app: oom-trap
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9999 # ОШИБКА: Nginx слушает 80 порт, а проба бьет в 9999!
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 2
+---
+# Поломка 3: Расхождение лейблов в Service selector и неверный targetPort
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthy-backend
+  namespace: chaos-drill
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthy-backend
+  template:
+    metadata:
+      labels:
+        app: healthy-backend
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthy-backend-svc
+  namespace: chaos-drill
+spec:
+  selector:
+    app: healthy-backEnd-typo # ОШИБКА: опечатка в регистре лейбла!
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080 # ОШИБКА: контейнер слушает 80 порт!
+---
+# Поломка 4: NetworkPolicy заблокировала весь входящий трафик к подам
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lockdown-all
+  namespace: chaos-drill
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress

@@ -9,7 +9,23 @@
   "status": "live",
   "eta": "2026-11",
   "catalog_domain": "backend",
-  "related_skills": ["fastapi", "postgresql", "redis", "docker", "sql-querying", "rest-api-design", "kafka", "system-design"],
+  "related_skills": [
+    "fastapi",
+    "django",
+    "go-rest-api",
+    "rust-tokio",
+    "spring-boot",
+    "nestjs",
+    "express",
+    "grpc",
+    "graphql",
+    "rest-api-design",
+    "websockets",
+    "postgresql",
+    "redis",
+    "kafka",
+    "system-design"
+  ],
   "stages": [
     {
       "title": "Part I. Foundation (months 1–4)",
@@ -86,13 +102,31 @@
         "First 12–24 months on the job",
         "Feedback loops: interview gaps re-prioritize learning",
         "Senior track: ownership, mentoring"
-
       ],
       "items_ru": [
         "Собеседования: кодинг, system design, поведенческое интервью",
         "Первые 12–24 месяца на работе",
         "Обратная связь: пробелы с интервью расставляют приоритеты учёбы",
         "Трек к senior: владение зоной, менторство"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Part V. Highload System Design (10k+ RPS), Outbox & Stateful Runbooks",
+      "title_ru": "Часть V. Highload System Design (10k+ RPS), паттерн Outbox и траблшутинг БД",
+      "items": [
+        "Edge-to-Core architecture for 10,000+ RPS: GeoDNS, CDN/WAF, L4/L7 balancers, and 3-AZ stateless pods",
+        "Cache-Aside in Redis/Valkey with jittered TTLs and singleflight stampede protection",
+        "Transactional Outbox pattern for atomic PostgreSQL writes and Kafka event publishing",
+        "High-availability PostgreSQL (CloudNativePG, PgBouncer transaction pooling, WAL-G S3 PITR)",
+        "Explicit RTO (< 30s) and RPO (0 lost transactions) engineering and lock_timeout migration hygiene"
+      ],
+      "items_ru": [
+        "Архитектура Edge-to-Core на 10 000+ RPS: GeoDNS, CDN/WAF, L4/L7 балансировка и stateless-поды в 3 AZ",
+        "Кэширование Cache-Aside в Redis/Valkey с разбросом TTL (jitter) и защитой от пробоя кэша",
+        "Паттерн Transactional Outbox для атомарной записи в PostgreSQL и публикации событий в Kafka",
+        "Отказоустойчивый PostgreSQL (CloudNativePG, пулер PgBouncer в режиме transaction, PITR-бэкапы WAL в S3)",
+        "Расчет целевых показателей RTO (< 30 с) и RPO (0 потерь) и безопасные DDL-миграции с lock_timeout"
       ],
       "status": "live"
     }

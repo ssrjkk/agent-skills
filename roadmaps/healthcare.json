@@ -2,40 +2,45 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "healthcare",
   "name": "Healthcare IT",
+  "name_ru": "Медицинские ИТ",
   "icon": "🏥",
-  "tagline": "FHIR, HIPAA, integrations",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "HL7 FHIR R4 clinical interoperability, SMART on FHIR apps, and HIPAA PHI security & compliance",
+  "tagline_ru": "Интеграция медицинских систем по стандарту HL7 FHIR R4, приложения SMART on FHIR и защита персональных данных HIPAA",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "healthcare",
-  "related_skills": [],
+  "related_skills": [
+    "hl7-fhir",
+    "hipaa-compliance",
+    "api-security",
+    "secrets-management"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Clinical Interoperability with HL7 FHIR R4 & SMART on FHIR",
+      "title_ru": "Этап 1. Обмен медицинскими данными по стандарту HL7 FHIR R4 и SMART on FHIR",
       "items": [
-        "Map drops soon"
+        "Modeling clinical resources (Patient, Observation, Encounter, MedicationRequest), coded terminologies (LOINC, SNOMED CT), and Bundles",
+        "Building SMART on FHIR applications with OAuth2/OIDC launch contexts, patient-scoped tokens, and FHIR REST search parameters"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Моделирование клинических ресурсов FHIR R4 (Patient, Observation, Encounter), медицинских справочников (LOINC, SNOMED) и транзакционных бандлов",
+        "Разработка приложений SMART on FHIR с авторизацией OAuth2/OIDC в контексте электронной медкарты (EHR)"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. HIPAA Security Rule, PHI Encryption & Audit Trails",
+      "title_ru": "Этап 2. Защита медицинских данных (PHI), шифрование и неизменяемый аудит по HIPAA",
       "items": [
-        "Map drops soon"
+        "Protecting Electronic Protected Health Information (ePHI) with AES-256 envelope encryption at rest and TLS 1.3 in transit",
+        "Minimum-necessary RBAC/ABAC access controls, PII/PHI log redaction, and tamper-evident audit logs"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Шифрование защищаемой медицинской информации (ePHI) на дисках (AES-256 KMS) и в канале передачи (TLS 1.3)",
+        "Ролевой доступ по принципу минимальной необходимости, фильтрация ПДн/диагнозов из логов и неизменяемый журнал аудита"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

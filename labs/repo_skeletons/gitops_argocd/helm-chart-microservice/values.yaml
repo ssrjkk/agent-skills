@@ -1,0 +1,30 @@
+replicaCount: 3
+
+image:
+  repository: ghcr.io/org/backend-api
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+gatewayRoute:
+  enabled: true
+  hostname: api.example.com
+  gatewayName: main-gateway
+  gatewayNamespace: envoy-gateway-system
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 15
+  targetCPUUtilizationPercentage: 75

@@ -1,41 +1,106 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "frontend",
-  "name": "Frontend",
+  "name": "Frontend & Web",
+  "name_ru": "Фронтенд и Веб",
   "icon": "🖥️",
-  "tagline": "React, Next.js, CSS, UI engineering",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Modern React 19, Next.js, TypeScript, CSS, plus Vibe-Coding SEO, SSR/Prerendering, PageSpeed 90+ and Zero-CLS Storefronts",
+  "tagline_ru": "Современный стек React 19, Next.js, TypeScript и CSS плюс SEO-чеклист вайбкодинга, SSR, PageSpeed 90+ и витрины Zero-CLS",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "frontend",
-  "related_skills": [],
+  "related_skills": [
+    "vibe-seo-audit",
+    "vibe-shop-normalizer",
+    "catalog-photo-mapper",
+    "react-19",
+    "nextjs",
+    "astro",
+    "typescript",
+    "modern-css",
+    "tailwind-v4",
+    "vue",
+    "svelte",
+    "angular",
+    "bun-runtime"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Semantic HTML5, Modern CSS & Strict TypeScript",
+      "title_ru": "Этап 1. Семантический HTML5, современный CSS и строгий TypeScript",
       "items": [
-        "Map drops soon"
+        "Semantic landmarks (<header>, <main>, <nav>, <article>), single <h1> hierarchy, and WCAG AA keyboard accessibility",
+        "Modern CSS architecture: Grid, Flexbox, Container Queries, Cascade Layers (@layer), custom properties, and Tailwind v4",
+        "Strict TypeScript engineering: discriminated unions, generics, utility types, Zod schema validation, and Bun runtime"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Семантическая разметка (<header>, <main>, <nav>, <article>), строгая иерархия одного <h1> и навигация с клавиатуры",
+        "Современный CSS: Grid, Flexbox, Container Queries, каскадные слои (@layer), CSS-переменные и Tailwind v4",
+        "Строгая типизация в TypeScript: размеченные объединения, дженерики, валидация схем через Zod и рантайм Bun"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Component Frameworks: React 19, Next.js, Astro, Vue & Svelte",
+      "title_ru": "Этап 2. Фреймворки: React 19, Next.js, Astro, Vue и Svelte",
       "items": [
-        "Map drops soon"
+        "React 19 fundamentals and Server Components (RSC), Actions, optimistic updates, and concurrent rendering",
+        "Full-stack routing and hybrid SSR/SSG/ISR rendering with Next.js App Router and Astro Islands architecture",
+        "Fine-grained reactivity patterns in Vue 3 Composition API, Svelte 5 Runes, and Angular Signals"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Архитектура React 19: серверные компоненты (RSC), Actions, оптимистичные обновления UI и хуки",
+        "Гибридный рендеринг SSR/SSG/ISR на базе Next.js App Router и островной архитектуры Astro",
+        "Реактивные паттерны в Vue 3 Composition API, Svelte 5 Runes и сигналах Angular"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Vibe-Coding SEO, SSR/Prerendering & Open Graph (Map 22)",
+      "title_ru": "Этап 3. Техническое SEO вайбкод-сайтов, SSR/пререндер и Open Graph (Карта 22)",
       "items": [
-        "Map drops soon"
+        "Eliminating empty client-only <div id='root'></div> shells with Next.js/Astro SSR or build-time HTML prerendering",
+        "Unique <title>, <meta name='description'>, canonical URLs, and search-intent headings per route",
+        "Rich social preview cards in Telegram and X via Open Graph (og:title, og:description, absolute HTTPS og:image)",
+        "Root indexing files (sitemap.xml and robots.txt) and verification in Google Search Console and Yandex Webmaster"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Устранение проблемы пустого <div id='root'></div> для роботов Яндекса и Google через SSR или пререндер при сборке",
+        "Уникальные теги <title>, <meta name='description'>, canonical и заголовки под реальный поисковый спрос",
+        "Разметка Open Graph (og:title, og:description, абсолютный HTTPS og:image) для карточек превью в Telegram и соцсетях",
+        "Файлы индексации sitemap.xml и robots.txt в корне сайта и регистрация в Google Search Console и Яндекс Вебмастере"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Core Web Vitals (PageSpeed 90+, LCP < 2.5s) & Zero-CLS Storefronts",
+      "title_ru": "Этап 4. Скорость PageSpeed 90+ (LCP < 2.5 с) и нормализация витрин Zero-CLS",
       "items": [
-        "Map drops soon"
+        "Compressing multi-megabyte hero PNGs into WebP (<= 200 KB) with explicit width/height and fetchpriority='high'",
+        "Zero-CLS storefront geometry: scrollbar-gutter: stable, 1:1 aspect-ratio product stages, and tabular-nums prices",
+        "Cleaning up vibe-coded DOM artifacts: stripping leaked ${...} literals, duplicate navbars, and conflicting !important rules"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Сжатие тяжелых баннеров из PNG в WebP (до 200 КБ) с явными размерами width/height и приоритетом fetchpriority='high'",
+        "Геометрия витрин без сдвигов макета (Zero-CLS): scrollbar-gutter: stable, квадратные карточки 1:1 и табличные цифры цен",
+        "Очистка вайбкода от артефактов: удаление утекших шаблонов ${...}, дублей шапок и конфликтующих тем"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. E-Commerce Catalog Photo Mapping & Automated QA",
+      "title_ru": "Этап 5. Маппинг фотографий каталога без коллизий и автотесты",
+      "items": [
+        "Auditing and mapping 800x800 studio product photos across brands, series, and categories with zero collisions",
+        "Synchronizing image maps across static pages (public/uploads/), SQLite databases, and CMS export bundles",
+        "End-to-end verification with Playwright browser automation, Jest/Node test runners, and Lighthouse CI gates"
+      ],
+      "items_ru": [
+        "Аудит и привязка студийных фотографий 800x800 по брендам, сериям и категориям с нулевым числом пересечений",
+        "Синхронизация карт изображений между статикой GitHub Pages, базой SQLite и архивами выгрузки CMS",
+        "Сквозное тестирование интерфейса через Playwright, встроенный раннер Node.js и контроль метрик в Lighthouse CI"
+      ],
+      "status": "live"
     }
   ]
 }

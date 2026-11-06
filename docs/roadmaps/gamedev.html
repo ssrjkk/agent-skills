@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GameDev roadmap — Agent Skills Library</title>
-  <meta name="description" content="Unity ECS, physics, gameplay">
+  <meta name="description" content="2D/3D game physics, spatial trees, raycasting, and high-performance Unity ECS / DOTS architecture">
   <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/roadmaps/gamedev.html">
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
   <meta property="og:title" content="GameDev roadmap — Agent Skills Library">
-  <meta property="og:description" content="Unity ECS, physics, gameplay">
+  <meta property="og:description" content="2D/3D game physics, spatial trees, raycasting, and high-performance Unity ECS / DOTS architecture">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/roadmaps/gamedev.html">
   <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GameDev roadmap — Agent Skills Library">
-  <meta name="twitter:description" content="Unity ECS, physics, gameplay">
+  <meta name="twitter:description" content="2D/3D game physics, spatial trees, raycasting, and high-performance Unity ECS / DOTS architecture">
   <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,14 +48,14 @@
       <p class="back-link"><a href="../roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
       <header class="rm-hero">
         <span class="domain-chip" style="background:#ef44441a;color:#ef4444;border-color:#ef444444">gamedev</span>
-        <h1>🎮 GameDev <span class="soon-pill big">soon</span></h1>
-        <p>Unity ECS, physics, gameplay</p>
+        <h1>🎮 <span data-slang-body="en">GameDev</span><span data-slang-body="ru" hidden>Геймдев</span> <span class="live-pill big">live</span></h1>
+        <p><span data-slang-body="en">2D/3D game physics, spatial trees, raycasting, and high-performance Unity ECS / DOTS architecture</span><span data-slang-body="ru" hidden>Физика 2D/3D игр, пространственные индексы, рейкастинг и высокопроизводительная архитектура Unity ECS / DOTS</span></p>
       </header>
       <div class="page-nav"><a class="page-nav-link" href="frontend.html">← frontend</a><a class="page-nav-link" href="healthcare.html">healthcare →</a></div>
-      <div class="rm-timeline"><div class="rm-stage"><h3>▸ Fundamentals <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Core <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Advanced <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Expert <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div></div>
-      <div class="rm-related"><a class="btn-ghost" href="../domains/gamedev.html"><span data-i18n="rel_skills">Related skills →</span></a></div>
+      <div class="rm-timeline"><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 1. Fixed-Timestep Game Loop, 2D/3D Math &amp; Rigid-Body Physics</span><span data-slang-body="ru" hidden>Этап 1. Игровой цикл с фиксированным шагом, математика 2D/3D и физика твердых тел</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Decoupling fixed physics ticks (dt) from variable render frames with transform interpolation</li><li>Collision detection (AABB, SAT, BVH spatial trees), impulse resolution, raycasting, and continuous collision detection (CCD)</li></ul><ul data-slang-body="ru" hidden><li>Разделение фиксированного шага симуляции физики (FixedUpdate) и частоты отрисовки кадров с интерполяцией координат</li><li>Обнаружение столкновений (AABB, SAT, пространственные деревья BVH), рейкастинг и защита от пролета быстрых объектов сквозь стены (CCD)</li></ul></div><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 2. Data-Oriented Design with Unity ECS, Jobs &amp; Burst</span><span data-slang-body="ru" hidden>Этап 2. Дата-ориентированная архитектура Unity ECS, C# Jobs и компилятор Burst</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Cache-friendly Archetype/Chunk memory layout in Unity Entities (ECS): unmanaged IComponentData and ISystem</li><li>Parallelizing simulation across CPU cores with IJobEntity and SIMD native compilation via the Burst compiler</li></ul><ul data-slang-body="ru" hidden><li>Укладка данных в кэш процессора по архетипам и чанкам в Unity ECS: компоненты IComponentData и системы ISystem</li><li>Распараллеливание игровой логики на все ядра CPU через IJobEntity и векторизация машинного кода компилятором Burst</li></ul></div></div>
+      <div class="rm-related"><h3>Related skills</h3><div class="rm-chips"><a class="rm-chip" href="../skills/unity-ecs.html">unity-ecs</a><a class="rm-chip" href="../skills/game-physics.html">game-physics</a></div></div>
       <div class="page-nav"><a class="page-nav-link" href="frontend.html">← frontend</a><a class="page-nav-link" href="healthcare.html">healthcare →</a></div>
-      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/gamedev.json</code> · ETA: soon</p>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/gamedev.json</code> · ETA: 2026-11</p>
     </div>
   </div>
   <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>

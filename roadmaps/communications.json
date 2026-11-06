@@ -1,41 +1,59 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "communications",
-  "name": "Writing",
+  "name": "Writing & Docs",
+  "name_ru": "Тексты и Документация",
   "icon": "✍️",
-  "tagline": "Humanize, no-slop, docs",
-  "status": "soon",
-  "eta": "soon",
-  "catalog_domain": null,
-  "related_skills": [],
+  "tagline": "No-slop engineering prose, natural bilingual copywriting (EN + RU), high-density RFCs/ADRs, and developer docs",
+  "tagline_ru": "Инженерный текст без ИИ-воды, живой двуязычный копирайтинг (EN + RU), плотные спецификации RFC/ADR и документация",
+  "status": "live",
+  "eta": "2026-11",
+  "catalog_domain": "communications",
+  "related_skills": [
+    "humanize-copy-pro",
+    "no-slop-writing",
+    "landing-page-pro",
+    "design-spec-md"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Anti-Slop Filtering & Information Density",
+      "title_ru": "Этап 1. Зачистка нейросетевой «воды» и повышение плотности фактов",
       "items": [
-        "Map drops soon"
+        "Stripping AI throat-clearing intros, corporate buzzwords ('synergy', 'paradigm shift'), and redundant closing recaps",
+        "Leading every section with the decision or metric in sentence 1 and grounding claims in commands, numbers, or links"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Удаление пустых вступлений («В современном мире...»), корпоративных штампов и дублирующих заключений",
+        "Вынос главного вывода в первое предложение абзаца и подтверждение каждого тезиса цифрой, командой или ссылкой"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Natural Bilingual Rhythm (English & Informational Russian)",
+      "title_ru": "Этап 2. Живой ритм текста на английском и инфостиль на русском",
       "items": [
-        "Map drops soon"
+        "Controlling sentence burstiness: alternating short declarative punches with detailed technical explanations",
+        "Eliminating Russian translation calques and bureaucratic nominalizations (-ение/-ание) in favor of active verbs"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Управление ритмикой текста: чередование коротких ударных фраз с развернутыми причинно-следственными пояснениями",
+        "Очистка русского текста от калек с английского и отглагольных существительных в пользу живых глаголов действия"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Engineering RFCs, ADRs, Postmortems & Product Copy",
+      "title_ru": "Этап 3. Технические спецификации (RFC, ADR, Postmortem) и продуктовый копирайтинг",
       "items": [
-        "Map drops soon"
+        "Writing high-signal RFCs and Architecture Decision Records (ADRs) with explicit trade-offs and rollback plans",
+        "Crafting developer-first READMEs, release notes, and landing copy where concrete benchmarks replace marketing adjectives"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Написание четких архитектурных документов (RFC, ADR) с явным указанием цены решения (trade-offs) и плана отката",
+        "Оформление README, релиз-ноутов и продуктовых страниц, где вместо рекламных прилагательных работают бенчмарки и примеры кода"
       ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

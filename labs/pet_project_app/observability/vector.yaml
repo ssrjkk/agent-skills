@@ -1,0 +1,31 @@
+sources:
+  docker_logs:
+    type: docker_logs
+    include_containers:
+      - backend-api
+
+transforms:
+  parse_json:
+    type: remap
+    inputs:
+      - docker_logs
+    source: |
+      parsed, err = parse_json(.message)
+      if err == null {
+        . = merge(., parsed)
+      }
+      .service = "backend-api"
+      .environment = "local-dev"
+
+sinks:
+  loki:
+    type: loki
+    inputs:
+      - parse_json
+    endpoint: http://loki:3100
+    encoding:
+      codec: json
+    labels:
+      service: "{{ service }}"
+      environment: "{{ environment }}"
+      level: "{{ level }}"

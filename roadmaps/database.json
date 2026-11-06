@@ -2,40 +2,99 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "database",
   "name": "Databases",
+  "name_ru": "Базы данных",
   "icon": "🗄️",
-  "tagline": "Postgres, Redis, Mongo, vectors",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "PostgreSQL internals, HA CloudNativePG + PgBouncer, Redis/Valkey, ClickHouse OLAP, Vector DBs, and DBA Runbooks (Map 10)",
+  "tagline_ru": "Внутренности PostgreSQL, отказоустойчивый CloudNativePG + PgBouncer, Redis/Valkey, ClickHouse, векторные БД и плейбуки (Карта 10)",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "database",
-  "related_skills": [],
+  "related_skills": [
+    "postgresql",
+    "mysql",
+    "sqlite",
+    "redis",
+    "mongodb",
+    "clickhouse",
+    "vector-databases",
+    "prisma-orm",
+    "observability-sre-highload"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Relational Internals, Indexing & Query Optimization",
+      "title_ru": "Этап 1. Внутреннее устройство СУБД, индексы и оптимизация запросов",
       "items": [
-        "Map drops soon"
+        "ACID isolation levels, MVCC tuple visibility, Write-Ahead Logging (WAL), and checkpoint tuning in PostgreSQL and MySQL",
+        "Index internals: B-Tree, GIN (JSONB/full-text), GiST, BRIN, covering indexes, and reading EXPLAIN (ANALYZE, BUFFERS)",
+        "Embedded SQLite in WAL mode with busy_timeout and type-safe schema migrations with Prisma/Alembic"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Уровни изоляции транзакций ACID, многоверсионность MVCC, журнал предзаписи WAL и настройка чекпоинтов в PostgreSQL и MySQL",
+        "Типы индексов: B-Tree, GIN, GiST, BRIN, покрывающие индексы и чтение планов выполнения EXPLAIN (ANALYZE, BUFFERS)",
+        "Встраиваемая СУБД SQLite в режиме WAL с настройкой busy_timeout и безопасные миграции схем"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. High-Availability PostgreSQL in Kubernetes (CloudNativePG & PgBouncer)",
+      "title_ru": "Этап 2. Отказоустойчивый PostgreSQL в Kubernetes (CloudNativePG и PgBouncer)",
       "items": [
-        "Map drops soon"
+        "3-node CloudNativePG clusters across availability zones with synchronous quorum replication (RPO = 0, RTO < 10s)",
+        "Connection pooling at 10k+ RPS with PgBouncer in transaction mode to prevent max_connections exhaustion",
+        "Continuous WAL archiving and base backups to S3 for Point-in-Time Recovery (PITR) with automated restore drills"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Кластеры CloudNativePG из 3 узлов в разных зонах доступности с синхронной кворумной репликацией (RPO = 0, RTO < 10 с)",
+        "Пулинг соединений на нагрузках 10k+ RPS через PgBouncer в режиме transaction для защиты от исчерпания max_connections",
+        "Непрерывная архивация WAL-сегментов в S3 для восстановления на любую секунду (PITR) и регулярные учения по восстановлению"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. On-Call DBA Troubleshooting Runbooks (Map 10)",
+      "title_ru": "Этап 3. Боевые плейбуки дежурного инженера по базам данных (Карта 10)",
       "items": [
-        "Map drops soon"
+        "Diagnosing active query bottlenecks and lock trees via pg_stat_activity and pg_blocking_pids()",
+        "Zero-downtime DDL migrations: setting lock_timeout = '2s' and statement_timeout so ALTER TABLE never freezes reads",
+        "Tuning aggressive per-table autovacuum on hot tables to prevent Dead Tuple table bloat and Transaction ID Wraparound"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Поиск зависших запросов и дерева блокировок в реальном времени через системные представления pg_stat_activity и pg_blocking_pids()",
+        "Безопасные миграции без простоя: установка lock_timeout = '2s' перед ALTER TABLE и создание индексов CONCURRENTLY",
+        "Тюнинг агрессивного autovacuum на горячих таблицах для предотвращения распухания (Bloat) и переполнения счетчика транзакций"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. In-Memory Caching (Redis/Valkey) & Document Stores (MongoDB)",
+      "title_ru": "Этап 4. In-Memory кэширование (Redis/Valkey) и документные БД (MongoDB)",
       "items": [
-        "Map drops soon"
+        "Redis and Valkey production patterns: Cache-Aside, distributed locks, rate-limiting Lua scripts, and Redis Streams",
+        "Memory eviction policies (allkeys-lfu vs volatile-lru), bigkeys scanning, and avoiding O(N) KEYS * stalls",
+        "MongoDB document schema design, compound indexing, aggregation pipelines, replica sets, and sharding keys"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Паттерны Redis и Valkey: кэш Cache-Aside, распределенные блокировки, лимитеры на Lua-скриптах и очереди Streams",
+        "Политики вытеснения памяти (allkeys-lfu против volatile-lru), поиск тяжелых ключей (--bigkeys) и запрет команды KEYS *",
+        "Проектирование документных схем в MongoDB, составные индексы, конвейеры агрегации и выбор ключа шардирования"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. Columnar OLAP (ClickHouse) & Vector Databases for AI/RAG",
+      "title_ru": "Этап 5. Колоночная аналитика (ClickHouse) и векторные БД для ИИ/RAG",
+      "items": [
+        "ClickHouse OLAP architecture: MergeTree primary sparse indexes, LowCardinality types, Partitioning, and Materialized Views",
+        "Distributed ClickHouse clusters on Kubernetes coordinated by lightweight C++ ClickHouse Keeper with S3 cold storage",
+        "Vector search with pgvector and Qdrant: HNSW index tuning (m, ef_construction), metadata filtering, and hybrid BM25 + dense search"
+      ],
+      "items_ru": [
+        "Колоночная СУБД ClickHouse: движки семейства MergeTree, разреженные индексы, партиционирование и материализованные представления",
+        "Кластеры ReplicatedMergeTree под управлением оператора Altinity и легковесного координатора ClickHouse Keeper с дисками S3",
+        "Векторные базы данных (pgvector, Qdrant): настройка графовых индексов HNSW, фильтрация по метаданным и гибридный поиск для RAG"
+      ],
+      "status": "live"
     }
   ]
 }

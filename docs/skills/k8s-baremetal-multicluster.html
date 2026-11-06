@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>k8s-baremetal-multicluster — Agent Skills Library</title>
+  <meta name="description" content="Architects bare-metal and multi-cluster Kubernetes platforms using immutable Talos Linux, Cilium eBPF and BGP Control Plane, Rook-Ceph vs TopoLVM storage, Kubebuilder Go Operators, Backstage IDP, Cluster API, and vCluster. Use for platform engineering at scale.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/k8s-baremetal-multicluster.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="k8s-baremetal-multicluster — Agent Skills Library">
+  <meta property="og:description" content="Architects bare-metal and multi-cluster Kubernetes platforms using immutable Talos Linux, Cilium eBPF and BGP Control Plane, Rook-Ceph vs TopoLVM storage, Kubebuilder Go Operators, Backstage IDP, Cluster API, and vCluster. Use for platform engineering at scale.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/k8s-baremetal-multicluster.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="k8s-baremetal-multicluster — Agent Skills Library">
+  <meta name="twitter:description" content="Architects bare-metal and multi-cluster Kubernetes platforms using immutable Talos Linux, Cilium eBPF and BGP Control Plane, Rook-Ceph vs TopoLVM storage, Kubebuilder Go Operators, Backstage IDP, Cluster API, and vCluster. Use for platform engineering at scale.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">kubernetes</span><span class="tag">bare-metal</span><span class="tag">talos</span><span class="tag">cilium</span><span class="tag">bgp</span><span class="tag">kubebuilder</span><span class="tag">backstage</span><span class="tag">vcluster</span>
+        </div>
+        <h1 class="skill-page-title">k8s-baremetal-multicluster</h1>
+        <p class="skill-page-desc">Architects bare-metal and multi-cluster Kubernetes platforms using immutable Talos Linux, Cilium eBPF and BGP Control Plane, Rook-Ceph vs TopoLVM storage, Kubebuilder Go Operators, Backstage IDP, Cluster API, and vCluster. Use for platform engineering at scale.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>105</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/devops/k8s-baremetal-multicluster" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/k8s-baremetal-multicluster" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="jenkins.html">← jenkins</a><a class="page-nav-link" href="kafka.html">kafka →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>Bare-Metal Kubernetes, Go Operators &amp; Multi-Cluster</h1>
+<blockquote>Immutable API-driven Talos Linux nodes, kube-proxy-free Cilium eBPF/BGP networking, custom Go controllers, and ephemeral vClusters.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Apply kube-proxy-free Talos control-plane patch and configure Cilium BGP peering
+talosctl apply-config --nodes 10.10.0.11 --file labs/baremetal_and_ha_db_pack/talos-controlplane-patch.yaml
+kubectl apply -f labs/baremetal_and_ha_db_pack/cilium-bgp-peering.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CiliumLoadBalancerIPPool + BGP announcement for bare-metal Service: LoadBalancer
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: baremetal-vip-pool
+spec:
+  blocks:
+    - cidr: &quot;198.51.100.64/27&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Building bare-metal Kubernetes clusters on immutable Talos Linux without SSH, systemd, or package managers</li>
+<li>Replacing kube-proxy and MetalLB with Cilium eBPF native routing and Cilium BGP Control Plane (ECMP) to Top-of-Rack routers</li>
+<li>Writing custom Kubernetes Operators in Go with Kubebuilder (controller-runtime), OwnerReferences, and Finalizers</li>
+<li>Scaling developer self-service with Backstage IDP, Crossplane XRDs, Cluster API (CAPI), and 5-second ephemeral PR vClusters</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Disable kube-proxy in Talos machine config (cluster.proxy.disabled: true) and forward KubePrism localhost:7445 to Cilium k8sServiceHost.</li>
+<li>Use ECMP BGP peering with Top-of-Rack switches in Cilium so external traffic load-balances across nodes without L2 ARP bottlenecks.</li>
+<li>Choose TopoLVM or OpenEBS LocalPV on NVMe drives for replicated databases (CloudNativePG, Kafka, ClickHouse) to avoid double network replication in Ceph.</li>
+<li>Make every Kubebuilder Reconcile loop strictly idempotent: use OwnerReferences for in-cluster children and Finalizers for external cloud resources.</li>
+<li>Provision ephemeral per-PR environments with vCluster inside shared host nodes instead of spinning up dedicated cloud control planes.</li>
+<li>Connect multi-region Kubernetes clusters via Cilium Cluster Mesh with non-overlapping PodCIDRs and Global Services.</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Install Talos CLI, Cilium CLI, Kubebuilder, and vCluster CLI
+brew install siderolabs/tap/talosctl cilium-cli kubebuilder vcluster</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Check non-overlapping PodCIDR allocations before enabling Cilium Cluster Mesh
+import ipaddress
+
+def verify_non_overlapping_cidrs(cidrs: list[str]) -&gt; bool:
+    nets = [ipaddress.ip_network(c) for c in cidrs]
+    for i, a in enumerate(nets):
+        for b in nets[i + 1:]:
+            if a.overlaps(b):
+                return False
+    return True
+
+assert verify_non_overlapping_cidrs([&quot;10.244.0.0/16&quot;, &quot;10.245.0.0/16&quot;])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Talos Linux Control Plane patch disabling kube-proxy and enabling host DNS
+machine:
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: true
+cluster:
+  proxy:
+    disabled: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Generate and apply Talos Linux machine configurations via talosctl gen config and talosctl apply-config.</p>
+<p class='ordered'>2. Install Cilium with kubeProxyReplacement=true, k8sServiceHost=127.0.0.1, k8sServicePort=7445, and bgpControlPlane.enabled=true.</p>
+<p class='ordered'>3. Configure CiliumBGPPeeringPolicy and CiliumLoadBalancerIPPool to announce LoadBalancer VIPs to Top-of-Rack BGP neighbors.</p>
+<p class='ordered'>4. Deploy Rook-Ceph for shared RWO/RWX/S3 storage and TopoLVM for low-latency local NVMe database volumes.</p>
+<p class='ordered'>5. Scaffold custom Kubernetes controllers with kubebuilder init and implement idempotent Reconcile logic in Go.</p>
+<p class='ordered'>6. Register Golden Path software templates in Backstage IDP backed by Crossplane CompositeResourceDefinitions (XRDs).</p>
+<p class='ordered'>7. Automate ephemeral PR environments with vcluster create pr-&lt;ID&gt; inside GitHub Actions / GitLab CI.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. talosctl health and cilium status report all nodes Ready and KubeProxyReplacement: True</p>
+<p class='ordered'>2. cilium bgp peers shows Established session state with Top-of-Rack routers and advertised /32 VIP prefixes</p>
+<p class='ordered'>3. Custom Go Operator passes envtest reconciliation suites and cleans up child Deployments via OwnerReferences</p>
+<p class='ordered'>4. vcluster create spins up an isolated control plane in under 10 seconds and tears down cleanly on PR merge</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Cilium pods fail to reach API server when kube-proxy is disabled — point k8sServiceHost to Talos KubePrism (127.0.0.1:7445).</li>
+<li>BGP session stuck in Active or Connect — verify ASN numbers, peer IP reachability, and TCP port 179 firewall rules on the ToR switch.</li>
+<li>CRD deletion hangs indefinitely — the custom operator pod is down or failing to remove its Finalizer string from metadata.finalizers.</li>
+<li>High storage write latency on PostgreSQL inside Ceph — migrate database PVCs from network-replicated Ceph RBD to local NVMe TopoLVM.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Bare-Metal Kubernetes, Go Operators &amp; Multi-Cluster (Talos, Cilium BGP и Операторы)</h1>
+<blockquote>Неизменяемая ОС Talos Linux, сетевой стек Cilium eBPF с BGP-анонсами на голом железе, разработка операторов на Go и мульти-кластерные платформы.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Apply kube-proxy-free Talos control-plane patch and configure Cilium BGP peering
+talosctl apply-config --nodes 10.10.0.11 --file labs/baremetal_and_ha_db_pack/talos-controlplane-patch.yaml
+kubectl apply -f labs/baremetal_and_ha_db_pack/cilium-bgp-peering.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CiliumLoadBalancerIPPool + BGP announcement for bare-metal Service: LoadBalancer
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: baremetal-vip-pool
+spec:
+  blocks:
+    - cidr: &quot;198.51.100.64/27&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Построение bare-metal кластеров Kubernetes на неизменяемой ОС Talos Linux без SSH, bash и пакетных менеджеров</li>
+<li>Замена kube-proxy и MetalLB на прямую маршрутизацию Cilium eBPF и анонсы LoadBalancer по BGP (ECMP) на коммутаторы стойки</li>
+<li>Разработка собственных операторов Kubernetes на Go (Kubebuilder / controller-runtime) с идемпотентным циклом Reconcile</li>
+<li>Внедрение внутреннего портала разработчика Backstage IDP, Crossplane XRD, Cluster API (CAPI) и изолированных PR-окружений на vCluster</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Отключайте kube-proxy в конфигурации Talos (cluster.proxy.disabled: true) и направляйте Cilium на локальный балансировщик KubePrism (127.0.0.1:7445).</li>
+<li>Используйте BGP-пиринг (ECMP) со стоечными коммутаторами ToR вместо L2 ARP для равномерного распределения входящего трафика.</li>
+<li>Для кластерных БД с собственной репликацией (CloudNativePG, Kafka, ClickHouse) выбирайте локальные NVMe через TopoLVM, чтобы не платить тройным I/O в Ceph.</li>
+<li>Проектируйте функцию Reconcile в Go-операторах строго идемпотентной, используя OwnerReferences для ресурсов K8s и Finalizers для внешних API.</li>
+<li>Поднимайте временные стенды под каждый Pull Request через vCluster за 5 секунд вместо создания отдельных дорогих облачных кластеров.</li>
+<li>Объединяйте кластеры разных площадок через Cilium Cluster Mesh с непересекающимися сетями PodCIDR и глобальными сервисами.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Install Talos CLI, Cilium CLI, Kubebuilder, and vCluster CLI
+brew install siderolabs/tap/talosctl cilium-cli kubebuilder vcluster</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Check non-overlapping PodCIDR allocations before enabling Cilium Cluster Mesh
+import ipaddress
+
+def verify_non_overlapping_cidrs(cidrs: list[str]) -&gt; bool:
+    nets = [ipaddress.ip_network(c) for c in cidrs]
+    for i, a in enumerate(nets):
+        for b in nets[i + 1:]:
+            if a.overlaps(b):
+                return False
+    return True
+
+assert verify_non_overlapping_cidrs([&quot;10.244.0.0/16&quot;, &quot;10.245.0.0/16&quot;])</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Talos Linux Control Plane patch disabling kube-proxy and enabling host DNS
+machine:
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: true
+cluster:
+  proxy:
+    disabled: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Сгенерируйте и примените декларативную конфигурацию узлов Talos Linux через talosctl gen config и talosctl apply-config.</p>
+<p class='ordered'>2. Установите Cilium с параметрами kubeProxyReplacement=true, k8sServiceHost=127.0.0.1, k8sServicePort=7445 и bgpControlPlane.enabled=true.</p>
+<p class='ordered'>3. Опишите CiliumBGPPeeringPolicy и CiliumLoadBalancerIPPool для анонса внешних VIP-адресов на BGP-маршрутизаторы стойки.</p>
+<p class='ordered'>4. Разверните Rook-Ceph для общих томов и S3-бакетов, а TopoLVM — для быстрых локальных NVMe-дисков под базы данных.</p>
+<p class='ordered'>5. Инициализируйте каркас оператора через kubebuilder init и реализуйте идемпотентный контроллер Reconcile на Go.</p>
+<p class='ordered'>6. Подключите шаблоны Golden Path в портале Backstage IDP и инфраструктурные композиции Crossplane XRD.</p>
+<p class='ordered'>7. Настройте автоматическое создание изолированных PR-кластеров через vcluster create pr-&lt;ID&gt; в пайплайне CI.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Команды talosctl health и cilium status подтверждают готовность всех узлов и активный режим KubeProxyReplacement: True</p>
+<p class='ordered'>2. В выводе cilium bgp peers сессии с маршрутизаторами находятся в статусе Established и анонсируют /32 префиксы</p>
+<p class='ordered'>3. Оператор на Go проходит интеграционные тесты envtest и каскадно удаляет дочерние ресурсы через OwnerReferences</p>
+<p class='ordered'>4. Временный кластер vCluster поднимается менее чем за 10 секунд и полностью очищается при закрытии Pull Request</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Поды Cilium не видят API-сервер после отключения kube-proxy — укажите адрес локального балансировщика KubePrism (127.0.0.1:7445).</li>
+<li>BGP-сессия висит в статусе Active/Connect — проверьте номера AS, доступность IP соседа и открытие порта TCP 179 на коммутаторе.</li>
+<li>Удаление кастомного ресурса CRD зависает навсегда — под оператора остановлен или не снимает свой Finalizer после очистки внешних объектов.</li>
+<li>Высокая задержка записи в PostgreSQL поверх Ceph — перенесите тома БД с сетевого Ceph RBD на локальные NVMe-диски под управлением TopoLVM.</li>
+</ul></div>
+      <div class="page-nav"><a class="page-nav-link" href="jenkins.html">← jenkins</a><a class="page-nav-link" href="kafka.html">kafka →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>observability-sre-highload — Agent Skills Library</title>
+  <meta name="description" content="Implements full-stack Observability (VictoriaMetrics, Loki, Vector, OpenTelemetry, Beyla eBPF, Pyroscope), SRE SLI/SLO/Error Budgets, and Highload Stateful clusters (CloudNativePG, Kafka KRaft Strimzi, ClickHouse Keeper). Use for resilient high-throughput production systems.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/observability-sre-highload.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="observability-sre-highload — Agent Skills Library">
+  <meta property="og:description" content="Implements full-stack Observability (VictoriaMetrics, Loki, Vector, OpenTelemetry, Beyla eBPF, Pyroscope), SRE SLI/SLO/Error Budgets, and Highload Stateful clusters (CloudNativePG, Kafka KRaft Strimzi, ClickHouse Keeper). Use for resilient high-throughput production systems.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/observability-sre-highload.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="observability-sre-highload — Agent Skills Library">
+  <meta name="twitter:description" content="Implements full-stack Observability (VictoriaMetrics, Loki, Vector, OpenTelemetry, Beyla eBPF, Pyroscope), SRE SLI/SLO/Error Budgets, and Highload Stateful clusters (CloudNativePG, Kafka KRaft Strimzi, ClickHouse Keeper). Use for resilient high-throughput production systems.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">observability</span><span class="tag">sre</span><span class="tag">prometheus</span><span class="tag">opentelemetry</span><span class="tag">pyroscope</span><span class="tag">postgresql</span><span class="tag">kafka</span><span class="tag">clickhouse</span>
+        </div>
+        <h1 class="skill-page-title">observability-sre-highload</h1>
+        <p class="skill-page-desc">Implements full-stack Observability (VictoriaMetrics, Loki, Vector, OpenTelemetry, Beyla eBPF, Pyroscope), SRE SLI/SLO/Error Budgets, and Highload Stateful clusters (CloudNativePG, Kafka KRaft Strimzi, ClickHouse Keeper). Use for resilient high-throughput production systems.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>101</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/devops/observability-sre-highload" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/observability-sre-highload" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="observability-llm.html">← observability-llm</a><a class="page-nav-link" href="platform-engineering.html">platform-engineering →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>Observability, SRE &amp; Highload Stateful Infrastructure</h1>
+<blockquote>Unified metrics, logs, traces, and eBPF FlameGraphs paired with SLO burn-rate alerts and HA PostgreSQL, Kafka KRaft, and ClickHouse.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Deploy OpenTelemetry + Pyroscope eBPF profiler, HA CloudNativePG, and Kafka KRaft
+kubectl apply -f labs/nextgen_2027_pack/otel-collector-and-pyroscope.yaml
+kubectl apply -f labs/baremetal_and_ha_db_pack/cloudnativepg-ha-cluster.yaml
+kubectl apply -f labs/baremetal_and_ha_db_pack/kafka-kraft-strimzi.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Multi-window RED 5xx error percentage over 5 minutes
+sum(rate(http_requests_total{job=&quot;backend-api&quot;,status=~&quot;5..&quot;}[5m]))
+/
+sum(rate(http_requests_total{job=&quot;backend-api&quot;}[5m])) * 100</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Building a unified observability stack correlating Prometheus/VictoriaMetrics, Loki/Vector JSON logs, Tempo traces, and Pyroscope eBPF profiles</li>
+<li>Instrumenting legacy or polyglot services without code changes using Grafana Beyla eBPF auto-instrumentation</li>
+<li>Defining SLIs, SLOs (99.9% / 99.95%), Error Budget burn-rate alerts, and Blameless Postmortems</li>
+<li>Operating HA PostgreSQL (CloudNativePG + PgBouncer + WAL-G), ZooKeeper-less Apache Kafka (KRaft on Strimzi), and ClickHouse clusters</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Never put high-cardinality fields (user_id, email, request_id, IP) into Prometheus or Loki labels; keep them inside structured JSON log fields.</li>
+<li>Include trace_id and span_id in every JSON log line so engineers jump directly from a Loki log entry to a Tempo trace and Pyroscope FlameGraph.</li>
+<li>Alert on symptoms and SLO Error Budget burn rates rather than noisy single-node CPU spikes.</li>
+<li>Deploy CloudNativePG with at least 3 instances spread across availability zones, transaction-mode PgBouncer, and continuous WAL archiving to S3.</li>
+<li>Run Apache Kafka strictly in KRaft mode (no ZooKeeper) with dedicated controller and broker KafkaNodePools and S3 Tiered Storage.</li>
+<li>Use lightweight C++ ClickHouse Keeper instead of ZooKeeper for ReplicatedMergeTree coordination in ClickHouse clusters.</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Install VictoriaMetrics, Loki, OpenTelemetry Operator, and CloudNativePG Helm charts
+helm repo add cnpg https://cloudnative-pg.github.io/charts
+helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Compute monthly SLO downtime budget in minutes and allowed 5xx error count
+def calc_error_budget(slo_percent: float, monthly_requests: int) -&gt; dict:
+    error_fraction = (100.0 - slo_percent) / 100.0
+    downtime_minutes = round(30 * 24 * 60 * error_fraction, 2)
+    allowed_failures = int(monthly_requests * error_fraction)
+    return {&quot;slo&quot;: slo_percent, &quot;downtime_min&quot;: downtime_minutes, &quot;allowed_5xx&quot;: allowed_failures}
+
+assert calc_error_budget(99.9, 100_000_000) == {&quot;slo&quot;: 99.9, &quot;downtime_min&quot;: 43.2, &quot;allowed_5xx&quot;: 100000}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CloudNativePG 3-node HA PostgreSQL 16 cluster with S3 WAL backup and Prometheus monitoring
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg-production-ha
+  namespace: databases
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  storage:
+    storageClass: local-nvme-topolvm
+    size: 200Gi
+  monitoring:
+    enablePodMonitor: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Deploy OpenTelemetry Collector with batch and memory_limiter processors to receive OTLP traces and metrics.</p>
+<p class='ordered'>2. Run Grafana Beyla and Pyroscope eBPF DaemonSets for zero-code RED telemetry and continuous CPU/memory FlameGraphs.</p>
+<p class='ordered'>3. Ship container JSON logs via Vector into Grafana Loki, stripping high-cardinality attributes from index labels.</p>
+<p class='ordered'>4. Define Availability and Latency SLIs/SLOs and configure multi-window burn-rate alerts in Alertmanager.</p>
+<p class='ordered'>5. Deploy a 3-instance CloudNativePG cluster with synchronous quorum replication, PgBouncer Pooler, and S3 PITR backups.</p>
+<p class='ordered'>6. Deploy a Strimzi Kafka cluster with kraft: enabled and separate controller/broker KafkaNodePools.</p>
+<p class='ordered'>7. Validate failover RTO (&lt; 10 seconds for CloudNativePG primary promotion) using Chaos Mesh pod-kill experiments.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. Grafana correlates metrics, Loki JSON logs, Tempo traces, and Pyroscope profiles via shared trace_id</p>
+<p class='ordered'>2. Prometheus cardinality audit confirms zero unbounded labels (user_id, ip, request_id) in time-series indexes</p>
+<p class='ordered'>3. Deleting the CloudNativePG primary pod promotes a standby automatically in under 10 seconds with zero data loss</p>
+<p class='ordered'>4. Strimzi Kafka KRaft cluster operates with zero ZooKeeper pods and maintains healthy under-replicated partition count (0)</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Prometheus or Loki OOM due to cardinality explosion — drop dynamic labels (user_id, path with UUIDs) in Vector/RelabelConfig.</li>
+<li>PostgreSQL max_connections exhausted during traffic spike — route application traffic through the CloudNativePG PgBouncer Pooler in transaction mode.</li>
+<li>ALTER TABLE hangs all concurrent SELECTs on PostgreSQL — set lock_timeout = &#x27;2s&#x27; in migrations so DDL fails fast instead of queuing behind long queries.</li>
+<li>Kafka consumer lag growing steadily — verify partition count matches or exceeds consumer pod count in the consumer group.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Observability, SRE &amp; Highload Stateful Infrastructure (Наблюдаемость, SRE и Highload БД)</h1>
+<blockquote>Четыре столпа телеметрии (метрики, логи, трейсы, eBPF-профилирование), контроль Error Budget и отказоустойчивые кластеры БД.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Deploy OpenTelemetry + Pyroscope eBPF profiler, HA CloudNativePG, and Kafka KRaft
+kubectl apply -f labs/nextgen_2027_pack/otel-collector-and-pyroscope.yaml
+kubectl apply -f labs/baremetal_and_ha_db_pack/cloudnativepg-ha-cluster.yaml
+kubectl apply -f labs/baremetal_and_ha_db_pack/kafka-kraft-strimzi.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Multi-window RED 5xx error percentage over 5 minutes
+sum(rate(http_requests_total{job=&quot;backend-api&quot;,status=~&quot;5..&quot;}[5m]))
+/
+sum(rate(http_requests_total{job=&quot;backend-api&quot;}[5m])) * 100</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Построение единого контура наблюдаемости со связкой метрик VictoriaMetrics, логов Vector/Loki, трейсов Tempo и профилей Pyroscope по trace_id</li>
+<li>Автоматический сбор RED-метрик и распределенных трейсов без правок кода через eBPF-агент Grafana Beyla</li>
+<li>Внедрение SRE-процессов: расчет SLI/SLO, контроль выгорания Error Budget и проведение Blameless Postmortems</li>
+<li>Эксплуатация отказоустойчивых кластеров PostgreSQL 16 (CloudNativePG), Apache Kafka в режиме KRaft (Strimzi) и аналитических витрин ClickHouse</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Никогда не добавляйте высококардинальные поля (user_id, email, request_id, IP) в лейблы Prometheus или Loki — храните их в теле JSON-лога.</li>
+<li>Прокидывайте trace_id в каждую строку JSON-лога для мгновенного перехода из лога Loki в трейс Tempo и профиль CPU Pyroscope.</li>
+<li>Настраивайте пейджинг дежурного по скорости выгорания Error Budget (Burn Rate) и симптомам деградации, а не по разовым всплескам CPU.</li>
+<li>Разворачивайте CloudNativePG минимум на 3 реплики в разных зонах доступности с пулером PgBouncer (transaction mode) и архивацией WAL в S3.</li>
+<li>Запускайте новые кластеры Apache Kafka исключительно в режиме KRaft (без ZooKeeper) через оператор Strimzi с выгрузкой холодных сегментов в S3.</li>
+<li>Используйте легковесный ClickHouse Keeper на C++ вместо тяжелого JVM ZooKeeper для координации таблиц ReplicatedMergeTree.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Install VictoriaMetrics, Loki, OpenTelemetry Operator, and CloudNativePG Helm charts
+helm repo add cnpg https://cloudnative-pg.github.io/charts
+helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Compute monthly SLO downtime budget in minutes and allowed 5xx error count
+def calc_error_budget(slo_percent: float, monthly_requests: int) -&gt; dict:
+    error_fraction = (100.0 - slo_percent) / 100.0
+    downtime_minutes = round(30 * 24 * 60 * error_fraction, 2)
+    allowed_failures = int(monthly_requests * error_fraction)
+    return {&quot;slo&quot;: slo_percent, &quot;downtime_min&quot;: downtime_minutes, &quot;allowed_5xx&quot;: allowed_failures}
+
+assert calc_error_budget(99.9, 100_000_000) == {&quot;slo&quot;: 99.9, &quot;downtime_min&quot;: 43.2, &quot;allowed_5xx&quot;: 100000}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># CloudNativePG 3-node HA PostgreSQL 16 cluster with S3 WAL backup and Prometheus monitoring
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg-production-ha
+  namespace: databases
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  storage:
+    storageClass: local-nvme-topolvm
+    size: 200Gi
+  monitoring:
+    enablePodMonitor: true</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Разверните OpenTelemetry Collector с процессорами memory_limiter и batch для приема OTLP-метрик и трейсов.</p>
+<p class='ordered'>2. Поднимите DaemonSet-агенты Grafana Beyla и Pyroscope для eBPF-трассировки без правок кода и построения FlameGraph-профилей.</p>
+<p class='ordered'>3. Настройте сбор JSON-логов через Vector в Grafana Loki с очисткой высококардинальных меток.</p>
+<p class='ordered'>4. Зафиксируйте целевые SLI/SLO и настройте многооконные алерты на выгорание Error Budget в Alertmanager.</p>
+<p class='ordered'>5. Разверните кластер PostgreSQL 16 из 3 узлов под управлением CloudNativePG с пулером PgBouncer и непрерывным бэкапом WAL в S3.</p>
+<p class='ordered'>6. Запустите кластер Apache Kafka в режиме KRaft через оператор Strimzi с разделением пулов controller и broker.</p>
+<p class='ordered'>7. Проверьте время автоматического переключения мастера (RTO &lt; 10 с) через эксперимент pod-kill в Chaos Mesh.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. В Grafana работает сквозной переход от метрик и логов Loki к трейсам Tempo и профилям Pyroscope по общему trace_id</p>
+<p class='ordered'>2. Аудит кардинальности Prometheus подтверждает отсутствие безразмерных меток (user_id, ip, request_id) в индексах</p>
+<p class='ordered'>3. При удалении мастер-пода CloudNativePG реплика автоматически становится новым мастером быстрее чем за 10 секунд без потери данных</p>
+<p class='ordered'>4. Кластер Strimzi Kafka работает в режиме KRaft без подов ZooKeeper при нулевом количестве недореплицированных партиций</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Падение Prometheus или Loki по OOM из-за взрыва кардинальности — удалите динамические поля (UUID в URL, user_id) из labels через relabel_configs.</li>
+<li>Исчерпание max_connections в PostgreSQL на пике нагрузки — переключите сервисы на подключение через пулер PgBouncer в режиме transaction.</li>
+<li>Миграция ALTER TABLE заблокировала все чтение таблицы — всегда задавайте SET lock_timeout = &#x27;2s&#x27; перед выполнением DDL-миграций.</li>
+<li>Постоянный рост Consumer Lag в Kafka — убедитесь, что число партиций топика не меньше числа подов-консьюмеров в группе.</li>
+</ul></div>
+      <div class="page-nav"><a class="page-nav-link" href="observability-llm.html">← observability-llm</a><a class="page-nav-link" href="platform-engineering.html">platform-engineering →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

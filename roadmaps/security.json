@@ -1,41 +1,89 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "security",
-  "name": "Security",
+  "name": "Security & DevSecOps",
+  "name_ru": "Безопасность и DevSecOps",
   "icon": "🔒",
-  "tagline": "OWASP, API security, secrets, OAuth",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "OWASP Top 10, OAuth2/JWT, Zero Static Secrets (OIDC), Vault/OpenBao, Supply Chain (SBOM/Cosign/Kyverno) & eBPF Tetragon (Map 13)",
+  "tagline_ru": "Защита API (OWASP, OAuth2/JWT), отказ от статики (OIDC), Vault/OpenBao, защита цепочки поставки (SBOM/Cosign/Kyverno) и eBPF (Карта 13)",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "security",
-  "related_skills": [],
+  "related_skills": [
+    "owasp-web-security",
+    "api-security",
+    "oauth2-jwt",
+    "secrets-management",
+    "ci-cd-gitops-iac",
+    "linux-ebpf-troubleshooting"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Web & API Application Security (OWASP Top 10 & OAuth2/JWT)",
+      "title_ru": "Этап 1. Безопасность веб-приложений и API (OWASP Top 10 и OAuth2/JWT)",
       "items": [
-        "Map drops soon"
+        "Defending against OWASP Top 10: parameterized SQL queries, strict CSP headers against XSS, CSRF tokens, and SSRF allowlists",
+        "Modern authentication and authorization: OAuth 2.1 with PKCE, short-lived asymmetric JWTs (RS256/EdDSA), and RBAC/ABAC",
+        "API abuse protection: token-bucket rate limiting, payload schema validation, and idempotency keys"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Защита от угроз OWASP Top 10: параметризация запросов против SQLi, заголовки CSP против XSS, защита от CSRF и SSRF",
+        "Аутентификация и авторизация: OAuth 2.1 с PKCE, короткоживущие асимметричные JWT-токены, ротация ключей JWKS и RBAC/ABAC",
+        "Защита API от перегрузки и перебора: лимитирование запросов (Rate Limiting), строгая валидация схем и ключи идемпотентности"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Zero Static Secrets & Cloud IAM Federation (Map 13)",
+      "title_ru": "Этап 2. Концепция Zero Static Secrets и федерация доступов OIDC (Карта 13)",
       "items": [
-        "Map drops soon"
+        "Eliminating long-lived cloud keys in CI/CD via OIDC federation (AssumeRoleWithWebIdentity) scoped to exact branches",
+        "Workload-to-cloud authentication in Kubernetes via IRSA / EKS Pod Identity and Workload Identity without static env secrets"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Полный отказ от долгоживущих облачных ключей в CI/CD через временные OIDC-токены с привязкой к ветке репозитория",
+        "Бесключевая авторизация подов Kubernetes в облачных сервисах (S3, KMS, SQS) через IRSA / Pod Identity"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Secrets Management & Pre-Commit Hygiene (Vault / OpenBao)",
+      "title_ru": "Этап 3. Хранение секретов в Vault/OpenBao и защита репозиториев",
       "items": [
-        "Map drops soon"
+        "Centralized secret storage, dynamic database credentials, and automatic rotation with HashiCorp Vault or OpenBao",
+        "Syncing Vault secrets into Kubernetes safely via External Secrets Operator (ESO) and blocking leaks in git with Gitleaks"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Централизованное хранение секретов, генерация динамических паролей к БД и авторотация в HashiCorp Vault / OpenBao",
+        "Синхронизация секретов в кластер через External Secrets Operator и блокировка утечек ключей в Git через Gitleaks"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Software Supply Chain Security (SBOM, Cosign & Kyverno)",
+      "title_ru": "Этап 4. Защита цепочки поставки ПО (SBOM, подпись Cosign и Kyverno)",
       "items": [
-        "Map drops soon"
+        "Generating CycloneDX/SPDX SBOMs with Syft and gating CI pipelines on HIGH/CRITICAL CVEs with Trivy",
+        "Keyless container image signing with Sigstore Cosign and admission verification in Kubernetes via Kyverno ClusterPolicies"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Генерация паспорта зависимостей образа (SBOM) через Syft и блокировка сборки при наличии критических уязвимостей в Trivy",
+        "Криптографическая подпись образов через Sigstore Cosign и проверка подписи на входе в кластер через политики Kyverno"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. Kubernetes Runtime Security (Zero-Trust & eBPF Tetragon)",
+      "title_ru": "Этап 5. Безопасность рантайма Kubernetes (Zero-Trust и eBPF Tetragon)",
+      "items": [
+        "Pod Security Standards (Restricted): readOnlyRootFilesystem, runAsNonRoot, drop ALL Linux capabilities, and Seccomp profiles",
+        "Default-deny Kubernetes NetworkPolicies, mTLS service encryption, and kernel-level eBPF enforcement with Cilium Tetragon"
+      ],
+      "items_ru": [
+        "Харденинг контейнеров: запуск от nonroot, режим readOnlyRootFilesystem, сброс Linux capabilities (drop: ALL) и профили Seccomp",
+        "Сетевая изоляция по принципу Default Deny (NetworkPolicy), шифрование mTLS и блокировка эксплойтов в ядре через eBPF Tetragon"
+      ],
+      "status": "live"
     }
   ]
 }

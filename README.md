@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/skills-103-blue?style=for-the-badge" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-120-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
-  <img src="https://img.shields.io/badge/domains-17-orange?style=for-the-badge" alt="Domains">
-  <img src="https://img.shields.io/badge/quality-97.1%25-brightgreen?style=for-the-badge" alt="Quality">
+  <img src="https://img.shields.io/badge/domains-20-orange?style=for-the-badge" alt="Domains">
+  <img src="https://img.shields.io/badge/quality-97.5%25-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
@@ -109,9 +109,9 @@ Frontmatter is strictly validated for cross-agent portability in CI
 
 | Metric | Value |
 |--------|-------|
-| Total skills | **103** |
-| Russian translations | **103 (100%)** |
-| Domains | **17** |
+| Total skills | **120** |
+| Russian translations | **120 (100%)** |
+| Domains | **20** |
 | Quality score | **97.1% avg (min 97.0, measured 2026-10-30)** |
 | Test coverage | **100%** |
 | License | MIT |
@@ -153,6 +153,8 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `backend` | `spring-boot` | Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services. |
 | `backend` | `websockets` | Build real-time features with WebSockets: connection lifecycle, protocols, backpressure, scaling, and reconnection. Use for live updates and chat. |
 | `blockchain` | `zk-proofs` | Develop zero-knowledge proofs: private voting and identity, zk-rollups, verifiable computation, and compliance without exposing data. Use for privacy-preserving apps. |
+| `communications` | `humanize-copy-pro` | Rewrites stiff, robotic AI-generated text into natural, rhythmic, concrete human copywriting in English and Russian. Use for technical articles, product pages, documentation, release notes, and developer communications. |
+| `communications` | `no-slop-writing` | Eliminates AI slop, corporate buzzwords, filler transitions, and ungrounded claims from technical documents, PRDs, and agent outputs. Use as a strict quality gate for high-density engineering and product writing. |
 | `data` | `airflow` | Orchestrate data pipelines with Apache Airflow: DAGs, tasks, dependencies, sensors, and retries. Use for scheduled workflows. |
 | `data` | `apache-spark` | Process large-scale data with Apache Spark: DataFrames, SQL, joins, partitioning, and optimization. Use for big data and ETL. |
 | `data` | `data-visualization` | Create clear data visualizations with Matplotlib, Plotly, and Altair: chart selection, design, interactivity, and dashboards. Use for communicating data. |
@@ -169,28 +171,39 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `database` | `sqlite` | Use SQLite for embedded relational storage: schema, WAL mode, transactions, indexing, and performance. Use for local and mobile data layers. |
 | `database` | `vector-databases` | Design and operate vector databases for semantic search and RAG: embeddings, indexes (HNSW), filtering, hybrid search, and scaling. Use for AI retrieval. |
 | `design` | `design-spec-md` | Write precise Markdown design specs: requirements, tokens, states, a11y, responsive. Use to make agents understand design exactly. |
+| `design` | `design-taste-direction` | Applies intentional art direction, anti-template visual concepts, curated typographic pairings, and domain-specific color palettes to web interfaces. Use when moving beyond generic AI-generated layouts into distinctive brand experiences. |
 | `design` | `diagram-as-code` | Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram. |
 | `design` | `landing-page-pro` | Design high-converting landing pages end to end: batched intake, page structure, layout choice, conversion copywriting, SEO/AEO, plus a strict visual token system for type, spacing, radius, motion and states. Use for any marketing page, hero, or product section. |
+| `design` | `ui-polish-audit` | Audits and refines existing UI layouts for optical alignment, baseline consistency, visual hierarchy, tabular numbers, and micro-interaction polish. Use when upgrading rough prototypes into production-grade interfaces. |
+| `design` | `ui-ux-system-pro` | Designs token-driven UI/UX systems with fluid typographic scales, 8px spatial grids, WCAG AA/AAA perceptual contrast, and complete interactive component states. Use for building cohesive design systems, dashboards, and web applications. |
 | `desktop` | `electron` | Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech. |
+| `devops` | `ai-gpu-infra-llmops` | Deploys and scales production AI/LLM and GPU infrastructure in Kubernetes using NVIDIA GPU Operator, DRA/MIG, vLLM tensor parallelism, KEDA scale-to-zero, Karpenter GPU nodes, Envoy AI Gateway, and LiteLLM. Use for self-hosted LLM serving and token cost governance. |
 | `devops` | `ansible` | Automate infrastructure with Ansible: playbooks, roles, inventory, modules, and idempotency. Use for config management and provisioning. |
 | `devops` | `argocd` | Deploy applications on Kubernetes with Argo CD: GitOps, applications, sync policies, health checks, and rollbacks. Use for declarative deployments. |
 | `devops` | `aws-lambda` | Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures. |
+| `devops` | `ci-cd-gitops-iac` | Builds secure CI/CD pipelines (GitHub Actions, GitLab CI, Dagger Go SDK, rootless BuildKit/Kaniko), OIDC tokenless cloud auth, OpenTofu/Terraform with Terragrunt, Supply Chain security (SBOM, Cosign, Kyverno), and ArgoCD GitOps with Canary rollouts. Use for end-to-end delivery automation. |
 | `devops` | `cloud-native-ai` | Run production AI on cloud-native stacks: HA serving, multi-model infrastructure, ML canary deploys, and GPU scheduling. Use for ML platforms. |
+| `devops` | `devops-sre-portal-architect` | Designs and generates 2026-2027 DevOps, SRE, Platform Engineering, and AI/GPU infrastructure roadmaps, production Kubernetes/bare-metal manifests, chaos troubleshooting labs, and AI-Coder learning-to-career portal modules. Use for curriculum design, platform blueprints, and SRE competency matrices. |
 | `devops` | `docker` | Containerize applications with Docker: Dockerfiles, images, networking, volumes, compose, and production hardening. Use for any deployable service. |
 | `devops` | `github-actions` | Automate CI/CD with GitHub Actions: workflows, jobs, matrices, caching, artifacts, and reusable workflows. Use for build, test, and deploy pipelines. |
 | `devops` | `gitlab-ci` | Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment. |
 | `devops` | `istio` | Operate a service mesh with Istio: sidecars, traffic routing, mTLS, observability, and resiliency. Use for Kubernetes service management. |
 | `devops` | `jenkins` | Operate Jenkins CI/CD: pipelines as code, agents, shared libraries, credentials, and plugins. Use for build and release automation. |
+| `devops` | `k8s-baremetal-multicluster` | Architects bare-metal and multi-cluster Kubernetes platforms using immutable Talos Linux, Cilium eBPF and BGP Control Plane, Rook-Ceph vs TopoLVM storage, Kubebuilder Go Operators, Backstage IDP, Cluster API, and vCluster. Use for platform engineering at scale. |
 | `devops` | `kafka` | Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems. |
 | `devops` | `kubernetes` | Deploy and operate applications on Kubernetes: workloads, services, config, scaling, and GitOps. Use for container orchestration at scale. |
+| `devops` | `linux-ebpf-troubleshooting` | Diagnoses and resolves production Linux kernel, cgroups v2, network conntrack, deleted file descriptor leaks, and Kubernetes pod incidents using USE/RED methods, eBPF tools, and chaos drill labs. Use for 5-minute incident triage and root-cause isolation. |
 | `devops` | `loki` | Operate log aggregation with Grafana Loki: agents, labels, queries (LogQL), retention, and dashboards. Use for log observability. |
 | `devops` | `nginx` | Configure and operate Nginx: reverse proxy, load balancing, TLS, caching, and security headers. Use for web serving and proxying. |
 | `devops` | `observability-llm` | LLM observability with Langfuse/LangSmith |
+| `devops` | `observability-sre-highload` | Implements full-stack Observability (VictoriaMetrics, Loki, Vector, OpenTelemetry, Beyla eBPF, Pyroscope), SRE SLI/SLO/Error Budgets, and Highload Stateful clusters (CloudNativePG, Kafka KRaft Strimzi, ClickHouse Keeper). Use for resilient high-throughput production systems. |
 | `devops` | `platform-engineering` | Platform engineering with Backstage/Port |
 | `devops` | `prometheus-grafana` | Set up monitoring with Prometheus and Grafana: metrics, exporters, alerting rules, dashboards, and SLO tracking. Use for observability. |
 | `devops` | `serverless-ai` | Serverless AI inference (Cloudflare Workers, Lambda) |
 | `devops` | `sre-slos` | Define reliability with SRE practices: SLIs, SLOs, error budgets, and data-driven deploy decisions. Use for balancing features with reliability. |
 | `devops` | `terraform` | Provision infrastructure as code with Terraform: resources, modules, state, workspaces, and remote backends. Use for cloud resource management. |
+| `education` | `ai-coder-career-architect` | Accelerates AI-Native Developer, DevOps, and Platform Engineer careers with XYZ-formula resumes, production pet-project blueprints, Senior/Staff System Design (10k+ RPS, Multi-AZ), and technical interview prep. Use for portfolio packaging, resume rewriting, and interview readiness. |
+| `education` | `explain-anything` | Deconstructs complex algorithms, distributed systems, research papers, and unfamiliar codebases using the Feynman method, progressive 3-layer depth, ASCII mental models, and runnable micro-examples. Use for technical teaching, onboarding, and deep comprehension. |
 | `embedded` | `rust-embedded` | Write embedded firmware in Rust: ARM Cortex-M and RISC-V, no-std, HALs, and memory safety over C/C++. Use for IoT and safety-critical devices. |
 | `engineering` | `ai-testing` | AI-powered test generation and validation |
 | `engineering` | `claude-code-commands` | Use Claude Code effectively: slash commands, context management, hooks, MCP, permissions, and workflows. Use for agentic coding with Claude Code. |
@@ -204,17 +217,21 @@ kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
 | `frontend` | `angular` | Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends. |
 | `frontend` | `astro` | Build content-focused websites with Astro: islands architecture, content collections, static generation, and integrations. Use for fast content sites. |
 | `frontend` | `bun-runtime` | Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling. |
+| `frontend` | `catalog-photo-mapper` | Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery. |
 | `frontend` | `modern-css` | Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling. |
 | `frontend` | `nextjs` | Build full-stack React applications with Next.js App Router, Server Components, API routes, middleware, and deployment. Use for production web apps. |
 | `frontend` | `react-19` | Build modern user interfaces with React 19, including Server Components, Actions, hooks, and the new compiler. Use for any interactive UI work. |
 | `frontend` | `svelte` | Build reactive UIs with Svelte 5: runes, stores, components, and transitions. Use for efficient interactive frontends. |
 | `frontend` | `tailwind-v4` | Style with Tailwind CSS v4: smaller config, container queries, 3D transforms, and the v3 upgrade path. Use for utility-first responsive UIs. |
 | `frontend` | `typescript` | Apply TypeScript for type-safe JavaScript: type design, generics, utility types, strict mode, and integration with modern tooling. Use for any JS codebase. |
+| `frontend` | `vibe-seo-audit` | Audits and fixes SEO, SSR/prerendering, meta tags, Open Graph preview cards, sitemap.xml, robots.txt, PageSpeed/LCP performance, and curated GitHub/MCP/Cursor integrations for vibe-coded websites and SPAs. Use when fixing empty React/Vite root divs and search visibility. |
+| `frontend` | `vibe-shop-normalizer` | Normalizes messy vibe-coded e-commerce HTML/CSS/JS storefronts into clean, light-themed, responsive Zero-CLS production sites with verified catalog imagery and passing DOM tests. Use when cleaning up multi-iteration storefront code and fixing layout shifts. |
 | `frontend` | `vue` | Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work. |
 | `gamedev` | `game-physics` | Implement 2D/3D game physics: rigid bodies, collisions, constraints, raycasting, and performance optimization. Use for realistic game mechanics. |
 | `gamedev` | `unity-ecs` | Build scalable Unity games with Entity Component System (ECS): systems, queries, jobs, burst compilation, and DOTS patterns. Use for high-performance Unity. |
 | `healthcare` | `hipaa-compliance` | Implement HIPAA compliance in healthcare software: PHI protection, access controls, audit logging, encryption, and breach notification. Use for health IT security. |
 | `healthcare` | `hl7-fhir` | Build healthcare integrations with HL7 FHIR: resources, operations, SMART on FHIR apps, and clinical data exchange. Use for health IT interoperability. |
+| `media` | `frontend-slides-code` | Creates interactive, keyboard-navigable HTML/CSS/JS slide decks and technical presentations as code with zero external dependencies, live code blocks, SVG architecture diagrams, and PDF print export. Use for engineering talks, pitch decks, and interactive workshops. |
 | `mobile` | `expo-rn` | Ship iOS and Android from one codebase with Expo: native features, OTA updates, EAS build, and no native tooling setup. Use for cross-platform MVPs. |
 | `mobile` | `flutter` | Build cross-platform mobile apps with Flutter: widgets, state management, navigation, platform channels, and release builds. Use for iOS/Android/desktop. |
 | `mobile` | `kotlin-android` | Build Android apps with Kotlin: Compose UI, coroutines, architecture components, and Gradle. Use for modern native Android development. |
@@ -290,10 +307,11 @@ Every skill is scored on 5 dimensions:
 | Freshness | 15% | Recency of last update |
 | Bilingual | 15% | Russian translation quality |
 
-## Domains (17)
-`ai` · `backend` · `blockchain` · `data` · `database` · `design` · `desktop` ·
-`devops` · `embedded` · `engineering` · `finance` · `frontend` · `gamedev` ·
-`healthcare` · `mobile` · `qa` · `security`
+## Domains (20)
+`ai` · `backend` · `blockchain` · `communications` · `data` · `database` ·
+`design` · `desktop` · `devops` · `education` · `embedded` · `engineering` ·
+`finance` · `frontend` · `gamedev` · `healthcare` · `media` · `mobile` ·
+`qa` · `security`
 
 ## Author
 
@@ -341,7 +359,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 - [Release Notes](docs/RELEASE_NOTES_v4.0.md)
 - [Roadmap](ROADMAP.md)
 - [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)
-- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (3 of 20 maps live: backend, QA, AI/ML)
+- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (all 20 maps live — EN + RU)
 
 ## Why this library
 

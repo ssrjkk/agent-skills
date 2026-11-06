@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinTech roadmap — Agent Skills Library</title>
-  <meta name="description" content="Trading, risk, quant models">
+  <title>FinTech &amp; Quant roadmap — Agent Skills Library</title>
+  <meta name="description" content="Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls">
   <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/roadmaps/finance.html">
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
-  <meta property="og:title" content="FinTech roadmap — Agent Skills Library">
-  <meta property="og:description" content="Trading, risk, quant models">
+  <meta property="og:title" content="FinTech &amp; Quant roadmap — Agent Skills Library">
+  <meta property="og:description" content="Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/roadmaps/finance.html">
   <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FinTech roadmap — Agent Skills Library">
-  <meta name="twitter:description" content="Trading, risk, quant models">
+  <meta name="twitter:title" content="FinTech &amp; Quant roadmap — Agent Skills Library">
+  <meta name="twitter:description" content="Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls">
   <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,14 +48,14 @@
       <p class="back-link"><a href="../roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
       <header class="rm-hero">
         <span class="domain-chip" style="background:#eab3081a;color:#eab308;border-color:#eab30844">finance</span>
-        <h1>💹 FinTech <span class="soon-pill big">soon</span></h1>
-        <p>Trading, risk, quant models</p>
+        <h1>💹 <span data-slang-body="en">FinTech &amp; Quant</span><span data-slang-body="ru" hidden>Финтех и Квант</span> <span class="live-pill big">live</span></h1>
+        <p><span data-slang-body="en">Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls</span><span data-slang-body="ru" hidden>Алгоритмическая торговля, бэктестинг без подглядывания в будущее, оценка рисков (VaR, CVaR, Монте-Карло) и защита исполнения</span></p>
       </header>
       <div class="page-nav"><a class="page-nav-link" href="engineering.html">← engineering</a><a class="page-nav-link" href="frontend.html">frontend →</a></div>
-      <div class="rm-timeline"><div class="rm-stage"><h3>▸ Fundamentals <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Core <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Advanced <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Expert <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div></div>
-      <div class="rm-related"><a class="btn-ghost" href="../domains/finance.html"><span data-i18n="rel_skills">Related skills →</span></a></div>
+      <div class="rm-timeline"><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 1. Market Data Pipelines &amp; Bias-Free Backtesting</span><span data-slang-body="ru" hidden>Этап 1. Потоки биржевых котировок и честный бэктестинг стратегий</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Ingesting tick and OHLCV order-book data into columnar stores (ClickHouse/Parquet) with strict UTC timestamp normalization</li><li>Eliminating look-ahead bias, survivorship bias, and unrealistic zero-slippage fills in walk-forward backtests</li></ul><ul data-slang-body="ru" hidden><li>Сбор тиковых данных и стакана заявок (Order Book) в колоночные хранилища (ClickHouse, Parquet) с нормализацией таймстемпов</li><li>Защита бэктестов от заглядывания в будущее (Look-Ahead Bias), ошибки выжившего и учета комиссий и проскальзывания</li></ul></div><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 2. Quantitative Risk Modeling (VaR, CVaR &amp; Stress Testing)</span><span data-slang-body="ru" hidden>Этап 2. Количественное моделирование рисков (VaR, CVaR и Монте-Карло)</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Computing parametric, historical, and Monte Carlo Value at Risk (VaR) and Expected Shortfall (CVaR) across portfolios</li><li>Automated pre-trade risk gates: maximum drawdown circuit breakers, position size caps, and fat-finger order checks</li></ul><ul data-slang-body="ru" hidden><li>Расчет исторического, параметрического и Монте-Карло показателей Value at Risk (VaR) и Expected Shortfall (CVaR)</li><li>Автоматические предторговые гейты риска: стоп-краны по максимальной просадке (Drawdown), лимиты позиции и идемпотентность ордеров</li></ul></div></div>
+      <div class="rm-related"><h3>Related skills</h3><div class="rm-chips"><a class="rm-chip" href="../skills/algorithmic-trading.html">algorithmic-trading</a><a class="rm-chip" href="../skills/risk-modeling.html">risk-modeling</a><a class="rm-chip" href="../skills/pandas.html">pandas</a><a class="rm-chip" href="../skills/clickhouse.html">clickhouse</a></div></div>
       <div class="page-nav"><a class="page-nav-link" href="engineering.html">← engineering</a><a class="page-nav-link" href="frontend.html">frontend →</a></div>
-      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/finance.json</code> · ETA: soon</p>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/finance.json</code> · ETA: 2026-11</p>
     </div>
   </div>
   <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>

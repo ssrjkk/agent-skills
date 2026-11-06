@@ -72,3 +72,6 @@ quality-report.json
 /scripts/gen-batch*.py
 /scripts/gen-5000.py
 /scripts/finalize_10k*.py
+
+# Local payload archives (course materials, integration packages)
+/*.zip

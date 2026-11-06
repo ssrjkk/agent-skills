@@ -1,41 +1,75 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "design",
-  "name": "Design",
+  "name": "Design & UI/UX",
+  "name_ru": "Дизайн и UI/UX",
   "icon": "🎨",
-  "tagline": "Specs, diagrams, systems, taste",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Design.md specs, diagrams as code, token systems, optical UI polish, art direction taste, and high-converting landings",
+  "tagline_ru": "Спецификации Design.md, диаграммы кодом, дизайн-системы на токенах, оптическая шлифовка UI и конверсионные лендинги",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "design",
-  "related_skills": [],
+  "related_skills": [
+    "design-spec-md",
+    "diagram-as-code",
+    "landing-page-pro",
+    "ui-ux-system-pro",
+    "ui-polish-audit",
+    "design-taste-direction",
+    "vibe-shop-normalizer"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Design Specifications in Markdown & Diagrams as Code",
+      "title_ru": "Этап 1. Дизайн-спецификации в Markdown (Design.md) и схемы кодом",
       "items": [
-        "Map drops soon"
+        "Structuring unambiguous UI/UX requirements, user flows, and state matrices in DESIGN.md before generating code",
+        "Rendering architecture, sequence, and C4 system diagrams as version-controlled Mermaid, D2, and PlantUML code"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Фиксация структуры экранов, пользовательских сценариев и матрицы состояний в файле DESIGN.md до начала генерации кода",
+        "Проектирование архитектурных, сетевых и продуктовых схем кодом через Mermaid, D2 и PlantUML с чистыми диффами в Git"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Token-Driven Design Systems & Accessibility (WCAG AA/AAA)",
+      "title_ru": "Этап 2. Токенизированные дизайн-системы и доступность WCAG AA/AAA",
       "items": [
-        "Map drops soon"
+        "Primitive vs semantic CSS tokens (--bg-canvas, --bg-surface, --text-primary), 8px spatial grids, and concentric border radii",
+        "Fluid clamp() typography, Cyrillic/Latin font pairing, WCAG >= 4.5:1 contrast verification, and :focus-visible rings"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Разделение примитивных и семантических CSS-токенов, модульная сетка отступов 4px/8px и формула вложенных радиусов",
+        "Плавная типографика на clamp(), подбор шрифтов с кириллицей, проверка контраста WCAG >= 4.5:1 и видимый фокус с клавиатуры"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Intentional Art Direction & Anti-Template Taste",
+      "title_ru": "Этап 3. Арт-дирекшн, визуальный вкус и уход от ИИ-шаблонов",
       "items": [
-        "Map drops soon"
+        "Replacing generic Indigo/Purple AI templates with the 60-30-10 color rule and domain-grounded visual archetypes",
+        "Designing hero focal artifacts (interactive terminals, live product stages, and real metrics) instead of decorative filler"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Отказ от шаблонных фиолетовых градиентов в пользу правила палитры 60–30–10 и предметных визуальных архетипов",
+        "Построение первого экрана вокруг живого продуктового артефакта (интерактивный терминал, витрина или граф) вместо пустых картинок"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Optical UI Polish, Zero-CLS & High-Converting Landings",
+      "title_ru": "Этап 4. Оптическая шлифовка UI, геометрия Zero-CLS и конверсионные лендинги",
       "items": [
-        "Map drops soon"
+        "Conversion-driven landing page architecture: batched intake, single primary CTA above the fold, proof strips, and objection FAQs",
+        "Optical alignment audit: equal-height grid cards, tabular-nums counters, text-wrap: balance headings, and zero layout shift"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Архитектура конверсионного лендинга: один главный CTA на первом экране, конкретные цифры выгод, блок доказательств и разбор возражений",
+        "Оптическая полировка: выравнивание карточек в сетке, табличные цифры tabular-nums, сбалансированные заголовки и нулевой CLS"
+      ],
+      "status": "live"
     }
   ]
 }

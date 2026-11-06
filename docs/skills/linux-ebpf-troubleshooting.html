@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>linux-ebpf-troubleshooting — Agent Skills Library</title>
+  <meta name="description" content="Diagnoses and resolves production Linux kernel, cgroups v2, network conntrack, deleted file descriptor leaks, and Kubernetes pod incidents using USE/RED methods, eBPF tools, and chaos drill labs. Use for 5-minute incident triage and root-cause isolation.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/linux-ebpf-troubleshooting.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="linux-ebpf-troubleshooting — Agent Skills Library">
+  <meta property="og:description" content="Diagnoses and resolves production Linux kernel, cgroups v2, network conntrack, deleted file descriptor leaks, and Kubernetes pod incidents using USE/RED methods, eBPF tools, and chaos drill labs. Use for 5-minute incident triage and root-cause isolation.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/linux-ebpf-troubleshooting.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="linux-ebpf-troubleshooting — Agent Skills Library">
+  <meta name="twitter:description" content="Diagnoses and resolves production Linux kernel, cgroups v2, network conntrack, deleted file descriptor leaks, and Kubernetes pod incidents using USE/RED methods, eBPF tools, and chaos drill labs. Use for 5-minute incident triage and root-cause isolation.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">linux</span><span class="tag">ebpf</span><span class="tag">troubleshooting</span><span class="tag">sre</span><span class="tag">kubernetes</span><span class="tag">chaos-engineering</span><span class="tag">networking</span>
+        </div>
+        <h1 class="skill-page-title">linux-ebpf-troubleshooting</h1>
+        <p class="skill-page-desc">Diagnoses and resolves production Linux kernel, cgroups v2, network conntrack, deleted file descriptor leaks, and Kubernetes pod incidents using USE/RED methods, eBPF tools, and chaos drill labs. Use for 5-minute incident triage and root-cause isolation.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>120</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/devops/linux-ebpf-troubleshooting" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/linux-ebpf-troubleshooting" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="kubernetes.html">← kubernetes</a><a class="page-nav-link" href="loki.html">loki →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>Linux Kernel, eBPF &amp; Kubernetes Troubleshooting</h1>
+<blockquote>Five-minute production incident triage across Linux kernel states, file descriptors, network sockets, and Kubernetes pods.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># 10-second USE triage: load average, D-state processes, disk I/O saturation, and deleted open files
+uptime &amp;&amp; vmstat 1 3 &amp;&amp; iostat -xz 1 2
+lsof +L1 | head -n 20
+ss -tulpan | head -n 20</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Launch the 4-scenario Kubernetes Chaos Drill lab and run automated fix verification
+kubectl apply -f labs/troubleshooting_lab/break-my-cluster.yaml
+bash labs/troubleshooting_lab/verify-fixes.sh</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>High Load Average with low CPU utilization caused by uninterruptible disk or NFS sleep (process state D)</li>
+<li>Disk reports 100% full in df -h while du -sh shows plenty of free space due to unlinked open file descriptors</li>
+<li>Intermittent 502/504 Bad Gateway spikes, TCP SYN backlog drops, or nf_conntrack table exhaustion</li>
+<li>Kubernetes pods stuck in CrashLoopBackOff (Exit Codes 1, 126, 127, 137, 143), OOMKilled, or blackholed by NetworkPolicy</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Start every host triage with the USE method (Utilization, Saturation, Errors) across CPU, memory, disk I/O, and network interfaces.</li>
+<li>Truncate leaked file descriptors safely via : &gt; /proc/&lt;PID&gt;/fd/&lt;FD&gt; instead of killing stateful database or proxy daemons mid-traffic.</li>
+<li>Use tini or dumb-init as PID 1 in containers so SIGTERM signals propagate cleanly and zombie processes (state Z) are reaped.</li>
+<li>Mount an emptyDir volume at /tmp and /var/run whenever enforcing readOnlyRootFilesystem: true in Kubernetes securityContext.</li>
+<li>Set startupProbe with a generous failureThreshold for slow-starting JVM/ML workloads so livenessProbe never triggers a premature restart loop.</li>
+<li>Verify Service selector labels against Pod labels with kubectl get endpoints &lt;svc&gt; before debugging CNI or ingress controllers.</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Standard Linux triage utilities and eBPF observability tools
+apt-get update &amp;&amp; apt-get install -y sysstat lsof iproute2 dnsutils bpfcc-tools</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Parse /proc/sys/net/netfilter/nf_conntrack_count vs max to detect firewall table saturation
+from pathlib import Path
+
+def check_conntrack_saturation(threshold: float = 0.85) -&gt; dict:
+    count_p = Path(&quot;/proc/sys/net/netfilter/nf_conntrack_count&quot;)
+    max_p = Path(&quot;/proc/sys/net/netfilter/nf_conntrack_max&quot;)
+    if not count_p.exists() or not max_p.exists():
+        return {&quot;status&quot;: &quot;not_enabled&quot;, &quot;ratio&quot;: 0.0}
+    cur = int(count_p.read_text().strip())
+    lim = int(max_p.read_text().strip())
+    ratio = cur / lim if lim else 0.0
+    return {&quot;status&quot;: &quot;critical&quot; if ratio &gt;= threshold else &quot;ok&quot;, &quot;current&quot;: cur, &quot;max&quot;: lim, &quot;ratio&quot;: round(ratio, 3)}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Fix readOnlyRootFilesystem crash and aggressive liveness probe in Kubernetes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilient-api
+  namespace: chaos-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resilient-api
+  template:
+    metadata:
+      labels:
+        app: resilient-api
+    spec:
+      containers:
+        - name: api
+          image: nginxinc/nginx-unprivileged:1.27-alpine
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 256Mi }
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 101
+          volumeMounts:
+            - { name: tmp-vol, mountPath: /tmp }
+      volumes:
+        - name: tmp-vol
+          emptyDir: {}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Run uptime, vmstat 1 3, and ps aux | awk &#x27;$8 ~ /D/&#x27; to separate CPU saturation from disk/NFS I/O wait.</p>
+<p class='ordered'>2. Check dmesg -T | grep -iE &#x27;oom|killed&#x27; and /sys/fs/cgroup/memory.events to confirm kernel OOM kills.</p>
+<p class='ordered'>3. Compare df -h and df -i against du -xhd1 /var; if deleted files hold blocks, find the PID via lsof +L1 and truncate the descriptor.</p>
+<p class='ordered'>4. Measure network handshake latency with curl -w &#x27;dns:%{time_namelookup} tcp:%{time_connect} tls:%{time_appconnect} ttfb:%{time_starttransfer}\n&#x27; -o /dev/null -s &lt;URL&gt;.</p>
+<p class='ordered'>5. In Kubernetes, inspect kubectl describe pod &lt;pod&gt; for Last State Exit Code (137=SIGKILL/OOM, 143=SIGTERM, 126=Permission, 127=Not Found) and read kubectl logs &lt;pod&gt; --previous.</p>
+<p class='ordered'>6. Check kubectl get endpoints &lt;svc&gt; and kubectl get networkpolicy -A to isolate selector mismatches or egress DNS (UDP/TCP 53) blocks.</p>
+<p class='ordered'>7. Verify every fix with automated readiness checks (bash labs/troubleshooting_lab/verify-fixes.sh).</p>
+<h2>Validation</h2>
+<p class='ordered'>1. dmesg -T shows zero new Out of Memory killer events after memory limit and probe tuning</p>
+<p class='ordered'>2. lsof +L1 shows zero unlinked multi-gigabyte log files holding disk space</p>
+<p class='ordered'>3. kubectl get endpoints &lt;service&gt; lists active pod IPs and curl succeeds with HTTP 200</p>
+<p class='ordered'>4. All 4 scenarios in labs/troubleshooting_lab/verify-fixes.sh pass with [PASS] status</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Pod killed with Exit Code 137 but memory usage is low — a failing livenessProbe triggers SIGKILL after terminationGracePeriodSeconds; increase initialDelaySeconds or add a startupProbe.</li>
+<li>Service ClusterIP times out despite Running pods — selector labels on the Service do not match template.metadata.labels on the Deployment.</li>
+<li>Pods cannot resolve internal or external DNS after applying NetworkPolicy — add an explicit egress rule allowing UDP and TCP port 53 to kube-dns/CoreDNS.</li>
+<li> High sys% CPU time during traffic spikes — check conntrack table limits and enable eBPF kube-proxy replacement in Cilium.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Linux Kernel, eBPF &amp; Kubernetes Troubleshooting (Траблшутинг Linux и K8s)</h1>
+<blockquote>Боевая локализация первопричин аварий ядра Linux, утечек диска, сети и подов Kubernetes в первые 5 минут инцидента.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># 10-second USE triage: load average, D-state processes, disk I/O saturation, and deleted open files
+uptime &amp;&amp; vmstat 1 3 &amp;&amp; iostat -xz 1 2
+lsof +L1 | head -n 20
+ss -tulpan | head -n 20</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Launch the 4-scenario Kubernetes Chaos Drill lab and run automated fix verification
+kubectl apply -f labs/troubleshooting_lab/break-my-cluster.yaml
+bash labs/troubleshooting_lab/verify-fixes.sh</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Высокий Load Average при низком потреблении CPU из-за блокировки процессов в статусе D (ожидание диска или NFS)</li>
+<li>Диск заполнен на 100% по df -h при полупустом du -sh из-за удаленных файлов, удерживаемых открытыми дескрипторами</li>
+<li>Периодические ошибки 502/504 Bad Gateway, сбросы TCP-пакетов или переполнение таблицы состояний nf_conntrack</li>
+<li>Поды Kubernetes в статусе CrashLoopBackOff (коды 1, 126, 127, 137, 143), OOMKilled или потеря трафика из-за NetworkPolicy</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Начинайте диагностику узла по методологии USE (Utilization, Saturation, Errors) для CPU, памяти, диска и сети.</li>
+<li>Очищайте удерживаемые удаленные файлы безопасно через : &gt; /proc/&lt;PID&gt;/fd/&lt;FD&gt; без жесткого убийства рабочего процесса.</li>
+<li>Используйте tini в качестве PID 1 внутри контейнера для корректной обработки SIGTERM и сборки процессов-зомби (статус Z).</li>
+<li>Монтируйте том emptyDir в /tmp и /var/run при включении жесткой защиты readOnlyRootFilesystem: true в Kubernetes.</li>
+<li>Настраивайте startupProbe для долго стартующих сервисов, чтобы livenessProbe не убивал приложение до завершения инициализации.</li>
+<li>Всегда проверяйте наличие IP-адресов в kubectl get endpoints &lt;svc&gt; перед тем, как искать проблему в балансировщике или CNI.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Standard Linux triage utilities and eBPF observability tools
+apt-get update &amp;&amp; apt-get install -y sysstat lsof iproute2 dnsutils bpfcc-tools</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Parse /proc/sys/net/netfilter/nf_conntrack_count vs max to detect firewall table saturation
+from pathlib import Path
+
+def check_conntrack_saturation(threshold: float = 0.85) -&gt; dict:
+    count_p = Path(&quot;/proc/sys/net/netfilter/nf_conntrack_count&quot;)
+    max_p = Path(&quot;/proc/sys/net/netfilter/nf_conntrack_max&quot;)
+    if not count_p.exists() or not max_p.exists():
+        return {&quot;status&quot;: &quot;not_enabled&quot;, &quot;ratio&quot;: 0.0}
+    cur = int(count_p.read_text().strip())
+    lim = int(max_p.read_text().strip())
+    ratio = cur / lim if lim else 0.0
+    return {&quot;status&quot;: &quot;critical&quot; if ratio &gt;= threshold else &quot;ok&quot;, &quot;current&quot;: cur, &quot;max&quot;: lim, &quot;ratio&quot;: round(ratio, 3)}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Fix readOnlyRootFilesystem crash and aggressive liveness probe in Kubernetes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilient-api
+  namespace: chaos-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resilient-api
+  template:
+    metadata:
+      labels:
+        app: resilient-api
+    spec:
+      containers:
+        - name: api
+          image: nginxinc/nginx-unprivileged:1.27-alpine
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 256Mi }
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 101
+          volumeMounts:
+            - { name: tmp-vol, mountPath: /tmp }
+      volumes:
+        - name: tmp-vol
+          emptyDir: {}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Выполните uptime, vmstat 1 3 и поиск процессов в статусе D (ps aux | awk &#x27;$8 ~ /D/&#x27;), чтобы отделить полку по CPU от зависания диска или NFS.</p>
+<p class='ordered'>2. Проверьте системный журнал dmesg -T | grep -iE &#x27;oom|killed&#x27; и счетчики cgroups v2 (memory.events) на предмет срабатывания OOM Killer.</p>
+<p class='ordered'>3. Сверьте df -h и df -i с du -xhd1 /var; при утечке удаленных файлов найдите процесс через lsof +L1 и обнулите дескриптор.</p>
+<p class='ordered'>4. Замерьте фазы сетевого соединения через curl -w &#x27;dns:%{time_namelookup} tcp:%{time_connect} tls:%{time_appconnect} ttfb:%{time_starttransfer}\n&#x27; -o /dev/null -s &lt;URL&gt;.</p>
+<p class='ordered'>5. В Kubernetes изучите kubectl describe pod &lt;pod&gt; (код 137 = SIGKILL/OOM, 143 = SIGTERM, 126/127 = ошибка запуска) и логи предыдущего контейнера kubectl logs &lt;pod&gt; --previous.</p>
+<p class='ordered'>6. Проверьте список эндпоинтов kubectl get endpoints &lt;svc&gt; и правила NetworkPolicy (особенно разрешение egress на порт 53 для CoreDNS).</p>
+<p class='ordered'>7. Подтвердите устранение всех поломок автотестом bash labs/troubleshooting_lab/verify-fixes.sh.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. В выводе dmesg -T отсутствуют новые срабатывания OOM Killer после корректировки лимитов и проб</p>
+<p class='ordered'>2. Команда lsof +L1 не показывает зависших удаленных лог-файлов, удерживающих место на диске</p>
+<p class='ordered'>3. Эндпоинты сервиса (kubectl get endpoints) содержат IP живых подов и отвечают кодом HTTP 200</p>
+<p class='ordered'>4. Все 4 сценария полигона в скрипте labs/troubleshooting_lab/verify-fixes.sh проходят со статусом [PASS]</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Под падает с кодом 137 при низком потреблении памяти — его убивает kubelet по провалу livenessProbe; добавьте startupProbe или увеличьте таймаут.</li>
+<li>Таймаут при обращении к Service при живых подах — метки в spec.selector сервиса не совпадают с метками подов.</li>
+<li>Внутри пода перестает резолвиться DNS после включения NetworkPolicy — добавьте в Egress-правило разрешение на порт 53 (UDP/TCP) до CoreDNS.</li>
+<li>Высокое потребление sys% CPU на пиках трафика — проверьте лимит nf_conntrack_max и переключите Cilium в режим eBPF kube-proxy replacement.</li>
+</ul></div>
+      <div class="page-nav"><a class="page-nav-link" href="kubernetes.html">← kubernetes</a><a class="page-nav-link" href="loki.html">loki →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

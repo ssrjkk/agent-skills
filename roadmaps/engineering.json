@@ -1,41 +1,96 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "engineering",
-  "name": "Engineering",
+  "name": "Software Engineering",
+  "name_ru": "Инженерия и Архитектура",
   "icon": "🏗️",
-  "tagline": "Architecture, TDD, review, git",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Clean Architecture, TDD, Git hygiene, Highload System Design (10k+ RPS), Vibe-Coding GitHub Ecosystem & AI Agent Workflows",
+  "tagline_ru": "Чистая архитектура, TDD, культура Git, Highload System Design (10k+ RPS), экосистема вайбкодинга и работа с ИИ-агентами",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "engineering",
-  "related_skills": [],
+  "related_skills": [
+    "git-workflow",
+    "code-review",
+    "clean-architecture",
+    "test-driven-development",
+    "system-design",
+    "claude-code-commands",
+    "ai-testing",
+    "vibe-seo-audit",
+    "ai-coder-career-architect"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Git Hygiene, Atomic Commits & High-Signal Code Review",
+      "title_ru": "Этап 1. Гигиена Git, атомарные коммиты и инженерное код-ревью",
       "items": [
-        "Map drops soon"
+        "Trunk-based development, interactive rebase, git bisect bug hunting, Conventional Commits, and automated pre-commit hooks",
+        "Conducting high-signal code reviews: checking concurrency invariants, security boundaries, failure handling, and test coverage"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Разработка от мастер-ветки (Trunk-Based), интерактивный ребейз, поиск регрессий через git bisect и хуки pre-commit",
+        "Проведение глубокого код-ревью: проверка инвариантов конкурентности, безопасности, обработки ошибок и полноты тестов"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Clean Architecture, Domain Boundaries & TDD",
+      "title_ru": "Этап 2. Чистая архитектура (Ports & Adapters) и дисциплина TDD",
       "items": [
-        "Map drops soon"
+        "Decoupling domain logic from frameworks and databases using Hexagonal / Clean Architecture (Ports and Adapters)",
+        "Red-Green-Refactor TDD loops, contract testing, property-based testing (Hypothesis), and deterministic dependency injection"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Отделение бизнес-логики от фреймворков и баз данных по принципам Чистой и Гексагональной архитектуры (Ports & Adapters)",
+        "Цикл разработки через тестирование (TDD Red-Green-Refactor), контрактные тесты и генеративное тестирование (Hypothesis)"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Vibe-Coding GitHub Ecosystem, MCP & Editor Rules (Map 21)",
+      "title_ru": "Этап 3. Экосистема вайбкодинга на GitHub, MCP-серверы и правила ИИ (Карта 21)",
       "items": [
-        "Map drops soon"
+        "Mastering core internals by rebuilding systems from scratch with codecrafters-io/build-your-own-x (~556k stars)",
+        "Rapid prototyping and pet-project data integration using free endpoints from public-apis/public-apis (~492k stars)",
+        "Connecting coding agents to Postgres, Gmail, Sheets, and browsers via Model Context Protocol (punkpeye/awesome-mcp-servers)",
+        "Locking stack conventions and anti-slop guardrails in Cursor, Claude Code, and OpenCode via PatrickJS/awesome-cursorrules"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Глубокое понимание технологий через сборку собственных реализаций по гайдам codecrafters-io/build-your-own-x",
+        "Быстрая сборка живых продуктов с подключением внешних данных из каталога бесплатных API public-apis/public-apis",
+        "Подключение ИИ-агентов к базам данных, почте, таблицам и браузеру по стандарту MCP (punkpeye/awesome-mcp-servers)",
+        "Фиксация архитектурных правил проекта для ИИ-редакторов через файлы .cursor/rules, CLAUDE.md и AGENTS.md"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Highload System Design (10,000+ RPS & Multi-AZ) (Map 11)",
+      "title_ru": "Этап 4. Проектирование высоконагруженных систем 10 000+ RPS (Карта 11)",
       "items": [
-        "Map drops soon"
+        "Back-of-the-envelope capacity planning: estimating read/write RPS, network bandwidth, RAM cache sizing, and disk IOPS",
+        "Eliminating Single Points of Failure (SPOF) across CDN/WAF, L4/L7 balancers, 3-AZ Kubernetes, Redis, Kafka, and HA Postgres",
+        "Distributed reliability patterns: idempotency keys, circuit breakers, exponential backoff with jitter, and transactional Outbox"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Инженерный расчет нагрузки на салфетке: оценка RPS чтения/записи, полосы сети, объема RAM под кэш и IOPS дисков",
+        "Проектирование без единых точек отказа (Zero SPOF): мульти-зональный K8s, кэш Redis, буферизация пиков в Kafka и кворумная БД",
+        "Паттерны надежности распределенных систем: ключи идемпотентности, Circuit Breaker, ретраи с jitter и паттерн Outbox"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. Production Pet-Project & Open-Source Packaging (Maps 07, 23)",
+      "title_ru": "Этап 5. Сборка эталонного продакшн пет-проекта и упаковка Open Source (Карты 07, 23)",
+      "items": [
+        "End-to-end repository engineering: bilingual docs, architecture diagrams, 100% test coverage, and zero-warning linters",
+        "Shipping complete operational artifacts: hardened Dockerfiles, docker-compose, CI/CD workflows, and SEO-ready GitHub Pages"
+      ],
+      "items_ru": [
+        "Оформление репозитория уровня Elite Open Source: двуязычная документация, схемы архитектуры и 100% покрытие тестами",
+        "Поставка полного комплекта эксплуатации: защищенные Dockerfile, docker-compose, пайплайн CI/CD и сайт документации"
+      ],
+      "status": "live"
     }
   ]
 }

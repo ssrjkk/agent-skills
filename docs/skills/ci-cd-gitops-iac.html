@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ci-cd-gitops-iac — Agent Skills Library</title>
+  <meta name="description" content="Builds secure CI/CD pipelines (GitHub Actions, GitLab CI, Dagger Go SDK, rootless BuildKit/Kaniko), OIDC tokenless cloud auth, OpenTofu/Terraform with Terragrunt, Supply Chain security (SBOM, Cosign, Kyverno), and ArgoCD GitOps with Canary rollouts. Use for end-to-end delivery automation.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/ci-cd-gitops-iac.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="ci-cd-gitops-iac — Agent Skills Library">
+  <meta property="og:description" content="Builds secure CI/CD pipelines (GitHub Actions, GitLab CI, Dagger Go SDK, rootless BuildKit/Kaniko), OIDC tokenless cloud auth, OpenTofu/Terraform with Terragrunt, Supply Chain security (SBOM, Cosign, Kyverno), and ArgoCD GitOps with Canary rollouts. Use for end-to-end delivery automation.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/ci-cd-gitops-iac.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ci-cd-gitops-iac — Agent Skills Library">
+  <meta name="twitter:description" content="Builds secure CI/CD pipelines (GitHub Actions, GitLab CI, Dagger Go SDK, rootless BuildKit/Kaniko), OIDC tokenless cloud auth, OpenTofu/Terraform with Terragrunt, Supply Chain security (SBOM, Cosign, Kyverno), and ArgoCD GitOps with Canary rollouts. Use for end-to-end delivery automation.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">ci-cd</span><span class="tag">gitops</span><span class="tag">argocd</span><span class="tag">opentofu</span><span class="tag">terraform</span><span class="tag">dagger</span><span class="tag">oidc</span><span class="tag">devsecops</span>
+        </div>
+        <h1 class="skill-page-title">ci-cd-gitops-iac</h1>
+        <p class="skill-page-desc">Builds secure CI/CD pipelines (GitHub Actions, GitLab CI, Dagger Go SDK, rootless BuildKit/Kaniko), OIDC tokenless cloud auth, OpenTofu/Terraform with Terragrunt, Supply Chain security (SBOM, Cosign, Kyverno), and ArgoCD GitOps with Canary rollouts. Use for end-to-end delivery automation.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>110</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/devops/ci-cd-gitops-iac" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/ci-cd-gitops-iac" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="aws-lambda.html">← aws-lambda</a><a class="page-nav-link" href="cloud-native-ai.html">cloud-native-ai →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>CI/CD, GitOps &amp; Infrastructure as Code</h1>
+<blockquote>Zero static secrets, rootless container builds, programmable Dagger pipelines, OpenTofu state isolation, and progressive Argo Rollouts.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Format, validate, and security-scan OpenTofu/Terraform modules before commit
+tofu fmt -check &amp;&amp; tofu validate
+trivy config . --severity HIGH,CRITICAL</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># GitHub Actions OIDC tokenless role assumption (no static AWS keys in secrets)
+permissions:
+  id-token: write
+  contents: read
+steps:
+  - uses: aws-actions/configure-aws-credentials@v4
+    with:
+      role-to-assume: arn:aws:iam::123456789012:role/github-ci-oidc
+      aws-region: eu-central-1</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Replacing insecure Docker-in-Docker (DinD) and static cloud keys with rootless BuildKit/Kaniko and short-lived OIDC tokens</li>
+<li>Writing portable CI/CD pipelines in Go with the Dagger SDK so local runs match CI execution bit-for-bit</li>
+<li>Structuring multi-environment OpenTofu/Terraform state with S3 locking and DRY Terragrunt hierarchies</li>
+<li>Enforcing container supply-chain integrity with Syft SBOMs, keyless Sigstore Cosign signatures, Kyverno policies, and Argo Rollouts Canary</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Build multi-stage Dockerfiles targeting gcr.io/distroless/static-debian12:nonroot (UID 65532) to strip shells and package managers from production images.</li>
+<li>Pin GitHub Actions and container base images by immutable SHA256 digest in critical workflows to prevent tag-mutation supply chain attacks.</li>
+<li>Never commit terraform.tfstate or .env files; enforce S3 native state locking (use_lockfile = true) and run gitleaks in pre-commit.</li>
+<li>Separate CI (build, test, scan, sign, push image, update GitOps manifest repo) from CD (ArgoCD pull-based synchronization inside the cluster).</li>
+<li>Gate progressive Canary rollouts in Argo Rollouts on real Prometheus RED metrics (HTTP 5xx rate &lt; 1% and p99 latency &lt; 300ms).</li>
+<li>Use ArgoCD ApplicationSet with Git directory or matrix generators to onboard new microservices without duplicating YAML.</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Install OpenTofu, Trivy, Cosign, and Gitleaks CLI tools
+brew install opentofu trivy cosign gitleaks</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Verify that all container images in a Kubernetes manifest pin an immutable @sha256 digest or semantic tag
+import re
+from pathlib import Path
+
+def audit_k8s_images(manifest_path: str) -&gt; list[str]:
+    text = Path(manifest_path).read_text(encoding=&quot;utf-8&quot;)
+    images = re.findall(r&quot;image:\s*([^\s#]+)&quot;, text)
+    bad = [img for img in images if img.endswith(&quot;:latest&quot;) or (&quot;:&quot; not in img and &quot;@sha256:&quot; not in img)]
+    return bad</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Kyverno ClusterPolicy blocking :latest tags and requiring runAsNonRoot
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: enforce-supply-chain-baseline
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: disallow-latest-tag
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+      validate:
+        message: &quot;Mutable :latest tag is forbidden; use a semantic version or @sha256 digest.&quot;
+        pattern:
+          spec:
+            containers:
+              - image: &quot;!*:latest&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Create a multi-stage Dockerfile that compiles the binary in stage 1 and copies only the static artifact and CA certs into a nonroot distroless image.</p>
+<p class='ordered'>2. Configure OIDC trust between GitHub Actions / GitLab CI and your cloud IAM provider (AssumeRoleWithWebIdentity).</p>
+<p class='ordered'>3. Add CI stages for linting, unit tests, Gitleaks secret detection, rootless BuildKit image build, and Trivy vulnerability gating.</p>
+<p class='ordered'>4. Generate a CycloneDX or SPDX SBOM using syft and sign the pushed image digest with cosign sign --yes.</p>
+<p class='ordered'>5. Provision cloud infrastructure via modular OpenTofu and Terragrunt with remote S3 state and encryption.</p>
+<p class='ordered'>6. Deploy ArgoCD using the App-of-Apps or ApplicationSet pattern with automated selfHeal and prune policies.</p>
+<p class='ordered'>7. Configure an Argo Rollouts Canary resource with an AnalysisTemplate querying Prometheus 5xx error rates during traffic shifting.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. CI pipeline authenticates via OIDC JWT with zero static cloud credentials stored in repository secrets</p>
+<p class='ordered'>2. trivy image --severity HIGH,CRITICAL --exit-code 1 passes on the final distroless image</p>
+<p class='ordered'>3. cosign verify confirms valid keyless signature on the container image digest</p>
+<p class='ordered'>4. Argo Rollouts automatically aborts and rolls back the Canary release if synthetic 5xx errors exceed 1%</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>OIDC AssumeRoleWithWebIdentity AccessDenied — verify the IAM role trust policy sub claim matches repo:&lt;org&gt;/&lt;repo&gt;:ref:refs/heads/main.</li>
+<li>OpenTofu state lock stuck after aborted CI job — verify no concurrent run is active, then run tofu force-unlock &lt;LOCK_ID&gt;.</li>
+<li>ArgoCD OutOfSync loop on HPA replicas — omit spec.replicas from the Git Deployment manifest and add /spec/replicas to ignoreDifferences.</li>
+<li>Distroless container fails with exec format error — compile Go binaries with CGO_ENABLED=0 GOOS=linux GOARCH=amd64.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>CI/CD, GitOps &amp; Infrastructure as Code (Пайплайны, IaC и GitOps)</h1>
+<blockquote>Конвейеры доставки без статических ключей (OIDC), rootless-сборка образов, пайплайны как код на Dagger, модули OpenTofu и канарки Argo Rollouts.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Format, validate, and security-scan OpenTofu/Terraform modules before commit
+tofu fmt -check &amp;&amp; tofu validate
+trivy config . --severity HIGH,CRITICAL</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># GitHub Actions OIDC tokenless role assumption (no static AWS keys in secrets)
+permissions:
+  id-token: write
+  contents: read
+steps:
+  - uses: aws-actions/configure-aws-credentials@v4
+    with:
+      role-to-assume: arn:aws:iam::123456789012:role/github-ci-oidc
+      aws-region: eu-central-1</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Переход от небезопасного Docker-in-Docker (DinD) и вечных облачных ключей к rootless BuildKit/Kaniko и временным OIDC-токенам</li>
+<li>Разработка переносимых пайплайнов на Go через Dagger SDK для 100% идентичности локального и CI-прогона</li>
+<li>Организация стейта OpenTofu/Terraform для dev/stage/prod с блокировками в S3 и обертками Terragrunt</li>
+<li>Защита цепочки поставки (SBOM через Syft, бесключевая подпись Cosign, проверка в Kyverno) и канареечный деплой через Argo Rollouts</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Используйте multi-stage сборку с финальным образом gcr.io/distroless/static-debian12:nonroot (UID 65532), исключая shell и пакетные менеджеры из продакшена.</li>
+<li>Фиксируйте внешние GitHub Actions и базовые образы по SHA256-хэшу для защиты от подмены тегов (Supply Chain атак).</li>
+<li>Никогда не храните terraform.tfstate или секреты в Git; включайте блокировку стейта в S3 и проверку gitleaks на каждом PR.</li>
+<li>Разделяйте CI (сборка, тесты, скан Trivy, подпись Cosign, коммит тега в GitOps-репо) и CD (pull-синхронизация через ArgoCD внутри кластера).</li>
+<li>Автоматизируйте откат канареечных релизов в Argo Rollouts по метрикам Prometheus (доля 5xx ошибок &lt; 1% и латентность p99 &lt; 300 мс).</li>
+<li>Применяйте ArgoCD ApplicationSet с генераторами по папкам Git для автоматического подключения новых микросервисов.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Install OpenTofu, Trivy, Cosign, and Gitleaks CLI tools
+brew install opentofu trivy cosign gitleaks</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Verify that all container images in a Kubernetes manifest pin an immutable @sha256 digest or semantic tag
+import re
+from pathlib import Path
+
+def audit_k8s_images(manifest_path: str) -&gt; list[str]:
+    text = Path(manifest_path).read_text(encoding=&quot;utf-8&quot;)
+    images = re.findall(r&quot;image:\s*([^\s#]+)&quot;, text)
+    bad = [img for img in images if img.endswith(&quot;:latest&quot;) or (&quot;:&quot; not in img and &quot;@sha256:&quot; not in img)]
+    return bad</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Kyverno ClusterPolicy blocking :latest tags and requiring runAsNonRoot
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: enforce-supply-chain-baseline
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: disallow-latest-tag
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+      validate:
+        message: &quot;Mutable :latest tag is forbidden; use a semantic version or @sha256 digest.&quot;
+        pattern:
+          spec:
+            containers:
+              - image: &quot;!*:latest&quot;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Напишите multi-stage Dockerfile со сборкой в первом слое и копированием статики в минимальный образ distroless:nonroot.</p>
+<p class='ordered'>2. Настройте доверие OIDC между GitHub Actions / GitLab CI и облачным IAM-провайдером (без сохранения статических ключей).</p>
+<p class='ordered'>3. Соберите конвейер CI: линтеры, юнит-тесты, поиск секретов Gitleaks, сборка образа через BuildKit rootless и гейт уязвимостей Trivy.</p>
+<p class='ordered'>4. Сгенерируйте SBOM-паспорт через syft и подпишите дайджест образа в реестре через cosign sign --yes.</p>
+<p class='ordered'>5. Опишите облачную инфраструктуру в модулях OpenTofu с обертками Terragrunt и удаленным стейтом в S3.</p>
+<p class='ordered'>6. Разверните ArgoCD по паттерну App-of-Apps или ApplicationSet с включенными политиками selfHeal и prune.</p>
+<p class='ordered'>7. Настройте канареечный выкат Argo Rollouts с автоматической проверкой метрик Prometheus (AnalysisTemplate) на каждом шаге трафика.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Пайплайн CI авторизуется в облаке по OIDC без единого статического ключа в секретах репозитория</p>
+<p class='ordered'>2. Сканирование trivy image --severity HIGH,CRITICAL --exit-code 1 проходит без критических уязвимостей</p>
+<p class='ordered'>3. Проверка cosign verify подтверждает валидность криптографической подписи дайджеста образа</p>
+<p class='ordered'>4. Argo Rollouts автоматически прерывает релиз и откатывает трафик при превышении порога 5xx ошибок в Prometheus</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Ошибка AccessDenied при OIDC-авторизации — проверьте совпадение поля sub (repo:&lt;org&gt;/&lt;repo&gt;:ref:refs/heads/main) в Trust Policy IAM-роли.</li>
+<li>Зависла блокировка стейта OpenTofu после обрыва CI — убедитесь в отсутствии параллельных джобов и выполните tofu force-unlock &lt;LOCK_ID&gt;.</li>
+<li>Вечный статус OutOfSync в ArgoCD при работе HPA — удалите поле spec.replicas из Deployment в Git и добавьте /spec/replicas в ignoreDifferences.</li>
+<li>Ошибка exec format error при старте distroless-контейнера — собирайте Go-бинарник с флагами CGO_ENABLED=0 GOOS=linux GOARCH=amd64.</li>
+</ul></div>
+      <div class="page-nav"><a class="page-nav-link" href="aws-lambda.html">← aws-lambda</a><a class="page-nav-link" href="cloud-native-ai.html">cloud-native-ai →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

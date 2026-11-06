@@ -1,41 +1,85 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "education",
-  "name": "Education",
+  "name": "Education & Career",
+  "name_ru": "Обучение и Карьера",
   "icon": "🎓",
-  "tagline": "Explain anything, onboarding",
-  "status": "soon",
-  "eta": "soon",
-  "catalog_domain": null,
-  "related_skills": [],
+  "tagline": "AI-Coder Learning-to-Career Portal (Learn -> Build -> Get Hired), Feynman Method, Interview Q&A & XYZ Resumes (Maps 08, 15, 23)",
+  "tagline_ru": "Портал AI-кодера «Обучение — Практика — Работа», метод Фейнмана, разбор собеседований и резюме по формуле XYZ (Карты 08, 15, 23)",
+  "status": "live",
+  "eta": "2026-11",
+  "catalog_domain": "education",
+  "related_skills": [
+    "ai-coder-career-architect",
+    "explain-anything",
+    "system-design",
+    "devops-sre-portal-architect"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Feynman Deconstruction & Learning by Rebuilding (Map 21)",
+      "title_ru": "Этап 1. Метод Фейнмана и обучение через воссоздание систем (Карта 21)",
       "items": [
-        "Map drops soon"
+        "4-layer Feynman study loop: identify the pain -> state 1-sentence intuition -> draw ASCII data flow -> write 20-line runnable core",
+        "Combining codecrafters-io/build-your-own-x with AI agents as Socratic tutors rather than passive copy-paste generators"
       ],
-      "status": "soon"
+      "items_ru": [
+        "4-уровневый разбор любой темы по Фейнману: исходная боль -> интуиция в 1 фразу -> ASCII-схема потока -> рабочий код в 20 строк",
+        "Сборка учебных реализаций по гайдам build-your-own-x с использованием ИИ-агента как ментора и ревьюера, а не генератора копипасты"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Hands-On Practice: Chaos Labs & Production Blueprints (Maps 07, 20)",
+      "title_ru": "Этап 2. Практика на боевых тренажерах Chaos Drill и пет-проектах (Карты 07, 20)",
       "items": [
-        "Map drops soon"
+        "Diagnosing and fixing broken Kubernetes workloads in the Chaos Drill simulator (break-my-cluster.yaml + verify-fixes.sh)",
+        "Building 1-2 flagship production repositories on GitHub with multi-stage Dockerfiles, CI/CD, IaC, and observability"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Отработка навыков траблшутинга в тренажере поломок Chaos Drill (break-my-cluster.yaml и скрипт автопроверки verify-fixes.sh)",
+        "Сборка 1–2 глубоких продакшн-репозиториев на GitHub с контейнеризацией, автотестами, CI/CD и мониторингом вместо 20 сырых демо"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Technical Interview Mastery: Linux, K8s, DBs & CI/CD (Map 08)",
+      "title_ru": "Этап 3. Прохождение технических собеседований Middle / Senior / Staff (Карта 08)",
       "items": [
-        "Map drops soon"
+        "Deep-dive interview answers: full curl https:// packet lifecycle, D-state Load Average, lsof +L1 disk leaks, and cgroups v2",
+        "Kubernetes and database interview drills: CrashLoopBackOff exit codes, etcd Raft quorum, PostgreSQL locks, and Kafka KRaft"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Разбор классических вопросов интервью: полный путь пакета при curl https://, причины высокого Load Average в статусе D и утечки lsof +L1",
+        "Секции по Kubernetes и базам данных: диагностика CrashLoopBackOff, потеря кворума etcd, блокировки ALTER TABLE и архитектура Kafka KRaft"
+      ],
+      "status": "live"
     },
     {
-      "title": "Expert",
+      "title": "Stage 4. Highload System Design Interview Framework (Map 11)",
+      "title_ru": "Этап 4. Алгоритм защиты архитектуры на секции System Design (Карта 11)",
       "items": [
-        "Map drops soon"
+        "45-minute System Design structure: functional/non-functional requirements (5m) -> RPS/storage math -> Edge-to-DB diagram -> SPOF audit",
+        "Defending trade-offs: synchronous vs asynchronous replication (RPO/RTO), Cache-Aside stampede protection, and Outbox consistency"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Пошаговый тайминг 45-минутного System Design: сбор требований и расчет RPS/трафика -> схема слоев -> устранение точек отказа SPOF",
+        "Аргументация инженерных компромиссов: синхронная против асинхронной репликации (RPO/RTO), защита кэша и паттерн Outbox"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage 5. ATS-Proof Resume Engineering with the XYZ Formula (Maps 15, 23)",
+      "title_ru": "Этап 5. Упаковка резюме по формуле XYZ и выход на оффер (Карты 15, 23)",
+      "items": [
+        "Rewriting every experience bullet with the Google XYZ formula: Achieved [X], measured by [Y], by implementing [Z]",
+        "Polishing the engineer's GitHub profile: 4-6 pinned flagship repos, architecture diagrams, green CI badges, and live SEO-indexed demos"
+      ],
+      "items_ru": [
+        "Переписывание каждого пункта опыта по формуле XYZ: «Достиг результата [X], измеряемого метрикой [Y], за счет внедрения [Z]»",
+        "Оформление витрины GitHub-профиля: закрепленные репозитории со схемами архитектуры, зелеными бейджами CI и живыми демо"
+      ],
+      "status": "live"
     }
   ]
 }

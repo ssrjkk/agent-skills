@@ -1,0 +1,66 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: production-golden-alerts
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: kubernetes-workloads.rules
+      rules:
+        - alert: KubernetesPodCrashLooping
+          expr: increase(kube_pod_container_status_restarts_total[15m]) > 3
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Под {{ $labels.namespace }}/{{ $labels.pod }} постоянно перезапускается"
+            description: "Контейнер {{ $labels.container }} перезапустился {{ $value }} раз за последние 15 минут."
+
+        - alert: KubernetesContainerOOMKilled
+          expr: (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_terminated_reason{reason="OOMKilled"}[10m]) == 1
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Контейнер убит по OOM ({{ $labels.namespace }}/{{ $labels.pod }})"
+            description: "Необходимо проверить утечки памяти или повысить resources.limits.memory."
+
+    - name: application-slo.rules
+      rules:
+        - alert: HighHttp5xxErrorRate
+          expr: |
+            sum(rate(http_requests_total{status_code=~"5.."}[5m])) by (namespace, service)
+            /
+            sum(rate(http_requests_total[5m])) by (namespace, service) * 100 > 2
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Высокий процент 5xx ошибок в сервисе {{ $labels.service }}"
+            description: "Доля 5xx ответов составляет {{ $value | printf "%.2f" }}% (порог > 2%)."
+
+        - alert: HighRequestLatencyP99
+          expr: |
+            histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, namespace, service)) > 1.0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Деградация времени ответа p99 у сервиса {{ $labels.service }}"
+            description: "99-й перцентиль времени ответа превысил 1 секунду (текущее значение: {{ $value | printf "%.2f" }}s)."
+
+    - name: host-resources.rules
+      rules:
+        - alert: NodeDiskRunningFull
+          expr: |
+            (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"}) * 100 < 15
+            and
+            predict_linear(node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"}[6h], 24 * 3600) < 0
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Заканчивается диск на ноде {{ $labels.instance }}"
+            description: "Свободно менее 15% ({{ $value | printf "%.1f" }}%), при текущей скорости записи диск заполнится менее чем за 24 часа."

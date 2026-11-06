@@ -1,0 +1,30 @@
+# Конфигурация AI Gateway (LiteLLM) для балансировки между локальным vLLM в K8s и облачными LLM,
+# контроля расходов (Token Rate Limiting) и семантического кэширования в Valkey/Redis
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-gateway-config
+  namespace: ai-workloads
+data:
+  config.yaml: |
+    model_list:
+      - model_name: code-assistant
+        litellm_params:
+          model: openai/Qwen/Qwen2.5-Coder-7B-Instruct
+          api_base: http://llm-inference-vllm.ai-workloads.svc.cluster.local:8000/v1
+          api_key: "internal-k8s-key"
+          rpm: 300
+          tpm: 150000
+
+    litellm_settings:
+      cache: true
+      cache_params:
+        type: redis
+        host: valkey.production.svc.cluster.local
+        port: 6379
+        ttl: 3600
+      success_callback: ["prometheus"]
+      failure_callback: ["prometheus"]
+
+    general_settings:
+      master_key: os.environ/AI_GATEWAY_MASTER_KEY

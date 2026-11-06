@@ -2,40 +2,58 @@
   "$schema": "../roadmaps.schema.json",
   "slug": "mobile",
   "name": "Mobile",
+  "name_ru": "Мобильная разработка",
   "icon": "📱",
-  "tagline": "Flutter, SwiftUI, Kotlin, React Native",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Cross-platform Flutter & React Native (Expo) plus native iOS (SwiftUI) and Android (Kotlin Compose) engineering",
+  "tagline_ru": "Кроссплатформенная разработка на Flutter и React Native (Expo), а также нативный iOS (SwiftUI) и Android (Kotlin Compose)",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "mobile",
-  "related_skills": [],
+  "related_skills": [
+    "flutter",
+    "expo-rn",
+    "swift-ios",
+    "kotlin-android"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Mobile UI Architecture, Navigation & Offline-First Storage",
+      "title_ru": "Этап 1. Архитектура мобильных приложений, навигация и работа офлайн",
       "items": [
-        "Map drops soon"
+        "Unidirectional data flow, declarative UI rendering, deep linking, and responsive safe-area layouts",
+        "Offline-first persistence with local SQLite, optimistic UI mutations, background sync queues, and secure keychain storage"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Однонаправленный поток данных, декларативный UI, обработка глубоких ссылок (Deep Links) и безопасные зоны экрана",
+        "Офлайн-режим с локальной базой SQLite, оптимистичные обновления интерфейса, фоновая синхронизация и хранение токенов в Keychain/Keystore"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Cross-Platform Engineering (Flutter & Expo React Native)",
+      "title_ru": "Этап 2. Кроссплатформенная разработка на Flutter и React Native (Expo)",
       "items": [
-        "Map drops soon"
+        "Flutter production architecture: custom widgets, Riverpod/BLoC state management, isolates, and native platform channels",
+        "React Native with Expo SDK: Expo Router, New Architecture (Fabric/TurboModules), Reanimated 60fps gestures, and EAS builds"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Продакшн-архитектура на Flutter: кастомные виджеты, управление состоянием (Riverpod/BLoC), изоляты и платформенные каналы",
+        "Разработка на React Native и Expo SDK: файловый роутинг Expo Router, анимации 60 FPS на Reanimated и облачная сборка EAS"
+      ],
+      "status": "live"
     },
     {
-      "title": "Advanced",
+      "title": "Stage 3. Native iOS (SwiftUI) & Android (Kotlin Jetpack Compose)",
+      "title_ru": "Этап 3. Нативная разработка под iOS (SwiftUI) и Android (Kotlin Compose)",
       "items": [
-        "Map drops soon"
+        "Modern iOS with Swift 6 strict concurrency (async/await, actors), SwiftUI navigation stacks, and Instruments profiling",
+        "Modern Android with Kotlin coroutines/Flow, Jetpack Compose state hoisting, Hilt DI, and baseline profiles"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Современный стек iOS: строгая конкурентность в Swift 6 (async/await, акторы), навигация в SwiftUI и профилирование в Instruments",
+        "Современный стек Android: корутины и Flow в Kotlin, декларативный UI на Jetpack Compose, внедрение зависимостей Hilt и Baseline Profiles"
       ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }
