@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>catalog-photo-mapper — Agent Skills Library</title>
+  <meta name="description" content="Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/catalog-photo-mapper.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="catalog-photo-mapper — Agent Skills Library">
+  <meta property="og:description" content="Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/catalog-photo-mapper.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="catalog-photo-mapper — Agent Skills Library">
+  <meta name="twitter:description" content="Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">ecommerce</span><span class="tag">frontend</span><span class="tag">catalog</span><span class="tag">images</span><span class="tag">sqlite</span><span class="tag">testing</span><span class="tag">automation</span>
+        </div>
+        <h1 class="skill-page-title">catalog-photo-mapper</h1>
+        <p class="skill-page-desc">Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>106</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/frontend/catalog-photo-mapper" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/catalog-photo-mapper" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="bun-runtime.html">← bun-runtime</a><a class="page-nav-link" href="modern-css.html">modern-css →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>E-Commerce Catalog Photo Mapper &amp; Integrity Auditor</h1>
+<blockquote>Zero cross-brand image collisions, verified 1:1 studio product renders, automatic SQLite/static sync, and gallery integrity tests.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Run catalog photo collision tests and synchronize static pages + CMS exports
+node --test tests/seo.test.js
+node sync-pages.js</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Assert zero cross-brand image collisions across all catalog items
+const brandByImg = new Map();
+for (const p of products) {
+  const prev = brandByImg.get(p.image);
+  if (prev &amp;&amp; prev !== p.brand) {
+    throw new Error(`Cross-brand collision on ${p.image}: ${prev} vs ${p.brand}`);
+  }
+  brandByImg.set(p.image, p.brand);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Product cards display mismatched brand photos (e.g., Suunto, Polar, or Coros items showing Garmin renders, or collars showing handhelds)</li>
+<li>Uploaded catalog images contain defective assets (upside-down devices, back-case sensors, narrow strap crops, or generic icons)</li>
+<li>Synchronizing updated image paths across products-data.js, uploads/catalog/, public/uploads/catalog/, SQLite (watchop.db), and CMS exports</li>
+<li>Ensuring product detail modal galleries (#product-main-img) switch angles and zoom cleanly on thumbnail selection</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Enforce a strict invariant: two products from different brands or incompatible categories must never reference the same image filename.</li>
+<li>Standardize all catalog photos to square 1:1 studio front renders (800x800 WebP/PNG) so object-contain cards look uniform.</li>
+<li>Mirror every image update identically in both uploads/catalog/ and public/uploads/catalog/ so static build checks pass.</li>
+<li>Auto-migrate products.image in the local SQLite database from the canonical products-data.js map on server startup.</li>
+<li>Separate accessory imagery by exact product type (USB-C charging cables, 9H sapphire glass protectors, silicone cases).</li>
+<li>Assign id=&quot;product-main-img&quot; to the primary image inside #product-photo-pane so thumbnail switching works deterministically.</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Verify image dimensions with Python Pillow and run Node catalog tests
+python3 -c &quot;from PIL import Image; print(Image.__name__)&quot;
+node --test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Audit catalog products for cross-brand or cross-category image collisions
+from collections import defaultdict
+
+def find_image_collisions(products: list[dict]) -&gt; list[str]:
+    brands_by_img: dict[str, set[str]] = defaultdict(set)
+    cats_by_img: dict[str, set[str]] = defaultdict(set)
+    for item in products:
+        img = item[&quot;image&quot;]
+        brands_by_img[img].add(item[&quot;brand&quot;])
+        cats_by_img[img].add(item[&quot;category&quot;])
+    errors: list[str] = []
+    for img, brands in brands_by_img.items():
+        if len(brands) &gt; 1:
+            errors.append(f&quot;{img}: shared across brands {sorted(brands)}&quot;)
+    for img, cats in cats_by_img.items():
+        if len(cats) &gt; 1:
+            errors.append(f&quot;{img}: shared across categories {sorted(cats)}&quot;)
+    return errors</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Synchronize SQLite product images with canonical products-data.js on startup
+const updateImgStmt = db.prepare(&#x27;UPDATE products SET image = ? WHERE id = ?&#x27;);
+for (const item of canonicalProducts) {
+  updateImgStmt.run(item.image, item.id);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Inspect all image files in uploads/catalog/ for aspect ratio (800x800 1:1) and flag non-square or back-facing images.</p>
+<p class='ordered'>2. Run find_image_collisions() against products-data.js to list every cross-brand or cross-category collision.</p>
+<p class='ordered'>3. Assign dedicated front-facing studio images for each brand and series (Edge bike computers, Striker/Deeper sonar, GPSMAP/Montana/eTrex, Alpha collars, multi-brand watches, cables, glass, cases).</p>
+<p class='ordered'>4. Copy updated image files to both uploads/catalog/ and public/uploads/catalog/.</p>
+<p class='ordered'>5. Ensure server.js synchronizes SQLite products.image rows from products-data.js at startup.</p>
+<p class='ordered'>6. Run node sync-pages.js to propagate the updated catalog map to static GitHub Pages and CMS export bundles.</p>
+<p class='ordered'>7. Verify #product-main-img angle switching and run the Catalog Photo Integrity test suite.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. find_image_collisions() returns an empty list (0 cross-brand and 0 cross-category collisions)</p>
+<p class='ordered'>2. Every image path in products-data.js exists in both uploads/catalog/ and public/uploads/catalog/ with 800x800 dimensions</p>
+<p class='ordered'>3. SQLite query SELECT id, image FROM products matches products-data.js 100%</p>
+<p class='ordered'>4. Clicking gallery angle thumbnails updates #product-main-img transform and visual state cleanly</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>Static build test fails on file count mismatch — copy every new or replaced image into both uploads/catalog/ and public/uploads/catalog/.</li>
+<li>API still returns old image paths after editing products-data.js — watchop.db cached old rows; run the startup SQLite image sync.</li>
+<li>Gallery thumbnail click throws TypeError — ensure the main &lt;img&gt; inside #product-photo-pane has id=&quot;product-main-img&quot;.</li>
+<li>Wide handheld or cable photo looks clipped — place the product centered on an 800x800 canvas and use object-contain.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>E-Commerce Catalog Photo Mapper &amp; Integrity Auditor (Маппинг фото каталога)</h1>
+<blockquote>Безошибочная привязка студийных фотографий 1:1 по брендам, сериям и категориям без коллизий и с автосинхронизацией SQLite и статики.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Run catalog photo collision tests and synchronize static pages + CMS exports
+node --test tests/seo.test.js
+node sync-pages.js</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Assert zero cross-brand image collisions across all catalog items
+const brandByImg = new Map();
+for (const p of products) {
+  const prev = brandByImg.get(p.image);
+  if (prev &amp;&amp; prev !== p.brand) {
+    throw new Error(`Cross-brand collision on ${p.image}: ${prev} vs ${p.brand}`);
+  }
+  brandByImg.set(p.image, p.brand);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>В карточках товаров перепутаны фотографии брендов или категорий (например, у часов Suunto/Polar/Coros стоит фото Garmin)</li>
+<li>В папке каталога есть бракованные исходники (перевернутые приборы, вид задней крышки с датчиками, узкие обрезки ремешков)</li>
+<li>Необходима синхронизация путей картинок между products-data.js, папками uploads/ и public/uploads/, базой SQLite и выгрузками CMS</li>
+<li>Настройка переключения ракурсов главного фото (#product-main-img) в модальном окне карточки товара</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Соблюдайте жесткий инвариант: товары разных брендов или несовместимых категорий никогда не должны ссылаться на один и тот же файл фото.</li>
+<li>Приводите все фотографии каталога к единому квадратному формату 1:1 (800x800 студийный анфас) для идеальной сетки карточек.</li>
+<li>Дублируйте каждое обновленное изображение одновременно в uploads/catalog/ и public/uploads/catalog/ для прохождения проверок сборки.</li>
+<li>Выполняйте автоматическую миграцию колонки products.image в SQLite из эталонного файла products-data.js при старте сервера.</li>
+<li>Разделяйте фотографии аксессуаров строго по типу (кабели зарядки, защитные сапфировые стекла 9H, силиконовые бамперы).</li>
+<li>Присваивайте id=&quot;product-main-img&quot; главному изображению внутри #product-photo-pane для надежного переключения миниатюр галереи.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Verify image dimensions with Python Pillow and run Node catalog tests
+python3 -c &quot;from PIL import Image; print(Image.__name__)&quot;
+node --test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Audit catalog products for cross-brand or cross-category image collisions
+from collections import defaultdict
+
+def find_image_collisions(products: list[dict]) -&gt; list[str]:
+    brands_by_img: dict[str, set[str]] = defaultdict(set)
+    cats_by_img: dict[str, set[str]] = defaultdict(set)
+    for item in products:
+        img = item[&quot;image&quot;]
+        brands_by_img[img].add(item[&quot;brand&quot;])
+        cats_by_img[img].add(item[&quot;category&quot;])
+    errors: list[str] = []
+    for img, brands in brands_by_img.items():
+        if len(brands) &gt; 1:
+            errors.append(f&quot;{img}: shared across brands {sorted(brands)}&quot;)
+    for img, cats in cats_by_img.items():
+        if len(cats) &gt; 1:
+            errors.append(f&quot;{img}: shared across categories {sorted(cats)}&quot;)
+    return errors</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Synchronize SQLite product images with canonical products-data.js on startup
+const updateImgStmt = db.prepare(&#x27;UPDATE products SET image = ? WHERE id = ?&#x27;);
+for (const item of canonicalProducts) {
+  updateImgStmt.run(item.image, item.id);
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Проверьте все файлы в папке uploads/catalog/ на разрешение (800x800, 1:1) и отбракуйте узкие обрезки или фото задних крышек.</p>
+<p class='ordered'>2. Запустите функцию find_image_collisions() по данным products-data.js для выявления всех межбрендовых и межкатегорийных пересечений.</p>
+<p class='ordered'>3. Назначьте выделенные студийные рендеры каждому бренду и серии (велокомпьютеры Edge, эхолоты Striker и Deeper, навигаторы GPSMAP/Montana/eTrex, ошейники Alpha, часы по брендам и аксессуары).</p>
+<p class='ordered'>4. Синхронно скопируйте обновленные файлы в обе директории: uploads/catalog/ и public/uploads/catalog/.</p>
+<p class='ordered'>5. Убедитесь, что при старте server.js таблица products в SQLite автоматически обновляет поле image из products-data.js.</p>
+<p class='ordered'>6. Запустите скрипт node sync-pages.js для обновления статической витрины GitHub Pages и архивов выгрузки CMS.</p>
+<p class='ordered'>7. Проверьте переключение ракурсов #product-main-img в модалке и прогоните автотесты целостности каталога.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Функция find_image_collisions() возвращает пустой список (0 межбрендовых и 0 межкатегорийных коллизий)</p>
+<p class='ordered'>2. Каждый файл из products-data.js физически присутствует в uploads/catalog/ и public/uploads/catalog/ в разрешении 800x800</p>
+<p class='ordered'>3. Данные в таблице products базы SQLite на 100% совпадают с эталонным маппингом в products-data.js</p>
+<p class='ordered'>4. Клик по миниатюрам ракурсов в карточке товара корректно обновляет главный рендер #product-main-img</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Падает тест на совпадение количества файлов в папках — копируйте каждое новое фото одновременно в uploads/catalog/ и public/uploads/catalog/.</li>
+<li>API продолжает отдавать старую картинку после правки products-data.js — обновите закэшированные строки в базе SQLite watchop.db.</li>
+<li>Ошибка при клике по миниатюре ракурса в карточке товара — проверьте наличие атрибута id=&quot;product-main-img&quot; у главного тега &lt;img&gt;.</li>
+<li>Широкое фото кабеля или навигатора обрезается по краям — размещайте рендер на квадратном холсте 800x800 со стилем object-contain.</li>
+</ul></div>
+      <div class="page-nav"><a class="page-nav-link" href="bun-runtime.html">← bun-runtime</a><a class="page-nav-link" href="modern-css.html">modern-css →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

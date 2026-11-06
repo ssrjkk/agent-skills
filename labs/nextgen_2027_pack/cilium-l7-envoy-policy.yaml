@@ -1,0 +1,27 @@
+# Sidecarless Service Mesh на базе Cilium (eBPF + встроенный Envoy на уровне узла)
+# Позволяет фильтровать HTTP-методы и пути без вставки сайдкар-контейнеров в поды!
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: l7-api-protection
+  namespace: production
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: backend-api
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: frontend-web
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+          rules:
+            http:
+              - method: "GET"
+                path: "/api/orders.*"
+              - method: "POST"
+                path: "/api/orders"
+                headers:
+                  - 'X-Api-Version: 2'

@@ -1,24 +1,27 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-10-30T10:56:42Z",
-    "total_skills": 103,
-    "total_ru": 103,
+    "generated_at": "2026-11-06T19:53:15Z",
+    "total_skills": 120,
+    "total_ru": 120,
     "domains": [
       "ai",
       "backend",
       "blockchain",
+      "communications",
       "data",
       "database",
       "design",
       "desktop",
       "devops",
+      "education",
       "embedded",
       "engineering",
       "finance",
       "frontend",
       "gamedev",
       "healthcare",
+      "media",
       "mobile",
       "qa",
       "security"
@@ -888,6 +891,66 @@
       "updated": "2026-09-29"
     },
     {
+      "name": "humanize-copy-pro",
+      "description": "Rewrites stiff, robotic AI-generated text into natural, rhythmic, concrete human copywriting in English and Russian. Use for technical articles, product pages, documentation, release notes, and developer communications.",
+      "category": "communications",
+      "tags": [
+        "copywriting",
+        "writing",
+        "communications",
+        "editing",
+        "bilingual",
+        "documentation",
+        "content"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/communications/humanize-copy-pro/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
+      "name": "no-slop-writing",
+      "description": "Eliminates AI slop, corporate buzzwords, filler transitions, and ungrounded claims from technical documents, PRDs, and agent outputs. Use as a strict quality gate for high-density engineering and product writing.",
+      "category": "communications",
+      "tags": [
+        "writing",
+        "editing",
+        "quality-gate",
+        "communications",
+        "documentation",
+        "anti-slop",
+        "prd"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/communications/no-slop-writing/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "airflow",
       "description": "Orchestrate data pipelines with Apache Airflow: DAGs, tasks, dependencies, sensors, and retries. Use for scheduled workflows.",
       "category": "data",
@@ -1362,6 +1425,36 @@
       "updated": "2026-10-24"
     },
     {
+      "name": "design-taste-direction",
+      "description": "Applies intentional art direction, anti-template visual concepts, curated typographic pairings, and domain-specific color palettes to web interfaces. Use when moving beyond generic AI-generated layouts into distinctive brand experiences.",
+      "category": "design",
+      "tags": [
+        "art-direction",
+        "design",
+        "typography",
+        "color-palette",
+        "branding",
+        "ui",
+        "frontend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/design/design-taste-direction/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "diagram-as-code",
       "description": "Visualize workflows, architecture and business processes as Mermaid/C4/PlantUML with validation. Use for any diagram.",
       "category": "design",
@@ -1424,6 +1517,67 @@
       "updated": "2026-10-28"
     },
     {
+      "name": "ui-polish-audit",
+      "description": "Audits and refines existing UI layouts for optical alignment, baseline consistency, visual hierarchy, tabular numbers, and micro-interaction polish. Use when upgrading rough prototypes into production-grade interfaces.",
+      "category": "design",
+      "tags": [
+        "ui-polish",
+        "design",
+        "frontend",
+        "css",
+        "visual-hierarchy",
+        "alignment",
+        "ux"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/design/ui-polish-audit/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
+      "name": "ui-ux-system-pro",
+      "description": "Designs token-driven UI/UX systems with fluid typographic scales, 8px spatial grids, WCAG AA/AAA perceptual contrast, and complete interactive component states. Use for building cohesive design systems, dashboards, and web applications.",
+      "category": "design",
+      "tags": [
+        "design-system",
+        "ui",
+        "ux",
+        "typography",
+        "accessibility",
+        "tokens",
+        "css",
+        "frontend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/design/ui-ux-system-pro/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "electron",
       "description": "Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech.",
       "category": "desktop",
@@ -1447,6 +1601,37 @@
       "has_ru": true,
       "created": "2026-05-14",
       "updated": "2026-09-29"
+    },
+    {
+      "name": "ai-gpu-infra-llmops",
+      "description": "Deploys and scales production AI/LLM and GPU infrastructure in Kubernetes using NVIDIA GPU Operator, DRA/MIG, vLLM tensor parallelism, KEDA scale-to-zero, Karpenter GPU nodes, Envoy AI Gateway, and LiteLLM. Use for self-hosted LLM serving and token cost governance.",
+      "category": "devops",
+      "tags": [
+        "ai-infra",
+        "llmops",
+        "gpu",
+        "vllm",
+        "kubernetes",
+        "litellm",
+        "keda",
+        "karpenter"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/devops/ai-gpu-infra-llmops/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "ansible",
@@ -1532,6 +1717,37 @@
       "updated": "2026-09-29"
     },
     {
+      "name": "ci-cd-gitops-iac",
+      "description": "Builds secure CI/CD pipelines (GitHub Actions, GitLab CI, Dagger Go SDK, rootless BuildKit/Kaniko), OIDC tokenless cloud auth, OpenTofu/Terraform with Terragrunt, Supply Chain security (SBOM, Cosign, Kyverno), and ArgoCD GitOps with Canary rollouts. Use for end-to-end delivery automation.",
+      "category": "devops",
+      "tags": [
+        "ci-cd",
+        "gitops",
+        "argocd",
+        "opentofu",
+        "terraform",
+        "dagger",
+        "oidc",
+        "devsecops"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/devops/ci-cd-gitops-iac/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "cloud-native-ai",
       "description": "Run production AI on cloud-native stacks: HA serving, multi-model infrastructure, ML canary deploys, and GPU scheduling. Use for ML platforms.",
       "category": "devops",
@@ -1555,6 +1771,36 @@
       "has_ru": true,
       "created": "2026-05-14",
       "updated": "2026-09-29"
+    },
+    {
+      "name": "devops-sre-portal-architect",
+      "description": "Designs and generates 2026-2027 DevOps, SRE, Platform Engineering, and AI/GPU infrastructure roadmaps, production Kubernetes/bare-metal manifests, chaos troubleshooting labs, and AI-Coder learning-to-career portal modules. Use for curriculum design, platform blueprints, and SRE competency matrices.",
+      "category": "devops",
+      "tags": [
+        "devops",
+        "sre",
+        "platform-engineering",
+        "roadmaps",
+        "kubernetes",
+        "chaos-engineering",
+        "ai-infra"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/devops/devops-sre-portal-architect/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "docker",
@@ -1701,6 +1947,37 @@
       "updated": "2026-09-29"
     },
     {
+      "name": "k8s-baremetal-multicluster",
+      "description": "Architects bare-metal and multi-cluster Kubernetes platforms using immutable Talos Linux, Cilium eBPF and BGP Control Plane, Rook-Ceph vs TopoLVM storage, Kubebuilder Go Operators, Backstage IDP, Cluster API, and vCluster. Use for platform engineering at scale.",
+      "category": "devops",
+      "tags": [
+        "kubernetes",
+        "bare-metal",
+        "talos",
+        "cilium",
+        "bgp",
+        "kubebuilder",
+        "backstage",
+        "vcluster"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/devops/k8s-baremetal-multicluster/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "kafka",
       "description": "Design and operate Kafka event streaming: topics, producers, consumers, consumer groups, partitioning, and exactly-once. Use for event-driven systems.",
       "category": "devops",
@@ -1759,6 +2036,36 @@
       "has_ru": true,
       "created": "2026-09-20",
       "updated": "2026-09-28"
+    },
+    {
+      "name": "linux-ebpf-troubleshooting",
+      "description": "Diagnoses and resolves production Linux kernel, cgroups v2, network conntrack, deleted file descriptor leaks, and Kubernetes pod incidents using USE/RED methods, eBPF tools, and chaos drill labs. Use for 5-minute incident triage and root-cause isolation.",
+      "category": "devops",
+      "tags": [
+        "linux",
+        "ebpf",
+        "troubleshooting",
+        "sre",
+        "kubernetes",
+        "chaos-engineering",
+        "networking"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/devops/linux-ebpf-troubleshooting/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "loki",
@@ -1843,6 +2150,37 @@
       "has_ru": true,
       "created": "2026-05-14",
       "updated": "2026-09-29"
+    },
+    {
+      "name": "observability-sre-highload",
+      "description": "Implements full-stack Observability (VictoriaMetrics, Loki, Vector, OpenTelemetry, Beyla eBPF, Pyroscope), SRE SLI/SLO/Error Budgets, and Highload Stateful clusters (CloudNativePG, Kafka KRaft Strimzi, ClickHouse Keeper). Use for resilient high-throughput production systems.",
+      "category": "devops",
+      "tags": [
+        "observability",
+        "sre",
+        "prometheus",
+        "opentelemetry",
+        "pyroscope",
+        "postgresql",
+        "kafka",
+        "clickhouse"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/devops/observability-sre-highload/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "platform-engineering",
@@ -1980,6 +2318,66 @@
       "has_ru": true,
       "created": "2026-09-26",
       "updated": "2026-09-28"
+    },
+    {
+      "name": "ai-coder-career-architect",
+      "description": "Accelerates AI-Native Developer, DevOps, and Platform Engineer careers with XYZ-formula resumes, production pet-project blueprints, Senior/Staff System Design (10k+ RPS, Multi-AZ), and technical interview prep. Use for portfolio packaging, resume rewriting, and interview readiness.",
+      "category": "education",
+      "tags": [
+        "career",
+        "resume",
+        "interview-prep",
+        "system-design",
+        "portfolio",
+        "education",
+        "devops"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/education/ai-coder-career-architect/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
+      "name": "explain-anything",
+      "description": "Deconstructs complex algorithms, distributed systems, research papers, and unfamiliar codebases using the Feynman method, progressive 3-layer depth, ASCII mental models, and runnable micro-examples. Use for technical teaching, onboarding, and deep comprehension.",
+      "category": "education",
+      "tags": [
+        "education",
+        "feynman-technique",
+        "onboarding",
+        "mental-models",
+        "architecture",
+        "diagrams",
+        "learning"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/education/explain-anything/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "rust-embedded",
@@ -2353,6 +2751,36 @@
       "updated": "2026-09-29"
     },
     {
+      "name": "catalog-photo-mapper",
+      "description": "Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery.",
+      "category": "frontend",
+      "tags": [
+        "ecommerce",
+        "frontend",
+        "catalog",
+        "images",
+        "sqlite",
+        "testing",
+        "automation"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/frontend/catalog-photo-mapper/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "modern-css",
       "description": "Use modern CSS: layout (grid/flex), custom properties, container queries, cascade layers, and responsive design. Use for maintainable styling.",
       "category": "frontend",
@@ -2523,6 +2951,67 @@
       "updated": "2026-09-28"
     },
     {
+      "name": "vibe-seo-audit",
+      "description": "Audits and fixes SEO, SSR/prerendering, meta tags, Open Graph preview cards, sitemap.xml, robots.txt, PageSpeed/LCP performance, and curated GitHub/MCP/Cursor integrations for vibe-coded websites and SPAs. Use when fixing empty React/Vite root divs and search visibility.",
+      "category": "frontend",
+      "tags": [
+        "seo",
+        "ssr",
+        "nextjs",
+        "astro",
+        "pagespeed",
+        "open-graph",
+        "mcp",
+        "frontend"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/frontend/vibe-seo-audit/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
+      "name": "vibe-shop-normalizer",
+      "description": "Normalizes messy vibe-coded e-commerce HTML/CSS/JS storefronts into clean, light-themed, responsive Zero-CLS production sites with verified catalog imagery and passing DOM tests. Use when cleaning up multi-iteration storefront code and fixing layout shifts.",
+      "category": "frontend",
+      "tags": [
+        "frontend",
+        "ecommerce",
+        "css",
+        "responsive",
+        "performance",
+        "testing",
+        "tailwind"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/frontend/vibe-shop-normalizer/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
+    },
+    {
       "name": "vue",
       "description": "Build reactive user interfaces with Vue 3: Composition API, reactivity, components, state, and tooling. Use for any Vue-based UI work.",
       "category": "frontend",
@@ -2675,6 +3164,36 @@
       "has_ru": true,
       "created": "2026-09-29",
       "updated": "2026-09-29"
+    },
+    {
+      "name": "frontend-slides-code",
+      "description": "Creates interactive, keyboard-navigable HTML/CSS/JS slide decks and technical presentations as code with zero external dependencies, live code blocks, SVG architecture diagrams, and PDF print export. Use for engineering talks, pitch decks, and interactive workshops.",
+      "category": "media",
+      "tags": [
+        "slides",
+        "presentations",
+        "media",
+        "frontend",
+        "html",
+        "css",
+        "svg"
+      ],
+      "models": [
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
+      ],
+      "version": "1.0.0",
+      "path": "D:/skills/.claude/skills/media/frontend-slides-code/SKILL.md",
+      "languages": [
+        "en",
+        "ru"
+      ],
+      "has_ru": true,
+      "created": "2026-10-28",
+      "updated": "2026-10-28"
     },
     {
       "name": "expo-rn",

@@ -1,41 +1,45 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "desktop",
-  "name": "Desktop",
+  "name": "Desktop Apps",
+  "name_ru": "Десктоп-разработка",
   "icon": "🖥️",
-  "tagline": "Electron, native apps",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Cross-platform desktop engineering with Electron, process sandboxing, typed IPC bridges, and local SQLite WAL storage",
+  "tagline_ru": "Кроссплатформенные десктопные приложения на Electron: изоляция процессов, типизированный мост IPC и локальная БД SQLite",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "desktop",
-  "related_skills": [],
+  "related_skills": [
+    "electron",
+    "sqlite",
+    "typescript"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Process Isolation, ContextBridge & Security Hardening",
+      "title_ru": "Этап 1. Изоляция процессов Main/Renderer и защита моста ContextBridge",
       "items": [
-        "Map drops soon"
+        "Enforcing nodeIntegration: false, contextIsolation: true, and sandbox: true on all BrowserWindow instances",
+        "Exposing narrow, schema-validated asynchronous APIs via contextBridge.exposeInMainWorld and ipcMain.handle"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Включение жесткой изоляции окна браузера: nodeIntegration: false, contextIsolation: true и песочница sandbox: true",
+        "Построение узкого типизированного API между интерфейсом и ОС через contextBridge и асинхронные обработчики ipcMain.handle"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Local SQLite Storage, Native OS Integration & Auto-Updates",
+      "title_ru": "Этап 2. Локальное хранилище SQLite, системная интеграция и автообновления",
       "items": [
-        "Map drops soon"
+        "Running embedded SQLite in WAL mode inside the Main process or utility worker thread for instant local search",
+        "Code signing (macOS Notarization, Windows Authenticode), system tray menus, and differential auto-updates"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Работа со встроенной базой SQLite в режиме WAL в основном процессе или воркер-потоке без заморозки интерфейса",
+        "Криптографическая подпись сборок под macOS и Windows, интеграция с системным треем и безопасная доставка автообновлений"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

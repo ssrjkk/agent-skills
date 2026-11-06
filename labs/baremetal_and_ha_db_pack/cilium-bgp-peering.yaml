@@ -1,0 +1,30 @@
+# Анонс внешних IP-адресов для Service: LoadBalancer на голом железе по протоколу BGP через Cilium
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: baremetal-public-pool
+spec:
+  blocks:
+    - cidr: "198.51.100.64/28"
+---
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: rack-tor-switches-bgp
+spec:
+  nodeSelector:
+    matchLabels:
+      node-role.kubernetes.io/worker: ""
+  virtualRouters:
+    - localASN: 64512
+      exportPodCIDR: false
+      serviceSelector:
+        matchExpressions:
+          - { key: somekey, operator: NotIn, values: ["never-match"] }
+      neighbors:
+        - peerAddress: "10.0.0.1/32" # IP физического коммутатора (Top-of-Rack Switch)
+          peerASN: 64511
+          eBGPMultihopTTL: 2
+          connectRetryTimeSeconds: 15
+          holdTimeSeconds: 9
+          keepAliveTimeSeconds: 3

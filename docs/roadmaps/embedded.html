@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Embedded roadmap — Agent Skills Library</title>
-  <meta name="description" content="Rust embedded, firmware">
+  <title>Embedded &amp; IoT roadmap — Agent Skills Library</title>
+  <meta name="description" content="Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety">
   <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/roadmaps/embedded.html">
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
-  <meta property="og:title" content="Embedded roadmap — Agent Skills Library">
-  <meta property="og:description" content="Rust embedded, firmware">
+  <meta property="og:title" content="Embedded &amp; IoT roadmap — Agent Skills Library">
+  <meta property="og:description" content="Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/roadmaps/embedded.html">
   <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Embedded roadmap — Agent Skills Library">
-  <meta name="twitter:description" content="Rust embedded, firmware">
+  <meta name="twitter:title" content="Embedded &amp; IoT roadmap — Agent Skills Library">
+  <meta name="twitter:description" content="Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety">
   <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,14 +48,14 @@
       <p class="back-link"><a href="../roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
       <header class="rm-hero">
         <span class="domain-chip" style="background:#84cc161a;color:#84cc16;border-color:#84cc1644">embedded</span>
-        <h1>🔌 Embedded <span class="soon-pill big">soon</span></h1>
-        <p>Rust embedded, firmware</p>
+        <h1>🔌 <span data-slang-body="en">Embedded &amp; IoT</span><span data-slang-body="ru" hidden>Embedded и микроконтроллеры</span> <span class="live-pill big">live</span></h1>
+        <p><span data-slang-body="en">Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety</span><span data-slang-body="ru" hidden>Программирование микроконтроллеров на Rust (#![no_std]), трейты embedded-hal, DMA, прерывания реального времени (Embassy) и Watchdog</span></p>
       </header>
       <div class="page-nav"><a class="page-nav-link" href="education.html">← education</a><a class="page-nav-link" href="engineering.html">engineering →</a></div>
-      <div class="rm-timeline"><div class="rm-stage"><h3>▸ Fundamentals <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Core <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Advanced <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div><div class="rm-stage"><h3>▸ Expert <span class="soon-pill">soon</span></h3><ul><li>Map drops soon</li></ul></div></div>
-      <div class="rm-related"><a class="btn-ghost" href="../domains/embedded.html"><span data-i18n="rel_skills">Related skills →</span></a></div>
+      <div class="rm-timeline"><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 1. Bare-Metal #![no_std] Rust, Memory Maps &amp; Typestate Peripherals</span><span data-slang-body="ru" hidden>Этап 1. Среда #![no_std] на Rust, карта памяти и типобезопасная периферия</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Custom linker scripts (memory.x), zero-heap static allocation (heapless), and compile-time GPIO/SPI/I2C pin state checking</li><li>Portable driver development against embedded-hal traits and zero-copy peripheral transfers via DMA</li></ul><ul data-slang-body="ru" hidden><li>Скрипты линковщика (memory.x), работа без кучи на статических буферах (heapless) и проверка режимов пинов GPIO/SPI/I2C на этапе компиляции</li><li>Разработка переносимых драйверов датчиков поверх трейтов embedded-hal и прямая пересылка данных через DMA без участия CPU</li></ul></div><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 2. Real-Time Concurrency (Embassy / RTIC), Watchdogs &amp; Telemetry</span><span data-slang-body="ru" hidden>Этап 2. Асинхронность реального времени (Embassy / RTIC), сторожевые таймеры и отладка</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Cooperative async/await firmware on Embassy and hardware interrupt prioritization with RTIC</li><li>Hardware watchdog timers, brown-out detection, defmt zero-cost logging over RTT, and A/B partition OTA updates</li></ul><ul data-slang-body="ru" hidden><li>Асинхронные прошивки без аллокаций на фреймворке Embassy и жесткое планирование аппаратных прерываний в RTIC</li><li>Аппаратные сторожевые таймеры (Watchdog), легковесное логирование defmt по шине SWD/RTT и отказоустойчивое обновление прошивки (OTA)</li></ul></div></div>
+      <div class="rm-related"><h3>Related skills</h3><div class="rm-chips"><a class="rm-chip" href="../skills/rust-embedded.html">rust-embedded</a><a class="rm-chip" href="../skills/rust-tokio.html">rust-tokio</a></div></div>
       <div class="page-nav"><a class="page-nav-link" href="education.html">← education</a><a class="page-nav-link" href="engineering.html">engineering →</a></div>
-      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/embedded.json</code> · ETA: soon</p>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/embedded.json</code> · ETA: 2026-11</p>
     </div>
   </div>
   <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>

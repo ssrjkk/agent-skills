@@ -1,41 +1,44 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "embedded",
-  "name": "Embedded",
+  "name": "Embedded & IoT",
+  "name_ru": "Embedded и микроконтроллеры",
   "icon": "🔌",
-  "tagline": "Rust embedded, firmware",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety",
+  "tagline_ru": "Программирование микроконтроллеров на Rust (#![no_std]), трейты embedded-hal, DMA, прерывания реального времени (Embassy) и Watchdog",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "embedded",
-  "related_skills": [],
+  "related_skills": [
+    "rust-embedded",
+    "rust-tokio"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Bare-Metal #![no_std] Rust, Memory Maps & Typestate Peripherals",
+      "title_ru": "Этап 1. Среда #![no_std] на Rust, карта памяти и типобезопасная периферия",
       "items": [
-        "Map drops soon"
+        "Custom linker scripts (memory.x), zero-heap static allocation (heapless), and compile-time GPIO/SPI/I2C pin state checking",
+        "Portable driver development against embedded-hal traits and zero-copy peripheral transfers via DMA"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Скрипты линковщика (memory.x), работа без кучи на статических буферах (heapless) и проверка режимов пинов GPIO/SPI/I2C на этапе компиляции",
+        "Разработка переносимых драйверов датчиков поверх трейтов embedded-hal и прямая пересылка данных через DMA без участия CPU"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Real-Time Concurrency (Embassy / RTIC), Watchdogs & Telemetry",
+      "title_ru": "Этап 2. Асинхронность реального времени (Embassy / RTIC), сторожевые таймеры и отладка",
       "items": [
-        "Map drops soon"
+        "Cooperative async/await firmware on Embassy and hardware interrupt prioritization with RTIC",
+        "Hardware watchdog timers, brown-out detection, defmt zero-cost logging over RTT, and A/B partition OTA updates"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Асинхронные прошивки без аллокаций на фреймворке Embassy и жесткое планирование аппаратных прерываний в RTIC",
+        "Аппаратные сторожевые таймеры (Watchdog), легковесное логирование defmt по шине SWD/RTT и отказоустойчивое обновление прошивки (OTA)"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

@@ -9,7 +9,12 @@
   "status": "live",
   "eta": "2026-11",
   "catalog_domain": "qa",
-  "related_skills": ["pytest", "jest", "browser-automation", "ai-testing"],
+  "related_skills": [
+    "pytest",
+    "jest",
+    "browser-automation",
+    "ai-testing"
+  ],
   "stages": [
     {
       "title": "Stage 0. QA fundamentals and test design (3–5 wk)",

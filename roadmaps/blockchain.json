@@ -1,41 +1,44 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "blockchain",
-  "name": "Blockchain",
+  "name": "Blockchain & ZK",
+  "name_ru": "Блокчейн и ZK",
   "icon": "⛓️",
-  "tagline": "ZK-proofs, protocols, dApps",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Cryptographic primitives, Zero-Knowledge Proofs (SNARKs/STARKs), arithmetic circuits, and smart-contract verifiers",
+  "tagline_ru": "Криптографические примитивы, доказательства с нулевым разглашением (ZK-SNARKs/STARKs), арифметические схемы и смарт-контракты",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "blockchain",
-  "related_skills": [],
+  "related_skills": [
+    "zk-proofs",
+    "secrets-management"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Cryptographic Primitives, Commitments & Merkle Proofs",
+      "title_ru": "Этап 1. Криптографические примитивы, коммитменты и деревья Меркла",
       "items": [
-        "Map drops soon"
+        "Finite fields, elliptic curves, Poseidon/Pedersen ZK-friendly hashes, and Merkle inclusion proofs",
+        "Deterministic key management, hardware security modules (HSM), and EIP-712 typed structured signatures"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Конечные поля, эллиптические кривые, ZK-дружественные хэш-функции (Poseidon, Pedersen) и доказательства включения в дерево Меркла",
+        "Управление ключами, аппаратные модули безопасности и типизированные криптографические подписи EIP-712"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Zero-Knowledge Circuits (Circom / Noir) & On-Chain Verifiers",
+      "title_ru": "Этап 2. Разработка ZK-схем (Circom / Noir) и смарт-контрактов верификаторов",
       "items": [
-        "Map drops soon"
+        "Writing R1CS and Plonkish arithmetic constraints in Circom, Noir, or Halo2 without under-constrained witness bugs",
+        "Generating Groth16/PLONK proofs off-chain and verifying them gas-efficiently inside Solidity smart contracts"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Проектирование арифметических схем в Circom и Noir с жесткой проверкой полноты ограничений (защита от under-constrained багов)",
+        "Генерация доказательств Groth16/PLONK вне сети и их экономичная по газу проверка в смарт-контрактах верификаторах"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

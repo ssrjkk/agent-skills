@@ -9,7 +9,24 @@
   "status": "live",
   "eta": "2026-11",
   "catalog_domain": "ai",
-  "related_skills": ["agent-development", "rag-pipeline", "prompt-engineering", "structured-output", "embeddings", "vector-databases", "mcp-servers", "llm-evals"],
+  "related_skills": [
+    "agent-development",
+    "rag-pipeline",
+    "prompt-engineering",
+    "structured-output",
+    "embeddings",
+    "vector-databases",
+    "mcp-servers",
+    "llm-evals",
+    "llm-finetuning",
+    "llm-guardrails",
+    "mlops",
+    "multi-agent-orchestration",
+    "context-engineering",
+    "function-calling",
+    "prompt-caching",
+    "ai-gpu-infra-llmops"
+  ],
   "stages": [
     {
       "title": "Stage 0. Python for data (2–3 wk)",
@@ -175,6 +192,25 @@
         "Антифрод: сильный дисбаланс, графовые признаки, петли разметки",
         "Речь: ASR/TTS вроде Whisper, потоковая обработка и задержка",
         "Инференс и инфраструктура: профилирование GPU, KV-кэш, continuous batching, устройство vLLM"
+      ],
+      "status": "live"
+    },
+    {
+      "title": "Stage G. GPU Inference in Kubernetes (vLLM, DRA/MIG), AI Gateways & MCP Ecosystem",
+      "title_ru": "Этап G. GPU-инференс в Kubernetes (vLLM, DRA/MIG), AI-шлюзы и экосистема MCP",
+      "items": [
+        "NVIDIA GPU Operator in Kubernetes: Dynamic Resource Allocation (DRA), MIG profiles, and Time-Slicing",
+        "High-throughput LLM serving with vLLM: PagedAttention, prefix caching, tensor parallelism, and 16Gi /dev/shm",
+        "Scale-to-zero GPU autoscaling with KEDA and rapid spot/on-demand GPU node provisioning via Karpenter",
+        "AI Gateways (LiteLLM and Envoy AI Gateway): token rate limits, team budgets, fallback routing, and Redis semantic cache",
+        "Model Context Protocol (awesome-mcp-servers) and IDE rules (.cursor/rules) for production coding agents"
+      ],
+      "items_ru": [
+        "Оркестрация GPU в Kubernetes: NVIDIA GPU Operator, профили MIG, DRA и Time-Slicing",
+        "Высокопроизводительный сервинг vLLM: PagedAttention, prefix caching, tensor parallelism и /dev/shm в RAM",
+        "Масштабирование GPU-подов в ноль через KEDA и быстрый заказ GPU-нод через Karpenter",
+        "Единый AI-шлюз (LiteLLM / Envoy AI Gateway): лимиты токенов, бюджеты команд, фоллбэк и семантический кэш в Redis",
+        "Интеграция агентов через Model Context Protocol (awesome-mcp-servers) и правила редакторов (.cursor/rules)"
       ],
       "status": "live"
     }

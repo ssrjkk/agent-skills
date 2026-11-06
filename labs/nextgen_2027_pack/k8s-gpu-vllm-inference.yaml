@@ -1,0 +1,61 @@
+# Тренды 2026-2027: Оркестрация LLM (vLLM) с выделением GPU в Kubernetes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-inference-vllm
+  namespace: ai-workloads
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vllm-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vllm-server
+    spec:
+      nodeSelector:
+        accelerator: nvidia-l40s
+      tolerations:
+        - key: "nvidia.com/gpu"
+          operator: "Exists"
+          effect: "NoSchedule"
+      containers:
+        - name: vllm
+          image: vllm/vllm-openai:v0.6.3
+          args:
+            - "--model=Qwen/Qwen2.5-Coder-7B-Instruct"
+            - "--port=8000"
+            - "--gpu-memory-utilization=0.90"
+            - "--max-model-len=16384"
+          ports:
+            - containerPort: 8000
+              name: http-openai
+          resources:
+            requests:
+              cpu: "4"
+              memory: "24Gi"
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "8"
+              memory: "32Gi"
+              nvidia.com/gpu: "1"
+          volumeMounts:
+            - name: hf-cache
+              mountPath: /root/.cache/huggingface
+            - name: shm
+              mountPath: /dev/shm
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      volumes:
+        - name: hf-cache
+          persistentVolumeClaim:
+            claimName: llm-models-nvme-pvc
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "8Gi"

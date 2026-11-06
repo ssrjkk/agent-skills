@@ -1,0 +1,16 @@
+# Патч конфигурации неизменяемой ОС Talos Linux для Bare-Metal Kubernetes кластера
+# Применение: talosctl gen config my-cluster https://10.0.0.10:6443 --config-patch @talos-controlplane-patch.yaml
+machine:
+  network:
+    kubespan:
+      enabled: true
+  sysctls:
+    net.core.somaxconn: "32768"
+    net.netfilter.nf_conntrack_max: "524288"
+    vm.overcommit_memory: "1"
+cluster:
+  network:
+    cni:
+      name: none # Отключаем стандартный CNI для установки Cilium в режиме eBPF
+  proxy:
+    disabled: true # Полностью отключаем kube-proxy (его заменяет Cilium kube-proxy replacement)

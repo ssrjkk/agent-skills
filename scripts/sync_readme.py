@@ -102,11 +102,15 @@ def render(readme: str, data: dict) -> str:
                 live += 1 if t.get("status") == "live" else 0
             except (OSError, json.JSONDecodeError):
                 continue
-    if live:
-        rm_link = f"- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) ({live} of {total} maps live: backend, QA, AI/ML)"
+    if live == total and total > 0:
+        rm_link = f"- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (all {total} maps live — EN + RU)"
+    elif live:
+        rm_link = f"- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) ({live} of {total} maps live)"
     else:
         rm_link = "- [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (every direction, soon)"
-    if rm_link not in text:
+    if re.search(r"^- \[IT Roadmaps\]\(.*\)$", text, flags=re.M):
+        text = re.sub(r"^- \[IT Roadmaps\]\(.*\)$", rm_link, text, count=1, flags=re.M)
+    elif rm_link not in text:
         text = text.replace(
             "- [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)",
             "- [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)\n" + rm_link,

@@ -19,7 +19,15 @@
         "embeddings",
         "vector-databases",
         "mcp-servers",
-        "llm-evals"
+        "llm-evals",
+        "llm-finetuning",
+        "llm-guardrails",
+        "mlops",
+        "multi-agent-orchestration",
+        "context-engineering",
+        "function-calling",
+        "prompt-caching",
+        "ai-gpu-infra-llmops"
       ],
       "stages": [
         {
@@ -188,6 +196,25 @@
             "Инференс и инфраструктура: профилирование GPU, KV-кэш, continuous batching, устройство vLLM"
           ],
           "status": "live"
+        },
+        {
+          "title": "Stage G. GPU Inference in Kubernetes (vLLM, DRA/MIG), AI Gateways & MCP Ecosystem",
+          "title_ru": "Этап G. GPU-инференс в Kubernetes (vLLM, DRA/MIG), AI-шлюзы и экосистема MCP",
+          "items": [
+            "NVIDIA GPU Operator in Kubernetes: Dynamic Resource Allocation (DRA), MIG profiles, and Time-Slicing",
+            "High-throughput LLM serving with vLLM: PagedAttention, prefix caching, tensor parallelism, and 16Gi /dev/shm",
+            "Scale-to-zero GPU autoscaling with KEDA and rapid spot/on-demand GPU node provisioning via Karpenter",
+            "AI Gateways (LiteLLM and Envoy AI Gateway): token rate limits, team budgets, fallback routing, and Redis semantic cache",
+            "Model Context Protocol (awesome-mcp-servers) and IDE rules (.cursor/rules) for production coding agents"
+          ],
+          "items_ru": [
+            "Оркестрация GPU в Kubernetes: NVIDIA GPU Operator, профили MIG, DRA и Time-Slicing",
+            "Высокопроизводительный сервинг vLLM: PagedAttention, prefix caching, tensor parallelism и /dev/shm в RAM",
+            "Масштабирование GPU-подов в ноль через KEDA и быстрый заказ GPU-нод через Karpenter",
+            "Единый AI-шлюз (LiteLLM / Envoy AI Gateway): лимиты токенов, бюджеты команд, фоллбэк и семантический кэш в Redis",
+            "Интеграция агентов через Model Context Protocol (awesome-mcp-servers) и правила редакторов (.cursor/rules)"
+          ],
+          "status": "live"
         }
       ]
     },
@@ -204,11 +231,18 @@
       "catalog_domain": "backend",
       "related_skills": [
         "fastapi",
+        "django",
+        "go-rest-api",
+        "rust-tokio",
+        "spring-boot",
+        "nestjs",
+        "express",
+        "grpc",
+        "graphql",
+        "rest-api-design",
+        "websockets",
         "postgresql",
         "redis",
-        "docker",
-        "sql-querying",
-        "rest-api-design",
         "kafka",
         "system-design"
       ],
@@ -296,129 +330,220 @@
             "Трек к senior: владение зоной, менторство"
           ],
           "status": "live"
+        },
+        {
+          "title": "Part V. Highload System Design (10k+ RPS), Outbox & Stateful Runbooks",
+          "title_ru": "Часть V. Highload System Design (10k+ RPS), паттерн Outbox и траблшутинг БД",
+          "items": [
+            "Edge-to-Core architecture for 10,000+ RPS: GeoDNS, CDN/WAF, L4/L7 balancers, and 3-AZ stateless pods",
+            "Cache-Aside in Redis/Valkey with jittered TTLs and singleflight stampede protection",
+            "Transactional Outbox pattern for atomic PostgreSQL writes and Kafka event publishing",
+            "High-availability PostgreSQL (CloudNativePG, PgBouncer transaction pooling, WAL-G S3 PITR)",
+            "Explicit RTO (< 30s) and RPO (0 lost transactions) engineering and lock_timeout migration hygiene"
+          ],
+          "items_ru": [
+            "Архитектура Edge-to-Core на 10 000+ RPS: GeoDNS, CDN/WAF, L4/L7 балансировка и stateless-поды в 3 AZ",
+            "Кэширование Cache-Aside в Redis/Valkey с разбросом TTL (jitter) и защитой от пробоя кэша",
+            "Паттерн Transactional Outbox для атомарной записи в PostgreSQL и публикации событий в Kafka",
+            "Отказоустойчивый PostgreSQL (CloudNativePG, пулер PgBouncer в режиме transaction, PITR-бэкапы WAL в S3)",
+            "Расчет целевых показателей RTO (< 30 с) и RPO (0 потерь) и безопасные DDL-миграции с lock_timeout"
+          ],
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "blockchain",
-      "name": "Blockchain",
+      "name": "Blockchain & ZK",
+      "name_ru": "Блокчейн и ZK",
       "icon": "⛓️",
-      "tagline": "ZK-proofs, protocols, dApps",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Cryptographic primitives, Zero-Knowledge Proofs (SNARKs/STARKs), arithmetic circuits, and smart-contract verifiers",
+      "tagline_ru": "Криптографические примитивы, доказательства с нулевым разглашением (ZK-SNARKs/STARKs), арифметические схемы и смарт-контракты",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "blockchain",
-      "related_skills": [],
+      "related_skills": [
+        "zk-proofs",
+        "secrets-management"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Cryptographic Primitives, Commitments & Merkle Proofs",
+          "title_ru": "Этап 1. Криптографические примитивы, коммитменты и деревья Меркла",
           "items": [
-            "Map drops soon"
+            "Finite fields, elliptic curves, Poseidon/Pedersen ZK-friendly hashes, and Merkle inclusion proofs",
+            "Deterministic key management, hardware security modules (HSM), and EIP-712 typed structured signatures"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Конечные поля, эллиптические кривые, ZK-дружественные хэш-функции (Poseidon, Pedersen) и доказательства включения в дерево Меркла",
+            "Управление ключами, аппаратные модули безопасности и типизированные криптографические подписи EIP-712"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Zero-Knowledge Circuits (Circom / Noir) & On-Chain Verifiers",
+          "title_ru": "Этап 2. Разработка ZK-схем (Circom / Noir) и смарт-контрактов верификаторов",
           "items": [
-            "Map drops soon"
+            "Writing R1CS and Plonkish arithmetic constraints in Circom, Noir, or Halo2 without under-constrained witness bugs",
+            "Generating Groth16/PLONK proofs off-chain and verifying them gas-efficiently inside Solidity smart contracts"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Проектирование арифметических схем в Circom и Noir с жесткой проверкой полноты ограничений (защита от under-constrained багов)",
+            "Генерация доказательств Groth16/PLONK вне сети и их экономичная по газу проверка в смарт-контрактах верификаторах"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "communications",
-      "name": "Writing",
+      "name": "Writing & Docs",
+      "name_ru": "Тексты и Документация",
       "icon": "✍️",
-      "tagline": "Humanize, no-slop, docs",
-      "status": "soon",
-      "eta": "soon",
-      "catalog_domain": null,
-      "related_skills": [],
+      "tagline": "No-slop engineering prose, natural bilingual copywriting (EN + RU), high-density RFCs/ADRs, and developer docs",
+      "tagline_ru": "Инженерный текст без ИИ-воды, живой двуязычный копирайтинг (EN + RU), плотные спецификации RFC/ADR и документация",
+      "status": "live",
+      "eta": "2026-11",
+      "catalog_domain": "communications",
+      "related_skills": [
+        "humanize-copy-pro",
+        "no-slop-writing",
+        "landing-page-pro",
+        "design-spec-md"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Anti-Slop Filtering & Information Density",
+          "title_ru": "Этап 1. Зачистка нейросетевой «воды» и повышение плотности фактов",
           "items": [
-            "Map drops soon"
+            "Stripping AI throat-clearing intros, corporate buzzwords ('synergy', 'paradigm shift'), and redundant closing recaps",
+            "Leading every section with the decision or metric in sentence 1 and grounding claims in commands, numbers, or links"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Удаление пустых вступлений («В современном мире...»), корпоративных штампов и дублирующих заключений",
+            "Вынос главного вывода в первое предложение абзаца и подтверждение каждого тезиса цифрой, командой или ссылкой"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Natural Bilingual Rhythm (English & Informational Russian)",
+          "title_ru": "Этап 2. Живой ритм текста на английском и инфостиль на русском",
           "items": [
-            "Map drops soon"
+            "Controlling sentence burstiness: alternating short declarative punches with detailed technical explanations",
+            "Eliminating Russian translation calques and bureaucratic nominalizations (-ение/-ание) in favor of active verbs"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Управление ритмикой текста: чередование коротких ударных фраз с развернутыми причинно-следственными пояснениями",
+            "Очистка русского текста от калек с английского и отглагольных существительных в пользу живых глаголов действия"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Engineering RFCs, ADRs, Postmortems & Product Copy",
+          "title_ru": "Этап 3. Технические спецификации (RFC, ADR, Postmortem) и продуктовый копирайтинг",
           "items": [
-            "Map drops soon"
+            "Writing high-signal RFCs and Architecture Decision Records (ADRs) with explicit trade-offs and rollback plans",
+            "Crafting developer-first READMEs, release notes, and landing copy where concrete benchmarks replace marketing adjectives"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Написание четких архитектурных документов (RFC, ADR) с явным указанием цены решения (trade-offs) и плана отката",
+            "Оформление README, релиз-ноутов и продуктовых страниц, где вместо рекламных прилагательных работают бенчмарки и примеры кода"
           ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "data",
-      "name": "Data",
+      "name": "Data Engineering",
+      "name_ru": "Дата-инженерия",
       "icon": "📊",
-      "tagline": "Spark, Airflow, dbt, SQL, viz",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "SQL, Python/Polars, Apache Kafka KRaft (Strimzi), Spark, Airflow, dbt, ClickHouse OLAP and S3 Lakehouse (Map 19)",
+      "tagline_ru": "Аналитический SQL, Python/Polars, стриминг Apache Kafka KRaft (Strimzi), Spark, Airflow, dbt, ClickHouse и S3 Lakehouse (Карта 19)",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "data",
-      "related_skills": [],
+      "related_skills": [
+        "sql-querying",
+        "pandas",
+        "apache-spark",
+        "airflow",
+        "dbt",
+        "elasticsearch",
+        "data-visualization",
+        "clickhouse",
+        "kafka"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Analytical SQL, Columnar Formats & Python Data Tooling",
+          "title_ru": "Этап 1. Аналитический SQL, колоночные форматы и обработка данных на Python",
           "items": [
-            "Map drops soon"
+            "Advanced analytical SQL: window functions (ROW_NUMBER, LAG/LEAD), CTEs, lateral joins, and query cost optimization",
+            "Vectorized data processing with pandas, Polars, and DuckDB over Parquet and Apache Arrow files"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Продвинутый аналитический SQL: оконные функции, рекурсивные CTE, LATERAL-джойны и оптимизация планов выполнения",
+            "Векторизованная обработка табличных данных в pandas, Polars и быстрые SQL-запросы через DuckDB поверх файлов Parquet и Arrow"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Event Streaming with Apache Kafka KRaft & Strimzi (Map 19)",
+          "title_ru": "Этап 2. Потоковая передача данных в Apache Kafka KRaft и Strimzi (Карта 19)",
           "items": [
-            "Map drops soon"
+            "Apache Kafka in KRaft mode (ZooKeeper-less Raft metadata quorum) deployed on Kubernetes via Strimzi KafkaNodePools",
+            "Producer/consumer reliability: acks=all, min.insync.replicas=2, idempotent producers, partitioning keys, and consumer lag control",
+            "Kafka Tiered Storage: offloading historical log segments to S3 while keeping hot tail data on fast local NVMe"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Эксплуатация Apache Kafka в режиме KRaft (без ZooKeeper) в Kubernetes через оператор Strimzi и раздельные пулы узлов",
+            "Гарантии доставки в Kafka: acks=all, min.insync.replicas=2, идемпотентные продюсеры, ключи партиционирования и мониторинг лага",
+            "Многоуровневое хранение (Tiered Storage) в Kafka: выгрузка старых сегментов в объектное хранилище S3 для удешевления дисков"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Orchestration & Analytics Engineering (Airflow & dbt)",
+          "title_ru": "Этап 3. Оркестрация пайплайнов и аналитическая инженерия (Airflow и dbt)",
           "items": [
-            "Map drops soon"
+            "Idempotent DAG engineering in Apache Airflow: TaskFlow API, dynamic task mapping, backfills, sensors, and SLA alerts",
+            "Modular transformation layers with dbt (staging -> intermediate -> marts), incremental models, macros, and schema/data tests"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Разработка идемпотентных пайплайнов в Apache Airflow: TaskFlow API, бэкфиллы, сенсоры и контроль выполнения по SLA",
+            "Слоеная трансформация данных в dbt (staging -> marts), инкрементальные витрины, макросы и автотесты качества данных"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Distributed Batch/Stream Processing (Spark & Elasticsearch)",
+          "title_ru": "Этап 4. Распределенная обработка больших данных (Apache Spark и Elasticsearch)",
           "items": [
-            "Map drops soon"
+            "Apache Spark optimization: Catalyst query planner, broadcast joins vs sort-merge joins, partition skew mitigation, and caching",
+            "Full-text and log search at scale with Elasticsearch: index mappings, analyzers, shard sizing, and ILM lifecycle policies"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Оптимизация джобов Apache Spark: планировщик Catalyst, broadcast-джойны, борьба с перекосом партиций (data skew) и кэширование",
+            "Полнотекстовый поиск и агрегации в Elasticsearch: настройка маппингов, анализаторов, шардов и политик жизненного цикла ILM"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. Real-Time OLAP & S3 Lakehouse Architecture (ClickHouse)",
+          "title_ru": "Этап 5. Витрины реального времени в ClickHouse и архитектура S3 Lakehouse",
+          "items": [
+            "Zero-code Kafka-to-ClickHouse ingestion pipelines using Kafka table engines and Materialized Views",
+            "Open Lakehouse tables (Apache Iceberg / Delta Lake) on S3 with expressive executive dashboards (Plotly, Altair, Grafana)"
+          ],
+          "items_ru": [
+            "Прямая потоковая заливка событий из топиков Kafka в витрины ClickHouse через движок таблицы Kafka и Materialized Views",
+            "Хранение исторических данных в открытых форматах Lakehouse (Iceberg/Parquet на S3) и визуализация метрик"
+          ],
+          "status": "live"
         }
       ]
     },
@@ -426,368 +551,795 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "database",
       "name": "Databases",
+      "name_ru": "Базы данных",
       "icon": "🗄️",
-      "tagline": "Postgres, Redis, Mongo, vectors",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "PostgreSQL internals, HA CloudNativePG + PgBouncer, Redis/Valkey, ClickHouse OLAP, Vector DBs, and DBA Runbooks (Map 10)",
+      "tagline_ru": "Внутренности PostgreSQL, отказоустойчивый CloudNativePG + PgBouncer, Redis/Valkey, ClickHouse, векторные БД и плейбуки (Карта 10)",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "database",
-      "related_skills": [],
+      "related_skills": [
+        "postgresql",
+        "mysql",
+        "sqlite",
+        "redis",
+        "mongodb",
+        "clickhouse",
+        "vector-databases",
+        "prisma-orm",
+        "observability-sre-highload"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Relational Internals, Indexing & Query Optimization",
+          "title_ru": "Этап 1. Внутреннее устройство СУБД, индексы и оптимизация запросов",
           "items": [
-            "Map drops soon"
+            "ACID isolation levels, MVCC tuple visibility, Write-Ahead Logging (WAL), and checkpoint tuning in PostgreSQL and MySQL",
+            "Index internals: B-Tree, GIN (JSONB/full-text), GiST, BRIN, covering indexes, and reading EXPLAIN (ANALYZE, BUFFERS)",
+            "Embedded SQLite in WAL mode with busy_timeout and type-safe schema migrations with Prisma/Alembic"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Уровни изоляции транзакций ACID, многоверсионность MVCC, журнал предзаписи WAL и настройка чекпоинтов в PostgreSQL и MySQL",
+            "Типы индексов: B-Tree, GIN, GiST, BRIN, покрывающие индексы и чтение планов выполнения EXPLAIN (ANALYZE, BUFFERS)",
+            "Встраиваемая СУБД SQLite в режиме WAL с настройкой busy_timeout и безопасные миграции схем"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. High-Availability PostgreSQL in Kubernetes (CloudNativePG & PgBouncer)",
+          "title_ru": "Этап 2. Отказоустойчивый PostgreSQL в Kubernetes (CloudNativePG и PgBouncer)",
           "items": [
-            "Map drops soon"
+            "3-node CloudNativePG clusters across availability zones with synchronous quorum replication (RPO = 0, RTO < 10s)",
+            "Connection pooling at 10k+ RPS with PgBouncer in transaction mode to prevent max_connections exhaustion",
+            "Continuous WAL archiving and base backups to S3 for Point-in-Time Recovery (PITR) with automated restore drills"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Кластеры CloudNativePG из 3 узлов в разных зонах доступности с синхронной кворумной репликацией (RPO = 0, RTO < 10 с)",
+            "Пулинг соединений на нагрузках 10k+ RPS через PgBouncer в режиме transaction для защиты от исчерпания max_connections",
+            "Непрерывная архивация WAL-сегментов в S3 для восстановления на любую секунду (PITR) и регулярные учения по восстановлению"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. On-Call DBA Troubleshooting Runbooks (Map 10)",
+          "title_ru": "Этап 3. Боевые плейбуки дежурного инженера по базам данных (Карта 10)",
           "items": [
-            "Map drops soon"
+            "Diagnosing active query bottlenecks and lock trees via pg_stat_activity and pg_blocking_pids()",
+            "Zero-downtime DDL migrations: setting lock_timeout = '2s' and statement_timeout so ALTER TABLE never freezes reads",
+            "Tuning aggressive per-table autovacuum on hot tables to prevent Dead Tuple table bloat and Transaction ID Wraparound"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Поиск зависших запросов и дерева блокировок в реальном времени через системные представления pg_stat_activity и pg_blocking_pids()",
+            "Безопасные миграции без простоя: установка lock_timeout = '2s' перед ALTER TABLE и создание индексов CONCURRENTLY",
+            "Тюнинг агрессивного autovacuum на горячих таблицах для предотвращения распухания (Bloat) и переполнения счетчика транзакций"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. In-Memory Caching (Redis/Valkey) & Document Stores (MongoDB)",
+          "title_ru": "Этап 4. In-Memory кэширование (Redis/Valkey) и документные БД (MongoDB)",
           "items": [
-            "Map drops soon"
+            "Redis and Valkey production patterns: Cache-Aside, distributed locks, rate-limiting Lua scripts, and Redis Streams",
+            "Memory eviction policies (allkeys-lfu vs volatile-lru), bigkeys scanning, and avoiding O(N) KEYS * stalls",
+            "MongoDB document schema design, compound indexing, aggregation pipelines, replica sets, and sharding keys"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Паттерны Redis и Valkey: кэш Cache-Aside, распределенные блокировки, лимитеры на Lua-скриптах и очереди Streams",
+            "Политики вытеснения памяти (allkeys-lfu против volatile-lru), поиск тяжелых ключей (--bigkeys) и запрет команды KEYS *",
+            "Проектирование документных схем в MongoDB, составные индексы, конвейеры агрегации и выбор ключа шардирования"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. Columnar OLAP (ClickHouse) & Vector Databases for AI/RAG",
+          "title_ru": "Этап 5. Колоночная аналитика (ClickHouse) и векторные БД для ИИ/RAG",
+          "items": [
+            "ClickHouse OLAP architecture: MergeTree primary sparse indexes, LowCardinality types, Partitioning, and Materialized Views",
+            "Distributed ClickHouse clusters on Kubernetes coordinated by lightweight C++ ClickHouse Keeper with S3 cold storage",
+            "Vector search with pgvector and Qdrant: HNSW index tuning (m, ef_construction), metadata filtering, and hybrid BM25 + dense search"
+          ],
+          "items_ru": [
+            "Колоночная СУБД ClickHouse: движки семейства MergeTree, разреженные индексы, партиционирование и материализованные представления",
+            "Кластеры ReplicatedMergeTree под управлением оператора Altinity и легковесного координатора ClickHouse Keeper с дисками S3",
+            "Векторные базы данных (pgvector, Qdrant): настройка графовых индексов HNSW, фильтрация по метаданным и гибридный поиск для RAG"
+          ],
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "design",
-      "name": "Design",
+      "name": "Design & UI/UX",
+      "name_ru": "Дизайн и UI/UX",
       "icon": "🎨",
-      "tagline": "Specs, diagrams, systems, taste",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Design.md specs, diagrams as code, token systems, optical UI polish, art direction taste, and high-converting landings",
+      "tagline_ru": "Спецификации Design.md, диаграммы кодом, дизайн-системы на токенах, оптическая шлифовка UI и конверсионные лендинги",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "design",
-      "related_skills": [],
+      "related_skills": [
+        "design-spec-md",
+        "diagram-as-code",
+        "landing-page-pro",
+        "ui-ux-system-pro",
+        "ui-polish-audit",
+        "design-taste-direction",
+        "vibe-shop-normalizer"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Design Specifications in Markdown & Diagrams as Code",
+          "title_ru": "Этап 1. Дизайн-спецификации в Markdown (Design.md) и схемы кодом",
           "items": [
-            "Map drops soon"
+            "Structuring unambiguous UI/UX requirements, user flows, and state matrices in DESIGN.md before generating code",
+            "Rendering architecture, sequence, and C4 system diagrams as version-controlled Mermaid, D2, and PlantUML code"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Фиксация структуры экранов, пользовательских сценариев и матрицы состояний в файле DESIGN.md до начала генерации кода",
+            "Проектирование архитектурных, сетевых и продуктовых схем кодом через Mermaid, D2 и PlantUML с чистыми диффами в Git"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Token-Driven Design Systems & Accessibility (WCAG AA/AAA)",
+          "title_ru": "Этап 2. Токенизированные дизайн-системы и доступность WCAG AA/AAA",
           "items": [
-            "Map drops soon"
+            "Primitive vs semantic CSS tokens (--bg-canvas, --bg-surface, --text-primary), 8px spatial grids, and concentric border radii",
+            "Fluid clamp() typography, Cyrillic/Latin font pairing, WCAG >= 4.5:1 contrast verification, and :focus-visible rings"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Разделение примитивных и семантических CSS-токенов, модульная сетка отступов 4px/8px и формула вложенных радиусов",
+            "Плавная типографика на clamp(), подбор шрифтов с кириллицей, проверка контраста WCAG >= 4.5:1 и видимый фокус с клавиатуры"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Intentional Art Direction & Anti-Template Taste",
+          "title_ru": "Этап 3. Арт-дирекшн, визуальный вкус и уход от ИИ-шаблонов",
           "items": [
-            "Map drops soon"
+            "Replacing generic Indigo/Purple AI templates with the 60-30-10 color rule and domain-grounded visual archetypes",
+            "Designing hero focal artifacts (interactive terminals, live product stages, and real metrics) instead of decorative filler"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Отказ от шаблонных фиолетовых градиентов в пользу правила палитры 60–30–10 и предметных визуальных архетипов",
+            "Построение первого экрана вокруг живого продуктового артефакта (интерактивный терминал, витрина или граф) вместо пустых картинок"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Optical UI Polish, Zero-CLS & High-Converting Landings",
+          "title_ru": "Этап 4. Оптическая шлифовка UI, геометрия Zero-CLS и конверсионные лендинги",
           "items": [
-            "Map drops soon"
+            "Conversion-driven landing page architecture: batched intake, single primary CTA above the fold, proof strips, and objection FAQs",
+            "Optical alignment audit: equal-height grid cards, tabular-nums counters, text-wrap: balance headings, and zero layout shift"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Архитектура конверсионного лендинга: один главный CTA на первом экране, конкретные цифры выгод, блок доказательств и разбор возражений",
+            "Оптическая полировка: выравнивание карточек в сетке, табличные цифры tabular-nums, сбалансированные заголовки и нулевой CLS"
+          ],
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "desktop",
-      "name": "Desktop",
+      "name": "Desktop Apps",
+      "name_ru": "Десктоп-разработка",
       "icon": "🖥️",
-      "tagline": "Electron, native apps",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Cross-platform desktop engineering with Electron, process sandboxing, typed IPC bridges, and local SQLite WAL storage",
+      "tagline_ru": "Кроссплатформенные десктопные приложения на Electron: изоляция процессов, типизированный мост IPC и локальная БД SQLite",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "desktop",
-      "related_skills": [],
+      "related_skills": [
+        "electron",
+        "sqlite",
+        "typescript"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Process Isolation, ContextBridge & Security Hardening",
+          "title_ru": "Этап 1. Изоляция процессов Main/Renderer и защита моста ContextBridge",
           "items": [
-            "Map drops soon"
+            "Enforcing nodeIntegration: false, contextIsolation: true, and sandbox: true on all BrowserWindow instances",
+            "Exposing narrow, schema-validated asynchronous APIs via contextBridge.exposeInMainWorld and ipcMain.handle"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Включение жесткой изоляции окна браузера: nodeIntegration: false, contextIsolation: true и песочница sandbox: true",
+            "Построение узкого типизированного API между интерфейсом и ОС через contextBridge и асинхронные обработчики ipcMain.handle"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Local SQLite Storage, Native OS Integration & Auto-Updates",
+          "title_ru": "Этап 2. Локальное хранилище SQLite, системная интеграция и автообновления",
           "items": [
-            "Map drops soon"
+            "Running embedded SQLite in WAL mode inside the Main process or utility worker thread for instant local search",
+            "Code signing (macOS Notarization, Windows Authenticode), system tray menus, and differential auto-updates"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Работа со встроенной базой SQLite в режиме WAL в основном процессе или воркер-потоке без заморозки интерфейса",
+            "Криптографическая подпись сборок под macOS и Windows, интеграция с системным треем и безопасная доставка автообновлений"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "devops",
-      "name": "DevOps",
+      "name": "DevOps & SRE",
+      "name_ru": "DevOps и SRE",
       "icon": "🚀",
-      "tagline": "Docker, K8s, CI/CD, observability",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "2026–2027 path from Linux kernel and eBPF to Bare-Metal Talos/Cilium BGP, vLLM GPU clusters, and Chaos Drills (Maps 01–20)",
+      "tagline_ru": "Путь 2026–2027 от ядра Linux и eBPF до Bare-Metal Talos/Cilium BGP, GPU-кластеров vLLM и траблшутинга (Карты 01–20)",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "devops",
-      "related_skills": [],
+      "related_skills": [
+        "devops-sre-portal-architect",
+        "linux-ebpf-troubleshooting",
+        "ci-cd-gitops-iac",
+        "k8s-baremetal-multicluster",
+        "ai-gpu-infra-llmops",
+        "observability-sre-highload",
+        "docker",
+        "kubernetes",
+        "terraform",
+        "argocd",
+        "github-actions",
+        "gitlab-ci",
+        "ansible",
+        "prometheus-grafana",
+        "loki",
+        "sre-slos",
+        "platform-engineering"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Linux Kernel Internals, eBPF & Networking (Map 01)",
+          "title_ru": "Этап 1. Внутреннее устройство ядра Linux, eBPF и сети (Карта 01)",
           "items": [
-            "Map drops soon"
+            "Process scheduler (CFS), states R/S/D (uninterruptible I/O sleep) and Z (zombies), PID 1 signal handling with tini",
+            "Namespaces (pid, net, mnt, user) and cgroups v2 (memory.max, cpu.max, OOM Killer scoring)",
+            "Filesystems, inodes (df -i), and fixing 100% disk usage from deleted open files via lsof +L1 and /proc/<PID>/fd",
+            "USE/RED triage in 60 seconds: uptime, vmstat 1, iostat -xz 1, ss -tulpan, and eBPF kernel tracing",
+            "TCP/IP handshake, TLS 1.3, DNS troubleshooting (dig +trace), nf_conntrack tuning, and hardened Nginx/Envoy"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Планировщик CFS, статусы процессов R/S/D (ожидание диска/NFS) и Z (зомби), обработка сигналов PID 1 через tini",
+            "Изоляция namespaces (pid, net, mnt, user) и лимиты cgroups v2 (memory.max, cpu.max, работа OOM Killer)",
+            "Файловые системы, иноды (df -i) и очистка удаленных открытых файлов через lsof +L1 без рестарта процесса",
+            "Методологии USE и RED за 60 секунд: uptime, vmstat 1, iostat -xz 1, ss -tulpan и трассировка ядра eBPF",
+            "Стек TCP/IP, TLS 1.3, отладка DNS (dig +trace), тюнинг таблицы nf_conntrack и боевой Nginx/Envoy"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Engineering in Python/Go & Container Internals (Map 02)",
+          "title_ru": "Этап 2. Кодинг на Python/Go и устройство контейнеров (Карта 02)",
           "items": [
-            "Map drops soon"
+            "Python automation with uv, httpx, boto3, official kubernetes client, Click/Typer CLIs, pytest, and ruff",
+            "Go for cloud-native engineers: goroutines, channels, context timeouts, Cobra CLIs, and static CGO_ENABLED=0 builds",
+            "OCI runtime internals: containerd -> containerd-shim -> runc, and OverlayFS lowerdir/upperdir/merged layers",
+            "Multi-stage distroless Dockerfiles running as nonroot (UID 65532) with readOnlyRootFilesystem"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Автоматизация на Python: пакетный менеджер uv, httpx, boto3, клиент kubernetes, CLI на Typer, pytest и ruff",
+            "Go для инфраструктурщиков: горутины, каналы, отмена через context, CLI на Cobra и статическая сборка CGO_ENABLED=0",
+            "Анатомия контейнера: цепочка containerd -> shim -> runc и слоеная файловая система OverlayFS",
+            "Эталонные multi-stage Dockerfile на базе distroless:nonroot (UID 65532) с режимом readOnlyRootFilesystem"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. CI/CD Pipelines, Dagger, OIDC & OpenTofu GitOps (Map 03)",
+          "title_ru": "Этап 3. Пайплайны CI/CD, Dagger, OIDC, OpenTofu и GitOps (Карта 03)",
           "items": [
-            "Map drops soon"
+            "GitHub Actions and GitLab CI with rootless BuildKit/Kaniko instead of privileged Docker-in-Docker",
+            "Zero static cloud keys in CI via short-lived OIDC JWT federation (AssumeRoleWithWebIdentity)",
+            "Programmable pipelines as code in Go using the Dagger SDK for 100% local-to-CI parity",
+            "Modular OpenTofu/Terraform with remote S3 state locking, DRY Terragrunt wrappers, and idempotent Ansible roles",
+            "Pull-based GitOps delivery with ArgoCD (App-of-Apps, ApplicationSet) and Argo Rollouts Canary with Prometheus rollback"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Конвейеры GitHub Actions и GitLab CI со сборкой через BuildKit rootless и Kaniko без привилегированного DinD",
+            "Отказ от вечных облачных ключей в секретах CI в пользу временных токенов OIDC (id-token: write)",
+            "Программируемые пайплайны на Go через Dagger SDK для полной идентичности локального и CI-запуска",
+            "Модульный OpenTofu/Terraform с блокировкой стейта в S3, обертками Terragrunt и идемпотентными ролями Ansible",
+            "GitOps-доставка через ArgoCD (App-of-Apps, ApplicationSet) и канареечные релизы Argo Rollouts с автооткатом по метрикам"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Kubernetes Architecture, Cilium eBPF & Autoscaling (Map 04)",
+          "title_ru": "Этап 4. Архитектура Kubernetes, Cilium eBPF и автоскейлинг (Карта 04)",
           "items": [
-            "Map drops soon"
+            "Control Plane internals: kube-apiserver, etcd Raft quorum and snapshot restore, kube-scheduler, and kubelet",
+            "Workload resilience: startup/liveness/readiness probes, QoS classes (Guaranteed/Burstable), PDB, and TopologySpreadConstraints",
+            "Cilium eBPF CNI replacing kube-proxy iptables, L7 Envoy policies, and Kubernetes Gateway API (HTTPRoute)",
+            "Event-driven workload scaling with KEDA (Kafka lag, Prometheus queries) and bin-packing Spot node provisioning with Karpenter"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Устройство Control Plane: kube-apiserver, кворум etcd Raft и восстановление снапшотов, планировщик и kubelet",
+            "Надежность подов: пробы startup/liveness/readiness, классы QoS, бюджеты PDB и распределение по зонам (AZ)",
+            "Сетевой стек Cilium eBPF вместо iptables, фильтрация на уровне L7 и переход с Ingress на Gateway API (HTTPRoute)",
+            "Масштабирование подов по длине очереди через KEDA и быстрый заказ Spot-узлов через Karpenter"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. Observability Stack, eBPF Profiling & Supply Chain Security (Maps 05, 13, 14)",
+          "title_ru": "Этап 5. Наблюдаемость, eBPF-профилирование и DevSecOps (Карты 05, 13, 14)",
+          "items": [
+            "Prometheus and VictoriaMetrics (PromQL rate/histogram_quantile) with cardinality discipline and Alertmanager routing",
+            "Structured JSON logging with Vector and Grafana Loki (LogQL) correlated with OpenTelemetry and Tempo traces via trace_id",
+            "Zero-code eBPF telemetry with Grafana Beyla and continuous CPU/memory FlameGraph profiling with Pyroscope",
+            "Secrets management with Vault/OpenBao + ExternalSecrets, SBOMs (Syft), keyless Cosign signatures, and Kyverno policies"
+          ],
+          "items_ru": [
+            "Метрики в Prometheus и VictoriaMetrics (PromQL), защита от взрыва кардинальности и маршрутизация в Alertmanager",
+            "Структурированные JSON-логи через Vector и Grafana Loki (LogQL), связанные с трейсами OpenTelemetry/Tempo по trace_id",
+            "Автоматическая eBPF-инструментация через Grafana Beyla и непрерывное профилирование FlameGraph в Pyroscope",
+            "Секреты в Vault/OpenBao + ExternalSecrets, генерация SBOM (Syft), бесключевая подпись Cosign и политики Kyverno"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 6. SRE Practices, Error Budgets & Incident Playbooks (Maps 06, 09, 10, 12)",
+          "title_ru": "Этап 6. Практики SRE, Error Budget и боевые плейбуки аварий (Карты 06, 09, 10, 12)",
+          "items": [
+            "SLI/SLO/SLA math (99.9% = 43.2m monthly downtime), Error Budget burn-rate alerts, and Blameless Postmortems (5 Whys)",
+            "First-5-minute incident runbooks: CrashLoopBackOff exit codes (137/143/126/127), OOMKilled, and 502/504 storms",
+            "On-call DBA runbook: pg_stat_activity lock trees, lock_timeout DDL, autovacuum dead tuples, and PgBouncer transaction pooling",
+            "Continuous resilience verification with Chaos Mesh fault injection and Grafana k6 stress testing"
+          ],
+          "items_ru": [
+            "Расчет SLI/SLO/SLA (99.9% = 43.2 мин простоя в месяц), алерты выгорания Error Budget и культура Blameless Postmortems",
+            "Боевые плейбуки первых 5 минут аварии: разбор кодов выхода CrashLoopBackOff, OOMKilled и штормов 502/504 Bad Gateway",
+            "Шпаргалка дежурного по БД: поиск блокировок в pg_stat_activity, лаг репликации, тюнинг autovacuum и пулер PgBouncer",
+            "Проверка отказоустойчивости боем через инъекцию сбоев в Chaos Mesh и нагрузочное тестирование на Grafana k6"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 7. Bare-Metal Kubernetes: Talos Linux, Cilium BGP & Storage (Map 17)",
+          "title_ru": "Этап 7. Bare-Metal Kubernetes: Talos Linux, Cilium BGP и СХД (Карта 17)",
+          "items": [
+            "Immutable API-driven Talos Linux: zero SSH, zero shell, declarative upgrades and recovery via mTLS talosctl gRPC API",
+            "Cilium BGP Control Plane on bare metal: announcing LoadBalancer VIPs via ECMP to Top-of-Rack switches",
+            "Bare-metal CSI architecture: distributed Rook-Ceph (RWO/RWX/S3) vs local NVMe TopoLVM for replicated databases"
+          ],
+          "items_ru": [
+            "Неизменяемая ОС Talos Linux без SSH и пакета утилит: управление и обновление узлов исключительно через mTLS gRPC API talosctl",
+            "Анонсы внешних IP для Service: LoadBalancer по протоколу BGP (ECMP) в Cilium напрямую на коммутаторы стойки (ToR)",
+            "Выбор СХД на голом железе: распределенный Rook-Ceph для общих томов против локальных NVMe (TopoLVM) для кластерных БД"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 8. Platform Engineering: Go Operators, Backstage IDP & Multi-Cluster (Maps 16, 18)",
+          "title_ru": "Этап 8. Платформенная инженерия: Go-операторы, Backstage и мульти-кластер (Карты 16, 18)",
+          "items": [
+            "Custom Kubernetes Operators in Go with Kubebuilder (controller-runtime): CRDs, idempotent Reconcile, OwnerReferences, Finalizers",
+            "Internal Developer Portal (IDP) with Backstage Software Templates and Crossplane XRDs for 3-minute service onboarding",
+            "Fleet lifecycle management via Cluster API (CAPI), 5-second ephemeral PR clusters via vCluster, and Cilium Cluster Mesh"
+          ],
+          "items_ru": [
+            "Разработка операторов K8s на Go (Kubebuilder): описание CRD, идемпотентный цикл Reconcile, OwnerReferences и Finalizers",
+            "Внутренний портал разработчика Backstage IDP и композиции Crossplane XRD для создания сервиса с БД за 3 минуты",
+            "Управление флотом кластеров через Cluster API (CAPI), временные PR-окружения за 5 секунд на vCluster и сеть Cilium Cluster Mesh"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 9. AI/GPU Infrastructure & Highload Data Streaming (Maps 14, 19)",
+          "title_ru": "Этап 9. Инфраструктура AI/GPU и потоковые системы данных (Карты 14, 19)",
+          "items": [
+            "GPU orchestration in Kubernetes (NVIDIA GPU Operator, DRA/MIG) and LLM serving with vLLM, KEDA, and LiteLLM/Envoy AI Gateway",
+            "ZooKeeper-less Apache Kafka in KRaft mode via Strimzi Operator with S3 Tiered Storage",
+            "Petabyte OLAP clusters on ClickHouse with ReplicatedMergeTree, C++ ClickHouse Keeper, and S3 Lakehouse tiers"
+          ],
+          "items_ru": [
+            "Оркестрация GPU в Kubernetes (NVIDIA GPU Operator, DRA/MIG) и сервинг LLM через vLLM, KEDA и шлюз LiteLLM / Envoy AI Gateway",
+            "Кластеры Apache Kafka в режиме KRaft без ZooKeeper под управлением оператора Strimzi с выгрузкой истории в S3",
+            "Аналитические кластеры ClickHouse в Kubernetes с координацией через ClickHouse Keeper и холодным уровнем хранения в S3"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 10. Chaos Drill Lab, System Design (10k+ RPS) & Career XYZ (Maps 07, 08, 11, 15, 20)",
+          "title_ru": "Этап 10. Полигон Chaos Drill, System Design (10k+ RPS) и карьера XYZ (Карты 07, 08, 11, 15, 20)",
+          "items": [
+            "Hands-on Chaos Drill Simulator (break-my-cluster.yaml + verify-fixes.sh): fixing readOnlyRootFilesystem, OOM/probes, selectors, and NetworkPolicy",
+            "Production Pet-Project Blueprint: Go/Python service + Postgres + Redis + Terraform + ArgoCD + Prometheus/Loki + k6",
+            "Senior/Staff System Design (10k+ RPS, Multi-AZ, RTO/RPO) and ATS-proof resume engineering with the Google XYZ formula"
+          ],
+          "items_ru": [
+            "Практический полигон поломок Chaos Drill (break-my-cluster.yaml + verify-fixes.sh): 4 боевых сценария с автопроверкой",
+            "Сквозной продакшн пет-проект для портфолио: микросервис + БД + кэш + пайплайн CI/CD + IaC + GitOps + мониторинг",
+            "Защита архитектуры System Design на 10 000+ RPS и упаковка резюме по формуле измеримых достижений XYZ"
+          ],
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "education",
-      "name": "Education",
+      "name": "Education & Career",
+      "name_ru": "Обучение и Карьера",
       "icon": "🎓",
-      "tagline": "Explain anything, onboarding",
-      "status": "soon",
-      "eta": "soon",
-      "catalog_domain": null,
-      "related_skills": [],
+      "tagline": "AI-Coder Learning-to-Career Portal (Learn -> Build -> Get Hired), Feynman Method, Interview Q&A & XYZ Resumes (Maps 08, 15, 23)",
+      "tagline_ru": "Портал AI-кодера «Обучение — Практика — Работа», метод Фейнмана, разбор собеседований и резюме по формуле XYZ (Карты 08, 15, 23)",
+      "status": "live",
+      "eta": "2026-11",
+      "catalog_domain": "education",
+      "related_skills": [
+        "ai-coder-career-architect",
+        "explain-anything",
+        "system-design",
+        "devops-sre-portal-architect"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Feynman Deconstruction & Learning by Rebuilding (Map 21)",
+          "title_ru": "Этап 1. Метод Фейнмана и обучение через воссоздание систем (Карта 21)",
           "items": [
-            "Map drops soon"
+            "4-layer Feynman study loop: identify the pain -> state 1-sentence intuition -> draw ASCII data flow -> write 20-line runnable core",
+            "Combining codecrafters-io/build-your-own-x with AI agents as Socratic tutors rather than passive copy-paste generators"
           ],
-          "status": "soon"
+          "items_ru": [
+            "4-уровневый разбор любой темы по Фейнману: исходная боль -> интуиция в 1 фразу -> ASCII-схема потока -> рабочий код в 20 строк",
+            "Сборка учебных реализаций по гайдам build-your-own-x с использованием ИИ-агента как ментора и ревьюера, а не генератора копипасты"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Hands-On Practice: Chaos Labs & Production Blueprints (Maps 07, 20)",
+          "title_ru": "Этап 2. Практика на боевых тренажерах Chaos Drill и пет-проектах (Карты 07, 20)",
           "items": [
-            "Map drops soon"
+            "Diagnosing and fixing broken Kubernetes workloads in the Chaos Drill simulator (break-my-cluster.yaml + verify-fixes.sh)",
+            "Building 1-2 flagship production repositories on GitHub with multi-stage Dockerfiles, CI/CD, IaC, and observability"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Отработка навыков траблшутинга в тренажере поломок Chaos Drill (break-my-cluster.yaml и скрипт автопроверки verify-fixes.sh)",
+            "Сборка 1–2 глубоких продакшн-репозиториев на GitHub с контейнеризацией, автотестами, CI/CD и мониторингом вместо 20 сырых демо"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Technical Interview Mastery: Linux, K8s, DBs & CI/CD (Map 08)",
+          "title_ru": "Этап 3. Прохождение технических собеседований Middle / Senior / Staff (Карта 08)",
           "items": [
-            "Map drops soon"
+            "Deep-dive interview answers: full curl https:// packet lifecycle, D-state Load Average, lsof +L1 disk leaks, and cgroups v2",
+            "Kubernetes and database interview drills: CrashLoopBackOff exit codes, etcd Raft quorum, PostgreSQL locks, and Kafka KRaft"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Разбор классических вопросов интервью: полный путь пакета при curl https://, причины высокого Load Average в статусе D и утечки lsof +L1",
+            "Секции по Kubernetes и базам данных: диагностика CrashLoopBackOff, потеря кворума etcd, блокировки ALTER TABLE и архитектура Kafka KRaft"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Highload System Design Interview Framework (Map 11)",
+          "title_ru": "Этап 4. Алгоритм защиты архитектуры на секции System Design (Карта 11)",
           "items": [
-            "Map drops soon"
+            "45-minute System Design structure: functional/non-functional requirements (5m) -> RPS/storage math -> Edge-to-DB diagram -> SPOF audit",
+            "Defending trade-offs: synchronous vs asynchronous replication (RPO/RTO), Cache-Aside stampede protection, and Outbox consistency"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Пошаговый тайминг 45-минутного System Design: сбор требований и расчет RPS/трафика -> схема слоев -> устранение точек отказа SPOF",
+            "Аргументация инженерных компромиссов: синхронная против асинхронной репликации (RPO/RTO), защита кэша и паттерн Outbox"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. ATS-Proof Resume Engineering with the XYZ Formula (Maps 15, 23)",
+          "title_ru": "Этап 5. Упаковка резюме по формуле XYZ и выход на оффер (Карты 15, 23)",
+          "items": [
+            "Rewriting every experience bullet with the Google XYZ formula: Achieved [X], measured by [Y], by implementing [Z]",
+            "Polishing the engineer's GitHub profile: 4-6 pinned flagship repos, architecture diagrams, green CI badges, and live SEO-indexed demos"
+          ],
+          "items_ru": [
+            "Переписывание каждого пункта опыта по формуле XYZ: «Достиг результата [X], измеряемого метрикой [Y], за счет внедрения [Z]»",
+            "Оформление витрины GitHub-профиля: закрепленные репозитории со схемами архитектуры, зелеными бейджами CI и живыми демо"
+          ],
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "embedded",
-      "name": "Embedded",
+      "name": "Embedded & IoT",
+      "name_ru": "Embedded и микроконтроллеры",
       "icon": "🔌",
-      "tagline": "Rust embedded, firmware",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety",
+      "tagline_ru": "Программирование микроконтроллеров на Rust (#![no_std]), трейты embedded-hal, DMA, прерывания реального времени (Embassy) и Watchdog",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "embedded",
-      "related_skills": [],
+      "related_skills": [
+        "rust-embedded",
+        "rust-tokio"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Bare-Metal #![no_std] Rust, Memory Maps & Typestate Peripherals",
+          "title_ru": "Этап 1. Среда #![no_std] на Rust, карта памяти и типобезопасная периферия",
           "items": [
-            "Map drops soon"
+            "Custom linker scripts (memory.x), zero-heap static allocation (heapless), and compile-time GPIO/SPI/I2C pin state checking",
+            "Portable driver development against embedded-hal traits and zero-copy peripheral transfers via DMA"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Скрипты линковщика (memory.x), работа без кучи на статических буферах (heapless) и проверка режимов пинов GPIO/SPI/I2C на этапе компиляции",
+            "Разработка переносимых драйверов датчиков поверх трейтов embedded-hal и прямая пересылка данных через DMA без участия CPU"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Real-Time Concurrency (Embassy / RTIC), Watchdogs & Telemetry",
+          "title_ru": "Этап 2. Асинхронность реального времени (Embassy / RTIC), сторожевые таймеры и отладка",
           "items": [
-            "Map drops soon"
+            "Cooperative async/await firmware on Embassy and hardware interrupt prioritization with RTIC",
+            "Hardware watchdog timers, brown-out detection, defmt zero-cost logging over RTT, and A/B partition OTA updates"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Асинхронные прошивки без аллокаций на фреймворке Embassy и жесткое планирование аппаратных прерываний в RTIC",
+            "Аппаратные сторожевые таймеры (Watchdog), легковесное логирование defmt по шине SWD/RTT и отказоустойчивое обновление прошивки (OTA)"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "engineering",
-      "name": "Engineering",
+      "name": "Software Engineering",
+      "name_ru": "Инженерия и Архитектура",
       "icon": "🏗️",
-      "tagline": "Architecture, TDD, review, git",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Clean Architecture, TDD, Git hygiene, Highload System Design (10k+ RPS), Vibe-Coding GitHub Ecosystem & AI Agent Workflows",
+      "tagline_ru": "Чистая архитектура, TDD, культура Git, Highload System Design (10k+ RPS), экосистема вайбкодинга и работа с ИИ-агентами",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "engineering",
-      "related_skills": [],
+      "related_skills": [
+        "git-workflow",
+        "code-review",
+        "clean-architecture",
+        "test-driven-development",
+        "system-design",
+        "claude-code-commands",
+        "ai-testing",
+        "vibe-seo-audit",
+        "ai-coder-career-architect"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Git Hygiene, Atomic Commits & High-Signal Code Review",
+          "title_ru": "Этап 1. Гигиена Git, атомарные коммиты и инженерное код-ревью",
           "items": [
-            "Map drops soon"
+            "Trunk-based development, interactive rebase, git bisect bug hunting, Conventional Commits, and automated pre-commit hooks",
+            "Conducting high-signal code reviews: checking concurrency invariants, security boundaries, failure handling, and test coverage"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Разработка от мастер-ветки (Trunk-Based), интерактивный ребейз, поиск регрессий через git bisect и хуки pre-commit",
+            "Проведение глубокого код-ревью: проверка инвариантов конкурентности, безопасности, обработки ошибок и полноты тестов"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Clean Architecture, Domain Boundaries & TDD",
+          "title_ru": "Этап 2. Чистая архитектура (Ports & Adapters) и дисциплина TDD",
           "items": [
-            "Map drops soon"
+            "Decoupling domain logic from frameworks and databases using Hexagonal / Clean Architecture (Ports and Adapters)",
+            "Red-Green-Refactor TDD loops, contract testing, property-based testing (Hypothesis), and deterministic dependency injection"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Отделение бизнес-логики от фреймворков и баз данных по принципам Чистой и Гексагональной архитектуры (Ports & Adapters)",
+            "Цикл разработки через тестирование (TDD Red-Green-Refactor), контрактные тесты и генеративное тестирование (Hypothesis)"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Vibe-Coding GitHub Ecosystem, MCP & Editor Rules (Map 21)",
+          "title_ru": "Этап 3. Экосистема вайбкодинга на GitHub, MCP-серверы и правила ИИ (Карта 21)",
           "items": [
-            "Map drops soon"
+            "Mastering core internals by rebuilding systems from scratch with codecrafters-io/build-your-own-x (~556k stars)",
+            "Rapid prototyping and pet-project data integration using free endpoints from public-apis/public-apis (~492k stars)",
+            "Connecting coding agents to Postgres, Gmail, Sheets, and browsers via Model Context Protocol (punkpeye/awesome-mcp-servers)",
+            "Locking stack conventions and anti-slop guardrails in Cursor, Claude Code, and OpenCode via PatrickJS/awesome-cursorrules"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Глубокое понимание технологий через сборку собственных реализаций по гайдам codecrafters-io/build-your-own-x",
+            "Быстрая сборка живых продуктов с подключением внешних данных из каталога бесплатных API public-apis/public-apis",
+            "Подключение ИИ-агентов к базам данных, почте, таблицам и браузеру по стандарту MCP (punkpeye/awesome-mcp-servers)",
+            "Фиксация архитектурных правил проекта для ИИ-редакторов через файлы .cursor/rules, CLAUDE.md и AGENTS.md"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Highload System Design (10,000+ RPS & Multi-AZ) (Map 11)",
+          "title_ru": "Этап 4. Проектирование высоконагруженных систем 10 000+ RPS (Карта 11)",
           "items": [
-            "Map drops soon"
+            "Back-of-the-envelope capacity planning: estimating read/write RPS, network bandwidth, RAM cache sizing, and disk IOPS",
+            "Eliminating Single Points of Failure (SPOF) across CDN/WAF, L4/L7 balancers, 3-AZ Kubernetes, Redis, Kafka, and HA Postgres",
+            "Distributed reliability patterns: idempotency keys, circuit breakers, exponential backoff with jitter, and transactional Outbox"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Инженерный расчет нагрузки на салфетке: оценка RPS чтения/записи, полосы сети, объема RAM под кэш и IOPS дисков",
+            "Проектирование без единых точек отказа (Zero SPOF): мульти-зональный K8s, кэш Redis, буферизация пиков в Kafka и кворумная БД",
+            "Паттерны надежности распределенных систем: ключи идемпотентности, Circuit Breaker, ретраи с jitter и паттерн Outbox"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. Production Pet-Project & Open-Source Packaging (Maps 07, 23)",
+          "title_ru": "Этап 5. Сборка эталонного продакшн пет-проекта и упаковка Open Source (Карты 07, 23)",
+          "items": [
+            "End-to-end repository engineering: bilingual docs, architecture diagrams, 100% test coverage, and zero-warning linters",
+            "Shipping complete operational artifacts: hardened Dockerfiles, docker-compose, CI/CD workflows, and SEO-ready GitHub Pages"
+          ],
+          "items_ru": [
+            "Оформление репозитория уровня Elite Open Source: двуязычная документация, схемы архитектуры и 100% покрытие тестами",
+            "Поставка полного комплекта эксплуатации: защищенные Dockerfile, docker-compose, пайплайн CI/CD и сайт документации"
+          ],
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "finance",
-      "name": "FinTech",
+      "name": "FinTech & Quant",
+      "name_ru": "Финтех и Квант",
       "icon": "💹",
-      "tagline": "Trading, risk, quant models",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls",
+      "tagline_ru": "Алгоритмическая торговля, бэктестинг без подглядывания в будущее, оценка рисков (VaR, CVaR, Монте-Карло) и защита исполнения",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "finance",
-      "related_skills": [],
+      "related_skills": [
+        "algorithmic-trading",
+        "risk-modeling",
+        "pandas",
+        "clickhouse"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Market Data Pipelines & Bias-Free Backtesting",
+          "title_ru": "Этап 1. Потоки биржевых котировок и честный бэктестинг стратегий",
           "items": [
-            "Map drops soon"
+            "Ingesting tick and OHLCV order-book data into columnar stores (ClickHouse/Parquet) with strict UTC timestamp normalization",
+            "Eliminating look-ahead bias, survivorship bias, and unrealistic zero-slippage fills in walk-forward backtests"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Сбор тиковых данных и стакана заявок (Order Book) в колоночные хранилища (ClickHouse, Parquet) с нормализацией таймстемпов",
+            "Защита бэктестов от заглядывания в будущее (Look-Ahead Bias), ошибки выжившего и учета комиссий и проскальзывания"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Quantitative Risk Modeling (VaR, CVaR & Stress Testing)",
+          "title_ru": "Этап 2. Количественное моделирование рисков (VaR, CVaR и Монте-Карло)",
           "items": [
-            "Map drops soon"
+            "Computing parametric, historical, and Monte Carlo Value at Risk (VaR) and Expected Shortfall (CVaR) across portfolios",
+            "Automated pre-trade risk gates: maximum drawdown circuit breakers, position size caps, and fat-finger order checks"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Расчет исторического, параметрического и Монте-Карло показателей Value at Risk (VaR) и Expected Shortfall (CVaR)",
+            "Автоматические предторговые гейты риска: стоп-краны по максимальной просадке (Drawdown), лимиты позиции и идемпотентность ордеров"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "frontend",
-      "name": "Frontend",
+      "name": "Frontend & Web",
+      "name_ru": "Фронтенд и Веб",
       "icon": "🖥️",
-      "tagline": "React, Next.js, CSS, UI engineering",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Modern React 19, Next.js, TypeScript, CSS, plus Vibe-Coding SEO, SSR/Prerendering, PageSpeed 90+ and Zero-CLS Storefronts",
+      "tagline_ru": "Современный стек React 19, Next.js, TypeScript и CSS плюс SEO-чеклист вайбкодинга, SSR, PageSpeed 90+ и витрины Zero-CLS",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "frontend",
-      "related_skills": [],
+      "related_skills": [
+        "vibe-seo-audit",
+        "vibe-shop-normalizer",
+        "catalog-photo-mapper",
+        "react-19",
+        "nextjs",
+        "astro",
+        "typescript",
+        "modern-css",
+        "tailwind-v4",
+        "vue",
+        "svelte",
+        "angular",
+        "bun-runtime"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Semantic HTML5, Modern CSS & Strict TypeScript",
+          "title_ru": "Этап 1. Семантический HTML5, современный CSS и строгий TypeScript",
           "items": [
-            "Map drops soon"
+            "Semantic landmarks (<header>, <main>, <nav>, <article>), single <h1> hierarchy, and WCAG AA keyboard accessibility",
+            "Modern CSS architecture: Grid, Flexbox, Container Queries, Cascade Layers (@layer), custom properties, and Tailwind v4",
+            "Strict TypeScript engineering: discriminated unions, generics, utility types, Zod schema validation, and Bun runtime"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Семантическая разметка (<header>, <main>, <nav>, <article>), строгая иерархия одного <h1> и навигация с клавиатуры",
+            "Современный CSS: Grid, Flexbox, Container Queries, каскадные слои (@layer), CSS-переменные и Tailwind v4",
+            "Строгая типизация в TypeScript: размеченные объединения, дженерики, валидация схем через Zod и рантайм Bun"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Component Frameworks: React 19, Next.js, Astro, Vue & Svelte",
+          "title_ru": "Этап 2. Фреймворки: React 19, Next.js, Astro, Vue и Svelte",
           "items": [
-            "Map drops soon"
+            "React 19 fundamentals and Server Components (RSC), Actions, optimistic updates, and concurrent rendering",
+            "Full-stack routing and hybrid SSR/SSG/ISR rendering with Next.js App Router and Astro Islands architecture",
+            "Fine-grained reactivity patterns in Vue 3 Composition API, Svelte 5 Runes, and Angular Signals"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Архитектура React 19: серверные компоненты (RSC), Actions, оптимистичные обновления UI и хуки",
+            "Гибридный рендеринг SSR/SSG/ISR на базе Next.js App Router и островной архитектуры Astro",
+            "Реактивные паттерны в Vue 3 Composition API, Svelte 5 Runes и сигналах Angular"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Vibe-Coding SEO, SSR/Prerendering & Open Graph (Map 22)",
+          "title_ru": "Этап 3. Техническое SEO вайбкод-сайтов, SSR/пререндер и Open Graph (Карта 22)",
           "items": [
-            "Map drops soon"
+            "Eliminating empty client-only <div id='root'></div> shells with Next.js/Astro SSR or build-time HTML prerendering",
+            "Unique <title>, <meta name='description'>, canonical URLs, and search-intent headings per route",
+            "Rich social preview cards in Telegram and X via Open Graph (og:title, og:description, absolute HTTPS og:image)",
+            "Root indexing files (sitemap.xml and robots.txt) and verification in Google Search Console and Yandex Webmaster"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Устранение проблемы пустого <div id='root'></div> для роботов Яндекса и Google через SSR или пререндер при сборке",
+            "Уникальные теги <title>, <meta name='description'>, canonical и заголовки под реальный поисковый спрос",
+            "Разметка Open Graph (og:title, og:description, абсолютный HTTPS og:image) для карточек превью в Telegram и соцсетях",
+            "Файлы индексации sitemap.xml и robots.txt в корне сайта и регистрация в Google Search Console и Яндекс Вебмастере"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Core Web Vitals (PageSpeed 90+, LCP < 2.5s) & Zero-CLS Storefronts",
+          "title_ru": "Этап 4. Скорость PageSpeed 90+ (LCP < 2.5 с) и нормализация витрин Zero-CLS",
           "items": [
-            "Map drops soon"
+            "Compressing multi-megabyte hero PNGs into WebP (<= 200 KB) with explicit width/height and fetchpriority='high'",
+            "Zero-CLS storefront geometry: scrollbar-gutter: stable, 1:1 aspect-ratio product stages, and tabular-nums prices",
+            "Cleaning up vibe-coded DOM artifacts: stripping leaked ${...} literals, duplicate navbars, and conflicting !important rules"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Сжатие тяжелых баннеров из PNG в WebP (до 200 КБ) с явными размерами width/height и приоритетом fetchpriority='high'",
+            "Геометрия витрин без сдвигов макета (Zero-CLS): scrollbar-gutter: stable, квадратные карточки 1:1 и табличные цифры цен",
+            "Очистка вайбкода от артефактов: удаление утекших шаблонов ${...}, дублей шапок и конфликтующих тем"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. E-Commerce Catalog Photo Mapping & Automated QA",
+          "title_ru": "Этап 5. Маппинг фотографий каталога без коллизий и автотесты",
+          "items": [
+            "Auditing and mapping 800x800 studio product photos across brands, series, and categories with zero collisions",
+            "Synchronizing image maps across static pages (public/uploads/), SQLite databases, and CMS export bundles",
+            "End-to-end verification with Playwright browser automation, Jest/Node test runners, and Lighthouse CI gates"
+          ],
+          "items_ru": [
+            "Аудит и привязка студийных фотографий 800x800 по брендам, сериям и категориям с нулевым числом пересечений",
+            "Синхронизация карт изображений между статикой GitHub Pages, базой SQLite и архивами выгрузки CMS",
+            "Сквозное тестирование интерфейса через Playwright, встроенный раннер Node.js и контроль метрик в Lighthouse CI"
+          ],
+          "status": "live"
         }
       ]
     },
@@ -795,40 +1347,43 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "gamedev",
       "name": "GameDev",
+      "name_ru": "Геймдев",
       "icon": "🎮",
-      "tagline": "Unity ECS, physics, gameplay",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "2D/3D game physics, spatial trees, raycasting, and high-performance Unity ECS / DOTS architecture",
+      "tagline_ru": "Физика 2D/3D игр, пространственные индексы, рейкастинг и высокопроизводительная архитектура Unity ECS / DOTS",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "gamedev",
-      "related_skills": [],
+      "related_skills": [
+        "unity-ecs",
+        "game-physics"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Fixed-Timestep Game Loop, 2D/3D Math & Rigid-Body Physics",
+          "title_ru": "Этап 1. Игровой цикл с фиксированным шагом, математика 2D/3D и физика твердых тел",
           "items": [
-            "Map drops soon"
+            "Decoupling fixed physics ticks (dt) from variable render frames with transform interpolation",
+            "Collision detection (AABB, SAT, BVH spatial trees), impulse resolution, raycasting, and continuous collision detection (CCD)"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Разделение фиксированного шага симуляции физики (FixedUpdate) и частоты отрисовки кадров с интерполяцией координат",
+            "Обнаружение столкновений (AABB, SAT, пространственные деревья BVH), рейкастинг и защита от пролета быстрых объектов сквозь стены (CCD)"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Data-Oriented Design with Unity ECS, Jobs & Burst",
+          "title_ru": "Этап 2. Дата-ориентированная архитектура Unity ECS, C# Jobs и компилятор Burst",
           "items": [
-            "Map drops soon"
+            "Cache-friendly Archetype/Chunk memory layout in Unity Entities (ECS): unmanaged IComponentData and ISystem",
+            "Parallelizing simulation across CPU cores with IJobEntity and SIMD native compilation via the Burst compiler"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Укладка данных в кэш процессора по архетипам и чанкам в Unity ECS: компоненты IComponentData и системы ISystem",
+            "Распараллеливание игровой логики на все ядра CPU через IJobEntity и векторизация машинного кода компилятором Burst"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
@@ -836,81 +1391,90 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "healthcare",
       "name": "Healthcare IT",
+      "name_ru": "Медицинские ИТ",
       "icon": "🏥",
-      "tagline": "FHIR, HIPAA, integrations",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "HL7 FHIR R4 clinical interoperability, SMART on FHIR apps, and HIPAA PHI security & compliance",
+      "tagline_ru": "Интеграция медицинских систем по стандарту HL7 FHIR R4, приложения SMART on FHIR и защита персональных данных HIPAA",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "healthcare",
-      "related_skills": [],
+      "related_skills": [
+        "hl7-fhir",
+        "hipaa-compliance",
+        "api-security",
+        "secrets-management"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Clinical Interoperability with HL7 FHIR R4 & SMART on FHIR",
+          "title_ru": "Этап 1. Обмен медицинскими данными по стандарту HL7 FHIR R4 и SMART on FHIR",
           "items": [
-            "Map drops soon"
+            "Modeling clinical resources (Patient, Observation, Encounter, MedicationRequest), coded terminologies (LOINC, SNOMED CT), and Bundles",
+            "Building SMART on FHIR applications with OAuth2/OIDC launch contexts, patient-scoped tokens, and FHIR REST search parameters"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Моделирование клинических ресурсов FHIR R4 (Patient, Observation, Encounter), медицинских справочников (LOINC, SNOMED) и транзакционных бандлов",
+            "Разработка приложений SMART on FHIR с авторизацией OAuth2/OIDC в контексте электронной медкарты (EHR)"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. HIPAA Security Rule, PHI Encryption & Audit Trails",
+          "title_ru": "Этап 2. Защита медицинских данных (PHI), шифрование и неизменяемый аудит по HIPAA",
           "items": [
-            "Map drops soon"
+            "Protecting Electronic Protected Health Information (ePHI) with AES-256 envelope encryption at rest and TLS 1.3 in transit",
+            "Minimum-necessary RBAC/ABAC access controls, PII/PHI log redaction, and tamper-evident audit logs"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Шифрование защищаемой медицинской информации (ePHI) на дисках (AES-256 KMS) и в канале передачи (TLS 1.3)",
+            "Ролевой доступ по принципу минимальной необходимости, фильтрация ПДн/диагнозов из логов и неизменяемый журнал аудита"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "media",
-      "name": "Media / Slides",
+      "name": "Media & Slides",
+      "name_ru": "Медиа и Презентации",
       "icon": "📽️",
-      "tagline": "Decks as code, visuals",
-      "status": "soon",
-      "eta": "soon",
-      "catalog_domain": null,
-      "related_skills": [],
+      "tagline": "Interactive HTML/CSS slide decks as code, Assertion-Evidence storytelling, vector SVG diagrams, and 16:9 PDF export",
+      "tagline_ru": "Интерактивные презентации кодом на HTML/CSS, модель Assertion-Evidence, векторные схемы SVG и экспорт в PDF 16:9",
+      "status": "live",
+      "eta": "2026-11",
+      "catalog_domain": "media",
+      "related_skills": [
+        "frontend-slides-code",
+        "diagram-as-code",
+        "data-visualization"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Assertion-Evidence Narrative & Action Title Scan",
+          "title_ru": "Этап 1. Сторителлинг по модели Assertion-Evidence и скелет заголовков",
           "items": [
-            "Map drops soon"
+            "Writing declarative Action Titles ('Cilium eBPF Cut Latency by 38%') so reading only headlines conveys the full pitch",
+            "Enforcing strict slide density: 1 primary visual proof (diagram, chart, or 12-line code block) + at most 3 concise bullets"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Формулировка тезисных заголовков с цифрой и выводом, чтобы чтение одних заголовков складывалось в законченный питч",
+            "Жесткий контроль плотности слайда: ровно 1 визуальное доказательство (схема, график или код) и не более 3 коротких тезисов"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Interactive 16:9 HTML/CSS/JS Slide Decks as Code",
+          "title_ru": "Этап 2. Верстка интерактивных презентаций 16:9 на HTML/CSS/JS",
           "items": [
-            "Map drops soon"
+            "Building zero-dependency single-file HTML slide decks with clamp() typography and keyboard/touch navigation",
+            "Embedding live copyable code blocks, vector SVG diagrams, and @media print rules for landscape PDF export"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Advanced",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Сборка автономных HTML-презентаций без внешних зависимостей с адаптивной типографикой clamp() и управлением с клавиатуры",
+            "Встраивание интерактивных блоков кода, векторных SVG-схем и правил @media print для чистой выгрузки в PDF"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
-          ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
@@ -918,40 +1482,58 @@
       "$schema": "../roadmaps.schema.json",
       "slug": "mobile",
       "name": "Mobile",
+      "name_ru": "Мобильная разработка",
       "icon": "📱",
-      "tagline": "Flutter, SwiftUI, Kotlin, React Native",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "Cross-platform Flutter & React Native (Expo) plus native iOS (SwiftUI) and Android (Kotlin Compose) engineering",
+      "tagline_ru": "Кроссплатформенная разработка на Flutter и React Native (Expo), а также нативный iOS (SwiftUI) и Android (Kotlin Compose)",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "mobile",
-      "related_skills": [],
+      "related_skills": [
+        "flutter",
+        "expo-rn",
+        "swift-ios",
+        "kotlin-android"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Mobile UI Architecture, Navigation & Offline-First Storage",
+          "title_ru": "Этап 1. Архитектура мобильных приложений, навигация и работа офлайн",
           "items": [
-            "Map drops soon"
+            "Unidirectional data flow, declarative UI rendering, deep linking, and responsive safe-area layouts",
+            "Offline-first persistence with local SQLite, optimistic UI mutations, background sync queues, and secure keychain storage"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Однонаправленный поток данных, декларативный UI, обработка глубоких ссылок (Deep Links) и безопасные зоны экрана",
+            "Офлайн-режим с локальной базой SQLite, оптимистичные обновления интерфейса, фоновая синхронизация и хранение токенов в Keychain/Keystore"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Cross-Platform Engineering (Flutter & Expo React Native)",
+          "title_ru": "Этап 2. Кроссплатформенная разработка на Flutter и React Native (Expo)",
           "items": [
-            "Map drops soon"
+            "Flutter production architecture: custom widgets, Riverpod/BLoC state management, isolates, and native platform channels",
+            "React Native with Expo SDK: Expo Router, New Architecture (Fabric/TurboModules), Reanimated 60fps gestures, and EAS builds"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Продакшн-архитектура на Flutter: кастомные виджеты, управление состоянием (Riverpod/BLoC), изоляты и платформенные каналы",
+            "Разработка на React Native и Expo SDK: файловый роутинг Expo Router, анимации 60 FPS на Reanimated и облачная сборка EAS"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Native iOS (SwiftUI) & Android (Kotlin Jetpack Compose)",
+          "title_ru": "Этап 3. Нативная разработка под iOS (SwiftUI) и Android (Kotlin Compose)",
           "items": [
-            "Map drops soon"
+            "Modern iOS with Swift 6 strict concurrency (async/await, actors), SwiftUI navigation stacks, and Instruments profiling",
+            "Modern Android with Kotlin coroutines/Flow, Jetpack Compose state hoisting, Hilt DI, and baseline profiles"
           ],
-          "status": "soon"
-        },
-        {
-          "title": "Expert",
-          "items": [
-            "Map drops soon"
+          "items_ru": [
+            "Современный стек iOS: строгая конкурентность в Swift 6 (async/await, акторы), навигация в SwiftUI и профилирование в Instruments",
+            "Современный стек Android: корутины и Flow в Kotlin, декларативный UI на Jetpack Compose, внедрение зависимостей Hilt и Baseline Profiles"
           ],
-          "status": "soon"
+          "status": "live"
         }
       ]
     },
@@ -1208,41 +1790,89 @@
     {
       "$schema": "../roadmaps.schema.json",
       "slug": "security",
-      "name": "Security",
+      "name": "Security & DevSecOps",
+      "name_ru": "Безопасность и DevSecOps",
       "icon": "🔒",
-      "tagline": "OWASP, API security, secrets, OAuth",
-      "status": "soon",
-      "eta": "soon",
+      "tagline": "OWASP Top 10, OAuth2/JWT, Zero Static Secrets (OIDC), Vault/OpenBao, Supply Chain (SBOM/Cosign/Kyverno) & eBPF Tetragon (Map 13)",
+      "tagline_ru": "Защита API (OWASP, OAuth2/JWT), отказ от статики (OIDC), Vault/OpenBao, защита цепочки поставки (SBOM/Cosign/Kyverno) и eBPF (Карта 13)",
+      "status": "live",
+      "eta": "2026-11",
       "catalog_domain": "security",
-      "related_skills": [],
+      "related_skills": [
+        "owasp-web-security",
+        "api-security",
+        "oauth2-jwt",
+        "secrets-management",
+        "ci-cd-gitops-iac",
+        "linux-ebpf-troubleshooting"
+      ],
       "stages": [
         {
-          "title": "Fundamentals",
+          "title": "Stage 1. Web & API Application Security (OWASP Top 10 & OAuth2/JWT)",
+          "title_ru": "Этап 1. Безопасность веб-приложений и API (OWASP Top 10 и OAuth2/JWT)",
           "items": [
-            "Map drops soon"
+            "Defending against OWASP Top 10: parameterized SQL queries, strict CSP headers against XSS, CSRF tokens, and SSRF allowlists",
+            "Modern authentication and authorization: OAuth 2.1 with PKCE, short-lived asymmetric JWTs (RS256/EdDSA), and RBAC/ABAC",
+            "API abuse protection: token-bucket rate limiting, payload schema validation, and idempotency keys"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Защита от угроз OWASP Top 10: параметризация запросов против SQLi, заголовки CSP против XSS, защита от CSRF и SSRF",
+            "Аутентификация и авторизация: OAuth 2.1 с PKCE, короткоживущие асимметричные JWT-токены, ротация ключей JWKS и RBAC/ABAC",
+            "Защита API от перегрузки и перебора: лимитирование запросов (Rate Limiting), строгая валидация схем и ключи идемпотентности"
+          ],
+          "status": "live"
         },
         {
-          "title": "Core",
+          "title": "Stage 2. Zero Static Secrets & Cloud IAM Federation (Map 13)",
+          "title_ru": "Этап 2. Концепция Zero Static Secrets и федерация доступов OIDC (Карта 13)",
           "items": [
-            "Map drops soon"
+            "Eliminating long-lived cloud keys in CI/CD via OIDC federation (AssumeRoleWithWebIdentity) scoped to exact branches",
+            "Workload-to-cloud authentication in Kubernetes via IRSA / EKS Pod Identity and Workload Identity without static env secrets"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Полный отказ от долгоживущих облачных ключей в CI/CD через временные OIDC-токены с привязкой к ветке репозитория",
+            "Бесключевая авторизация подов Kubernetes в облачных сервисах (S3, KMS, SQS) через IRSA / Pod Identity"
+          ],
+          "status": "live"
         },
         {
-          "title": "Advanced",
+          "title": "Stage 3. Secrets Management & Pre-Commit Hygiene (Vault / OpenBao)",
+          "title_ru": "Этап 3. Хранение секретов в Vault/OpenBao и защита репозиториев",
           "items": [
-            "Map drops soon"
+            "Centralized secret storage, dynamic database credentials, and automatic rotation with HashiCorp Vault or OpenBao",
+            "Syncing Vault secrets into Kubernetes safely via External Secrets Operator (ESO) and blocking leaks in git with Gitleaks"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Централизованное хранение секретов, генерация динамических паролей к БД и авторотация в HashiCorp Vault / OpenBao",
+            "Синхронизация секретов в кластер через External Secrets Operator и блокировка утечек ключей в Git через Gitleaks"
+          ],
+          "status": "live"
         },
         {
-          "title": "Expert",
+          "title": "Stage 4. Software Supply Chain Security (SBOM, Cosign & Kyverno)",
+          "title_ru": "Этап 4. Защита цепочки поставки ПО (SBOM, подпись Cosign и Kyverno)",
           "items": [
-            "Map drops soon"
+            "Generating CycloneDX/SPDX SBOMs with Syft and gating CI pipelines on HIGH/CRITICAL CVEs with Trivy",
+            "Keyless container image signing with Sigstore Cosign and admission verification in Kubernetes via Kyverno ClusterPolicies"
           ],
-          "status": "soon"
+          "items_ru": [
+            "Генерация паспорта зависимостей образа (SBOM) через Syft и блокировка сборки при наличии критических уязвимостей в Trivy",
+            "Криптографическая подпись образов через Sigstore Cosign и проверка подписи на входе в кластер через политики Kyverno"
+          ],
+          "status": "live"
+        },
+        {
+          "title": "Stage 5. Kubernetes Runtime Security (Zero-Trust & eBPF Tetragon)",
+          "title_ru": "Этап 5. Безопасность рантайма Kubernetes (Zero-Trust и eBPF Tetragon)",
+          "items": [
+            "Pod Security Standards (Restricted): readOnlyRootFilesystem, runAsNonRoot, drop ALL Linux capabilities, and Seccomp profiles",
+            "Default-deny Kubernetes NetworkPolicies, mTLS service encryption, and kernel-level eBPF enforcement with Cilium Tetragon"
+          ],
+          "items_ru": [
+            "Харденинг контейнеров: запуск от nonroot, режим readOnlyRootFilesystem, сброс Linux capabilities (drop: ALL) и профили Seccomp",
+            "Сетевая изоляция по принципу Default Deny (NetworkPolicy), шифрование mTLS и блокировка эксплойтов в ядре через eBPF Tetragon"
+          ],
+          "status": "live"
         }
       ]
     }

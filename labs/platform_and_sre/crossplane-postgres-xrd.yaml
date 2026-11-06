@@ -1,0 +1,45 @@
+# Platform Engineering: Crossplane XRD + Claim
+# Позволяет разработчику заказать готовую БД в облаке одним маленьким YAML-манифестом
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xpostgresqlinstances.platform.example.com
+spec:
+  group: platform.example.com
+  names:
+    kind: XPostgreSQLInstance
+    plural: xpostgresqlinstances
+  claimNames:
+    kind: PostgreSQLInstance
+    plural: postgresqlinstances
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - storageGB
+                - tier
+              properties:
+                storageGB:
+                  type: integer
+                  minimum: 20
+                  maximum: 1000
+                tier:
+                  type: string
+                  enum: ["small", "medium", "highload"]
+---
+# Пример того, что пишет разработчик в своем репозитории (Claim):
+apiVersion: platform.example.com/v1alpha1
+kind: PostgreSQLInstance
+metadata:
+  name: orders-service-db
+  namespace: production
+spec:
+  storageGB: 100
+  tier: highload

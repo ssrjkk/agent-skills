@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vibe-shop-normalizer — Agent Skills Library</title>
+  <meta name="description" content="Normalizes messy vibe-coded e-commerce HTML/CSS/JS storefronts into clean, light-themed, responsive Zero-CLS production sites with verified catalog imagery and passing DOM tests. Use when cleaning up multi-iteration storefront code and fixing layout shifts.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/vibe-shop-normalizer.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="vibe-shop-normalizer — Agent Skills Library">
+  <meta property="og:description" content="Normalizes messy vibe-coded e-commerce HTML/CSS/JS storefronts into clean, light-themed, responsive Zero-CLS production sites with verified catalog imagery and passing DOM tests. Use when cleaning up multi-iteration storefront code and fixing layout shifts.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/vibe-shop-normalizer.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="vibe-shop-normalizer — Agent Skills Library">
+  <meta name="twitter:description" content="Normalizes messy vibe-coded e-commerce HTML/CSS/JS storefronts into clean, light-themed, responsive Zero-CLS production sites with verified catalog imagery and passing DOM tests. Use when cleaning up multi-iteration storefront code and fixing layout shifts.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#3b82f61a;color:#3b82f6;border-color:#3b82f644">frontend</span>
+          <span class="tag">frontend</span><span class="tag">ecommerce</span><span class="tag">css</span><span class="tag">responsive</span><span class="tag">performance</span><span class="tag">testing</span><span class="tag">tailwind</span>
+        </div>
+        <h1 class="skill-page-title">vibe-shop-normalizer</h1>
+        <p class="skill-page-desc">Normalizes messy vibe-coded e-commerce HTML/CSS/JS storefronts into clean, light-themed, responsive Zero-CLS production sites with verified catalog imagery and passing DOM tests. Use when cleaning up multi-iteration storefront code and fixing layout shifts.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>96</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/frontend/vibe-shop-normalizer" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/frontend/vibe-shop-normalizer" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><a class="page-nav-link" href="vibe-seo-audit.html">← vibe-seo-audit</a><a class="page-nav-link" href="vue.html">vue →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>Vibe-Coded Storefront &amp; Zero-CLS Normalizer</h1>
+<blockquote>Turning tangled multi-pass HTML/CSS/JS shop files into crisp, light-themed, Zero-CLS storefronts that pass every test.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Synchronize storefront HTML/assets and execute the full Node.js test suite
+npm run vibe:clean
+node --test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Strict Zero-CLS light storefront geometry */
+html { scrollbar-gutter: stable; overflow-x: hidden; }
+body { background-color: #F4F5F7; color: #141619; overflow-x: hidden; }
+.watch-stage { aspect-ratio: 1 / 1; background: #F8FAFC; }
+.card-title { min-height: 38px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>A single-file or static HTML/CSS/JS storefront has accumulated duplicate navbars, conflicting dark/light overrides, or leaked ${...} literals</li>
+<li>Product cards jump or shift horizontally/vertically across mobile (320px), tablet (768px), and desktop (1024px+) viewports</li>
+<li>Converting an inconsistent dark/neon draft into a clean commercial light theme (#F4F5F7 canvas, #FFFFFF surfaces, #141619 primary actions)</li>
+<li>Synchronizing static storefront files (index.html, public/index.html) while keeping 100% of existing DOM unit tests green</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Audit existing unit tests (tests/*.test.js) before touching markup so required IDs, hash routes (#/catalog, #/p/:id), and price classes stay intact.</li>
+<li>Strip leaked JavaScript template expressions (${...}) outside &lt;script&gt; tags and remove duplicate &lt;nav&gt; or modal containers.</li>
+<li>Lock card aspect ratios (aspect-ratio: 1 / 1), title heights (min-height: 38px), spec heights (min-height: 32px), and button heights (h-10).</li>
+<li>Use font-variant-numeric: tabular-nums on all price, discount, and cart badge counters so digit updates never shift layout.</li>
+<li>Always call .unref() on recurring setInterval timers in storefront scripts so Node.js test runners exit cleanly without hanging.</li>
+<li>Keep index.html and public/index.html synchronized via a deterministic build script (vibe-clean.js).</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Run Node.js built-in test runner and storefront normalizer
+node --version
+node --test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Scan static HTML outside &lt;script&gt; blocks for leaked JS template literals (${...}) and duplicate IDs
+import re
+from collections import Counter
+
+def audit_storefront_dom(html: str) -&gt; dict:
+    no_scripts = re.sub(r&quot;&lt;script\b[^&gt;]*&gt;.*?&lt;/script&gt;&quot;, &quot;&quot;, html, flags=re.S | re.I)
+    leaked_tpl = re.findall(r&quot;\$\{[^}]+\}&quot;, no_scripts)
+    ids = re.findall(r&#x27;\bid=[&quot;\&#x27;]([^&quot;\&#x27;]+)[&quot;\&#x27;]&#x27;, no_scripts)
+    dupe_ids = [k for k, v in Counter(ids).items() if v &gt; 1]
+    return {&quot;leaked_templates&quot;: leaked_tpl, &quot;duplicate_ids&quot;: dupe_ids}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Safe background stock ticker that never hangs Node.js test runners
+const ticker = setInterval(() =&gt; {
+  updateLiveOrderToast();
+}, 15000);
+if (typeof ticker.unref === &#x27;function&#x27;) {
+  ticker.unref();
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Read all test files in tests/ and record every asserted DOM selector, meta tag, route pattern, and global helper function.</p>
+<p class='ordered'>2. Run audit_storefront_dom() to locate leaked ${...} strings, duplicate element IDs, and redundant &lt;nav&gt; blocks.</p>
+<p class='ordered'>3. Remove destructive !important dark-mode overrides on .bg-white, .bg-gray-50, and .text-gray-900.</p>
+<p class='ordered'>4. Apply the normalized light palette (#F4F5F7 background, #FFFFFF cards/modals, #141619 primary CTA, #0E9F6E accent, #2AABEE Telegram).</p>
+<p class='ordered'>5. Enforce Zero-CLS card rules: aspect-ratio: 1 / 1 photo stage, explicit width/height on &lt;img&gt;, 2-line clamped titles, and tabular-nums prices.</p>
+<p class='ordered'>6. Sync index.html to public/index.html and update byte/Brotli metrics in README.md if required by repository tests.</p>
+<p class='ordered'>7. Execute node --test and verify zero layout shifts across 320px, 768px, and 1280px viewports.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. audit_storefront_dom() returns zero leaked ${...} literals and zero duplicate IDs in static HTML</p>
+<p class='ordered'>2. node --test passes 100% of unit, DOM contract, and SEO assertions without hanging</p>
+<p class='ordered'>3. document.documentElement.scrollWidth &lt;= document.documentElement.clientWidth holds at 320px, 768px, and 1280px</p>
+<p class='ordered'>4. Toggling filter pills, favorites, or cart state causes zero pixel shift in adjacent product cards</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>node --test passes all assertions but never exits — a setInterval timer was started without calling timer.unref().</li>
+<li>README byte-size test fails after editing index.html — run the project sync script (vibe-clean.js) to update recorded raw/Brotli byte counts.</li>
+<li>Product cards have uneven heights in the grid — apply min-height: 38px on the 2-line title and min-height: 32px on the subtitle.</li>
+<li>Page jumps horizontally when opening a modal — add html { scrollbar-gutter: stable; } so hiding the scrollbar does not shift the viewport.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>Vibe-Coded Storefront &amp; Zero-CLS Normalizer (Нормализация вайбкод-витрин)</h1>
+<blockquote>Очистка навайбкоженных витрин интернет-магазинов от визуальной каши, прыжков верстки (CLS) и поломанных DOM-контрактов.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Synchronize storefront HTML/assets and execute the full Node.js test suite
+npm run vibe:clean
+node --test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>/* Strict Zero-CLS light storefront geometry */
+html { scrollbar-gutter: stable; overflow-x: hidden; }
+body { background-color: #F4F5F7; color: #141619; overflow-x: hidden; }
+.watch-stage { aspect-ratio: 1 / 1; background: #F8FAFC; }
+.card-title { min-height: 38px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>После десятка итераций вайбкодинга в HTML/CSS/JS появились дубли шапок, конфликты тем и сырые шаблонные строки ${...}</li>
+<li>Карточки товаров прыгают по высоте или вызывают горизонтальный скролл на экранах 320px, 768px и 1024px+</li>
+<li>Перевод пестрой черновой верстки в чистую коммерческую светлую тему (#F4F5F7 фон, #FFFFFF карточки, #141619 кнопки)</li>
+<li>Синхронизация витрины (index.html и public/index.html) с сохранением 100% прохождения контрактных автотестов</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Начинайте рефакторинг с чтения автотестов (tests/*.test.js), чтобы сохранить все обязательные ID, роуты (#/catalog, #/p/:id) и классы скидок.</li>
+<li>Вычищайте случайно попавшие в статический HTML конструкции ${...} и удаляйте дублирующиеся блоки &lt;nav&gt; и модальных окон.</li>
+<li>Фиксируйте геометрию карточки: квадратный контейнер фото (aspect-ratio: 1 / 1), высоты заголовка (38px), характеристик (32px) и кнопок (h-10).</li>
+<li>Включайте табличные цифры (tabular-nums) для всех цен, таймеров и счетчиков корзины, чтобы смена цифр не двигала соседние блоки.</li>
+<li>Вызывайте .unref() у фоновых таймеров setInterval, чтобы тестовый раннер node --test завершался мгновенно без зависания.</li>
+<li>Синхронизируйте корневой index.html и public/index.html единым скриптом сборки для защиты от рассинхрона статики.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Run Node.js built-in test runner and storefront normalizer
+node --version
+node --test</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Scan static HTML outside &lt;script&gt; blocks for leaked JS template literals (${...}) and duplicate IDs
+import re
+from collections import Counter
+
+def audit_storefront_dom(html: str) -&gt; dict:
+    no_scripts = re.sub(r&quot;&lt;script\b[^&gt;]*&gt;.*?&lt;/script&gt;&quot;, &quot;&quot;, html, flags=re.S | re.I)
+    leaked_tpl = re.findall(r&quot;\$\{[^}]+\}&quot;, no_scripts)
+    ids = re.findall(r&#x27;\bid=[&quot;\&#x27;]([^&quot;\&#x27;]+)[&quot;\&#x27;]&#x27;, no_scripts)
+    dupe_ids = [k for k, v in Counter(ids).items() if v &gt; 1]
+    return {&quot;leaked_templates&quot;: leaked_tpl, &quot;duplicate_ids&quot;: dupe_ids}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code>// Safe background stock ticker that never hangs Node.js test runners
+const ticker = setInterval(() =&gt; {
+  updateLiveOrderToast();
+}, 15000);
+if (typeof ticker.unref === &#x27;function&#x27;) {
+  ticker.unref();
+}</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Изучите все тесты в папке tests/ и выпишите проверяемые селекторы DOM, мета-теги, хэш-роуты и глобальные функции.</p>
+<p class='ordered'>2. Прогоните проверку audit_storefront_dom() для поиска утекших шаблонов ${...}, дублирующихся ID и лишних тегов &lt;nav&gt;.</p>
+<p class='ordered'>3. Удалите деструктивные переопределения !important, перекрашивающие светлые классы .bg-white и .bg-gray-50 в темные цвета.</p>
+<p class='ordered'>4. Примените чистую светлую палитру (#F4F5F7 общий фон, #FFFFFF карточки и модалки, #141619 основные кнопки, #0E9F6E акцент).</p>
+<p class='ordered'>5. Зафиксируйте Zero-CLS геометрию карточек: aspect-ratio: 1 / 1 для фото, явные width/height у &lt;img&gt; и tabular-nums для цен.</p>
+<p class='ordered'>6. Синхронизируйте index.html с public/index.html и обновите метрики размера бандла в документации при наличии проверок.</p>
+<p class='ordered'>7. Запустите node --test и убедитесь в отсутствии горизонтального скролла на ширине 320px, 768px и 1280px.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Проверка audit_storefront_dom() подтверждает отсутствие утекших шаблонов ${...} и дублей ID в HTML</p>
+<p class='ordered'>2. Набор автотестов node --test проходит на 100% и завершается без зависания процесса</p>
+<p class='ordered'>3. На разрешениях 320px, 768px и 1280px отсутствует горизонтальная прокрутка (scrollWidth &lt;= clientWidth)</p>
+<p class='ordered'>4. Переключение фильтров, избранного и кнопки корзины не вызывает сдвига соседних карточек товаров (CLS = 0)</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Все тесты в node --test зеленые, но процесс висит — найдите запущенный setInterval и добавьте вызов timer.unref().</li>
+<li>Падает тест на размер файла в README после правок HTML — запустите скрипт синхронизации (vibe-clean.js) для пересчета метрик.</li>
+<li>Карточки в сетке разной высоты — задайте фиксированный min-height: 38px для заголовка в 2 строки и min-height: 32px для подзаголовка.</li>
+<li>Страница дергается по горизонтали при открытии модального окна — пропишите html { scrollbar-gutter: stable; } в базовых стилях.</li>
+</ul></div>
+      <div class="page-nav"><a class="page-nav-link" href="vibe-seo-audit.html">← vibe-seo-audit</a><a class="page-nav-link" href="vue.html">vue →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

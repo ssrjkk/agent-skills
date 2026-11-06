@@ -1,0 +1,56 @@
+# Прогрессивная доставка (Canary Release) с автоматическим откатом по метрикам Prometheus
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: backend-api
+  namespace: production
+spec:
+  replicas: 10
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/org/backend-api:1.2.0
+          ports:
+            - containerPort: 8080
+  strategy:
+    canary:
+      # Фоновый анализ метрик начиная с первого шага раскатки
+      analysis:
+        templates:
+          - templateName: success-rate-check
+        startingStep: 1
+      steps:
+        - setWeight: 10
+        - pause: { duration: 2m }
+        - setWeight: 30
+        - pause: { duration: 3m }
+        - setWeight: 60
+        - pause: { duration: 3m }
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: success-rate-check
+  namespace: production
+spec:
+  metrics:
+    - name: success-rate
+      interval: 30s
+      # Требуем, чтобы доля успешных (не 5xx) ответов была >= 99%
+      successCondition: result[0] >= 0.99
+      failureLimit: 2
+      provider:
+        prometheus:
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc:9090
+          query: |
+            sum(rate(http_requests_total{service="backend-api",status_code!~"5.."}[2m]))
+            /
+            sum(rate(http_requests_total{service="backend-api"}[2m]))

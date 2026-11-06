@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ai-gpu-infra-llmops — Agent Skills Library</title>
+  <meta name="description" content="Deploys and scales production AI/LLM and GPU infrastructure in Kubernetes using NVIDIA GPU Operator, DRA/MIG, vLLM tensor parallelism, KEDA scale-to-zero, Karpenter GPU nodes, Envoy AI Gateway, and LiteLLM. Use for self-hosted LLM serving and token cost governance.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/skills/ai-gpu-infra-llmops.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:title" content="ai-gpu-infra-llmops — Agent Skills Library">
+  <meta property="og:description" content="Deploys and scales production AI/LLM and GPU infrastructure in Kubernetes using NVIDIA GPU Operator, DRA/MIG, vLLM tensor parallelism, KEDA scale-to-zero, Karpenter GPU nodes, Envoy AI Gateway, and LiteLLM. Use for self-hosted LLM serving and token cost governance.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/skills/ai-gpu-infra-llmops.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ai-gpu-infra-llmops — Agent Skills Library">
+  <meta name="twitter:description" content="Deploys and scales production AI/LLM and GPU infrastructure in Kubernetes using NVIDIA GPU Operator, DRA/MIG, vLLM tensor parallelism, KEDA scale-to-zero, Karpenter GPU nodes, Envoy AI Gateway, and LiteLLM. Use for self-hosted LLM serving and token cost governance.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="skill-page">
+      <div class="skill-page-head">
+        <div class="skill-page-badges">
+          <span class="domain-chip" style="background:#f43f5e1a;color:#f43f5e;border-color:#f43f5e44">devops</span>
+          <span class="tag">ai-infra</span><span class="tag">llmops</span><span class="tag">gpu</span><span class="tag">vllm</span><span class="tag">kubernetes</span><span class="tag">litellm</span><span class="tag">keda</span><span class="tag">karpenter</span>
+        </div>
+        <h1 class="skill-page-title">ai-gpu-infra-llmops</h1>
+        <p class="skill-page-desc">Deploys and scales production AI/LLM and GPU infrastructure in Kubernetes using NVIDIA GPU Operator, DRA/MIG, vLLM tensor parallelism, KEDA scale-to-zero, Karpenter GPU nodes, Envoy AI Gateway, and LiteLLM. Use for self-hosted LLM serving and token cost governance.</p>
+        <div class="skill-page-meta">
+          <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
+          <span><span data-i18n="blocks">Code blocks</span> <strong>5</strong></span>
+          <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>99</strong></span>
+          <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
+        </div>
+        <div class="skill-page-actions">
+          <button class="copy-btn" onclick="copyBtn(this,this.getAttribute('data-path'))" data-path=".claude/skills/devops/ai-gpu-infra-llmops" data-i18n="copy_path">copy path</button>
+          <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/ai-gpu-infra-llmops" data-i18n="view_source">view source</a>
+        </div>
+      </div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="ansible.html">ansible →</a></div>
+      <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
+      <div class="skill-page-body" data-slang-body="en">
+        <h1>AI/GPU Infrastructure &amp; LLMOps in Kubernetes</h1>
+<blockquote>High-throughput vLLM GPU serving, MIG/DRA hardware partitioning, KEDA scale-to-zero, and LiteLLM/Envoy AI Gateway routing.</blockquote>
+<h2>Quick Start</h2>
+<div class="codeblock"><pre class="code"><code># Deploy vLLM multi-GPU inference server and LiteLLM AI Gateway in Kubernetes
+kubectl apply -f labs/nextgen_2027_pack/k8s-gpu-vllm-inference.yaml
+kubectl apply -f labs/nextgen_2027_pack/envoy-ai-gateway-litellm.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Shared memory /dev/shm volume required for multi-GPU PyTorch NCCL tensor parallelism
+volumes:
+  - name: dshm
+    emptyDir:
+      medium: Memory
+      sizeLimit: 16Gi</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>When to Use</h2>
+<ul>
+<li>Running open-weights LLMs (Qwen, Llama, DeepSeek, Mistral) on NVIDIA GPUs in Kubernetes with vLLM continuous batching and PagedAttention</li>
+<li>Partitioning A100/H100 GPUs via Multi-Instance GPU (MIG), Dynamic Resource Allocation (DRA), or Time-Slicing</li>
+<li>Scaling idle GPU inference pods down to zero with KEDA and provisioning spot/on-demand GPU nodes with Karpenter</li>
+<li>Routing, rate-limiting by tokens, semantic caching, and setting per-team budgets across local vLLM and cloud APIs via LiteLLM or Envoy AI Gateway</li>
+</ul>
+<h2>Best Practices</h2>
+<ul>
+<li>Always mount an in-memory emptyDir (medium: Memory, sizeLimit: 16Gi) at /dev/shm when tensor-parallel-size &gt;= 2 so NCCL never crashes on Linux&#x27;s default 64MB shm.</li>
+<li>Store HuggingFace model weights on a persistent PVC or pre-baked node snapshot so pod restarts do not re-download 60GB+ weights over the network.</li>
+<li>Enable --enable-prefix-caching and tune --gpu-memory-utilization 0.92 in vLLM to maximize KV-cache throughput for system prompts.</li>
+<li>Use hardware MIG profiles in production for strict VRAM/compute isolation and Time-Slicing only in non-critical dev/staging clusters.</li>
+<li>Place LiteLLM or Envoy AI Gateway in front of all model endpoints to enforce token-per-minute limits, budget caps, and automatic cloud failover.</li>
+<li>Enable Redis semantic caching on the AI Gateway to serve repeated or near-identical prompts in &lt;15ms at zero GPU compute cost.</li>
+</ul>
+<h2>Dependencies</h2>
+<div class="codeblock"><pre class="code"><code># Install NVIDIA GPU Operator via Helm in Kubernetes
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia &amp;&amp; helm repo update
+helm install gpu-operator nvidia/gpu-operator -n gpu-operator --create-namespace</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Examples</h2>
+<div class="codeblock"><pre class="code"><code># Estimate vLLM VRAM requirement (GB) for FP16/BF16 vs AWQ/GPTQ 4-bit quantization with KV cache overhead
+def estimate_vram_gb(params_b: float, bits: int = 16, kv_overhead: float = 1.25) -&gt; float:
+    bytes_per_param = bits / 8.0
+    return round(params_b * bytes_per_param * kv_overhead, 2)
+
+assert estimate_vram_gb(32, bits=16) == 80.0
+assert estimate_vram_gb(32, bits=4) == 20.0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># LiteLLM Gateway configuration with local vLLM primary, Claude fallback, and Redis semantic cache
+model_list:
+  - model_name: coding-assistant
+    litellm_params:
+      model: openai/Qwen/Qwen2.5-Coder-32B-Instruct
+      api_base: http://vllm-inference-svc.ai-inference.svc:8000/v1
+      api_key: internal-k8s-key
+litellm_settings:
+  fallbacks: [{&quot;coding-assistant&quot;: [&quot;claude-sonnet-fallback&quot;]}]
+  cache: true
+  cache_params:
+    type: redis-semantic</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Step-by-Step</h2>
+<p class='ordered'>1. Deploy NVIDIA GPU Operator in Kubernetes and verify nvidia.com/gpu allocatable resources on GPU worker nodes.</p>
+<p class='ordered'>2. Configure Karpenter NodePool with node.kubernetes.io/instance-type GPU families and consolidation policies.</p>
+<p class='ordered'>3. Create a PersistentVolumeClaim for /root/.cache/huggingface and an in-memory emptyDir volume for /dev/shm.</p>
+<p class='ordered'>4. Deploy vLLM with --tensor-parallel-size, --max-model-len, --enable-prefix-caching, and readiness probes on /health.</p>
+<p class='ordered'>5. Configure a KEDA ScaledObject watching vllm:num_requests_waiting in Prometheus to scale GPU replicas between 0/1 and N.</p>
+<p class='ordered'>6. Deploy LiteLLM / Envoy AI Gateway with virtual keys, per-team max_budget limits, and Redis semantic caching.</p>
+<p class='ordered'>7. Monitor time-to-first-token (TTFT), inter-token latency (ITL), KV-cache usage, and GPU DCGM temperature/power metrics in Grafana.</p>
+<h2>Validation</h2>
+<p class='ordered'>1. kubectl get nodes -o json confirms allocatable nvidia.com/gpu capacity on GPU nodes</p>
+<p class='ordered'>2. vLLM /v1/chat/completions responds with streaming tokens and prefix-cache hit rate &gt; 0%</p>
+<p class='ordered'>3. LiteLLM gateway enforces token rate limits and seamlessly fails over when primary vLLM pod is cordoned</p>
+<p class='ordered'>4. Prometheus scrapes both vLLM queue metrics and NVIDIA DCGM GPU utilization metrics</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li>PyTorch NCCL error: unhandled system error / shm exhausted — mount emptyDir with medium: Memory and sizeLimit: 16Gi at /dev/shm.</li>
+<li>vLLM pod killed by livenessProbe during weight loading — add a startupProbe allowing up to 10 minutes (failureThreshold: 60, periodSeconds: 10).</li>
+<li>CUDA OutOfMemoryError on startup — lower --max-model-len or use AWQ/FP8 quantized weights to leave headroom for the KV cache.</li>
+<li>GPU pod stuck in Pending — ensure spec.tolerations includes key: nvidia.com/gpu, operator: Exists, effect: NoSchedule.</li>
+</ul>
+      </div>
+      <div class="skill-page-body" data-slang-body="ru" hidden><h1>AI/GPU Infrastructure &amp; LLMOps in Kubernetes (Сервинг LLM и GPU в K8s)</h1>
+<blockquote>Высокопроизводительный сервинг LLM через vLLM на GPU в Kubernetes, разделение карт MIG/DRA, автоскейлинг KEDA и шлюз LiteLLM.</blockquote>
+<h2>Быстрый старт</h2>
+<div class="codeblock"><pre class="code"><code># Deploy vLLM multi-GPU inference server and LiteLLM AI Gateway in Kubernetes
+kubectl apply -f labs/nextgen_2027_pack/k8s-gpu-vllm-inference.yaml
+kubectl apply -f labs/nextgen_2027_pack/envoy-ai-gateway-litellm.yaml</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># Shared memory /dev/shm volume required for multi-GPU PyTorch NCCL tensor parallelism
+volumes:
+  - name: dshm
+    emptyDir:
+      medium: Memory
+      sizeLimit: 16Gi</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Когда использовать</h2>
+<ul>
+<li>Запуск локальных LLM (Qwen, Llama, DeepSeek, Mistral) на картах NVIDIA в Kubernetes через движок vLLM (PagedAttention, Continuous Batching)</li>
+<li>Аппаратная нарезка дорогих GPU A100/H100 через профили MIG, драйверы DRA или разделение времени Time-Slicing</li>
+<li>Масштабирование простаивающих GPU-подов в ноль через KEDA и быстрый заказ GPU-нод через Karpenter</li>
+<li>Единый шлюз LiteLLM / Envoy AI Gateway для учета токенов, бюджетов по командам, семантического кэша в Redis и фоллбэка в облачные API</li>
+</ul>
+<h2>Лучшие практики</h2>
+<ul>
+<li>Обязательно монтируйте emptyDir в RAM (medium: Memory, sizeLimit: 16Gi) в /dev/shm при tensor-parallel-size &gt;= 2, иначе PyTorch NCCL упадет из-за лимита в 64 МБ.</li>
+<li>Кэшируйте веса моделей HuggingFace на постоянном томе PVC или локальном NVMe, чтобы при рестарте пода не качать по 60+ ГБ из сети.</li>
+<li>Включайте --enable-prefix-caching и --gpu-memory-utilization 0.92 в vLLM для переиспользования KV-кэша системных промптов.</li>
+<li>Применяйте аппаратный MIG в продакшене для жесткой изоляции видеопамяти, а Time-Slicing — только для тестовых и dev-стендов.</li>
+<li>Ставьте шлюз LiteLLM / Envoy AI Gateway перед всеми LLM для лимитирования токенов в минуту, контроля бюджетов и автопереключения при сбоях.</li>
+<li>Включайте семантический кэш в Redis/Valkey на уровне AI-шлюза, чтобы отдавать типовые ответы за 15 мс без нагрузки на GPU.</li>
+</ul>
+<h2>Зависимости</h2>
+<div class="codeblock"><pre class="code"><code># Install NVIDIA GPU Operator via Helm in Kubernetes
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia &amp;&amp; helm repo update
+helm install gpu-operator nvidia/gpu-operator -n gpu-operator --create-namespace</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Примеры</h2>
+<div class="codeblock"><pre class="code"><code># Estimate vLLM VRAM requirement (GB) for FP16/BF16 vs AWQ/GPTQ 4-bit quantization with KV cache overhead
+def estimate_vram_gb(params_b: float, bits: int = 16, kv_overhead: float = 1.25) -&gt; float:
+    bytes_per_param = bits / 8.0
+    return round(params_b * bytes_per_param * kv_overhead, 2)
+
+assert estimate_vram_gb(32, bits=16) == 80.0
+assert estimate_vram_gb(32, bits=4) == 20.0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<div class="codeblock"><pre class="code"><code># LiteLLM Gateway configuration with local vLLM primary, Claude fallback, and Redis semantic cache
+model_list:
+  - model_name: coding-assistant
+    litellm_params:
+      model: openai/Qwen/Qwen2.5-Coder-32B-Instruct
+      api_base: http://vllm-inference-svc.ai-inference.svc:8000/v1
+      api_key: internal-k8s-key
+litellm_settings:
+  fallbacks: [{&quot;coding-assistant&quot;: [&quot;claude-sonnet-fallback&quot;]}]
+  cache: true
+  cache_params:
+    type: redis-semantic</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Пошаговое руководство</h2>
+<p class='ordered'>1. Установите NVIDIA GPU Operator в кластер и проверьте появление ресурсов nvidia.com/gpu в описании GPU-узлов.</p>
+<p class='ordered'>2. Опишите Karpenter NodePool с фильтрацией по GPU-инстансам, толерациями nvidia.com/gpu и политикой консолидации.</p>
+<p class='ordered'>3. Создайте том PVC для кэша весов /root/.cache/huggingface и том emptyDir в памяти (Memory) для /dev/shm.</p>
+<p class='ordered'>4. Разверните Deployment с vLLM, указав --tensor-parallel-size, --max-model-len, --enable-prefix-caching и пробу готовности /health.</p>
+<p class='ordered'>5. Настройте KEDA ScaledObject по метрике очереди запросов vllm:num_requests_waiting для автоскейлинга реплик.</p>
+<p class='ordered'>6. Поднимите шлюз LiteLLM / Envoy AI Gateway с виртуальными ключами команд, лимитами бюджетов и семантическим кэшем в Redis.</p>
+<p class='ordered'>7. Выведите на дашборд Grafana метрики TTFT (время первого токена), заполнение KV-cache и телеметрию карт DCGM Exporter.</p>
+<h2>Валидация</h2>
+<p class='ordered'>1. Узлы кластера отображают доступные ресурсы nvidia.com/gpu в выводе kubectl describe node</p>
+<p class='ordered'>2. Эндпоинт vLLM /v1/chat/completions отдает поток токенов и фиксирует попадания в prefix-cache</p>
+<p class='ordered'>3. Шлюз LiteLLM контролирует квоты токенов и прозрачно переключает запросы на резервную модель при остановке пода vLLM</p>
+<p class='ordered'>4. В Prometheus поступают метрики очереди vLLM и аппаратная телеметрия видеокарт из DCGM Exporter</p>
+<h2>Устранение неполадок</h2>
+<ul>
+<li>Ошибка PyTorch NCCL: unhandled system error при старте на нескольких GPU — примонтируйте emptyDir (medium: Memory, 16Gi) в /dev/shm.</li>
+<li>Под vLLM перезапускается во время загрузки тяжелых весов — добавьте startupProbe с запасом до 10 минут (failureThreshold: 60, periodSeconds: 10).</li>
+<li>Ошибка CUDA OutOfMemoryError при инициализации KV-кэша — уменьшите --max-model-len или перейдите на квантованные веса AWQ/FP8.</li>
+<li>GPU-под висит в статусе Pending — проверьте наличие toleration для ключа nvidia.com/gpu:NoSchedule в манифесте пода.</li>
+</ul></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="ansible.html">ansible →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

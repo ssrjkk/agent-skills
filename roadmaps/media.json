@@ -1,41 +1,45 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "media",
-  "name": "Media / Slides",
+  "name": "Media & Slides",
+  "name_ru": "Медиа и Презентации",
   "icon": "📽️",
-  "tagline": "Decks as code, visuals",
-  "status": "soon",
-  "eta": "soon",
-  "catalog_domain": null,
-  "related_skills": [],
+  "tagline": "Interactive HTML/CSS slide decks as code, Assertion-Evidence storytelling, vector SVG diagrams, and 16:9 PDF export",
+  "tagline_ru": "Интерактивные презентации кодом на HTML/CSS, модель Assertion-Evidence, векторные схемы SVG и экспорт в PDF 16:9",
+  "status": "live",
+  "eta": "2026-11",
+  "catalog_domain": "media",
+  "related_skills": [
+    "frontend-slides-code",
+    "diagram-as-code",
+    "data-visualization"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Assertion-Evidence Narrative & Action Title Scan",
+      "title_ru": "Этап 1. Сторителлинг по модели Assertion-Evidence и скелет заголовков",
       "items": [
-        "Map drops soon"
+        "Writing declarative Action Titles ('Cilium eBPF Cut Latency by 38%') so reading only headlines conveys the full pitch",
+        "Enforcing strict slide density: 1 primary visual proof (diagram, chart, or 12-line code block) + at most 3 concise bullets"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Формулировка тезисных заголовков с цифрой и выводом, чтобы чтение одних заголовков складывалось в законченный питч",
+        "Жесткий контроль плотности слайда: ровно 1 визуальное доказательство (схема, график или код) и не более 3 коротких тезисов"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Interactive 16:9 HTML/CSS/JS Slide Decks as Code",
+      "title_ru": "Этап 2. Верстка интерактивных презентаций 16:9 на HTML/CSS/JS",
       "items": [
-        "Map drops soon"
+        "Building zero-dependency single-file HTML slide decks with clamp() typography and keyboard/touch navigation",
+        "Embedding live copyable code blocks, vector SVG diagrams, and @media print rules for landscape PDF export"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Сборка автономных HTML-презентаций без внешних зависимостей с адаптивной типографикой clamp() и управлением с клавиатуры",
+        "Встраивание интерактивных блоков кода, векторных SVG-схем и правил @media print для чистой выгрузки в PDF"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

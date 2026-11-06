@@ -1,0 +1,56 @@
+# Отказоустойчивый кластер PostgreSQL 16 в Kubernetes под управлением оператора CloudNativePG
+# Включает 3 узла, синхронную репликацию, автофейловер, пулер PgBouncer и непрерывный бэкап WAL в S3
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg-orders-ha
+  namespace: production
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  primaryUpdateStrategy: unsupervised
+
+  postgresql:
+    parameters:
+      max_connections: "200"
+      shared_buffers: "512MB"
+      effective_cache_size: "1536MB"
+      work_mem: "16MB"
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: "all"
+
+  storage:
+    storageClass: local-nvme-topolvm
+    size: 50Gi
+
+  monitoring:
+    enablePodMonitor: true
+
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://company-prod-db-backups/pg-orders-ha"
+      endpointURL: "https://s3.eu-central-1.amazonaws.com"
+      s3Credentials:
+        InheritFromIAMRole: true
+      wal:
+        compression: zstd
+        maxParallel: 4
+    retentionPolicy: "30d"
+---
+# Декларативный пулер соединений PgBouncer перед кластером БД
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: pg-orders-pooler-rw
+  namespace: production
+spec:
+  cluster:
+    name: pg-orders-ha
+  instances: 2
+  type: rw
+  pgbouncer:
+    poolMode: transaction
+    parameters:
+      max_client_conn: "5000"
+      default_pool_size: "40"
+      max_prepared_statements: "200"

@@ -1,41 +1,46 @@
 {
   "$schema": "../roadmaps.schema.json",
   "slug": "finance",
-  "name": "FinTech",
+  "name": "FinTech & Quant",
+  "name_ru": "Финтех и Квант",
   "icon": "💹",
-  "tagline": "Trading, risk, quant models",
-  "status": "soon",
-  "eta": "soon",
+  "tagline": "Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls",
+  "tagline_ru": "Алгоритмическая торговля, бэктестинг без подглядывания в будущее, оценка рисков (VaR, CVaR, Монте-Карло) и защита исполнения",
+  "status": "live",
+  "eta": "2026-11",
   "catalog_domain": "finance",
-  "related_skills": [],
+  "related_skills": [
+    "algorithmic-trading",
+    "risk-modeling",
+    "pandas",
+    "clickhouse"
+  ],
   "stages": [
     {
-      "title": "Fundamentals",
+      "title": "Stage 1. Market Data Pipelines & Bias-Free Backtesting",
+      "title_ru": "Этап 1. Потоки биржевых котировок и честный бэктестинг стратегий",
       "items": [
-        "Map drops soon"
+        "Ingesting tick and OHLCV order-book data into columnar stores (ClickHouse/Parquet) with strict UTC timestamp normalization",
+        "Eliminating look-ahead bias, survivorship bias, and unrealistic zero-slippage fills in walk-forward backtests"
       ],
-      "status": "soon"
+      "items_ru": [
+        "Сбор тиковых данных и стакана заявок (Order Book) в колоночные хранилища (ClickHouse, Parquet) с нормализацией таймстемпов",
+        "Защита бэктестов от заглядывания в будущее (Look-Ahead Bias), ошибки выжившего и учета комиссий и проскальзывания"
+      ],
+      "status": "live"
     },
     {
-      "title": "Core",
+      "title": "Stage 2. Quantitative Risk Modeling (VaR, CVaR & Stress Testing)",
+      "title_ru": "Этап 2. Количественное моделирование рисков (VaR, CVaR и Монте-Карло)",
       "items": [
-        "Map drops soon"
+        "Computing parametric, historical, and Monte Carlo Value at Risk (VaR) and Expected Shortfall (CVaR) across portfolios",
+        "Automated pre-trade risk gates: maximum drawdown circuit breakers, position size caps, and fat-finger order checks"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Advanced",
-      "items": [
-        "Map drops soon"
+      "items_ru": [
+        "Расчет исторического, параметрического и Монте-Карло показателей Value at Risk (VaR) и Expected Shortfall (CVaR)",
+        "Автоматические предторговые гейты риска: стоп-краны по максимальной просадке (Drawdown), лимиты позиции и идемпотентность ордеров"
       ],
-      "status": "soon"
-    },
-    {
-      "title": "Expert",
-      "items": [
-        "Map drops soon"
-      ],
-      "status": "soon"
+      "status": "live"
     }
   ]
 }

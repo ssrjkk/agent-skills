@@ -5,6 +5,8 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills_catalog.json</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills_catalog.schema.json</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/agent-development.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/ai-coder-career-architect.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/ai-gpu-infra-llmops.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/ai-testing.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/airflow.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/algorithmic-trading.html</loc></url>
@@ -17,6 +19,8 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/aws-lambda.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/browser-automation.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/bun-runtime.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/catalog-photo-mapper.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/ci-cd-gitops-iac.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/claude-code-commands.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/clean-architecture.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/clickhouse.html</loc></url>
@@ -27,6 +31,8 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/dbt.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/deno-runtime.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/design-spec-md.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/design-taste-direction.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/devops-sre-portal-architect.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/diagram-as-code.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/django.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/docker.html</loc></url>
@@ -34,11 +40,13 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/elasticsearch.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/electron.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/embeddings.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/explain-anything.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/expo-rn.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/express.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/fastapi.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/few-shot-learning.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/flutter.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/frontend-slides-code.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/function-calling.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/game-physics.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/git-workflow.html</loc></url>
@@ -49,14 +57,17 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/grpc.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/hipaa-compliance.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/hl7-fhir.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/humanize-copy-pro.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/istio.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/jenkins.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/jest.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/k8s-baremetal-multicluster.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/kafka.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/kotlin-android.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/kubernetes.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/landing-page-pro.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/laravel.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/linux-ebpf-troubleshooting.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/llm-evals.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/llm-finetuning.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/llm-guardrails.html</loc></url>
@@ -70,8 +81,10 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/nestjs.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/nextjs.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/nginx.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/no-slop-writing.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/oauth2-jwt.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/observability-llm.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/observability-sre-highload.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/owasp-web-security.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/pandas.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/platform-engineering.html</loc></url>
@@ -102,25 +115,32 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/terraform.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/test-driven-development.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/typescript.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/ui-polish-audit.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/ui-ux-system-pro.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/unity-ecs.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/vector-databases.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/vibe-seo-audit.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/skills/vibe-shop-normalizer.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/vue.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/websockets.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/skills/zk-proofs.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/ai.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/backend.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/blockchain.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/domains/communications.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/data.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/database.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/design.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/desktop.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/devops.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/domains/education.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/embedded.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/engineering.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/finance.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/frontend.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/gamedev.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/healthcare.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/domains/media.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/mobile.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/qa.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/domains/security.html</loc></url>
