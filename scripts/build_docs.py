@@ -1804,8 +1804,10 @@ def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
         cards = []
         for g in tier_guides:
             num = f"{g['number']:02d}" if g["number"] is not None else "✦"
+            # span, not <a>: guide cards are anchors themselves and nested
+            # anchors make browsers split the card around the chip
             track_chip = (
-                f'<a class="rm-chip" href="roadmaps/{esc(g["track"])}.html">{esc(g["track"])}</a>'
+                f'<span class="rm-chip">{esc(g["track"])}</span>'
                 if g["track"]
                 else ""
             )
