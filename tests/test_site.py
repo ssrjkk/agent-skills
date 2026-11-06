@@ -403,7 +403,7 @@ class TestSiteGenerator:
         docs = _build_site(tmp_path)
         index = (docs / "index.html").read_text(encoding="utf-8")
         assert "showTab" in index
-        for tab in ["catalog", "stats", "how", "install", "roadmaps"]:
+        for tab in ["catalog", "roadmaps", "guides", "stats", "how", "install"]:
             assert f'data-panel="{tab}"' in index, f"missing tab panel: {tab}"
             assert f"showTab('{tab}'" in index, f"missing tab button: {tab}"
         assert index.count("tab-panel active") >= 2  # search + results in catalog
@@ -648,3 +648,40 @@ class TestGuidesPortal:
         overview = (out / "roadmaps.html").read_text(encoding="utf-8")
         assert "Every track is live" in overview
         assert "Want this map first?" not in overview
+
+
+class TestPortalTabs:
+    """Index is the full tabbed portal: roadmaps explorer + guides library."""
+
+    def test_tab_order_and_names(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert "TAB_NAMES = ['catalog', 'roadmaps', 'guides', 'stats', 'how', 'install']" in index
+        assert "<kbd>1–6</kbd>" in index
+
+    def test_roadmaps_explorer_embedded_in_index(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert "var RM_DATA" in index
+        assert "function showTrack(" in index
+        assert "function refreshTrack(" in index
+        assert 'id="rm-stages"' in index
+        assert 'class="rm-tab' in index
+        assert "Map drops soon" in index  # first track pre-rendered server-side
+
+    def test_guides_panel_embedded_in_index(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'data-panel="guides"' in index
+        assert 'id="guide-search"' in index
+        assert "filterGuides" in index
+        assert 'href="guides/21_Linux_Map.html"' in index
+        assert "Handbooks &amp; Digests" in index
+        assert "data-title=" in index
+
+    def test_hero_glass_chips(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'class="glass-chip"' in index
+        assert "<strong>3</strong> maps" in index
+        assert "<strong>0/2</strong> live" in index

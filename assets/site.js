@@ -2,8 +2,8 @@
    Hand-edited in assets/site.js; build_docs.py copies it to docs/site.js.
    Page-specific code (search, tabs, roadmaps data) stays inline per page. */
   var I18N = {
-    en: {skip:"Skip to catalog",nav_catalog:"Catalog",nav_roadmaps:"Roadmaps",nav_guides:"Guides",nav_stats:"Stats",nav_how:"How it works",soon:"soon",back_top:"Back to top",copied:"Copied: ",copy:"copy",copy_path:"copy path",view_source:"view source",models:"Models:",quality:"Quality",blocks:"Code blocks",sections:"Sections",lines:"Lines",ru_tr:"RU translation",back_catalog:"← Back to catalog",back_roadmaps:"← All roadmaps",back_guides:"← All guides",open_map:"Open full map →",rel_skills:"Related skills →",src:"Source:",words_n:"~{n} words",copied_btn:"✓ copied",hero_sub:"Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.",how_t:"How it works",how_s:"— 3 steps, 30 seconds",f1t:"Find",f1d:"Search by task, domain or tag. Every card shows quality, blocks and RU badge.",f2t:"Copy",f2d:"One click copies the skill path or install command for your agent.",f3t:"Ship",f3d:"Paste SKILL.md into context. Validate with agent-skills validate.",inst_t:"Install in one line",inst_s:"— pick your agent",cat_t:"Catalog",cat_s:"— {total} skills, {ru} with RU",search_ph:"Search skills by name, domain, or tag…",search_aria:"Search skills",sort_domain:"Sort: domain",sort_name:"Sort: name",sort_score:"Sort: quality (high→low)",sort_aria:"Sort skills",empty_t:"No skills match your search.",count_t:"{v} of {t} shown",rm_t:"IT Roadmaps",rm_s:"{live} live · {total} soon",rm_d:"Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.",rm_b:"Open roadmaps →",foot_t:"Created by ssrjkk · {n} skills · {d} domains",keys:"<kbd>/</kbd> search · <kbd>1–5</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear",browse:"Browse skills ↓",st_skills:"Skills",st_ru:"Russian",st_dom:"Domains",st_q:"Quality",stat_t:"Distribution by domain",stat_s:"— click a pill to filter ↓",tab_install:"Install",rm_hd:"One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in."},
-    ru: {skip:"К каталогу",nav_catalog:"Каталог",nav_roadmaps:"Роадмапы",nav_guides:"Гайды",nav_stats:"Статистика",nav_how:"Как это работает",soon:"скоро",back_top:"Наверх",copied:"Скопировано: ",copy:"копировать",copy_path:"скопировать путь",view_source:"исходник",models:"Модели:",quality:"Качество",blocks:"Блоки кода",sections:"Разделы",lines:"Строк",ru_tr:"Перевод RU",back_catalog:"← Назад в каталог",back_roadmaps:"← Все роадмапы",back_guides:"← Все гайды",open_map:"Открыть мапу →",rel_skills:"Смежные скиллы →",src:"Источник:",words_n:"~{n} слов",copied_btn:"✓ готово",hero_sub:"Двуязычные скиллы для <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> и любого совместимого агента. Найди скилл → скопируй путь → ship.",how_t:"Как это работает",how_s:"— 3 шага, 30 секунд",f1t:"Найди",f1d:"Ищи по задаче, домену или тегу. На каждой карточке — качество, блоки и бейдж RU.",f2t:"Скопируй",f2d:"Один клик копирует путь к скиллу или команду установки для твоего агента.",f3t:"Зашипь",f3d:"Вставь SKILL.md в контекст. Проверь через agent-skills validate.",inst_t:"Установка в одну строку",inst_s:"— выбери свой агент",cat_t:"Каталог",cat_s:"— {total} скиллов, {ru} с RU",search_ph:"Ищи скиллы по имени, домену или тегу…",search_aria:"Поиск скиллов",sort_domain:"Сорт: домен",sort_name:"Сорт: имя",sort_score:"Сорт: качество (сначала лучшие)",sort_aria:"Сортировка скиллов",empty_t:"Ничего не найдено.",count_t:"Показано {v} из {t}",rm_t:"IT-роадмапы",rm_s:"{live} live · {total} скоро",rm_d:"Пошаговые мапы по каждому IT-направлению — от фронтенда до AI. Статусы живые, контент скоро.",rm_b:"Открыть роадмапы →",foot_t:"Автор ssrjkk · {n} скиллов · {d} доменов",keys:"<kbd>/</kbd> поиск · <kbd>1–5</kbd> вкладки · <kbd>t</kbd> тема · <kbd>Esc</kbd> очистить",browse:"Смотреть скиллы ↓",st_skills:"Скиллы",st_ru:"На русском",st_dom:"Домены",st_q:"Качество",stat_t:"По доменам",stat_s:"— клик по пилюле фильтрует ↓",tab_install:"Установка",rm_hd:"Одна вкладка — одно направление. Каждая мапа живёт на своей странице и в своём файле (<code>roadmaps/&lt;slug&gt;.json</code>) — клади свои мапы туда, и они подхватятся сами."}
+    en: {skip:"Skip to catalog",nav_catalog:"Catalog",nav_roadmaps:"Roadmaps",nav_guides:"Guides",nav_stats:"Stats",nav_how:"How it works",soon:"soon",back_top:"Back to top",copied:"Copied: ",copy:"copy",copy_path:"copy path",view_source:"view source",models:"Models:",quality:"Quality",blocks:"Code blocks",sections:"Sections",lines:"Lines",ru_tr:"RU translation",back_catalog:"← Back to catalog",back_roadmaps:"← All roadmaps",back_guides:"← All guides",open_map:"Open full map →",rel_skills:"Related skills →",src:"Source:",words_n:"~{n} words",copied_btn:"✓ copied",hero_sub:"Curated bilingual skills for <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> and every Agent Skills–compatible agent. Pick a skill → copy the path → ship.",how_t:"How it works",how_s:"— 3 steps, 30 seconds",f1t:"Find",f1d:"Search by task, domain or tag. Every card shows quality, blocks and RU badge.",f2t:"Copy",f2d:"One click copies the skill path or install command for your agent.",f3t:"Ship",f3d:"Paste SKILL.md into context. Validate with agent-skills validate.",inst_t:"Install in one line",inst_s:"— pick your agent",cat_t:"Catalog",cat_s:"— {total} skills, {ru} with RU",search_ph:"Search skills by name, domain, or tag…",guides_search_ph:"Search maps by title or track…",search_aria:"Search skills",sort_domain:"Sort: domain",sort_name:"Sort: name",sort_score:"Sort: quality (high→low)",sort_aria:"Sort skills",empty_t:"No skills match your search.",count_t:"{v} of {t} shown",rm_t:"IT Roadmaps",rm_s:"{live} live · {total} soon",rm_d:"Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.",rm_b:"Open roadmaps →",foot_t:"Created by ssrjkk · {n} skills · {d} domains",keys:"<kbd>/</kbd> search · <kbd>1–6</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear",browse:"Browse skills ↓",st_skills:"Skills",st_ru:"Russian",st_dom:"Domains",st_q:"Quality",stat_t:"Distribution by domain",stat_s:"— click a pill to filter ↓",tab_install:"Install",rm_hd:"One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in."},
+    ru: {skip:"К каталогу",nav_catalog:"Каталог",nav_roadmaps:"Роадмапы",nav_guides:"Гайды",nav_stats:"Статистика",nav_how:"Как это работает",soon:"скоро",back_top:"Наверх",copied:"Скопировано: ",copy:"копировать",copy_path:"скопировать путь",view_source:"исходник",models:"Модели:",quality:"Качество",blocks:"Блоки кода",sections:"Разделы",lines:"Строк",ru_tr:"Перевод RU",back_catalog:"← Назад в каталог",back_roadmaps:"← Все роадмапы",back_guides:"← Все гайды",open_map:"Открыть мапу →",rel_skills:"Смежные скиллы →",src:"Источник:",words_n:"~{n} слов",copied_btn:"✓ готово",hero_sub:"Двуязычные скиллы для <strong>Claude Code, OpenCode, Cursor, Windsurf</strong> и любого совместимого агента. Найди скилл → скопируй путь → ship.",how_t:"Как это работает",how_s:"— 3 шага, 30 секунд",f1t:"Найди",f1d:"Ищи по задаче, домену или тегу. На каждой карточке — качество, блоки и бейдж RU.",f2t:"Скопируй",f2d:"Один клик копирует путь к скиллу или команду установки для твоего агента.",f3t:"Зашипь",f3d:"Вставь SKILL.md в контекст. Проверь через agent-skills validate.",inst_t:"Установка в одну строку",inst_s:"— выбери свой агент",cat_t:"Каталог",cat_s:"— {total} скиллов, {ru} с RU",search_ph:"Ищи скиллы по имени, домену или тегу…",guides_search_ph:"Ищи мапы по названию или треку…",search_aria:"Поиск скиллов",sort_domain:"Сорт: домен",sort_name:"Сорт: имя",sort_score:"Сорт: качество (сначала лучшие)",sort_aria:"Сортировка скиллов",empty_t:"Ничего не найдено.",count_t:"Показано {v} из {t}",rm_t:"IT-роадмапы",rm_s:"{live} live · {total} скоро",rm_d:"Пошаговые мапы по каждому IT-направлению — от фронтенда до AI. Статусы живые, контент скоро.",rm_b:"Открыть роадмапы →",foot_t:"Автор ssrjkk · {n} скиллов · {d} доменов",keys:"<kbd>/</kbd> поиск · <kbd>1–6</kbd> вкладки · <kbd>t</kbd> тема · <kbd>Esc</kbd> очистить",browse:"Смотреть скиллы ↓",st_skills:"Скиллы",st_ru:"На русском",st_dom:"Домены",st_q:"Качество",stat_t:"По доменам",stat_s:"— клик по пилюле фильтрует ↓",tab_install:"Установка",rm_hd:"Одна вкладка — одно направление. Каждая мапа живёт на своей странице и в своём файле (<code>roadmaps/&lt;slug&gt;.json</code>) — клади свои мапы туда, и они подхватятся сами."}
   };
   function lang() { try { return localStorage.getItem('lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'); } catch (e) { return 'en'; } }
   function setLang(l) {
@@ -105,18 +105,29 @@
     try { sl = localStorage.getItem('skill-lang') || localStorage.getItem('lang'); } catch (e) {}
     if ((sl === 'ru' || sl === 'en') && document.querySelector('[data-slang-body="ru"]')) showSkillLang(sl);
   })();
-  // animated counters
+  // animated counters — start only when actually visible, otherwise rAF
+  // throttles for hidden panels and the numbers freeze mid-animation
   document.querySelectorAll('.stat-num[data-count]').forEach(function(el) {
     var target = parseInt(el.getAttribute('data-count'), 10);
-    var start = null;
-    function step(ts) {
-      if (!start) start = ts;
-      var p = Math.min((ts - start) / 900, 1);
-      el.textContent = Math.round(target * p);
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = target;
+    var started = false;
+    function run() {
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / 900, 1);
+        el.textContent = Math.round(target * p);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
+    if (typeof IntersectionObserver === 'undefined') { run(); return; }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting && !started) { started = true; run(); io.disconnect(); }
+      });
+    }, {threshold: 0.1});
+    io.observe(el);
   });
   // terminal typing animation
   (function() {
@@ -170,9 +181,30 @@
   if (typeof showTab === 'function' && document.querySelector('.tab-btn')) {
     var h = (location.hash || '').replace('#', '');
     if (h === 'dashboard') h = 'stats';
-    showTab(['catalog', 'stats', 'how', 'install', 'roadmaps'].indexOf(h) >= 0 ? h : 'catalog');
+    var hMain = h.split('/')[0];
+    showTab(['catalog', 'roadmaps', 'guides', 'stats', 'how', 'install'].indexOf(hMain) >= 0 ? hMain : 'catalog');
+    if (h.indexOf('roadmaps/') === 0 && typeof showTrack === 'function') {
+      var slug = h.split('/')[1];
+      var b = document.querySelector('.rm-tab[data-track="' + slug.replace(/"/g, '') + '"]');
+      if (b) showTrack(slug, b);
+    }
     if (typeof applyFilter === 'function') applyFilter();
   }
+  // in-page hash changes (back/forward, shared links) re-route tabs
+  window.addEventListener('hashchange', function() {
+    if (typeof showTab !== 'function' || !document.querySelector('.tab-btn')) return;
+    var h2 = (location.hash || '').replace('#', '');
+    if (h2 === 'dashboard') h2 = 'stats';
+    var hMain2 = h2.split('/')[0];
+    if (['catalog', 'roadmaps', 'guides', 'stats', 'how', 'install'].indexOf(hMain2) >= 0) {
+      showTab(hMain2);
+      if (h2.indexOf('roadmaps/') === 0 && typeof showTrack === 'function') {
+        var slug2 = h2.split('/')[1];
+        var b2 = document.querySelector('.rm-tab[data-track="' + slug2.replace(/"/g, '') + '"]');
+        if (b2) showTrack(slug2, b2);
+      }
+    }
+  });
   // reveal on scroll + stagger cards
   (function() {
     var io = new IntersectionObserver(function(entries) {

@@ -149,6 +149,31 @@ def rm_cta_pill() -> str:
     return '<span class="soon-pill" data-i18n="soon">soon</span>'
 
 
+def rm_tier_label(en: str, ru: str) -> str:
+    """Bilingual tier/label pair using the data-slang-body mechanism."""
+    return (
+        f'<span data-slang-body="en">{esc(en)}</span>'
+        f'<span data-slang-body="ru" hidden>{esc(ru)}</span>'
+    )
+
+
+def guide_card_html(g: dict, href_prefix: str = GUIDES_SUBDIR + "/") -> str:
+    """One guide card. Cards are anchors, so the track chip must be a span:
+    nested <a> makes browsers split the card around the inner anchor."""
+    num = f"{g['number']:02d}" if g["number"] is not None else "✦"
+    track_chip = f'<span class="rm-chip">{esc(g["track"])}</span>' if g["track"] else ""
+    title_attr = esc((g["title"] + " " + (g["track"] or "")).lower())
+    return (
+        f'<a class="guide-card" href="{href_prefix}{esc(g["slug"])}.html" data-title="{title_attr}">'
+        f'<span class="guide-num">{num}</span>'
+        f'<span class="guide-card-title">{esc(g["title"])}</span>'
+        f'<span class="guide-card-excerpt">{esc(g["excerpt"])}</span>'
+        f'<span class="guide-card-meta">{track_chip}'
+        f'<span class="guide-words" data-i18n="words_n" data-n="{g["words"]}">~{g["words"]} words</span></span>'
+        "</a>"
+    )
+
+
 def rm_soon_hero(live: int, soon: int) -> str:
     """Server-rendered fallback for the rm_s headline (data-i18n re-renders
     it client-side; crawlers and no-JS readers must also see the truth)."""
@@ -549,7 +574,29 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     tracks = load_roadmap_tracks(output_dir.parent)
     rm_live, rm_soon = rm_statuses(tracks)
     _remember_rm_state(tracks)
-    guides_n = len(load_guides(output_dir.parent))
+    guides = load_guides(output_dir.parent)
+    guides_n = len(guides)
+
+    def _index_rm_links(t: dict) -> str:
+        links = [f'<a class="btn-ghost" href="roadmaps/{esc(t["slug"])}.html"><span data-i18n="open_map">Open full map →</span></a>']
+        if t.get("catalog_domain"):
+            links.append(f'<a class="btn-ghost" href="domains/{esc(t["catalog_domain"])}.html"><span data-i18n="rel_skills">Related skills →</span></a>')
+        return "".join(links)
+
+    rm_tabs_html = "".join(
+        f'<button class="rm-tab{" active" if i == 0 else ""}" data-track="{esc(t["slug"])}" '
+        f'style="--dc:{DOMAIN_COLORS.get(t["slug"], "#64748b")}" '
+        f"onclick=\"showTrack('{esc(t['slug'])}', this)\">{esc(t['icon'])} {esc(t['name'])}"
+        f'{rm_status_pill(t.get("status", "soon"))}</button>'
+        for i, t in enumerate(tracks)
+    )
+    stages0 = "".join(rm_stage_html(s) for s in tracks[0]["stages"])
+    guides_sections_html = "".join(
+        f'<section class="tier-head"><h2>{rm_tier_label(tier_en, tier_ru)}</h2>'
+        f'<div class="guide-grid">{"".join(guide_card_html(g) for g in guides if g["tier"] == tier_key)}</div></section>'
+        for tier_key, tier_en, tier_ru in GUIDE_TIERS
+        if any(g["tier"] == tier_key for g in guides)
+    )
 
     model_names = set()
     for s in skills:
@@ -627,6 +674,13 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
         <a class="btn-ghost" href="guides.html"><span data-i18n="nav_guides">Guides</span> · {guides_n} maps →</a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
+      <div class="hero-chips">
+        <span class="glass-chip"><strong>{meta["total_skills"]}</strong> <span data-i18n="st_skills">skills</span></span>
+        <span class="glass-chip"><strong>{meta["total_ru"]}</strong> <span data-i18n="st_ru">Russian</span></span>
+        <span class="glass-chip"><strong>{len(meta["domains"])}</strong> <span data-i18n="st_dom">domains</span></span>
+        <span class="glass-chip"><strong>{guides_n}</strong> maps</span>
+        <span class="glass-chip"><strong>{rm_live}/{rm_live + rm_soon}</strong> live</span>
+      </div>
       <div class="term-box tilt" aria-hidden="true">
         <div class="term-bar">
           <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
@@ -653,11 +707,12 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     </section>
 
     <div class="tabs reveal in" role="tablist" aria-label="Site sections">
-      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog')"><span data-i18n="nav_catalog">Catalog</span></button>
+      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog')"><span data-i18n="nav_catalog">Catalog</span><span class="tab-count">{meta["total_skills"]}</span></button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="tab-count live">{rm_live}/{rm_live + rm_soon}</span></button>
+      <button class="tab-btn" data-tab="guides" role="tab" aria-selected="false" onclick="showTab('guides')"><span data-i18n="nav_guides">Guides</span><span class="tab-count">{guides_n}</span></button>
       <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats')"><span data-i18n="nav_stats">Stats</span></button>
       <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how')"><span data-i18n="nav_how">How it works</span></button>
       <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install')"><span data-i18n="tab_install">Install</span></button>
-      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> {rm_cta_pill()}</button>
     </div>
 
     <section class="install reveal tab-panel" id="install" data-panel="install">
@@ -692,8 +747,25 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
         <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="{rm_live}" data-total="{rm_soon}">{rm_soon_hero(rm_live, rm_soon)}</span></h2>
         <p data-i18n="rm_d">Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
       </div>
-      <div class="rm-strip" id="rm-strip"></div>
+      <div class="rm-tabs" role="tablist">{rm_tabs_html}</div>
+      <div class="rm-detail" id="rm-detail">
+        <div class="rm-detail-head">
+          <h2 id="rm-name">{esc(tracks[0]["icon"])} {rm_pair(tracks[0]["name"], tracks[0].get("name_ru"))}</h2>
+          {rm_status_pill(tracks[0].get("status", "soon"), big=True)}
+        </div>
+        <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{rm_pair(tracks[0]["tagline"], tracks[0].get("tagline_ru"))}</p>
+        <div class="rm-timeline" id="rm-stages">{stages0}</div>
+        <div class="rm-detail-actions" id="rm-actions">{_index_rm_links(tracks[0])}</div>
+      </div>
       <a class="btn-primary shine" href="roadmaps.html" data-i18n="rm_b">Open roadmaps →</a>
+    </section>
+
+    <section class="guides-panel reveal tab-panel" id="guides" data-panel="guides">
+      <h2><span data-i18n="nav_guides">Guides</span> <span class="h-sub">— {guides_n} full-text maps</span></h2>
+      <div class="search-row">
+        <input type="search" id="guide-search" class="search" data-i18n-ph="guides_search_ph" placeholder="Search maps by title or track…" aria-label="Search guides" autocomplete="off" oninput="filterGuides(this.value)">
+      </div>
+      {guides_sections_html}
     </section>
 
     <section class="search-section reveal tab-panel active" id="catalog" data-panel="catalog">
@@ -722,7 +794,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
 
     <footer>
       <p data-i18n="foot_t" data-i18n-html data-n="{meta["total_skills"]}" data-d="{len(meta["domains"])}">Created by ssrjkk · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
-      <p class="shortcuts" data-i18n="keys" data-i18n-html><kbd>/</kbd> search · <kbd>1–5</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear</p>
+      <p class="shortcuts" data-i18n="keys" data-i18n-html><kbd>/</kbd> search · <kbd>1–6</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear</p>
       <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 """ + """
@@ -741,6 +813,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
         {"slug": t["slug"], "name": t["name"], "icon": t["icon"], "status": t.get("status", "soon")}
         for t in tracks
     ]) + """;
+  var RM_DATA = """ + json_for_script([{k: v for k, v in t.items() if not k.startswith("$")} for t in tracks]) + """;
 
   function showAgent(name, btn) {
     document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];
@@ -828,7 +901,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     }
     if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === '/') { e.preventDefault(); showTab('catalog'); var s2 = document.getElementById('search'); if (s2) s2.focus(); }
-    else if (e.key >= '1' && e.key <= '5') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1]); }
+    else if (e.key >= '1' && e.key <= '6') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1]); }
     else if (e.key === 't') { toggleTheme(); }
   });
   // card copy action is a span[role=button]: Enter/Space must trigger it
@@ -840,7 +913,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     }
   });
   // tabs: one screen instead of a long ribbon (deep-linkable via hash)
-  var TAB_NAMES = ['catalog', 'stats', 'how', 'install', 'roadmaps'];
+  var TAB_NAMES = ['catalog', 'roadmaps', 'guides', 'stats', 'how', 'install'];
   function showTab(name) {
     if (TAB_NAMES.indexOf(name) < 0) name = 'catalog';
     document.querySelectorAll('.tab-btn').forEach(function(b) {
@@ -852,6 +925,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       var on = p.getAttribute('data-panel') === name;
       p.classList.toggle('active', on);
       if (on) {
+        if (p.classList.contains('reveal')) p.classList.add('in');
         p.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in'); });
         Array.prototype.forEach.call(p.querySelectorAll('.card'), function(c, i) {
           c.style.transitionDelay = Math.min(i * 30, 600) + 'ms';
@@ -861,6 +935,71 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     });
     if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
     window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  // --- roadmaps explorer (embedded from the roadmaps page) ---
+  function escH(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&#34;', "'": '&#39;'}[c];
+    });
+  }
+  function rmPair(en, ru) {
+    var h = en == null ? '' : escH(en);
+    if (!ru) return h;
+    return '<span data-slang-body="en">' + h + '</span>'
+      + '<span data-slang-body="ru" hidden>' + escH(ru) + '</span>';
+  }
+  function rmStageHTML(s) {
+    var pill = s.status === 'live' ? '<span class="live-pill">live</span>' : '<span class="soon-pill">soon</span>';
+    var items = (s.items || []).map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
+    var lists;
+    if (s.items_ru) {
+      var ru = s.items_ru.map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
+      lists = '<ul data-slang-body="en">' + items + '</ul>'
+        + '<ul data-slang-body="ru" hidden>' + ru + '</ul>';
+    } else {
+      lists = '<ul>' + items + '</ul>';
+    }
+    return '<div class="rm-stage"><h3>▸ ' + rmPair(s.title, s.title_ru) + ' ' + pill + '</h3>' + lists + '</div>';
+  }
+  function refreshTrack() {
+    var btn = document.querySelector('.rm-tab.active');
+    if (btn && btn.getAttribute('data-track')) { try { showTrack(btn.getAttribute('data-track'), btn); } catch (e) {} }
+    if (typeof showSkillLang === 'function') { try { showSkillLang(lang()); } catch (e2) {} }
+  }
+  function showTrack(slug, btn) {
+    document.querySelectorAll('.rm-tab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var t = RM_DATA.find(function(x) { return x.slug === slug; });
+    if (!t) return;
+    document.getElementById('rm-name').innerHTML = escH(t.icon) + ' ' + rmPair(t.name, t.name_ru);
+    document.getElementById('rm-tagline').innerHTML = rmPair(t.tagline, t.tagline_ru);
+    var box = document.getElementById('rm-stages');
+    box.innerHTML = '';
+    t.stages.forEach(function(s) {
+      var d = document.createElement('div');
+      d.innerHTML = rmStageHTML(s);
+      box.appendChild(d.firstChild);
+    });
+    var L = (typeof I18N !== 'undefined' && (I18N[lang()] || I18N.en)) || {open_map: 'Open full map', rel_skills: 'Related skills'};
+    var actions = document.getElementById('rm-actions');
+    actions.innerHTML = '<a class=\\'btn-ghost\\' href=\\'roadmaps/\\' + encodeURIComponent(t.slug) + \\'.html\\'><span>' + L.open_map + '</span></a>'
+      + (t.catalog_domain ? '<a class=\\'btn-ghost\\' href=\\'domains/\\' + encodeURIComponent(t.catalog_domain) + \\'.html\\'><span>' + L.rel_skills + '</span></a>' : '');
+    box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
+  }
+  // --- guides filter (guides tab) ---
+  function filterGuides(q) {
+    q = (q || '').toLowerCase();
+    var heads = document.querySelectorAll('#guides .tier-head');
+    Array.prototype.forEach.call(heads, function(sec) {
+      var visible = 0;
+      Array.prototype.forEach.call(sec.querySelectorAll('.guide-card'), function(c) {
+        var hay = c.getAttribute('data-title') || '';
+        var show = !q || hay.indexOf(q) >= 0;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      sec.style.display = visible ? '' : 'none';
+    });
   }
   </script>
   <script src="site.js"></script>
@@ -1137,8 +1276,11 @@ def build_style_css(output_dir: Path) -> None:
   --font:'JetBrains Mono','Consolas','Menlo',monospace;
   --mono:'JetBrains Mono','Consolas','Menlo',monospace;
   --grid:linear-gradient(rgba(125,255,74,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(125,255,74,.03) 1px,transparent 1px);
+  --accent-grad:linear-gradient(135deg,#7dff4a,#00ffd1);
+  --glow:0 0 22px rgba(125,255,74,.22);
 }
 body[data-theme="light"]{
+  --glow:0 0 18px rgba(26,127,55,.16);
   --bg:#f4f6f1;--bg2:#eef1ea;--card:#ffffff;--card-hover:#e9efe4;
   --text:#14321f;--muted:#4a6a52;--accent:#1a7f37;--accent2:#007f6a;
   --border:rgba(20,80,40,.16);--radius:4px;
@@ -1146,6 +1288,11 @@ body[data-theme="light"]{
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 ::selection{background:var(--accent);color:#0b0f0a}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(125,255,74,.25);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:rgba(125,255,74,.4)}
+::-webkit-scrollbar-track{background:transparent}
+body[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(26,127,55,.3)}
 body{
   font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;font-size:15px;
@@ -1205,11 +1352,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   padding:.18rem .6rem;font-size:.72rem;border:1px solid var(--border);color:var(--muted);background:var(--card);
 }
 .hero-cta{display:flex;gap:.8rem;justify-content:center;margin-top:1.6rem;flex-wrap:wrap}
+.hero-chips{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.glass-chip{padding:.35rem .85rem;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 70%,transparent);backdrop-filter:blur(8px);border-radius:20px;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+.glass-chip strong{color:var(--accent);font-weight:700}
 .btn-primary{
   padding:.6rem 1.3rem;border:none;cursor:pointer;text-decoration:none;font-weight:600;font-size:.88rem;color:#0b0f0a;
-  background:var(--accent);transition:opacity .15s;display:inline-block;border-radius:var(--radius);
+  background:var(--accent-grad);box-shadow:var(--glow);transition:opacity .15s,transform .15s;display:inline-block;border-radius:var(--radius);
 }
-.btn-primary:hover{opacity:.85}
+.btn-primary:hover{opacity:.92;transform:translateY(-1px)}
 .btn-ghost{
   padding:.6rem 1.3rem;border:1px solid var(--border);cursor:pointer;text-decoration:none;font-weight:600;font-size:.88rem;color:var(--text);
   background:var(--card);transition:border-color .15s;display:inline-block;border-radius:var(--radius);
@@ -1286,7 +1436,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   padding:1rem 1.1rem;transition:border-color .15s,transform .15s;text-decoration:none;color:inherit;display:block;border-radius:var(--radius);
   content-visibility:auto;contain-intrinsic-size:auto 240px;
 }
-.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--accent-grad);opacity:0;transition:opacity .2s;border-radius:var(--radius) var(--radius) 0 0}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--glow)}
+.card:hover::before{opacity:.8}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
 .card-name{font-family:var(--mono);font-weight:700;font-size:.9rem;color:var(--accent)}
 .card-name::before{content:"$ ";opacity:.5}
@@ -1416,10 +1568,16 @@ body[data-theme="light"] .bg-glow{
 .agent-tab{padding:.4rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.75rem;border-radius:20px;transition:all .15s}
 .agent-tab:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
 .agent-tab.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent);font-weight:700}
-.tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.8rem 0 1.2rem;position:sticky;top:57px;z-index:40;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding:.55rem;border:1px solid var(--border);border-radius:10px}
-.tab-btn{padding:.5rem 1.1rem;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:600;border-radius:8px;transition:all .15s}
-.tab-btn:hover{color:var(--text);border-color:var(--border);transform:translateY(-1px)}
-.tab-btn.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent)}
+.tabs{display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap;margin:1.8rem auto 1.4rem;position:sticky;top:57px;z-index:40;width:fit-content;max-width:96vw;background:color-mix(in srgb,var(--bg2) 78%,transparent);backdrop-filter:blur(14px);padding:.45rem;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
+.tab-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.15rem;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:600;border-radius:9px;transition:color .15s,background .2s,transform .15s,box-shadow .2s;position:relative}
+.tab-btn::after{content:"";position:absolute;left:20%;right:20%;bottom:-6px;height:2px;border-radius:2px;background:var(--accent-grad);opacity:0;transition:opacity .2s}
+.tab-btn:hover{color:var(--text);transform:translateY(-1px)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(125,255,74,.16),rgba(0,255,209,.12));color:var(--accent);border-color:rgba(125,255,74,.35);box-shadow:var(--glow)}
+.tab-btn.active::after{opacity:1}
+.tab-count{font-size:.6rem;font-weight:800;padding:.08rem .4rem;border-radius:10px;background:rgba(0,0,0,.25);color:var(--muted);font-family:var(--mono)}
+.tab-count.live{background:rgba(125,255,74,.15);color:var(--accent)}
+.tab-btn.active .tab-count{background:rgba(125,255,74,.22);color:var(--accent)}
+body[data-theme="light"] .tab-btn.active{background:linear-gradient(135deg,rgba(26,127,55,.14),rgba(0,127,106,.1));border-color:rgba(26,127,55,.4)}
 .tab-btn.active .soon-pill{background:#0b0f0a;color:var(--accent);animation:none}
 .tab-panel{display:none}
 .tab-panel.active{display:block;animation:fadeSlide .35s ease}
@@ -1449,10 +1607,12 @@ body[data-theme="light"] .bg-glow{
 .rm-detail-head h2{font-size:1.3rem}
 .rm-tag{font-size:.7rem;color:var(--muted);border:1px solid var(--border);padding:.15rem .6rem;border-radius:20px}
 .rm-timeline{display:grid;gap:.7rem;margin-top:1.1rem}
-.rm-stage{border:1px dashed var(--border);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
+.rm-stage{border:1px dashed var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
 .rm-stage h3{font-size:.85rem;display:flex;align-items:center;gap:.5rem}
 .rm-stage p{color:var(--muted);font-size:.78rem;margin-top:.25rem}
 .rm-note{margin-top:1rem;color:var(--muted);font-size:.78rem;text-align:center}
+.roadmaps-teaser .rm-detail{text-align:left}
+.roadmaps-teaser .rm-stage li{text-align:left}
 .live-pill{display:inline-block;background:var(--accent);color:#0b0f0a;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .45rem;border-radius:20px;margin-left:.4rem;vertical-align:middle}
 .live-pill.big{font-size:.68rem;padding:.2rem .7rem}
 .rm-detail-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
@@ -1469,8 +1629,11 @@ body[data-theme="light"] .bg-glow{
 .tier-head h2{font-size:1.15rem;letter-spacing:.02em;border-bottom:1px solid var(--border);padding-bottom:.5rem}
 .guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem;margin-top:1rem}
 .guide-card{display:flex;flex-direction:column;gap:.4rem;background:var(--card);border:1px solid var(--border);padding:1rem 1.1rem;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;border-radius:var(--radius)}
-.guide-card:hover{transform:translateY(-3px);border-color:var(--accent)}
-.guide-num{font-family:var(--mono);font-weight:700;font-size:.72rem;color:var(--accent);letter-spacing:.12em}
+.guide-card{position:relative}
+.guide-card::after{content:"→";position:absolute;right:1rem;top:1rem;opacity:0;transform:translateX(-6px);transition:all .2s;color:var(--accent);font-family:var(--mono)}
+.guide-card:hover::after{opacity:1;transform:none}
+.guide-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--glow)}
+.guide-num{font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.12em;background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .guide-card-title{font-weight:700;font-size:.88rem;line-height:1.35}
 .guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45}
 .guide-card-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:.4rem}
@@ -1790,39 +1953,15 @@ def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
     guides_dir.mkdir(parents=True, exist_ok=True)
     gsrc = (source_dir or Path(__file__).resolve().parent.parent) / "roadmaps" / GUIDES_SUBDIR
 
-    def tier_label(en: str, ru: str) -> str:
-        return (
-            f'<span data-slang-body="en">{esc(en)}</span>'
-            f'<span data-slang-body="ru" hidden>{esc(ru)}</span>'
-        )
-
     sections = []
     for tier_key, tier_en, tier_ru in GUIDE_TIERS:
         tier_guides = [g for g in guides if g["tier"] == tier_key]
         if not tier_guides:
             continue
-        cards = []
-        for g in tier_guides:
-            num = f"{g['number']:02d}" if g["number"] is not None else "✦"
-            # span, not <a>: guide cards are anchors themselves and nested
-            # anchors make browsers split the card around the chip
-            track_chip = (
-                f'<span class="rm-chip">{esc(g["track"])}</span>'
-                if g["track"]
-                else ""
-            )
-            cards.append(
-                f'<a class="guide-card" href="{GUIDES_SUBDIR}/{esc(g["slug"])}.html">'
-                f'<span class="guide-num">{num}</span>'
-                f'<span class="guide-card-title">{esc(g["title"])}</span>'
-                f'<span class="guide-card-excerpt">{esc(g["excerpt"])}</span>'
-                f'<span class="guide-card-meta">{track_chip}'
-                f'<span class="guide-words" data-i18n="words_n" data-n="{g["words"]}">~{g["words"]} words</span></span>'
-                "</a>"
-            )
+        cards = "".join(guide_card_html(g) for g in tier_guides)
         sections.append(
-            f'<section class="tier-head"><h2>{tier_label(tier_en, tier_ru)}</h2>'
-            f'<div class="guide-grid">{"".join(cards)}</div></section>'
+            f'<section class="tier-head"><h2>{rm_tier_label(tier_en, tier_ru)}</h2>'
+            f'<div class="guide-grid">{cards}</div></section>'
         )
 
     overview = page_head(
@@ -1836,8 +1975,8 @@ def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
     <div class="rm-page">
       <header class="rm-hero reveal in">
         <div class="hero-badge pulse">Guides · {len(guides)} full-text maps</div>
-        <h1>{tier_label("The Maps Library", "Библиотека мап")}</h1>
-        <p>{tier_label(
+        <h1>{rm_tier_label("The Maps Library", "Библиотека мап")}</h1>
+        <p>{rm_tier_label(
             "The complete text behind every roadmap track — from Linux internals to GPU inference, chaos drills and the AI-coder career portal.",
             "Полный текст каждой дорожной карты — от ядра Linux до GPU-инференса, хаос-инженерии и карьерного портала AI-кодера.",
         )}</p>
@@ -1893,7 +2032,7 @@ def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
       <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
       <header class="rm-hero">
         <div class="skill-page-badges">
-          <span class="domain-chip">{tier_label(tier[1], tier[2])}</span>
+          <span class="domain-chip">{rm_tier_label(tier[1], tier[2])}</span>
           {track_link}
         </div>
         <h1 class="skill-page-title">{esc(g["title"])}</h1>
