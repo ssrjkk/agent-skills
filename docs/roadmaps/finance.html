@@ -9,6 +9,8 @@
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:title" content="FinTech &amp; Quant roadmap — Agent Skills Library">
   <meta property="og:description" content="Algorithmic trading pipelines, bias-free backtesting, quantitative risk modeling (VaR, CVaR, Monte Carlo), and execution controls">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/roadmaps/finance.html">
@@ -32,7 +34,8 @@
       <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
         <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
@@ -53,6 +56,7 @@
       </header>
       <div class="page-nav"><a class="page-nav-link" href="engineering.html">← engineering</a><a class="page-nav-link" href="frontend.html">frontend →</a></div>
       <div class="rm-timeline"><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 1. Market Data Pipelines &amp; Bias-Free Backtesting</span><span data-slang-body="ru" hidden>Этап 1. Потоки биржевых котировок и честный бэктестинг стратегий</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Ingesting tick and OHLCV order-book data into columnar stores (ClickHouse/Parquet) with strict UTC timestamp normalization</li><li>Eliminating look-ahead bias, survivorship bias, and unrealistic zero-slippage fills in walk-forward backtests</li></ul><ul data-slang-body="ru" hidden><li>Сбор тиковых данных и стакана заявок (Order Book) в колоночные хранилища (ClickHouse, Parquet) с нормализацией таймстемпов</li><li>Защита бэктестов от заглядывания в будущее (Look-Ahead Bias), ошибки выжившего и учета комиссий и проскальзывания</li></ul></div><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 2. Quantitative Risk Modeling (VaR, CVaR &amp; Stress Testing)</span><span data-slang-body="ru" hidden>Этап 2. Количественное моделирование рисков (VaR, CVaR и Монте-Карло)</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Computing parametric, historical, and Monte Carlo Value at Risk (VaR) and Expected Shortfall (CVaR) across portfolios</li><li>Automated pre-trade risk gates: maximum drawdown circuit breakers, position size caps, and fat-finger order checks</li></ul><ul data-slang-body="ru" hidden><li>Расчет исторического, параметрического и Монте-Карло показателей Value at Risk (VaR) и Expected Shortfall (CVaR)</li><li>Автоматические предторговые гейты риска: стоп-краны по максимальной просадке (Drawdown), лимиты позиции и идемпотентность ордеров</li></ul></div></div>
+      
       <div class="rm-related"><h3>Related skills</h3><div class="rm-chips"><a class="rm-chip" href="../skills/algorithmic-trading.html">algorithmic-trading</a><a class="rm-chip" href="../skills/risk-modeling.html">risk-modeling</a><a class="rm-chip" href="../skills/pandas.html">pandas</a><a class="rm-chip" href="../skills/clickhouse.html">clickhouse</a></div></div>
       <div class="page-nav"><a class="page-nav-link" href="engineering.html">← engineering</a><a class="page-nav-link" href="frontend.html">frontend →</a></div>
       <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/finance.json</code> · ETA: 2026-11</p>

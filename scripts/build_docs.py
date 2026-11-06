@@ -5,10 +5,13 @@ Pages:
   index.html          - landing with hero, dashboard, search, filters, cards
   skills/<name>.html  - a full page per skill
   domains/<name>.html - a page per domain listing its skills
+  roadmaps.html       - roadmap tracks overview + one page per track
+  guides.html         - full-text maps library + one page per guide
 """
 
 from __future__ import annotations
 
+import functools
 import html as html_lib
 import json
 import os
@@ -70,6 +73,287 @@ ROADMAP_TRACKS = [
 ]
 
 MODEL_ORDER = ["opus", "sonnet", "gpt-6", "gemini-3", "glm-5", "haiku"]
+
+# Full-text maps shipped in roadmaps/guides/*.md. They are rendered into the
+# site (guides.html + guides/<slug>.html) so every map is a real indexed page,
+# not just a repo file — the portal principle: every stage pairs with an
+# artifact a reader can open.
+GUIDES_SUBDIR = "guides"
+
+# Progressive competency tiers (devops-sre-portal-architect): numbered maps
+# group into tiers; 00_* handbooks and the resume/career files stand apart.
+# (tier key, EN label, RU label)
+GUIDE_TIERS: list[tuple[str, str, str]] = [
+    ("meta", "Handbooks & Digests", "Справочники и дайджесты"),
+    ("foundation", "Foundation · Maps 01–03", "Фундамент · мапы 01–03"),
+    ("cloud", "Cloud-Native & SRE · Maps 04–13", "Cloud-Native и SRE · мапы 04–13"),
+    ("principal", "Principal & AI-Infra · Maps 14–20", "Principal и AI-Infra · мапы 14–20"),
+    ("vibe", "Vibe-Coding & Portal · Maps 21–23", "Вайбкодинг и портал · мапы 21–23"),
+    ("career", "Career & Portfolio", "Карьера и портфолио"),
+]
+
+# Map number → roadmap track slug (00_* and career files map to no track).
+def _guide_track(number: int) -> str | None:
+    if 1 <= number <= 20:
+        return "devops"
+    if number in (21, 22):
+        return "frontend"
+    if number == 23:
+        return "education"
+    return None
+
+
+def _guide_tier(stem: str) -> str:
+    m = re.match(r"^(\d+)_", stem)
+    if not m:
+        return "career" if "resume" in stem.lower() else "meta"
+    n = int(m.group(1))
+    if n == 0:
+        return "meta"
+    if n <= 3:
+        return "foundation"
+    if n <= 13:
+        return "cloud"
+    if n <= 20:
+        return "principal"
+    return "vibe"
+
+
+# Roadmap live-state cache, refreshed by the builders that know the source
+# dir (index, roadmaps). Subpage builders (skills/domains/guides) reuse it to
+# keep the shared nav honest; None → keep the legacy "soon" styling.
+RM_STATE: dict[str, int] | None = None
+
+
+def _remember_rm_state(tracks: list[dict]) -> None:
+    global RM_STATE
+    live = sum(1 for t in tracks if t.get("status") == "live")
+    RM_STATE = {"live": live, "total": len(tracks)}
+
+
+def rm_nav_dot() -> str:
+    """Honest nav badge: green 'live' when every track is live, amber 'soon'
+    otherwise (or when the state is unknown, e.g. isolated page builds)."""
+    if RM_STATE and RM_STATE["total"] > 0 and RM_STATE["live"] == RM_STATE["total"]:
+        return '<span class="live-dot">live</span>'
+    return '<span class="soon-dot" data-i18n="soon">soon</span>'
+
+
+def rm_cta_pill() -> str:
+    """Honest hero/tab pill: real live counts instead of a hardcoded 'soon'."""
+    if RM_STATE and RM_STATE["total"] > 0 and RM_STATE["live"] == RM_STATE["total"]:
+        return f'<span class="live-pill">all {RM_STATE["total"]} live</span>'
+    if RM_STATE and RM_STATE.get("live"):
+        soon = RM_STATE["total"] - RM_STATE["live"]
+        return f'<span class="soon-pill">{RM_STATE["live"]} live · {soon} soon</span>'
+    return '<span class="soon-pill" data-i18n="soon">soon</span>'
+
+
+def rm_soon_hero(live: int, soon: int) -> str:
+    """Server-rendered fallback for the rm_s headline (data-i18n re-renders
+    it client-side; crawlers and no-JS readers must also see the truth)."""
+    if soon == 0 and live > 0:
+        return f"all {live} live"
+    return "soon everywhere"
+
+
+# ---------------------------------------------------------------------------
+# Guides (roadmaps/guides/*.md → site pages)
+
+
+def md_inline(text: str) -> str:
+    """Inline markdown (bold, code, links) on top of strict escaping.
+    Links are restricted to http(s)/# targets — anything else stays text."""
+    s = esc(text)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+
+    def _link(m: re.Match[str]) -> str:
+        raw = html_lib.unescape(m.group(2)).strip()
+        if not raw.startswith(("https://", "http://", "#")):
+            return m.group(0)
+        return f'<a href="{esc(raw)}" rel="noopener">{m.group(1)}</a>'
+
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", _link, s)
+
+
+def render_guide_markdown(body: str) -> str:
+    """Renderer for the guide markdown dialect: fences, headings, lists,
+    task lists, tables, hr, quotes, paragraphs. Everything is escaped;
+    structure tags are generated, never taken from input."""
+    out: list[str] = []
+    in_fence = False
+    fence_lines: list[str] = []
+    list_mode: str | None = None  # None | 'ul' | 'ol' | 'task'
+    para: list[str] = []
+
+    def close_list() -> None:
+        nonlocal list_mode
+        if list_mode == "ol":
+            out.append("</ol>")
+        elif list_mode is not None:
+            out.append("</ul>")
+        list_mode = None
+
+    def close_para() -> None:
+        nonlocal para
+        if para:
+            out.append(f"<p>{md_inline(' '.join(para))}</p>")
+            para = []
+
+    def flush_pending() -> None:
+        close_para()
+        close_list()
+
+    lines = body.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            flush_pending()
+            if not in_fence:
+                in_fence = True
+                fence_lines = []
+            else:
+                in_fence = False
+                code = esc("\n".join(fence_lines))
+                out.append(
+                    f'<div class="codeblock"><pre class="code"><code>{code}</code></pre>'
+                    f'<button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector(\'code\').textContent)">copy</button></div>'
+                )
+            i += 1
+            continue
+        if in_fence:
+            fence_lines.append(line)
+            i += 1
+            continue
+        if not stripped:
+            flush_pending()
+            i += 1
+            continue
+        # tables: consecutive |...| rows; the ---|--- row is the separator
+        if stripped.startswith("|") and i + 1 < len(lines) and re.match(r"^\|?[\s:|-]+\|[\s:|]*$", lines[i + 1].strip()):
+            flush_pending()
+            rows: list[list[str]] = []
+            header = [c.strip() for c in stripped.strip("|").split("|")]
+            i += 2
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
+                i += 1
+            head = "".join(f"<th>{md_inline(c)}</th>" for c in header)
+            body_rows = "".join(
+                "<tr>" + "".join(f"<td>{md_inline(c)}</td>" for c in r) + "</tr>" for r in rows
+            )
+            out.append(f'<div class="md-table"><table><thead><tr>{head}</tr></thead><tbody>{body_rows}</tbody></table></div>')
+            continue
+        if stripped.startswith("### "):
+            flush_pending()
+            out.append(f"<h3>{md_inline(stripped[4:])}</h3>")
+            i += 1
+            continue
+        if stripped.startswith("## "):
+            flush_pending()
+            out.append(f"<h2>{md_inline(stripped[3:])}</h2>")
+            i += 1
+            continue
+        if stripped == "---":
+            flush_pending()
+            out.append("<hr>")
+            i += 1
+            continue
+        if stripped.startswith(">"):
+            flush_pending()
+            out.append(f"<blockquote>{md_inline(stripped.lstrip('> '))}</blockquote>")
+            i += 1
+            continue
+        task = re.match(r"^- \[( |x|X)\] (.*)$", stripped)
+        if task:
+            if list_mode not in ("task", "ul"):
+                close_para()
+                if list_mode == "ol":
+                    out.append("</ol>")
+                elif list_mode is not None:
+                    out.append("</ul>")
+                out.append('<ul class="task-list">')
+                list_mode = "task"
+            checked = " checked" if task.group(1).lower() == "x" else ""
+            out.append(f'<li class="task"><input type="checkbox" disabled{checked}> {md_inline(task.group(2))}</li>')
+            i += 1
+            continue
+        if stripped.startswith("- "):
+            if list_mode not in ("ul", "task"):
+                flush_pending()
+                out.append("<ul>")
+                list_mode = "ul"
+            elif list_mode == "task":
+                out.append("</ul>")
+                out.append("<ul>")
+                list_mode = "ul"
+            out.append(f"<li>{md_inline(stripped[2:])}</li>")
+            i += 1
+            continue
+        ordered = re.match(r"^(\d+)\. (.*)$", stripped)
+        if ordered:
+            if list_mode != "ol":
+                flush_pending()
+                out.append("<ol>")
+                list_mode = "ol"
+            out.append(f"<li>{md_inline(ordered.group(2))}</li>")
+            i += 1
+            continue
+        para.append(stripped)
+        i += 1
+    flush_pending()
+    return "\n".join(out)
+
+
+@functools.lru_cache(maxsize=4)
+def _load_guides_cached(root: str) -> tuple[tuple[str, str, str, str, int | None, str, int], ...]:
+    """(slug, title, tier, track, number, excerpt, words) per guide file."""
+    gdir = Path(root) / "roadmaps" / GUIDES_SUBDIR
+    guides: list[tuple[str, str, str, str, int | None, str, int]] = []
+    if not gdir.is_dir():
+        return ()
+    for path in sorted(gdir.glob("*.md")):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"warning: cannot read guide {path.name}: {e}", file=sys.stderr)
+            continue
+        title = path.stem
+        body_lines = text.splitlines()
+        for ln in body_lines:
+            if ln.startswith("# "):
+                title = ln[2:].strip()
+                break
+        excerpt = next((ln.strip() for ln in body_lines[1:] if ln.strip() and not ln.startswith("#")), "")
+        if len(excerpt) > 160:
+            excerpt = excerpt[:157] + "…"
+        m = re.match(r"^(\d+)", path.stem)
+        number = int(m.group(1)) if m else None
+        guides.append(
+            (
+                path.stem,
+                title,
+                _guide_tier(path.stem),
+                _guide_track(number) if number else None,
+                number,
+                excerpt,
+                len(text.split()),
+            )
+        )
+    # handbooks (00_*) first, then numbered maps, career files last
+    guides.sort(key=lambda g: (2 if g[4] is None else (0 if g[4] == 0 else 1), g[4] or 0, g[0]))
+    return tuple(guides)
+
+
+def load_guides(source_dir: Path | None = None) -> list[dict]:
+    root = source_dir or Path(__file__).resolve().parent.parent
+    return [
+        {"slug": s, "title": t, "tier": tier, "track": track, "number": n, "excerpt": ex, "words": w}
+        for s, t, tier, track, n, ex, w in _load_guides_cached(str(root))
+    ]
 
 
 def esc(s: str) -> str:
@@ -174,10 +458,20 @@ def load_all(path: Path, jobs: int | None = None) -> tuple[dict, dict, dict]:
     return meta, skills, metrics
 
 
-def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: str = "../style.css", nav_index: str = "../index.html") -> str:
-    roadmaps_href = "roadmaps.html" if nav_index == "index.html" else "../roadmaps.html"
+def page_head(
+    title: str,
+    desc: str,
+    canonical: str,
+    extra: str = "",
+    css_path: str = "../style.css",
+    nav_index: str = "../index.html",
+    lang_attr: str = "en",
+) -> str:
+    root = "" if nav_index == "index.html" else "../"
+    roadmaps_href = f"{root}roadmaps.html"
+    guides_href = f"{root}guides.html"
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="{lang_attr}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -187,6 +481,8 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
@@ -210,7 +506,8 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
       <a class="nav-brand" href="{nav_index}"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="{nav_index}#catalog" data-i18n="nav_catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span>{rm_nav_dot()}</a>
+        <a class="nav-link" href="{guides_href}" data-i18n="nav_guides">Guides</a>
         <a class="nav-link" href="{nav_index}#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="{nav_index}#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
@@ -245,6 +542,8 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     # roadmaps/ lives beside the catalog repo root (tests build into tmp/<out>)
     tracks = load_roadmap_tracks(output_dir.parent)
     rm_live, rm_soon = rm_statuses(tracks)
+    _remember_rm_state(tracks)
+    guides_n = len(load_guides(output_dir.parent))
 
     model_names = set()
     for s in skills:
@@ -318,7 +617,8 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <div class="hero-models">Models: {models_badges}</div>
       <div class="hero-cta">
         <a class="btn-primary shine" href="#catalog" data-i18n="browse">Browse skills ↓</a>
-        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a>
+        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> {rm_cta_pill()}</a>
+        <a class="btn-ghost" href="guides.html"><span data-i18n="nav_guides">Guides</span> · {guides_n} maps →</a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
       <div class="term-box tilt" aria-hidden="true">
@@ -351,7 +651,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats')"><span data-i18n="nav_stats">Stats</span></button>
       <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how')"><span data-i18n="nav_how">How it works</span></button>
       <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install')"><span data-i18n="tab_install">Install</span></button>
-      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> {rm_cta_pill()}</button>
     </div>
 
     <section class="install reveal tab-panel" id="install" data-panel="install">
@@ -369,7 +669,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <div class="install-links">
         <a href="skills_catalog.json" download>Download catalog (JSON)</a> ·
         <a href="skills_catalog.schema.json" download>JSON Schema</a> ·
-        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a> ·
+        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> {rm_cta_pill()}</a> ·
         <a href="{REPO}">GitHub</a>
       </div>
     </section>
@@ -383,7 +683,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
 
     <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
-        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="{rm_live}" data-total="{rm_soon}">soon everywhere</span></h2>
+        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="{rm_live}" data-total="{rm_soon}">{rm_soon_hero(rm_live, rm_soon)}</span></h2>
         <p data-i18n="rm_d">Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
       </div>
       <div class="rm-strip" id="rm-strip"></div>
@@ -431,7 +731,10 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     cursor: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills',
     windsurf: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills'
   };
-  var RM_TRACKS = """ + json_for_script([{"slug": t["slug"], "name": t["name"], "icon": t["icon"]} for t in ROADMAP_TRACKS]) + """;
+  var RM_TRACKS = """ + json_for_script([
+        {"slug": t["slug"], "name": t["name"], "icon": t["icon"], "status": t.get("status", "soon")}
+        for t in tracks
+    ]) + """;
 
   function showAgent(name, btn) {
     document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];
@@ -1154,6 +1457,30 @@ body[data-theme="light"] .bg-glow{
 .rm-chips{display:flex;flex-wrap:wrap;gap:.45rem}
 .ru-badge{display:inline-block;background:var(--accent2);color:#0b0f0a;font-size:.6rem;font-weight:800;padding:.1rem .4rem;border-radius:3px;letter-spacing:.05em}
 @media (max-width:600px){.rm-detail{padding:1rem}.how-grid{grid-template-columns:1fr}}
+.live-dot{background:var(--accent);color:#0b0f0a;font-size:.55rem;font-weight:800;border-radius:10px;padding:.05rem .35rem;margin-left:.35rem;text-transform:uppercase;letter-spacing:.06em;animation:pulseB 2.4s infinite}
+.nav-hot:has(.live-dot){border-color:rgba(125,255,74,.55)}
+.tier-head{margin:2.2rem 0 .9rem}
+.tier-head h2{font-size:1.15rem;letter-spacing:.02em;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem;margin-top:1rem}
+.guide-card{display:flex;flex-direction:column;gap:.4rem;background:var(--card);border:1px solid var(--border);padding:1rem 1.1rem;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;border-radius:var(--radius)}
+.guide-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.guide-num{font-family:var(--mono);font-weight:700;font-size:.72rem;color:var(--accent);letter-spacing:.12em}
+.guide-card-title{font-weight:700;font-size:.88rem;line-height:1.35}
+.guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45}
+.guide-card-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:.4rem}
+.guide-words{font-size:.66rem;color:var(--muted);font-family:var(--mono)}
+.guide-page{max-width:900px;margin:0 auto}
+.guide-body h2{border-bottom:1px solid var(--border);padding-bottom:.3rem}
+.md-table{overflow-x:auto;margin:1rem 0;border:1px solid var(--border);background:var(--bg2);border-radius:var(--radius)}
+.md-table table{border-collapse:collapse;width:100%;font-size:.78rem}
+.md-table th,.md-table td{border:1px solid var(--border);padding:.4rem .6rem;text-align:left;vertical-align:top}
+.md-table th{background:rgba(125,255,74,.08);color:var(--accent);font-family:var(--mono);font-size:.72rem}
+ul.task-list{list-style:none;margin-left:.2rem}
+ul.task-list li.task{display:flex;align-items:baseline;gap:.5rem}
+ul.task-list input[type=checkbox]{accent-color:var(--accent);flex:none}
+body[data-theme="light"] .md-table{background:#f0f3ec}
+body[data-theme="light"] .md-table th{background:rgba(26,127,55,.1);color:#1a7f37}
+@media (max-width:600px){.guide-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.reveal{opacity:1;transform:none}}
 """
     raw_len = len(css)
@@ -1273,6 +1600,8 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
     """
     tracks = load_roadmap_tracks(source_dir)
     live_n, soon_n = rm_statuses(tracks)
+    _remember_rm_state(tracks)
+    guides = load_guides(source_dir)
     (output_dir / "roadmaps.json").write_text(json.dumps({"tracks": tracks}, indent=2, ensure_ascii=False), encoding="utf-8")
 
     tabs = []
@@ -1302,7 +1631,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
     <div class="rm-page">
       <header class="rm-hero reveal in">
         <div class="hero-badge pulse">Roadmaps · {len(tracks)} tracks · {live_n} live</div>
-        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s" data-live="{live_n}" data-total="{soon_n}">soon everywhere</span></h1>
+        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s" data-live="{live_n}" data-total="{soon_n}">{rm_soon_hero(live_n, soon_n)}</span></h1>
         <p data-i18n="rm_hd" data-i18n-html>One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in.</p>
       </header>
       <div class="rm-tabs" role="tablist">{"".join(tabs)}</div>
@@ -1314,7 +1643,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
         <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{rm_pair(first["tagline"], first.get("tagline_ru"))}</p>
         <div class="rm-timeline" id="rm-stages">{stages0}</div>
         <div class="rm-detail-actions" id="rm-actions">{rm_links_html(first)}</div>
-        <p class="rm-note">Want this map first? <a href="{REPO}/discussions">Vote in Discussions</a> · <a href="{REPO}/issues">Request a track</a></p>
+        <p class="rm-note">{'Every track is live — sources in <code>roadmaps/&lt;slug&gt;.json</code>.' if soon_n == 0 else 'Want this map first? <a href="' + REPO + '/discussions">Vote in Discussions</a> · <a href="' + REPO + '/issues">Request a track</a>'}</p>
       </div>
     </div>
   <script>
@@ -1403,6 +1732,21 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
         elif t.get("catalog_domain"):
             rel = (f'<div class="rm-related"><a class="btn-ghost" href="../domains/{esc(t["catalog_domain"])}.html">'
                    f'<span data-i18n="rel_skills">Related skills →</span></a></div>')
+        track_maps = [g for g in guides if g.get("track") == t["slug"]]
+        maps_html = ""
+        if track_maps:
+
+            def _map_chip(g: dict) -> str:
+                num = f"{g['number']:02d}"
+                href = f"../guides/{esc(g['slug'])}.html"
+                return f'<a class="rm-chip" href="{href}">{rm_pair("Map " + num, "Карта " + num)}</a>'
+
+            chips = "".join(_map_chip(g) for g in track_maps)
+            maps_html = (
+                '<div class="rm-related"><h3>'
+                + rm_pair("Full maps", "Полные мапы")
+                + '</h3><div class="rm-chips">' + chips + "</div></div>"
+            )
         color = DOMAIN_COLORS.get(t["slug"], "#64748b")
         page = page_head(
             f'{t["name"]} roadmap — Agent Skills Library',
@@ -1418,6 +1762,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
       </header>
       {nav}
       <div class="rm-timeline">{"".join(rm_stage_html(s) for s in t["stages"])}</div>
+      {maps_html}
       {rel}
       {nav}
       <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/{esc(t["slug"])}.json</code> · ETA: {esc(t.get("eta", "soon"))}</p>
@@ -1427,6 +1772,141 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
 
     print(f"Roadmaps written: overview + {len(tracks)} track pages + roadmaps.json")
     return tracks
+
+
+def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
+    """Render roadmaps/guides/*.md into the site: an overview grouped by
+    competency tier plus one full-text page per map, cross-linked with the
+    roadmap tracks. Bilingual labels reuse the data-slang-body mechanism."""
+    _remember_rm_state(load_roadmap_tracks(source_dir))
+    guides = load_guides(source_dir)
+    guides_dir = output_dir / GUIDES_SUBDIR
+    guides_dir.mkdir(parents=True, exist_ok=True)
+    gsrc = (source_dir or Path(__file__).resolve().parent.parent) / "roadmaps" / GUIDES_SUBDIR
+
+    def tier_label(en: str, ru: str) -> str:
+        return (
+            f'<span data-slang-body="en">{esc(en)}</span>'
+            f'<span data-slang-body="ru" hidden>{esc(ru)}</span>'
+        )
+
+    sections = []
+    for tier_key, tier_en, tier_ru in GUIDE_TIERS:
+        tier_guides = [g for g in guides if g["tier"] == tier_key]
+        if not tier_guides:
+            continue
+        cards = []
+        for g in tier_guides:
+            num = f"{g['number']:02d}" if g["number"] is not None else "✦"
+            track_chip = (
+                f'<a class="rm-chip" href="roadmaps/{esc(g["track"])}.html">{esc(g["track"])}</a>'
+                if g["track"]
+                else ""
+            )
+            cards.append(
+                f'<a class="guide-card" href="{GUIDES_SUBDIR}/{esc(g["slug"])}.html">'
+                f'<span class="guide-num">{num}</span>'
+                f'<span class="guide-card-title">{esc(g["title"])}</span>'
+                f'<span class="guide-card-excerpt">{esc(g["excerpt"])}</span>'
+                f'<span class="guide-card-meta">{track_chip}'
+                f'<span class="guide-words" data-i18n="words_n" data-n="{g["words"]}">~{g["words"]} words</span></span>'
+                "</a>"
+            )
+        sections.append(
+            f'<section class="tier-head"><h2>{tier_label(tier_en, tier_ru)}</h2>'
+            f'<div class="guide-grid">{"".join(cards)}</div></section>'
+        )
+
+    overview = page_head(
+        "IT Maps Library — full-text DevOps/SRE guides",
+        f"{len(guides)} full-text maps: Linux, Kubernetes, CI/CD, SRE, AI infra and vibe-coding — the complete 2026-2027 learning library.",
+        BASE + "guides.html",
+        css_path="style.css",
+        nav_index="index.html",
+        lang_attr="ru",
+    ) + f"""
+    <div class="rm-page">
+      <header class="rm-hero reveal in">
+        <div class="hero-badge pulse">Guides · {len(guides)} full-text maps</div>
+        <h1>{tier_label("The Maps Library", "Библиотека мап")}</h1>
+        <p>{tier_label(
+            "The complete text behind every roadmap track — from Linux internals to GPU inference, chaos drills and the AI-coder career portal.",
+            "Полный текст каждой дорожной карты — от ядра Linux до GPU-инференса, хаос-инженерии и карьерного портала AI-кодера.",
+        )}</p>
+      </header>
+      {"".join(sections)}
+      <p class="back-link"><a href="roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
+    </div>
+""" + page_foot(js_path="site.js")
+    (output_dir / "guides.html").write_text(overview, encoding="utf-8")
+
+    count = 0
+    for i, g in enumerate(guides):
+        prev_g = guides[i - 1] if i > 0 else None
+        next_g = guides[i + 1] if i < len(guides) - 1 else None
+        nav = '<div class="page-nav">'
+        nav += f'<a class="page-nav-link" href="{esc(prev_g["slug"])}.html">← {esc(prev_g["title"][:40])}</a>' if prev_g else "<span></span>"
+        nav += f'<a class="page-nav-link" href="{esc(next_g["slug"])}.html">{esc(next_g["title"][:40])} →</a>' if next_g else "<span></span>"
+        nav += "</div>"
+        try:
+            md_text = (gsrc / f'{g["slug"]}.md').read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"warning: cannot read guide body {g['slug']}: {e}", file=sys.stderr)
+            continue
+        body_lines = md_text.splitlines()
+        drop = next((k for k, ln in enumerate(body_lines) if ln.startswith("# ")), None)
+        if drop is not None:
+            body_lines = body_lines[:drop] + body_lines[drop + 1 :]
+        rendered = render_guide_markdown("\n".join(body_lines))
+        track_link = (
+            f'<a class="rm-chip" href="../roadmaps/{esc(g["track"])}.html">{esc(g["track"])} track →</a>'
+            if g["track"]
+            else ""
+        )
+        tier = next(t for t in GUIDE_TIERS if t[0] == g["tier"])
+        ld = json_for_script({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": g["title"],
+            "description": g["excerpt"] or g["title"],
+            "url": BASE + f"guides/{g['slug']}.html",
+            "inLanguage": "ru",
+            "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": BASE + "guides.html"},
+            "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap",
+        })
+        page = page_head(
+            f'{g["title"]} — IT Maps',
+            g["excerpt"] or g["title"],
+            BASE + f'guides/{g["slug"]}.html',
+            extra=f'<script type="application/ld+json">{ld}</script>',
+            lang_attr="ru",
+        ) + f"""
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip">{tier_label(tier[1], tier[2])}</span>
+          {track_link}
+        </div>
+        <h1 class="skill-page-title">{esc(g["title"])}</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="{g["words"]}">~{g["words"]} words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/{GUIDES_SUBDIR}/{esc(g["slug"])}.md</code></span>
+          <a href="{REPO}/tree/main/roadmaps/{GUIDES_SUBDIR}/{esc(g["slug"])}.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      {nav}
+      <div class="skill-page-body guide-body">
+        {rendered}
+      </div>
+      {nav}
+    </article>
+""" + page_foot()
+        (guides_dir / f'{g["slug"]}.html').write_text(page, encoding="utf-8")
+        count += 1
+
+    print(f"Guides written: overview + {count} map pages")
+    return count
 
 
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
@@ -1452,6 +1932,9 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
         lines.append(f"  <url><loc>{BASE}domains/{esc(d)}.html</loc></url>")
     for t in load_roadmap_tracks():
         lines.append(f"  <url><loc>{BASE}roadmaps/{esc(t['slug'])}.html</loc></url>")
+    lines.append(f"  <url><loc>{BASE}guides.html</loc><priority>0.8</priority></url>")
+    for g in load_guides():
+        lines.append(f"  <url><loc>{BASE}guides/{esc(g['slug'])}.html</loc></url>")
     lines.append("</urlset>")
     (output_dir / "sitemap.xml").write_text("\n".join(lines), encoding="utf-8")
     print(f"robots.txt and sitemap.xml written to {output_dir}")
@@ -1475,6 +1958,7 @@ def main() -> int:
     build_skill_pages(Path(args.catalog), output_dir, jobs=args.jobs)
     build_domain_pages(Path(args.catalog), output_dir)
     build_roadmaps(output_dir)
+    build_guides(output_dir)
     build_style_css(output_dir)
     build_site_js(output_dir)
     build_search_index(Path(args.catalog), output_dir)

@@ -9,6 +9,8 @@
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:title" content="Agent Skills Library — 120 curated bilingual skills">
   <meta property="og:description" content="120 curated bilingual (EN + RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent.">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/">
@@ -32,7 +34,8 @@
       <a class="nav-brand" href="index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="index.html#catalog" data-i18n="nav_catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link nav-hot" href="roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="guides.html" data-i18n="nav_guides">Guides</a>
         <a class="nav-link" href="index.html#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
@@ -51,7 +54,8 @@
       <div class="hero-models">Models: <span class="model-badge">opus</span><span class="model-badge">sonnet</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="hero-cta">
         <a class="btn-primary shine" href="#catalog" data-i18n="browse">Browse skills ↓</a>
-        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a>
+        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="live-pill">all 20 live</span></a>
+        <a class="btn-ghost" href="guides.html"><span data-i18n="nav_guides">Guides</span> · 27 maps →</a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
       <div class="term-box tilt" aria-hidden="true">
@@ -84,7 +88,7 @@
       <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats')"><span data-i18n="nav_stats">Stats</span></button>
       <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how')"><span data-i18n="nav_how">How it works</span></button>
       <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install')"><span data-i18n="tab_install">Install</span></button>
-      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="live-pill">all 20 live</span></button>
     </div>
 
     <section class="install reveal tab-panel" id="install" data-panel="install">
@@ -102,7 +106,7 @@
       <div class="install-links">
         <a href="skills_catalog.json" download>Download catalog (JSON)</a> ·
         <a href="skills_catalog.schema.json" download>JSON Schema</a> ·
-        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a> ·
+        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="live-pill">all 20 live</span></a> ·
         <a href="https://github.com/ssrjkk/agent-skills">GitHub</a>
       </div>
     </section>
@@ -116,7 +120,7 @@
 
     <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
-        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="20" data-total="0">soon everywhere</span></h2>
+        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="20" data-total="0">all 20 live</span></h2>
         <p data-i18n="rm_d">Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
       </div>
       <div class="rm-strip" id="rm-strip"></div>
@@ -505,7 +509,7 @@ export API_KEY=&quot;...&quot;</code></pre><div class="card-score"><div class="s
     cursor: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills',
     windsurf: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills'
   };
-  var RM_TRACKS = [{"slug": "frontend", "name": "Frontend", "icon": "🖥️"}, {"slug": "backend", "name": "Backend", "icon": "⚙️"}, {"slug": "mobile", "name": "Mobile", "icon": "📱"}, {"slug": "devops", "name": "DevOps", "icon": "🚀"}, {"slug": "qa", "name": "QA", "icon": "🧪"}, {"slug": "data", "name": "Data", "icon": "📊"}, {"slug": "database", "name": "Databases", "icon": "🗄️"}, {"slug": "ai", "name": "AI / LLM", "icon": "🤖"}, {"slug": "security", "name": "Security", "icon": "🔒"}, {"slug": "engineering", "name": "Engineering", "icon": "🏗️"}, {"slug": "gamedev", "name": "GameDev", "icon": "🎮"}, {"slug": "healthcare", "name": "Healthcare IT", "icon": "🏥"}, {"slug": "finance", "name": "FinTech", "icon": "💹"}, {"slug": "blockchain", "name": "Blockchain", "icon": "⛓️"}, {"slug": "desktop", "name": "Desktop", "icon": "🖥️"}, {"slug": "embedded", "name": "Embedded", "icon": "🔌"}, {"slug": "design", "name": "Design", "icon": "🎨"}, {"slug": "communications", "name": "Writing", "icon": "✍️"}, {"slug": "education", "name": "Education", "icon": "🎓"}, {"slug": "media", "name": "Media / Slides", "icon": "📽️"}];
+  var RM_TRACKS = [{"slug": "ai", "name": "AI / LLM", "icon": "🤖", "status": "live"}, {"slug": "backend", "name": "Backend", "icon": "⚙️", "status": "live"}, {"slug": "blockchain", "name": "Blockchain & ZK", "icon": "⛓️", "status": "live"}, {"slug": "communications", "name": "Writing & Docs", "icon": "✍️", "status": "live"}, {"slug": "data", "name": "Data Engineering", "icon": "📊", "status": "live"}, {"slug": "database", "name": "Databases", "icon": "🗄️", "status": "live"}, {"slug": "design", "name": "Design & UI/UX", "icon": "🎨", "status": "live"}, {"slug": "desktop", "name": "Desktop Apps", "icon": "🖥️", "status": "live"}, {"slug": "devops", "name": "DevOps & SRE", "icon": "🚀", "status": "live"}, {"slug": "education", "name": "Education & Career", "icon": "🎓", "status": "live"}, {"slug": "embedded", "name": "Embedded & IoT", "icon": "🔌", "status": "live"}, {"slug": "engineering", "name": "Software Engineering", "icon": "🏗️", "status": "live"}, {"slug": "finance", "name": "FinTech & Quant", "icon": "💹", "status": "live"}, {"slug": "frontend", "name": "Frontend & Web", "icon": "🖥️", "status": "live"}, {"slug": "gamedev", "name": "GameDev", "icon": "🎮", "status": "live"}, {"slug": "healthcare", "name": "Healthcare IT", "icon": "🏥", "status": "live"}, {"slug": "media", "name": "Media & Slides", "icon": "📽️", "status": "live"}, {"slug": "mobile", "name": "Mobile", "icon": "📱", "status": "live"}, {"slug": "qa", "name": "QA", "icon": "🧪", "status": "live"}, {"slug": "security", "name": "Security & DevSecOps", "icon": "🔒", "status": "live"}];
 
   function showAgent(name, btn) {
     document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];

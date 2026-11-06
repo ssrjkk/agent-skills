@@ -164,4 +164,32 @@
   <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/mobile.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/qa.html</loc></url>
   <url><loc>https://ssrjkk.github.io/agent-skills/roadmaps/security.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides.html</loc><priority>0.8</priority></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/00_CURRENT_CHAT_FULL_DIGEST_AND_MAPS.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/00_DEVOPS_CHAT_CHRONICLE.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/00_README.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/01_Linux_and_Networking_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/02_Coding_and_Containers_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/03_CI_CD_and_IaC_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/04_Kubernetes_and_Cloud_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/05_Observability_and_DevSecOps_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/06_SRE_and_Platform_Engineering_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/07_Pet_Project_Blueprint.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/08_Interview_Prep_Q_and_A.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/09_Incident_Troubleshooting_Playbooks.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/10_Database_and_Stateful_Runbooks.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/11_System_Design_for_DevOps_SRE.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/12_Postmortem_and_SLO_Templates.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/13_Cloud_Security_IAM_and_FinOps_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/14_2026_2027_Trends_AI_eBPF_Wasm_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/15_DevOps_Resume_and_Portfolio_Guide.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/16_Custom_K8s_Operators_and_IDP_Backstage_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/17_BareMetal_K8s_Talos_and_Cilium_BGP_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/18_MultiCluster_Federation_and_Global_Traffic_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/19_Data_Streaming_Kafka_ClickHouse_and_Lakehouse_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/20_HandsOn_Troubleshooting_Simulator_Guide.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/21_VibeCoding_GitHub_Ecosystem_and_MCP_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/22_VibeCoding_SEO_SSR_and_Performance_Map.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/23_AI_Coder_Portal_Learning_Practice_Career_Blueprint.html</loc></url>
+  <url><loc>https://ssrjkk.github.io/agent-skills/guides/Resume_Sergey_Sitnikov_DevOps_2026.html</loc></url>
 </urlset>
