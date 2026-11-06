@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 04 (Расширенная): Kubernetes и Облачная Архитектура — IT Maps</title>
+  <meta name="description" content="Control Plane компоненты:">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/04_Kubernetes_and_Cloud_Map.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 04 (Расширенная): Kubernetes и Облачная Архитектура — IT Maps">
+  <meta property="og:description" content="Control Plane компоненты:">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/04_Kubernetes_and_Cloud_Map.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 04 (Расширенная): Kubernetes и Облачная Архитектура — IT Maps">
+  <meta name="twitter:description" content="Control Plane компоненты:">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 04 (Расширенная): Kubernetes и Облачная Архитектура", "description": "Control Plane компоненты:", "url": "https://ssrjkk.github.io/agent-skills/guides/04_Kubernetes_and_Cloud_Map.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Cloud-Native &amp; SRE · Maps 04–13</span><span data-slang-body="ru" hidden>Cloud-Native и SRE · мапы 04–13</span></span>
+          <a class="rm-chip" href="../roadmaps/devops.html">devops track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 04 (Расширенная): Kubernetes и Облачная Архитектура</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="597">~597 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/04_Kubernetes_and_Cloud_Map.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/04_Kubernetes_and_Cloud_Map.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="03_CI_CD_and_IaC_Map.html">← Карта 03 (Расширенная): CI/CD, IaC и Git</a><a class="page-nav-link" href="05_Observability_and_DevSecOps_Map.html">Карта 05 (Расширенная): Observability и  →</a></div>
+      <div class="skill-page-body guide-body">
+        <h2>1. Архитектура Kubernetes (Под капотом)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Control Plane компоненты:</strong></li>
+</ul>
+<ul>
+<li><code>kube-apiserver</code>: центральная точка входа, аутентификация, авторизация (RBAC), обработка запросов через Mutating и Validating Admission Webhooks.</li>
+<li><code>etcd</code>: распределенное KV-хранилище на базе алгоритма Raft. Процедура снятия снапшотов (<code>etcdctl snapshot save</code>), восстановление кластера (<code>snapshot restore</code>) и мониторинг задержек записи (<code>fsync</code>).</li>
+<li><code>kube-scheduler</code>: алгоритмы фильтрации (Filtering) и взвешивания/оценки (Scoring) нод для размещения подов.</li>
+<li><code>kube-controller-manager</code>: набор контроллеров (Node Controller, ReplicaSet Controller, Endpoint Controller), реализующих цикл реконсиляции (Reconciliation Loop).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Worker Node компоненты:</strong></li>
+<li><code>kubelet</code>: агент ноды, общающийся с Container Runtime через CRI, управление жизненным циклом подов, запуск статических подов (Static Pods).</li>
+<li><code>kube-proxy</code>: поддержка сетевой абстракции сервисов (iptables, IPVS режимы, либо полное отключение при использовании eBPF CNI).</li>
+</ul>
+<h2>2. Рабочие нагрузки и управление размещением</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> Жизненный цикл <code>Pod</code>, использование <code>initContainers</code> для подготовки окружения, <code>ephemeralContainers</code> для отладки работающих подов без перезапуска (<code>kubectl debug</code>).</li>
+<li class="task"><input type="checkbox" disabled> Контроллеры: <code>Deployment</code>, <code>StatefulSet</code> (гарантии стабильных сетевых имен через Headless Service и постоянных дисков для БД), <code>DaemonSet</code> (деплой агентов мониторинга/логирования на каждую ноду), <code>Job</code> / <code>CronJob</code>.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Надежность и отказоустойчивость:</strong></li>
+</ul>
+<ul>
+<li>Пробы состояния: <code>startupProbe</code> (для тяжелых приложений), <code>livenessProbe</code> (перезапуск зависшего контейнера), <code>readinessProbe</code> (исключение не готового принимать трафик пода из Endpoints).</li>
+<li>Ресурсы и изоляция: настройка <code>resources.requests</code> (используется шедулером для выделения места) и <code>resources.limits</code> (жесткое ограничение cgroups: троттлинг CPU и OOM Kill по памяти). Классы QoS: <code>Guaranteed</code>, <code>Burstable</code>, <code>BestEffort</code>.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Продвинутый шедулинг:</strong></li>
+<li>Размещение подов: <code>nodeSelector</code>, <code>Node Affinity</code>, <code>Pod Affinity</code> и <code>Pod Anti-Affinity</code> (разнос критических реплик по разным стойкам/нодам).</li>
+<li>Ограничения и вытеснение: <code>Taints &amp; Tolerations</code>, <code>Topology Spread Constraints</code>.</li>
+<li>Обеспечение плавных обновлений: <strong><code>PodDisruptionBudget</code> (PDB)</strong> для гарантии минимального количества доступных подов при обслуживании нод, хук <code>preStop</code> и <code>terminationGracePeriodSeconds</code> для корректного завершения активных соединений.</li>
+</ul>
+<h2>3. Сеть и Хранение в Kubernetes</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Сетевые плагины (CNI):</strong></li>
+</ul>
+<ul>
+<li><strong>Cilium</strong>: высокая производительность на базе eBPF, замена <code>kube-proxy</code>, L7 сетевые политики, прозрачное шифрование трафика между нодами через WireGuard, инструмент визуализации Hubble.</li>
+<li><strong>Calico</strong>: работа в режимах BGP routing или инкапсуляции IPIP/VXLAN, сетевые политики.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Сетевые абстракции:</strong></li>
+<li>Типы сервисов: <code>ClusterIP</code>, <code>Headless Service</code>, <code>NodePort</code>, <code>LoadBalancer</code>.</li>
+<li>Входящий трафик: классический <code>Ingress</code> (контроллеры вроде <code>ingress-nginx</code>) и современный стандарт <strong>Gateway API</strong> (<code>GatewayClass</code>, <code>Gateway</code>, <code>HTTPRoute</code> с поддержкой разделения трафика и фильтрации).</li>
+<li>Изоляция: <code>NetworkPolicy</code> (создание политики по умолчанию <code>Default Deny</code> и открытие разрешенных направлений).</li>
+<li><code>CoreDNS</code>: тюнинг и кэширование запросов (<code>NodeLocal DNSCache</code>), борьба с проблемой <code>ndots:5</code>.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Хранение данных (Storage):</strong></li>
+<li>Абстракции <code>PersistentVolume</code> (PV), <code>PersistentVolumeClaim</code> (PVC), <code>StorageClass</code>. Динамический провижининг дисков через интерфейс <strong>CSI</strong> (Container Storage Interface), снятие снапшотов томов.</li>
+</ul>
+<h2>4. Шаблонизация и Автомасштабирование</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Helm и Kustomize:</strong></li>
+</ul>
+<ul>
+<li>Создание собственных Helm-чартов: структура <code>Chart.yaml</code>, <code>values.yaml</code>, шаблонизатор Go templates, использование вспомогательных шаблонов (<code>helpers.tpl</code>), хуки и управление зависимостями.</li>
+<li>Управление конфигурациями без шаблонизации через <strong>Kustomize</strong> (пакеты <code>base</code> и окружения <code>overlays</code>, патчи манифестов).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Автомасштабирование:</strong></li>
+<li>Горизонтальное масштабирование подов: <code>HPA</code> (на базе метрик CPU/Memory или кастомных метрик Prometheus).</li>
+<li>Масштабирование по внешней очереди: <strong>KEDA</strong> (Kubernetes Event-driven Autoscaling — масштабирование по количеству сообщений в Kafka, RabbitMQ или RPS в HTTP-сервере).</li>
+<li>Масштабирование узлов кластера: <strong>Karpenter</strong> (быстрый провижининг инстансов под требования подов) или стандартный <code>Cluster Autoscaler</code>.</li>
+</ul>
+<h2>5. Облачные провайдеры (AWS / GCP / Yandex Cloud)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> Управление доступом (IAM): принцип наименьших привилегий, интеграция ролей облака с сервисными аккаунтами Kubernetes (AWS IRSA / Pod Identity, GCP Workload Identity).</li>
+<li class="task"><input type="checkbox" disabled> Проектирование сети в облаке: топология VPC (публичные/приватные подсети), NAT Gateway, VPC Peering, Transit Gateway, настройка балансировщиков (ALB/NLB).</li>
+<li class="task"><input type="checkbox" disabled> Управляемые сервисы: объектное хранилище S3 (политики доступа, правила жизненного цикла), управляемые базы данных (Managed PostgreSQL), службы управления ключами шифрования (KMS).</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="03_CI_CD_and_IaC_Map.html">← Карта 03 (Расширенная): CI/CD, IaC и Git</a><a class="page-nav-link" href="05_Observability_and_DevSecOps_Map.html">Карта 05 (Расширенная): Observability и  →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 23: Архитектура Портала «Обучение — Практика — Работа для кодеров с AI» (на базе `ssrjkk/agent-skills`) — IT Maps</title>
+  <meta name="description" content="Этот документ описывает концепцию, архитектуру и дорожную карту запуска единого портала для разработчиков, использующих ИИ-агентов, на фундаменте репозитория…">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/23_AI_Coder_Portal_Learning_Practice_Career_Blueprint.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 23: Архитектура Портала «Обучение — Практика — Работа для кодеров с AI» (на базе `ssrjkk/agent-skills`) — IT Maps">
+  <meta property="og:description" content="Этот документ описывает концепцию, архитектуру и дорожную карту запуска единого портала для разработчиков, использующих ИИ-агентов, на фундаменте репозитория…">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/23_AI_Coder_Portal_Learning_Practice_Career_Blueprint.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 23: Архитектура Портала «Обучение — Практика — Работа для кодеров с AI» (на базе `ssrjkk/agent-skills`) — IT Maps">
+  <meta name="twitter:description" content="Этот документ описывает концепцию, архитектуру и дорожную карту запуска единого портала для разработчиков, использующих ИИ-агентов, на фундаменте репозитория…">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 23: Архитектура Портала «Обучение — Практика — Работа для кодеров с AI» (на базе `ssrjkk/agent-skills`)", "description": "Этот документ описывает концепцию, архитектуру и дорожную карту запуска единого портала для разработчиков, использующих ИИ-агентов, на фундаменте репозитория…", "url": "https://ssrjkk.github.io/agent-skills/guides/23_AI_Coder_Portal_Learning_Practice_Career_Blueprint.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Vibe-Coding &amp; Portal · Maps 21–23</span><span data-slang-body="ru" hidden>Вайбкодинг и портал · мапы 21–23</span></span>
+          <a class="rm-chip" href="../roadmaps/education.html">education track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 23: Архитектура Портала «Обучение — Практика — Работа для кодеров с AI» (на базе `ssrjkk/agent-skills`)</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="524">~524 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/23_AI_Coder_Portal_Learning_Practice_Career_Blueprint.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/23_AI_Coder_Portal_Learning_Practice_Career_Blueprint.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="22_VibeCoding_SEO_SSR_and_Performance_Map.html">← Карта 22: Технический SEO-чек-лист, SSR/</a><a class="page-nav-link" href="Resume_Sergey_Sitnikov_DevOps_2026.html">Ситников Сергей Алексеевич →</a></div>
+      <div class="skill-page-body guide-body">
+        <p>Этот документ описывает концепцию, архитектуру и дорожную карту запуска единого портала для разработчиков, использующих ИИ-агентов, на фундаменте репозитория <strong><a href="https://github.com/ssrjkk/agent-skills" rel="noopener">ssrjkk/agent-skills</a></strong> (<code>agent-skills-library</code>).</p>
+<hr>
+<h2>1. Главная идея и ценность портала (Value Proposition)</h2>
+<p>Современный разработчик тонет в разрозненных промптах, гайдах и пустых вайбкод-шаблонах, которые падают в продакшене и не индексируются поисковиками. Портал соединяет <strong>три этапа роста инженера в одном месте</strong>:</p>
+<ol>
+<li><strong>ОБУЧЕНИЕ (Learn &amp; Roadmaps):</strong></li>
+</ol>
+<ul>
+<li>Структурированные дорожные карты <strong>01–23</strong> (от Linux Internals, Go/Python, Kubernetes, Bare-Metal Talos/Cilium и AI/GPU-инфраструктуры до Вайбкодинга и SEO).</li>
+<li>Интеграция с курируемыми списками (<a href="https://github.com/codecrafters-io/build-your-own-x" rel="noopener">build-your-own-x</a>, <a href="https://github.com/public-apis/public-apis" rel="noopener">public-apis</a>, <a href="https://github.com/punkpeye/awesome-mcp-servers" rel="noopener">awesome-mcp-servers</a>, <a href="https://github.com/PatrickJS/awesome-cursorrules" rel="noopener">awesome-cursorrules</a>).</li>
+</ul>
+<ol>
+<li><strong>ПРАКТИКА И ИНСТРУМЕНТЫ (Build &amp; Agent Skills):</strong></li>
+</ol>
+<ul>
+<li>Библиотека из <strong>110+ двуязычных (EN + RU) скиллов уровня Grade A</strong> (<code>SKILL.md</code> / <code>SKILL.ru.md</code>) для Claude Code, Cursor, Windsurf, OpenCode и <a href="https://github.com/ssrjkk/raven" rel="noopener">ssrjkk/raven</a>.</li>
+<li>Интерактивные тренажеры и полигоны: <strong>Chaos Drill Lab</strong> (<code>break-my-cluster.yaml</code> + <code>verify-fixes.sh</code>), <strong>Vibe-SEO &amp; Zero-CLS чек-лист</strong> и готовые продакшн-манифесты (vLLM, Envoy AI Gateway + LiteLLM, CloudNativePG, Kafka KRaft, ClickHouse).</li>
+</ul>
+<ol>
+<li><strong>РАБОТА И КАРЬЕРА (Career &amp; Job Hub):</strong></li>
+</ol>
+<ul>
+<li>Конструктор инженерного резюме по формуле <strong>XYZ</strong> (*«Достиг [X], измеряемого в [Y], за счет внедрения [Z]»*) из Карты 15.</li>
+<li>Тренажер технических собеседований и System Design (10k+ RPS, Multi-Region, RTO/RPO) из Карт 08 и 11.</li>
+<li>Карьерный трекер прогресса (<code>DevOps_Career_Tracker_2026.xlsx</code> + веб-трекер в <code>localStorage</code>) и витрина проверенных пет-проектов для работодателей.</li>
+</ul>
+<hr>
+<h2>2. Техническая архитектура портала</h2>
+<div class="codeblock"><pre class="code"><code>┌───────────────────────────────────────────────────────────────────────────┐
+│        Frontend Портала (Next.js / Astro / Static Prerendered HTML)       │
+│  SEO 100/100 · Open Graph · sitemap.xml · robots.txt · Zero-CLS · WebP   │
+├───────────────────────┬───────────────────────────┬───────────────────────┤
+│   Модуль 1: ОБУЧЕНИЕ  │  Модуль 2: СКИЛЛЫ &amp; ЛАБЫ  │   Модуль 3: КАРЬЕРА   │
+│  • Карты 01–23 (MD)   │  • 110+ SKILL.md (EN/RU)  │  • Тренажер Q&amp;A       │
+│  • Build-Your-Own-X   │  • Awesome MCP &amp; Cursor   │  • Генератор XYZ CV   │
+│  • Трекер прогресса   │  • Chaos Lab K8s &amp; SEO    │  • Матрица грейдов    │
+└───────────┬───────────┴─────────────┬─────────────┴───────────┬───────────┘
+            │                         │                         │
+            ▼                         ▼                         ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│         Ядро данных и CLI: репозиторий ssrjkk/agent-skills (PyPI)         │
+│  • Пакет: pip install agent-skills-library                                │
+│  • Валидация CI: Python 3.9–3.13 + проверка структуры SKILL.md            │
+│  • Интеграция с автономным агентом ssrjkk/raven (raven-mcp, 66 тулов)     │
+└───────────────────────────────────────────────────────────────────────────┘</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<hr>
+<h2>3. Дорожная карта запуска портала (4 спринта)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Спринт 1 (Контентное ядро в <code>ssrjkk/agent-skills</code>):</strong></li>
+</ul>
+<ul>
+<li>Добавить в репозиторий новые двуязычные скиллы (<code>vibe-seo-audit</code>, <code>catalog-photo-mapper</code>, <code>vibe-shop-normalizer</code>, <code>linux-ebpf-troubleshooting</code>, <code>ci-cd-gitops-iac</code>, <code>k8s-baremetal-multicluster</code>, <code>ai-gpu-infra-llmops</code>, <code>observability-sre-highload</code>, <code>ai-coder-career-architect</code>).</li>
+<li>Разместить папки <code>roadmaps/</code> (Карты 01–23) и <code>labs_and_manifests/</code> (боевые манифесты и полигон поломок).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Спринт 2 (Веб-витрина портала на GitHub Pages / собственной доменной зоне):</strong></li>
+<li>Задеплоить пререндеренный лендинг-портал (<code>portal/index.html</code>, <code>sitemap.xml</code>, <code>robots.txt</code>, <code>portal-catalog.json</code>) с поиском по скиллам, фильтрацией карт по грейдам (Junior -&gt; Middle -&gt; Senior -&gt; Principal) и интерактивным чек-листом прогресса.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Спринт 3 (Интерактивные песочницы и ИИ-ревьюер через <code>ssrjkk/raven</code>):</strong></li>
+<li>Подключить бота <code>@ssrjkk_bot</code> / шлюз <code>RavenFlow</code> для автоматического аудита GitHub-репозиториев студентов (проверка SEO, Dockerfile, K8s-манифестов и резюме по формуле XYZ).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Спринт 4 (Карьерный хаб и матчинг):</strong></li>
+<li>Запуск публичных профилей выпускников с верифицированными бейджами пройденных лаб (<code>Chaos Drill Passed</code>, <code>Vibe-SEO 95+</code>, <code>K8s Operator Built</code>) и доски вакансий для AI-Native / DevOps / Platform инженеров.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="22_VibeCoding_SEO_SSR_and_Performance_Map.html">← Карта 22: Технический SEO-чек-лист, SSR/</a><a class="page-nav-link" href="Resume_Sergey_Sitnikov_DevOps_2026.html">Ситников Сергей Алексеевич →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

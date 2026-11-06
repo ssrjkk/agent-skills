@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 03 (Расширенная): CI/CD, IaC и GitOps — IT Maps</title>
+  <meta name="description" content="Архитектура и этапы пайплайна:">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/03_CI_CD_and_IaC_Map.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 03 (Расширенная): CI/CD, IaC и GitOps — IT Maps">
+  <meta property="og:description" content="Архитектура и этапы пайплайна:">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/03_CI_CD_and_IaC_Map.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 03 (Расширенная): CI/CD, IaC и GitOps — IT Maps">
+  <meta name="twitter:description" content="Архитектура и этапы пайплайна:">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 03 (Расширенная): CI/CD, IaC и GitOps", "description": "Архитектура и этапы пайплайна:", "url": "https://ssrjkk.github.io/agent-skills/guides/03_CI_CD_and_IaC_Map.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Foundation · Maps 01–03</span><span data-slang-body="ru" hidden>Фундамент · мапы 01–03</span></span>
+          <a class="rm-chip" href="../roadmaps/devops.html">devops track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 03 (Расширенная): CI/CD, IaC и GitOps</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="511">~511 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/03_CI_CD_and_IaC_Map.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/03_CI_CD_and_IaC_Map.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="02_Coding_and_Containers_Map.html">← Карта 02 (Расширенная): Программирование</a><a class="page-nav-link" href="04_Kubernetes_and_Cloud_Map.html">Карта 04 (Расширенная): Kubernetes и Обл →</a></div>
+      <div class="skill-page-body guide-body">
+        <h2>1. Построение CI/CD пайплайнов (GitLab CI / GitHub Actions)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Архитектура и этапы пайплайна:</strong></li>
+</ul>
+<ul>
+<li>Стандартный флоу: <code>Lint &amp; Static Analysis</code> -&gt; <code>Unit/Integration Tests</code> -&gt; <code>Security Scans (SAST/Secrets)</code> -&gt; <code>Build &amp; Push Image</code> -&gt; <code>CD Deployment</code>.</li>
+<li>Оптимизация времени выполнения: кэширование зависимостей (<code>actions/cache</code>, GitLab cache), параллельное выполнение матричных тестов (<code>matrix strategy</code>), условие запуска джоб по измененным путям (<code>rules:changes</code> / <code>paths</code>).</li>
+<li>Переиспользование кода в CI: использование Composite Actions и Reusable Workflows в GitHub Actions, механизмов <code>extends</code> и <code>include:project</code> в GitLab CI.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Раннеры и безопасность сборки:</strong></li>
+<li>Развертывание собственных раннеров в Kubernetes (GitLab Runner Helm Chart, Actions Runner Controller — ARC).</li>
+<li>Безопасная сборка образов без использования небезопасного Docker-in-Docker (DinD) с привилегированным режимом: применение <strong>Kaniko</strong> или <strong>BuildKit rootless</strong>.</li>
+<li>Бестокенная аутентификация через <strong>OIDC</strong> (OpenID Connect) для безопасного доступа CI-пайплайна к облачным ресурсам (AWS IAM / Vault) без хранения статических ключей в переменных CI.</li>
+</ul>
+<h2>2. Infrastructure as Code (Terraform / OpenTofu)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Концепции и синтаксис:</strong></li>
+</ul>
+<ul>
+<li>Управление провайдерами, ресурсами (<code>resource</code>), источниками данных (<code>data</code>), входными переменными (<code>variable</code>), выходными данными (<code>output</code>) и локальными вычислениями (<code>locals</code>).</li>
+<li>Управление потоком выполнения: аргументы <code>count</code> и <code>for_each</code>, динамические блоки (<code>dynamic</code>), использование встроенных функций (<code>templatefile</code>, <code>jsonencode</code>, <code>merge</code>).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Управление состоянием (State Management):</strong></li>
+<li>Настройка удаленного бэкенда (S3 совместимое хранилище) с поддержкой распределенных блокировок (DynamoDB / native S3 locks).</li>
+<li>Манипуляции со стейтом: команды <code>terraform state list</code>, <code>mv</code>, <code>rm</code>, импорт существующих ресурсов через <code>terraform import</code> или блоки <code>import {}</code>.</li>
+<li>Масштабирование конфигураций: разделение по директориям или использование <strong>Terragrunt</strong> для управления DRY-конфигурациями и зависимостями между модулями.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Модульность и валидация:</strong></li>
+<li>Проектирование универсальных версионируемых модулей инфраструктуры.</li>
+<li>Проверка качества IaC-кода: <code>terraform fmt</code>, <code>terraform validate</code>, статический анализ через <code>tflint</code>, сканирование безопасности через <code>Trivy config</code> / <code>Checkov</code>.</li>
+<li>Автоматизация IaC в Pull Request через инструменты вроде <strong>Atlantis</strong> (автоматический запуск <code>terraform plan</code> в комментарии к PR и применение после аппрува).</li>
+</ul>
+<h2>3. Управление конфигурацией (Ansible)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> Организация репозитория: структура ролей, статический и динамический Inventory (например, интеграция с AWS EC2 API).</li>
+<li class="task"><input type="checkbox" disabled> Обеспечение идемпотентности плейбуков, использование <code>handlers</code> для перезапуска сервисов только при изменении конфигурации.</li>
+<li class="task"><input type="checkbox" disabled> Шаблонизация конфигурационных файлов с помощью <code>Jinja2</code>, управление переменными с учетом приоритетов (<code>group_vars</code>, <code>host_vars</code>).</li>
+<li class="task"><input type="checkbox" disabled> Шифрование секретов в репозитории с помощью <code>ansible-vault</code>.</li>
+<li class="task"><input type="checkbox" disabled> Тестирование ролей в изолированных контейнерах с помощью <code>Molecule</code>. Сборка готовых золотых образов ОС (Golden Images) с помощью <strong>Packer</strong> + Ansible.</li>
+</ul>
+<h2>4. GitOps (ArgoCD / Flux)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> Принципы GitOps: декларативное описание всей инфраструктуры и приложений в Git, Pull-модель синхронизации кластера агентом вместо Push-деплоев из CI.</li>
+<li class="task"><input type="checkbox" disabled> <strong>ArgoCD на практике:</strong></li>
+</ul>
+<ul>
+<li>Сущности <code>Application</code> и <strong><code>ApplicationSet</code></strong> для автоматического развертывания множества приложений на один или десятки кластеров по паттернам генераторов (Git directories, clusters).</li>
+<li>Паттерн <strong>App of Apps</strong> (родительское приложение управляет списком всех дочерних сервисов).</li>
+<li>Использование Sync Waves и Sync Hooks (например, запуск миграций базы данных в хуке <code>PreSync</code> до обновления основного деплоя приложения).</li>
+<li>Прогрессивная доставка (<strong>Argo Rollouts</strong>): реализация стратегий <code>Canary</code> и <code>Blue-Green</code> деплоев с автоматическим откатом (Rollback) в случае роста метрик ошибок в Prometheus.</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="02_Coding_and_Containers_Map.html">← Карта 02 (Расширенная): Программирование</a><a class="page-nav-link" href="04_Kubernetes_and_Cloud_Map.html">Карта 04 (Расширенная): Kubernetes и Обл →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

@@ -5,10 +5,13 @@ Pages:
   index.html          - landing with hero, dashboard, search, filters, cards
   skills/<name>.html  - a full page per skill
   domains/<name>.html - a page per domain listing its skills
+  roadmaps.html       - roadmap tracks overview + one page per track
+  guides.html         - full-text maps library + one page per guide
 """
 
 from __future__ import annotations
 
+import functools
 import html as html_lib
 import json
 import os
@@ -70,6 +73,318 @@ ROADMAP_TRACKS = [
 ]
 
 MODEL_ORDER = ["opus", "sonnet", "gpt-6", "gemini-3", "glm-5", "haiku"]
+
+# Full-text maps shipped in roadmaps/guides/*.md. They are rendered into the
+# site (guides.html + guides/<slug>.html) so every map is a real indexed page,
+# not just a repo file — the portal principle: every stage pairs with an
+# artifact a reader can open.
+GUIDES_SUBDIR = "guides"
+
+# Progressive competency tiers (devops-sre-portal-architect): numbered maps
+# group into tiers; 00_* handbooks and the resume/career files stand apart.
+# (tier key, EN label, RU label)
+GUIDE_TIERS: list[tuple[str, str, str]] = [
+    ("meta", "Handbooks & Digests", "Справочники и дайджесты"),
+    ("foundation", "Foundation · Maps 01–03", "Фундамент · мапы 01–03"),
+    ("cloud", "Cloud-Native & SRE · Maps 04–13", "Cloud-Native и SRE · мапы 04–13"),
+    ("principal", "Principal & AI-Infra · Maps 14–20", "Principal и AI-Infra · мапы 14–20"),
+    ("vibe", "Vibe-Coding & Portal · Maps 21–23", "Вайбкодинг и портал · мапы 21–23"),
+    ("career", "Career & Portfolio", "Карьера и портфолио"),
+]
+
+# Map number → roadmap track slug (00_* and career files map to no track).
+def _guide_track(number: int) -> str | None:
+    if 1 <= number <= 20:
+        return "devops"
+    if number in (21, 22):
+        return "frontend"
+    if number == 23:
+        return "education"
+    return None
+
+
+def _guide_tier(stem: str) -> str:
+    m = re.match(r"^(\d+)_", stem)
+    if not m:
+        return "career" if "resume" in stem.lower() else "meta"
+    n = int(m.group(1))
+    if n == 0:
+        return "meta"
+    if n <= 3:
+        return "foundation"
+    if n <= 13:
+        return "cloud"
+    if n <= 20:
+        return "principal"
+    return "vibe"
+
+
+# Roadmap live-state cache, refreshed by the builders that know the source
+# dir (index, roadmaps). Subpage builders (skills/domains/guides) reuse it to
+# keep the shared nav honest; None → keep the legacy "soon" styling.
+RM_STATE: dict[str, int] | None = None
+
+
+def _remember_rm_state(tracks: list[dict]) -> None:
+    global RM_STATE
+    live = sum(1 for t in tracks if t.get("status") == "live")
+    RM_STATE = {"live": live, "total": len(tracks)}
+
+
+def rm_nav_dot() -> str:
+    """Honest nav badge: green 'live' when every track is live, amber 'soon'
+    otherwise (or when the state is unknown, e.g. isolated page builds)."""
+    if RM_STATE and RM_STATE["total"] > 0 and RM_STATE["live"] == RM_STATE["total"]:
+        return '<span class="live-dot">live</span>'
+    return '<span class="soon-dot" data-i18n="soon">soon</span>'
+
+
+def rm_cta_pill() -> str:
+    """Honest hero/tab pill: real live counts instead of a hardcoded 'soon'."""
+    if RM_STATE and RM_STATE["total"] > 0 and RM_STATE["live"] == RM_STATE["total"]:
+        return f'<span class="live-pill">all {RM_STATE["total"]} live</span>'
+    if RM_STATE and RM_STATE.get("live"):
+        soon = RM_STATE["total"] - RM_STATE["live"]
+        return f'<span class="soon-pill">{RM_STATE["live"]} live · {soon} soon</span>'
+    return '<span class="soon-pill" data-i18n="soon">soon</span>'
+
+
+def rm_tier_label(en: str, ru: str) -> str:
+    """Bilingual tier/label pair using the data-slang-body mechanism."""
+    return (
+        f'<span data-slang-body="en">{esc(en)}</span>'
+        f'<span data-slang-body="ru" hidden>{esc(ru)}</span>'
+    )
+
+
+def guide_card_html(g: dict, href_prefix: str = GUIDES_SUBDIR + "/") -> str:
+    """One guide card. Cards are anchors, so the track chip must be a span:
+    nested <a> makes browsers split the card around the inner anchor."""
+    num = f"{g['number']:02d}" if g["number"] is not None else "✦"
+    track_chip = f'<span class="rm-chip">{esc(g["track"])}</span>' if g["track"] else ""
+    title_attr = esc((g["title"] + " " + (g["track"] or "")).lower())
+    return (
+        f'<a class="guide-card" href="{href_prefix}{esc(g["slug"])}.html" data-title="{title_attr}">'
+        f'<span class="guide-num">{num}</span>'
+        f'<span class="guide-card-title">{esc(g["title"])}</span>'
+        f'<span class="guide-card-excerpt">{esc(g["excerpt"])}</span>'
+        f'<span class="guide-card-meta">{track_chip}'
+        f'<span class="guide-words" data-i18n="words_n" data-n="{g["words"]}">~{g["words"]} words</span></span>'
+        "</a>"
+    )
+
+
+def rm_soon_hero(live: int, soon: int) -> str:
+    """Server-rendered fallback for the rm_s headline (data-i18n re-renders
+    it client-side; crawlers and no-JS readers must also see the truth)."""
+    if soon == 0 and live > 0:
+        return f"all {live} live"
+    return "soon everywhere"
+
+
+# ---------------------------------------------------------------------------
+# Guides (roadmaps/guides/*.md → site pages)
+
+
+def md_inline(text: str) -> str:
+    """Inline markdown (bold, code, links) on top of strict escaping.
+    Links are restricted to http(s)/# targets — anything else stays text."""
+    s = esc(text)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+
+    def _link(m: re.Match[str]) -> str:
+        raw = html_lib.unescape(m.group(2)).strip()
+        if not raw.startswith(("https://", "http://", "#")):
+            return m.group(0)
+        return f'<a href="{esc(raw)}" rel="noopener">{m.group(1)}</a>'
+
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", _link, s)
+
+
+def render_guide_markdown(body: str) -> str:
+    """Renderer for the guide markdown dialect: fences, headings, lists,
+    task lists, tables, hr, quotes, paragraphs. Everything is escaped;
+    structure tags are generated, never taken from input."""
+    out: list[str] = []
+    in_fence = False
+    fence_lines: list[str] = []
+    list_mode: str | None = None  # None | 'ul' | 'ol' | 'task'
+    para: list[str] = []
+
+    def close_list() -> None:
+        nonlocal list_mode
+        if list_mode == "ol":
+            out.append("</ol>")
+        elif list_mode is not None:
+            out.append("</ul>")
+        list_mode = None
+
+    def close_para() -> None:
+        nonlocal para
+        if para:
+            out.append(f"<p>{md_inline(' '.join(para))}</p>")
+            para = []
+
+    def flush_pending() -> None:
+        close_para()
+        close_list()
+
+    lines = body.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            flush_pending()
+            if not in_fence:
+                in_fence = True
+                fence_lines = []
+            else:
+                in_fence = False
+                code = esc("\n".join(fence_lines))
+                out.append(
+                    f'<div class="codeblock"><pre class="code"><code>{code}</code></pre>'
+                    f'<button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector(\'code\').textContent)">copy</button></div>'
+                )
+            i += 1
+            continue
+        if in_fence:
+            fence_lines.append(line)
+            i += 1
+            continue
+        if not stripped:
+            flush_pending()
+            i += 1
+            continue
+        # tables: consecutive |...| rows; the ---|--- row is the separator
+        if stripped.startswith("|") and i + 1 < len(lines) and re.match(r"^\|?[\s:|-]+\|[\s:|]*$", lines[i + 1].strip()):
+            flush_pending()
+            rows: list[list[str]] = []
+            header = [c.strip() for c in stripped.strip("|").split("|")]
+            i += 2
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
+                i += 1
+            head = "".join(f"<th>{md_inline(c)}</th>" for c in header)
+            body_rows = "".join(
+                "<tr>" + "".join(f"<td>{md_inline(c)}</td>" for c in r) + "</tr>" for r in rows
+            )
+            out.append(f'<div class="md-table"><table><thead><tr>{head}</tr></thead><tbody>{body_rows}</tbody></table></div>')
+            continue
+        if stripped.startswith("### "):
+            flush_pending()
+            out.append(f"<h3>{md_inline(stripped[4:])}</h3>")
+            i += 1
+            continue
+        if stripped.startswith("## "):
+            flush_pending()
+            out.append(f"<h2>{md_inline(stripped[3:])}</h2>")
+            i += 1
+            continue
+        if stripped == "---":
+            flush_pending()
+            out.append("<hr>")
+            i += 1
+            continue
+        if stripped.startswith(">"):
+            flush_pending()
+            out.append(f"<blockquote>{md_inline(stripped.lstrip('> '))}</blockquote>")
+            i += 1
+            continue
+        task = re.match(r"^- \[( |x|X)\] (.*)$", stripped)
+        if task:
+            if list_mode not in ("task", "ul"):
+                close_para()
+                if list_mode == "ol":
+                    out.append("</ol>")
+                elif list_mode is not None:
+                    out.append("</ul>")
+                out.append('<ul class="task-list">')
+                list_mode = "task"
+            checked = " checked" if task.group(1).lower() == "x" else ""
+            out.append(f'<li class="task"><input type="checkbox" disabled{checked}> {md_inline(task.group(2))}</li>')
+            i += 1
+            continue
+        if stripped.startswith("- "):
+            if list_mode not in ("ul", "task"):
+                flush_pending()
+                out.append("<ul>")
+                list_mode = "ul"
+            elif list_mode == "task":
+                out.append("</ul>")
+                out.append("<ul>")
+                list_mode = "ul"
+            out.append(f"<li>{md_inline(stripped[2:])}</li>")
+            i += 1
+            continue
+        ordered = re.match(r"^(\d+)\. (.*)$", stripped)
+        if ordered:
+            if list_mode != "ol":
+                flush_pending()
+                out.append("<ol>")
+                list_mode = "ol"
+            out.append(f"<li>{md_inline(ordered.group(2))}</li>")
+            i += 1
+            continue
+        para.append(stripped)
+        i += 1
+    flush_pending()
+    return "\n".join(out)
+
+
+@functools.lru_cache(maxsize=4)
+def _load_guides_cached(root: str) -> tuple[tuple[str, str, str, str, int | None, str, int], ...]:
+    """(slug, title, tier, track, number, excerpt, words) per guide file."""
+    gdir = Path(root) / "roadmaps" / GUIDES_SUBDIR
+    guides: list[tuple[str, str, str, str, int | None, str, int]] = []
+    if not gdir.is_dir():
+        return ()
+    for path in sorted(gdir.glob("*.md")):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"warning: cannot read guide {path.name}: {e}", file=sys.stderr)
+            continue
+        title = path.stem
+        body_lines = text.splitlines()
+        for ln in body_lines:
+            if ln.startswith("# "):
+                title = ln[2:].strip()
+                break
+        excerpt = next((ln.strip() for ln in body_lines[1:] if ln.strip() and not ln.startswith("#")), "")
+        # plain-text excerpt: strip task-list prefixes and inline markdown
+        if excerpt.startswith("- [") and len(excerpt) >= 7 and excerpt[4] == "]":
+            excerpt = excerpt[6:].strip()
+        excerpt = excerpt.replace("**", "").replace("`", "").strip()
+        while excerpt.startswith("*"):
+            excerpt = excerpt[1:].strip()
+        if len(excerpt) > 160:
+            excerpt = excerpt[:157] + "…"
+        m = re.match(r"^(\d+)", path.stem)
+        number = int(m.group(1)) if m else None
+        guides.append(
+            (
+                path.stem,
+                title,
+                _guide_tier(path.stem),
+                _guide_track(number) if number else None,
+                number,
+                excerpt,
+                len(text.split()),
+            )
+        )
+    # handbooks (00_*) first, then numbered maps, career files last
+    guides.sort(key=lambda g: (2 if g[4] is None else (0 if g[4] == 0 else 1), g[4] or 0, g[0]))
+    return tuple(guides)
+
+
+def load_guides(source_dir: Path | None = None) -> list[dict]:
+    root = source_dir or Path(__file__).resolve().parent.parent
+    return [
+        {"slug": s, "title": t, "tier": tier, "track": track, "number": n, "excerpt": ex, "words": w}
+        for s, t, tier, track, n, ex, w in _load_guides_cached(str(root))
+    ]
 
 
 def esc(s: str) -> str:
@@ -174,10 +489,20 @@ def load_all(path: Path, jobs: int | None = None) -> tuple[dict, dict, dict]:
     return meta, skills, metrics
 
 
-def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: str = "../style.css", nav_index: str = "../index.html") -> str:
-    roadmaps_href = "roadmaps.html" if nav_index == "index.html" else "../roadmaps.html"
+def page_head(
+    title: str,
+    desc: str,
+    canonical: str,
+    extra: str = "",
+    css_path: str = "../style.css",
+    nav_index: str = "../index.html",
+    lang_attr: str = "en",
+) -> str:
+    root = "" if nav_index == "index.html" else "../"
+    roadmaps_href = f"{root}roadmaps.html"
+    guides_href = f"{root}guides.html"
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="{lang_attr}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -187,6 +512,8 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
@@ -210,7 +537,8 @@ def page_head(title: str, desc: str, canonical: str, extra: str = "", css_path: 
       <a class="nav-brand" href="{nav_index}"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="{nav_index}#catalog" data-i18n="nav_catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span>{rm_nav_dot()}</a>
+        <a class="nav-link" href="{guides_href}" data-i18n="nav_guides">Guides</a>
         <a class="nav-link" href="{nav_index}#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="{nav_index}#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
@@ -245,6 +573,30 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     # roadmaps/ lives beside the catalog repo root (tests build into tmp/<out>)
     tracks = load_roadmap_tracks(output_dir.parent)
     rm_live, rm_soon = rm_statuses(tracks)
+    _remember_rm_state(tracks)
+    guides = load_guides(output_dir.parent)
+    guides_n = len(guides)
+
+    def _index_rm_links(t: dict) -> str:
+        links = [f'<a class="btn-ghost" href="roadmaps/{esc(t["slug"])}.html"><span data-i18n="open_map">Open full map →</span></a>']
+        if t.get("catalog_domain"):
+            links.append(f'<a class="btn-ghost" href="domains/{esc(t["catalog_domain"])}.html"><span data-i18n="rel_skills">Related skills →</span></a>')
+        return "".join(links)
+
+    rm_tabs_html = "".join(
+        f'<button class="rm-tab{" active" if i == 0 else ""}" data-track="{esc(t["slug"])}" '
+        f'style="--dc:{DOMAIN_COLORS.get(t["slug"], "#64748b")}" '
+        f"onclick=\"showTrack('{esc(t['slug'])}', this)\">{esc(t['icon'])} {esc(t['name'])}"
+        f'{rm_status_pill(t.get("status", "soon"))}</button>'
+        for i, t in enumerate(tracks)
+    )
+    stages0 = "".join(rm_stage_html(s) for s in tracks[0]["stages"])
+    guides_sections_html = "".join(
+        f'<section class="tier-head"><h2>{rm_tier_label(tier_en, tier_ru)}</h2>'
+        f'<div class="guide-grid">{"".join(guide_card_html(g) for g in guides if g["tier"] == tier_key)}</div></section>'
+        for tier_key, tier_en, tier_ru in GUIDE_TIERS
+        if any(g["tier"] == tier_key for g in guides)
+    )
 
     model_names = set()
     for s in skills:
@@ -318,8 +670,16 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <div class="hero-models">Models: {models_badges}</div>
       <div class="hero-cta">
         <a class="btn-primary shine" href="#catalog" data-i18n="browse">Browse skills ↓</a>
-        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a>
+        <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> {rm_cta_pill()}</a>
+        <a class="btn-ghost" href="guides.html"><span data-i18n="nav_guides">Guides</span> · {guides_n} maps →</a>
         <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
+      </div>
+      <div class="hero-chips">
+        <span class="glass-chip"><strong>{meta["total_skills"]}</strong> <span data-i18n="st_skills">skills</span></span>
+        <span class="glass-chip"><strong>{meta["total_ru"]}</strong> <span data-i18n="st_ru">Russian</span></span>
+        <span class="glass-chip"><strong>{len(meta["domains"])}</strong> <span data-i18n="st_dom">domains</span></span>
+        <span class="glass-chip"><strong>{guides_n}</strong> maps</span>
+        <span class="glass-chip"><strong>{rm_live}/{rm_live + rm_soon}</strong> live</span>
       </div>
       <div class="term-box tilt" aria-hidden="true">
         <div class="term-bar">
@@ -347,11 +707,12 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     </section>
 
     <div class="tabs reveal in" role="tablist" aria-label="Site sections">
-      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog')"><span data-i18n="nav_catalog">Catalog</span></button>
+      <button class="tab-btn active" data-tab="catalog" role="tab" aria-selected="true" onclick="showTab('catalog')"><span data-i18n="nav_catalog">Catalog</span><span class="tab-count">{meta["total_skills"]}</span></button>
+      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="tab-count live">{rm_live}/{rm_live + rm_soon}</span></button>
+      <button class="tab-btn" data-tab="guides" role="tab" aria-selected="false" onclick="showTab('guides')"><span data-i18n="nav_guides">Guides</span><span class="tab-count">{guides_n}</span></button>
       <button class="tab-btn" data-tab="stats" role="tab" aria-selected="false" onclick="showTab('stats')"><span data-i18n="nav_stats">Stats</span></button>
       <button class="tab-btn" data-tab="how" role="tab" aria-selected="false" onclick="showTab('how')"><span data-i18n="nav_how">How it works</span></button>
       <button class="tab-btn" data-tab="install" role="tab" aria-selected="false" onclick="showTab('install')"><span data-i18n="tab_install">Install</span></button>
-      <button class="tab-btn" data-tab="roadmaps" role="tab" aria-selected="false" onclick="showTab('roadmaps')"><span data-i18n="nav_roadmaps">Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></button>
     </div>
 
     <section class="install reveal tab-panel" id="install" data-panel="install">
@@ -369,7 +730,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       <div class="install-links">
         <a href="skills_catalog.json" download>Download catalog (JSON)</a> ·
         <a href="skills_catalog.schema.json" download>JSON Schema</a> ·
-        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill" data-i18n="soon">soon</span></a> ·
+        <a href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> {rm_cta_pill()}</a> ·
         <a href="{REPO}">GitHub</a>
       </div>
     </section>
@@ -383,11 +744,28 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
 
     <section class="roadmaps-teaser reveal tab-panel" id="roadmaps" data-panel="roadmaps">
       <div class="rm-head">
-        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="{rm_live}" data-total="{rm_soon}">soon everywhere</span></h2>
+        <h2><span data-i18n="rm_t">IT Roadmaps</span> <span class="soon-pill big" data-i18n="rm_s" data-live="{rm_live}" data-total="{rm_soon}">{rm_soon_hero(rm_live, rm_soon)}</span></h2>
         <p data-i18n="rm_d">Step-by-step maps for every IT direction — frontend to AI. Statuses are live, content drops next.</p>
       </div>
-      <div class="rm-strip" id="rm-strip"></div>
+      <div class="rm-tabs" role="tablist">{rm_tabs_html}</div>
+      <div class="rm-detail" id="rm-detail">
+        <div class="rm-detail-head">
+          <h2 id="rm-name">{esc(tracks[0]["icon"])} {rm_pair(tracks[0]["name"], tracks[0].get("name_ru"))}</h2>
+          {rm_status_pill(tracks[0].get("status", "soon"), big=True)}
+        </div>
+        <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{rm_pair(tracks[0]["tagline"], tracks[0].get("tagline_ru"))}</p>
+        <div class="rm-timeline" id="rm-stages">{stages0}</div>
+        <div class="rm-detail-actions" id="rm-actions">{_index_rm_links(tracks[0])}</div>
+      </div>
       <a class="btn-primary shine" href="roadmaps.html" data-i18n="rm_b">Open roadmaps →</a>
+    </section>
+
+    <section class="guides-panel reveal tab-panel" id="guides" data-panel="guides">
+      <h2><span data-i18n="nav_guides">Guides</span> <span class="h-sub">— {guides_n} full-text maps</span></h2>
+      <div class="search-row">
+        <input type="search" id="guide-search" class="search" data-i18n-ph="guides_search_ph" placeholder="Search maps by title or track…" aria-label="Search guides" autocomplete="off" oninput="filterGuides(this.value)">
+      </div>
+      {guides_sections_html}
     </section>
 
     <section class="search-section reveal tab-panel active" id="catalog" data-panel="catalog">
@@ -416,7 +794,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
 
     <footer>
       <p data-i18n="foot_t" data-i18n-html data-n="{meta["total_skills"]}" data-d="{len(meta["domains"])}">Created by ssrjkk · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
-      <p class="shortcuts" data-i18n="keys" data-i18n-html><kbd>/</kbd> search · <kbd>1–5</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear</p>
+      <p class="shortcuts" data-i18n="keys" data-i18n-html><kbd>/</kbd> search · <kbd>1–6</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear</p>
       <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 """ + """
@@ -431,7 +809,11 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     cursor: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.cursor/skills',
     windsurf: 'git clone --depth 1 https://github.com/ssrjkk/agent-skills.git ~/.windsurf/skills'
   };
-  var RM_TRACKS = """ + json_for_script([{"slug": t["slug"], "name": t["name"], "icon": t["icon"]} for t in ROADMAP_TRACKS]) + """;
+  var RM_TRACKS = """ + json_for_script([
+        {"slug": t["slug"], "name": t["name"], "icon": t["icon"], "status": t.get("status", "soon")}
+        for t in tracks
+    ]) + """;
+  var RM_DATA = """ + json_for_script([{k: v for k, v in t.items() if not k.startswith("$")} for t in tracks]) + """;
 
   function showAgent(name, btn) {
     document.getElementById('agent-cmd').textContent = AGENT_CMDS[name];
@@ -519,7 +901,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     }
     if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === '/') { e.preventDefault(); showTab('catalog'); var s2 = document.getElementById('search'); if (s2) s2.focus(); }
-    else if (e.key >= '1' && e.key <= '5') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1]); }
+    else if (e.key >= '1' && e.key <= '6') { showTab(TAB_NAMES[parseInt(e.key, 10) - 1]); }
     else if (e.key === 't') { toggleTheme(); }
   });
   // card copy action is a span[role=button]: Enter/Space must trigger it
@@ -531,7 +913,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     }
   });
   // tabs: one screen instead of a long ribbon (deep-linkable via hash)
-  var TAB_NAMES = ['catalog', 'stats', 'how', 'install', 'roadmaps'];
+  var TAB_NAMES = ['catalog', 'roadmaps', 'guides', 'stats', 'how', 'install'];
   function showTab(name) {
     if (TAB_NAMES.indexOf(name) < 0) name = 'catalog';
     document.querySelectorAll('.tab-btn').forEach(function(b) {
@@ -543,6 +925,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
       var on = p.getAttribute('data-panel') === name;
       p.classList.toggle('active', on);
       if (on) {
+        if (p.classList.contains('reveal')) p.classList.add('in');
         p.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in'); });
         Array.prototype.forEach.call(p.querySelectorAll('.card'), function(c, i) {
           c.style.transitionDelay = Math.min(i * 30, 600) + 'ms';
@@ -552,6 +935,71 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     });
     if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
     window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  // --- roadmaps explorer (embedded from the roadmaps page) ---
+  function escH(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&#34;', "'": '&#39;'}[c];
+    });
+  }
+  function rmPair(en, ru) {
+    var h = en == null ? '' : escH(en);
+    if (!ru) return h;
+    return '<span data-slang-body="en">' + h + '</span>'
+      + '<span data-slang-body="ru" hidden>' + escH(ru) + '</span>';
+  }
+  function rmStageHTML(s) {
+    var pill = s.status === 'live' ? '<span class="live-pill">live</span>' : '<span class="soon-pill">soon</span>';
+    var items = (s.items || []).map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
+    var lists;
+    if (s.items_ru) {
+      var ru = s.items_ru.map(function(i) { return '<li>' + escH(i) + '</li>'; }).join('');
+      lists = '<ul data-slang-body="en">' + items + '</ul>'
+        + '<ul data-slang-body="ru" hidden>' + ru + '</ul>';
+    } else {
+      lists = '<ul>' + items + '</ul>';
+    }
+    return '<div class="rm-stage"><h3>▸ ' + rmPair(s.title, s.title_ru) + ' ' + pill + '</h3>' + lists + '</div>';
+  }
+  function refreshTrack() {
+    var btn = document.querySelector('.rm-tab.active');
+    if (btn && btn.getAttribute('data-track')) { try { showTrack(btn.getAttribute('data-track'), btn); } catch (e) {} }
+    if (typeof showSkillLang === 'function') { try { showSkillLang(lang()); } catch (e2) {} }
+  }
+  function showTrack(slug, btn) {
+    document.querySelectorAll('.rm-tab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var t = RM_DATA.find(function(x) { return x.slug === slug; });
+    if (!t) return;
+    document.getElementById('rm-name').innerHTML = escH(t.icon) + ' ' + rmPair(t.name, t.name_ru);
+    document.getElementById('rm-tagline').innerHTML = rmPair(t.tagline, t.tagline_ru);
+    var box = document.getElementById('rm-stages');
+    box.innerHTML = '';
+    t.stages.forEach(function(s) {
+      var d = document.createElement('div');
+      d.innerHTML = rmStageHTML(s);
+      box.appendChild(d.firstChild);
+    });
+    var L = (typeof I18N !== 'undefined' && (I18N[lang()] || I18N.en)) || {open_map: 'Open full map', rel_skills: 'Related skills'};
+    var actions = document.getElementById('rm-actions');
+    actions.innerHTML = '<a class=\\'btn-ghost\\' href=\\'roadmaps/\\' + encodeURIComponent(t.slug) + \\'.html\\'><span>' + L.open_map + '</span></a>'
+      + (t.catalog_domain ? '<a class=\\'btn-ghost\\' href=\\'domains/\\' + encodeURIComponent(t.catalog_domain) + \\'.html\\'><span>' + L.rel_skills + '</span></a>' : '');
+    box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
+  }
+  // --- guides filter (guides tab) ---
+  function filterGuides(q) {
+    q = (q || '').toLowerCase();
+    var heads = document.querySelectorAll('#guides .tier-head');
+    Array.prototype.forEach.call(heads, function(sec) {
+      var visible = 0;
+      Array.prototype.forEach.call(sec.querySelectorAll('.guide-card'), function(c) {
+        var hay = c.getAttribute('data-title') || '';
+        var show = !q || hay.indexOf(q) >= 0;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      sec.style.display = visible ? '' : 'none';
+    });
   }
   </script>
   <script src="site.js"></script>
@@ -828,8 +1276,11 @@ def build_style_css(output_dir: Path) -> None:
   --font:'JetBrains Mono','Consolas','Menlo',monospace;
   --mono:'JetBrains Mono','Consolas','Menlo',monospace;
   --grid:linear-gradient(rgba(125,255,74,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(125,255,74,.03) 1px,transparent 1px);
+  --accent-grad:linear-gradient(135deg,#7dff4a,#00ffd1);
+  --glow:0 0 22px rgba(125,255,74,.22);
 }
 body[data-theme="light"]{
+  --glow:0 0 18px rgba(26,127,55,.16);
   --bg:#f4f6f1;--bg2:#eef1ea;--card:#ffffff;--card-hover:#e9efe4;
   --text:#14321f;--muted:#4a6a52;--accent:#1a7f37;--accent2:#007f6a;
   --border:rgba(20,80,40,.16);--radius:4px;
@@ -837,6 +1288,11 @@ body[data-theme="light"]{
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 ::selection{background:var(--accent);color:#0b0f0a}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(125,255,74,.25);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:rgba(125,255,74,.4)}
+::-webkit-scrollbar-track{background:transparent}
+body[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(26,127,55,.3)}
 body{
   font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;font-size:15px;
@@ -896,11 +1352,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   padding:.18rem .6rem;font-size:.72rem;border:1px solid var(--border);color:var(--muted);background:var(--card);
 }
 .hero-cta{display:flex;gap:.8rem;justify-content:center;margin-top:1.6rem;flex-wrap:wrap}
+.hero-chips{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.glass-chip{padding:.35rem .85rem;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 70%,transparent);backdrop-filter:blur(8px);border-radius:20px;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+.glass-chip strong{color:var(--accent);font-weight:700}
 .btn-primary{
   padding:.6rem 1.3rem;border:none;cursor:pointer;text-decoration:none;font-weight:600;font-size:.88rem;color:#0b0f0a;
-  background:var(--accent);transition:opacity .15s;display:inline-block;border-radius:var(--radius);
+  background:var(--accent-grad);box-shadow:var(--glow);transition:opacity .15s,transform .15s;display:inline-block;border-radius:var(--radius);
 }
-.btn-primary:hover{opacity:.85}
+.btn-primary:hover{opacity:.92;transform:translateY(-1px)}
 .btn-ghost{
   padding:.6rem 1.3rem;border:1px solid var(--border);cursor:pointer;text-decoration:none;font-weight:600;font-size:.88rem;color:var(--text);
   background:var(--card);transition:border-color .15s;display:inline-block;border-radius:var(--radius);
@@ -977,7 +1436,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   padding:1rem 1.1rem;transition:border-color .15s,transform .15s;text-decoration:none;color:inherit;display:block;border-radius:var(--radius);
   content-visibility:auto;contain-intrinsic-size:auto 240px;
 }
-.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--accent-grad);opacity:0;transition:opacity .2s;border-radius:var(--radius) var(--radius) 0 0}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--glow)}
+.card:hover::before{opacity:.8}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
 .card-name{font-family:var(--mono);font-weight:700;font-size:.9rem;color:var(--accent)}
 .card-name::before{content:"$ ";opacity:.5}
@@ -1107,10 +1568,16 @@ body[data-theme="light"] .bg-glow{
 .agent-tab{padding:.4rem .9rem;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.75rem;border-radius:20px;transition:all .15s}
 .agent-tab:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
 .agent-tab.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent);font-weight:700}
-.tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.8rem 0 1.2rem;position:sticky;top:57px;z-index:40;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding:.55rem;border:1px solid var(--border);border-radius:10px}
-.tab-btn{padding:.5rem 1.1rem;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:600;border-radius:8px;transition:all .15s}
-.tab-btn:hover{color:var(--text);border-color:var(--border);transform:translateY(-1px)}
-.tab-btn.active{background:var(--accent);color:#0b0f0a;border-color:var(--accent)}
+.tabs{display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap;margin:1.8rem auto 1.4rem;position:sticky;top:57px;z-index:40;width:fit-content;max-width:96vw;background:color-mix(in srgb,var(--bg2) 78%,transparent);backdrop-filter:blur(14px);padding:.45rem;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
+.tab-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.15rem;background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.8rem;font-weight:600;border-radius:9px;transition:color .15s,background .2s,transform .15s,box-shadow .2s;position:relative}
+.tab-btn::after{content:"";position:absolute;left:20%;right:20%;bottom:-6px;height:2px;border-radius:2px;background:var(--accent-grad);opacity:0;transition:opacity .2s}
+.tab-btn:hover{color:var(--text);transform:translateY(-1px)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(125,255,74,.16),rgba(0,255,209,.12));color:var(--accent);border-color:rgba(125,255,74,.35);box-shadow:var(--glow)}
+.tab-btn.active::after{opacity:1}
+.tab-count{font-size:.6rem;font-weight:800;padding:.08rem .4rem;border-radius:10px;background:rgba(0,0,0,.25);color:var(--muted);font-family:var(--mono)}
+.tab-count.live{background:rgba(125,255,74,.15);color:var(--accent)}
+.tab-btn.active .tab-count{background:rgba(125,255,74,.22);color:var(--accent)}
+body[data-theme="light"] .tab-btn.active{background:linear-gradient(135deg,rgba(26,127,55,.14),rgba(0,127,106,.1));border-color:rgba(26,127,55,.4)}
 .tab-btn.active .soon-pill{background:#0b0f0a;color:var(--accent);animation:none}
 .tab-panel{display:none}
 .tab-panel.active{display:block;animation:fadeSlide .35s ease}
@@ -1140,10 +1607,12 @@ body[data-theme="light"] .bg-glow{
 .rm-detail-head h2{font-size:1.3rem}
 .rm-tag{font-size:.7rem;color:var(--muted);border:1px solid var(--border);padding:.15rem .6rem;border-radius:20px}
 .rm-timeline{display:grid;gap:.7rem;margin-top:1.1rem}
-.rm-stage{border:1px dashed var(--border);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
+.rm-stage{border:1px dashed var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
 .rm-stage h3{font-size:.85rem;display:flex;align-items:center;gap:.5rem}
 .rm-stage p{color:var(--muted);font-size:.78rem;margin-top:.25rem}
 .rm-note{margin-top:1rem;color:var(--muted);font-size:.78rem;text-align:center}
+.roadmaps-teaser .rm-detail{text-align:left}
+.roadmaps-teaser .rm-stage li{text-align:left}
 .live-pill{display:inline-block;background:var(--accent);color:#0b0f0a;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .45rem;border-radius:20px;margin-left:.4rem;vertical-align:middle}
 .live-pill.big{font-size:.68rem;padding:.2rem .7rem}
 .rm-detail-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
@@ -1154,6 +1623,33 @@ body[data-theme="light"] .bg-glow{
 .rm-chips{display:flex;flex-wrap:wrap;gap:.45rem}
 .ru-badge{display:inline-block;background:var(--accent2);color:#0b0f0a;font-size:.6rem;font-weight:800;padding:.1rem .4rem;border-radius:3px;letter-spacing:.05em}
 @media (max-width:600px){.rm-detail{padding:1rem}.how-grid{grid-template-columns:1fr}}
+.live-dot{background:var(--accent);color:#0b0f0a;font-size:.55rem;font-weight:800;border-radius:10px;padding:.05rem .35rem;margin-left:.35rem;text-transform:uppercase;letter-spacing:.06em;animation:pulseB 2.4s infinite}
+.nav-hot:has(.live-dot){border-color:rgba(125,255,74,.55)}
+.tier-head{margin:2.2rem 0 .9rem}
+.tier-head h2{font-size:1.15rem;letter-spacing:.02em;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem;margin-top:1rem}
+.guide-card{display:flex;flex-direction:column;gap:.4rem;background:var(--card);border:1px solid var(--border);padding:1rem 1.1rem;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;border-radius:var(--radius)}
+.guide-card{position:relative}
+.guide-card::after{content:"→";position:absolute;right:1rem;top:1rem;opacity:0;transform:translateX(-6px);transition:all .2s;color:var(--accent);font-family:var(--mono)}
+.guide-card:hover::after{opacity:1;transform:none}
+.guide-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--glow)}
+.guide-num{font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.12em;background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.guide-card-title{font-weight:700;font-size:.88rem;line-height:1.35}
+.guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45}
+.guide-card-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:.4rem}
+.guide-words{font-size:.66rem;color:var(--muted);font-family:var(--mono)}
+.guide-page{max-width:900px;margin:0 auto}
+.guide-body h2{border-bottom:1px solid var(--border);padding-bottom:.3rem}
+.md-table{overflow-x:auto;margin:1rem 0;border:1px solid var(--border);background:var(--bg2);border-radius:var(--radius)}
+.md-table table{border-collapse:collapse;width:100%;font-size:.78rem}
+.md-table th,.md-table td{border:1px solid var(--border);padding:.4rem .6rem;text-align:left;vertical-align:top}
+.md-table th{background:rgba(125,255,74,.08);color:var(--accent);font-family:var(--mono);font-size:.72rem}
+ul.task-list{list-style:none;margin-left:.2rem}
+ul.task-list li.task{display:flex;align-items:baseline;gap:.5rem}
+ul.task-list input[type=checkbox]{accent-color:var(--accent);flex:none}
+body[data-theme="light"] .md-table{background:#f0f3ec}
+body[data-theme="light"] .md-table th{background:rgba(26,127,55,.1);color:#1a7f37}
+@media (max-width:600px){.guide-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.reveal{opacity:1;transform:none}}
 """
     raw_len = len(css)
@@ -1273,6 +1769,8 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
     """
     tracks = load_roadmap_tracks(source_dir)
     live_n, soon_n = rm_statuses(tracks)
+    _remember_rm_state(tracks)
+    guides = load_guides(source_dir)
     (output_dir / "roadmaps.json").write_text(json.dumps({"tracks": tracks}, indent=2, ensure_ascii=False), encoding="utf-8")
 
     tabs = []
@@ -1302,7 +1800,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
     <div class="rm-page">
       <header class="rm-hero reveal in">
         <div class="hero-badge pulse">Roadmaps · {len(tracks)} tracks · {live_n} live</div>
-        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s" data-live="{live_n}" data-total="{soon_n}">soon everywhere</span></h1>
+        <h1><span data-i18n="rm_t">IT Roadmaps</span> <span class="gradient" data-i18n="rm_s" data-live="{live_n}" data-total="{soon_n}">{rm_soon_hero(live_n, soon_n)}</span></h1>
         <p data-i18n="rm_hd" data-i18n-html>One tab per IT direction. Each map lives on its own page and in its own source file (<code>roadmaps/&lt;slug&gt;.json</code>) — drop your maps there and they plug straight in.</p>
       </header>
       <div class="rm-tabs" role="tablist">{"".join(tabs)}</div>
@@ -1314,7 +1812,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
         <p class="rm-tagline" id="rm-tagline" style="color:var(--muted);font-size:.85rem;margin-top:.4rem">{rm_pair(first["tagline"], first.get("tagline_ru"))}</p>
         <div class="rm-timeline" id="rm-stages">{stages0}</div>
         <div class="rm-detail-actions" id="rm-actions">{rm_links_html(first)}</div>
-        <p class="rm-note">Want this map first? <a href="{REPO}/discussions">Vote in Discussions</a> · <a href="{REPO}/issues">Request a track</a></p>
+        <p class="rm-note">{'Every track is live — sources in <code>roadmaps/&lt;slug&gt;.json</code>.' if soon_n == 0 else 'Want this map first? <a href="' + REPO + '/discussions">Vote in Discussions</a> · <a href="' + REPO + '/issues">Request a track</a>'}</p>
       </div>
     </div>
   <script>
@@ -1403,6 +1901,21 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
         elif t.get("catalog_domain"):
             rel = (f'<div class="rm-related"><a class="btn-ghost" href="../domains/{esc(t["catalog_domain"])}.html">'
                    f'<span data-i18n="rel_skills">Related skills →</span></a></div>')
+        track_maps = [g for g in guides if g.get("track") == t["slug"]]
+        maps_html = ""
+        if track_maps:
+
+            def _map_chip(g: dict) -> str:
+                num = f"{g['number']:02d}"
+                href = f"../guides/{esc(g['slug'])}.html"
+                return f'<a class="rm-chip" href="{href}">{rm_pair("Map " + num, "Карта " + num)}</a>'
+
+            chips = "".join(_map_chip(g) for g in track_maps)
+            maps_html = (
+                '<div class="rm-related"><h3>'
+                + rm_pair("Full maps", "Полные мапы")
+                + '</h3><div class="rm-chips">' + chips + "</div></div>"
+            )
         color = DOMAIN_COLORS.get(t["slug"], "#64748b")
         page = page_head(
             f'{t["name"]} roadmap — Agent Skills Library',
@@ -1418,6 +1931,7 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
       </header>
       {nav}
       <div class="rm-timeline">{"".join(rm_stage_html(s) for s in t["stages"])}</div>
+      {maps_html}
       {rel}
       {nav}
       <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/{esc(t["slug"])}.json</code> · ETA: {esc(t.get("eta", "soon"))}</p>
@@ -1427,6 +1941,119 @@ def build_roadmaps(output_dir: Path, source_dir: Path | None = None) -> list[dic
 
     print(f"Roadmaps written: overview + {len(tracks)} track pages + roadmaps.json")
     return tracks
+
+
+def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
+    """Render roadmaps/guides/*.md into the site: an overview grouped by
+    competency tier plus one full-text page per map, cross-linked with the
+    roadmap tracks. Bilingual labels reuse the data-slang-body mechanism."""
+    _remember_rm_state(load_roadmap_tracks(source_dir))
+    guides = load_guides(source_dir)
+    guides_dir = output_dir / GUIDES_SUBDIR
+    guides_dir.mkdir(parents=True, exist_ok=True)
+    gsrc = (source_dir or Path(__file__).resolve().parent.parent) / "roadmaps" / GUIDES_SUBDIR
+
+    sections = []
+    for tier_key, tier_en, tier_ru in GUIDE_TIERS:
+        tier_guides = [g for g in guides if g["tier"] == tier_key]
+        if not tier_guides:
+            continue
+        cards = "".join(guide_card_html(g) for g in tier_guides)
+        sections.append(
+            f'<section class="tier-head"><h2>{rm_tier_label(tier_en, tier_ru)}</h2>'
+            f'<div class="guide-grid">{cards}</div></section>'
+        )
+
+    overview = page_head(
+        "IT Maps Library — full-text DevOps/SRE guides",
+        f"{len(guides)} full-text maps: Linux, Kubernetes, CI/CD, SRE, AI infra and vibe-coding — the complete 2026-2027 learning library.",
+        BASE + "guides.html",
+        css_path="style.css",
+        nav_index="index.html",
+        lang_attr="ru",
+    ) + f"""
+    <div class="rm-page">
+      <header class="rm-hero reveal in">
+        <div class="hero-badge pulse">Guides · {len(guides)} full-text maps</div>
+        <h1>{rm_tier_label("The Maps Library", "Библиотека мап")}</h1>
+        <p>{rm_tier_label(
+            "The complete text behind every roadmap track — from Linux internals to GPU inference, chaos drills and the AI-coder career portal.",
+            "Полный текст каждой дорожной карты — от ядра Linux до GPU-инференса, хаос-инженерии и карьерного портала AI-кодера.",
+        )}</p>
+      </header>
+      {"".join(sections)}
+      <p class="back-link"><a href="roadmaps.html" data-i18n="back_roadmaps">← All roadmaps</a></p>
+    </div>
+""" + page_foot(js_path="site.js")
+    (output_dir / "guides.html").write_text(overview, encoding="utf-8")
+
+    count = 0
+    for i, g in enumerate(guides):
+        prev_g = guides[i - 1] if i > 0 else None
+        next_g = guides[i + 1] if i < len(guides) - 1 else None
+        nav = '<div class="page-nav">'
+        nav += f'<a class="page-nav-link" href="{esc(prev_g["slug"])}.html">← {esc(prev_g["title"][:40])}</a>' if prev_g else "<span></span>"
+        nav += f'<a class="page-nav-link" href="{esc(next_g["slug"])}.html">{esc(next_g["title"][:40])} →</a>' if next_g else "<span></span>"
+        nav += "</div>"
+        try:
+            md_text = (gsrc / f'{g["slug"]}.md').read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"warning: cannot read guide body {g['slug']}: {e}", file=sys.stderr)
+            continue
+        body_lines = md_text.splitlines()
+        drop = next((k for k, ln in enumerate(body_lines) if ln.startswith("# ")), None)
+        if drop is not None:
+            body_lines = body_lines[:drop] + body_lines[drop + 1 :]
+        rendered = render_guide_markdown("\n".join(body_lines))
+        track_link = (
+            f'<a class="rm-chip" href="../roadmaps/{esc(g["track"])}.html">{esc(g["track"])} track →</a>'
+            if g["track"]
+            else ""
+        )
+        tier = next(t for t in GUIDE_TIERS if t[0] == g["tier"])
+        ld = json_for_script({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": g["title"],
+            "description": g["excerpt"] or g["title"],
+            "url": BASE + f"guides/{g['slug']}.html",
+            "inLanguage": "ru",
+            "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": BASE + "guides.html"},
+            "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap",
+        })
+        page = page_head(
+            f'{g["title"]} — IT Maps',
+            g["excerpt"] or g["title"],
+            BASE + f'guides/{g["slug"]}.html',
+            extra=f'<script type="application/ld+json">{ld}</script>',
+            lang_attr="ru",
+        ) + f"""
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip">{rm_tier_label(tier[1], tier[2])}</span>
+          {track_link}
+        </div>
+        <h1 class="skill-page-title">{esc(g["title"])}</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="{g["words"]}">~{g["words"]} words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/{GUIDES_SUBDIR}/{esc(g["slug"])}.md</code></span>
+          <a href="{REPO}/tree/main/roadmaps/{GUIDES_SUBDIR}/{esc(g["slug"])}.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      {nav}
+      <div class="skill-page-body guide-body">
+        {rendered}
+      </div>
+      {nav}
+    </article>
+""" + page_foot()
+        (guides_dir / f'{g["slug"]}.html').write_text(page, encoding="utf-8")
+        count += 1
+
+    print(f"Guides written: overview + {count} map pages")
+    return count
 
 
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
@@ -1452,6 +2079,9 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
         lines.append(f"  <url><loc>{BASE}domains/{esc(d)}.html</loc></url>")
     for t in load_roadmap_tracks():
         lines.append(f"  <url><loc>{BASE}roadmaps/{esc(t['slug'])}.html</loc></url>")
+    lines.append(f"  <url><loc>{BASE}guides.html</loc><priority>0.8</priority></url>")
+    for g in load_guides():
+        lines.append(f"  <url><loc>{BASE}guides/{esc(g['slug'])}.html</loc></url>")
     lines.append("</urlset>")
     (output_dir / "sitemap.xml").write_text("\n".join(lines), encoding="utf-8")
     print(f"robots.txt and sitemap.xml written to {output_dir}")
@@ -1475,6 +2105,7 @@ def main() -> int:
     build_skill_pages(Path(args.catalog), output_dir, jobs=args.jobs)
     build_domain_pages(Path(args.catalog), output_dir)
     build_roadmaps(output_dir)
+    build_guides(output_dir)
     build_style_css(output_dir)
     build_site_js(output_dir)
     build_search_index(Path(args.catalog), output_dir)

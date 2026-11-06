@@ -17,11 +17,11 @@ import sys
 from pathlib import Path
 
 
-def main() -> int:
+def main(root: Path | None = None) -> int:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from _console import ensure_utf8_console
     ensure_utf8_console()
-    root = Path(__file__).resolve().parent.parent
+    root = root or Path(__file__).resolve().parent.parent
     docs = root / "docs"
     errors: list[str] = []
 
@@ -88,6 +88,24 @@ def main() -> int:
             except (OSError, json.JSONDecodeError, KeyError) as e:
                 errors.append(f"roadmaps.json invalid: {e}")
 
+    # 2c. guides: roadmaps/guides/*.md <-> docs/guides/*.html + overview
+    guides_src = root / "roadmaps" / "guides"
+    guides_out = docs / "guides"
+    md_stems: set[str] = set()
+    if not guides_src.is_dir():
+        errors.append("roadmaps/guides source directory missing")
+    elif not guides_out.is_dir():
+        errors.append("docs/guides output directory missing (run make docs)")
+    else:
+        md_stems = {p.stem for p in guides_src.glob("*.md")}
+        html_stems = {p.stem for p in guides_out.glob("*.html")}
+        for stem in sorted(md_stems - html_stems):
+            errors.append(f"missing guide page: {stem}")
+        for stem in sorted(html_stems - md_stems):
+            errors.append(f"guide page without source: {stem}")
+        if not (docs / "guides.html").exists():
+            errors.append("missing guides.html overview")
+
     # 3. relative links resolve
     for page in list(docs.rglob("*.html")):
         html = page.read_text(encoding="utf-8")
@@ -130,7 +148,10 @@ def main() -> int:
         for e in errors[:25]:
             print(f"  {e}")
         return 1
-    print(f"Site consistent: {len(names)} skills, {len(domains)} domains, {len(rm_slugs)} roadmaps, all pages valid.")
+    print(
+        f"Site consistent: {len(names)} skills, {len(domains)} domains, "
+        f"{len(rm_slugs)} roadmaps, {len(md_stems) if guides_src.is_dir() else 0} guides, all pages valid."
+    )
     return 0
 
 

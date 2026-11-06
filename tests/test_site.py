@@ -140,6 +140,24 @@ def _build_site(tmp_path: Path) -> Path:
         "stages": [{"title": "Fundamentals", "items": ["Map drops soon"], "status": "soon"}],
     }), encoding="utf-8")
 
+    guides_dir = rm_dir / "guides"
+    guides_dir.mkdir(parents=True, exist_ok=True)
+    (guides_dir / "00_README.md").write_text(
+        "# Полный сборник мап\n\nДайджест всех карт и артефактов.\n",
+        encoding="utf-8",
+    )
+    (guides_dir / "21_Linux_Map.md").write_text(
+        "# Карта 21: Linux и Сети\n\nПервая строка описания карты.\n\n"
+        "| Команда | Зачем |\n|---|---|\n| `uptime` | load average |\n\n"
+        "- [x] сделано\n- [ ] не сделано\n\n**Жирный тезис** и `код`.\n",
+        encoding="utf-8",
+    )
+    (guides_dir / "22_Vibe_Map.md").write_text(
+        "# Карта 22: Вайбкодинг\n\nSEO и SSR для витрин.\n\n"
+        "- пункт один\n- пункт два\n\n[GitHub](https://github.com/ssrjkk/agent-skills)\n",
+        encoding="utf-8",
+    )
+
     mod = _load_mod()
 
     out = tmp_path / "docs"
@@ -150,6 +168,7 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_skill_pages(catalog_path, out)
     mod.build_domain_pages(catalog_path, out)
     mod.build_roadmaps(out, source_dir=tmp_path)
+    mod.build_guides(out, source_dir=tmp_path)
     mod.build_style_css(out)
     mod.build_site_js(out)
     mod.build_search_index(catalog_path, out)
@@ -324,9 +343,11 @@ class TestSiteGenerator:
         pages = (
             list(docs.glob("*.html"))
             + list((docs / "skills").glob("alpha.html"))
+            + list((docs / "domains").glob("*.html"))
             + list((docs / "roadmaps").glob("*.html"))
+            + list((docs / "guides").glob("*.html"))
         )
-        assert len(pages) >= 4
+        assert len(pages) >= 6
         used: set[str] = set()
         for page in pages:
             html = page.read_text(encoding="utf-8")
@@ -382,7 +403,7 @@ class TestSiteGenerator:
         docs = _build_site(tmp_path)
         index = (docs / "index.html").read_text(encoding="utf-8")
         assert "showTab" in index
-        for tab in ["catalog", "stats", "how", "install", "roadmaps"]:
+        for tab in ["catalog", "roadmaps", "guides", "stats", "how", "install"]:
             assert f'data-panel="{tab}"' in index, f"missing tab panel: {tab}"
             assert f"showTab('{tab}'" in index, f"missing tab button: {tab}"
         assert index.count("tab-panel active") >= 2  # search + results in catalog
@@ -546,3 +567,121 @@ class TestBuildRobustness:
         assert out["scoreEmpty"] == 0, out
         assert out["scoreMid"] == 30, out
         assert out["fns"] == "function,function,function,function,function", out
+
+
+class TestGuidesPortal:
+    """Full-text maps rendered into the site, cross-linked with tracks."""
+
+    def test_guides_pages_generated(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        assert (docs / "guides.html").exists()
+        for stem in ("00_README", "21_Linux_Map", "22_Vibe_Map"):
+            assert (docs / "guides" / f"{stem}.html").exists()
+
+    def test_guide_page_renders_tables_tasks_inline(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "guides" / "21_Linux_Map.html").read_text(encoding="utf-8")
+        assert '<div class="md-table">' in page
+        assert "<th>Команда</th>" in page
+        assert '<ul class="task-list">' in page
+        assert "<input" in page and " checked" in page
+        assert "<strong>Жирный тезис</strong>" in page
+        assert "<code>код</code>" in page
+        assert page.count("<h1") == 1, "guide H1 must render once (title), body H1 is stripped"
+
+    def test_links_sanitized(self):
+        mod = _load_mod()
+        html = mod.render_guide_markdown("[x](javascript:alert(1)) and [ok](https://example.com)")
+        assert "javascript:" not in html.replace("[x](javascript:alert(1))", "")
+        assert 'href="https://example.com"' in html
+        assert "[x](javascript:alert(1))" in html, "unsafe target must degrade to plain text"
+
+    def test_track_page_links_full_maps(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "roadmaps" / "frontend.html").read_text(encoding="utf-8")
+        assert 'href="../guides/21_Linux_Map.html"' in page
+        assert 'href="../guides/22_Vibe_Map.html"' in page
+        assert "Full maps" in page
+        assert "00_README" not in page, "meta guide has no track, must not appear"
+
+    def test_guide_page_cross_links_track_and_jsonld(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "guides" / "21_Linux_Map.html").read_text(encoding="utf-8")
+        assert 'href="../roadmaps/frontend.html"' in page
+        assert 'data-i18n="back_guides"' in page
+        assert "application/ld+json" in page
+        assert "TechArticle" in page
+        meta = (docs / "guides" / "00_README.html").read_text(encoding="utf-8")
+        assert "../roadmaps/" not in meta
+
+    def test_guides_overview_groups_tiers(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        overview = (docs / "guides.html").read_text(encoding="utf-8")
+        assert "Handbooks &amp; Digests" in overview
+        assert "Vibe-Coding &amp; Portal · Maps 21–23" in overview
+        assert 'href="guides/22_Vibe_Map.html"' in overview
+
+    def test_nav_and_cta_are_honest(self, tmp_path: Path):
+        mod = _load_mod()
+        docs = _build_site(tmp_path)  # fixture: every track is soon
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'class="soon-dot"' in index
+        assert 'class="live-dot"' not in index
+        assert '<span data-i18n="nav_guides">Guides</span> · 3 maps →' in index
+        mod.RM_STATE = {"live": 2, "total": 2}
+        assert "live-dot" in mod.rm_nav_dot()
+        assert "all 2 live" in mod.rm_cta_pill()
+
+    def test_rm_note_switches_when_all_live(self, tmp_path: Path):
+        mod = _load_mod()
+        tracks = tmp_path / "roadmaps"
+        tracks.mkdir(exist_ok=True)
+        (tracks / "qa.json").write_text(json.dumps({
+            "slug": "qa", "name": "QA", "icon": "🧪",
+            "tagline": "Test design", "status": "live", "eta": "2026-11",
+            "catalog_domain": None, "related_skills": [],
+            "stages": [{"title": "S0", "items": ["a", "b"], "status": "live"}],
+        }), encoding="utf-8")
+        out = tmp_path / "docs"
+        out.mkdir()
+        mod.build_roadmaps(out, source_dir=tmp_path)
+        overview = (out / "roadmaps.html").read_text(encoding="utf-8")
+        assert "Every track is live" in overview
+        assert "Want this map first?" not in overview
+
+
+class TestPortalTabs:
+    """Index is the full tabbed portal: roadmaps explorer + guides library."""
+
+    def test_tab_order_and_names(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert "TAB_NAMES = ['catalog', 'roadmaps', 'guides', 'stats', 'how', 'install']" in index
+        assert "<kbd>1–6</kbd>" in index
+
+    def test_roadmaps_explorer_embedded_in_index(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert "var RM_DATA" in index
+        assert "function showTrack(" in index
+        assert "function refreshTrack(" in index
+        assert 'id="rm-stages"' in index
+        assert 'class="rm-tab' in index
+        assert "Map drops soon" in index  # first track pre-rendered server-side
+
+    def test_guides_panel_embedded_in_index(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'data-panel="guides"' in index
+        assert 'id="guide-search"' in index
+        assert "filterGuides" in index
+        assert 'href="guides/21_Linux_Map.html"' in index
+        assert "Handbooks &amp; Digests" in index
+        assert "data-title=" in index
+
+    def test_hero_glass_chips(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'class="glass-chip"' in index
+        assert "<strong>3</strong> maps" in index
+        assert "<strong>0/2</strong> live" in index

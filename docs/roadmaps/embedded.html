@@ -9,6 +9,8 @@
   <meta name="theme-color" content="#0b0f0a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:title" content="Embedded &amp; IoT roadmap — Agent Skills Library">
   <meta property="og:description" content="Bare-metal firmware in Rust (#![no_std]), embedded-hal traits, DMA, real-time interrupts (RTIC/Embassy), and watchdog safety">
   <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/roadmaps/embedded.html">
@@ -32,7 +34,8 @@
       <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
       <div class="nav-right">
         <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
-        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="soon-dot" data-i18n="soon">soon</span></a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
         <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
@@ -53,6 +56,7 @@
       </header>
       <div class="page-nav"><a class="page-nav-link" href="education.html">← education</a><a class="page-nav-link" href="engineering.html">engineering →</a></div>
       <div class="rm-timeline"><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 1. Bare-Metal #![no_std] Rust, Memory Maps &amp; Typestate Peripherals</span><span data-slang-body="ru" hidden>Этап 1. Среда #![no_std] на Rust, карта памяти и типобезопасная периферия</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Custom linker scripts (memory.x), zero-heap static allocation (heapless), and compile-time GPIO/SPI/I2C pin state checking</li><li>Portable driver development against embedded-hal traits and zero-copy peripheral transfers via DMA</li></ul><ul data-slang-body="ru" hidden><li>Скрипты линковщика (memory.x), работа без кучи на статических буферах (heapless) и проверка режимов пинов GPIO/SPI/I2C на этапе компиляции</li><li>Разработка переносимых драйверов датчиков поверх трейтов embedded-hal и прямая пересылка данных через DMA без участия CPU</li></ul></div><div class="rm-stage"><h3>▸ <span data-slang-body="en">Stage 2. Real-Time Concurrency (Embassy / RTIC), Watchdogs &amp; Telemetry</span><span data-slang-body="ru" hidden>Этап 2. Асинхронность реального времени (Embassy / RTIC), сторожевые таймеры и отладка</span> <span class="live-pill">live</span></h3><ul data-slang-body="en"><li>Cooperative async/await firmware on Embassy and hardware interrupt prioritization with RTIC</li><li>Hardware watchdog timers, brown-out detection, defmt zero-cost logging over RTT, and A/B partition OTA updates</li></ul><ul data-slang-body="ru" hidden><li>Асинхронные прошивки без аллокаций на фреймворке Embassy и жесткое планирование аппаратных прерываний в RTIC</li><li>Аппаратные сторожевые таймеры (Watchdog), легковесное логирование defmt по шине SWD/RTT и отказоустойчивое обновление прошивки (OTA)</li></ul></div></div>
+      
       <div class="rm-related"><h3>Related skills</h3><div class="rm-chips"><a class="rm-chip" href="../skills/rust-embedded.html">rust-embedded</a><a class="rm-chip" href="../skills/rust-tokio.html">rust-tokio</a></div></div>
       <div class="page-nav"><a class="page-nav-link" href="education.html">← education</a><a class="page-nav-link" href="engineering.html">engineering →</a></div>
       <p class="rm-note"><span data-i18n="src">Source:</span> <code>roadmaps/embedded.json</code> · ETA: 2026-11</p>

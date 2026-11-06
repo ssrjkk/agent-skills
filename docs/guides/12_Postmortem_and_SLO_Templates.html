@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 12: Шаблоны SRE — Blameless Postmortem и Расчет SLO / Error Budget — IT Maps</title>
+  <meta name="description" content="| Уровень SLO | Допустимый простой в год | Допустимый простой в месяц (30 дней) | Допустимый простой в неделю |">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/12_Postmortem_and_SLO_Templates.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 12: Шаблоны SRE — Blameless Postmortem и Расчет SLO / Error Budget — IT Maps">
+  <meta property="og:description" content="| Уровень SLO | Допустимый простой в год | Допустимый простой в месяц (30 дней) | Допустимый простой в неделю |">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/12_Postmortem_and_SLO_Templates.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 12: Шаблоны SRE — Blameless Postmortem и Расчет SLO / Error Budget — IT Maps">
+  <meta name="twitter:description" content="| Уровень SLO | Допустимый простой в год | Допустимый простой в месяц (30 дней) | Допустимый простой в неделю |">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 12: Шаблоны SRE — Blameless Postmortem и Расчет SLO / Error Budget", "description": "| Уровень SLO | Допустимый простой в год | Допустимый простой в месяц (30 дней) | Допустимый простой в неделю |", "url": "https://ssrjkk.github.io/agent-skills/guides/12_Postmortem_and_SLO_Templates.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Cloud-Native &amp; SRE · Maps 04–13</span><span data-slang-body="ru" hidden>Cloud-Native и SRE · мапы 04–13</span></span>
+          <a class="rm-chip" href="../roadmaps/devops.html">devops track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 12: Шаблоны SRE — Blameless Postmortem и Расчет SLO / Error Budget</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="624">~624 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/12_Postmortem_and_SLO_Templates.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/12_Postmortem_and_SLO_Templates.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="11_System_Design_for_DevOps_SRE.html">← Карта 11: Архитектура и System Design дл</a><a class="page-nav-link" href="13_Cloud_Security_IAM_and_FinOps_Map.html">Карта 13: Облачная Безопасность (IAM, OI →</a></div>
+      <div class="skill-page-body guide-body">
+        <h2>1. Калькулятор SLO и Error Budget (Таблица доступности)</h2>
+<div class="md-table"><table><thead><tr><th>Уровень SLO</th><th>Допустимый простой в год</th><th>Допустимый простой в месяц (30 дней)</th><th>Допустимый простой в неделю</th></tr></thead><tbody><tr><td><strong>99.0% (Две девятки)</strong></td><td>3 дня 15 часов</td><td><strong>7 часов 18 минут</strong></td><td>1 час 40 минут</td></tr><tr><td><strong>99.5%</strong></td><td>1 день 19 часов</td><td><strong>3 часа 39 минут</strong></td><td>50 минут</td></tr><tr><td><strong>99.9% (Три девятки)</strong></td><td>8 часов 45 минут</td><td><strong>43 минуты 49 секунд</strong></td><td>10 минут 4 секунды</td></tr><tr><td><strong>99.95%</strong></td><td>4 часа 22 минуты</td><td><strong>21 минута 54 секунды</strong></td><td>5 минут 2 секунды</td></tr><tr><td><strong>99.99% (Четыре девятки)</strong></td><td>52 минуты 35 секунд</td><td><strong>4 минуты 23 секунды</strong></td><td>1 минута</td></tr></tbody></table></div>
+<h3>Формула Error Budget для трафика:</h3>
+<p>Если наш целевой <strong>SLO = 99.9%</strong> успешных запросов за 30 дней, а сервис обрабатывает <strong>100 000 000 запросов в месяц</strong>, то наш бюджет ошибок:</p>
+<ul>
+<li><code>Error Budget = 100 000 000 * (1 - 0.999) = 100 000 ошибок (5xx)</code>.</li>
+<li>Пока мы сожгли меньше 100 000 ошибок за месяц — продуктовая команда может смело выкатывать рискованные релизы. Если бюджет выгорел — фичи замораживаются, ресурсы бросаются на техдолг и стабильность.</li>
+</ul>
+<hr>
+<h2>2. Готовый шаблон Blameless Postmortem (Отчет об инциденте)</h2>
+<blockquote><strong>Правило SRE:</strong> В постмортеме никогда не указываются имена людей как причина сбоя («Иван запустил скрипт без флага»). Если человек смог сломать прод одной командой — виновата система, в которой не было автоматических предохранителей (CI-валидации, лимитов, Canary-отката).</blockquote>
+<div class="codeblock"><pre class="code"><code># Postmortem: [INC-2026-042] Деградация API оформления заказов (502/504 ошибки)
+
+- **Дата:** 28 октября 2026
+- **Длительность:** 22 минуты (14:10 — 14:32 UTC)
+- **Влияние на бизнес (Impact):** 18% запросов к `/api/orders` завершились ошибкой 504. Сожжено 34% месячного Error Budget.
+- **Статус:** Завершен (Action Items в работе)
+
+## 1. Краткое резюме (Executive Summary)
+Во время раскатки релиза `v1.4.2` была добавлена новая колонка в таблицу `orders` без использования `CONCURRENTLY`. Миграция взяла эксклюзивную блокировку (`ACCESS EXCLUSIVE LOCK`) на таблицу, заблокировав все входящие `INSERT`/`SELECT` запросы от бэкенда. Это привело к исчерпанию пула соединений и ответам 504 на балансировщике.
+
+## 2. Хронология событий (Timeline — UTC)
+- **14:08** — Пайплайн GitLab CI запустил `PreSync` хук миграции БД в ArgoCD для релиза `v1.4.2`.
+- **14:10** — Сработал алерт `HighRequestLatencyP99` и `PostgresBlockedQueries` в Telegram.
+- **14:12** — Дежурный SRE подключился к инциденту, обнаружил очередь локов в `pg_stat_activity`.
+- **14:18** — Выявлен блокирующий PID миграции, удерживающий таблицу `orders` в ожидании завершения длинного аналитического отчета.
+- **14:25** — Принято решение убить процесс миграции через `pg_terminate_backend()`.
+- **14:26** — Очередь запросов рассосалась, метрики p99 и RPS вернулись в норму.
+- **14:32** — Инцидент официально закрыт.
+
+## 3. Корневая причина (Root Cause Analysis — 5 Whys)
+1. **Почему упало API?** Запросы зависли в ожидании таблицы `orders` в PostgreSQL.
+2. **Почему таблица была заблокирована?** DDL-миграция взяла `ACCESS EXCLUSIVE` лок и встала в очередь за долгим `SELECT`-запросом.
+3. **Почему миграция ждала бесконечно?** В сессии мигратора не был задан параметр `lock_timeout`.
+4. **Почему опасная миграция попала в прод?** В CI-пайплайне отсутствовал линтер SQL-миграций.
+5. **Почему аналитический запрос шел на мастер-базу?** Сервис отчетов ходил в Primary-узел вместо выделенной Read-реплики.
+
+## 4. Что сработало хорошо
+- Алерт по метрикам RED и блокировкам БД прилетел в течение 90 секунд после начала деградации.
+- Наличие готового SQL-скрипта поиска блокировок в Runbook (`10_Database_and_Stateful_Runbooks.md`) сократило время диагностики до 5 минут.
+
+## 5. План действий (Action Items)
+- [ ] **[P0]** Добавить обязательный `SET lock_timeout = &#x27;3s&#x27;;` и `SET statement_timeout = &#x27;10s&#x27;;` во все скрипты миграций (Срок: 30.10.2026).
+- [ ] **[P1]** Внедрить линтер опасных DDL-операций (`squawk`) в CI-пайплайн (Срок: 05.11.2026).
+- [ ] **[P1]** Переключить сервис аналитики на чтение с Standby-реплики PostgreSQL (Срок: 07.11.2026).</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="11_System_Design_for_DevOps_SRE.html">← Карта 11: Архитектура и System Design дл</a><a class="page-nav-link" href="13_Cloud_Security_IAM_and_FinOps_Map.html">Карта 13: Облачная Безопасность (IAM, OI →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 10: Эксплуатация и Траблшутинг Баз Данных (PostgreSQL, Redis, Kafka) — IT Maps</title>
+  <meta name="description" content="DevOps и SRE инженеру регулярно приходится диагностировать деградацию БД, настраивать пулеры соединений и проверять бэкапы.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/10_Database_and_Stateful_Runbooks.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 10: Эксплуатация и Траблшутинг Баз Данных (PostgreSQL, Redis, Kafka) — IT Maps">
+  <meta property="og:description" content="DevOps и SRE инженеру регулярно приходится диагностировать деградацию БД, настраивать пулеры соединений и проверять бэкапы.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/10_Database_and_Stateful_Runbooks.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 10: Эксплуатация и Траблшутинг Баз Данных (PostgreSQL, Redis, Kafka) — IT Maps">
+  <meta name="twitter:description" content="DevOps и SRE инженеру регулярно приходится диагностировать деградацию БД, настраивать пулеры соединений и проверять бэкапы.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 10: Эксплуатация и Траблшутинг Баз Данных (PostgreSQL, Redis, Kafka)", "description": "DevOps и SRE инженеру регулярно приходится диагностировать деградацию БД, настраивать пулеры соединений и проверять бэкапы.", "url": "https://ssrjkk.github.io/agent-skills/guides/10_Database_and_Stateful_Runbooks.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Cloud-Native &amp; SRE · Maps 04–13</span><span data-slang-body="ru" hidden>Cloud-Native и SRE · мапы 04–13</span></span>
+          <a class="rm-chip" href="../roadmaps/devops.html">devops track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 10: Эксплуатация и Траблшутинг Баз Данных (PostgreSQL, Redis, Kafka)</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="495">~495 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/10_Database_and_Stateful_Runbooks.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/10_Database_and_Stateful_Runbooks.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="09_Incident_Troubleshooting_Playbooks.html">← Карта 09: Боевые Плейбуки Разбора Инциде</a><a class="page-nav-link" href="11_System_Design_for_DevOps_SRE.html">Карта 11: Архитектура и System Design дл →</a></div>
+      <div class="skill-page-body guide-body">
+        <p>DevOps и SRE инженеру регулярно приходится диагностировать деградацию БД, настраивать пулеры соединений и проверять бэкапы.</p>
+<hr>
+<h2>1. PostgreSQL: Диагностика в реальном времени (SQL-шпаргалка дежурного)</h2>
+<h3>Поиск зависших и долгих запросов (атака клонов / тяжелые аналитические запросы)</h3>
+<div class="codeblock"><pre class="code"><code>SELECT pid, now() - pg_stat_activity.query_start AS duration, usename, state, wait_event_type, query
+FROM pg_stat_activity
+WHERE state != &#x27;idle&#x27;
+  AND (now() - pg_stat_activity.query_start) &gt; interval &#x27;5 seconds&#x27;
+ORDER BY duration DESC;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<ul>
+<li><strong>Мягко отменить запрос:</strong> <code>SELECT pg_cancel_backend(&lt;pid&gt;);</code></li>
+<li><strong>Жестко убить сессию (если не помогло):</strong> <code>SELECT pg_terminate_backend(&lt;pid&gt;);</code></li>
+</ul>
+<h3>Поиск блокировок (Кто кого держит в Lock Queue)</h3>
+<p>Частая причина зависания миграций (<code>ALTER TABLE</code>), которые берут <code>ACCESS EXCLUSIVE</code> лок и встают в очередь за длинной транзакцией <code>idle in transaction</code>:</p>
+<div class="codeblock"><pre class="code"><code>SELECT
+    blocked_locks.pid AS blocked_pid,
+    blocked_activity.usename AS blocked_user,
+    blocking_locks.pid AS blocking_pid,
+    blocking_activity.usename AS blocking_user,
+    blocked_activity.query AS blocked_statement,
+    blocking_activity.query AS current_statement_in_blocking_process
+FROM pg_catalog.pg_locks blocked_locks
+JOIN pg_catalog.pg_stat_activity blocked_activity ON blocked_activity.pid = blocked_locks.pid
+JOIN pg_catalog.pg_locks blocking_locks
+    ON blocking_locks.locktype = blocked_locks.locktype
+    AND blocking_locks.database IS NOT DISTINCT FROM blocked_locks.database
+    AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
+    AND blocking_locks.pid != blocked_locks.pid
+JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid
+WHERE NOT blocked_locks.granted;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h3>Проверка раздувания таблиц (Bloat) и работы Autovacuum</h3>
+<div class="codeblock"><pre class="code"><code>SELECT relname, n_live_tup, n_dead_tup,
+       round(n_dead_tup::numeric / nullif(n_live_tup + n_dead_tup, 0) * 100, 2) AS dead_pct,
+       last_autovacuum
+FROM pg_stat_user_tables
+WHERE n_dead_tup &gt; 1000
+ORDER BY n_dead_tup DESC LIMIT 15;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<hr>
+<h2>2. Архитектура отказоустойчивого PostgreSQL в K8s и на VM</h2>
+<h3>CloudNativePG (CNPG) — стандарт оператора для Kubernetes</h3>
+<p>Вместо ручной настройки StatefulSet используется оператор <strong>CloudNativePG</strong>:</p>
+<ul>
+<li>Управляет Primary и Standby репликами напрямую через Kubernetes API (без внешнего Consul/etcd для лидера).</li>
+<li>Из коробки поднимает пулер <strong>PgBouncer</strong> (<code>Pooler</code> CRD), экспортирует метрики для Prometheus и стримит WAL-архивы в S3 через Barman Cloud.</li>
+</ul>
+<h3>Золотые правила настройки PgBouncer:</h3>
+<ul>
+<li><strong><code>pool_mode = transaction</code></strong> — соединение с реальным Postgres выдается клиенту только на время выполнения одной транзакции, позволяя держать 5 000 подключений от микросервисов на 50 реальных процессах Postgres (<code>default_pool_size = 50</code>).</li>
+<li><strong>Важный нюанс:</strong> в режиме <code>transaction</code> приложению нужно явно включить поддержку протокола подготовленных выражений в самом PgBouncer (<code>max_prepared_statements = 200</code> в современных версиях PgBouncer 1.21+).</li>
+</ul>
+<hr>
+<h2>3. Redis / Valkey в продакшене</h2>
+<ul>
+<li><strong>Почему <code>KEYS *</code> убивает продакшн:</strong> Redis однопоточен для выполнения команд. Вызов <code>KEYS *</code> на базе с миллионами ключей блокирует основной поток на несколько секунд, вызывая таймауты у всех клиентов. Всегда используй итератор <code>SCAN 0 MATCH prefix:* COUNT 100</code>.</li>
+<li><strong>Политика вытеснения памяти (<code>maxmemory-policy</code>):</strong></li>
+<li>Если Redis используется как <strong>кэш</strong>: ставь <code>allkeys-lru</code> или <code>volatile-lfu</code>.</li>
+<li>Если Redis используется как <strong>брокер очередей (Celery/BullMQ)</strong>: ставь <code>noeviction</code> (чтобы задачи не удалялись тихо при нехватке RAM).</li>
+</ul>
+<hr>
+<h2>4. Apache Kafka: На что смотреть при деградации</h2>
+<ol>
+<li><strong><code>UnderReplicatedPartitions &gt; 0</code></strong> — один из брокеров отстает или упал, риск потери данных при отказе лидера.</li>
+<li><strong><code>Consumer Lag</code> растет</strong> — воркеры-консьюмеры не успевают разгребать сообщения.</li>
+</ol>
+<ul>
+<li><strong>Решение:</strong> увеличить число подов-консьюмеров (но помни: число активных консьюмеров в одной Consumer Group <strong>не может превышать число партиций</strong> в топике — лишние поды будут просто простаивать!).</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="09_Incident_Troubleshooting_Playbooks.html">← Карта 09: Боевые Плейбуки Разбора Инциде</a><a class="page-nav-link" href="11_System_Design_for_DevOps_SRE.html">Карта 11: Архитектура и System Design дл →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

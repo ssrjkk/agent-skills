@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 01 (Расширенная): Linux, Сети и Базовая Инфраструктура — IT Maps</title>
+  <meta name="description" content="Планировщик и процессы:">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/01_Linux_and_Networking_Map.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 01 (Расширенная): Linux, Сети и Базовая Инфраструктура — IT Maps">
+  <meta property="og:description" content="Планировщик и процессы:">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/01_Linux_and_Networking_Map.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 01 (Расширенная): Linux, Сети и Базовая Инфраструктура — IT Maps">
+  <meta name="twitter:description" content="Планировщик и процессы:">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 01 (Расширенная): Linux, Сети и Базовая Инфраструктура", "description": "Планировщик и процессы:", "url": "https://ssrjkk.github.io/agent-skills/guides/01_Linux_and_Networking_Map.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Foundation · Maps 01–03</span><span data-slang-body="ru" hidden>Фундамент · мапы 01–03</span></span>
+          <a class="rm-chip" href="../roadmaps/devops.html">devops track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 01 (Расширенная): Linux, Сети и Базовая Инфраструктура</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="776">~776 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/01_Linux_and_Networking_Map.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/01_Linux_and_Networking_Map.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="00_README.html">← Полный сборник DevOps / SRE / Platform E</a><a class="page-nav-link" href="02_Coding_and_Containers_Map.html">Карта 02 (Расширенная): Программирование →</a></div>
+      <div class="skill-page-body guide-body">
+        <h2>1. Внутреннее устройство Linux (Linux Internals)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Планировщик и процессы:</strong></li>
+</ul>
+<ul>
+<li>CFS (Completely Fair Scheduler), приоритеты nice и renice, RT-планировщик.</li>
+<li>Состояния процессов: <code>R</code> (Running), <code>S</code> (Interruptible sleep), <code>D</code> (Uninterruptible sleep — критический маркер проблем с диском/NFS), <code>Z</code> (Zombie), <code>T</code> (Stopped).</li>
+<li>Управление сигналами: почему процесс с PID 1 не умирает по <code>SIGTERM</code> по умолчанию и как использовать <code>tini</code> или <code>init</code> обвязку.</li>
+<li>Виртуальная файловая система <code>/proc</code> и <code>/sys</code>: чтение лимитов дескрипторов (<code>/proc/sys/fs/file-max</code>), тюнинг параметров ядра через <code>sysctl.conf</code> (<code>net.core.somaxconn</code>, <code>vm.swappiness</code>, <code>fs.inotify.max_user_watches</code>).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Изоляция и контейнеризация под капотом:</strong></li>
+<li><strong>Namespaces:</strong></li>
+<li><code>pid</code> (изоляция идентификаторов процессов).</li>
+<li><code>net</code> (собственные интерфейсы, таблица маршрутизации, iptables для каждого контейнера).</li>
+<li><code>mnt</code> (изоляция точек монтирования файловой системы).</li>
+<li><code>ipc</code> (межпроцессное взаимодействие: семафоры, очереди сообщений).</li>
+<li><code>uts</code> (hostname и доменное имя).</li>
+<li><code>user</code> (мапинг UID/GID хоста в контейнер — основа rootless-контейнеров).</li>
+<li><code>cgroup</code> (управление и ограничение потребления ресурсов).</li>
+<li><strong>cgroups v2:</strong></li>
+<li>Универсальная иерархия контроллеров.</li>
+<li>Ограничение CPU через <code>cpu.weight</code> и <code>cpu.max</code> (quota/period).</li>
+<li>Ограничение памяти через <code>memory.max</code> и поведение OOM Killer (<code>memory.oom.group</code>).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Память и Дисковая подсистема:</strong></li>
+<li>Архитектура Virtual Memory, Page Cache, механизмы Swap, использование <code>vm.dirty_ratio</code> и <code>vm.dirty_background_ratio</code>.</li>
+<li>Утилита <code>lsof</code> — поиск процессов, удерживающих открытые файлы или удаленные файлы (причина утечки дискового пространства).</li>
+<li>LVM (Logical Volume Manager): создание Physical Volume (PV), Volume Group (VG), Logical Volume (LV), расширение томов на лету без перезагрузки.</li>
+<li>RAID (0, 1, 5, 10) и программные уровни через <code>mdadm</code>.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Systemd и инициализация системы:</strong></li>
+<li>Написание юнитов (<code>.service</code>, <code>.timer</code>, <code>.socket</code>).</li>
+<li>Харденинг сервисов: директивы <code>ProtectSystem=full</code>, <code>PrivateTmp=true</code>, <code>NoNewPrivileges=yes</code>, <code>ReadOnlyPaths=/</code>.</li>
+<li>Диагностика через <code>journalctl</code>: фильтрация по PID, юниту, времени, уровням логирования (<code>-p err</code>), вывод в JSON (<code>-o json</code>).</li>
+</ul>
+<h2>2. Диагностика и Траблшутинг (USE / RED методики)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>CPU:</strong></li>
+</ul>
+<ul>
+<li>Анализ <code>top</code> / <code>htop</code>, метрики <code>us</code> (user), <code>sy</code> (system), <code>id</code> (idle), <code>wa</code> (I/O wait), <code>si</code>/<code>st</code> (steal time в облаках).</li>
+<li>Понимание Load Average: почему значение LA выше количества ядер не всегда означает деградацию (учитываются процессы в статусе <code>D</code>).</li>
+<li class="task"><input type="checkbox" disabled> <strong>Memory:</strong></li>
+<li>Команда <code>free -m</code> (разница между <code>available</code> и <code>free</code>).</li>
+<li>Анализ <code>vmstat 1</code> (колонки <code>si</code>/<code>so</code> на предмет своппинга).</li>
+<li>Поиск причин OOM-kill в системном логе через <code>dmesg -T | grep -i oom</code>.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Disk I/O:</strong></li>
+<li>Утилита <code>iostat -xz 1</code>: метрики <code>await</code> (среднее время ожидания I/O запроса) и <code>%util</code> (загрузка устройства).</li>
+<li><code>iotop</code> для поиска процессов, активно пишущих на диск.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Диагностика через eBPF (современный стек):</strong></li>
+<li>Утилиты из пакета BCC и bpftrace:</li>
+<li><code>execsnoop</code> (отслеживание запусков процессов в реальном времени).</li>
+<li><code>biolatency</code> (гистограмма задержек дисковых операций).</li>
+<li><code>tcplife</code> (информация о завершенных TCP-соединениях с таймингами).</li>
+</ul>
+<h2>3. Продвинутая командная строка и обработка данных</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> Стандарт надежного скриптинга в Bash: <code>set -euo pipefail</code> (прекращение выполнения при ошибках, необъявленных переменных и сбоях в пайплайнах).</li>
+<li class="task"><input type="checkbox" disabled> Использование <code>trap</code> для очистки временных файлов при выходе из скрипта.</li>
+<li class="task"><input type="checkbox" disabled> Мощные потоковые утилиты:</li>
+</ul>
+<ul>
+<li><code>grep</code> с расширенными регулярными выражениями (<code>-P</code>).</li>
+<li><code>sed</code> для инлайн-замен (<code>sed -i &#x27;s/old/new/g&#x27; file</code>).</li>
+<li><code>awk</code> для колоночной фильтрации, подсчета сумм и построения отчетов.</li>
+<li class="task"><input type="checkbox" disabled> Парсинг JSON/YAML в скриптах: <code>jq</code> (фильтрация, селекторы, преобразования) и <code>yq</code>.</li>
+<li class="task"><input type="checkbox" disabled> Пакетная обработка: <code>xargs -P</code> для параллельного запуска задач, <code>rsync</code> для инкрементального копирования по сети.</li>
+</ul>
+<h2>4. Компьютерные сети и безопасность</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Стек TCP/IP в деталях:</strong></li>
+</ul>
+<ul>
+<li>Трехстороннее рукопожатие (SYN -&gt; SYN-ACK -&gt; ACK), четырехсторонняя процедура закрытия соединения (FIN).</li>
+<li>Состояния сокетов: <code>TIME_WAIT</code> (почему важно для предотвращения дублирования пакетов) и <code>CLOSE_WAIT</code> (признак того, что приложение забыло закрыть дескриптор сокета).</li>
+<li>Проблемы с MTU и Path MTU Discovery (PMTUD) в оверлейных сетях (VXLAN, Geneve), приводящие к зависанию TCP-соединений.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Маршрутизация и NAT:</strong></li>
+<li>Управление таблицами маршрутизации через <code>ip route</code> и <code>ip rule</code>.</li>
+<li>Механизм Netfilter и таблица состояний соединений <strong>Conntrack</strong>: переполнение таблицы (<code>nf_conntrack: table full</code>) под высокой нагрузкой и способы тюнинга.</li>
+<li class="task"><input type="checkbox" disabled> <strong>Файрволы:</strong></li>
+<li>Базовые принципы <code>iptables</code> / <code>nftables</code> (цепочки <code>INPUT</code>, <code>FORWARD</code>, <code>OUTPUT</code>).</li>
+<li class="task"><input type="checkbox" disabled> <strong>DNS и Криптография:</strong></li>
+<li>Резолвинг: корневые серверы, авторитетные серверы, рекурсивные резолверы (1.1.1.1, 8.8.8.8), кэширование записей (TTL).</li>
+<li>Типы записей: <code>A</code>, <code>AAAA</code>, <code>CNAME</code>, <code>TXT</code>, <code>SRV</code>, <code>CAA</code>. Диагностика через <code>dig +trace</code>.</li>
+<li>TLS 1.3 Handshake (минимизация раунд-трипов), проверка цепочки сертификатов, выпуск сертификатов через ACME протокол (Let&#x27;s Encrypt), генерация mTLS сертификатов для межсервисного взаимодействия.</li>
+</ul>
+<h2>5. Веб-серверы и Обратные прокси (Reverse Proxy)</h2>
+<ul class="task-list">
+<li class="task"><input type="checkbox" disabled> <strong>Nginx / Envoy / Traefik / HAProxy:</strong></li>
+</ul>
+<ul>
+<li>Настройка Reverse Proxy и балансировки нагрузки (алгоритмы Round Robin, Least Connections, IP Hash).</li>
+<li>Терминация SSL/TLS, поддержка HTTP/2 и HTTP/3 (QUIC), проксирование gRPC трафика и WebSockets.</li>
+<li>Тюнинг производительности: пул воркеров (<code>worker_processes</code>, <code>worker_connections</code>), буферы (<code>client_max_body_size</code>, <code>proxy_buffer_size</code>), кэширование ответов и ограничение частоты запросов (Rate Limiting через <code>limit_req_zone</code>).</li>
+</ul>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="00_README.html">← Полный сборник DevOps / SRE / Platform E</a><a class="page-nav-link" href="02_Coding_and_Containers_Map.html">Карта 02 (Расширенная): Программирование →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

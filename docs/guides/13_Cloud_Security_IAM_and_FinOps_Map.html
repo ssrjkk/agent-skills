@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта 13: Облачная Безопасность (IAM, OIDC, KMS), Supply Chain и FinOps — IT Maps</title>
+  <meta name="description" content="Современный продакшн строится по принципу Zero Static Secrets (отказ от долгоживущих ключей AWS_ACCESS_KEY_ID в переменных CI/CD и подах) и прозрачного контр…">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/guides/13_Cloud_Security_IAM_and_FinOps_Map.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Карта 13: Облачная Безопасность (IAM, OIDC, KMS), Supply Chain и FinOps — IT Maps">
+  <meta property="og:description" content="Современный продакшн строится по принципу Zero Static Secrets (отказ от долгоживущих ключей AWS_ACCESS_KEY_ID в переменных CI/CD и подах) и прозрачного контр…">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/guides/13_Cloud_Security_IAM_and_FinOps_Map.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Карта 13: Облачная Безопасность (IAM, OIDC, KMS), Supply Chain и FinOps — IT Maps">
+  <meta name="twitter:description" content="Современный продакшн строится по принципу Zero Static Secrets (отказ от долгоживущих ключей AWS_ACCESS_KEY_ID в переменных CI/CD и подах) и прозрачного контр…">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Карта 13: Облачная Безопасность (IAM, OIDC, KMS), Supply Chain и FinOps", "description": "Современный продакшн строится по принципу Zero Static Secrets (отказ от долгоживущих ключей AWS_ACCESS_KEY_ID в переменных CI/CD и подах) и прозрачного контр…", "url": "https://ssrjkk.github.io/agent-skills/guides/13_Cloud_Security_IAM_and_FinOps_Map.html", "inLanguage": "ru", "isPartOf": {"name": "Agent Skills Library — IT Maps", "url": "https://ssrjkk.github.io/agent-skills/guides.html"}, "keywords": "DevOps, SRE, Platform Engineering, Kubernetes, roadmap"}</script>
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <article class="guide-page">
+      <p class="back-link"><a href="../guides.html" data-i18n="back_guides">← All guides</a></p>
+      <header class="rm-hero">
+        <div class="skill-page-badges">
+          <span class="domain-chip"><span data-slang-body="en">Cloud-Native &amp; SRE · Maps 04–13</span><span data-slang-body="ru" hidden>Cloud-Native и SRE · мапы 04–13</span></span>
+          <a class="rm-chip" href="../roadmaps/devops.html">devops track →</a>
+        </div>
+        <h1 class="skill-page-title">Карта 13: Облачная Безопасность (IAM, OIDC, KMS), Supply Chain и FinOps</h1>
+        <div class="skill-page-meta">
+          <span><span class="guide-words" data-i18n="words_n" data-n="497">~497 words</span></span>
+          <span><span data-i18n="src">Source:</span> <code>roadmaps/guides/13_Cloud_Security_IAM_and_FinOps_Map.md</code></span>
+          <a href="https://github.com/ssrjkk/agent-skills/tree/main/roadmaps/guides/13_Cloud_Security_IAM_and_FinOps_Map.md" data-i18n="view_source">view source</a>
+        </div>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="12_Postmortem_and_SLO_Templates.html">← Карта 12: Шаблоны SRE — Blameless Postmo</a><a class="page-nav-link" href="14_2026_2027_Trends_AI_eBPF_Wasm_Map.html">Карта 14: Главные тренды DevOps / SRE /  →</a></div>
+      <div class="skill-page-body guide-body">
+        <p>Современный продакшн строится по принципу <strong>Zero Static Secrets</strong> (отказ от долгоживущих ключей <code>AWS_ACCESS_KEY_ID</code> в переменных CI/CD и подах) и прозрачного контроля облачного чека (FinOps).</p>
+<hr>
+<h2>1. Бестокенная аутентификация: OIDC и Workload Identity</h2>
+<h3>Проблема старого подхода:</h3>
+<p>Хранение статических ключей облака в GitHub Secrets или GitLab Variables опасно: ключи забывают ротировать, их могут скомпрометировать через утечку логов пайплайна.</p>
+<h3>Как работает OIDC (OpenID Connect) в CI/CD:</h3>
+<ol>
+<li>GitHub Actions / GitLab CI генерирует короткоживущий криптографически подписанный <strong>JWT-токен</strong> для конкретного запуска джобы (внутри зашиты <code>repo:org/backend-api:ref:refs/heads/main</code>).</li>
+<li>Пайплайн отправляет этот JWT в облачный <strong>STS (Security Token Service)</strong> (<code>AssumeRoleWithWebIdentity</code>).</li>
+<li>Облачный IAM проверяет подпись через OIDC-провайдер GitLab/GitHub, сверяет имя репозитория и ветку в Trust Policy и выдает <strong>временные учетные данные на 15–60 минут</strong>.</li>
+</ol>
+<h3>Как поды в Kubernetes ходят в S3/SQS без паролей (IRSA / Pod Identity):</h3>
+<ul>
+<li>К <code>ServiceAccount</code> микросервиса в K8s привязывается IAM-роль облака через аннотацию (<code>eks.amazonaws.com/role-arn</code> или Pod Identity Association).</li>
+<li><code>kubelet</code> автоматически монтирует временный проекционный токен в под, и AWS/GCP SDK прозрачно обменивает его на временный доступ к конкретному S3-бакету.</li>
+</ul>
+<hr>
+<h2>2. Безопасность цепочки поставок (Supply Chain Security: SBOM &amp; Cosign)</h2>
+<ol>
+<li><strong>Генерация SBOM (Software Bill of Materials):</strong></li>
+</ol>
+<ul>
+<li>При каждой сборке образа утилита <strong>Syft</strong> или <strong>Trivy</strong> создает полный паспорт всех пакетов и библиотек внутри контейнера в формате CycloneDX / SPDX:</li>
+</ul>
+<div class="codeblock"><pre class="code"><code>     trivy image --format cyclonedx --output sbom.json ghcr.io/org/backend-api:1.0.0</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<ol>
+<li><strong>Криптографическая подпись образов (Sigstore Cosign):</strong></li>
+</ol>
+<ul>
+<li>Сразу после пуша в Container Registry образ подписывается в бесключевом режиме (Keyless signing через OIDC) с помощью <strong>Cosign</strong>:</li>
+</ul>
+<div class="codeblock"><pre class="code"><code>     cosign sign --yes ghcr.io/org/backend-api@sha256:abcd...</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<ol>
+<li><strong>Проверка подписи при деплое в K8s:</strong></li>
+</ol>
+<ul>
+<li>Политика <strong>Kyverno (<code>verifyImages</code>)</strong> на входе в кластер проверяет криптографическую подпись образа. Если злоумышленник подменил образ в регистри или попытался запустить неподписанный контейнер — Kubernetes заблокирует запуск пода.</li>
+</ul>
+<hr>
+<h2>3. Практический FinOps в Kubernetes (Как сократить счет за облако на 40–60%)</h2>
+<div class="md-table"><table><thead><tr><th>Рычаг оптимизации</th><th>Инструмент</th><th>Как работает и сколько экономит</th></tr></thead><tbody><tr><td><strong>Видимость затрат по неймспейсам</strong></td><td><strong>OpenCost</strong> / Kubecost</td><td>Показывает в Grafana реальную стоимость каждого пода, неймспейса и команды разработчиков в долларах/рублях, выявляет «зомби-ресурсы» (Idle resources).</td></tr><tr><td><strong>Right-sizing (<code>requests</code>)</strong></td><td><strong>VPA</strong> (режим <code>Off</code>) + <strong>Goldilocks</strong></td><td>Разработчики часто прописывают <code>requests: cpu: 2000m</code>, когда сервис реально потребляет <code>50m</code>. Goldilocks анализирует реальные метрики и выдает точные рекомендации для снижения <code>requests</code>.</td></tr><tr><td><strong>Spot / Preemptible узлы</strong></td><td><strong>Karpenter</strong></td><td>Запуск всех stateless-воркеров и CI-раннеров на Spot-инстансах дает скидку <strong>до 60–70%</strong> по сравнению с On-Demand. При уведомлении об изъятии ноды за 2 минуты Karpenter плавно переносит поды.</td></tr><tr><td><strong>Автовыключение Dev/Stage стендов ночью</strong></td><td><strong>kube-green</strong> / KEDA</td><td>Автоматический скейлинг всех деплойментов в <code>dev</code> и <code>staging</code> неймспейсах в <code>0</code> реплик с 20:00 до 08:00 и на выходные экономит <strong>~65% стоимости</strong> тестовых контуров.</td></tr><tr><td><strong>Очистка S3 и Container Registry</strong></td><td>S3 Lifecycle + Registry GC</td><td>Автоматическое удаление тегов образов из PR старше 14 дней и перевод старых бэкапов в <code>Glacier</code> / <code>Cold Storage</code>.</td></tr></tbody></table></div>
+      </div>
+      <div class="page-nav"><a class="page-nav-link" href="12_Postmortem_and_SLO_Templates.html">← Карта 12: Шаблоны SRE — Blameless Postmo</a><a class="page-nav-link" href="14_2026_2027_Trends_AI_eBPF_Wasm_Map.html">Карта 14: Главные тренды DevOps / SRE /  →</a></div>
+    </article>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>
