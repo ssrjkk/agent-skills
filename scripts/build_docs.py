@@ -328,6 +328,12 @@ def _load_guides_cached(root: str) -> tuple[tuple[str, str, str, str, int | None
                 title = ln[2:].strip()
                 break
         excerpt = next((ln.strip() for ln in body_lines[1:] if ln.strip() and not ln.startswith("#")), "")
+        # plain-text excerpt: strip task-list prefixes and inline markdown
+        if excerpt.startswith("- [") and len(excerpt) >= 7 and excerpt[4] == "]":
+            excerpt = excerpt[6:].strip()
+        excerpt = excerpt.replace("**", "").replace("`", "").strip()
+        while excerpt.startswith("*"):
+            excerpt = excerpt[1:].strip()
         if len(excerpt) > 160:
             excerpt = excerpt[:157] + "…"
         m = re.match(r"^(\d+)", path.stem)
