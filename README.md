@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/skills-120-blue?style=for-the-badge" alt="Skills">
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-20-orange?style=for-the-badge" alt="Domains">
-  <img src="https://img.shields.io/badge/quality-97.1%25-brightgreen?style=for-the-badge" alt="Quality">
+  <img src="https://img.shields.io/badge/quality-97.5%25-brightgreen?style=for-the-badge" alt="Quality">
   <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">

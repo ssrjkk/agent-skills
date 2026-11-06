@@ -5,12 +5,12 @@
 если до истечения любого сертификата осталось меньше порога дней.
 """
 
-import socket
-import ssl
 import datetime
 import json
+import socket
+import ssl
 import sys
-from typing import Dict, Any, List
+from typing import Any
 
 DOMAINS = [
     "google.com",
@@ -19,11 +19,15 @@ DOMAINS = [
 WARN_DAYS_THRESHOLD = 14
 
 
-def check_domain_ssl(hostname: str, port: int = 443, timeout: float = 5.0) -> Dict[str, Any]:
+def check_domain_ssl(hostname: str, port: int = 443, timeout: float = 5.0) -> dict[str, Any]:
     context = ssl.create_default_context()
+    # Explicitly require TLS 1.2+ so legacy protocol versions are never negotiated
+    context.minimum_version = ssl.TLSVersion.TLSv1_2
     try:
-        with socket.create_connection((hostname, port), timeout=timeout) as sock:
-            with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+        with (
+            socket.create_connection((hostname, port), timeout=timeout) as sock,
+            context.wrap_socket(sock, server_hostname=hostname) as ssock,
+        ):
                 cert = ssock.getpeercert()
                 not_after_str = cert.get("notAfter")
                 expiry_date = datetime.datetime.strptime(
@@ -48,7 +52,7 @@ def check_domain_ssl(hostname: str, port: int = 443, timeout: float = 5.0) -> Di
 
 
 def main() -> int:
-    results: List[Dict[str, Any]] = []
+    results: list[dict[str, Any]] = []
     has_issues = False
 
     for domain in DOMAINS:
