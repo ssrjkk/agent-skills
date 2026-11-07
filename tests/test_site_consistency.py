@@ -191,6 +191,7 @@ def test_pages_artifact_comes_from_one_checked_matrix_build():
         "Build documentation site",
         "Verify site consistency (links, CSS paths, search index)",
         "Verify catalog consistency",
+        "Verify responsive site in Chromium",
     ):
         gate = next(step for step in steps if step.get("name") == name)
         assert steps.index(gate) < upload_index

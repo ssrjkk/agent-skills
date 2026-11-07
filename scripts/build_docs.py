@@ -1440,7 +1440,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--glow)}
 .card:hover::before{opacity:.8}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
-.card-name{font-family:var(--mono);font-weight:700;font-size:.9rem;color:var(--accent)}
+.card-name{font-family:var(--mono);font-weight:700;font-size:.9rem;color:var(--accent);min-width:0;overflow-wrap:anywhere}
 .card-name::before{content:"$ ";opacity:.5}
 .card-desc{color:var(--muted);font-size:.78rem;margin:.5rem 0 .5rem;line-height:1.5}
 .card-code{
@@ -1479,13 +1479,14 @@ footer a:hover{text-decoration:underline}
 }
 .skill-page-title{font-size:1.9rem;font-weight:700;letter-spacing:-.01em;margin:.8rem 0 .4rem}
 .skill-page-desc{color:var(--muted);font-size:.92rem;max-width:720px}
-.skill-page-meta{display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0;font-size:.78rem;color:var(--muted)}
+.skill-page-meta{display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0;font-size:.78rem;color:var(--muted);overflow-wrap:anywhere}
 .skill-page-meta strong{color:var(--accent);font-family:var(--mono)}
 .skill-page-actions{display:flex;gap:.7rem;margin:1rem 0}
 .skill-page-models{display:flex;gap:.4rem;flex-wrap:wrap;margin:0 0 1.5rem;align-items:center}
 .page-nav{display:flex;justify-content:space-between;gap:1rem;margin:1.2rem 0}
 .page-nav-link{color:var(--accent);text-decoration:none;font-size:.82rem}
 .page-nav-link:hover{text-decoration:underline}
+.skill-page-body{overflow-wrap:anywhere}
 .skill-page-body h1{font-size:1.4rem;margin:1.4rem 0 .6rem}
 .skill-page-body h2{font-size:1.15rem;margin:1.3rem 0 .5rem;letter-spacing:.01em}
 .skill-page-body h3{font-size:1rem;margin:1.1rem 0 .5rem}
@@ -1512,9 +1513,13 @@ footer a:hover{text-decoration:underline}
 .back-link{margin-top:1.5rem}
 .back-link a{color:var(--accent);text-decoration:none}
 .back-link a:hover{text-decoration:underline}
+@media (max-width:1000px){
+  .nav-inner{flex-wrap:wrap;gap:.75rem}
+  .nav-right{width:100%;min-width:0;flex-wrap:wrap;gap:.5rem 1rem}
+}
 @media (max-width:600px){
   .container{padding:1.4rem 1rem 2.5rem}
-  .cards{grid-template-columns:1fr}
+  .cards{grid-template-columns:minmax(0,1fr)}
   .install-box{flex-direction:column;align-items:stretch}
   .dash-row{grid-template-columns:80px 1fr 34px}
   .skill-page-title{font-size:1.4rem}

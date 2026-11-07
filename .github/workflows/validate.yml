@@ -131,6 +131,12 @@ jobs:
           print(f'Validation benchmark: {elapsed:.2f}s')
           "
 
+      - name: Verify responsive site in Chromium
+        if: matrix.python-version == '3.12'
+        run: |
+          python -m playwright install --with-deps chromium
+          python scripts/check_responsive.py
+
       - name: Upload checked Pages artifact
         if: github.ref == 'refs/heads/main' && vars.DEPLOY_PAGES == 'true' && matrix.python-version == '3.12'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
