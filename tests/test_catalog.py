@@ -153,3 +153,18 @@ class TestCatalogBuilderDuplicate:
         )
         with pytest.raises(ValueError, match="no 'name'"):
             CatalogBuilder.from_json(path)
+
+
+def test_canonical_skill_path_variants() -> None:
+    from claude_skills.catalog import canonical_skill_path
+
+    # абсолютный путь с другой машины (утечка в опубликованном каталоге)
+    assert canonical_skill_path(Path("D:/skills/.claude/skills/ai/fastapi/SKILL.md")) == (
+        ".claude/skills/ai/fastapi/SKILL.md"
+    )
+    # обычный относительный путь из корня библиотеки
+    assert canonical_skill_path(Path(".claude/skills/ai/fastapi/SKILL.md")) == (
+        ".claude/skills/ai/fastapi/SKILL.md"
+    )
+    # кастомный каталог без маркера — путь не искажаем
+    assert canonical_skill_path(Path("custom/dir/SKILL.md")) == "custom/dir/SKILL.md"

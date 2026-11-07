@@ -6,9 +6,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+import click
 import pytest
 from click.testing import CliRunner
 
+import claude_skills.cli as cli_mod
 from claude_skills.cli import cli
 
 
@@ -468,3 +470,89 @@ class TestCommandInstall:
         # not in bundled library -> not found without --dir
         assert result.exit_code != 0
         assert "not found" in _strip_ansi(result.output)
+
+
+def _registry_payload() -> dict[str, Any]:
+    return {
+        "metadata": {"schema_version": "3.0", "total_skills": 2},
+        "skills": [
+            {
+                "name": "agent-development",
+                "description": "Build reliable LLM agents and agentic workflows.",
+                "category": "ai",
+                "tags": ["agents", "llm"],
+                "languages": ["en", "ru"],
+                "path": ".claude/skills/ai/agent-development",
+            },
+            {
+                "name": "redis-caching",
+                "description": "Cache hot paths with Redis.",
+                "category": "database",
+                "tags": ["redis", "caching"],
+                "languages": ["en"],
+                "path": ".claude/skills/database/redis-caching",
+            },
+        ],
+    }
+
+
+def test_score_entry_matches_local_scoring() -> None:
+    entry = _registry_payload()["skills"][0]
+    # "agent" содержится в имени (50), описании через "agentic" (25) и теге "agents" (10)
+    assert cli_mod.score_entry(entry, "agent") == 85
+    # только в описании
+    assert cli_mod.score_entry(entry, "reliable") == 25
+    # "llm" в описании (25) и в теге "llm" (10)
+    assert cli_mod.score_entry(entry, "llm") == 35
+    assert cli_mod.score_entry(entry, "zzz-no-match") == 0
+
+
+def test_search_remote_prints_registry_results(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(cli_mod, "fetch_remote_catalog", lambda: _registry_payload()["skills"])
+    result = CliRunner().invoke(cli, ["search", "agent", "--remote"])
+    assert result.exit_code == 0, result.output
+    out = _strip_ansi(result.output)
+    assert "source: https://ssrjkk.github.io/agent-skills/skills_catalog.json" in out
+    assert "agent-development" in out
+    assert ".claude/skills/ai/agent-development" in out
+
+
+def test_search_remote_respects_domain_and_limit(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(cli_mod, "fetch_remote_catalog", lambda: _registry_payload()["skills"])
+    result = CliRunner().invoke(cli, ["search", "cache", "--remote", "--domain", "database"])
+    assert result.exit_code == 0, result.output
+    out = _strip_ansi(result.output)
+    assert "redis-caching" in out
+    assert "agent-development" not in out
+
+
+def test_fetch_remote_catalog_raises_on_bad_payload(monkeypatch: pytest.MonkeyPatch) -> None:
+    class FakeUrlopen:
+        def __init__(self, payload: bytes) -> None:
+            self._payload = payload
+
+        def __enter__(self) -> FakeUrlopen:
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def read(self) -> bytes:
+            return self._payload
+
+    monkeypatch.setattr(
+        "urllib.request.urlopen", lambda _req, **_kwargs: FakeUrlopen(b'{"unexpected": true}')
+    )
+    with pytest.raises(click.ClickException, match="unexpected registry payload"):
+        cli_mod.fetch_remote_catalog()
+
+
+def test_fetch_remote_catalog_raises_on_network_error(monkeypatch: pytest.MonkeyPatch) -> None:
+    import urllib.error
+
+    def boom(_req: object, **_kwargs: object) -> None:
+        raise urllib.error.URLError("connection refused")
+
+    monkeypatch.setattr("urllib.request.urlopen", boom)
+    with pytest.raises(click.ClickException, match="registry unavailable"):
+        cli_mod.fetch_remote_catalog()

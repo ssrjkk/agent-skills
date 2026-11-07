@@ -16,12 +16,43 @@ import click
 from colorama import Fore, Style  # type: ignore[import-untyped]
 
 from claude_skills import ensure_utf8_console
-from claude_skills.catalog import CatalogBuilder
+from claude_skills.catalog import CatalogBuilder, canonical_skill_path
 from claude_skills.models import QualityScore, SkillFile, ValidationResult, parse_frontmatter
 from claude_skills.quality import QualityAnalyzer, QualityReport
 from claude_skills.validator import ValidationPipeline
 
 DEFAULT_SKILLS = ".claude/skills"
+REGISTRY_URL = "https://ssrjkk.github.io/agent-skills/skills_catalog.json"
+
+
+def score_entry(entry: dict[str, Any], query: str) -> int:
+    """Simple relevance score shared by local and remote search (0 = no match)."""
+    q = query.lower()
+    score = 0
+    if q in entry["name"].lower():
+        score += 50
+    if q in entry["description"].lower():
+        score += 25
+    if any(q in tag.lower() for tag in entry["tags"]):
+        score += 10
+    return score
+
+
+def fetch_remote_catalog(url: str = REGISTRY_URL) -> list[dict[str, Any]]:
+    """Download the published registry (catalog.json) and return its skill entries."""
+    import urllib.error
+    import urllib.request
+
+    request = urllib.request.Request(url, headers={"User-Agent": "agent-skills-cli"})
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            payload = json_lib.loads(response.read().decode("utf-8"))
+    except (urllib.error.URLError, OSError, ValueError) as exc:
+        raise click.ClickException(f"registry unavailable ({url}): {exc}") from exc
+    entries = payload.get("skills") if isinstance(payload, dict) else payload
+    if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
+        raise click.ClickException(f"unexpected registry payload ({url})")
+    return entries
 
 
 def resolve_skills_dir(dir_value: str | None) -> str:
@@ -220,34 +251,44 @@ def quality(dir: str | None, json: str | None, top: int) -> None:
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--domain', help='Filter by domain')
 @click.option('--limit', type=int, default=10, help='Max results')
-def search(query: str, dir: str | None, domain: str | None, limit: int) -> None:
+@click.option('--remote', is_flag=True, help='Search the published online registry (catalog.json) instead of local files')
+def search(query: str, dir: str | None, domain: str | None, limit: int, remote: bool) -> None:
     """Search skills."""
     if not query.strip():
         raise click.ClickException("query must not be empty")
     if limit <= 0:
         raise click.ClickException("--limit must be > 0")
-    builder = CatalogBuilder(base=resolve_skills_dir(dir))
-    catalog = builder.build_catalog()
+    if remote:
+        entries: list[dict[str, Any]] = fetch_remote_catalog()
+    else:
+        builder = CatalogBuilder(base=resolve_skills_dir(dir))
+        catalog = builder.build_catalog()
+        entries = [
+            {
+                "name": s.name,
+                "description": s.description,
+                "category": s.category,
+                "tags": s.tags,
+                "languages": s.languages,
+                "path": s.path,
+            }
+            for s in catalog.skills
+        ]
 
     print(f"\n{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Search Results for: {query}{Style.RESET_ALL}")
+    if remote:
+        print(f"{Fore.CYAN}source: {REGISTRY_URL}{Style.RESET_ALL}")
     print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}\n")
 
     results = []
-    for skill in catalog.skills:
-        if domain and skill.category != domain:
+    for entry in entries:
+        score = score_entry(entry, query)
+        if score <= 0:
             continue
-
-        score = 0
-        if query.lower() in skill.name.lower():
-            score += 50
-        if query.lower() in skill.description.lower():
-            score += 25
-        if any(query.lower() in tag.lower() for tag in skill.tags):
-            score += 10
-
-        if score > 0:
-            results.append((skill, score))
+        if domain and entry["category"] != domain:
+            continue
+        results.append((entry, score))
 
     results.sort(key=lambda x: x[1], reverse=True)
 
@@ -256,9 +297,12 @@ def search(query: str, dir: str | None, domain: str | None, limit: int) -> None:
         return
 
     for i, (skill, _score) in enumerate(results[:limit], 1):
-        print(f"  {i}. {Fore.CYAN}{skill.name}{Style.RESET_ALL}")
-        print(f"     {skill.description[:60]}...")
-        print(f"      {skill.category} |  {', '.join(skill.languages)}")
+        print(f"  {i}. {Fore.CYAN}{skill['name']}{Style.RESET_ALL}")
+        print(f"     {skill['description'][:60]}...")
+        print(f"      {skill['category']} |  {', '.join(skill['languages'])}")
+        if remote:
+            skill_path = canonical_skill_path(Path(skill["path"]))
+            print(f"     {Fore.BLUE}{skill_path}{Style.RESET_ALL}")
         print()
 
 

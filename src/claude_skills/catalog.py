@@ -10,6 +10,18 @@ from typing import Any
 from claude_skills.models import Catalog, CatalogMetadata, Skill, parse_frontmatter
 
 
+def canonical_skill_path(path: Path) -> str:
+    """Путь скилла от корня библиотеки (".claude/skills/...").
+
+    Каталог публикуется как registry: пути не должны зависеть от того,
+    из какого каталога и на какой машине его сгенерировали.
+    """
+    pos = path.as_posix()
+    marker = ".claude/skills/"
+    idx = pos.find(marker)
+    return pos[idx:] if idx >= 0 else pos
+
+
 class CatalogBuilder:
     BASE = ".claude/skills"
 
@@ -95,7 +107,7 @@ class CatalogBuilder:
                     "tags": s.tags,
                     "models": s.models,
                     "version": s.version,
-                    "path": str(s.path.as_posix()),
+                    "path": canonical_skill_path(s.path),
                     "languages": s.languages,
                     "has_ru": s.has_ru,
                     "created": s.created or "",
