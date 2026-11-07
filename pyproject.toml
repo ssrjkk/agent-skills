@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agent-skills-library"
 version = "4.1.1"
-description = "103 curated bilingual (EN+RU) skills in the universal Agent Skills format for Claude Code, OpenCode, Cursor, Windsurf and every LLM/GLM agent. Python SDK + CLI with CI-enforced validation and quality scoring."
+description = "Curated bilingual (EN+RU) Agent Skills with an online registry, IT roadmaps and guides. Python SDK and CLI with CI-enforced validation and quality scoring."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

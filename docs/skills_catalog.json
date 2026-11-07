@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-11-06T21:00:05Z",
+    "generated_at": "2026-11-07T16:16:41Z",
     "total_skills": 120,
     "total_ru": 120,
     "domains": [
@@ -50,7 +50,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/agent-development/SKILL.md",
+      "path": ".claude/skills/ai/agent-development/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -79,7 +79,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/context-engineering/SKILL.md",
+      "path": ".claude/skills/ai/context-engineering/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -108,7 +108,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/embeddings/SKILL.md",
+      "path": ".claude/skills/ai/embeddings/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -133,7 +133,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/few-shot-learning/SKILL.md",
+      "path": ".claude/skills/ai/few-shot-learning/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -162,7 +162,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/function-calling/SKILL.md",
+      "path": ".claude/skills/ai/function-calling/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -192,7 +192,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/llm-evals/SKILL.md",
+      "path": ".claude/skills/ai/llm-evals/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -217,7 +217,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/llm-finetuning/SKILL.md",
+      "path": ".claude/skills/ai/llm-finetuning/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -246,7 +246,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/llm-guardrails/SKILL.md",
+      "path": ".claude/skills/ai/llm-guardrails/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -276,7 +276,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/mcp-servers/SKILL.md",
+      "path": ".claude/skills/ai/mcp-servers/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -306,7 +306,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/mlops/SKILL.md",
+      "path": ".claude/skills/ai/mlops/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -335,7 +335,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/multi-agent-orchestration/SKILL.md",
+      "path": ".claude/skills/ai/multi-agent-orchestration/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -365,7 +365,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/prompt-caching/SKILL.md",
+      "path": ".claude/skills/ai/prompt-caching/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -393,7 +393,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/prompt-engineering/SKILL.md",
+      "path": ".claude/skills/ai/prompt-engineering/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -423,7 +423,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/rag-pipeline/SKILL.md",
+      "path": ".claude/skills/ai/rag-pipeline/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -452,7 +452,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/ai/structured-output/SKILL.md",
+      "path": ".claude/skills/ai/structured-output/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -477,7 +477,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/deno-runtime/SKILL.md",
+      "path": ".claude/skills/backend/deno-runtime/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -508,7 +508,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/django/SKILL.md",
+      "path": ".claude/skills/backend/django/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -537,7 +537,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/dotnet/SKILL.md",
+      "path": ".claude/skills/backend/dotnet/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -567,7 +567,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/express/SKILL.md",
+      "path": ".claude/skills/backend/express/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -597,7 +597,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/fastapi/SKILL.md",
+      "path": ".claude/skills/backend/fastapi/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -627,7 +627,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/go-rest-api/SKILL.md",
+      "path": ".claude/skills/backend/go-rest-api/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -657,7 +657,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/graphql/SKILL.md",
+      "path": ".claude/skills/backend/graphql/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -687,7 +687,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/grpc/SKILL.md",
+      "path": ".claude/skills/backend/grpc/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -717,7 +717,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/laravel/SKILL.md",
+      "path": ".claude/skills/backend/laravel/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -742,7 +742,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/nestjs/SKILL.md",
+      "path": ".claude/skills/backend/nestjs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -772,7 +772,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/rest-api-design/SKILL.md",
+      "path": ".claude/skills/backend/rest-api-design/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -797,7 +797,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/rust-tokio/SKILL.md",
+      "path": ".claude/skills/backend/rust-tokio/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -827,7 +827,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/spring-boot/SKILL.md",
+      "path": ".claude/skills/backend/spring-boot/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -856,7 +856,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/backend/websockets/SKILL.md",
+      "path": ".claude/skills/backend/websockets/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -881,7 +881,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/blockchain/zk-proofs/SKILL.md",
+      "path": ".claude/skills/blockchain/zk-proofs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -911,7 +911,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/communications/humanize-copy-pro/SKILL.md",
+      "path": ".claude/skills/communications/humanize-copy-pro/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -941,7 +941,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/communications/no-slop-writing/SKILL.md",
+      "path": ".claude/skills/communications/no-slop-writing/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -971,7 +971,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/airflow/SKILL.md",
+      "path": ".claude/skills/data/airflow/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1001,7 +1001,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/apache-spark/SKILL.md",
+      "path": ".claude/skills/data/apache-spark/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1031,7 +1031,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/data-visualization/SKILL.md",
+      "path": ".claude/skills/data/data-visualization/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1061,7 +1061,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/dbt/SKILL.md",
+      "path": ".claude/skills/data/dbt/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1091,7 +1091,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/elasticsearch/SKILL.md",
+      "path": ".claude/skills/data/elasticsearch/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1121,7 +1121,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/pandas/SKILL.md",
+      "path": ".claude/skills/data/pandas/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1151,7 +1151,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/data/sql-querying/SKILL.md",
+      "path": ".claude/skills/data/sql-querying/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1180,7 +1180,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/clickhouse/SKILL.md",
+      "path": ".claude/skills/database/clickhouse/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1210,7 +1210,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/mongodb/SKILL.md",
+      "path": ".claude/skills/database/mongodb/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1240,7 +1240,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/mysql/SKILL.md",
+      "path": ".claude/skills/database/mysql/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1270,7 +1270,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/postgresql/SKILL.md",
+      "path": ".claude/skills/database/postgresql/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1295,7 +1295,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/prisma-orm/SKILL.md",
+      "path": ".claude/skills/database/prisma-orm/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1325,7 +1325,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/redis/SKILL.md",
+      "path": ".claude/skills/database/redis/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1354,7 +1354,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/sqlite/SKILL.md",
+      "path": ".claude/skills/database/sqlite/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1384,7 +1384,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/database/vector-databases/SKILL.md",
+      "path": ".claude/skills/database/vector-databases/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1415,7 +1415,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/design/design-spec-md/SKILL.md",
+      "path": ".claude/skills/design/design-spec-md/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1445,7 +1445,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/design/design-taste-direction/SKILL.md",
+      "path": ".claude/skills/design/design-taste-direction/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1476,7 +1476,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/design/diagram-as-code/SKILL.md",
+      "path": ".claude/skills/design/diagram-as-code/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1507,7 +1507,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/design/landing-page-pro/SKILL.md",
+      "path": ".claude/skills/design/landing-page-pro/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1537,7 +1537,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/design/ui-polish-audit/SKILL.md",
+      "path": ".claude/skills/design/ui-polish-audit/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1568,7 +1568,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/design/ui-ux-system-pro/SKILL.md",
+      "path": ".claude/skills/design/ui-ux-system-pro/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1593,7 +1593,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/desktop/electron/SKILL.md",
+      "path": ".claude/skills/desktop/electron/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1624,7 +1624,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/ai-gpu-infra-llmops/SKILL.md",
+      "path": ".claude/skills/devops/ai-gpu-infra-llmops/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1653,7 +1653,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/ansible/SKILL.md",
+      "path": ".claude/skills/devops/ansible/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1682,7 +1682,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/argocd/SKILL.md",
+      "path": ".claude/skills/devops/argocd/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1707,7 +1707,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/aws-lambda/SKILL.md",
+      "path": ".claude/skills/devops/aws-lambda/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1738,7 +1738,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/ci-cd-gitops-iac/SKILL.md",
+      "path": ".claude/skills/devops/ci-cd-gitops-iac/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1763,7 +1763,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/cloud-native-ai/SKILL.md",
+      "path": ".claude/skills/devops/cloud-native-ai/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1793,7 +1793,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/devops-sre-portal-architect/SKILL.md",
+      "path": ".claude/skills/devops/devops-sre-portal-architect/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1823,7 +1823,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/docker/SKILL.md",
+      "path": ".claude/skills/devops/docker/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1853,7 +1853,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/github-actions/SKILL.md",
+      "path": ".claude/skills/devops/github-actions/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1878,7 +1878,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/gitlab-ci/SKILL.md",
+      "path": ".claude/skills/devops/gitlab-ci/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1907,7 +1907,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/istio/SKILL.md",
+      "path": ".claude/skills/devops/istio/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1937,7 +1937,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/jenkins/SKILL.md",
+      "path": ".claude/skills/devops/jenkins/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1968,7 +1968,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/k8s-baremetal-multicluster/SKILL.md",
+      "path": ".claude/skills/devops/k8s-baremetal-multicluster/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -1998,7 +1998,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/kafka/SKILL.md",
+      "path": ".claude/skills/devops/kafka/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2028,7 +2028,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/kubernetes/SKILL.md",
+      "path": ".claude/skills/devops/kubernetes/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2058,7 +2058,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/linux-ebpf-troubleshooting/SKILL.md",
+      "path": ".claude/skills/devops/linux-ebpf-troubleshooting/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2087,7 +2087,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/loki/SKILL.md",
+      "path": ".claude/skills/devops/loki/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2116,7 +2116,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/nginx/SKILL.md",
+      "path": ".claude/skills/devops/nginx/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2142,7 +2142,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/observability-llm/SKILL.md",
+      "path": ".claude/skills/devops/observability-llm/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2173,7 +2173,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/observability-sre-highload/SKILL.md",
+      "path": ".claude/skills/devops/observability-sre-highload/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2198,7 +2198,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/platform-engineering/SKILL.md",
+      "path": ".claude/skills/devops/platform-engineering/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2228,7 +2228,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/prometheus-grafana/SKILL.md",
+      "path": ".claude/skills/devops/prometheus-grafana/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2254,7 +2254,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/serverless-ai/SKILL.md",
+      "path": ".claude/skills/devops/serverless-ai/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2280,7 +2280,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/sre-slos/SKILL.md",
+      "path": ".claude/skills/devops/sre-slos/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2310,7 +2310,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/devops/terraform/SKILL.md",
+      "path": ".claude/skills/devops/terraform/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2340,7 +2340,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/education/ai-coder-career-architect/SKILL.md",
+      "path": ".claude/skills/education/ai-coder-career-architect/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2370,7 +2370,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/education/explain-anything/SKILL.md",
+      "path": ".claude/skills/education/explain-anything/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2396,7 +2396,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/embedded/rust-embedded/SKILL.md",
+      "path": ".claude/skills/embedded/rust-embedded/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2421,7 +2421,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/ai-testing/SKILL.md",
+      "path": ".claude/skills/engineering/ai-testing/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2451,7 +2451,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/claude-code-commands/SKILL.md",
+      "path": ".claude/skills/engineering/claude-code-commands/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2479,7 +2479,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/clean-architecture/SKILL.md",
+      "path": ".claude/skills/engineering/clean-architecture/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2508,7 +2508,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/code-review/SKILL.md",
+      "path": ".claude/skills/engineering/code-review/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2539,7 +2539,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/git-workflow/SKILL.md",
+      "path": ".claude/skills/engineering/git-workflow/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2567,7 +2567,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/system-design/SKILL.md",
+      "path": ".claude/skills/engineering/system-design/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2596,7 +2596,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/engineering/test-driven-development/SKILL.md",
+      "path": ".claude/skills/engineering/test-driven-development/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2627,7 +2627,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/finance/algorithmic-trading/SKILL.md",
+      "path": ".claude/skills/finance/algorithmic-trading/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2658,7 +2658,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/finance/risk-modeling/SKILL.md",
+      "path": ".claude/skills/finance/risk-modeling/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2687,7 +2687,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/angular/SKILL.md",
+      "path": ".claude/skills/frontend/angular/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2716,7 +2716,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/astro/SKILL.md",
+      "path": ".claude/skills/frontend/astro/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2741,7 +2741,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/bun-runtime/SKILL.md",
+      "path": ".claude/skills/frontend/bun-runtime/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2771,7 +2771,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/catalog-photo-mapper/SKILL.md",
+      "path": ".claude/skills/frontend/catalog-photo-mapper/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2800,7 +2800,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/modern-css/SKILL.md",
+      "path": ".claude/skills/frontend/modern-css/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2829,7 +2829,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/nextjs/SKILL.md",
+      "path": ".claude/skills/frontend/nextjs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2858,7 +2858,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/react-19/SKILL.md",
+      "path": ".claude/skills/frontend/react-19/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2887,7 +2887,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/svelte/SKILL.md",
+      "path": ".claude/skills/frontend/svelte/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2912,7 +2912,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/tailwind-v4/SKILL.md",
+      "path": ".claude/skills/frontend/tailwind-v4/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2941,7 +2941,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/typescript/SKILL.md",
+      "path": ".claude/skills/frontend/typescript/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -2972,7 +2972,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/vibe-seo-audit/SKILL.md",
+      "path": ".claude/skills/frontend/vibe-seo-audit/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3002,7 +3002,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/vibe-shop-normalizer/SKILL.md",
+      "path": ".claude/skills/frontend/vibe-shop-normalizer/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3032,7 +3032,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/frontend/vue/SKILL.md",
+      "path": ".claude/skills/frontend/vue/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3063,7 +3063,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/gamedev/game-physics/SKILL.md",
+      "path": ".claude/skills/gamedev/game-physics/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3094,7 +3094,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/gamedev/unity-ecs/SKILL.md",
+      "path": ".claude/skills/gamedev/unity-ecs/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3125,7 +3125,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/healthcare/hipaa-compliance/SKILL.md",
+      "path": ".claude/skills/healthcare/hipaa-compliance/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3156,7 +3156,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/healthcare/hl7-fhir/SKILL.md",
+      "path": ".claude/skills/healthcare/hl7-fhir/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3186,7 +3186,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/media/frontend-slides-code/SKILL.md",
+      "path": ".claude/skills/media/frontend-slides-code/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3212,7 +3212,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/mobile/expo-rn/SKILL.md",
+      "path": ".claude/skills/mobile/expo-rn/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3243,7 +3243,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/mobile/flutter/SKILL.md",
+      "path": ".claude/skills/mobile/flutter/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3272,7 +3272,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/mobile/kotlin-android/SKILL.md",
+      "path": ".claude/skills/mobile/kotlin-android/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3302,7 +3302,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/mobile/swift-ios/SKILL.md",
+      "path": ".claude/skills/mobile/swift-ios/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3332,7 +3332,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/qa/browser-automation/SKILL.md",
+      "path": ".claude/skills/qa/browser-automation/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3362,7 +3362,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/qa/jest/SKILL.md",
+      "path": ".claude/skills/qa/jest/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3392,7 +3392,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/qa/pytest/SKILL.md",
+      "path": ".claude/skills/qa/pytest/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3420,7 +3420,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/security/api-security/SKILL.md",
+      "path": ".claude/skills/security/api-security/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3445,7 +3445,7 @@
         "opus"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/security/oauth2-jwt/SKILL.md",
+      "path": ".claude/skills/security/oauth2-jwt/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3476,7 +3476,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/security/owasp-web-security/SKILL.md",
+      "path": ".claude/skills/security/owasp-web-security/SKILL.md",
       "languages": [
         "en",
         "ru"
@@ -3505,7 +3505,7 @@
         "glm-5"
       ],
       "version": "1.0.0",
-      "path": "D:/skills/.claude/skills/security/secrets-management/SKILL.md",
+      "path": ".claude/skills/security/secrets-management/SKILL.md",
       "languages": [
         "en",
         "ru"

@@ -251,7 +251,7 @@ def quality(dir: str | None, json: str | None, top: int) -> None:
 @click.option('--dir', type=click.Path(), default=None, help=f'Skills dir (default: {DEFAULT_SKILLS})')
 @click.option('--domain', help='Filter by domain')
 @click.option('--limit', type=int, default=10, help='Max results')
-@click.option('--remote', is_flag=True, help='Search the published online registry (catalog.json) instead of local files')
+@click.option('--remote', is_flag=True, help='Search the published online registry (skills_catalog.json) instead of local files')
 def search(query: str, dir: str | None, domain: str | None, limit: int, remote: bool) -> None:
     """Search skills."""
     if not query.strip():

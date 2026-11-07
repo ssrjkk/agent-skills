@@ -104,9 +104,13 @@ jobs:
           total = data['metadata']['total_skills']
           skills_count = len(data['skills'])
           assert skills_count == total, f'Mismatch: {skills_count} vs {total}'
+          with open('docs/skills_catalog.json') as f:
+              published = json.load(f)
+          assert published == data, 'Published registry differs from generated catalog'
           missing = []
           for s in data['skills']:
               p = f'.claude/skills/{s[\"category\"]}/{s[\"name\"]}/SKILL.md'
+              assert s['path'] == p, f'Noncanonical path: {s[\"path\"]}'
               if not os.path.exists(p):
                   missing.append(p)
           if missing:
@@ -127,6 +131,12 @@ jobs:
           print(f'Validation benchmark: {elapsed:.2f}s')
           "
 
+      - name: Upload checked Pages artifact
+        if: github.ref == 'refs/heads/main' && vars.DEPLOY_PAGES == 'true' && matrix.python-version == '3.12'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: docs
+
   deploy-pages:
     if: github.ref == 'refs/heads/main' && vars.DEPLOY_PAGES == 'true'
     needs: validate
@@ -139,15 +149,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
-        with:
-          path: docs
 
       - name: Deploy to GitHub Pages
         id: deployment

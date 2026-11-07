@@ -55,7 +55,7 @@ Or clone directly into your agent's skills directory:
 
 ## What is this?
 
-103 production-grade, bilingual (English + Russian) skills following the
+Curated bilingual (English + Russian) skills following the
 **universal Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
@@ -74,6 +74,7 @@ pip install agent-skills-library
 # Explore the library (both `agent-skills` and `claude-skills` work)
 agent-skills stats          # Library statistics
 agent-skills search <query> # Search skills
+agent-skills search fastapi --remote # Search the published registry
 agent-skills validate       # Validate all skills (EN + RU)
 agent-skills quality        # Quality analysis
 agent-skills catalog        # Rebuild skills_catalog.json
@@ -354,6 +355,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 ## Links
 
 - [Live Catalog Site](https://ssrjkk.github.io/agent-skills/)
+- [Registry JSON](https://ssrjkk.github.io/agent-skills/skills_catalog.json)
 - [Telegram Bot](https://t.me/ssrjkk_bot)
 - [Architecture Guide](docs/ARCHITECTURE.md)
 - [Release Notes](docs/RELEASE_NOTES_v4.0.md)
@@ -363,7 +365,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 
 ## Why this library
 
-- **Curated, not generated** — 103 hand-reviewed skills that pass a 5-dimension
+- **Curated, not generated** — hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
 - **Universal Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No

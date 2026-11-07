@@ -10,6 +10,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import yaml
+
 from tests.load_scripts import load_script
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -168,3 +170,40 @@ def test_bad_track_status_detected(tmp_path: Path):
         p.write_text(json.dumps(data), encoding="utf-8")
     out = _broken(tmp_path, mutate)
     assert "bad status" in out
+
+
+def test_pages_artifact_comes_from_one_checked_matrix_build():
+    workflow = yaml.safe_load((ROOT / ".github" / "workflows" / "validate.yml").read_text(encoding="utf-8"))
+    validate = workflow["jobs"]["validate"]
+    steps = validate["steps"]
+    uploads = [step for step in steps if step.get("uses", "").startswith("actions/upload-pages-artifact@")]
+    assert len(uploads) == 1
+    upload = uploads[0]
+    assert upload["with"]["path"] == "docs"
+    assert "matrix.python-version == '3.12'" in upload["if"]
+    assert "github.ref == 'refs/heads/main'" in upload["if"]
+    assert "vars.DEPLOY_PAGES == 'true'" in upload["if"]
+    assert validate["strategy"]["matrix"]["python-version"].count("3.12") == 1
+    upload_index = steps.index(upload)
+    for name in (
+        "Generate catalog",
+        "Run tests with coverage",
+        "Build documentation site",
+        "Verify site consistency (links, CSS paths, search index)",
+        "Verify catalog consistency",
+    ):
+        gate = next(step for step in steps if step.get("name") == name)
+        assert steps.index(gate) < upload_index
+        assert not gate.get("continue-on-error", False)
+
+
+def test_pages_deploy_consumes_artifact_without_recreating_docs():
+    workflow = yaml.safe_load((ROOT / ".github" / "workflows" / "validate.yml").read_text(encoding="utf-8"))
+    deploy = workflow["jobs"]["deploy-pages"]
+    assert deploy["needs"] == "validate"
+    assert "github.ref == 'refs/heads/main'" in deploy["if"]
+    assert "vars.DEPLOY_PAGES == 'true'" in deploy["if"]
+    steps = deploy["steps"]
+    assert not any("run" in step for step in steps)
+    assert not any(step.get("uses", "").startswith(("actions/checkout@", "actions/upload-pages-artifact@")) for step in steps)
+    assert sum(step.get("uses", "").startswith("actions/deploy-pages@") for step in steps) == 1
