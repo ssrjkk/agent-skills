@@ -3,7 +3,7 @@ name: few-shot-learning
 description: "Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering. Use for task specification without fine-tuning."
 category: ai
 tags: [prompt, few-shot, examples, in-context-learning, llm]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

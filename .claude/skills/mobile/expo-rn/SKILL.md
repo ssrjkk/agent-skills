@@ -3,7 +3,7 @@ name: expo-rn
 description: "Ship iOS and Android from one codebase with Expo: native features, OTA updates, EAS build, and no native tooling setup. Use for cross-platform MVPs."
 category: mobile
 tags: [expo, react-native, mobile, ios, android, cross-platform]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

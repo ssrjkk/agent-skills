@@ -3,7 +3,7 @@ name: aws-lambda
 description: "Builds and deploys serverless functions with AWS Lambda, API Gateway, and SAM/CDK. Use for event-driven architectures."
 category: devops
 tags: [aws, lambda, serverless, api-gateway, sam]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

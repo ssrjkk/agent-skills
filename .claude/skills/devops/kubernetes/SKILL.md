@@ -43,7 +43,8 @@ kubectl get pods
 
 ### Networking & Security
 - Expose via Services (ClusterIP/NodePort/LoadBalancer)
-- Use Ingress for HTTP routing with TLS
+- Use Ingress for HTTP routing with TLS; for new L7-heavy setups prefer
+  the Gateway API (HTTPRoute) - the modern successor to Ingress
 - Apply RBAC with least privilege; use NetworkPolicies
 - Set resource quotas and limits per namespace
 

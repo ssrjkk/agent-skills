@@ -32,8 +32,8 @@ Mobile-first shoppers, low patience, possible screen readers.
 ```
 
 ```bash
-# validate the spec before building
-python scripts/check_spec.py docs/specs/checkout.md
+# validate the spec before building with your own repo's checker,
+# e.g.: python scripts/check_spec.py docs/specs/checkout.md
 ```
 
 ## When to Use

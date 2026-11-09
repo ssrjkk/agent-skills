@@ -3,7 +3,7 @@ name: tailwind-v4
 description: "Style with Tailwind CSS v4: smaller config, container queries, 3D transforms, and the v3 upgrade path. Use for utility-first responsive UIs."
 category: frontend
 tags: [tailwind, css, v4, design, styling]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

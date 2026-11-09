@@ -26,7 +26,8 @@ flowchart TD
 ```bash
 # render locally or paste into Mermaid Live
 npx @mermaid-js/mermaid-cli -i docs/arch.mmd -o docs/arch.svg
-python scripts/validate_mermaid.py docs/arch.mmd
+# optional: wire the render into your own validator,
+# e.g.: python scripts/validate_mermaid.py docs/arch.mmd
 ```
 
 ## When to Use

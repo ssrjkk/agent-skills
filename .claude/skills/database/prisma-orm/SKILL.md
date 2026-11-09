@@ -3,7 +3,7 @@ name: prisma-orm
 description: "Models databases and writes type-safe queries with Prisma ORM. Use for modern Node.js/TypeScript database access."
 category: database
 tags: [prisma, orm, database, typescript, postgresql]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

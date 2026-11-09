@@ -3,7 +3,7 @@ name: bun-runtime
 description: "Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling."
 category: frontend
 tags: [bun, javascript, typescript, runtime, bundler]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

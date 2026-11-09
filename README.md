@@ -113,7 +113,7 @@ Frontmatter is strictly validated for cross-agent portability in CI
 | Total skills | **120** |
 | Russian translations | **120 (100%)** |
 | Domains | **20** |
-| Quality score | **97.5% avg (min 97.0, measured 2026-11-09)** |
+| Quality score | **97.5% avg (min 97.0, measured 2026-11-10)** |
 | Test coverage | **93%** (CI gate: `--cov-fail-under=90`) |
 | License | MIT |
 

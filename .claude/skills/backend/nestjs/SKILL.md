@@ -3,7 +3,7 @@ name: nestjs
 description: "Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs."
 category: backend
 tags: [nestjs, nodejs, typescript, api, decorators]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

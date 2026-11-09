@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schema_version": "3.0",
-    "generated_at": "2026-11-09T18:10:05Z",
+    "generated_at": "2026-11-09T22:22:29Z",
     "total_skills": 120,
     "total_ru": 120,
     "domains": [
@@ -130,7 +130,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/ai/few-shot-learning/SKILL.md",
@@ -214,7 +217,11 @@
         "llm"
       ],
       "models": [
-        "opus"
+        "sonnet",
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/ai/llm-finetuning/SKILL.md",
@@ -474,7 +481,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/backend/deno-runtime/SKILL.md",
@@ -739,7 +749,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/backend/nestjs/SKILL.md",
@@ -794,7 +807,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/backend/rust-tokio/SKILL.md",
@@ -878,7 +894,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/blockchain/zk-proofs/SKILL.md",
@@ -1292,7 +1311,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/database/prisma-orm/SKILL.md",
@@ -1590,7 +1612,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/desktop/electron/SKILL.md",
@@ -1704,7 +1729,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/aws-lambda/SKILL.md",
@@ -1760,7 +1788,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/cloud-native-ai/SKILL.md",
@@ -1875,7 +1906,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/gitlab-ci/SKILL.md",
@@ -2139,7 +2173,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/observability-llm/SKILL.md",
@@ -2195,7 +2232,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/platform-engineering/SKILL.md",
@@ -2251,7 +2291,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/serverless-ai/SKILL.md",
@@ -2277,7 +2320,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/devops/sre-slos/SKILL.md",
@@ -2393,7 +2439,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/embedded/rust-embedded/SKILL.md",
@@ -2418,7 +2467,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/engineering/ai-testing/SKILL.md",
@@ -2738,7 +2790,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/frontend/bun-runtime/SKILL.md",
@@ -2909,7 +2964,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/frontend/tailwind-v4/SKILL.md",
@@ -3209,7 +3267,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/mobile/expo-rn/SKILL.md",
@@ -3442,7 +3503,10 @@
       ],
       "models": [
         "sonnet",
-        "opus"
+        "opus",
+        "gpt-6",
+        "gemini-3",
+        "glm-5"
       ],
       "version": "1.0.0",
       "path": ".claude/skills/security/oauth2-jwt/SKILL.md",

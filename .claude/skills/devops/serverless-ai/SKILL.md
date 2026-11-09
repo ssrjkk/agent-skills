@@ -3,7 +3,7 @@ name: serverless-ai
 description: "Serverless AI inference (Cloudflare Workers, Lambda)"
 category: devops
 tags: [serverless, ai, inference, cloudflare-workers, lambda, edge]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

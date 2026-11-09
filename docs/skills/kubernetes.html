@@ -59,7 +59,7 @@
           <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
           <span><span data-i18n="blocks">Code blocks</span> <strong>6</strong></span>
           <span><span data-i18n="sections">Sections</span> <strong>8</strong></span>
-          <span><span data-i18n="lines">Lines</span> <strong>150</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>151</strong></span>
           <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
         </div>
         <div class="skill-page-actions">
@@ -103,7 +103,10 @@ kubectl get pods</code></pre><button class="copy-btn code-copy" onclick="copyTex
 <h3>Networking &amp; Security</h3>
 <ul>
 <li>Expose via Services (ClusterIP/NodePort/LoadBalancer)</li>
-<li>Use Ingress for HTTP routing with TLS</li>
+<li>Use Ingress for HTTP routing with TLS; for new L7-heavy setups prefer</li>
+</ul>
+<p>the Gateway API (HTTPRoute) - the modern successor to Ingress</p>
+<ul>
 <li>Apply RBAC with least privilege; use NetworkPolicies</li>
 <li>Set resource quotas and limits per namespace</li>
 </ul>

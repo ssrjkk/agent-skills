@@ -3,7 +3,7 @@ name: rust-embedded
 description: "Write embedded firmware in Rust: ARM Cortex-M and RISC-V, no-std, HALs, and memory safety over C/C++. Use for IoT and safety-critical devices."
 category: embedded
 tags: [rust, embedded, microcontroller, no-std, arm, risc-v]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

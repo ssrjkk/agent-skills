@@ -3,7 +3,7 @@ name: oauth2-jwt
 description: "Implements OAuth 2.0 authentication and JWT-based authorization with refresh tokens. Use for secure API access."
 category: security
 tags: [oauth2, jwt, auth, security, authentication]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

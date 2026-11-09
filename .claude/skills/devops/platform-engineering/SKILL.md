@@ -3,7 +3,7 @@ name: platform-engineering
 description: "Platform engineering with Backstage/Port"
 category: devops
 tags: [platform-engineering, backstage, port, developer-portal, internal-developer-platform]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

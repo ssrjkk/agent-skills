@@ -3,7 +3,7 @@ name: ai-testing
 description: "AI-powered test generation and validation"
 category: engineering
 tags: [testing, ai, test-generation, quality, automation]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

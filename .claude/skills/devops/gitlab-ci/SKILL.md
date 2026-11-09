@@ -3,7 +3,7 @@ name: gitlab-ci
 description: "Configures GitLab CI/CD pipelines with stages, jobs, and GitLab Runner. Use for Git-native automation and deployment."
 category: devops
 tags: [gitlab, ci-cd, pipelines, runner, devops]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29
@@ -84,15 +84,22 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - local: /ci/deploy.gitlab-ci.yml
 
-deploy:
+build-push:
   stage: deploy
-  image: docker:24
-  services: [docker:24-dind]
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   only:
     - main
   script:
-    - docker build -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
+    # Rootless image build - no privileged docker:24-dind service needed,
+    # the executor runs inside an unprivileged container (Map 03 standard).
+    - /kaniko/executor
+      --context "$CI_PROJECT_DIR"
+      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+      --destination "$CI_REGISTRY_IMAGE:latest"
+      --cache=true
   environment: production
 ```
 

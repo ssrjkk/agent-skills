@@ -3,7 +3,7 @@ name: zk-proofs
 description: "Develop zero-knowledge proofs: private voting and identity, zk-rollups, verifiable computation, and compliance without exposing data. Use for privacy-preserving apps."
 category: blockchain
 tags: [zk-proofs, circom, snarkjs, cryptography, blockchain]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

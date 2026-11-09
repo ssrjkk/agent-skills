@@ -3,7 +3,7 @@ name: rust-tokio
 description: "Build async Rust services with Tokio: high-throughput networking, tasks, channels, timers, and testing. Use for chat, proxies, streaming, and data pipelines."
 category: backend
 tags: [rust, tokio, async, concurrency, runtime]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

@@ -3,7 +3,7 @@ name: electron
 description: "Builds cross-platform desktop applications with Electron, React, and IPC communication. Use for native desktop apps with web tech."
 category: desktop
 tags: [electron, desktop, react, native, cross-platform]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29

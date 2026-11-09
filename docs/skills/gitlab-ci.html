@@ -59,7 +59,7 @@
           <span><span data-i18n="quality">Quality</span> <strong>100%</strong></span>
           <span><span data-i18n="blocks">Code blocks</span> <strong>4</strong></span>
           <span><span data-i18n="sections">Sections</span> <strong>9</strong></span>
-          <span><span data-i18n="lines">Lines</span> <strong>116</strong></span>
+          <span><span data-i18n="lines">Lines</span> <strong>123</strong></span>
           <span><span data-i18n="ru_tr">RU translation</span> <strong>yes</strong></span>
         </div>
         <div class="skill-page-actions">
@@ -67,7 +67,7 @@
           <a class="btn-ghost" href="https://github.com/ssrjkk/agent-skills/tree/main/.claude/skills/devops/gitlab-ci" data-i18n="view_source">view source</a>
         </div>
       </div>
-      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span></div>
+      <div class="skill-page-models"><span data-i18n="models">Models:</span> <span class="model-badge">sonnet</span><span class="model-badge">opus</span><span class="model-badge">gpt-6</span><span class="model-badge">gemini-3</span><span class="model-badge">glm-5</span></div>
       <div class="page-nav"><a class="page-nav-link" href="github-actions.html">← github-actions</a><a class="page-nav-link" href="istio.html">istio →</a></div>
       <div class="lang-tabs" role="tablist" aria-label="Language"><button class="lang-tab active" data-slang="en" role="tab" onclick="showSkillLang('en')">EN</button><button class="lang-tab" data-slang="ru" role="tab" onclick="showSkillLang('ru')">РУ</button></div>
       <div class="skill-page-body" data-slang-body="en">
@@ -137,15 +137,22 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - local: /ci/deploy.gitlab-ci.yml
 
-deploy:
+build-push:
   stage: deploy
-  image: docker:24
-  services: [docker:24-dind]
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [&quot;&quot;]
   only:
     - main
   script:
-    - docker build -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
+    # Rootless image build - no privileged docker:24-dind service needed,
+    # the executor runs inside an unprivileged container (Map 03 standard).
+    - /kaniko/executor
+      --context &quot;$CI_PROJECT_DIR&quot;
+      --dockerfile &quot;$CI_PROJECT_DIR/Dockerfile&quot;
+      --destination &quot;$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA&quot;
+      --destination &quot;$CI_REGISTRY_IMAGE:latest&quot;
+      --cache=true
   environment: production</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
 <h2>Resources</h2>
 <ul>

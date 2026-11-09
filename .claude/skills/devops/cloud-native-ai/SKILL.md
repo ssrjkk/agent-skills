@@ -3,7 +3,7 @@ name: cloud-native-ai
 description: "Run production AI on cloud-native stacks: HA serving, multi-model infrastructure, ML canary deploys, and GPU scheduling. Use for ML platforms."
 category: devops
 tags: [cloud-native, ai, kubernetes, inference, deployment]
-models: [sonnet, opus]
+models: [sonnet, opus, gpt-6, gemini-3, glm-5]
 version: 1.0.0
 created: 2026-05-14
 updated: 2026-09-29
@@ -117,6 +117,7 @@ spec:
     - port: 8000
       targetPort: 8000
 ---
+# Gateway API (HTTPRoute) is the modern successor for L7 routing
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
