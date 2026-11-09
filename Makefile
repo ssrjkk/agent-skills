@@ -70,6 +70,8 @@ docs:
 
 sync-readme:
 	python scripts/sync_readme.py
+sync-npm:
+	python scripts/sync_npm.py
 
 check-readme:
 	python scripts/sync_readme.py --check

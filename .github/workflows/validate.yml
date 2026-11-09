@@ -99,6 +99,9 @@ jobs:
       - name: Verify site consistency (links, CSS paths, search index)
         run: python scripts/check_site_consistency.py
 
+      - name: npm catalog snapshot in sync
+        run: python scripts/sync_npm.py --check
+
       - name: Verify catalog consistency
         run: |
           python -c "

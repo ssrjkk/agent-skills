@@ -13,6 +13,7 @@ from typing import Any
 
 from tests.load_scripts import load_script
 
+NL = chr(10)
 
 def _load() -> Any:
     return load_script("sync_readme.py")
@@ -181,3 +182,36 @@ def test_main_writes_then_check_passes(tmp_path: Path, monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["sync_readme.py", "--check"])
     assert mod.main() == 0
     assert "in sync" in capsys.readouterr().out
+
+
+def test_quality_row_synced_from_report(tmp_path: Path):
+    mod = _load()
+    mod.ROOT = tmp_path
+    _tracks(tmp_path, ["live"])
+    (tmp_path / "quality-report.json").write_text(json.dumps({
+        "average": {"overall": 97.5},
+        "total_skills": 2,
+        "skills": [
+            {"name": "alpha", "score": 98.2},
+            {"name": "beta", "score": 96.8},
+        ],
+    }), encoding="utf-8")
+    readme = _readme().replace(
+        "| Domains | **1** |",
+        "| Domains | **1** |" + NL + "| Quality score | **97.1% avg (min 97.0, measured 2026-10-30)** |",
+    )
+    out = mod.render(readme, json.loads(_catalog(tmp_path).read_text(encoding="utf-8")))
+    assert "avg (min 96.8, measured" in out
+    assert "97.1% avg" not in out
+
+
+def test_quality_row_untouched_without_report(tmp_path: Path):
+    mod = _load()
+    mod.ROOT = tmp_path
+    _tracks(tmp_path, ["live"])
+    readme = _readme().replace(
+        "| Domains | **1** |",
+        "| Domains | **1** |" + NL + "| Quality score | **97.1% avg (min 97.0, measured 2026-10-30)** |",
+    )
+    out = mod.render(readme, json.loads(_catalog(tmp_path).read_text(encoding="utf-8")))
+    assert "| Quality score | **97.1% avg (min 97.0, measured 2026-10-30)** |" in out

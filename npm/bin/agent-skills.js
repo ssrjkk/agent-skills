@@ -8,8 +8,13 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const SKILLS_SOURCE = path.join(__dirname, '..', 'skills');
 const CATALOG_PATH = path.join(__dirname, '..', 'skills_catalog.json');
+// The npm tarball ships the catalog, not every skill file; when the
+// skills/ directory is absent, fall back to a shallow clone of the repo.
+let SKILLS_SOURCE = path.join(__dirname, '..', 'skills');
+if (!fs.existsSync(SKILLS_SOURCE)) {
+  SKILLS_SOURCE = null;
+}
 
 function getTargetDir(agent) {
   const home = os.homedir();

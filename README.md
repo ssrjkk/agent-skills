@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
   <img src="https://img.shields.io/badge/domains-20-orange?style=for-the-badge" alt="Domains">
   <img src="https://img.shields.io/badge/quality-97.5%25-brightgreen?style=for-the-badge" alt="Quality">
-  <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=for-the-badge" alt="Coverage">
+  <img src="https://img.shields.io/badge/coverage-93%25-brightgreen?style=for-the-badge" alt="Coverage">
   <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
   <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
   <img src="https://img.shields.io/github/stars/ssrjkk/agent-skills?style=for-the-badge&color=gold" alt="Stars">
@@ -113,12 +113,12 @@ Frontmatter is strictly validated for cross-agent portability in CI
 | Total skills | **120** |
 | Russian translations | **120 (100%)** |
 | Domains | **20** |
-| Quality score | **97.1% avg (min 97.0, measured 2026-10-30)** |
-| Test coverage | **100%** |
+| Quality score | **97.5% avg (min 97.0, measured 2026-11-09)** |
+| Test coverage | **93%** (CI gate: `--cov-fail-under=90`) |
 | License | MIT |
 
 Only skills that pass validation with zero errors and zero warnings are
-kept in `main`. Everything else is archived under the `v1.0-legacy` tag.
+kept on `main` — the catalog is rebuilt and re-verified on every change.
 
 ## Skills by domain
 
