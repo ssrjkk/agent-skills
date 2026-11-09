@@ -617,7 +617,7 @@ class TestGuidesPortal:
     def test_guides_overview_groups_tiers(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         overview = (docs / "guides.html").read_text(encoding="utf-8")
-        assert "Handbooks &amp; Digests" in overview
+        assert "Handbook &amp; Index" in overview
         assert "Vibe-Coding &amp; Portal · Maps 21–23" in overview
         assert 'href="guides/22_Vibe_Map.html"' in overview
 
@@ -676,7 +676,7 @@ class TestPortalTabs:
         assert 'id="guide-search"' in index
         assert "filterGuides" in index
         assert 'href="guides/21_Linux_Map.html"' in index
-        assert "Handbooks &amp; Digests" in index
+        assert "Handbook &amp; Index" in index
         assert "data-title=" in index
 
     def test_hero_glass_chips(self, tmp_path: Path):
