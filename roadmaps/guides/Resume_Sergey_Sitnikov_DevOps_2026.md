@@ -32,7 +32,6 @@
 - **Harvest v2.3.0** — асинхронный движок параллельного исполнения в EVM-сетях: кастомный workpool на aiohttp, анти-сибил поведенческая симуляция, sliding-window ротация RPC-нод без просадок RPS.
 
 ### AI / ML, Агентные системы & Formal Verification
-- **Wake Up** — десктопный real-time AI-суфлёр: C++/Win32 лаунчер (MinGW, windres), стеклянный оверлей на Electron/Node 24 с честной альфа-прозрачностью и `WDA_EXCLUDEFROMCAPTURE`, двухрежимный захват звука (микрофонный VAD + перехват через VB-Cable), STT **OpenAI Whisper / Groq**, стриминг **Llama-3.3-70B** по SSE; **184 теста** node:test (≥98% line coverage) + **57 тестов** pytest (100% branch coverage).
 - **agent-skills** — этот портал: **120 двуязычных (EN/RU) скиллов**, 20 доменов, **326 автотестов** (юнит / property-based / e2e), **93% покрытия** с жёстким CI-гейтом `--cov-fail-under=90`, гейты ruff/mypy/CodeQL, Python SDK + CLI в PyPI, GitHub Action, статический сайт с 25 полнотекстовыми мапами.
 - **raven** — высоконагруженные RAG-микросервисы, MCP-сервер и мониторинг на Go, Python 3.12 и PostgreSQL.
 - **noema** — автономный AI-агент с **формальной верификацией** решений через SMT-решатель **Z3**.
@@ -52,7 +51,7 @@
 ## Ключевые технические навыки
 - **Языки:** Python 3.12, Go, C++20, Rust, TypeScript/JavaScript (Node.js 24, Electron), Solidity, SQL.
 - **Backend & Архитектура:** FastAPI, aiohttp, Go-микросервисы, tRPC, Prisma 7, REST/gRPC/WebSockets/SSE, PostgreSQL, Redis, Kafka, SQLite (включая WASM), DDD/BDD/CQRS, интеграция **1С:УНФ 3.0**.
-- **AI / ML & Audio DSP:** мультиагентные пайплайны, RAG (Go/Python), MCP, роутинг 9+ LLM (DeepSeek, GLM, Claude, GPT, Gemini, Groq/Llama-3.3-70B), vLLM, потоковый STT Whisper (VAD, VB-Cable, 16kHz PCM), формальная верификация через **Z3**.
+- **AI / ML:** мультиагентные пайплайны, RAG (Go/Python), MCP, роутинг 9+ LLM (DeepSeek, GLM, Claude, GPT, Gemini, Groq), vLLM, формальная верификация через **Z3**.
 - **Web3 & Криптография:** fhEVM/FHEWasm (гомоморфное шифрование), **ZK-STARK**, VRF-контракты, ERC-4337, Paymaster, EAS, x402, перп-DEX и L2 (Base, Lighter, Hyperliquid).
 - **Инфраструктура, SRE & QA:** Docker, Kubernetes, Cilium (eBPF), Talos Linux, GitHub Actions, GitLab CI, ArgoCD, Chaos Engineering, Locust, Playwright, Pytest, Appium, node:test, Allure, Grafana, Kibana, ASan/TSan, clang-tidy, Ruff, mypy, CodeQL, Trivy, gitleaks.
 
