@@ -23,7 +23,7 @@
 17. **`17_BareMetal_K8s_Talos_and_Cilium_BGP_Map.md`** — Современный Bare-Metal и On-Premise Kubernetes: неизменяемая ОС **Talos Linux**, анонсы IP-адресов по **BGP в Cilium**, распределенные хранилища **Rook-Ceph / Longhorn / TopoLVM**.
 18. **`18_MultiCluster_Federation_and_Global_Traffic_Map.md`** *(Новое в v9!)* — Мульти-кластерная архитектура: **Cilium Cluster Mesh**, **vCluster** (виртуальные кластеры для PR-окружений), **Cluster API (CAPI)** и глобальная балансировка трафика (**GSLB / ExternalDNS**).
 19. **`19_Data_Streaming_Kafka_ClickHouse_and_Lakehouse_Map.md`** *(Новое в v9!)* — Эксплуатация аналитических и стриминговых платформ в K8s: **ClickHouse** (Altinity Operator, шардирование, ClickHouse Keeper), **Apache Kafka в режиме KRaft** (без ZooKeeper, Strimzi) и **MinIO / Ceph RGW**.
-20. **`20_HandsOn_Troubleshooting_Simulator_Guide.md`** *(Новое в v9!)* — Практический тренажер инженера: 5 сценариев намеренно сломанной инфраструктуры с пошаговой методикой расследования.
+20. **`20_HandsOn_Troubleshooting_Simulator_Guide.md`** *(Новое в v9!)* — Практический тренажер инженера: 4 сценария намеренно сломанной инфраструктуры с пошаговой методикой расследования и автопроверкой.
 
 ### Новые боевые комплекты манифестов в v9:
 - **`baremetal_and_ha_db_pack/`** — Полный комплект манифестов для Bare-Metal и отказоустойчивых баз:
