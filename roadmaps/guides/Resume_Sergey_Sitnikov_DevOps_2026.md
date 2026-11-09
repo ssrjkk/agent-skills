@@ -1,61 +1,65 @@
 # Ситников Сергей Алексеевич
-**DevOps / Platform / Infrastructure Engineer**
-📍 Санкт-Петербург (Полная занятость / Гибрид / Удаленно)
-📞 8 (900) 313-24-87
+**Senior Fullstack & Systems Engineer · AI/ML & Autonomous Agents · DevOps/SRE**
+📍 Санкт-Петербург · Полная занятость / Гибрид / Удалённо · Релокация: Москва, Кипр, Сербия, Беларусь, Латвия
+📞 8 (900) 313-24-87 · ✉️ ray013lefe@gmail.com · 💬 Telegram: @ssrjkk · 🐙 github.com/ssrjkk · 🌐 ssrjkk.github.io
+**Оформление:** ТК РФ или B2B (действующее ИП с октября 2026)
 
 ---
 
 ## Профиль
-Инженер с выраженным аналитическим и структурным подходом к решению сложных инфраструктурных и архитектурных задач. Специализируюсь на контейнеризации, автоматизации CI/CD пайплайнов, построении надежной облачной и Kubernetes-инфраструктуры (IaC, GitOps, Observability) и обеспечении качества мультимодульных программных систем. Веду открытую инженерную экосистему с полным жизненным циклом: код → тесты → CI-гейты → деплой → наблюдаемость.
+5,5 года в разработке и автоматизации. **23 open-source и коммерческих репозитория**, **9 опубликованных пакетов** (PyPI / GHCR / NPM), **1 600+ автотестов** в своих проектах, **1 800+ контрибуций** за год. Последние 2 года 9 месяцев — Senior QA Automation / SDET в amoCRM параллельно с собственной инженерной практикой: 23 системы, доведённые до продакшена, на Python, Go, C++20, Rust и TypeScript — с жёстким CI, санитайзерами памяти и покрытием до 98–100%.
 
 ---
 
-## Ключевые технические навыки (Hard Skills)
-- **Контейнеризация и Оркестрация:** Docker (multi-stage, distroless, BuildKit, Docker Compose), containerd, Kubernetes (Deployment, StatefulSet, Probes, HPA, PDB, RBAC, NetworkPolicy, Gateway API), Helm, Kustomize.
-- **CI/CD и GitOps:** GitHub Actions, GitLab CI (Kaniko, кэширование, матричные сборки), ArgoCD (App of Apps, ApplicationSet), Argo Rollouts.
-- **Инфраструктура как код (IaC):** Terraform / OpenTofu (Remote State, модули), Terragrunt, Ansible (плейбуки харденинга, роли), Crossplane.
-- **Наблюдаемость (Observability):** Prometheus, VictoriaMetrics (PromQL), Grafana (RED/USE дашборды), Grafana Loki, Vector, Alertmanager, OpenTelemetry.
-- **Безопасность (DevSecOps):** HashiCorp Vault, External Secrets Operator, Trivy (сканирование образов и IaC), Gitleaks, Hadolint, Kyverno (Policy-as-Code).
-- **Linux и Сети:** Linux Internals (cgroups v2, namespaces, systemd, sysctl тюнинг, lsof/iostat/vmstat/eBPF), стек TCP/IP, DNS, TLS/mTLS, Nginx, Envoy, балансировка нагрузки.
-- **Программирование и СУБД:** Go (Golang), TypeScript/Node.js, Python, Bash (`set -euo pipefail`), PostgreSQL (Patroni/CloudNativePG, PgBouncer), Redis / Valkey.
+## Коммерческий опыт
+
+### amoCRM — Senior QA Automation / SDET (инженерная инфраструктура качества)
+*январь 2024 — сентябрь 2026 (2 года 9 месяцев)*
+- Ускорил полный регресс **в 8 раз** (с 4 часов до 30 минут).
+- Повысил покрытие на **30%**: **100+ API-тестов** (pytest) и **170+ UI-тестов** (Playwright, Selenium, Page Object).
+- Тестировал **DDD/BDD и CQRS-инварианты**, асинхронные пайплайны **Apache Kafka** (Eventual Consistency) в Kubernetes.
+- Настроил инженерную инфраструктуру: **GitHub Actions, Docker, Kubernetes, Locust, Kibana, Grafana**.
 
 ---
 
-## Инженерный опыт и проекты
+## Инженерная практика (параллельно, с апреля 2021)
+Как фулстек и системный инженер создал и вывел в продакшн **23 системы**. Избранные проекты по кластерам:
 
-### Мейнтейнер экосистемы agent-skills — библиотека AI-скиллов и портал обучения
-*Open Source, единоличный архитектор и инженер (2026)*
-- Выстроил библиотеку из **120 production-grade скиллов** в универсальном Agent Skills формате (EN + RU, 20 доменов) с автоматическими валидаторами качества и интероперабельности между агентами (Claude Code, OpenCode, Cursor, Windsurf).
-- Спроектировал **CI-конвейер с тремя уровнями гейтов**: статический анализ (ruff, mypy — 0 замечаний), **318 автотестов** (юнит / property-based на Hypothesis / e2e-сборка / интеграционные), безопасность (CodeQL) — покрытие тестами **95%**, порог качества зашит в Makefile (`--cov-fail-under=90`).
-- Собрал **статический портал на GitHub Pages**: вкладки-секции (каталог, роадмапы, библиотека мап), клиентский поиск, двуязычный интерфейс (EN/RU) с автоопределением языка, SEO (sitemap, JSON-LD, Open Graph) и автоматическим деплоем из main.
-- Доведил до продакшена **27 полнотекстовых учебных мап** (DevOps, SRE, Platform Engineering, AI-Infra) с рендерингом markdown → HTML, кросс-ссылками трек ↔ мапа ↔ скилл и проверкой консистентности сайта в CI.
+### Криптография, Web3 & Confidential ML
+- **Shroud** — FHE-Appchain для приватного обучения ML-моделей: Rust-ноды, клиентское шифрование **FHEWasm**, контракты **Solidity (fhEVM)**, доказательства целостности **ZK-STARK**, пороговое дешифрование, VRF-комитет разрешения споров, полная Threat Model.
+- **Tippy on Base** — некастодиальная ончейн-экономика: **ERC-4337** Account Abstraction, Paymaster (gasless USDC), ончейн-аттестация действий ИИ через **EAS**, протокол **x402** для M2M-платежей, MCP, **782 автотеста**.
+- **Wake** — торговый терминал для zk-perp DEX Lighter: FastAPI + React + Telegram Mini App, LMSR-рынки предсказаний, копи-трейдинг, funding-арбитраж, **270+ автотестов**; реальный опыт с Hyperliquid (топ-32k глобального лидерборда).
+- **Harvest v2.3.0** — асинхронный движок параллельного исполнения в EVM-сетях: кастомный workpool на aiohttp, анти-сибил поведенческая симуляция, sliding-window ротация RPC-нод без просадок RPS.
 
-### Инженер по автоматизации сборки и тестирования — Проект «Shroud» (мультимодульная инфраструктурная и криптографическая платформа)
-*2025 — 2026*
-- Выстроил модульную архитектуру репозитория и автоматизировал прогон тестовых конвейеров в 4 ключевых пакетах системы, доведя общее покрытие до **320+ автотестов**:
-  - `packages/contracts`: расширил и стабилизировал тестовый набор до **102 успешных тестов** (`npm test`).
-  - `node`: реализовал и отладил **~165 модульных и интеграционных тестов** (`#[test]`-атрибутов) ядерного модуля.
-  - `sdk` и `bot`: обеспечил покрытие клиентского SDK (**32 теста**) и сервисного бота (**22 теста**).
-- Настроил воспроизводимую среду сборки и строгий контроль регрессий перед слиянием веток.
+### AI / ML, Агентные системы & Formal Verification
+- **Wake Up** — десктопный real-time AI-суфлёр: C++/Win32 лаунчер (MinGW, windres), стеклянный оверлей на Electron/Node 24 с честной альфа-прозрачностью и `WDA_EXCLUDEFROMCAPTURE`, двухрежимный захват звука (микрофонный VAD + перехват через VB-Cable), STT **OpenAI Whisper / Groq**, стриминг **Llama-3.3-70B** по SSE; **184 теста** node:test (≥98% line coverage) + **57 тестов** pytest (100% branch coverage).
+- **agent-skills** — этот портал: **120 двуязычных (EN/RU) скиллов**, 20 доменов, **318+ тестов** (юнит / property-based / e2e), **95% покрытия**, CI-гейты (ruff, mypy, CodeQL), Python SDK + CLI в PyPI, GitHub Action, статический сайт с 27 полнотекстовыми мапами.
+- **raven** — высоконагруженные RAG-микросервисы, MCP-сервер и мониторинг на Go, Python 3.12 и PostgreSQL.
+- **noema** — автономный AI-агент с **формальной верификацией** решений через SMT-решатель **Z3**.
+- **drafter** — Zero-Backend браузерный AI QA-комбайн (SQLite в WASM, роутинг 9+ LLM-провайдеров).
 
-### DevOps / SRE архитектор — Production-Grade Cloud-Native & GitOps платформа (сквозной инфраструктурный стенд)
-*2026*
-- Разработал микросервис на **Go 1.23** со структурированным JSON-логированием (`slog`), сквозной трассировкой (`X-Trace-Id`), разделением проб `/healthz` и `/readyz` (с проверкой TCP-коннектов к PostgreSQL и Redis) и корректным **Graceful Shutdown** по `SIGTERM`.
-- Упаковал сервис в защищенный multi-stage образ на базе `gcr.io/distroless/static-debian12:nonroot` (размер образа < 25 МБ, `readOnlyRootFilesystem`, сброс всех Linux capabilities).
-- Реализовал конвейер CI/CD (**GitHub Actions / GitLab CI**) с автоматическим поиском утечек секретов (**Gitleaks**), линтингом (**Hadolint**) и блокировкой сборки при обнаружении CRITICAL-уязвимостей в **Trivy**.
-- Спроектировал GitOps-доставку через **ArgoCD (`ApplicationSet`)** и прогрессивный Canary-деплой (**Argo Rollouts**) с автоматическим откатом по метрикам ошибок в Prometheus, а также внедрил Zero-Trust сетевые политики (`NetworkPolicy`) и правила **Kyverno**.
-- Развернул полный стек наблюдаемости (**Prometheus + Grafana + Loki + Vector + Alertmanager**) и провел нагрузочное тестирование с помощью **Grafana k6** для валидации SLO (`p95 < 150ms`).
+### Системное программирование & QA/SRE-платформы
+- **Volley / cppload-pro** — движки нагрузочного тестирования на **C++20** (Boost.Beast/ASIO, двусторонний mTLS, Python SDK через pybind11, ASan/TSan, clang-tidy).
+- **bothive** — оркестрация AI-воркеров и ботов (Telegram, Twitch, YouTube, X) на Node.js: RBAC, Circuit Breaker, SLO, Trivy, **Chaos Engineering в CI**.
+- **Qualix / QA-Arsenal / QA-Helper / AmoCRM-Tests / Mobius** — платформы API/UI/Mobile-тестирования (Playwright, Locust, Appium, Allure, Quality Gates, Nightly Builds).
+
+### Корпоративные SaaS & E-Commerce
+- **Verso / Corvid CMS / Corvid CRM** — модульная Headless CMS на TypeScript, **Prisma 7** и **tRPC**: визуальный конструктор блоков, ревизии, API-ключи, SEO-инспектор, вебхук-синхронизация с CRM.
+- **Shopwatch / Our-Jamon** — коммерческие E-Commerce платформы: Zero-CLS витрины, маппинг каталогов без коллизий, весовой/штучный расчёт, Telegram-боты, интеграция с **1С:УНФ 3.0**.
 
 ---
 
-## Инфраструктурные лаборатории (публичные артефакты)
-- **Chaos Drill** — лаборатория отказоустойчивости: `break-my-cluster.yaml` поднимает 4 сценария реальных отказов Kubernetes (OOMKilled, CrashLoopBackOff, NetworkPolicy blackhole, вытеснение подов), `verify-fixes.sh` автоматически верифицирует починку.
-- **Bare-Metal Kubernetes** — кластер на Talos Linux с Cilium eBPF/BGP-пирингом, патчи control-plane, HA-конфигурация.
-- **Stateful-стек** — CloudNativePG HA-кластер PostgreSQL и Kafka в режиме KRaft (Strimzi) с критериями готовности.
-- **AI/GPU инфраструктура** — сервинг LLM в K8s (vLLM + NVIDIA GPU Operator), AI Gateway на Envoy + LiteLLM.
+## Ключевые технические навыки
+- **Языки:** Python 3.12, Go, C++20, Rust, TypeScript/JavaScript (Node.js 24, Electron), Solidity, SQL.
+- **Backend & Архитектура:** FastAPI, aiohttp, Go-микросервисы, tRPC, Prisma 7, REST/gRPC/WebSockets/SSE, PostgreSQL, Redis, Kafka, SQLite (включая WASM), DDD/BDD/CQRS, интеграция **1С:УНФ 3.0**.
+- **AI / ML & Audio DSP:** мультиагентные пайплайны, RAG (Go/Python), MCP, роутинг 9+ LLM (DeepSeek, GLM, Claude, GPT, Gemini, Groq/Llama-3.3-70B), vLLM, потоковый STT Whisper (VAD, VB-Cable, 16kHz PCM), формальная верификация через **Z3**.
+- **Web3 & Криптография:** fhEVM/FHEWasm (гомоморфное шифрование), **ZK-STARK**, VRF-контракты, ERC-4337, Paymaster, EAS, x402, перп-DEX и L2 (Base, Lighter, Hyperliquid).
+- **Инфраструктура, SRE & QA:** Docker, Kubernetes, Cilium (eBPF), Talos Linux, GitHub Actions, GitLab CI, ArgoCD, Chaos Engineering, Locust, Playwright, Pytest, Appium, node:test, Allure, Grafana, Kibana, ASan/TSan, clang-tidy, Ruff, mypy, CodeQL, Trivy, gitleaks.
 
 ---
 
 ## Образование
-**Санкт-Петербургский государственный университет аэрокосмического приборостроения (ГУАП)**, Санкт-Петербург
-- Направление: **Прикладная информатика** (поступление: сентябрь 2024 г.)
+**ГУАП** (Санкт-Петербург) — Прикладная информатика, гр. 4411з, заочное отделение (ИНДО), выпуск 2028 — график полностью совместим с full-time занятостью.
+**SHIFT Project** — курс Machine Learning (2026).
+Расчётные работы (2026): системный анализ и теория надёжности — деревья неисправностей (FTA), графы Герца, матрицы инцидентности/контуров в NetworkX, схемы резервирования вычислителей.
+**Английский:** B2 (160+ дней ежедневной практики).
