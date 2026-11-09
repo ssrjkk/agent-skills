@@ -17,6 +17,10 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     strategy:
       fail-fast: false # one Python version failing must not hide the rest
       matrix:
