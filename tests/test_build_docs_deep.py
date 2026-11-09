@@ -85,7 +85,7 @@ class TestHelpers:
     def test_load_guides_real_repo_sorted(self):
         mod = _load()
         guides = mod.load_guides(ROOT)
-        assert len(guides) == 27
+        assert len(guides) == 25
         assert guides[0]["slug"].startswith("00_")
         assert guides[-1]["slug"].startswith("Resume_")
         numbers = [g["number"] for g in guides if g["number"]]
@@ -157,7 +157,7 @@ class TestEntrypointAndSeo:
 
         # main() is the repo entrypoint: it reads roadmaps/ and
         # roadmaps/guides/ from the repository root by design, so the tmp
-        # build asserts against the real 20 tracks and 27 guides.
+        # build asserts against the real 20 tracks and 25 guides.
         mod = _load()
         out = tmp_path / "docs"
         monkeypatch.setattr(sys, "argv", [
@@ -165,7 +165,7 @@ class TestEntrypointAndSeo:
         ])
         assert mod.main() == 0
         assert (out / "guides" / "01_Linux_and_Networking_Map.html").exists()
-        assert len(list((out / "guides").glob("*.html"))) == 27
+        assert len(list((out / "guides").glob("*.html"))) == 25
         assert (out / "skills_catalog.json").exists()  # copied byte-exact
         assert (out / "roadmaps" / "devops.html").exists()
 
@@ -209,7 +209,7 @@ class TestRealRepoPortalSmoke:
         tracks = list((out / "roadmaps").glob("*.html"))
         guides = list((out / "guides").glob("*.html"))
         assert len(tracks) == 20
-        assert len(guides) == 27
+        assert len(guides) == 25
 
         index = (out / "index.html").read_text(encoding="utf-8")
         assert 'class="live-dot">live</span>' in index

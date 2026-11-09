@@ -7,7 +7,7 @@
   Windsurf, and every Agent Skills-compatible agent.
 - Python SDK + CLI (with remote registry search `search --remote`), GitHub
   Action, PyPI + npm packages, JSON Schema validation, quality gates.
-- Tabbed portal site: skills catalog, **20/20 live roadmap tracks**, **27
+- Tabbed portal site: skills catalog, **20/20 live roadmap tracks**, **25
   full-text maps library**, bilingual UI (EN/RU), search, honest live-status
   badges, sitemap + JSON-LD.
 - Test suite: **326 tests** (unit / property-based / e2e site builds), **93%
@@ -30,7 +30,7 @@
 - [x] `agent-skills install <skill>` targeted single-skill install
 - [x] Docs site: search, filters, install snippets, tabs, live roadmap
       explorer and the full-text maps library
-- [x] Roadmaps portal: 20 live bilingual tracks + 27 full-text maps
+- [x] Roadmaps portal: 20 live bilingual tracks + 25 full-text maps
 - [x] In-process test coverage of every CI gate script (67% → 93%)
 
 ## Planned
