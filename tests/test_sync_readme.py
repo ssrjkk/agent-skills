@@ -201,7 +201,7 @@ def test_quality_row_synced_from_report(tmp_path: Path):
         "| Domains | **1** |" + NL + "| Quality score | **97.1% avg (min 97.0, measured 2026-10-30)** |",
     )
     out = mod.render(readme, json.loads(_catalog(tmp_path).read_text(encoding="utf-8")))
-    assert "avg (min 96.8, measured" in out
+    assert "**97.5% avg (min 96.8)** |" in out
     assert "97.1% avg" not in out
 
 
