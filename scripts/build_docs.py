@@ -84,7 +84,7 @@ GUIDES_SUBDIR = "guides"
 # group into tiers; 00_* handbooks and the resume/career files stand apart.
 # (tier key, EN label, RU label)
 GUIDE_TIERS: list[tuple[str, str, str]] = [
-    ("meta", "Handbooks & Digests", "Справочники и дайджесты"),
+    ("meta", "Handbook & Index", "Справочник и указатель"),
     ("foundation", "Foundation · Maps 01–03", "Фундамент · мапы 01–03"),
     ("cloud", "Cloud-Native & SRE · Maps 04–13", "Cloud-Native и SRE · мапы 04–13"),
     ("principal", "Principal & AI-Infra · Maps 14–20", "Principal и AI-Infra · мапы 14–20"),
