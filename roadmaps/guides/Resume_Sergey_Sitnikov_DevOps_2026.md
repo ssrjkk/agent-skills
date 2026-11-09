@@ -33,7 +33,7 @@
 
 ### AI / ML, Агентные системы & Formal Verification
 - **Wake Up** — десктопный real-time AI-суфлёр: C++/Win32 лаунчер (MinGW, windres), стеклянный оверлей на Electron/Node 24 с честной альфа-прозрачностью и `WDA_EXCLUDEFROMCAPTURE`, двухрежимный захват звука (микрофонный VAD + перехват через VB-Cable), STT **OpenAI Whisper / Groq**, стриминг **Llama-3.3-70B** по SSE; **184 теста** node:test (≥98% line coverage) + **57 тестов** pytest (100% branch coverage).
-- **agent-skills** — этот портал: **120 двуязычных (EN/RU) скиллов**, 20 доменов, **318+ тестов** (юнит / property-based / e2e), **95% покрытия**, CI-гейты (ruff, mypy, CodeQL), Python SDK + CLI в PyPI, GitHub Action, статический сайт с 27 полнотекстовыми мапами.
+- **agent-skills** — этот портал: **120 двуязычных (EN/RU) скиллов**, 20 доменов, **326 автотестов** (юнит / property-based / e2e), **93% покрытия** с жёстким CI-гейтом `--cov-fail-under=90`, гейты ruff/mypy/CodeQL, Python SDK + CLI в PyPI, GitHub Action, статический сайт с 27 полнотекстовыми мапами.
 - **raven** — высоконагруженные RAG-микросервисы, MCP-сервер и мониторинг на Go, Python 3.12 и PostgreSQL.
 - **noema** — автономный AI-агент с **формальной верификацией** решений через SMT-решатель **Z3**.
 - **drafter** — Zero-Backend браузерный AI QA-комбайн (SQLite в WASM, роутинг 9+ LLM-провайдеров).

@@ -1,44 +1,50 @@
 # Roadmap
 
-## Current state
+## Current state (2026-11-09)
 
-- **103 curated skills** across 17 domains, 100% bilingual (EN + RU), avg quality 97.1 (min 97.0, measured 2026-10-30).
+- **120 curated skills** across **20 domains**, 100% bilingual (EN + RU), avg quality **97.5** (min 97, measured 2026-11-09).
 - Universal Agent Skills format, portable to Claude Code, OpenCode, Cursor,
   Windsurf, and every Agent Skills-compatible agent.
-- Python SDK + CLI, GitHub Action, live catalog site, PyPI-ready packaging.
-- JSON Schema validation, npm package, domain filters, quality gates.
+- Python SDK + CLI (with remote registry search `search --remote`), GitHub
+  Action, PyPI + npm packages, JSON Schema validation, quality gates.
+- Tabbed portal site: skills catalog, **20/20 live roadmap tracks**, **27
+  full-text maps library**, bilingual UI (EN/RU), search, honest live-status
+  badges, sitemap + JSON-LD.
+- Test suite: **326 tests** (unit / property-based / e2e site builds), **93%
+  coverage** across `src/` + `scripts/` with a hard `--cov-fail-under=90` gate.
 
-## Planned
+## Shipped
 
 ### v4.0 — Ecosystem
 - [x] Publish `agent-skills-library` to PyPI (auto-publish on tags)
-- [x] Add `skills_catalog.json` downloads and JSON Schema for the catalog
+- [x] `skills_catalog.json` downloads + JSON Schema for the catalog
 - [x] npm package for Node-based agents
-- [x] 100 skills milestone across 16 domains
 - [x] Announcement on GitHub Discussions + PRs to awesome-lists
-- [ ] Homebrew tap for macOS installs
 
 ### v4.1 — More coverage
-- [x] Add skills for more domains: gamedev, finance, healthcare, ecommerce
-- [ ] Community-requested skills via GitHub Discussions
-- [ ] Per-skill verified recipes (tested commands + expected output)
+- [x] Skills for more domains: gamedev, finance, healthcare and 15 more
+- [x] 100 → 120 skills milestone across 17 → 20 domains
 
 ### v4.2 — Quality & UX
 - [x] CI that validates new skills in PRs + blocks below 90% quality
 - [x] `agent-skills install <skill>` targeted single-skill install
-- [x] Better docs site with search, filters, and install snippets
+- [x] Docs site: search, filters, install snippets, tabs, live roadmap
+      explorer and the full-text maps library
+- [x] Roadmaps portal: 20 live bilingual tracks + 27 full-text maps
+- [x] In-process test coverage of every CI gate script (67% → 93%)
+
+## Planned
+
+### v4.3 — Portal & ecosystem
+- [ ] Command palette (⌘K) with cross-entity search: skills, maps, tracks
+- [ ] Full-text search across the 27 maps (server-side index)
+- [ ] Tailored resume maps per hh.ru track (AI/ML, Senior Fullstack,
+      Backend/SDET)
+- [ ] RSS/Atom feed for new skills and maps
+- [ ] Homebrew tap for macOS installs
+
+## Backlog
+- [ ] Community-requested skills via GitHub Discussions
+- [ ] Per-skill verified recipes (tested commands + expected output)
 - [ ] Benchmark suite for validation speed
-
-### v4.3 — Community
-- [ ] Contribution guides for translators
-- [ ] Skill badges / certification for contributors
-- [ ] Monthly release cadence with changelog
-
-## How to help
-
-- Open a Discussion to propose a new skill.
-- Submit a PR following `AGENTS.md`.
-- Translate or improve existing `SKILL.ru.md` files.
-- Star the repo to help others discover it.
-
-**Want to shape this roadmap?** Open an issue or discussion on GitHub.
+- [ ] RU-first i18n for domain and skill pages (server-rendered mirrors)

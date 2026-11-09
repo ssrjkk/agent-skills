@@ -14,6 +14,17 @@ Gemini CLI, GLM Coding, Codex, etc.) work correctly in this repository.
   from the skills catalog; each track gets its own page under
   `docs/roadmaps/`). To add a map, edit the track file: replace
   `stages`/`items` and set `status` to `live`. Schema: `roadmaps.schema.json`.
+- `roadmaps/guides/*.md` — full-text maps; `build_docs.py` renders them into
+  `docs/guides/` and cross-links them with the tracks (run `make docs` after
+  editing).
+- `labs/` — runnable infrastructure artifacts (chaos drill, K8s/GPU manifests,
+  Go operators, CI templates, cheatsheets).
+- `assets/site.js` — single source of the shared frontend; `make docs` copies
+  it to `docs/`. i18n keys must exist in both EN and RU dicts (parity is
+  tested).
+- `tests/` — pytest suite (326 tests) incl. property-based and e2e site
+  builds; `make coverage` measures `src/` + `scripts/` with a
+  `--cov-fail-under=90` gate.
 
 ## Skill file requirements
 
@@ -42,7 +53,8 @@ make catalog       # rebuild skills_catalog.json
 make interop       # cross-agent portability check
 make docs          # rebuild docs site (use --jobs N for 1000+ skills)
 make sync-readme   # sync README.md with skills_catalog.json
-make consistency   # verify built site (links, CSS, index, roadmaps)
+make consistency   # verify built site (links, CSS, index, roadmaps, guides)
+make coverage      # pytest with coverage across src+scripts, gate >= 90%
 make all           # full gate: lint → test → validate → catalog → docs
 ```
 
