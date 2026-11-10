@@ -9,7 +9,7 @@ pytest-cov>=4.0,<8.0
 hypothesis>=6.168.5
 
 # Code quality
-mypy>=1.0
+mypy>=2.4.1
 ruff>=0.17.4
 types-PyYAML>=6.0
 
