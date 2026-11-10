@@ -1,5 +1,5 @@
 # Runtime-only dependencies for the Docker action image.
 # (Full dev set lives in requirements.txt / pyproject.toml [dev].)
-pyyaml>=6.0,<7.0
+pyyaml>=6.0.3,<7.0
 colorama>=0.4.6,<1.0
 click>=8.5.0,<9.0
