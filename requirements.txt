@@ -10,7 +10,7 @@ hypothesis>=6.168.5
 
 # Code quality
 mypy>=1.0
-ruff>=0.1.0
+ruff>=0.17.4
 types-PyYAML>=6.0
 
 # Packaging
