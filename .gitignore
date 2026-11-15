@@ -76,3 +76,6 @@ quality-report.json
 
 # Local payload archives (course materials, integration packages)
 /*.zip
+
+# Local build check artifacts
+dist_check/
