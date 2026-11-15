@@ -1359,7 +1359,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .hero-chips{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
 .glass-chip{padding:.35rem .85rem;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 70%,transparent);backdrop-filter:blur(8px);border-radius:20px;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
 .glass-chip strong{color:var(--accent);font-weight:700}
-.hire-contacts{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:1.2rem 0 2.2rem}
+.hire-contacts{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:1.2rem 0 2.2rem;max-width:100%}
+.hire-contacts .glass-chip{overflow-wrap:anywhere}
 a.glass-chip{color:var(--text);text-decoration:none;transition:border-color .15s,color .15s,transform .15s}
 a.glass-chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 .btn-primary{
@@ -1646,8 +1647,8 @@ body[data-theme="light"] .tab-btn.active{background:linear-gradient(135deg,rgba(
 .guide-card:hover::after{opacity:1;transform:none}
 .guide-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--glow)}
 .guide-num{font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.12em;background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.guide-card-title{font-weight:700;font-size:.88rem;line-height:1.35}
-.guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45}
+.guide-card-title{font-weight:700;font-size:.88rem;line-height:1.35;overflow-wrap:anywhere}
+.guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45;overflow-wrap:anywhere}
 .guide-card-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:.4rem}
 .guide-words{font-size:.66rem;color:var(--muted);font-family:var(--mono)}
 .guide-page{max-width:900px;margin:0 auto}
