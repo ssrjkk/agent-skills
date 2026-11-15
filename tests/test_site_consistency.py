@@ -51,6 +51,7 @@ def _mini_site(root: Path) -> None:
     (docs / "index.html").write_text(PAGE_ROOT, encoding="utf-8")
     (docs / "guides.html").write_text(PAGE_ROOT, encoding="utf-8")
     (docs / "roadmaps.html").write_text(PAGE_ROOT, encoding="utf-8")
+    (docs / "conveyors.html").write_text(PAGE_ROOT, encoding="utf-8")
     (docs / "skills" / "alpha.html").write_text(PAGE_SUB, encoding="utf-8")
     (docs / "domains" / "qa.html").write_text(PAGE_SUB, encoding="utf-8")
     (root / "roadmaps" / "frontend.json").write_text(json.dumps({
@@ -61,6 +62,16 @@ def _mini_site(root: Path) -> None:
     (docs / "roadmaps" / "frontend.html").write_text(PAGE_SUB, encoding="utf-8")
     (docs / "roadmaps.json").write_text(json.dumps({"tracks": [{"slug": "frontend"}]}), encoding="utf-8")
     (root / "roadmaps" / "guides" / "01_Map.md").write_text("# Map\n\ntext\n", encoding="utf-8")
+    (root / "conveyors").mkdir()
+    (root / "conveyors" / "mini.json").write_text(json.dumps({
+        "slug": "mini", "name": "Mini", "icon": "x", "tagline": "t", "target": "svc", "status": "soon",
+        "stages": [{"id": "s", "title": "S", "goal": "g", "gates": ["a", "b", "c"], "skills": [], "prompts": ["p1"], "artifacts": ["x"]}],
+    }), encoding="utf-8")
+    (docs / "conveyors").mkdir()
+    (docs / "conveyors" / "mini.html").write_text(PAGE_SUB, encoding="utf-8")
+    (root / "prompts").mkdir()
+    (root / "prompts" / "p1.md").write_text("# P\n\ntext\n", encoding="utf-8")
+    (root / "prompts" / "p1.ru.md").write_text("# П\n\nтекст\n", encoding="utf-8")
     (docs / "guides" / "01_Map.html").write_text(PAGE_SUB, encoding="utf-8")
 
 

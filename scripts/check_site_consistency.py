@@ -106,6 +106,24 @@ def main(root: Path | None = None) -> int:
         if not (docs / "guides.html").exists():
             errors.append("missing guides.html overview")
 
+    # 2e. conveyors: conveyors/*.json <-> docs/conveyors/*.html + overview
+    conv_src = root / "conveyors"
+    conv_out = docs / "conveyors"
+    conv_json: set[str] = set()
+    if not conv_src.is_dir():
+        errors.append("conveyors/ source directory missing")
+    elif not conv_out.is_dir():
+        errors.append("docs/conveyors output directory missing (run make docs)")
+    else:
+        conv_json = {p.stem for p in conv_src.glob("*.json")}
+        conv_html = {p.stem for p in conv_out.glob("*.html")}
+        for slug in sorted(conv_json - conv_html):
+            errors.append(f"missing conveyor page: {slug}")
+        for slug in sorted(conv_html - conv_json):
+            errors.append(f"conveyor page without source: {slug}")
+        if not (docs / "conveyors.html").exists():
+            errors.append("missing conveyors.html overview")
+
     # 3. relative links resolve
     for page in list(docs.rglob("*.html")):
         html = page.read_text(encoding="utf-8")
@@ -153,6 +171,7 @@ def main(root: Path | None = None) -> int:
         f"{len(rm_slugs)} roadmaps, {len(md_stems) if guides_src.is_dir() else 0} guides, all pages valid."
     )
     return 0
+    print(f"Conveyors: {len(conv_json)} pipeline(s) checked.")
 
 
 if __name__ == "__main__":

@@ -174,6 +174,7 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_roadmaps(out, source_dir=tmp_path)
     mod.build_guides(out, source_dir=tmp_path)
     mod.build_hire(out, source_dir=tmp_path)
+    mod.build_conveyors(out, source_dir=tmp_path)
     mod.build_style_css(out)
     mod.build_site_js(out)
     mod.build_search_index(catalog_path, out)

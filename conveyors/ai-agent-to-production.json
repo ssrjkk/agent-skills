@@ -1,0 +1,176 @@
+{
+  "$schema": "../conveyors.schema.json",
+  "slug": "ai-agent-to-production",
+  "name": "AI Agent → Production",
+  "name_ru": "AI-агент → Продакшн",
+  "icon": "🤖",
+  "tagline": "Run an AI agent through 5 gates: spec → prototype loop → MVP with evals → safety & cost → production",
+  "tagline_ru": "Проведите AI-агента через 5 гейтов: спецификация → прототип цикла → MVP с оценками → безопасность и стоимость → продакшн",
+  "target": "AI agent / LLM-powered service",
+  "target_ru": "AI-агент / LLM-сервис",
+  "status": "live",
+  "catalog_domain": "ai",
+  "related_skills": [
+    "agent-development",
+    "prompt-engineering",
+    "llm-evals",
+    "mcp-servers",
+    "function-calling",
+    "multi-agent-orchestration",
+    "structured-output",
+    "rag-pipeline",
+    "llm-guardrails",
+    "prompt-caching",
+    "observability-llm",
+    "mlops",
+    "vector-databases",
+    "ai-testing"
+  ],
+  "stages": [
+    {
+      "id": "agent-spec",
+      "title": "Stage 1 · Agent spec: job, guardrails, eval set",
+      "title_ru": "Этап 1 · Спецификация агента: задача, границы, eval-набор",
+      "goal": "Define the agent's job so narrowly that success is measurable: inputs, tools, refusal policy, and a golden eval set written BEFORE the first prompt.",
+      "goal_ru": "Сузьте задачу агента так, чтобы успех был измерим: входы, инструменты, политика отказа и золотой eval-набор, написанный ДО первого промпта.",
+      "gates": [
+        "The agent's job is one sentence with a measurable success criterion",
+        "A golden eval set (≥ 20 cases) exists, written before any prompting",
+        "Refusal policy is explicit: what the agent must NOT do or answer",
+        "Tool list is minimal and each tool has a purpose"
+      ],
+      "gates_ru": [
+        "Задача агента — одно предложение с измеримым критерием успеха",
+        "Золотой eval-набор (≥ 20 кейсов) существует и написан до любого промптинга",
+        "Политика отказа явная: что агент НЕ должен делать и отвечать",
+        "Список инструментов минимален, у каждого есть назначение"
+      ],
+      "skills": ["agent-development", "design-spec-md", "llm-evals"],
+      "prompts": ["01-idea-to-spec", "06-agent-eval-set"],
+      "artifacts": [
+        "Agent spec one-pager + refusal policy",
+        "Golden eval set (cases + expected outcomes)"
+      ],
+      "artifacts_ru": [
+        "Спецификация агента на одну страницу + политика отказа",
+        "Золотой eval-набор (кейсы + ожидаемые исходы)"
+      ]
+    },
+    {
+      "id": "agent-prototype",
+      "title": "Stage 2 · Prototype the agent loop",
+      "title_ru": "Этап 2 · Прототип агентного цикла",
+      "goal": "The smallest working loop: prompt → model → tool → response, run locally against the eval set. Judge with the eval set, not with vibes.",
+      "goal_ru": "Самый маленький рабочий цикл: промпт → модель → инструмент → ответ, локально против eval-набора. Оценивайте eval-набором, а не «на глаз».",
+      "gates": [
+        "The loop runs locally: prompt → model → tools → structured response",
+        "The golden eval set runs and prints a pass rate",
+        "Failures are categorized (bad prompt / bad tool / bad data)",
+        "Model choice is recorded with cost per eval run"
+      ],
+      "gates_ru": [
+        "Цикл запускается локально: промпт → модель → инструменты → структурированный ответ",
+        "Золотой eval-набор запускается и печатает долю прохождений",
+        "Отказы классифицированы (плохой промпт / плохой инструмент / плохие данные)",
+        "Выбор модели зафиксирован вместе со стоимостью одного eval-прогона"
+      ],
+      "skills": ["prompt-engineering", "function-calling", "mcp-servers"],
+      "prompts": ["02-skeleton-and-smoke", "06-agent-eval-set"],
+      "artifacts": [
+        "Eval runner with a printed pass rate",
+        "Prototype loop code (explicitly throwaway)"
+      ],
+      "artifacts_ru": [
+        "Eval-раннер с печатной долей прохождений",
+        "Код прототипа цикла (явно одноразовый)"
+      ]
+    },
+    {
+      "id": "agent-mvp",
+      "title": "Stage 3 · MVP: structured output + RAG + deployed",
+      "title_ru": "Этап 3 · MVP: структурированный вывод + RAG + задеплоено",
+      "goal": "The agent becomes a service: schema-constrained outputs, grounded answers (RAG or tools), CI that blocks on eval regressions, and a public endpoint.",
+      "goal_ru": "Агент становится сервисом: вывод, ограниченный схемой, ответы с опорой на данные (RAG или инструменты), CI, блокирующий регрессии eval-ов, и публичный эндпоинт.",
+      "gates": [
+        "Outputs are schema-constrained (no free-text parsing of model answers)",
+        "Grounding is real: every factual answer cites its source",
+        "CI blocks on eval pass-rate regression",
+        "A public endpoint serves the agent behind HTTPS"
+      ],
+      "gates_ru": [
+        "Вывод ограничен схемой (никакого разбора свободного текста ответов модели)",
+        "Опора на данные реальна: каждый фактический ответ ссылается на источник",
+        "CI блокирует регрессию доли прохождения eval-ов",
+        "Публичный эндпоинт отдаёт агента по HTTPS"
+      ],
+      "skills": ["structured-output", "rag-pipeline", "vector-databases", "llm-evals", "ai-testing"],
+      "prompts": ["03-mvp-cut-and-ci", "06-agent-eval-set"],
+      "artifacts": [
+        "Eval CI job (blocks merge on regression)",
+        "Deployed agent endpoint"
+      ],
+      "artifacts_ru": [
+        "Eval-джоба в CI (блокирует слияние при регрессии)",
+        "Задеплоенный эндпоинт агента"
+      ]
+    },
+    {
+      "id": "agent-hardening",
+      "title": "Stage 4 · Safety & cost: guardrails, caching, observability",
+      "title_ru": "Этап 4 · Безопасность и стоимость: guardrails, кэш, наблюдаемость",
+      "goal": "Assume users will try to break it and finance will ask what it costs: prompt-injection defenses, refusal enforcement, per-request cost/latency tracking, and caching where it pays.",
+      "goal_ru": "Считайте, что пользователи будут пытаться его сломать, а финансы спросят, сколько он стоит: защита от prompt-инъекций, принудительный отказ, учёт стоимости и латентности каждого запроса, кэширование там, где оно окупается.",
+      "gates": [
+        "Prompt-injection test suite exists and passes",
+        "Refusals are enforced in code, not only promised in the prompt",
+        "Cost and latency per request are logged and alertable",
+        "Caching measurably reduces cost without hurting the eval pass rate"
+      ],
+      "gates_ru": [
+        "Существует и проходит набор тестов на prompt-инъекции",
+        "Отказы принуждаются кодом, а не только обещаются в промпте",
+        "Стоимость и латентность каждого запроса логируются и алертятся",
+        "Кэширование измеримо снижает стоимость без просадки eval-прохождения"
+      ],
+      "skills": ["llm-guardrails", "prompt-caching", "observability-llm", "context-engineering"],
+      "prompts": ["07-guardrails-and-cost"],
+      "artifacts": [
+        "Prompt-injection test suite",
+        "Cost/latency dashboard with alerts"
+      ],
+      "artifacts_ru": [
+        "Набор тестов на prompt-инъекции",
+        "Дашборд стоимости и латентности с алертами"
+      ]
+    },
+    {
+      "id": "agent-production",
+      "title": "Stage 5 · Production: evals in CI, monitoring, drift control",
+      "title_ru": "Этап 5 · Продакшн: evals в CI, мониторинг, контроль дрейфа",
+      "goal": "The agent is operated like a service, not demoed like a chat: evals on every change, model/provider drift monitored, incidents postmortemed into the eval set.",
+      "goal_ru": "Агент эксплуатируется как сервис, а не демострируется как чат: evals на каждое изменение, мониторинг дрейфа модели и провайдера, инциденты постмортемятся в eval-набор.",
+      "gates": [
+        "Every prompt/model change runs the eval set in CI before merge",
+        "Production responses are sampled and re-scored against the eval set",
+        "Model/provider drift has an alarm (same input, worse output)",
+        "Every incident becomes a new eval case"
+      ],
+      "gates_ru": [
+        "Каждое изменение промпта/модели прогоняет eval-набор в CI до слияния",
+        "Продакшн-ответы сэмплируются и пересчитываются против eval-набора",
+        "Дрейф модели/провайдера под сигнализацией (тот же вход — хуже выход)",
+        "Каждый инцидент становится новым eval-кейсом"
+      ],
+      "skills": ["mlops", "llm-guardrails", "observability-llm", "llm-evals", "kubernetes"],
+      "prompts": ["06-agent-eval-set", "07-guardrails-and-cost"],
+      "artifacts": [
+        "Eval-in-CI job on the main branch",
+        "Production sampling dashboard + drift alarm"
+      ],
+      "artifacts_ru": [
+        "Eval-джоба в CI на главной ветке",
+        "Дашборд продакшн-сэмплинга + сигнализация дрейфа"
+      ]
+    }
+  ]
+}

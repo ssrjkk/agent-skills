@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conveyors — prototype to production pipelines</title>
+  <meta name="description" content="Staged quality pipelines: run an idea, prototype or MVP through gates into a full product - spec, prototype, MVP, hardening, production.">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/conveyors.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Conveyors — prototype to production pipelines">
+  <meta property="og:description" content="Staged quality pipelines: run an idea, prototype or MVP through gates into a full product - spec, prototype, MVP, hardening, production.">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/conveyors.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Conveyors — prototype to production pipelines">
+  <meta name="twitter:description" content="Staged quality pipelines: run an idea, prototype or MVP through gates into a full product - spec, prototype, MVP, hardening, production.">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="conveyors.html" data-i18n="nav_conveyors">Conveyors</a>
+        <a class="nav-link nav-hot" href="hire.html" data-i18n="nav_hire">Hire</a>
+        <a class="nav-link" href="index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="rm-page">
+      <header class="rm-hero reveal in">
+        <div class="hero-badge pulse">Conveyors · 2 pipelines · stage gates + prompts</div>
+        <h1><span data-slang-body="en">The Product Conveyor</span><span data-slang-body="ru" hidden>Продуктовый конвейер</span></h1>
+        <p><span data-slang-body="en">Run an MVP or a prototype through staged quality gates until it becomes a full product. Every stage: goal, gates, catalog skills, ready-to-run prompts and produced artifacts.</span><span data-slang-body="ru" hidden>Проведите MVP или прототип через поэтапные гейты качества до полноценного продукта. Каждый этап: цель, гейты, скиллы из каталога, готовые промпты и получаемые артефакты.</span></p>
+      </header>
+      <div class="guide-grid"><a class="guide-card" href="conveyors/ai-agent-to-production.html"><span class="guide-num">🤖</span><span class="guide-card-title"><span data-slang-body="en">AI Agent → Production</span><span data-slang-body="ru" hidden>AI-агент → Продакшн</span></span><span class="guide-card-excerpt"><span data-slang-body="en">Run an AI agent through 5 gates: spec → prototype loop → MVP with evals → safety &amp; cost → production</span><span data-slang-body="ru" hidden>Проведите AI-агента через 5 гейтов: спецификация → прототип цикла → MVP с оценками → безопасность и стоимость → продакшн</span></span><span class="guide-card-meta"><span class="rm-chip"><span data-slang-body="en">target</span><span data-slang-body="ru" hidden>цель</span>: <span data-slang-body="en">AI agent / LLM-powered service</span><span data-slang-body="ru" hidden>AI-агент / LLM-сервис</span></span><span class="guide-words">5 stages</span><span class="live-pill">live</span></span></a><a class="guide-card" href="conveyors/prototype-to-production.html"><span class="guide-num">🏭</span><span class="guide-card-title"><span data-slang-body="en">Prototype → MVP → Production</span><span data-slang-body="ru" hidden>Прототип → MVP → Продакшн</span></span><span class="guide-card-excerpt"><span data-slang-body="en">Run a web/API product through 5 quality gates: idea → spec → prototype → MVP → hardening → production</span><span data-slang-body="ru" hidden>Проведите веб/API-продукт через 5 гейтов качества: идея → спецификация → прототип → MVP → закалка → продакшн</span></span><span class="guide-card-meta"><span class="rm-chip"><span data-slang-body="en">target</span><span data-slang-body="ru" hidden>цель</span>: <span data-slang-body="en">web / API service</span><span data-slang-body="ru" hidden>веб / API-сервис</span></span><span class="guide-words">5 stages</span><span class="live-pill">live</span></span></a></div>
+      <p class="back-link"><a href="index.html" data-i18n="back_catalog">← Back to catalog</a></p>
+    </div>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="site.js"></script>
+</body>
+</html>

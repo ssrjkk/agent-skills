@@ -8,6 +8,7 @@ Pages:
   roadmaps.html       - roadmap tracks overview + one page per track
   guides.html         - full-text maps library + one page per guide
   hire.html           - open-to-work landing (career mode)
+  conveyors.html      - prototype->production pipelines + one page per conveyor
 """
 
 from __future__ import annotations
@@ -74,6 +75,11 @@ ROADMAP_TRACKS = [
 ]
 
 MODEL_ORDER = ["opus", "sonnet", "gpt-6", "gemini-3", "glm-5", "haiku"]
+
+# Conveyor pipelines: conveyors/<slug>.json + prompts/<slug>[.ru].md -
+# staged quality gates that turn an idea/prototype/MVP into a full product.
+CONVEYORS_SUBDIR = "conveyors"
+PROMPTS_SUBDIR = "prompts"
 
 # Full-text maps shipped in roadmaps/guides/*.md. They are rendered into the
 # site (guides.html + guides/<slug>.html) so every map is a real indexed page,
@@ -503,6 +509,7 @@ def page_head(
     roadmaps_href = f"{root}roadmaps.html"
     guides_href = f"{root}guides.html"
     hire_href = f"{root}hire.html"
+    conveyors_href = f"{root}conveyors.html"
     return f"""<!DOCTYPE html>
 <html lang="{lang_attr}">
 <head>
@@ -541,6 +548,7 @@ def page_head(
         <a class="nav-link" href="{nav_index}#catalog" data-i18n="nav_catalog">Catalog</a>
         <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span>{rm_nav_dot()}</a>
         <a class="nav-link" href="{guides_href}" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="{conveyors_href}" data-i18n="nav_conveyors">Conveyors</a>
         <a class="nav-link nav-hot" href="{hire_href}" data-i18n="nav_hire">Hire</a>
         <a class="nav-link" href="{nav_index}#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="{nav_index}#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
@@ -1651,6 +1659,11 @@ body[data-theme="light"] .tab-btn.active{background:linear-gradient(135deg,rgba(
 .guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45;overflow-wrap:anywhere}
 .guide-card-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:.4rem}
 .guide-words{font-size:.66rem;color:var(--muted);font-family:var(--mono)}
+.prompt-block{margin:1.1rem 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2);overflow:hidden}
+.prompt-head{padding:.45rem .7rem;border-bottom:1px solid var(--border);background:rgba(125,255,74,.06);font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+.prompt-head code{color:var(--accent)}
+.prompt-block .skill-page-body{padding:.6rem .9rem}
+.cv-label{margin-top:.7rem;font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
 .guide-page{max-width:900px;margin:0 auto}
 .guide-body h2{border-bottom:1px solid var(--border);padding-bottom:.3rem}
 .md-table{overflow-x:auto;margin:1rem 0;border:1px solid var(--border);background:var(--bg2);border-radius:var(--radius)}
@@ -2244,6 +2257,157 @@ def build_hire(output_dir: Path, source_dir: Path | None = None) -> int:
     return 0
 
 
+def duo_text(en: str, ru: str) -> str:
+    """Bilingual inline pair for labels: EN visible, RU behind the slang flip."""
+    return rm_tier_label(en, ru)
+
+
+def load_conveyors(source_dir: Path | None = None) -> list[dict]:
+    root = source_dir or Path(__file__).resolve().parent.parent
+    out = []
+    for path in sorted((root / CONVEYORS_SUBDIR).glob("*.json")):
+        try:
+            out.append(json.loads(path.read_text(encoding="utf-8")))
+        except (OSError, json.JSONDecodeError) as e:
+            print(f"warning: cannot read conveyor {path.name}: {e}", file=sys.stderr)
+    return out
+
+
+def build_conveyors(output_dir: Path, source_dir: Path | None = None) -> int:
+    """Render conveyor pipelines: an overview plus one page per conveyor with
+    stage gates, catalog skill links and the full bilingual prompt library
+    inlined (EN visible, RU behind the standard slang flip)."""
+    _remember_rm_state(load_roadmap_tracks(source_dir))
+    conveyors = load_conveyors(source_dir)
+    cdir = output_dir / CONVEYORS_SUBDIR
+    cdir.mkdir(parents=True, exist_ok=True)
+    csrc = (source_dir or Path(__file__).resolve().parent.parent)
+
+    overview_cards = "".join(
+        f'<a class="guide-card" href="{CONVEYORS_SUBDIR}/{esc(c["slug"])}.html">'
+        f'<span class="guide-num">{esc(c["icon"])}</span>'
+        f'<span class="guide-card-title">{rm_pair(c["name"], c.get("name_ru"))}</span>'
+        f'<span class="guide-card-excerpt">{rm_pair(c["tagline"], c.get("tagline_ru"))}</span>'
+        f'<span class="guide-card-meta">'
+        f'<span class="rm-chip">{rm_pair("target", "цель")}: {rm_pair(c["target"], c.get("target_ru", ""))}</span>'
+        f'<span class="guide-words">{len(c["stages"])} stages</span>'
+        f'{rm_status_pill(c.get("status", "soon"))}</span>'
+        "</a>"
+        for c in conveyors
+    )
+
+    overview = page_head(
+        "Conveyors — prototype to production pipelines",
+        "Staged quality pipelines: run an idea, prototype or MVP through gates into a full product - spec, prototype, MVP, hardening, production.",
+        BASE + "conveyors.html",
+        css_path="style.css",
+        nav_index="index.html",
+        lang_attr="ru",
+    ) + f"""
+    <div class="rm-page">
+      <header class="rm-hero reveal in">
+        <div class="hero-badge pulse">Conveyors · {len(conveyors)} pipelines · stage gates + prompts</div>
+        <h1>{rm_tier_label("The Product Conveyor", "Продуктовый конвейер")}</h1>
+        <p>{rm_tier_label(
+            "Run an MVP or a prototype through staged quality gates until it becomes a full product. Every stage: goal, gates, catalog skills, ready-to-run prompts and produced artifacts.",
+            "Проведите MVP или прототип через поэтапные гейты качества до полноценного продукта. Каждый этап: цель, гейты, скиллы из каталога, готовые промпты и получаемые артефакты.",
+        )}</p>
+      </header>
+      <div class="guide-grid">{overview_cards}</div>
+      <p class="back-link"><a href="index.html" data-i18n="back_catalog">← Back to catalog</a></p>
+    </div>
+""" + page_foot(js_path="site.js")
+    (output_dir / "conveyors.html").write_text(overview, encoding="utf-8")
+
+    count = 0
+    for i, c in enumerate(conveyors):
+        prev_c = conveyors[i - 1] if i > 0 else None
+        next_c = conveyors[i + 1] if i < len(conveyors) - 1 else None
+        nav = '<div class="page-nav">'
+        nav += f'<a class="page-nav-link" href="{esc(prev_c["slug"])}.html">← {esc(prev_c["name"])}</a>' if prev_c else "<span></span>"
+        nav += f'<a class="page-nav-link" href="{esc(next_c["slug"])}.html">{esc(next_c["name"])} →</a>' if next_c else "<span></span>"
+        nav += "</div>"
+
+        stages_html = ""
+        for si, stage in enumerate(c["stages"], 1):
+            stage_no = f"{si:02d}"
+            gates_en = stage.get("gates", [])
+            gates_ru = stage.get("gates_ru") or []
+            gate_items = "".join(
+                f'<li class="task"><input type="checkbox" disabled> {rm_pair(g, gates_ru[k] if k < len(gates_ru) else None)}</li>'
+                for k, g in enumerate(gates_en)
+            )
+            skills_chips = "".join(
+                f'<a class="rm-chip" href="../skills/{esc(sk)}.html">{esc(sk)}</a>'
+                for sk in stage.get("skills", [])
+            )
+            prompts_html = ""
+            for slug in stage.get("prompts", []):
+                try:
+                    en_md = (csrc / PROMPTS_SUBDIR / f"{slug}.md").read_text(encoding="utf-8")
+                    ru_md = (csrc / PROMPTS_SUBDIR / f"{slug}.ru.md").read_text(encoding="utf-8")
+                except (OSError, UnicodeDecodeError) as e:
+                    print(f"warning: cannot read prompt {slug}: {e}", file=sys.stderr)
+                    continue
+                prompts_html += (
+                    f'<div class="prompt-block"><div class="prompt-head">{duo_text("Prompt", "Промпт")}: <code>{esc(slug)}</code>'
+                    f'<span class="guide-words" data-i18n="words_n" data-n="{len(en_md.split())}">~{len(en_md.split())} words</span></div>'
+                    f'<div class="skill-page-body" data-slang-body="en">{render_guide_markdown(en_md)}</div>'
+                    f'<div class="skill-page-body" data-slang-body="ru" hidden>{render_guide_markdown(ru_md)}</div></div>'
+                )
+
+            artifacts_en = stage.get("artifacts", [])
+            artifacts_ru = stage.get("artifacts_ru") or []
+            artifact_items = "".join(
+                f"<li>{rm_pair(a, artifacts_ru[k] if k < len(artifacts_ru) else None)}</li>"
+                for k, a in enumerate(artifacts_en)
+            )
+
+            goal = stage.get("goal", "")
+            goal_ru = stage.get("goal_ru")
+            stages_html += (
+                f'<div class="rm-stage" id="{esc(stage["id"])}">'
+                f'<h3>▸ <span class="guide-num">{stage_no}</span> {rm_pair(stage["title"], stage.get("title_ru"))} '
+                f'{rm_status_pill(stage.get("status", c.get("status", "soon")))}</h3>'
+                f'<p>{rm_pair(goal, goal_ru)}</p>'
+                f'<p class="cv-label">{duo_text("Gates", "Гейты")}</p>'
+                f'<ul class="task-list">{gate_items}</ul>'
+                f'<p class="cv-label">{duo_text("Catalog skills", "Скиллы каталога")}</p>'
+                f'<div class="rm-chips">{skills_chips}</div>'
+                + (f'<p class="cv-label">{duo_text("Prompts", "Промпты")}</p>{prompts_html}' if prompts_html else "")
+                + f'<p class="cv-label">{duo_text("Artifacts", "Артефакты")}</p>'
+                + f"<ul>{artifact_items}</ul>"
+                + "</div>"
+            )
+
+        hero_pill = rm_status_pill(c.get("status", "soon"), big=True)
+        page = page_head(
+            f'{c["name"]} — conveyor',
+            c.get("tagline", ""),
+            BASE + f'conveyors/{c["slug"]}.html',
+            css_path="../style.css",
+            lang_attr="ru",
+        ) + f"""
+    <div class="rm-page">
+      <p class="back-link"><a href="../conveyors.html" data-i18n="back_conveyors">← All conveyors</a></p>
+      <header class="rm-hero">
+        <span class="domain-chip">{esc(c.get("target", ""))}</span>
+        <h1>{esc(c["icon"])} {rm_pair(c["name"], c.get("name_ru"))} {hero_pill}</h1>
+        <p>{rm_pair(c["tagline"], c.get("tagline_ru"))}</p>
+      </header>
+      {nav}
+      <div class="rm-timeline">{stages_html}</div>
+      {nav}
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>{CONVEYORS_SUBDIR}/{esc(c["slug"])}.json</code> · <a href="{REPO}/tree/main/prompts" data-i18n="view_source">prompts</a></p>
+    </div>
+""" + page_foot(js_path="../site.js")
+        (cdir / f'{c["slug"]}.html').write_text(page, encoding="utf-8")
+        count += 1
+
+    print(f"Conveyors written: overview + {count} pipeline pages")
+    return count
+
+
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     robots = (
         "User-agent: *\n"
@@ -2268,6 +2432,9 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     for t in load_roadmap_tracks():
         lines.append(f"  <url><loc>{BASE}roadmaps/{esc(t['slug'])}.html</loc></url>")
     lines.append(f"  <url><loc>{BASE}hire.html</loc><priority>1.0</priority></url>")
+    lines.append(f"  <url><loc>{BASE}conveyors.html</loc><priority>0.9</priority></url>")
+    for c in load_conveyors():
+        lines.append(f"  <url><loc>{BASE}conveyors/{esc(c['slug'])}.html</loc></url>")
     lines.append(f"  <url><loc>{BASE}guides.html</loc><priority>0.8</priority></url>")
     for g in load_guides():
         lines.append(f"  <url><loc>{BASE}guides/{esc(g['slug'])}.html</loc></url>")
@@ -2295,7 +2462,7 @@ def main() -> int:
     build_domain_pages(Path(args.catalog), output_dir)
     build_roadmaps(output_dir)
     build_guides(output_dir)
-    build_hire(output_dir)
+    build_conveyors(output_dir)
     build_style_css(output_dir)
     build_site_js(output_dir)
     build_search_index(Path(args.catalog), output_dir)

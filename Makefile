@@ -52,6 +52,8 @@ validate:
 
 roadmaps:
 	python scripts/validate_roadmaps.py
+conveyors:
+	python scripts/validate_conveyors.py
 
 quality:
 	python -m claude_skills.cli quality --dir .claude/skills --json quality-report.json

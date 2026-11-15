@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ssrjkk.github.io/agent-skills/conveyors.schema.json",
+  "title": "Agent Skills conveyor",
+  "description": "A staged quality pipeline that takes an idea/prototype/MVP through gates into a full product.",
+  "type": "object",
+  "required": ["slug", "name", "icon", "tagline", "target", "status", "stages"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string", "minLength": 1 },
+    "name_ru": { "type": "string", "minLength": 1 },
+    "icon": { "type": "string", "minLength": 1 },
+    "tagline": { "type": "string", "minLength": 1 },
+    "tagline_ru": { "type": "string", "minLength": 1 },
+    "target": { "type": "string", "minLength": 1 },
+    "target_ru": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["soon", "live"] },
+    "catalog_domain": { "type": ["string", "null"] },
+    "related_skills": { "type": "array", "items": { "type": "string" } },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "goal", "gates", "skills", "prompts", "artifacts"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "title": { "type": "string", "minLength": 1 },
+          "title_ru": { "type": "string", "minLength": 1 },
+          "goal": { "type": "string", "minLength": 1 },
+          "goal_ru": { "type": "string", "minLength": 1 },
+          "gates": { "type": "array", "minItems": 3, "items": { "type": "string", "minLength": 1 } },
+          "gates_ru": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "skills": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "prompts": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "artifacts": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "artifacts_ru": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    }
+  }
+}

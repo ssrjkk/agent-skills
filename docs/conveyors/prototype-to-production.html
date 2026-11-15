@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype → MVP → Production — conveyor</title>
+  <meta name="description" content="Run a web/API product through 5 quality gates: idea → spec → prototype → MVP → hardening → production">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/conveyors/prototype-to-production.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="Prototype → MVP → Production — conveyor">
+  <meta property="og:description" content="Run a web/API product through 5 quality gates: idea → spec → prototype → MVP → hardening → production">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/conveyors/prototype-to-production.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prototype → MVP → Production — conveyor">
+  <meta name="twitter:description" content="Run a web/API product through 5 quality gates: idea → spec → prototype → MVP → hardening → production">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../conveyors.html" data-i18n="nav_conveyors">Conveyors</a>
+        <a class="nav-link nav-hot" href="../hire.html" data-i18n="nav_hire">Hire</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="rm-page">
+      <p class="back-link"><a href="../conveyors.html" data-i18n="back_conveyors">← All conveyors</a></p>
+      <header class="rm-hero">
+        <span class="domain-chip">web / API service</span>
+        <h1>🏭 <span data-slang-body="en">Prototype → MVP → Production</span><span data-slang-body="ru" hidden>Прототип → MVP → Продакшн</span> <span class="live-pill big">live</span></h1>
+        <p><span data-slang-body="en">Run a web/API product through 5 quality gates: idea → spec → prototype → MVP → hardening → production</span><span data-slang-body="ru" hidden>Проведите веб/API-продукт через 5 гейтов качества: идея → спецификация → прототип → MVP → закалка → продакшн</span></p>
+      </header>
+      <div class="page-nav"><a class="page-nav-link" href="ai-agent-to-production.html">← AI Agent → Production</a><span></span></div>
+      <div class="rm-timeline"><div class="rm-stage" id="spec"><h3>▸ <span class="guide-num">01</span> <span data-slang-body="en">Stage 1 · Idea → One-page spec</span><span data-slang-body="ru" hidden>Этап 1 · Идея → Спецификация на одну страницу</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">Turn the idea into a testable one-page spec: problem, user, success metric, one runnable scope slice, explicit non-goals.</span><span data-slang-body="ru" hidden>Превратите идею в проверяемую спецификацию на одну страницу: проблема, пользователь, метрика успеха, один выполнимый срез скоупа и явный список «не делаем».</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">One-page spec exists: problem, target user, single success metric</span><span data-slang-body="ru" hidden>Спецификация на одну страницу существует: проблема, целевой пользователь, одна метрика успеха</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Scope is cut to ONE runnable vertical slice (no &#x27;and then everything&#x27;)</span><span data-slang-body="ru" hidden>Скоуп срезан до ОДНОГО выполнимого вертикального среза (без «а потом всё остальное»)</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Non-goals are written down and agreed with yourself</span><span data-slang-body="ru" hidden>Список «не делаем» записан и согласован с самим собой</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">The slice has a definition of done you can check in a day</span><span data-slang-body="ru" hidden>У среза есть definition of done, проверяемое за день</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/design-spec-md.html">design-spec-md</a><a class="rm-chip" href="../skills/system-design.html">system-design</a><a class="rm-chip" href="../skills/git-workflow.html">git-workflow</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>01-idea-to-spec</code><span class="guide-words" data-i18n="words_n" data-n="177">~177 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Idea → One-page Spec</p>
+<p>Turn the idea below into a <strong>one-page spec</strong> a single engineer can start tomorrow.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 1 of any conveyor, before writing a single line of code</li>
+<li>Any time the scope of an ongoing project quietly grows</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a product engineer. Convert the idea below into a one-page spec.
+Rules:
+- Cut scope aggressively: exactly ONE runnable vertical slice.
+- No feature without a measurable success metric. Unmeasurable wishes go to Non-goals.
+- The slice must have a Definition of Done checkable in one working day.
+- Output exactly these sections, nothing else:
+  1. Problem (2 sentences, who hurts and why)
+  2. Target user (one persona)
+  3. Success metric (one number with a deadline)
+  4. The one slice (steps a user takes, first to last)
+  5. Non-goals (at least 3 explicit rejections)
+  6. Definition of done (checkbox list)
+
+Idea: &lt;PASTE YOUR IDEA&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 1 · gates 1-4: spec exists, scope cut to one slice, non-goals written, DoD checkable.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Идея → Спецификация на одну страницу</p>
+<p>Превратите идею ниже в <strong>спецификацию на одну страницу</strong>, которую один инженер может начать делать завтра.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 1 любого конвейера, до первой строки кода</li>
+<li>Каждый раз, когда скоуп текущего проекта тихо разрастается</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — продуктовый инженер. Преобразуй идею ниже в спецификацию на одну страницу.
+Правила:
+- Режь скоуп агрессивно: ровно ОДИН выполнимый вертикальный срез.
+- Ни одной фичи без измеримой метрики успеха. Неизмеряемые пожелания — в «Не делаем».
+- У среза есть Definition of Done, проверяемое за один рабочий день.
+- Выводи ровно эти разделы, ничего больше:
+  1. Проблема (2 предложения: кому больно и почему)
+  2. Целевой пользователь (одна персона)
+  3. Метрика успеха (одно число с дедлайном)
+  4. Один срез (шаги пользователя от первого до последнего)
+  5. Не делаем (минимум 3 явных отказа)
+  6. Definition of done (чек-лист)
+
+Идея: &lt;ВСТАВЬТЕ СВОЮ ИДЕЮ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 1 · гейты 1-4: спецификация есть, скоуп срезан до одного среза, «не делаем» записаны, DoD проверяем.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">docs/spec.md (one page, versioned in the repo)</span><span data-slang-body="ru" hidden>docs/spec.md (одна страница, версионируется в репо)</span></li><li><span data-slang-body="en">Repo skeleton with README stub</span><span data-slang-body="ru" hidden>Скелет репозитория с заготовкой README</span></li></ul></div><div class="rm-stage" id="prototype"><h3>▸ <span class="guide-num">02</span> <span data-slang-body="en">Stage 2 · Prototype (throwaway is allowed)</span><span data-slang-body="ru" hidden>Этап 2 · Прототип (выбросить — можно)</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">One happy path runs locally end-to-end. Ugly code is fine; the point is to kill or confirm the idea, not to keep the code.</span><span data-slang-body="ru" hidden>Один счастливый путь запускается локально от начала до конца. Код может быть некрасивым: цель — убить или подтвердить идею, а не сохранить код.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">The happy path runs locally with one documented command</span><span data-slang-body="ru" hidden>Счастливый путь запускается локально одной задокументированной командой</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">One end-to-end smoke test proves the slice works</span><span data-slang-body="ru" hidden>Один E2E смоук-тест доказывает, что срез работает</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A decision is recorded: continue, pivot, or kill</span><span data-slang-body="ru" hidden>Решение зафиксировано: продолжаем, разворачиваемся или убиваем</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Nothing from the prototype is promised to anyone yet</span><span data-slang-body="ru" hidden>Ничего из прототипа ещё не обещано никому</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/fastapi.html">fastapi</a><a class="rm-chip" href="../skills/rest-api-design.html">rest-api-design</a><a class="rm-chip" href="../skills/docker.html">docker</a><a class="rm-chip" href="../skills/test-driven-development.html">test-driven-development</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>02-skeleton-and-smoke</code><span class="guide-words" data-i18n="words_n" data-n="164">~164 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Skeleton + One-command Smoke Test</p>
+<p>Generate a <strong>throwaway prototype</strong>: the smallest project that runs the slice locally with one command and proves it with a smoke script.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 2 of any conveyor: the prototype loop</li>
+<li>Deciding whether an idea lives or dies before investing</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a pragmatic engineer. Create a THROWAWAY prototype (ugly code is fine) for the spec below.
+Requirements:
+- One command boots everything locally: `docker compose up` (or equivalent)
+- One happy path works end-to-end
+- A smoke script `scripts/smoke.sh` exits 0 when the slice works, 1 when it does not
+- No auth, no polish, no extra features — the slice only
+- A DECISION.md file: &quot;continue / pivot / kill&quot; plus the reason
+
+Output: the full file tree with file contents, then the two commands to run.
+Spec: &lt;PASTE THE SPEC&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 2 · gates 1-3: one-command local run, E2E smoke, recorded decision.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Скелет + смоук одной командой</p>
+<p>Создайте <strong>одноразовый прототип</strong>: минимальный проект, который запускает срез локально одной командой и доказывает это смоук-скриптом.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 2 любого конвейера: цикл прототипа</li>
+<li>Решение, живёт идея или умирает, до вложений</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — прагматичный инженер. Создай ОДНОРАЗОВЫЙ прототип (код может быть некрасивым) для спецификации ниже.
+Требования:
+- Одна команда поднимает всё локально: `docker compose up` (или аналог)
+- Один счастливый путь работает от начала до конца
+- Смоук-скрипт `scripts/smoke.sh` возвращает 0, если срез работает, и 1 — если нет
+- Без аутентификации, без полировки, без лишних фич — только срез
+- Файл DECISION.md: «continue / pivot / kill» плюс причина
+
+Вывод: полное дерево файлов с содержимым, затем две команды для запуска.
+Спецификация: &lt;ВСТАВЬТЕ СПЕЦИФИКАЦИЮ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 2 · гейты 1-3: локальный запуск одной командой, E2E смоук, зафиксированное решение.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">docker-compose.yml that boots the slice</span><span data-slang-body="ru" hidden>docker-compose.yml, поднимающий срез</span></li><li><span data-slang-body="en">A smoke script with exit code 0/1</span><span data-slang-body="ru" hidden>Смоук-скрипт с кодом возврата 0/1</span></li></ul></div><div class="rm-stage" id="mvp"><h3>▸ <span class="guide-num">03</span> <span data-slang-body="en">Stage 3 · MVP (deployed, tested, CI-gated)</span><span data-slang-body="ru" hidden>Этап 3 · MVP (задеплоен, протестирован, под CI-гейтами)</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">The slice becomes a deployed MVP: real data model, auth, CI pipeline, and a public URL a user can actually hit.</span><span data-slang-body="ru" hidden>Срез превращается в задеплоенный MVP: настоящая модель данных, аутентификация, CI-пайплайн и публичный URL, по которому пользователь реально приходит.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">CI runs lint + tests + build on every push and blocks on red</span><span data-slang-body="ru" hidden>CI гоняет lint + тесты + сборку на каждый пуш и блокирует красный</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Real data model with migrations (no hand-edited databases)</span><span data-slang-body="ru" hidden>Настоящая модель данных с миграциями (без «ручных» правок БД)</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Auth exists; secrets are in a manager, not in code</span><span data-slang-body="ru" hidden>Аутентификация есть; секреты в менеджере, а не в коде</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A public URL serves the MVP behind HTTPS</span><span data-slang-body="ru" hidden>Публичный URL отдаёт MVP по HTTPS</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/github-actions.html">github-actions</a><a class="rm-chip" href="../skills/postgresql.html">postgresql</a><a class="rm-chip" href="../skills/oauth2-jwt.html">oauth2-jwt</a><a class="rm-chip" href="../skills/secrets-management.html">secrets-management</a><a class="rm-chip" href="../skills/docker.html">docker</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>03-mvp-cut-and-ci</code><span class="guide-words" data-i18n="words_n" data-n="170">~170 words</span></div><div class="skill-page-body" data-slang-body="en"><p># MVP Scope + CI Pipeline</p>
+<p>Upgrade the prototype into a <strong>deployed MVP</strong>: real data model, auth, CI gates, public URL.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 3 of any conveyor, when the prototype decision was &quot;continue&quot;</li>
+<li>Any project that runs manually but should run in CI</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a senior engineer. Upgrade this prototype into an MVP with these gates:
+1. Real data model with migrations (no hand-edited databases)
+2. Auth: working session or token flow; secrets in a manager, never in code
+3. CI pipeline on every push: lint -&gt; tests -&gt; build -&gt; deploy; red blocks merge
+4. A public HTTPS URL serving the MVP, plus a documented ROLLBACK command
+Keep the prototype&#x27;s scope. Add NOTHING that is not in the spec.
+Output: a numbered task list (each task &lt; 2h), the CI file, and the deploy config.
+Prototype: &lt;PASTE THE REPO TREE&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 3 · gates 1-4: CI blocks red, migrations, auth + managed secrets, public URL.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Скоуп MVP + CI-пайплайн</p>
+<p>Превратите прототип в <strong>задеплоенный MVP</strong>: настоящая модель данных, аутентификация, CI-гейты, публичный URL.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 3 любого конвейера, когда решение по прототипу — «continue»</li>
+<li>Любой проект, который запускается вручную, но должен запускаться в CI</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — ведущий инженер. Преврати прототип в MVP с этими гейтами:
+1. Настоящая модель данных с миграциями (без ручных правок БД)
+2. Аутентификация: рабочая сессия или токен; секреты в менеджере, не в коде
+3. CI-пайплайн на каждый пуш: lint -&gt; тесты -&gt; сборка -&gt; deploy; красный блокирует слияние
+4. Публичный HTTPS URL, отдающий MVP, плюс задокументированная команда ROLLBACK
+Скоуп прототипа сохраняем. Ничего сверх спецификации не добавляем.
+Вывод: нумерованный список задач (каждая &lt; 2ч), файл CI и конфиг деплоя.
+Прототип: &lt;ДЕРЕВО РЕПОЗИТОРИЯ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 3 · гейты 1-4: CI блокирует красный, миграции, аутентификация + секреты, публичный URL.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">CI pipeline file (build → test → deploy)</span><span data-slang-body="ru" hidden>Файл CI-пайплайна (build → test → deploy)</span></li><li><span data-slang-body="en">Deployed MVP URL + rollback command</span><span data-slang-body="ru" hidden>URL задеплоенного MVP + команда отката</span></li></ul></div><div class="rm-stage" id="hardening"><h3>▸ <span class="guide-num">04</span> <span data-slang-body="en">Stage 4 · Hardening (security, observability, backups)</span><span data-slang-body="ru" hidden>Этап 4 · Закалка (безопасность, наблюдаемость, бэкапы)</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">Assume the MVP is now worth attacking and worth losing: close OWASP basics, add metrics/logs/alerts, and prove backups restore.</span><span data-slang-body="ru" hidden>Считайте, что MVP уже стоит того, чтобы его атаковать и что его можно потерять: закройте базовые OWASP-риски, добавьте метрики/логи/алерты и докажите восстановление из бэкапа.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">OWASP top-10 checklist reviewed; auth and input validation hardened</span><span data-slang-body="ru" hidden>Чек-лист OWASP top-10 пройден; аутентификация и валидация ввода усилены</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Metrics, logs and one alert per error class are collected</span><span data-slang-body="ru" hidden>Метрики, логи и по одному алерту на класс ошибок собираются</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A backup restore has been performed from zero, not assumed</span><span data-slang-body="ru" hidden>Восстановление из бэкапа выполнено с нуля, а не «предполагается»</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A load test result is recorded against an SLO target</span><span data-slang-body="ru" hidden>Результат нагрузочного теста зафиксирован против целевого SLO</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/owasp-web-security.html">owasp-web-security</a><a class="rm-chip" href="../skills/secrets-management.html">secrets-management</a><a class="rm-chip" href="../skills/prometheus-grafana.html">prometheus-grafana</a><a class="rm-chip" href="../skills/nginx.html">nginx</a><a class="rm-chip" href="../skills/redis.html">redis</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>04-security-and-observability</code><span class="guide-words" data-i18n="words_n" data-n="145">~145 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Hardening: Security + Observability + Backups</p>
+<p>Assume the MVP is now worth attacking and worth losing. Produce the hardening plan.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 4 of any conveyor, right after the MVP is public</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an SRE/security engineer. Harden this MVP:
+1. OWASP top-10 checklist against the actual stack; top 5 risks with fixes
+2. Input validation and auth hardening (rate limits, session policy)
+3. Observability: exactly 4 golden metrics, structured logs, one alert per error class
+4. Backups: schedule + a restore drill plan that starts from zero
+5. A load test against the SLO target (name the tool and the target)
+Output: checklist ordered by risk, each item &lt; 1h of work.
+MVP stack: &lt;PASTE THE STACK&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 4 · gates 1-4: OWASP reviewed, metrics/logs/alerts, restore drill, load test vs SLO.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Закалка: безопасность + наблюдаемость + бэкапы</p>
+<p>Считайте, что MVP уже стоит того, чтобы его атаковать и что его можно потерять. Составьте план закалки.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 4 любого конвейера, сразу после публикации MVP</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — SRE/инженер по безопасности. Закали этот MVP:
+1. Чек-лист OWASP top-10 против реального стека; топ-5 рисков с исправлениями
+2. Валидация ввода и усиление аутентификации (rate limits, политика сессий)
+3. Наблюдаемость: ровно 4 золотых метрики, структурированные логи, один алерт на класс ошибок
+4. Бэкапы: расписание + план учения восстановления с нуля
+5. Нагрузочный тест против целевого SLO (назови инструмент и цель)
+Вывод: чек-лист по убыванию риска, каждый пункт &lt; 1 часа работы.
+Стек MVP: &lt;ВСТАВЬТЕ СТЕК&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 4 · гейты 1-4: OWASP пройден, метрики/логи/алерты, учение восстановления, нагрузочный тест vs SLO.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">Observability stack files (metrics/logs/alerts)</span><span data-slang-body="ru" hidden>Файлы стека наблюдаемости (метрики/логи/алерты)</span></li><li><span data-slang-body="en">Backup + restore script with a recorded restore drill</span><span data-slang-body="ru" hidden>Скрипт бэкапа и восстановления с зафиксированным учением</span></li></ul></div><div class="rm-stage" id="production"><h3>▸ <span class="guide-num">05</span> <span data-slang-body="en">Stage 5 · Production (GitOps, canary, SLO, on-call)</span><span data-slang-body="ru" hidden>Этап 5 · Продакшн (GitOps, канарейка, SLO, дежурство)</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">The product is operated, not just hosted: declarative delivery, progressive rollout with automatic rollback, an SLO with error budget, and a runbook you can follow at 3 AM.</span><span data-slang-body="ru" hidden>Продукт не просто «размещён», а эксплуатируется: декларативная доставка, прогрессивный выкат с автооткатом, SLO с бюджетом ошибок и плейбук, по которому можно работать в 3 часа ночи.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Delivery is declarative: the cluster state matches the repo (GitOps)</span><span data-slang-body="ru" hidden>Доставка декларативна: состояние кластера совпадает с репозиторием (GitOps)</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A canary rollout with automatic rollback has survived a drill</span><span data-slang-body="ru" hidden>Канареечный выкат с автооткатом выдержал учение</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">An SLO with an error budget is published and alerting</span><span data-slang-body="ru" hidden>SLO с бюджетом ошибок опубликован и алертит</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A 3 AM runbook exists and has been followed once</span><span data-slang-body="ru" hidden>Ночной плейбук существует и хотя бы раз применён</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/argocd.html">argocd</a><a class="rm-chip" href="../skills/kubernetes.html">kubernetes</a><a class="rm-chip" href="../skills/sre-slos.html">sre-slos</a><a class="rm-chip" href="../skills/ci-cd-gitops-iac.html">ci-cd-gitops-iac</a><a class="rm-chip" href="../skills/observability-sre-highload.html">observability-sre-highload</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>05-gitops-canary-slo</code><span class="guide-words" data-i18n="words_n" data-n="143">~143 words</span></div><div class="skill-page-body" data-slang-body="en"><p># GitOps Delivery + Canary + SLO</p>
+<p>Turn &quot;hosted&quot; into &quot;operated&quot;: declarative delivery, progressive rollout, an SLO with an error budget, and a 3 AM runbook.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 5 of any conveyor, when the MVP is stable under load</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a platform engineer. Make this MVP operable:
+1. GitOps: repo structure (ApplicationSet) driving the cluster; cluster state == repo state
+2. Canary: progressive rollout with automatic rollback on error-metric regression; include a rollback drill
+3. SLO: one user-facing SLI, target, error budget, and the burn-rate alert
+4. Runbook: a 3 AM checklist (symptom -&gt; diagnosis command -&gt; action -&gt; verification), tested once
+Output: repo tree, rollout manifest, SLO definition, runbook.
+Stack: &lt;PASTE THE STACK AND CLUSTER&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 5 · gates 1-4: GitOps state, canary drill, SLO + budget, tested runbook.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># GitOps-доставка + канарейка + SLO</p>
+<p>Превратите «размещено» в «эксплуатируется»: декларативная доставка, прогрессивный выкат, SLO с бюджетом ошибок и ночной плейбук.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 5 любого конвейера, когда MVP стабилен под нагрузкой</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — платформенный инженер. Сделай этот MVP эксплуатируемым:
+1. GitOps: структура репозитория (ApplicationSet), управляющая кластером; состояние кластера == состояние репо
+2. Канарейка: прогрессивный выкат с автооткатом при регрессии метрик ошибок; включи учение отката
+3. SLO: один пользовательский SLI, цель, бюджет ошибок и алерт выгорания
+4. Плейбук: ночной чек-лист (симптом -&gt; команда диагностики -&gt; действие -&gt; проверка), применённый хотя бы раз
+Вывод: дерево репо, манифест выката, определение SLO, плейбук.
+Стек: &lt;СТЕК И КЛАСТЕР&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 5 · гейты 1-4: GitOps-состояние, учение канарейки, SLO + бюджет, проверенный плейбук.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">GitOps repo (ApplicationSet) driving the cluster</span><span data-slang-body="ru" hidden>GitOps-репозиторий (ApplicationSet), управляющий кластером</span></li><li><span data-slang-body="en">SLO dashboard + 3 AM runbook</span><span data-slang-body="ru" hidden>Дашборд SLO + ночной плейбук</span></li></ul></div></div>
+      <div class="page-nav"><a class="page-nav-link" href="ai-agent-to-production.html">← AI Agent → Production</a><span></span></div>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>conveyors/prototype-to-production.json</code> · <a href="https://github.com/ssrjkk/agent-skills/tree/main/prompts" data-i18n="view_source">prompts</a></p>
+    </div>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

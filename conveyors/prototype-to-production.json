@@ -1,0 +1,177 @@
+{
+  "$schema": "../conveyors.schema.json",
+  "slug": "prototype-to-production",
+  "name": "Prototype → MVP → Production",
+  "name_ru": "Прототип → MVP → Продакшн",
+  "icon": "🏭",
+  "tagline": "Run a web/API product through 5 quality gates: idea → spec → prototype → MVP → hardening → production",
+  "tagline_ru": "Проведите веб/API-продукт через 5 гейтов качества: идея → спецификация → прототип → MVP → закалка → продакшн",
+  "target": "web / API service",
+  "target_ru": "веб / API-сервис",
+  "status": "live",
+  "catalog_domain": "devops",
+  "related_skills": [
+    "design-spec-md",
+    "system-design",
+    "git-workflow",
+    "fastapi",
+    "docker",
+    "github-actions",
+    "postgresql",
+    "oauth2-jwt",
+    "secrets-management",
+    "owasp-web-security",
+    "prometheus-grafana",
+    "argocd",
+    "kubernetes",
+    "sre-slos",
+    "ci-cd-gitops-iac"
+  ],
+  "stages": [
+    {
+      "id": "spec",
+      "title": "Stage 1 · Idea → One-page spec",
+      "title_ru": "Этап 1 · Идея → Спецификация на одну страницу",
+      "goal": "Turn the idea into a testable one-page spec: problem, user, success metric, one runnable scope slice, explicit non-goals.",
+      "goal_ru": "Превратите идею в проверяемую спецификацию на одну страницу: проблема, пользователь, метрика успеха, один выполнимый срез скоупа и явный список «не делаем».",
+      "gates": [
+        "One-page spec exists: problem, target user, single success metric",
+        "Scope is cut to ONE runnable vertical slice (no 'and then everything')",
+        "Non-goals are written down and agreed with yourself",
+        "The slice has a definition of done you can check in a day"
+      ],
+      "gates_ru": [
+        "Спецификация на одну страницу существует: проблема, целевой пользователь, одна метрика успеха",
+        "Скоуп срезан до ОДНОГО выполнимого вертикального среза (без «а потом всё остальное»)",
+        "Список «не делаем» записан и согласован с самим собой",
+        "У среза есть definition of done, проверяемое за день"
+      ],
+      "skills": ["design-spec-md", "system-design", "git-workflow"],
+      "prompts": ["01-idea-to-spec"],
+      "artifacts": [
+        "docs/spec.md (one page, versioned in the repo)",
+        "Repo skeleton with README stub"
+      ],
+      "artifacts_ru": [
+        "docs/spec.md (одна страница, версионируется в репо)",
+        "Скелет репозитория с заготовкой README"
+      ]
+    },
+    {
+      "id": "prototype",
+      "title": "Stage 2 · Prototype (throwaway is allowed)",
+      "title_ru": "Этап 2 · Прототип (выбросить — можно)",
+      "goal": "One happy path runs locally end-to-end. Ugly code is fine; the point is to kill or confirm the idea, not to keep the code.",
+      "goal_ru": "Один счастливый путь запускается локально от начала до конца. Код может быть некрасивым: цель — убить или подтвердить идею, а не сохранить код.",
+      "gates": [
+        "The happy path runs locally with one documented command",
+        "One end-to-end smoke test proves the slice works",
+        "A decision is recorded: continue, pivot, or kill",
+        "Nothing from the prototype is promised to anyone yet"
+      ],
+      "gates_ru": [
+        "Счастливый путь запускается локально одной задокументированной командой",
+        "Один E2E смоук-тест доказывает, что срез работает",
+        "Решение зафиксировано: продолжаем, разворачиваемся или убиваем",
+        "Ничего из прототипа ещё не обещано никому"
+      ],
+      "skills": ["fastapi", "rest-api-design", "docker", "test-driven-development"],
+      "prompts": ["02-skeleton-and-smoke"],
+      "artifacts": [
+        "docker-compose.yml that boots the slice",
+        "A smoke script with exit code 0/1"
+      ],
+      "artifacts_ru": [
+        "docker-compose.yml, поднимающий срез",
+        "Смоук-скрипт с кодом возврата 0/1"
+      ]
+    },
+    {
+      "id": "mvp",
+      "title": "Stage 3 · MVP (deployed, tested, CI-gated)",
+      "title_ru": "Этап 3 · MVP (задеплоен, протестирован, под CI-гейтами)",
+      "goal": "The slice becomes a deployed MVP: real data model, auth, CI pipeline, and a public URL a user can actually hit.",
+      "goal_ru": "Срез превращается в задеплоенный MVP: настоящая модель данных, аутентификация, CI-пайплайн и публичный URL, по которому пользователь реально приходит.",
+      "gates": [
+        "CI runs lint + tests + build on every push and blocks on red",
+        "Real data model with migrations (no hand-edited databases)",
+        "Auth exists; secrets are in a manager, not in code",
+        "A public URL serves the MVP behind HTTPS"
+      ],
+      "gates_ru": [
+        "CI гоняет lint + тесты + сборку на каждый пуш и блокирует красный",
+        "Настоящая модель данных с миграциями (без «ручных» правок БД)",
+        "Аутентификация есть; секреты в менеджере, а не в коде",
+        "Публичный URL отдаёт MVP по HTTPS"
+      ],
+      "skills": ["github-actions", "postgresql", "oauth2-jwt", "secrets-management", "docker"],
+      "prompts": ["03-mvp-cut-and-ci"],
+      "artifacts": [
+        "CI pipeline file (build → test → deploy)",
+        "Deployed MVP URL + rollback command"
+      ],
+      "artifacts_ru": [
+        "Файл CI-пайплайна (build → test → deploy)",
+        "URL задеплоенного MVP + команда отката"
+      ]
+    },
+    {
+      "id": "hardening",
+      "title": "Stage 4 · Hardening (security, observability, backups)",
+      "title_ru": "Этап 4 · Закалка (безопасность, наблюдаемость, бэкапы)",
+      "goal": "Assume the MVP is now worth attacking and worth losing: close OWASP basics, add metrics/logs/alerts, and prove backups restore.",
+      "goal_ru": "Считайте, что MVP уже стоит того, чтобы его атаковать и что его можно потерять: закройте базовые OWASP-риски, добавьте метрики/логи/алерты и докажите восстановление из бэкапа.",
+      "gates": [
+        "OWASP top-10 checklist reviewed; auth and input validation hardened",
+        "Metrics, logs and one alert per error class are collected",
+        "A backup restore has been performed from zero, not assumed",
+        "A load test result is recorded against an SLO target"
+      ],
+      "gates_ru": [
+        "Чек-лист OWASP top-10 пройден; аутентификация и валидация ввода усилены",
+        "Метрики, логи и по одному алерту на класс ошибок собираются",
+        "Восстановление из бэкапа выполнено с нуля, а не «предполагается»",
+        "Результат нагрузочного теста зафиксирован против целевого SLO"
+      ],
+      "skills": ["owasp-web-security", "secrets-management", "prometheus-grafana", "nginx", "redis"],
+      "prompts": ["04-security-and-observability"],
+      "artifacts": [
+        "Observability stack files (metrics/logs/alerts)",
+        "Backup + restore script with a recorded restore drill"
+      ],
+      "artifacts_ru": [
+        "Файлы стека наблюдаемости (метрики/логи/алерты)",
+        "Скрипт бэкапа и восстановления с зафиксированным учением"
+      ]
+    },
+    {
+      "id": "production",
+      "title": "Stage 5 · Production (GitOps, canary, SLO, on-call)",
+      "title_ru": "Этап 5 · Продакшн (GitOps, канарейка, SLO, дежурство)",
+      "goal": "The product is operated, not just hosted: declarative delivery, progressive rollout with automatic rollback, an SLO with error budget, and a runbook you can follow at 3 AM.",
+      "goal_ru": "Продукт не просто «размещён», а эксплуатируется: декларативная доставка, прогрессивный выкат с автооткатом, SLO с бюджетом ошибок и плейбук, по которому можно работать в 3 часа ночи.",
+      "gates": [
+        "Delivery is declarative: the cluster state matches the repo (GitOps)",
+        "A canary rollout with automatic rollback has survived a drill",
+        "An SLO with an error budget is published and alerting",
+        "A 3 AM runbook exists and has been followed once"
+      ],
+      "gates_ru": [
+        "Доставка декларативна: состояние кластера совпадает с репозиторием (GitOps)",
+        "Канареечный выкат с автооткатом выдержал учение",
+        "SLO с бюджетом ошибок опубликован и алертит",
+        "Ночной плейбук существует и хотя бы раз применён"
+      ],
+      "skills": ["argocd", "kubernetes", "sre-slos", "ci-cd-gitops-iac", "observability-sre-highload"],
+      "prompts": ["05-gitops-canary-slo"],
+      "artifacts": [
+        "GitOps repo (ApplicationSet) driving the cluster",
+        "SLO dashboard + 3 AM runbook"
+      ],
+      "artifacts_ru": [
+        "GitOps-репозиторий (ApplicationSet), управляющий кластером",
+        "Дашборд SLO + ночной плейбук"
+      ]
+    }
+  ]
+}

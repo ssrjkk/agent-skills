@@ -86,6 +86,24 @@ jobs:
       - name: Agent-interop compatibility (universal format)
         run: python scripts/check_agent_interop.py
 
+      - name: Roadmap tracks validation
+        run: python scripts/validate_roadmaps.py
+
+      - name: Conveyor validation
+        run: python scripts/validate_conveyors.py
+
+      - name: Roadmap tracks validation
+        run: python scripts/validate_roadmaps.py
+
+      - name: Conveyor validation
+        run: python scripts/validate_conveyors.py
+
+      - name: Roadmap tracks validation
+        run: python scripts/validate_roadmaps.py
+
+      - name: Conveyor validation
+        run: python scripts/validate_conveyors.py
+
       - name: Python code fences in skills are valid
         run: python scripts/check_python_fences.py
 

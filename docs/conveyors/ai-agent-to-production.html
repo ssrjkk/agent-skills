@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent → Production — conveyor</title>
+  <meta name="description" content="Run an AI agent through 5 gates: spec → prototype loop → MVP with evals → safety &amp; cost → production">
+  <link rel="canonical" href="https://ssrjkk.github.io/agent-skills/conveyors/ai-agent-to-production.html">
+  <meta name="theme-color" content="#0b0f0a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Agent Skills Library">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:title" content="AI Agent → Production — conveyor">
+  <meta property="og:description" content="Run an AI agent through 5 gates: spec → prototype loop → MVP with evals → safety &amp; cost → production">
+  <meta property="og:url" content="https://ssrjkk.github.io/agent-skills/conveyors/ai-agent-to-production.html">
+  <meta property="og:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Agent → Production — conveyor">
+  <meta name="twitter:description" content="Run an AI agent through 5 gates: spec → prototype loop → MVP with evals → safety &amp; cost → production">
+  <meta name="twitter:image" content="https://github.com/ssrjkk/agent-skills/raw/main/.github/site-preview.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  
+</head>
+<body data-theme="dark">
+  <div class="bg-glow" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span></div>
+  <a class="skip-link" href="../index.html#catalog" data-i18n="skip">Skip to catalog</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html"><span class="nav-logo"><svg viewBox="0 0 96 96" aria-hidden="true"><rect x="4" y="4" width="88" height="88" rx="22" fill="#0e140d" stroke="#7dff4a" stroke-opacity=".45" stroke-width="3"/><polyline points="27,33 48,43 69,33" fill="none" stroke="#7dff4a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,49 48,59 69,49" fill="none" stroke="#00ffd1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline points="27,65 48,75 69,65" fill="none" stroke="#7dff4a" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-name">Agent&nbsp;Skills</span></a>
+      <div class="nav-right">
+        <a class="nav-link" href="../index.html#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a class="nav-link nav-hot" href="../roadmaps.html"><span data-i18n="nav_roadmaps">Roadmaps</span><span class="live-dot">live</span></a>
+        <a class="nav-link" href="../guides.html" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link" href="../conveyors.html" data-i18n="nav_conveyors">Conveyors</a>
+        <a class="nav-link nav-hot" href="../hire.html" data-i18n="nav_hire">Hire</a>
+        <a class="nav-link" href="../index.html#stats" data-i18n="nav_stats">Stats</a>
+        <a class="nav-link" href="../index.html#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
+        <a class="nav-link" href="https://github.com/ssrjkk/agent-skills">GitHub</a>
+        <a class="nav-link" href="https://t.me/ssrjkk_bot">Telegram</a>
+        <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">РУ</button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="rm-page">
+      <p class="back-link"><a href="../conveyors.html" data-i18n="back_conveyors">← All conveyors</a></p>
+      <header class="rm-hero">
+        <span class="domain-chip">AI agent / LLM-powered service</span>
+        <h1>🤖 <span data-slang-body="en">AI Agent → Production</span><span data-slang-body="ru" hidden>AI-агент → Продакшн</span> <span class="live-pill big">live</span></h1>
+        <p><span data-slang-body="en">Run an AI agent through 5 gates: spec → prototype loop → MVP with evals → safety &amp; cost → production</span><span data-slang-body="ru" hidden>Проведите AI-агента через 5 гейтов: спецификация → прототип цикла → MVP с оценками → безопасность и стоимость → продакшн</span></p>
+      </header>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="prototype-to-production.html">Prototype → MVP → Production →</a></div>
+      <div class="rm-timeline"><div class="rm-stage" id="agent-spec"><h3>▸ <span class="guide-num">01</span> <span data-slang-body="en">Stage 1 · Agent spec: job, guardrails, eval set</span><span data-slang-body="ru" hidden>Этап 1 · Спецификация агента: задача, границы, eval-набор</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">Define the agent&#x27;s job so narrowly that success is measurable: inputs, tools, refusal policy, and a golden eval set written BEFORE the first prompt.</span><span data-slang-body="ru" hidden>Сузьте задачу агента так, чтобы успех был измерим: входы, инструменты, политика отказа и золотой eval-набор, написанный ДО первого промпта.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">The agent&#x27;s job is one sentence with a measurable success criterion</span><span data-slang-body="ru" hidden>Задача агента — одно предложение с измеримым критерием успеха</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A golden eval set (≥ 20 cases) exists, written before any prompting</span><span data-slang-body="ru" hidden>Золотой eval-набор (≥ 20 кейсов) существует и написан до любого промптинга</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Refusal policy is explicit: what the agent must NOT do or answer</span><span data-slang-body="ru" hidden>Политика отказа явная: что агент НЕ должен делать и отвечать</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Tool list is minimal and each tool has a purpose</span><span data-slang-body="ru" hidden>Список инструментов минимален, у каждого есть назначение</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/agent-development.html">agent-development</a><a class="rm-chip" href="../skills/design-spec-md.html">design-spec-md</a><a class="rm-chip" href="../skills/llm-evals.html">llm-evals</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>01-idea-to-spec</code><span class="guide-words" data-i18n="words_n" data-n="177">~177 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Idea → One-page Spec</p>
+<p>Turn the idea below into a <strong>one-page spec</strong> a single engineer can start tomorrow.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 1 of any conveyor, before writing a single line of code</li>
+<li>Any time the scope of an ongoing project quietly grows</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a product engineer. Convert the idea below into a one-page spec.
+Rules:
+- Cut scope aggressively: exactly ONE runnable vertical slice.
+- No feature without a measurable success metric. Unmeasurable wishes go to Non-goals.
+- The slice must have a Definition of Done checkable in one working day.
+- Output exactly these sections, nothing else:
+  1. Problem (2 sentences, who hurts and why)
+  2. Target user (one persona)
+  3. Success metric (one number with a deadline)
+  4. The one slice (steps a user takes, first to last)
+  5. Non-goals (at least 3 explicit rejections)
+  6. Definition of done (checkbox list)
+
+Idea: &lt;PASTE YOUR IDEA&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 1 · gates 1-4: spec exists, scope cut to one slice, non-goals written, DoD checkable.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Идея → Спецификация на одну страницу</p>
+<p>Превратите идею ниже в <strong>спецификацию на одну страницу</strong>, которую один инженер может начать делать завтра.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 1 любого конвейера, до первой строки кода</li>
+<li>Каждый раз, когда скоуп текущего проекта тихо разрастается</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — продуктовый инженер. Преобразуй идею ниже в спецификацию на одну страницу.
+Правила:
+- Режь скоуп агрессивно: ровно ОДИН выполнимый вертикальный срез.
+- Ни одной фичи без измеримой метрики успеха. Неизмеряемые пожелания — в «Не делаем».
+- У среза есть Definition of Done, проверяемое за один рабочий день.
+- Выводи ровно эти разделы, ничего больше:
+  1. Проблема (2 предложения: кому больно и почему)
+  2. Целевой пользователь (одна персона)
+  3. Метрика успеха (одно число с дедлайном)
+  4. Один срез (шаги пользователя от первого до последнего)
+  5. Не делаем (минимум 3 явных отказа)
+  6. Definition of done (чек-лист)
+
+Идея: &lt;ВСТАВЬТЕ СВОЮ ИДЕЮ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 1 · гейты 1-4: спецификация есть, скоуп срезан до одного среза, «не делаем» записаны, DoD проверяем.</p></div></div><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>06-agent-eval-set</code><span class="guide-words" data-i18n="words_n" data-n="165">~165 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Golden Eval Set Before Any Prompting</p>
+<p>Write the agent&#x27;s golden eval set BEFORE tuning a single prompt. No eval set = no objective quality, only vibes.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 1 of the AI conveyor, before writing the first prompt</li>
+<li>Every time the agent&#x27;s job changes scope</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an AI QA engineer. Build a golden eval set for the agent below:
+- &gt;= 20 cases across 5 categories: happy paths (8), edge inputs (4),
+  refusal cases (4), adversarial/injection (2), regression anchors (2+)
+- Each case: input, expected behaviour (observable, not vibes), severity
+- 3 cases MUST be ones the current design will fail (they define the next work)
+- A runner spec: how to execute the set and compute a pass rate
+Output: the eval set as a table + the runner spec.
+Agent job: &lt;ONE SENTENCE + TOOLS&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 1 · gates 2-3: eval set written before prompting, refusal policy explicit.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Золотой eval-набор до любого промптинга</p>
+<p>Напишите золотой eval-набор агента ДО настройки хотя бы одного промпта. Нет eval-набора — нет объективного качества, только «на глаз».</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 1 AI-конвейера, до первого промпта</li>
+<li>Каждый раз, когда меняется скоуп задачи агента</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — AI-инженер по качеству. Собери золотой eval-набор для агента ниже:
+- &gt;= 20 кейсов по 5 категориям: счастливые пути (8), краевые входы (4),
+  кейсы отказа (4), атакующие/инъекции (2), якоря регрессий (2+)
+- Каждый кейс: вход, ожидаемое поведение (наблюдаемое, не «на глаз»), критичность
+- 3 кейса ОБЯЗАТЕЛЬНО должны провалиться текущей конструкцией (они задают следующую работу)
+- Спецификация раннера: как исполнить набор и посчитать долю прохождений
+Вывод: eval-набор таблицей + спецификация раннера.
+Задача агента: &lt;ОДНО ПРЕДЛОЖЕНИЕ + ИНСТРУМЕНТЫ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 1 · гейты 2-3: eval-набор написан до промптинга, политика отказа явная.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">Agent spec one-pager + refusal policy</span><span data-slang-body="ru" hidden>Спецификация агента на одну страницу + политика отказа</span></li><li><span data-slang-body="en">Golden eval set (cases + expected outcomes)</span><span data-slang-body="ru" hidden>Золотой eval-набор (кейсы + ожидаемые исходы)</span></li></ul></div><div class="rm-stage" id="agent-prototype"><h3>▸ <span class="guide-num">02</span> <span data-slang-body="en">Stage 2 · Prototype the agent loop</span><span data-slang-body="ru" hidden>Этап 2 · Прототип агентного цикла</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">The smallest working loop: prompt → model → tool → response, run locally against the eval set. Judge with the eval set, not with vibes.</span><span data-slang-body="ru" hidden>Самый маленький рабочий цикл: промпт → модель → инструмент → ответ, локально против eval-набора. Оценивайте eval-набором, а не «на глаз».</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">The loop runs locally: prompt → model → tools → structured response</span><span data-slang-body="ru" hidden>Цикл запускается локально: промпт → модель → инструменты → структурированный ответ</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">The golden eval set runs and prints a pass rate</span><span data-slang-body="ru" hidden>Золотой eval-набор запускается и печатает долю прохождений</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Failures are categorized (bad prompt / bad tool / bad data)</span><span data-slang-body="ru" hidden>Отказы классифицированы (плохой промпт / плохой инструмент / плохие данные)</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Model choice is recorded with cost per eval run</span><span data-slang-body="ru" hidden>Выбор модели зафиксирован вместе со стоимостью одного eval-прогона</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/prompt-engineering.html">prompt-engineering</a><a class="rm-chip" href="../skills/function-calling.html">function-calling</a><a class="rm-chip" href="../skills/mcp-servers.html">mcp-servers</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>02-skeleton-and-smoke</code><span class="guide-words" data-i18n="words_n" data-n="164">~164 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Skeleton + One-command Smoke Test</p>
+<p>Generate a <strong>throwaway prototype</strong>: the smallest project that runs the slice locally with one command and proves it with a smoke script.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 2 of any conveyor: the prototype loop</li>
+<li>Deciding whether an idea lives or dies before investing</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a pragmatic engineer. Create a THROWAWAY prototype (ugly code is fine) for the spec below.
+Requirements:
+- One command boots everything locally: `docker compose up` (or equivalent)
+- One happy path works end-to-end
+- A smoke script `scripts/smoke.sh` exits 0 when the slice works, 1 when it does not
+- No auth, no polish, no extra features — the slice only
+- A DECISION.md file: &quot;continue / pivot / kill&quot; plus the reason
+
+Output: the full file tree with file contents, then the two commands to run.
+Spec: &lt;PASTE THE SPEC&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 2 · gates 1-3: one-command local run, E2E smoke, recorded decision.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Скелет + смоук одной командой</p>
+<p>Создайте <strong>одноразовый прототип</strong>: минимальный проект, который запускает срез локально одной командой и доказывает это смоук-скриптом.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 2 любого конвейера: цикл прототипа</li>
+<li>Решение, живёт идея или умирает, до вложений</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — прагматичный инженер. Создай ОДНОРАЗОВЫЙ прототип (код может быть некрасивым) для спецификации ниже.
+Требования:
+- Одна команда поднимает всё локально: `docker compose up` (или аналог)
+- Один счастливый путь работает от начала до конца
+- Смоук-скрипт `scripts/smoke.sh` возвращает 0, если срез работает, и 1 — если нет
+- Без аутентификации, без полировки, без лишних фич — только срез
+- Файл DECISION.md: «continue / pivot / kill» плюс причина
+
+Вывод: полное дерево файлов с содержимым, затем две команды для запуска.
+Спецификация: &lt;ВСТАВЬТЕ СПЕЦИФИКАЦИЮ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 2 · гейты 1-3: локальный запуск одной командой, E2E смоук, зафиксированное решение.</p></div></div><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>06-agent-eval-set</code><span class="guide-words" data-i18n="words_n" data-n="165">~165 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Golden Eval Set Before Any Prompting</p>
+<p>Write the agent&#x27;s golden eval set BEFORE tuning a single prompt. No eval set = no objective quality, only vibes.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 1 of the AI conveyor, before writing the first prompt</li>
+<li>Every time the agent&#x27;s job changes scope</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an AI QA engineer. Build a golden eval set for the agent below:
+- &gt;= 20 cases across 5 categories: happy paths (8), edge inputs (4),
+  refusal cases (4), adversarial/injection (2), regression anchors (2+)
+- Each case: input, expected behaviour (observable, not vibes), severity
+- 3 cases MUST be ones the current design will fail (they define the next work)
+- A runner spec: how to execute the set and compute a pass rate
+Output: the eval set as a table + the runner spec.
+Agent job: &lt;ONE SENTENCE + TOOLS&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 1 · gates 2-3: eval set written before prompting, refusal policy explicit.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Золотой eval-набор до любого промптинга</p>
+<p>Напишите золотой eval-набор агента ДО настройки хотя бы одного промпта. Нет eval-набора — нет объективного качества, только «на глаз».</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 1 AI-конвейера, до первого промпта</li>
+<li>Каждый раз, когда меняется скоуп задачи агента</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — AI-инженер по качеству. Собери золотой eval-набор для агента ниже:
+- &gt;= 20 кейсов по 5 категориям: счастливые пути (8), краевые входы (4),
+  кейсы отказа (4), атакующие/инъекции (2), якоря регрессий (2+)
+- Каждый кейс: вход, ожидаемое поведение (наблюдаемое, не «на глаз»), критичность
+- 3 кейса ОБЯЗАТЕЛЬНО должны провалиться текущей конструкцией (они задают следующую работу)
+- Спецификация раннера: как исполнить набор и посчитать долю прохождений
+Вывод: eval-набор таблицей + спецификация раннера.
+Задача агента: &lt;ОДНО ПРЕДЛОЖЕНИЕ + ИНСТРУМЕНТЫ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 1 · гейты 2-3: eval-набор написан до промптинга, политика отказа явная.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">Eval runner with a printed pass rate</span><span data-slang-body="ru" hidden>Eval-раннер с печатной долей прохождений</span></li><li><span data-slang-body="en">Prototype loop code (explicitly throwaway)</span><span data-slang-body="ru" hidden>Код прототипа цикла (явно одноразовый)</span></li></ul></div><div class="rm-stage" id="agent-mvp"><h3>▸ <span class="guide-num">03</span> <span data-slang-body="en">Stage 3 · MVP: structured output + RAG + deployed</span><span data-slang-body="ru" hidden>Этап 3 · MVP: структурированный вывод + RAG + задеплоено</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">The agent becomes a service: schema-constrained outputs, grounded answers (RAG or tools), CI that blocks on eval regressions, and a public endpoint.</span><span data-slang-body="ru" hidden>Агент становится сервисом: вывод, ограниченный схемой, ответы с опорой на данные (RAG или инструменты), CI, блокирующий регрессии eval-ов, и публичный эндпоинт.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Outputs are schema-constrained (no free-text parsing of model answers)</span><span data-slang-body="ru" hidden>Вывод ограничен схемой (никакого разбора свободного текста ответов модели)</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Grounding is real: every factual answer cites its source</span><span data-slang-body="ru" hidden>Опора на данные реальна: каждый фактический ответ ссылается на источник</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">CI blocks on eval pass-rate regression</span><span data-slang-body="ru" hidden>CI блокирует регрессию доли прохождения eval-ов</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">A public endpoint serves the agent behind HTTPS</span><span data-slang-body="ru" hidden>Публичный эндпоинт отдаёт агента по HTTPS</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/structured-output.html">structured-output</a><a class="rm-chip" href="../skills/rag-pipeline.html">rag-pipeline</a><a class="rm-chip" href="../skills/vector-databases.html">vector-databases</a><a class="rm-chip" href="../skills/llm-evals.html">llm-evals</a><a class="rm-chip" href="../skills/ai-testing.html">ai-testing</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>03-mvp-cut-and-ci</code><span class="guide-words" data-i18n="words_n" data-n="170">~170 words</span></div><div class="skill-page-body" data-slang-body="en"><p># MVP Scope + CI Pipeline</p>
+<p>Upgrade the prototype into a <strong>deployed MVP</strong>: real data model, auth, CI gates, public URL.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 3 of any conveyor, when the prototype decision was &quot;continue&quot;</li>
+<li>Any project that runs manually but should run in CI</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are a senior engineer. Upgrade this prototype into an MVP with these gates:
+1. Real data model with migrations (no hand-edited databases)
+2. Auth: working session or token flow; secrets in a manager, never in code
+3. CI pipeline on every push: lint -&gt; tests -&gt; build -&gt; deploy; red blocks merge
+4. A public HTTPS URL serving the MVP, plus a documented ROLLBACK command
+Keep the prototype&#x27;s scope. Add NOTHING that is not in the spec.
+Output: a numbered task list (each task &lt; 2h), the CI file, and the deploy config.
+Prototype: &lt;PASTE THE REPO TREE&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 3 · gates 1-4: CI blocks red, migrations, auth + managed secrets, public URL.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Скоуп MVP + CI-пайплайн</p>
+<p>Превратите прототип в <strong>задеплоенный MVP</strong>: настоящая модель данных, аутентификация, CI-гейты, публичный URL.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 3 любого конвейера, когда решение по прототипу — «continue»</li>
+<li>Любой проект, который запускается вручную, но должен запускаться в CI</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — ведущий инженер. Преврати прототип в MVP с этими гейтами:
+1. Настоящая модель данных с миграциями (без ручных правок БД)
+2. Аутентификация: рабочая сессия или токен; секреты в менеджере, не в коде
+3. CI-пайплайн на каждый пуш: lint -&gt; тесты -&gt; сборка -&gt; deploy; красный блокирует слияние
+4. Публичный HTTPS URL, отдающий MVP, плюс задокументированная команда ROLLBACK
+Скоуп прототипа сохраняем. Ничего сверх спецификации не добавляем.
+Вывод: нумерованный список задач (каждая &lt; 2ч), файл CI и конфиг деплоя.
+Прототип: &lt;ДЕРЕВО РЕПОЗИТОРИЯ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 3 · гейты 1-4: CI блокирует красный, миграции, аутентификация + секреты, публичный URL.</p></div></div><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>06-agent-eval-set</code><span class="guide-words" data-i18n="words_n" data-n="165">~165 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Golden Eval Set Before Any Prompting</p>
+<p>Write the agent&#x27;s golden eval set BEFORE tuning a single prompt. No eval set = no objective quality, only vibes.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 1 of the AI conveyor, before writing the first prompt</li>
+<li>Every time the agent&#x27;s job changes scope</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an AI QA engineer. Build a golden eval set for the agent below:
+- &gt;= 20 cases across 5 categories: happy paths (8), edge inputs (4),
+  refusal cases (4), adversarial/injection (2), regression anchors (2+)
+- Each case: input, expected behaviour (observable, not vibes), severity
+- 3 cases MUST be ones the current design will fail (they define the next work)
+- A runner spec: how to execute the set and compute a pass rate
+Output: the eval set as a table + the runner spec.
+Agent job: &lt;ONE SENTENCE + TOOLS&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 1 · gates 2-3: eval set written before prompting, refusal policy explicit.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Золотой eval-набор до любого промптинга</p>
+<p>Напишите золотой eval-набор агента ДО настройки хотя бы одного промпта. Нет eval-набора — нет объективного качества, только «на глаз».</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 1 AI-конвейера, до первого промпта</li>
+<li>Каждый раз, когда меняется скоуп задачи агента</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — AI-инженер по качеству. Собери золотой eval-набор для агента ниже:
+- &gt;= 20 кейсов по 5 категориям: счастливые пути (8), краевые входы (4),
+  кейсы отказа (4), атакующие/инъекции (2), якоря регрессий (2+)
+- Каждый кейс: вход, ожидаемое поведение (наблюдаемое, не «на глаз»), критичность
+- 3 кейса ОБЯЗАТЕЛЬНО должны провалиться текущей конструкцией (они задают следующую работу)
+- Спецификация раннера: как исполнить набор и посчитать долю прохождений
+Вывод: eval-набор таблицей + спецификация раннера.
+Задача агента: &lt;ОДНО ПРЕДЛОЖЕНИЕ + ИНСТРУМЕНТЫ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 1 · гейты 2-3: eval-набор написан до промптинга, политика отказа явная.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">Eval CI job (blocks merge on regression)</span><span data-slang-body="ru" hidden>Eval-джоба в CI (блокирует слияние при регрессии)</span></li><li><span data-slang-body="en">Deployed agent endpoint</span><span data-slang-body="ru" hidden>Задеплоенный эндпоинт агента</span></li></ul></div><div class="rm-stage" id="agent-hardening"><h3>▸ <span class="guide-num">04</span> <span data-slang-body="en">Stage 4 · Safety &amp; cost: guardrails, caching, observability</span><span data-slang-body="ru" hidden>Этап 4 · Безопасность и стоимость: guardrails, кэш, наблюдаемость</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">Assume users will try to break it and finance will ask what it costs: prompt-injection defenses, refusal enforcement, per-request cost/latency tracking, and caching where it pays.</span><span data-slang-body="ru" hidden>Считайте, что пользователи будут пытаться его сломать, а финансы спросят, сколько он стоит: защита от prompt-инъекций, принудительный отказ, учёт стоимости и латентности каждого запроса, кэширование там, где оно окупается.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Prompt-injection test suite exists and passes</span><span data-slang-body="ru" hidden>Существует и проходит набор тестов на prompt-инъекции</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Refusals are enforced in code, not only promised in the prompt</span><span data-slang-body="ru" hidden>Отказы принуждаются кодом, а не только обещаются в промпте</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Cost and latency per request are logged and alertable</span><span data-slang-body="ru" hidden>Стоимость и латентность каждого запроса логируются и алертятся</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Caching measurably reduces cost without hurting the eval pass rate</span><span data-slang-body="ru" hidden>Кэширование измеримо снижает стоимость без просадки eval-прохождения</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/llm-guardrails.html">llm-guardrails</a><a class="rm-chip" href="../skills/prompt-caching.html">prompt-caching</a><a class="rm-chip" href="../skills/observability-llm.html">observability-llm</a><a class="rm-chip" href="../skills/context-engineering.html">context-engineering</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>07-guardrails-and-cost</code><span class="guide-words" data-i18n="words_n" data-n="149">~149 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Guardrails, Refusal Enforcement, Cost Budget</p>
+<p>Assume users will attack the agent and finance will audit its bill. Produce the safety-and-cost plan.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 4 of the AI conveyor, when the agent MVP is public</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an AI platform engineer. Harden this agent:
+1. Prompt-injection suite: &gt;= 8 attack cases (indirect via tools, role-play, encoded payloads)
+2. Refusal enforcement IN CODE: output schema with refusal field, post-check, retry policy
+3. Cost/latency: per-request accounting, monthly budget, alert at 60% and 90%
+4. Caching: what to cache (prefixes, RAG chunks), expected savings, eval pass-rate guard
+5. Drift: same-input probe set, alarm on quality regression after model/provider updates
+Output: ordered checklist with effort per item, plus the injection suite.
+Agent: &lt;PASTE THE LOOP AND STACK&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 4 · gates 1-4: injection suite passes, code-enforced refusals, cost/latency alerting, measured caching.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Guardrails, принудительный отказ, бюджет стоимости</p>
+<p>Считайте, что пользователи будут атаковать агента, а финансы будут проверять его счёт. Составьте план безопасности и стоимости.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 4 AI-конвейера, когда MVP агента публичен</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — AI-платформенный инженер. Закали агента:
+1. Набор prompt-инъекций: &gt;= 8 атак (косвенные через инструменты, role-play, закодированные payload)
+2. Принудительный отказ В КОДЕ: схема вывода с полем отказа, пост-проверка, политика повтора
+3. Стоимость/латентность: учёт на каждый запрос, месячный бюджет, алерты на 60% и 90%
+4. Кэширование: что кэшировать (префиксы, RAG-чанки), ожидаемая экономия, защита доли прохождения eval
+5. Дрейф: набор проб «одинаковый вход», сигнализация регрессии качества после обновления модели/провайдера
+Вывод: чек-лист по приоритету с трудозатратами на пункт, плюс набор инъекций.
+Агент: &lt;ЦИКЛ И СТЕК&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 4 · гейты 1-4: набор инъекций проходит, отказ принуждается кодом, алерты стоимости/латентности, измеренное кэширование.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">Prompt-injection test suite</span><span data-slang-body="ru" hidden>Набор тестов на prompt-инъекции</span></li><li><span data-slang-body="en">Cost/latency dashboard with alerts</span><span data-slang-body="ru" hidden>Дашборд стоимости и латентности с алертами</span></li></ul></div><div class="rm-stage" id="agent-production"><h3>▸ <span class="guide-num">05</span> <span data-slang-body="en">Stage 5 · Production: evals in CI, monitoring, drift control</span><span data-slang-body="ru" hidden>Этап 5 · Продакшн: evals в CI, мониторинг, контроль дрейфа</span> <span class="live-pill">live</span></h3><p><span data-slang-body="en">The agent is operated like a service, not demoed like a chat: evals on every change, model/provider drift monitored, incidents postmortemed into the eval set.</span><span data-slang-body="ru" hidden>Агент эксплуатируется как сервис, а не демострируется как чат: evals на каждое изменение, мониторинг дрейфа модели и провайдера, инциденты постмортемятся в eval-набор.</span></p><p class="cv-label"><span data-slang-body="en">Gates</span><span data-slang-body="ru" hidden>Гейты</span></p><ul class="task-list"><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Every prompt/model change runs the eval set in CI before merge</span><span data-slang-body="ru" hidden>Каждое изменение промпта/модели прогоняет eval-набор в CI до слияния</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Production responses are sampled and re-scored against the eval set</span><span data-slang-body="ru" hidden>Продакшн-ответы сэмплируются и пересчитываются против eval-набора</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Model/provider drift has an alarm (same input, worse output)</span><span data-slang-body="ru" hidden>Дрейф модели/провайдера под сигнализацией (тот же вход — хуже выход)</span></li><li class="task"><input type="checkbox" disabled> <span data-slang-body="en">Every incident becomes a new eval case</span><span data-slang-body="ru" hidden>Каждый инцидент становится новым eval-кейсом</span></li></ul><p class="cv-label"><span data-slang-body="en">Catalog skills</span><span data-slang-body="ru" hidden>Скиллы каталога</span></p><div class="rm-chips"><a class="rm-chip" href="../skills/mlops.html">mlops</a><a class="rm-chip" href="../skills/llm-guardrails.html">llm-guardrails</a><a class="rm-chip" href="../skills/observability-llm.html">observability-llm</a><a class="rm-chip" href="../skills/llm-evals.html">llm-evals</a><a class="rm-chip" href="../skills/kubernetes.html">kubernetes</a></div><p class="cv-label"><span data-slang-body="en">Prompts</span><span data-slang-body="ru" hidden>Промпты</span></p><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>06-agent-eval-set</code><span class="guide-words" data-i18n="words_n" data-n="165">~165 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Golden Eval Set Before Any Prompting</p>
+<p>Write the agent&#x27;s golden eval set BEFORE tuning a single prompt. No eval set = no objective quality, only vibes.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 1 of the AI conveyor, before writing the first prompt</li>
+<li>Every time the agent&#x27;s job changes scope</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an AI QA engineer. Build a golden eval set for the agent below:
+- &gt;= 20 cases across 5 categories: happy paths (8), edge inputs (4),
+  refusal cases (4), adversarial/injection (2), regression anchors (2+)
+- Each case: input, expected behaviour (observable, not vibes), severity
+- 3 cases MUST be ones the current design will fail (they define the next work)
+- A runner spec: how to execute the set and compute a pass rate
+Output: the eval set as a table + the runner spec.
+Agent job: &lt;ONE SENTENCE + TOOLS&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 1 · gates 2-3: eval set written before prompting, refusal policy explicit.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Золотой eval-набор до любого промптинга</p>
+<p>Напишите золотой eval-набор агента ДО настройки хотя бы одного промпта. Нет eval-набора — нет объективного качества, только «на глаз».</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 1 AI-конвейера, до первого промпта</li>
+<li>Каждый раз, когда меняется скоуп задачи агента</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — AI-инженер по качеству. Собери золотой eval-набор для агента ниже:
+- &gt;= 20 кейсов по 5 категориям: счастливые пути (8), краевые входы (4),
+  кейсы отказа (4), атакующие/инъекции (2), якоря регрессий (2+)
+- Каждый кейс: вход, ожидаемое поведение (наблюдаемое, не «на глаз»), критичность
+- 3 кейса ОБЯЗАТЕЛЬНО должны провалиться текущей конструкцией (они задают следующую работу)
+- Спецификация раннера: как исполнить набор и посчитать долю прохождений
+Вывод: eval-набор таблицей + спецификация раннера.
+Задача агента: &lt;ОДНО ПРЕДЛОЖЕНИЕ + ИНСТРУМЕНТЫ&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 1 · гейты 2-3: eval-набор написан до промптинга, политика отказа явная.</p></div></div><div class="prompt-block"><div class="prompt-head"><span data-slang-body="en">Prompt</span><span data-slang-body="ru" hidden>Промпт</span>: <code>07-guardrails-and-cost</code><span class="guide-words" data-i18n="words_n" data-n="149">~149 words</span></div><div class="skill-page-body" data-slang-body="en"><p># Guardrails, Refusal Enforcement, Cost Budget</p>
+<p>Assume users will attack the agent and finance will audit its bill. Produce the safety-and-cost plan.</p>
+<h2>When to use</h2>
+<ul>
+<li>Stage 4 of the AI conveyor, when the agent MVP is public</li>
+</ul>
+<h2>Prompt</h2>
+<div class="codeblock"><pre class="code"><code>You are an AI platform engineer. Harden this agent:
+1. Prompt-injection suite: &gt;= 8 attack cases (indirect via tools, role-play, encoded payloads)
+2. Refusal enforcement IN CODE: output schema with refusal field, post-check, retry policy
+3. Cost/latency: per-request accounting, monthly budget, alert at 60% and 90%
+4. Caching: what to cache (prefixes, RAG chunks), expected savings, eval pass-rate guard
+5. Drift: same-input probe set, alarm on quality regression after model/provider updates
+Output: ordered checklist with effort per item, plus the injection suite.
+Agent: &lt;PASTE THE LOOP AND STACK&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Gate this satisfies</h2>
+<p>Stage 4 · gates 1-4: injection suite passes, code-enforced refusals, cost/latency alerting, measured caching.</p></div><div class="skill-page-body" data-slang-body="ru" hidden><p># Guardrails, принудительный отказ, бюджет стоимости</p>
+<p>Считайте, что пользователи будут атаковать агента, а финансы будут проверять его счёт. Составьте план безопасности и стоимости.</p>
+<h2>Когда использовать</h2>
+<ul>
+<li>Этап 4 AI-конвейера, когда MVP агента публичен</li>
+</ul>
+<h2>Промпт</h2>
+<div class="codeblock"><pre class="code"><code>Ты — AI-платформенный инженер. Закали агента:
+1. Набор prompt-инъекций: &gt;= 8 атак (косвенные через инструменты, role-play, закодированные payload)
+2. Принудительный отказ В КОДЕ: схема вывода с полем отказа, пост-проверка, политика повтора
+3. Стоимость/латентность: учёт на каждый запрос, месячный бюджет, алерты на 60% и 90%
+4. Кэширование: что кэшировать (префиксы, RAG-чанки), ожидаемая экономия, защита доли прохождения eval
+5. Дрейф: набор проб «одинаковый вход», сигнализация регрессии качества после обновления модели/провайдера
+Вывод: чек-лист по приоритету с трудозатратами на пункт, плюс набор инъекций.
+Агент: &lt;ЦИКЛ И СТЕК&gt;</code></pre><button class="copy-btn code-copy" onclick="copyText(this.parentNode.querySelector('code').textContent)">copy</button></div>
+<h2>Закрываемый гейт</h2>
+<p>Этап 4 · гейты 1-4: набор инъекций проходит, отказ принуждается кодом, алерты стоимости/латентности, измеренное кэширование.</p></div></div><p class="cv-label"><span data-slang-body="en">Artifacts</span><span data-slang-body="ru" hidden>Артефакты</span></p><ul><li><span data-slang-body="en">Eval-in-CI job on the main branch</span><span data-slang-body="ru" hidden>Eval-джоба в CI на главной ветке</span></li><li><span data-slang-body="en">Production sampling dashboard + drift alarm</span><span data-slang-body="ru" hidden>Дашборд продакшн-сэмплинга + сигнализация дрейфа</span></li></ul></div></div>
+      <div class="page-nav"><span></span><a class="page-nav-link" href="prototype-to-production.html">Prototype → MVP → Production →</a></div>
+      <p class="rm-note"><span data-i18n="src">Source:</span> <code>conveyors/ai-agent-to-production.json</code> · <a href="https://github.com/ssrjkk/agent-skills/tree/main/prompts" data-i18n="view_source">prompts</a></p>
+    </div>
+  </div>
+  <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
+  <div class="toast" id="toast"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

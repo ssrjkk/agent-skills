@@ -5,6 +5,10 @@
 ## [Unreleased]
 
 ### Added
+- **Conveyors (конвейеры производства)**: идея → прототип → MVP → закалка → продакшн; 
+  2 live-конвейера (web/API и AI-агент), 5 этапов с гейтами-чеклистами, скиллами каталога,
+  двуязычной библиотекой промптов (7 тем × EN/RU) и валидатором `validate_conveyors.py`;
+  портал: conveyors.html + страница на конвейер с инлайн-промптами (EN/RU)
 - Career mode: открытая для рекрутёров страница `hire.html` (Person JSON-LD, evidence grid «каждое заявление — живая ссылка», три карьерных трека) + запись в sitemap (priority 1.0)
 - Гейт уязвимостей зависимостей: `make audit` / CI-шаг `pip-audit -r requirements.txt` (на внедрении — чисто)
 - `scripts/sync_npm.py`: синхронизация снапшота каталога в npm/ + семантическая проверка дрейфа + сверка версий pyproject ↔ npm/package.json
