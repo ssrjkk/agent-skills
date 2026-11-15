@@ -1627,10 +1627,10 @@ body[data-theme="light"] .tab-btn.active{background:linear-gradient(135deg,rgba(
 .rm-detail-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
 .rm-detail-head h2{font-size:1.3rem}
 .rm-tag{font-size:.7rem;color:var(--muted);border:1px solid var(--border);padding:.15rem .6rem;border-radius:20px}
-.rm-timeline{display:grid;gap:.7rem;margin-top:1.1rem}
-.rm-stage{border:1px dashed var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
-.rm-stage h3{font-size:.85rem;display:flex;align-items:center;gap:.5rem}
-.rm-stage p{color:var(--muted);font-size:.78rem;margin-top:.25rem}
+.rm-timeline{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;margin-top:1.1rem}
+.rm-stage{min-width:0;border:1px dashed var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:.8rem 1rem;background:var(--bg2)}
+.rm-stage h3{font-size:.85rem;display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.rm-stage p{color:var(--muted);font-size:.78rem;margin-top:.25rem;overflow-wrap:anywhere}
 .rm-note{margin-top:1rem;color:var(--muted);font-size:.78rem;text-align:center}
 .roadmaps-teaser .rm-detail{text-align:left}
 .roadmaps-teaser .rm-stage li{text-align:left}
@@ -1659,7 +1659,7 @@ body[data-theme="light"] .tab-btn.active{background:linear-gradient(135deg,rgba(
 .guide-card-excerpt{color:var(--muted);font-size:.74rem;line-height:1.45;overflow-wrap:anywhere}
 .guide-card-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:.4rem}
 .guide-words{font-size:.66rem;color:var(--muted);font-family:var(--mono)}
-.prompt-block{margin:1.1rem 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2);overflow:hidden}
+.prompt-block{margin:1.1rem 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2);overflow:hidden;min-width:0}
 .prompt-head{padding:.45rem .7rem;border-bottom:1px solid var(--border);background:rgba(125,255,74,.06);font-size:.72rem;color:var(--muted);font-family:var(--mono)}
 .prompt-head code{color:var(--accent)}
 .prompt-block .skill-page-body{padding:.6rem .9rem}
