@@ -78,6 +78,8 @@ check-readme:
 
 consistency:
 	python scripts/check_site_consistency.py
+audit:
+	python -m pip_audit -r requirements.txt
 
 clean:
 	python -c "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]"

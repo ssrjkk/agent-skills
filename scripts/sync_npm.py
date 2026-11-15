@@ -35,6 +35,16 @@ def main() -> int:
             data.get("metadata", {}).pop("generated_at", None)
             return data
 
+        # version drift guard: pyproject is the source of truth (AUDIT A1 -
+        # npm once shipped 3.4.0 while the project was at 4.1.1)
+        import re as _re
+        pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        m = _re.search(r'^version = "([^"]+)"', pyproject, _re.M)
+        py_version = m.group(1) if m else None
+        npm_version = json.loads((ROOT / "npm" / "package.json").read_text(encoding="utf-8")).get("version")
+        if py_version and npm_version != py_version:
+            print(f"npm/package.json version {npm_version!r} != pyproject {py_version!r}: run `make sync-npm`", file=sys.stderr)
+            return 1
         if semantic(src) != semantic(dst):
             print("npm/skills_catalog.json is stale: run `make sync-npm`", file=sys.stderr)
             new_data, old_data = semantic(src), semantic(dst)
@@ -66,6 +76,17 @@ def main() -> int:
         print("skills_catalog.json missing — run `make catalog` first", file=sys.stderr)
         return 1
     shutil.copyfile(src, dst)
+    # keep the npm version aligned with pyproject
+    import json as _json
+    import re as _re
+    pj = ROOT / "pyproject.toml"
+    m = _re.search(r'^version = "([^"]+)"', pj.read_text(encoding="utf-8"), _re.M)
+    if m:
+        pkg = _json.loads(dst.parent.joinpath("package.json").read_text(encoding="utf-8"))
+        if pkg.get("version") != m.group(1):
+            pkg["version"] = m.group(1)
+            dst.parent.joinpath("package.json").write_text(_json.dumps(pkg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            print(f"npm/package.json version aligned to {m.group(1)}")
     print(f"Catalog copied to {dst}")
     return 0
 
