@@ -32,6 +32,7 @@
       explorer and the full-text maps library
 - [x] Roadmaps portal: 20 live bilingual tracks + 25 full-text maps
 - [x] In-process test coverage of every CI gate script (67% → 93%)
+- [x] Career mode: hire-me landing with evidence grid (every claim links live)
 
 ## Planned
 

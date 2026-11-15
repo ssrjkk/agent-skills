@@ -181,6 +181,7 @@ class TestEntrypointAndSeo:
         mod.build_seo_files(out, cat)
         sitemap = (out / "sitemap.xml").read_text(encoding="utf-8")
         assert f"<loc>{mod.BASE}guides.html</loc>" in sitemap
+        assert f"<loc>{mod.BASE}hire.html</loc>" in sitemap
         assert f"<loc>{mod.BASE}roadmaps.html</loc>" in sitemap
         robots = (out / "robots.txt").read_text(encoding="utf-8")
         assert f"Sitemap: {mod.BASE}sitemap.xml" in robots

@@ -142,6 +142,10 @@ def _build_site(tmp_path: Path) -> Path:
 
     guides_dir = rm_dir / "guides"
     guides_dir.mkdir(parents=True, exist_ok=True)
+    (guides_dir / "Resume_Sergey_Sitnikov_DevOps_2026.md").write_text(
+        "# Resume\n\nDevOps / Platform Engineer.\n",
+        encoding="utf-8",
+    )
     (guides_dir / "00_README.md").write_text(
         "# Полный сборник мап\n\nДайджест всех карт и артефактов.\n",
         encoding="utf-8",
@@ -169,6 +173,7 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_domain_pages(catalog_path, out)
     mod.build_roadmaps(out, source_dir=tmp_path)
     mod.build_guides(out, source_dir=tmp_path)
+    mod.build_hire(out, source_dir=tmp_path)
     mod.build_style_css(out)
     mod.build_site_js(out)
     mod.build_search_index(catalog_path, out)
@@ -627,7 +632,7 @@ class TestGuidesPortal:
         index = (docs / "index.html").read_text(encoding="utf-8")
         assert 'class="soon-dot"' in index
         assert 'class="live-dot"' not in index
-        assert '<span data-i18n="nav_guides">Guides</span> · 3 maps →' in index
+        assert '<span data-i18n="nav_guides">Guides</span> · 4 maps →' in index
         mod.RM_STATE = {"live": 2, "total": 2}
         assert "live-dot" in mod.rm_nav_dot()
         assert "all 2 live" in mod.rm_cta_pill()
@@ -683,5 +688,44 @@ class TestPortalTabs:
         docs = _build_site(tmp_path)
         index = (docs / "index.html").read_text(encoding="utf-8")
         assert 'class="glass-chip"' in index
-        assert "<strong>3</strong> maps" in index
+        assert "<strong>4</strong> maps" in index
         assert "<strong>0/2</strong> live" in index
+
+
+class TestHirePage:
+    """Career mode: open-to-work landing with evidence grid."""
+
+    def test_hire_page_generated_with_contacts_and_tracks(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "hire.html").read_text(encoding="utf-8")
+        assert "ray013lefe@gmail.com" in page
+        assert "tel:+79003132487" in page
+        assert "Senior Fullstack &amp; Systems Engineer" in page
+        assert "amoCRM" in page
+        assert page.count("how-card") >= 3
+
+    def test_hire_evidence_links_are_live_artifacts(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "hire.html").read_text(encoding="utf-8")
+        assert 'href="https://ssrjkk.github.io/agent-skills/"' in page
+        assert 'href="https://pypi.org/project/agent-skills-library/"' in page
+        assert 'href="https://github.com/ssrjkk/agent-skills/tree/main/labs/pet_project_app"' in page
+        # resume map link resolves within the fixture
+        assert 'href="guides/Resume_Sergey_Sitnikov_DevOps_2026.html"' in page
+        assert (docs / "guides" / "Resume_Sergey_Sitnikov_DevOps_2026.html").exists()
+
+    def test_hire_person_jsonld(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        page = (docs / "hire.html").read_text(encoding="utf-8")
+        assert "application/ld+json" in page
+        assert '"@type": "Person"' in page
+        assert "Saint Petersburg" in page
+
+    def test_hire_nav_and_cta(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        index = (docs / "index.html").read_text(encoding="utf-8")
+        assert 'href="hire.html"' in index
+        assert 'data-i18n="hire_cta"' in index
+        hire = (docs / "hire.html").read_text(encoding="utf-8")
+        assert 'data-i18n="nav_hire"' in hire
+        assert 'data-i18n="full_resume"' in hire

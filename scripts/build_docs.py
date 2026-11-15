@@ -7,6 +7,7 @@ Pages:
   domains/<name>.html - a page per domain listing its skills
   roadmaps.html       - roadmap tracks overview + one page per track
   guides.html         - full-text maps library + one page per guide
+  hire.html           - open-to-work landing (career mode)
 """
 
 from __future__ import annotations
@@ -501,6 +502,7 @@ def page_head(
     root = "" if nav_index == "index.html" else "../"
     roadmaps_href = f"{root}roadmaps.html"
     guides_href = f"{root}guides.html"
+    hire_href = f"{root}hire.html"
     return f"""<!DOCTYPE html>
 <html lang="{lang_attr}">
 <head>
@@ -539,6 +541,7 @@ def page_head(
         <a class="nav-link" href="{nav_index}#catalog" data-i18n="nav_catalog">Catalog</a>
         <a class="nav-link nav-hot" href="{roadmaps_href}"><span data-i18n="nav_roadmaps">Roadmaps</span>{rm_nav_dot()}</a>
         <a class="nav-link" href="{guides_href}" data-i18n="nav_guides">Guides</a>
+        <a class="nav-link nav-hot" href="{hire_href}" data-i18n="nav_hire">Hire</a>
         <a class="nav-link" href="{nav_index}#stats" data-i18n="nav_stats">Stats</a>
         <a class="nav-link" href="{nav_index}#how" data-i18n="nav_how">How&nbsp;it&nbsp;works</a>
         <a class="nav-link" href="{REPO}">GitHub</a>
@@ -672,7 +675,8 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
         <a class="btn-primary shine" href="#catalog" data-i18n="browse">Browse skills ↓</a>
         <a class="btn-ghost" href="roadmaps.html"><span data-i18n="rm_t">IT Roadmaps</span> {rm_cta_pill()}</a>
         <a class="btn-ghost" href="guides.html"><span data-i18n="nav_guides">Guides</span> · {guides_n} maps →</a>
-        <button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
+        <a class="btn-primary shine" href="hire.html" data-i18n="hire_cta">Hire me →</a>
+<button class="btn-ghost" onclick="copyText('pip install agent-skills-library')">pip install agent-skills-library</button>
       </div>
       <div class="hero-chips">
         <span class="glass-chip"><strong>{meta["total_skills"]}</strong> <span data-i18n="st_skills">skills</span></span>
@@ -1355,6 +1359,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .hero-chips{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
 .glass-chip{padding:.35rem .85rem;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 70%,transparent);backdrop-filter:blur(8px);border-radius:20px;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
 .glass-chip strong{color:var(--accent);font-weight:700}
+.hire-contacts{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:1.2rem 0 2.2rem}
+a.glass-chip{color:var(--text);text-decoration:none;transition:border-color .15s,color .15s,transform .15s}
+a.glass-chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 .btn-primary{
   padding:.6rem 1.3rem;border:none;cursor:pointer;text-decoration:none;font-weight:600;font-size:.88rem;color:#0b0f0a;
   background:var(--accent-grad);box-shadow:var(--glow);transition:opacity .15s,transform .15s;display:inline-block;border-radius:var(--radius);
@@ -2061,6 +2068,181 @@ def build_guides(output_dir: Path, source_dir: Path | None = None) -> int:
     return count
 
 
+# Open-to-work profile data (career mode). Hand-edit here; the page is
+# regenerated on every `make docs` and indexed for recruiters.
+HIRE = {
+    "name": "Ситников Сергей Алексеевич",
+    "title_en": "Senior Fullstack & Systems Engineer · AI/ML & Autonomous Agents · DevOps/SRE",
+    "title_ru": "Senior Fullstack и системный инженер · AI/ML и автономные агенты · DevOps/SRE",
+    "location_en": "Saint Petersburg · Full-time / Hybrid / Remote · Relocation: Moscow, Cyprus, Serbia, Belarus, Latvia",
+    "location_ru": "Санкт-Петербург · Полная занятость / Гибрид / Удалённо · Релокация: Москва, Кипр, Сербия, Беларусь, Латвия",
+    "employment_en": "Employment: TF RF (staff) or B2B contract (registered sole proprietor, IP, since Oct 2026)",
+    "employment_ru": "Оформление: ТК РФ или B2B (действующее ИП с октября 2026)",
+    "phone": "8 (900) 313-24-87",
+    "phone_href": "tel:+79003132487",
+    "email": "ray013lefe@gmail.com",
+    "telegram": "https://t.me/ssrjkk",
+    "github": "https://github.com/ssrjkk",
+    "portfolio": "https://ssrjkk.github.io/agent-skills/",
+    "resume_map": "guides/Resume_Sergey_Sitnikov_DevOps_2026.html",
+    "chips_en": [
+        ("5.5", "years of engineering"),
+        ("23", "production repositories"),
+        ("9", "published packages"),
+        ("1,600+", "automated tests"),
+        ("2y 9m", "SDET at amoCRM"),
+    ],
+    "tracks": [
+        (
+            "Senior Fullstack & Systems Engineer",
+            "Fullstack и системный инженер",
+            "Python/Go/TypeScript services, Kafka, PostgreSQL, CQRS, DDD - 23 production systems, 9 published packages.",
+            "Сервисы на Python/Go/TypeScript, Kafka, PostgreSQL, CQRS, DDD - 23 доведённых до продакшена системы, 9 опубликованных пакетов.",
+        ),
+        (
+            "AI / ML & Autonomous Agents Engineer",
+            "AI / ML и автономные агенты",
+            "RAG microservices, MCP, multi-agent pipelines, LLM routing, formal verification with Z3, on-chain AI attestation.",
+            "RAG-микросервисы, MCP, мультиагентные пайплайны, роутинг LLM, формальная верификация через Z3, ончейн-аттестация ИИ.",
+        ),
+        (
+            "Senior Backend / SDET Architect",
+            "Senior Backend / SDET архитектор",
+            "Quality infrastructure: pytest + Playwright frameworks, regression 8x faster, Kafka/CQRS test design, CI gates.",
+            "Инфраструктура качества: фреймворки pytest и Playwright, регресс в 8 раз быстрее, тест-дизайн Kafka/CQRS, CI-гейты.",
+        ),
+    ],
+    # claim -> live artifact (every row must link to something a recruiter can open)
+    "evidence": [
+        (
+            "This portal: 120 validated skills, 20 live roadmaps, CI-gated deploys",
+            "Этот портал: 120 валидированных скиллов, 20 live-роадмапов, деплой через CI-гейты",
+            "https://ssrjkk.github.io/agent-skills/",
+        ),
+        (
+            "Python SDK + CLI on PyPI (pip install agent-skills-library)",
+            "Python SDK и CLI на PyPI (pip install agent-skills-library)",
+            "https://pypi.org/project/agent-skills-library/",
+        ),
+        (
+            "Chaos Drill lab: 4 planted production incidents + auto-verification",
+            "Chaos Drill лаборатория: 4 заложенных продакшн-инцидента с автопроверкой",
+            "https://ssrjkk.github.io/agent-skills/guides/20_HandsOn_Troubleshooting_Simulator_Guide.html",
+        ),
+        (
+            "Full-text maps library: DevOps/SRE/AI career encyclopedia",
+            "Библиотека полных мап: энциклопедия DevOps/SRE/AI-карьеры",
+            "https://ssrjkk.github.io/agent-skills/guides.html",
+        ),
+        (
+            "Go microservice + full observability stack (Prometheus/Loki/Vector)",
+            "Go-микросервис и полный стек наблюдаемости (Prometheus/Loki/Vector)",
+            "https://github.com/ssrjkk/agent-skills/tree/main/labs/pet_project_app",
+        ),
+        (
+            "GitOps delivery: ArgoCD ApplicationSet + Argo Rollouts canary",
+            "GitOps-доставка: ArgoCD ApplicationSet и канареечные релизы Argo Rollouts",
+            "https://github.com/ssrjkk/agent-skills/tree/main/labs/platform_and_sre",
+        ),
+    ],
+}
+
+
+def build_hire(output_dir: Path, source_dir: Path | None = None) -> int:
+    """Open-to-work landing page: identity, three tracks, evidence grid.
+    Every claim links to an artifact a recruiter can open right now."""
+    _remember_rm_state(load_roadmap_tracks(source_dir))
+    d = HIRE
+
+    def duo(en: str, ru: str) -> str:
+        return rm_tier_label(en, ru)
+
+    chips = "".join(
+        f'<span class="glass-chip"><strong>{esc(v)}</strong> {duo(l_en, l_ru)}</span>'
+        for v, l_en, l_ru in [
+            ("5.5", "years of engineering", "года разработки"),
+            ("23", "production repositories", "продакшн-репозитория"),
+            ("9", "published packages", "опубликованных пакетов"),
+            ("1,600+", "automated tests", "автотестов"),
+            ("2y 9m", "SDET at amoCRM", "SDET в amoCRM"),
+        ]
+    )
+
+    contacts = "".join(
+        f'<a class="glass-chip" href="{esc(href)}">{esc(label)}</a>'
+        for label, href in [
+            ("📞 " + d["phone"], d["phone_href"]),
+            ("✉️ " + d["email"], "mailto:" + d["email"]),
+            ("💬 Telegram @ssrjkk", d["telegram"]),
+            ("🐙 github.com/ssrjkk", d["github"]),
+        ]
+    )
+
+    track_cards = "".join(
+        f'<div class="how-card"><span class="how-num">0{i}</span>'
+        f"<h3>{duo(en_title, ru_title)}</h3>"
+        f"<p>{duo(en_pitch, ru_pitch)}</p></div>"
+        for i, (en_title, ru_title, en_pitch, ru_pitch) in enumerate(d["tracks"], 1)
+    )
+
+    evidence_rows = "".join(
+        f'<a class="guide-card" href="{esc(url)}" rel="noopener">'
+        f'<span class="guide-num">→</span>'
+        f'<span class="guide-card-title">{duo(en, ru)}</span>'
+        f'<span class="guide-card-excerpt">{esc(url.replace("https://", ""))}</span>'
+        "</a>"
+        for en, ru, url in d["evidence"]
+    )
+
+    ld = json_for_script({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sergey Sitnikov",
+        "alternateName": d["name"],
+        "jobTitle": d["title_en"],
+        "email": "mailto:" + d["email"],
+        "telephone": d["phone"],
+        "address": {"@type": "PostalAddress", "addressLocality": "Saint Petersburg", "addressCountry": "RU"},
+        "url": BASE + "hire.html",
+        "sameAs": [d["github"], d["telegram"], d["portfolio"]],
+        "knowsAbout": ["DevOps", "SRE", "Platform Engineering", "Kubernetes", "AI Agents", "RAG", "QA Automation"],
+    })
+
+    page = page_head(
+        "Sergey Sitnikov — Senior Fullstack & Systems Engineer · Open to work",
+        "Senior Fullstack & Systems Engineer / AI-ML / DevOps-SRE. 23 production repositories, 9 published packages, 1,600+ automated tests. Saint Petersburg, remote-friendly.",
+        BASE + "hire.html",
+        extra=f'<script type="application/ld+json">{ld}</script>',
+        css_path="style.css",
+        nav_index="index.html",
+        lang_attr="ru",
+    ) + f"""
+    <div class="rm-page">
+      <header class="rm-hero reveal in">
+        <div class="hero-badge pulse">● Open to work · 2026</div>
+        <h1>{esc(d["name"])}</h1>
+        <p>{duo(d["title_en"], d["title_ru"])}</p>
+        <p style="color:var(--muted);font-size:.8rem;margin-top:.4rem">{duo(d["location_en"], d["location_ru"])}</p>
+        <p style="color:var(--muted);font-size:.8rem">{duo(d["employment_en"], d["employment_ru"])}</p>
+      </header>
+      <div class="hero-chips">{chips}</div>
+      <div class="hire-contacts">{contacts}</div>
+
+      <section class="tier-head"><h2>{duo("Three career tracks", "Три карьерных трека")}</h2>
+      <div class="how-grid">{track_cards}</div></section>
+
+      <section class="tier-head"><h2>{duo("Evidence — every claim opens live", "Доказательства — каждое заявление открывается живьём")}</h2>
+      <div class="guide-grid">{evidence_rows}</div></section>
+
+      <p class="back-link"><a href="{d["resume_map"]}" data-i18n="full_resume">Full resume →</a></p>
+      <p class="back-link"><a href="index.html" data-i18n="back_catalog">← Back to catalog</a></p>
+    </div>
+""" + page_foot(js_path="site.js")
+    (output_dir / "hire.html").write_text(page, encoding="utf-8")
+    print("Hire page written to", output_dir / "hire.html")
+    return 0
+
+
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     robots = (
         "User-agent: *\n"
@@ -2084,6 +2266,7 @@ def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
         lines.append(f"  <url><loc>{BASE}domains/{esc(d)}.html</loc></url>")
     for t in load_roadmap_tracks():
         lines.append(f"  <url><loc>{BASE}roadmaps/{esc(t['slug'])}.html</loc></url>")
+    lines.append(f"  <url><loc>{BASE}hire.html</loc><priority>1.0</priority></url>")
     lines.append(f"  <url><loc>{BASE}guides.html</loc><priority>0.8</priority></url>")
     for g in load_guides():
         lines.append(f"  <url><loc>{BASE}guides/{esc(g['slug'])}.html</loc></url>")
@@ -2111,6 +2294,7 @@ def main() -> int:
     build_domain_pages(Path(args.catalog), output_dir)
     build_roadmaps(output_dir)
     build_guides(output_dir)
+    build_hire(output_dir)
     build_style_css(output_dir)
     build_site_js(output_dir)
     build_search_index(Path(args.catalog), output_dir)

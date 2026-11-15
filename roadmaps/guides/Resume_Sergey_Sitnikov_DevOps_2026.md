@@ -26,25 +26,25 @@
 Как фулстек и системный инженер создал и вывел в продакшн **23 системы**. Избранные проекты по кластерам:
 
 ### Криптография, Web3 & Confidential ML
-- **Shroud** — FHE-Appchain для приватного обучения ML-моделей: Rust-ноды, клиентское шифрование **FHEWasm**, контракты **Solidity (fhEVM)**, доказательства целостности **ZK-STARK**, пороговое дешифрование, VRF-комитет разрешения споров, полная Threat Model.
-- **Tippy on Base** — некастодиальная ончейн-экономика: **ERC-4337** Account Abstraction, Paymaster (gasless USDC), ончейн-аттестация действий ИИ через **EAS**, протокол **x402** для M2M-платежей, MCP, **782 автотеста**.
-- **Wake** — торговый терминал для zk-perp DEX Lighter: FastAPI + React + Telegram Mini App, LMSR-рынки предсказаний, копи-трейдинг, funding-арбитраж, **270+ автотестов**; реальный опыт с Hyperliquid (топ-32k глобального лидерборда).
-- **Harvest v2.3.0** — асинхронный движок параллельного исполнения в EVM-сетях: кастомный workpool на aiohttp, анти-сибил поведенческая симуляция, sliding-window ротация RPC-нод без просадок RPS.
+- **[Shroud](https://github.com/ssrjkk/shroud)** — FHE-Appchain для приватного обучения ML-моделей: Rust-ноды, клиентское шифрование **FHEWasm**, контракты **Solidity (fhEVM)**, доказательства целостности **ZK-STARK**, пороговое дешифрование, VRF-комитет разрешения споров, полная Threat Model.
+- **[Tippy on Base](https://github.com/ssrjkk/tippy-on-base)** — некастодиальная ончейн-экономика: **ERC-4337** Account Abstraction, Paymaster (gasless USDC), ончейн-аттестация действий ИИ через **EAS**, протокол **x402** для M2M-платежей, MCP, **782 автотеста**.
+- **[Wake](https://github.com/ssrjkk/wake)** — торговый терминал для zk-perp DEX Lighter: FastAPI + React + Telegram Mini App, LMSR-рынки предсказаний, копи-трейдинг, funding-арбитраж, **270+ автотестов**; реальный опыт с Hyperliquid (топ-32k глобального лидерборда).
+- **[Harvest v2.3.0](https://github.com/ssrjkk/harvest)** — асинхронный движок параллельного исполнения в EVM-сетях: кастомный workpool на aiohttp, анти-сибил поведенческая симуляция, sliding-window ротация RPC-нод без просадок RPS.
 
 ### AI / ML, Агентные системы & Formal Verification
-- **agent-skills** — этот портал: **120 двуязычных (EN/RU) скиллов**, 20 доменов, **326 автотестов** (юнит / property-based / e2e), **93% покрытия** с жёстким CI-гейтом `--cov-fail-under=90`, гейты ruff/mypy/CodeQL, Python SDK + CLI в PyPI, GitHub Action, статический сайт с 25 полнотекстовыми мапами.
-- **raven** — высоконагруженные RAG-микросервисы, MCP-сервер и мониторинг на Go, Python 3.12 и PostgreSQL.
-- **noema** — автономный AI-агент с **формальной верификацией** решений через SMT-решатель **Z3**.
-- **drafter** — Zero-Backend браузерный AI QA-комбайн (SQLite в WASM, роутинг 9+ LLM-провайдеров).
+- **[agent-skills](https://ssrjkk.github.io/agent-skills/)** — этот портал: **120 двуязычных (EN/RU) скиллов**, 20 доменов, **326 автотестов** (юнит / property-based / e2e), **93% покрытия** с жёстким CI-гейтом `--cov-fail-under=90`, гейты ruff/mypy/CodeQL, Python SDK + CLI в PyPI, GitHub Action, статический сайт с 25 полнотекстовыми мапами.
+- **[raven](https://github.com/ssrjkk/raven)** — высоконагруженные RAG-микросервисы, MCP-сервер и мониторинг на Go, Python 3.12 и PostgreSQL.
+- **[noema](https://github.com/ssrjkk/noema)** — автономный AI-агент с **формальной верификацией** решений через SMT-решатель **Z3**.
+- **[drafter](https://github.com/ssrjkk/drafter)** — Zero-Backend браузерный AI QA-комбайн (SQLite в WASM, роутинг 9+ LLM-провайдеров).
 
 ### Системное программирование & QA/SRE-платформы
-- **Volley / cppload-pro** — движки нагрузочного тестирования на **C++20** (Boost.Beast/ASIO, двусторонний mTLS, Python SDK через pybind11, ASan/TSan, clang-tidy).
-- **bothive** — оркестрация AI-воркеров и ботов (Telegram, Twitch, YouTube, X) на Node.js: RBAC, Circuit Breaker, SLO, Trivy, **Chaos Engineering в CI**.
-- **Qualix / QA-Arsenal / QA-Helper / AmoCRM-Tests / Mobius** — платформы API/UI/Mobile-тестирования (Playwright, Locust, Appium, Allure, Quality Gates, Nightly Builds).
+- **[Volley](https://github.com/ssrjkk/volley)** / cppload-pro — движки нагрузочного тестирования на **C++20** (Boost.Beast/ASIO, двусторонний mTLS, Python SDK через pybind11, ASan/TSan, clang-tidy).
+- **[bothive](https://github.com/ssrjkk/bothive)** — оркестрация AI-воркеров и ботов (Telegram, Twitch, YouTube, X) на Node.js: RBAC, Circuit Breaker, SLO, Trivy, **Chaos Engineering в CI**.
+- **[Qualix](https://github.com/ssrjkk/qualix)** / **[QA-Arsenal](https://github.com/ssrjkk/qa-arsenal)** / QA-Helper / AmoCRM-Tests / **[Mobius](https://github.com/ssrjkk/mobius)** — платформы API/UI/Mobile-тестирования (Playwright, Locust, Appium, Allure, Quality Gates, Nightly Builds).
 
 ### Корпоративные SaaS & E-Commerce
-- **Verso / Corvid CMS / Corvid CRM** — модульная Headless CMS на TypeScript, **Prisma 7** и **tRPC**: визуальный конструктор блоков, ревизии, API-ключи, SEO-инспектор, вебхук-синхронизация с CRM.
-- **Shopwatch / Our-Jamon** — коммерческие E-Commerce платформы: Zero-CLS витрины, маппинг каталогов без коллизий, весовой/штучный расчёт, Telegram-боты, интеграция с **1С:УНФ 3.0**.
+- **[Verso](https://github.com/ssrjkk/verso)** / Corvid CMS / **[Corvid CRM](https://github.com/ssrjkk/corvid_crm)** — модульная Headless CMS на TypeScript, **Prisma 7** и **tRPC**: визуальный конструктор блоков, ревизии, API-ключи, SEO-инспектор, вебхук-синхронизация с CRM.
+- **[Shopwatch](https://github.com/ssrjkk/shopwatch)** / **[Our-Jamon](https://github.com/ssrjkk/our-jamon)** — коммерческие E-Commerce платформы: Zero-CLS витрины, маппинг каталогов без коллизий, весовой/штучный расчёт, Telegram-боты, интеграция с **1С:УНФ 3.0**.
 
 ---
 
