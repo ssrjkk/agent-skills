@@ -43,7 +43,7 @@ def _make_skill(root: Path, name: str, category: str, description: str = "A test
 class TestCliImport:
     def test_cli_group(self):
         names = sorted(cli.commands.keys())
-        assert set(names) == {"stats", "validate", "quality", "search", "catalog", "install", "stale"}
+        assert set(names) == {"stats", "validate", "quality", "search", "catalog", "install", "stale", "conveyors"}
 
     def test_cli_help(self):
         import subprocess
@@ -556,3 +556,40 @@ def test_fetch_remote_catalog_raises_on_network_error(monkeypatch: pytest.Monkey
     monkeypatch.setattr("urllib.request.urlopen", boom)
     with pytest.raises(click.ClickException, match="registry unavailable"):
         cli_mod.fetch_remote_catalog()
+
+
+
+class TestConveyorsCommand:
+    """agent-skills conveyors: print product pipelines with gates."""
+
+    def _conveyor(self, root: Path) -> None:
+        cdir = root / "conveyors"
+        cdir.mkdir(parents=True)
+        (cdir / "demo.json").write_text(json.dumps({
+            "slug": "demo", "name": "Demo line", "icon": "*", "target": "svc",
+            "tagline": "demo conveyor", "status": "live",
+            "stages": [{
+                "id": "mvp", "title": "Stage MVP", "goal": "ship it",
+                "gates": ["ci green", "auth", "public url"],
+                "skills": [], "prompts": [], "artifacts": ["url"]
+            }]
+        }), encoding="utf-8")
+
+    def test_lists_stage_gates(self, tmp_path: Path):
+        self._conveyor(tmp_path)
+        result = CliRunner().invoke(cli, ["conveyors", "--dir", str(tmp_path), "--stage", "mvp"])
+        assert result.exit_code == 0
+        assert "Demo line" in result.output
+        assert "[ ] ci green" in result.output
+
+    def test_json_output(self, tmp_path: Path):
+        self._conveyor(tmp_path)
+        result = CliRunner().invoke(cli, ["conveyors", "--dir", str(tmp_path), "--json"])
+        assert result.exit_code == 0
+        payload = json.loads(result.output)
+        assert payload[0]["slug"] == "demo"
+
+    def test_missing_dir_fails(self, tmp_path: Path):
+        result = CliRunner().invoke(cli, ["conveyors", "--dir", str(tmp_path)])
+        assert result.exit_code == 1
+        assert "no conveyors/" in result.output

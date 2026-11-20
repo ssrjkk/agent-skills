@@ -36,13 +36,19 @@ def main(root: Path | None = None) -> int:
         errors.append("search-index.json missing")
     else:
         idx = json.loads(idx_path.read_text(encoding="utf-8"))
-        idx_names = {e["name"] for e in idx}
+        # entries without an explicit kind are skills (legacy format)
+        skill_entries = [e for e in idx if e.get("kind", "skill") == "skill"]
+        doc_entries = [e for e in idx if e.get("kind") == "doc"]
+        idx_names = {e["name"] for e in skill_entries}
         missing = names - idx_names
         extra = idx_names - names
         if missing:
             errors.append(f"search-index missing skills: {sorted(missing)[:5]}")
         if extra:
             errors.append(f"search-index has unknown skills: {sorted(extra)[:5]}")
+        for e in doc_entries:
+            if not (docs / e.get("path", "")).exists():
+                errors.append(f"search-index doc path missing: {e.get('path')}")
 
     # 2. every skill/domain has a page
     for name in names:

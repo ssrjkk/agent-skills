@@ -9,6 +9,7 @@ Pages:
   guides.html         - full-text maps library + one page per guide
   hire.html           - open-to-work landing (career mode)
   conveyors.html      - prototype->production pipelines + one page per conveyor
+  feed.xml            - Atom feed of maps and conveyors
 """
 
 from __future__ import annotations
@@ -531,6 +532,7 @@ def page_head(
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(desc)}">
   <meta name="twitter:image" content="{REPO}/raw/main/.github/site-preview.png">
+  <link rel="alternate" type="application/atom+xml" href="{BASE}feed.xml">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><rect x=%224%22 y=%224%22 width=%2288%22 height=%2288%22 rx=%2222%22 fill=%22%230e140d%22 stroke=%22%237dff4a%22 stroke-opacity=%22.45%22 stroke-width=%223%22/><polyline points=%2227,33 48,43 69,33%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,49 48,59 69,49%22 fill=%22none%22 stroke=%22%2300ffd1%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><polyline points=%2227,65 48,75 69,65%22 fill=%22none%22 stroke=%22%237dff4a%22 stroke-opacity=%22.55%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -587,6 +589,30 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     _remember_rm_state(tracks)
     guides = load_guides(output_dir.parent)
     guides_n = len(guides)
+    conveyors = load_conveyors(output_dir.parent)
+    prompt_owner: dict[str, str] = {}
+    for c in conveyors:
+        for stage in c["stages"]:
+            for slug in stage.get("prompts", []):
+                prompt_owner.setdefault(slug, c["slug"])
+    doc_anchor_parts = []
+    for g in guides:
+        blob = md_search_blob(output_dir.parent / "roadmaps" / "guides" / f"{g['slug']}.md", 260)
+        title_esc = esc(g["title"])
+        href = f"guides/{esc(g['slug'])}.html"
+        doc_anchor_parts.append(
+            f'<a class="doc-hit" data-search="{esc((g["title"] + " " + blob).lower())}" href="{href}">🗺️ {title_esc}</a>')
+    for c in conveyors:
+        blob = (c["name"] + " " + c.get("tagline", "")).lower()
+        href = f"conveyors/{esc(c['slug'])}.html"
+        doc_anchor_parts.append(
+            f'<a class="doc-hit" data-search="{esc(blob)}" href="{href}">🏭 {esc(c["name"])}</a>')
+        for slug in c.get_stage_prompts() if False else [sp for st in c["stages"] for sp in st.get("prompts", [])]:
+            pblob = md_search_blob(output_dir.parent / "prompts" / f"{slug}.md", 260)
+            phref = f"conveyors/{esc(c['slug'])}.html"
+            doc_anchor_parts.append(
+                f'<a class="doc-hit" data-search="{esc((slug + " " + pblob).lower())}" href="{phref}">📝 {esc(slug)}</a>')
+    doc_anchor = "".join(doc_anchor_parts)
 
     def _index_rm_links(t: dict) -> str:
         links = [f'<a class="btn-ghost" href="roadmaps/{esc(t["slug"])}.html"><span data-i18n="open_map">Open full map →</span></a>']
@@ -790,6 +816,12 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
           <option value="score" selected data-i18n="sort_score">Sort: quality (high→low)</option>
         </select>
       </div>
+      <div id="doc-results" hidden>
+          <span class="cv-label" data-i18n="docs_results">Docs &amp; maps</span>
+          <div id="doc-links">
+          {doc_anchor}
+          </div>
+        </div>
       <div class="result-count" id="result-count" data-i18n="count_t" data-i18n-html data-v="" data-t=""></div>
       <div class="pills" id="pills">
         <button class="pill active" data-domain="all" onclick="filterByDomain(this.getAttribute('data-domain'), this)">all<span class="pill-count">{meta["total_skills"]}</span></button>
@@ -807,7 +839,7 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     <footer>
       <p data-i18n="foot_t" data-i18n-html data-n="{meta["total_skills"]}" data-d="{len(meta["domains"])}">Created by ssrjkk · {meta["total_skills"]} skills · {len(meta["domains"])} domains</p>
       <p class="shortcuts" data-i18n="keys" data-i18n-html><kbd>/</kbd> search · <kbd>1–6</kbd> tabs · <kbd>t</kbd> theme · <kbd>Esc</kbd> clear</p>
-      <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
+      <p><a href="{REPO}">GitHub</a> · <a href="{REPO}/issues">Report Issue</a> · <a href="{REPO}/discussions">Discussions</a> · <a href="feed.xml">RSS</a> · <a href="https://t.me/ssrjkk_bot">Telegram</a></p>
     </footer>
 """ + """
   <button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" data-i18n-aria="back_top" hidden>↑</button>
@@ -832,11 +864,16 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     document.querySelectorAll('.agent-tab').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
   }
+  var docEntries = [];
   function loadSearchIndex() {
     if (searchIndex) return Promise.resolve(searchIndex);
     return fetch('search-index.json').then(function(r) { return r.json(); }).then(function(data) {
       searchIndex = {};
-      data.forEach(function(e) { searchIndex[e.name] = ((e.content || '') + ' ' + (e.content_ru || '')).toLowerCase(); });
+      docEntries = [];
+      data.forEach(function(e) {
+        if (e.kind && e.kind !== 'skill') { docEntries.push(e); return; }
+        searchIndex[e.name] = ((e.content || '') + ' ' + (e.content_ru || '')).toLowerCase();
+      });
       applyFilter();
     }).catch(function() { searchIndex = {}; });
   }
@@ -893,6 +930,16 @@ def build_index_html(catalog_path: Path, output_dir: Path, jobs: int | None = No
     var grid = document.getElementById('cards');
     cards.forEach(function(c) { grid.appendChild(c); });
     document.getElementById('empty').hidden = visible !== 0;
+    var docBox = document.getElementById('doc-results');
+    if (docBox) {
+      var docHits = 0;
+      docBox.querySelectorAll('.doc-hit').forEach(function(a) {
+        var show = q && a.getAttribute('data-search').indexOf(q) >= 0;
+        a.style.display = show ? '' : 'none';
+        if (show) docHits++;
+      });
+      docBox.hidden = !(q && docHits);
+    }
     var cnt = document.getElementById('result-count');
     if (cnt) {
       var D = (typeof I18N !== 'undefined' && (I18N[lang()] || I18N.en)) || {count_t: '{v} of {t} shown'};
@@ -1368,6 +1415,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .glass-chip{padding:.35rem .85rem;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 70%,transparent);backdrop-filter:blur(8px);border-radius:20px;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
 .glass-chip strong{color:var(--accent);font-weight:700}
 .hire-contacts{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:1.2rem 0 2.2rem;max-width:100%}
+#doc-results{margin:.8rem 0 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);padding:.7rem .9rem}
+#doc-results .cv-label{display:block;margin-bottom:.4rem}
+.doc-hit{display:inline-block;margin:.15rem .3rem .15rem 0;padding:.3rem .6rem;border:1px solid var(--border);border-radius:16px;background:var(--bg2);color:var(--text);text-decoration:none;font-size:.74rem;font-family:var(--mono);transition:border-color .15s,color .15s}
+.doc-hit:hover{border-color:var(--accent);color:var(--accent)}
 .hire-contacts .glass-chip{overflow-wrap:anywhere}
 a.glass-chip{color:var(--text);text-decoration:none;transition:border-color .15s,color .15s,transform .15s}
 a.glass-chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
@@ -1691,21 +1742,56 @@ def build_site_js(output_dir: Path) -> None:
     print(f"Shared script written to {dst}")
 
 
-def build_search_index(catalog_path: Path, output_dir: Path) -> None:
+def build_search_index(catalog_path: Path, output_dir: Path, source_dir: Path | None = None) -> None:
+    root = source_dir or Path(__file__).resolve().parent.parent
     _meta, skills, _metrics = load_all(catalog_path)
     index = []
     for s in sorted(skills, key=lambda x: x["name"]):
         ru_path = Path(s["path"]).parent / "SKILL.ru.md"
         ru_blob = skill_search_text(ru_path) if ru_path.exists() else ""
         index.append({
+            "kind": "skill",
             "name": s["name"],
             "category": s["category"],
             "content": skill_search_text(Path(s["path"]))[:1500],
             "content_ru": ru_blob[:1500],
         })
+    # docs entries: guides, prompts, conveyors - searchable on the portal
+    prompt_owner: dict[str, str] = {}
+    conveyors = load_conveyors(source_dir)
+    for c in conveyors:
+        for stage in c["stages"]:
+            for slug in stage.get("prompts", []):
+                prompt_owner.setdefault(slug, c["slug"])
+    for g in load_guides(source_dir):
+        index.append({
+            "kind": "doc", "name": g["slug"], "category": "guide",
+            "title": "🗺️ " + g["title"],
+            "path": f"guides/{g['slug']}.html",
+            "content": md_search_blob(root / "roadmaps" / "guides" / f"{g['slug']}.md", 1200),
+        })
+    for slug, owner in sorted(prompt_owner.items()):
+        index.append({
+            "kind": "doc", "name": slug, "category": "prompt",
+            "title": "📝 " + slug,
+            "path": f"conveyors/{owner}.html",
+            "content": md_search_blob(root / "prompts" / f"{slug}.md", 1200)
+            + " " + md_search_blob(root / "prompts" / f"{slug}.ru.md", 600),
+        })
+    for c in conveyors:
+        blob = " ".join(
+            [c["name"], c.get("tagline", "")]
+            + [st.get("title", "") + " " + st.get("goal", "") for st in c["stages"]]
+        ).lower()
+        index.append({
+            "kind": "doc", "name": c["slug"], "category": "conveyor",
+            "title": "🏭 " + c["name"],
+            "path": f"conveyors/{c['slug']}.html",
+            "content": blob[:1200],
+        })
     out = output_dir / "search-index.json"
     out.write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
-    print(f"Search index written to {out}")
+    print(f"Search index written to {out} ({len(index)} entries)")
 
 
 def load_roadmap_tracks(source_dir: Path | None = None) -> list[dict]:
@@ -2262,6 +2348,18 @@ def duo_text(en: str, ru: str) -> str:
     return rm_tier_label(en, ru)
 
 
+def md_search_blob(path: Path, limit: int = 300) -> str:
+    """Lower-cased searchable blob from a markdown file (fences kept: for
+    prompts the fence IS the payload)."""
+    try:
+        text = path.read_text(encoding="utf-8").lower()
+    except (OSError, UnicodeDecodeError):
+        return ""
+    text = text.replace("```", " ").replace("**", " ")
+    text = re.sub(r"\s+", " ", text)
+    return text[:limit]
+
+
 def load_conveyors(source_dir: Path | None = None) -> list[dict]:
     root = source_dir or Path(__file__).resolve().parent.parent
     out = []
@@ -2408,6 +2506,46 @@ def build_conveyors(output_dir: Path, source_dir: Path | None = None) -> int:
     return count
 
 
+def build_feed(output_dir: Path, source_dir: Path | None = None) -> None:
+    """Atom feed of the library: full-text maps + conveyor pipelines."""
+    import datetime
+
+    updated = datetime.date.today().isoformat() + "T00:00:00Z"
+    guides = load_guides(source_dir)
+    conveyors = load_conveyors(source_dir)
+    entries = []
+    for g in guides:
+        entries.append((
+            BASE + f"guides/{g['slug']}.html",
+            "Map: " + g["title"],
+            g.get("excerpt") or g["title"],
+        ))
+    for c in conveyors:
+        entries.append((
+            BASE + f"conveyors/{c['slug']}.html",
+            "Conveyor: " + c["name"],
+            c.get("tagline", ""),
+        ))
+    items = "".join(
+        "<entry><id>" + esc(url) + "</id><title>" + esc(title) + "</title>"
+        + '<link rel="alternate" href="' + esc(url) + '"/>'
+        + "<updated>" + updated + "</updated><summary>" + esc(summary) + "</summary></entry>"
+        for url, title, summary in entries
+    )
+    feed = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<feed xmlns="http://www.w3.org/2005/Atom">'
+        "<title>Agent Skills Library</title>"
+        '<link rel="self" href="' + BASE + 'feed.xml"/>'
+        '<link rel="alternate" href="' + BASE + '"/>'
+        "<updated>" + updated + "</updated><id>" + BASE + "</id>"
+        + items
+        + "</feed>"
+    )
+    (output_dir / "feed.xml").write_text(feed, encoding="utf-8")
+    print(f"Atom feed written to {output_dir / 'feed.xml'}")
+
+
 def build_seo_files(output_dir: Path, catalog_path: Path) -> None:
     robots = (
         "User-agent: *\n"
@@ -2463,9 +2601,10 @@ def main() -> int:
     build_roadmaps(output_dir)
     build_guides(output_dir)
     build_conveyors(output_dir)
+    build_feed(output_dir, Path(args.catalog).parent)
     build_style_css(output_dir)
     build_site_js(output_dir)
-    build_search_index(Path(args.catalog), output_dir)
+    build_search_index(Path(args.catalog), output_dir, source_dir=Path(args.catalog).parent)
     build_seo_files(output_dir, Path(args.catalog))
 
     import shutil

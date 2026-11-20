@@ -177,7 +177,7 @@ def _build_site(tmp_path: Path) -> Path:
     mod.build_conveyors(out, source_dir=tmp_path)
     mod.build_style_css(out)
     mod.build_site_js(out)
-    mod.build_search_index(catalog_path, out)
+    mod.build_search_index(catalog_path, out, source_dir=tmp_path)
     return out
 
 def _load_mod() -> Any:
@@ -246,12 +246,23 @@ class TestSiteGenerator:
     def test_search_index_has_all_skills(self, tmp_path: Path):
         docs = _build_site(tmp_path)
         idx = json.loads((docs / "search-index.json").read_text(encoding="utf-8"))
-        names = {e["name"] for e in idx}
+        skills = [e for e in idx if e.get("kind", "skill") == "skill"]
+        names = {e["name"] for e in skills}
         assert names == {"alpha", "beta"}
-        alpha = next(e for e in idx if e["name"] == "alpha")
+        alpha = next(e for e in skills if e["name"] == "alpha")
         assert "quick start" in alpha["content"]
         assert "validation" in alpha["content"]
         assert "быстрый старт" in alpha["content_ru"]
+
+    def test_search_index_includes_docs(self, tmp_path: Path):
+        docs = _build_site(tmp_path)
+        idx = json.loads((docs / "search-index.json").read_text(encoding="utf-8"))
+        doc_entries = [e for e in idx if e.get("kind") == "doc"]
+        doc_names = {e["name"] for e in doc_entries}
+        assert {"00_README", "Resume_Sergey_Sitnikov_DevOps_2026", "prototype-to-production", "01-idea-to-spec"} <= doc_names
+        for e in doc_entries:
+            assert (docs / e["path"]).exists(), e["path"]
+            assert e["content"], e["name"]
 
     def test_skill_page_has_ru_toggle(self, tmp_path: Path):
         docs = _build_site(tmp_path)
@@ -444,7 +455,7 @@ class TestSiteGenerator:
         # write catalog to the docs parent as the script expects ROOT-based paths
         # Instead, run the script's logic manually on the generated docs
         idx = json.loads((docs / "search-index.json").read_text(encoding="utf-8"))
-        assert len(idx) == 2
+        assert len([e for e in idx if e.get("kind", "skill") == "skill"]) == 2
         for page in docs.rglob("*.html"):
             assert page.read_text(encoding="utf-8").count("<div") == page.read_text(encoding="utf-8").count("</div>")
 

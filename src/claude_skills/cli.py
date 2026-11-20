@@ -423,5 +423,52 @@ def stale(dir: str | None, days: int) -> None:
     print()
 
 
+@cli.command('conveyors')
+@click.option('--dir', 'root_dir', type=click.Path(), default='.',
+              help='Repo root containing conveyors/ (default: current directory)')
+@click.option('--stage', default=None, help='Print only the named stage id (e.g. mvp)')
+@click.option('--json', 'as_json', is_flag=True, help='Emit raw conveyor JSON')
+def conveyors_command(root_dir: str, stage: str | None, as_json: bool) -> None:
+    """Print product conveyors: stages, gates, skills, prompts, artifacts."""
+    import json as _json
+    from pathlib import Path as _Path
+
+    root = _Path(root_dir)
+    cdir = root / "conveyors"
+    if not cdir.is_dir():
+        raise click.ClickException(
+            f"no conveyors/ directory in {root} - run from a repository root that has conveyors/*.json"
+        )
+    tracks = []
+    for path in sorted(cdir.glob("*.json")):
+        try:
+            tracks.append(_json.loads(path.read_text(encoding="utf-8")))
+        except (OSError, ValueError) as exc:
+            raise click.ClickException(f"unreadable conveyor {path.name}: {exc}") from exc
+    if not tracks:
+        raise click.ClickException(f"no conveyors found in {cdir}")
+    if as_json:
+        payload = tracks if stage is None else [t for t in tracks if any(s["id"] == stage for s in t["stages"])]
+        click.echo(_json.dumps(payload, ensure_ascii=False, indent=2))
+        return
+    for track in tracks:
+        click.echo("")
+        click.echo(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
+        click.echo(f"{Fore.GREEN}{track['icon']} {track['name']}{Style.RESET_ALL}  {Fore.CYAN}{track['target']}{Style.RESET_ALL}")
+        click.echo(f"{Fore.CYAN}{track['tagline']}{Style.RESET_ALL}")
+        for num, st in enumerate(track["stages"], 1):
+            if stage and st["id"] != stage:
+                continue
+            click.echo("")
+            click.echo(f"{Fore.YELLOW}{num:02d} {st['title']}{Style.RESET_ALL}")
+            click.echo(f"  goal: {st['goal']}")
+            for gate in st["gates"]:
+                click.echo(f"  [ ] {gate}")
+            click.echo(f"  skills: {', '.join(st['skills'])}")
+            click.echo(f"  prompts: {', '.join(st['prompts'])}")
+            click.echo(f"  artifacts: {'; '.join(st['artifacts'])}")
+    click.echo("")
+
+
 if __name__ == '__main__':  # pragma: no cover
     cli()
