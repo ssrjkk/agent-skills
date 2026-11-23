@@ -362,6 +362,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 - [Roadmap](ROADMAP.md)
 - [Issue Tracker](https://github.com/ssrjkk/agent-skills/issues)
 - [IT Roadmaps](https://ssrjkk.github.io/agent-skills/roadmaps.html) (all 20 maps live — EN + RU)
+- [Guides](https://ssrjkk.github.io/agent-skills/guides.html)
 
 ## Why this library
 
