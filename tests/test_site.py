@@ -162,6 +162,48 @@ def _build_site(tmp_path: Path) -> Path:
         encoding="utf-8",
     )
 
+    # Conveyor + prompt sources, same shape as conveyors.schema.json: build_search_index
+    # индексирует их как kind="doc", и test_search_index_includes_docs это проверяет.
+    conv_dir = tmp_path / "conveyors"
+    conv_dir.mkdir(parents=True, exist_ok=True)
+    (conv_dir / "prototype-to-production.json").write_text(json.dumps({
+        "slug": "prototype-to-production",
+        "name": "Prototype to Production",
+        "name_ru": "Прототип в Продакшн",
+        "icon": "P",
+        "tagline": "Idea through quality gates into production",
+        "tagline_ru": "Идея через гейты качества в продакшн",
+        "target": "web / API service",
+        "target_ru": "веб / API-сервис",
+        "status": "live",
+        "catalog_domain": "devops",
+        "related_skills": ["alpha"],
+        "stages": [{
+            "id": "spec",
+            "title": "Stage 1 · Idea to one-page spec",
+            "title_ru": "Этап 1 · Идея в спецификацию",
+            "goal": "Turn the idea into a testable one-page spec.",
+            "goal_ru": "Превратите идею в проверяемую спецификацию.",
+            "gates": ["spec reviewed"],
+            "gates_ru": ["спецификация проверена"],
+            "skills": ["alpha"],
+            "prompts": ["01-idea-to-spec"],
+            "artifacts": ["spec.md"],
+            "artifacts_ru": ["spec.md"],
+        }],
+    }), encoding="utf-8")
+
+    prompts_dir = tmp_path / "prompts"
+    prompts_dir.mkdir(parents=True, exist_ok=True)
+    (prompts_dir / "01-idea-to-spec.md").write_text(
+        "# 01 · Idea to spec\n\nAsk for the problem, the user, the success metric and one scope slice.\n",
+        encoding="utf-8",
+    )
+    (prompts_dir / "01-idea-to-spec.ru.md").write_text(
+        "# 01 · Идея в спецификацию\n\nСпросите про задачу, пользователя, метрику и один срез скоупа.\n",
+        encoding="utf-8",
+    )
+
     mod = _load_mod()
 
     out = tmp_path / "docs"
