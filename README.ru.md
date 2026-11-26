@@ -7,7 +7,8 @@
 опубликованы на отдельном сайте; Python SDK и CLI проверяют структуру, качество
 и синхронность данных.
 
-**Сайт:** https://ssrjkk.github.io/agent-skills/
+**Сайт:** https://ssrjkk.github.io/agent-skills/  
+**Исходники:** https://github.com/ssrjkk/agent-skills
 
 ## Возможности
 
