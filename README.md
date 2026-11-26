@@ -15,6 +15,9 @@
   
 
 <h1 align="center">Skills Library</h1>
+
+> **Languages:** [English](README.md) · [Русский](README.ru.md)
+
 <strong>Curated bilingual (EN + RU) skills in the Agent Skills SKILL.md format</strong>
 <p align="center">Works with Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills-compatible tool</p>
 
