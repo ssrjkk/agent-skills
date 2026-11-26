@@ -15,7 +15,7 @@
   
 
 <h1 align="center">Skills Library</h1>
-<p align="center"><strong>Curated bilingual (EN + RU) skills in the universal Agent Skills format</strong></p>
+<strong>Curated bilingual (EN + RU) skills in the Agent Skills SKILL.md format</strong>
 <p align="center">Works with Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills-compatible tool</p>
 
   <a href="https://ssrjkk.github.io/agent-skills/">Live Catalog Site</a> ·
@@ -50,7 +50,7 @@ Or clone directly into your agent's skills directory:
 ## What is this?
 
 Curated bilingual (English + Russian) skills following the
-**universal Agent Skills format** — the `SKILL.md` convention shared by Claude
+**Agent Skills format** — the `SKILL.md` convention shared by Claude
 Code, OpenCode, Cursor, Windsurf and other agents. Each skill is a folder with
 a `SKILL.md` (primary, English) and an optional `SKILL.ru.md` (parallel
 Russian translation). Any agent that implements the Agent Skills spec can
@@ -122,7 +122,7 @@ kept on `main` — the catalog is rebuilt and re-verified on every change.
 | `ai` | `context-engineering` | Curate LLM context windows for quality and cost: system prompts, compaction, just-in-time retrieval, progressive disclosure, and token budgets. Use for effective agent context. |
 | `ai` | `embeddings` | Work with text embeddings: model selection, vectorization, similarity, clustering, and caching for search and retrieval. Use for semantic representation of text. |
 | `ai` | `few-shot-learning` | Designs and curates few-shot examples to guide LLM behavior, including example selection, formatting, and ordering. Use for task specification without fine-tuning. |
-| `ai` | `function-calling` | Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use. |
+| `ai` | `function-calling` | Implement LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use. |
 | `ai` | `llm-evals` | Build evaluation suites for LLM applications: golden datasets, metrics, LLM-as-judge, regression gates, and CI integration. Use for trustworthy model behavior. |
 | `ai` | `llm-finetuning` | Fine-tunes open-source LLMs (Llama, Mistral, Qwen) using LoRA/QLoRA with HuggingFace and Unsloth. Use for domain-specific model adaptation. |
 | `ai` | `llm-guardrails` | Add safety guardrails to LLM apps: prompt injection defense, content filtering, PII protection, policy enforcement, and red-teaming. Use for safe production AI. |
@@ -142,7 +142,7 @@ kept on `main` — the catalog is rebuilt and re-verified on every change.
 | `backend` | `graphql` | Design and implement GraphQL APIs: schemas, resolvers, queries, mutations, subscriptions, and N+1 avoidance. Use for flexible client-driven APIs. |
 | `backend` | `grpc` | Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling. Use for inter-service communication. |
 | `backend` | `laravel` | Build PHP web applications with Laravel: routing, Eloquent ORM, Blade, migrations, validation, and deployment. Use for PHP backends. |
-| `backend` | `nestjs` | Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs. |
+| `backend` | `nestjs` | Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. |
 | `backend` | `rest-api-design` | Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task. |
 | `backend` | `rust-tokio` | Build async Rust services with Tokio: high-throughput networking, tasks, channels, timers, and testing. Use for chat, proxies, streaming, and data pipelines. |
 | `backend` | `spring-boot` | Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services. |
@@ -209,7 +209,7 @@ kept on `main` — the catalog is rebuilt and re-verified on every change.
 | `engineering` | `test-driven-development` | Practice test-driven development: red-green-refactor, test design, refactoring safely, and coverage discipline. Use for reliable code evolution. |
 | `finance` | `algorithmic-trading` | Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance. |
 | `finance` | `risk-modeling` | Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management. |
-| `frontend` | `angular` | Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends. |
+| `frontend` | `angular` | Build Angular apps with components, signals, services, dependency injection, and testing. |
 | `frontend` | `astro` | Build content-focused websites with Astro: islands architecture, content collections, static generation, and integrations. Use for fast content sites. |
 | `frontend` | `bun-runtime` | Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling. |
 | `frontend` | `catalog-photo-mapper` | Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery. |
@@ -360,7 +360,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 
 - **Curated, not generated** — hand-reviewed skills that pass a 5-dimension
   quality pipeline (completeness, depth, code quality, freshness, bilingual).
-- **Universal Agent Skills format** — the same `SKILL.md` convention native to
+- **Agent Skills format** — the same `SKILL.md` convention native to
   Claude Code and supported by OpenCode, Cursor, Windsurf, and others. No
   lock-in: install once, use anywhere.
 - **Bilingual (EN + RU)** — every skill ships a real Russian translation, not
@@ -375,8 +375,7 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 
 ## Supported agents & models
 
-The `SKILL.md` format is universal — every skill works with any agent that
-implements the Agent Skills spec, across model providers:
+The `SKILL.md` format is a shared convention. Skills work with agents that implement the Agent Skills spec, across model providers:
 
   
   
