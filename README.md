@@ -1,39 +1,33 @@
-<p align="center">
   <img src="assets/logo.svg" width="88" alt="Agent Skills logo">
-</p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/skills-120-blue?style=for-the-badge" alt="Skills">
-  <img src="https://img.shields.io/badge/languages-EN%20%7C%20RU-green?style=for-the-badge" alt="Languages">
-  <img src="https://img.shields.io/badge/domains-20-orange?style=for-the-badge" alt="Domains">
-  <img src="https://img.shields.io/badge/quality-97.5%25-brightgreen?style=for-the-badge" alt="Quality">
-  <img src="https://img.shields.io/badge/coverage-93%25-brightgreen?style=for-the-badge" alt="Coverage">
-  <img src="https://img.shields.io/badge/agents-universal-purple?style=for-the-badge" alt="Agent-agnostic">
-  <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
-  <img src="https://img.shields.io/github/stars/ssrjkk/agent-skills?style=for-the-badge&color=gold" alt="Stars">
-  <img src="https://img.shields.io/github/actions/workflow/status/ssrjkk/agent-skills/validate.yml?branch=main&style=for-the-badge&label=CI&color=green" alt="CI">
-  <img src="https://img.shields.io/github/release/ssrjkk/agent-skills?style=for-the-badge&color=blue" alt="Release">
-  <img src="https://img.shields.io/github/last-commit/ssrjkk/agent-skills?style=for-the-badge&color=lightgrey" alt="Last commit">
-  <img src="https://img.shields.io/pypi/v/agent-skills-library?style=for-the-badge&color=3775A9&logo=pypi&logoColor=white" alt="PyPI">
-  <img src="https://img.shields.io/pypi/pyversions/agent-skills-library?style=for-the-badge&color=3775A9" alt="Python versions">
-</p>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 <h1 align="center">Skills Library</h1>
 <p align="center"><strong>Curated bilingual (EN + RU) skills in the universal Agent Skills format</strong></p>
 <p align="center">Works with Claude Code, OpenCode, Cursor, Windsurf and every Agent Skills-compatible tool</p>
-<p align="center">
+
   <a href="https://ssrjkk.github.io/agent-skills/">Live Catalog Site</a> ·
   <a href="https://github.com/ssrjkk/agent-skills/releases">Releases</a> ·
   <a href="https://github.com/ssrjkk/agent-skills/issues">Issues</a> ·
   <a href="https://github.com/ssrjkk/agent-skills/discussions">Discussions</a> ·
   <a href="https://t.me/ssrjkk_bot">Telegram</a>
-</p>
 
-<p align="center">
   <a href="https://ssrjkk.github.io/agent-skills/">
     <img src="https://raw.githubusercontent.com/ssrjkk/agent-skills/main/.github/site-preview.png" alt="Agent Skills Library — live catalog site" width="800">
   </a>
-</p>
+
 <p align="center"><em>Live catalog: <a href="https://ssrjkk.github.io/agent-skills/">ssrjkk.github.io/agent-skills</a></em></p>
 
 ---
@@ -318,12 +312,10 @@ Every skill is scored on 5 dimensions:
 
 **ssrjkk** — creator & maintainer
 
-<p align="center">
-  <a href="https://github.com/ssrjkk"><img src="https://img.shields.io/badge/GitHub-ssrjkk-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
-  <a href="https://t.me/ssrjkk_bot"><img src="https://img.shields.io/badge/Telegram-@ssrjkk_bot-26A5E4?style=for-the-badge&logo=telegram" alt="Telegram bot"></a>
-  <a href="https://t.me/ssrjkk"><img src="https://img.shields.io/badge/Telegram-@ssrjkk-26A5E4?style=for-the-badge&logo=telegram" alt="Telegram"></a>
-  <a href="mailto:ray013lefe@gmail.com"><img src="https://img.shields.io/badge/Email-ray013lefe%40gmail.com-D14836?style=for-the-badge&logo=gmail" alt="Email"></a>
-</p>
+  <a href="https://github.com/ssrjkk"></a>
+  <a href="https://t.me/ssrjkk_bot"></a>
+  <a href="https://t.me/ssrjkk"></a>
+  <a href="mailto:ray013lefe@gmail.com"></a>
 
 ## For Contributors
 
@@ -386,15 +378,13 @@ CLI) · `scripts/` (CI helpers) · `docs/` (generated site, do not hand-edit).
 The `SKILL.md` format is universal — every skill works with any agent that
 implements the Agent Skills spec, across model providers:
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Claude%20Code-Claude%20Sonnet%2FOpus-8B5CF6?style=flat-square&logo=anthropic" alt="Claude">
-  <img src="https://img.shields.io/badge/OpenAI-GPT%20Series-10A37F?style=flat-square&logo=openai" alt="OpenAI">
-  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=flat-square&logo=google" alt="Gemini">
-  <img src="https://img.shields.io/badge/Zhipu-GLM%20Series-3859FF?style=flat-square" alt="GLM">
-  <img src="https://img.shields.io/badge/OpenCode-%E2%9C%93-00C9A7?style=flat-square" alt="OpenCode">
-  <img src="https://img.shields.io/badge/Cursor-%E2%9C%93-6C5CE7?style=flat-square" alt="Cursor">
-  <img src="https://img.shields.io/badge/Windsurf-%E2%9C%93-00B3FF?style=flat-square" alt="Windsurf">
-</p>
+  
+  
+  
+  
+  
+  
+  
 
 ## Legacy Version
 
