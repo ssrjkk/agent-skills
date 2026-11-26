@@ -1,6 +1,6 @@
 ---
 name: angular
-description: "Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends."
+description: "Build Angular apps with components, signals, services, dependency injection, and testing. Use for structured frontends."
 category: frontend
 tags: [angular, typescript, components, signals, dependency-injection, rxjs]
 models: [sonnet, opus, gpt-6, gemini-3, glm-5]
@@ -11,7 +11,7 @@ author: ssrjkk
 ---
 # Angular
 
-> Building scalable enterprise frontends with Angular.
+> Building structured frontends with Angular.
 
 ## Quick Start
 ```bash
@@ -21,7 +21,7 @@ cd my-app && ng serve
 ```
 
 ## When to Use
-- Enterprise single-page applications
+- Large single-page applications
 - Teams wanting structure and conventions
 - Large apps with many developers
 - Reactive data flows with RxJS

@@ -1,6 +1,6 @@
 ---
 name: nestjs
-description: "Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs."
+description: "Build Node.js server-side applications with NestJS: modules, dependency injection, decorators, and API layers."
 category: backend
 tags: [nestjs, nodejs, typescript, api, decorators]
 models: [sonnet, opus, gpt-6, gemini-3, glm-5]
@@ -45,7 +45,7 @@ export class UsersService {
 ```
 
 ## When to Use
-- Enterprise TypeScript APIs
+- Structured TypeScript APIs
 - Microservices with NATS/RabbitMQ
 - GraphQL + REST hybrid APIs
 - Projects needing strong structure

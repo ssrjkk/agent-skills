@@ -142,7 +142,7 @@ kept on `main` — the catalog is rebuilt and re-verified on every change.
 | `backend` | `graphql` | Design and implement GraphQL APIs: schemas, resolvers, queries, mutations, subscriptions, and N+1 avoidance. Use for flexible client-driven APIs. |
 | `backend` | `grpc` | Build high-performance services with gRPC: protobuf schemas, unary/streaming RPCs, interceptors, and error handling. Use for inter-service communication. |
 | `backend` | `laravel` | Build PHP web applications with Laravel: routing, Eloquent ORM, Blade, migrations, validation, and deployment. Use for PHP backends. |
-| `backend` | `nestjs` | Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. |
+| `backend` | `nestjs` | Build Node.js server-side applications with NestJS: modules, dependency injection, decorators, and API layers. |
 | `backend` | `rest-api-design` | Design consistent REST APIs: resource modeling, status codes, pagination, versioning, error contracts, and documentation. Use for any API design task. |
 | `backend` | `rust-tokio` | Build async Rust services with Tokio: high-throughput networking, tasks, channels, timers, and testing. Use for chat, proxies, streaming, and data pipelines. |
 | `backend` | `spring-boot` | Build production Java/Kotlin backends with Spring Boot: REST controllers, dependency injection, data access, security, and testing. Use for JVM services. |
@@ -209,7 +209,7 @@ kept on `main` — the catalog is rebuilt and re-verified on every change.
 | `engineering` | `test-driven-development` | Practice test-driven development: red-green-refactor, test design, refactoring safely, and coverage discipline. Use for reliable code evolution. |
 | `finance` | `algorithmic-trading` | Build algorithmic trading systems: backtesting, strategy design, order execution, risk management, and market data pipelines. Use for quantitative finance. |
 | `finance` | `risk-modeling` | Build financial risk models: VaR, CVaR, Monte Carlo simulation, stress testing, and portfolio risk decomposition. Use for quantitative risk management. |
-| `frontend` | `angular` | Build Angular apps with components, signals, services, dependency injection, and testing. |
+| `frontend` | `angular` | Build Angular apps with components, signals, services, dependency injection, and testing. Use for structured frontends. |
 | `frontend` | `astro` | Build content-focused websites with Astro: islands architecture, content collections, static generation, and integrations. Use for fast content sites. |
 | `frontend` | `bun-runtime` | Run JavaScript/TypeScript with Bun: fast installs and builds, hot reload, built-in SQLite, fetch, and WebSocket. Use for all-in-one JS tooling. |
 | `frontend` | `catalog-photo-mapper` | Audits, maps, and synchronizes e-commerce product catalog images across brands, series, and categories with zero cross-brand collisions, 1:1 studio aspect ratios, SQLite/CMS sync, and automated integrity tests. Use when fixing mismatched or broken product imagery. |

@@ -147,7 +147,7 @@
     },
     {
       "name": "function-calling",
-      "description": "Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use.",
+      "description": "Implement LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use.",
       "category": "ai",
       "tags": [
         "function-calling",
@@ -738,7 +738,7 @@
     },
     {
       "name": "nestjs",
-      "description": "Creates Node.js server-side applications with NestJS, modules, dependency injection, and decorators. Use for enterprise-grade Node.js APIs.",
+      "description": "Build Node.js server-side applications with NestJS: modules, dependency injection, decorators, and API layers.",
       "category": "backend",
       "tags": [
         "nestjs",
@@ -2721,7 +2721,7 @@
     },
     {
       "name": "angular",
-      "description": "Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends.",
+      "description": "Build Angular apps with components, signals, services, dependency injection, and testing. Use for structured frontends.",
       "category": "frontend",
       "tags": [
         "angular",
