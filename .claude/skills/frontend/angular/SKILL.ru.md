@@ -1,6 +1,6 @@
 ---
 name: angular
-description: "Build enterprise web apps with Angular: components, signals, services, dependency injection, and testing. Use for scalable structured frontends."
+description: "Build Angular apps with components, signals, services, dependency injection, and testing. Use for structured frontends."
 category: frontend
 tags: [angular, frontend, russian]
 models: [sonnet, opus]
@@ -11,7 +11,7 @@ author: ssrjkk
 ---
 # Angular (Ангуляр)
 
-> Масштабируемые корпоративные фронтенды на Angular.
+> Структурированные фронтенды на Angular.
 
 ## Быстрый старт
 ```bash
@@ -21,7 +21,7 @@ cd my-app && ng serve
 ```
 
 ## Когда использовать
-- Корпоративные single-page приложения
+- Крупные single-page приложения
 - Команды, которым нужна структура и конвенции
 - Большие приложения со многими разработчиками
 - Реактивные потоки данных через RxJS

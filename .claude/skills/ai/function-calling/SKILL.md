@@ -1,6 +1,6 @@
 ---
 name: function-calling
-description: "Implement robust LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use."
+description: "Implement LLM function/tool calling: schemas, multi-call handling, validation, error recovery, and structured execution. Use for agent tool use."
 category: ai
 tags: [function-calling, tool-use, llm, structured-output, agents, json-schema]
 models: [sonnet, opus, gpt-6, gemini-3, glm-5]
@@ -11,7 +11,7 @@ author: ssrjkk
 ---
 # Function Calling
 
-> Wiring LLMs to real functions with robust tool calling.
+> Wiring LLMs to real functions with tool calling.
 
 ## Quick Start
 ```bash
